@@ -212,6 +212,36 @@ class WriterContract:
                 else {}
             )
         )
+        unified_dialogue_policy = (
+            dict(dialogue_policy.get("unified_dialogue_profile", {}))
+            if isinstance(dialogue_policy.get("unified_dialogue_profile"), dict)
+            else {}
+        )
+        dialogue_act_resolution = (
+            dict(dialogue_policy.get("dialogue_act_resolution", {}))
+            if isinstance(dialogue_policy.get("dialogue_act_resolution"), dict)
+            else {}
+        )
+        last_assistant_offer = (
+            dict(dialogue_policy.get("last_assistant_offer", {}))
+            if isinstance(dialogue_policy.get("last_assistant_offer"), dict)
+            else {}
+        )
+        unanswered_question_state = (
+            dict(dialogue_policy.get("unanswered_question_state", {}))
+            if isinstance(dialogue_policy.get("unanswered_question_state"), dict)
+            else {}
+        )
+        dialogue_style_state = (
+            dict(dialogue_policy.get("dialogue_style_state", {}))
+            if isinstance(dialogue_policy.get("dialogue_style_state"), dict)
+            else {}
+        )
+        answer_obligation_resolution = (
+            dict(dialogue_policy.get("answer_obligation_resolution", {}))
+            if isinstance(dialogue_policy.get("answer_obligation_resolution"), dict)
+            else {}
+        )
         included_writer_hits = [
             str(item.get("content", "") or "")
             for item in list(retrieval_decision.get("rag_included_for_writer", []) or [])
@@ -267,7 +297,9 @@ class WriterContract:
             if str(item).strip()
         ]
         writer_first_enabled = bool(final_answer_directive)
-        legacy_blocks_source_only = bool(dialogue_profile == "mvp_free_dialogue")
+        legacy_blocks_source_only = bool(
+            unified_dialogue_policy.get("legacy_blocks_source_signals_only", True)
+        )
         mode_hint = str(writer_freedom_contract.get("mode_hint", self.thread_state.response_mode) or self.thread_state.response_mode)
         freedom_level = str(writer_freedom_contract.get("freedom_level", "guided") or "guided")
         mode_is_hint_not_cage = bool(writer_freedom_contract.get("mode_is_hint_not_cage", True))
@@ -529,6 +561,87 @@ class WriterContract:
             ),
             "dialogue_policy": dialogue_policy,
             "dialogue_profile": dialogue_profile,
+            "profile_preset": str(
+                dialogue_policy.get("profile_preset", unified_dialogue_policy.get("profile_preset", "safe_guided"))
+                or unified_dialogue_policy.get("profile_preset", "safe_guided")
+            ),
+            "unified_dialogue_policy": unified_dialogue_policy,
+            "unified_dialogue_policy_version": str(
+                unified_dialogue_policy.get("version", "unified_dialogue_policy_v2")
+                or "unified_dialogue_policy_v2"
+            ),
+            "unified_active_profile_alias": str(
+                unified_dialogue_policy.get("active_profile_alias", dialogue_profile)
+                or dialogue_profile
+            ),
+            "unified_effective_writer_autonomy": str(
+                unified_dialogue_policy.get("effective_writer_autonomy", dialogue_policy.get("writer_autonomy", "medium"))
+                or dialogue_policy.get("writer_autonomy", "medium")
+            ),
+            "unified_effective_safety_floor": str(
+                unified_dialogue_policy.get("effective_safety_floor", "minimal_baseline")
+                or "minimal_baseline"
+            ),
+            "unified_legacy_blocks_visible_to_writer": bool(
+                unified_dialogue_policy.get("legacy_blocks_visible_to_writer", False)
+            ),
+            "unified_legacy_blocks_source_signals_only": bool(
+                unified_dialogue_policy.get("legacy_blocks_source_signals_only", True)
+            ),
+            "unified_hard_boundaries_csv": ", ".join(
+                [str(item) for item in list(unified_dialogue_policy.get("hard_boundaries", []) or []) if str(item).strip()]
+            ) or "none",
+            "unified_soft_guidance_csv": ", ".join(
+                [str(item) for item in list(unified_dialogue_policy.get("soft_guidance", []) or []) if str(item).strip()]
+            ) or "none",
+            "dialogue_act_resolution": dialogue_act_resolution,
+            "dialogue_act": str(dialogue_act_resolution.get("dialogue_act", "unknown") or "unknown"),
+            "dialogue_act_confidence": float(dialogue_act_resolution.get("confidence", 0.0) or 0.0),
+            "dialogue_act_evidence": ", ".join(
+                [str(item) for item in list(dialogue_act_resolution.get("evidence", []) or []) if str(item).strip()]
+            ) or "none",
+            "last_assistant_offer": last_assistant_offer,
+            "last_assistant_offer_open": bool(last_assistant_offer.get("is_open", False)),
+            "last_assistant_offer_type": str(last_assistant_offer.get("offer_type", "none") or "none"),
+            "last_assistant_offer_summary": str(last_assistant_offer.get("offer_text_summary", "") or "none"),
+            "unanswered_question_state": unanswered_question_state,
+            "unanswered_question_answer_required": bool(unanswered_question_state.get("answer_required", False)),
+            "unanswered_question_status": str(
+                unanswered_question_state.get("answer_status", "answered") or "answered"
+            ),
+            "unanswered_question_summary": str(
+                unanswered_question_state.get("last_direct_user_question", "") or "none"
+            ),
+            "dialogue_style_state": dialogue_style_state,
+            "dialogue_style_tone": str(dialogue_style_state.get("tone", "neutral") or "neutral"),
+            "dialogue_style_length_preference": str(
+                dialogue_style_state.get("length_preference", "adaptive") or "adaptive"
+            ),
+            "dialogue_style_complexity_preference": str(
+                dialogue_style_state.get("complexity_preference", "normal") or "normal"
+            ),
+            "dialogue_style_avoid_csv": ", ".join(
+                [str(item) for item in list(dialogue_style_state.get("avoid", []) or []) if str(item).strip()]
+            ) or "none",
+            "answer_obligation_resolution": answer_obligation_resolution,
+            "answer_obligation": str(
+                answer_obligation_resolution.get("answer_obligation", "continue_thread")
+                or "continue_thread"
+            ),
+            "answer_obligation_shape": str(
+                answer_obligation_resolution.get("answer_shape", "structured_explanation")
+                or "structured_explanation"
+            ),
+            "answer_obligation_depth": str(
+                answer_obligation_resolution.get("depth", "medium") or "medium"
+            ),
+            "answer_obligation_question_policy": str(
+                answer_obligation_resolution.get("question_policy", "optional_none")
+                or "optional_none"
+            ),
+            "answer_obligation_source": ", ".join(
+                [str(item) for item in list(answer_obligation_resolution.get("source", []) or []) if str(item).strip()]
+            ) or "none",
             "final_answer_directive": final_answer_directive,
             "final_answer_directive_json": json.dumps(
                 final_answer_directive,
@@ -567,7 +680,9 @@ class WriterContract:
             "legacy_constraints_suppressed": suppressed_legacy_constraints,
             "legacy_constraints_suppressed_csv": ", ".join(suppressed_legacy_constraints) or "none",
             "writer_first_prompt_assembly_enabled": writer_first_enabled,
-            "legacy_blocks_visible_to_writer": not legacy_blocks_source_only,
+            "legacy_blocks_visible_to_writer": bool(
+                unified_dialogue_policy.get("legacy_blocks_visible_to_writer", False)
+            ),
             "legacy_blocks_source_signals_only": legacy_blocks_source_only,
             "dialogue_expansion_requested": bool(dialogue_policy.get("expansion_requested", False)),
             "dialogue_repair_and_expand_requested": bool(

@@ -85,6 +85,29 @@ async def test_continue_preserves_existing_pattern_core() -> None:
 
 
 @pytest.mark.asyncio
+async def test_continue_preserves_runtime_dialogue_state() -> None:
+    manager = ThreadManagerAgent()
+    current = _thread(pattern_core="stable continuity core")
+    current.active_frame["dialogue_state"] = {
+        "unanswered_question_state": {
+            "last_direct_user_question": "что такое нейросталкинг?",
+            "answer_required": True,
+        }
+    }
+    current.active_frame["active_concept"] = "нейросталкинг"
+    updated = await manager.update(
+        user_message="ты не ответил на мой вопрос",
+        state_snapshot=_snapshot(intent="clarify"),
+        user_id="u1",
+        current_thread=current,
+        archived_threads=[],
+    )
+    assert isinstance(updated.active_frame.get("dialogue_state"), dict)
+    assert updated.active_frame["dialogue_state"]["unanswered_question_state"]["answer_required"] is True
+    assert updated.active_frame.get("active_concept") == "нейросталкинг"
+
+
+@pytest.mark.asyncio
 async def test_safety_patch_preserves_pattern_core_and_sets_safety_need() -> None:
     manager = ThreadManagerAgent()
     current = _thread(pattern_core="do not lose this core")

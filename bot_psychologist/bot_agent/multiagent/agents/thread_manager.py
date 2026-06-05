@@ -370,6 +370,28 @@ def _build_active_frame_v1(
     }
 
 
+_RUNTIME_ACTIVE_FRAME_KEYS = {
+    "active_concept",
+    "dialogue_state",
+    "last_assistant_offer",
+    "last_direct_user_question",
+    "dialogue_style_state",
+}
+
+
+def _merge_runtime_active_frame(
+    *,
+    semantic_frame: dict[str, str],
+    previous_active_frame: dict[str, Any] | None,
+) -> dict[str, Any]:
+    merged: dict[str, Any] = dict(semantic_frame)
+    previous = dict(previous_active_frame or {})
+    for key in _RUNTIME_ACTIVE_FRAME_KEYS:
+        if key in previous:
+            merged[key] = previous[key]
+    return merged
+
+
 class ThreadManagerAgent:
     """Builds and updates thread state per user turn."""
 
@@ -579,6 +601,7 @@ class ThreadManagerAgent:
                     now=now,
                     user_id=user_id,
                     relation="new_thread",
+                    previous_active_frame=current_thread.active_frame,
                 )
                 mode, goal, mode_reason = _mode_and_goal_with_reason(
                     new_thread.phase,
@@ -887,6 +910,7 @@ class ThreadManagerAgent:
         now: datetime,
         user_id: str,
         relation: str = "new_thread",
+        previous_active_frame: dict[str, Any] | None = None,
     ) -> ThreadState:
         phase = "stabilize" if state_snapshot.safety_flag else "clarify"
         mode, goal = _mode_and_goal(phase, state_snapshot, user_message=user_message)
@@ -899,6 +923,10 @@ class ThreadManagerAgent:
             relation=relation,
             response_mode=mode,
             phase=phase,
+        )
+        active_frame = _merge_runtime_active_frame(
+            semantic_frame=active_frame,
+            previous_active_frame=previous_active_frame,
         )
         return ThreadState(
             thread_id=f"tm_{uuid.uuid4().hex[:12]}",
@@ -982,6 +1010,10 @@ class ThreadManagerAgent:
             relation=relation,
             response_mode=mode,
             phase=phase,
+        )
+        active_frame = _merge_runtime_active_frame(
+            semantic_frame=active_frame,
+            previous_active_frame=current_thread.active_frame,
         )
         updated = ThreadState(
             thread_id=current_thread.thread_id,
@@ -1123,6 +1155,10 @@ class ThreadManagerAgent:
             relation="continue",
             response_mode="safe_override",
             phase="stabilize",
+        )
+        active_frame = _merge_runtime_active_frame(
+            semantic_frame=active_frame,
+            previous_active_frame=current_thread.active_frame,
         )
         return ThreadState(
             thread_id=current_thread.thread_id,

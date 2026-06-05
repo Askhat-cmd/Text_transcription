@@ -1,0 +1,574 @@
+{
+  "generated_at_utc": "2026-06-05T05:41:47.049279+00:00",
+  "issue_file_count": 68,
+  "issue_count": 227,
+  "files": [
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/PRD-045.6.3_TASK_LIST.md",
+      "issues": [
+        "contains:\\u0420\\u0405",
+        "contains:\\u0420\\u0451",
+        "contains:\\u0420\\u045c",
+        "contains:\\u0420\\u045f",
+        "contains:\\u0420\\u0491",
+        "contains:\\u0421\\u0403",
+        "contains:\\u0421\\u040a",
+        "contains:\\u0421\\u201a",
+        "cyrillic_mojibake_pattern"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/PRD-046.0.2.1_TASK_LIST.md",
+      "issues": [
+        "contains:\\x07"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/PRD-046.0.5-APPLY1_TASK_LIST.md",
+      "issues": [
+        "contains:\\u0420\\u0405",
+        "contains:\\u0420\\u040e",
+        "contains:\\u0420\\u0451",
+        "contains:\\u0420\\u045c",
+        "contains:\\u0420\\u045f",
+        "contains:\\u0420\\u0491",
+        "contains:\\u0421\\u0403",
+        "contains:\\u0421\\u040a",
+        "contains:\\u0421\\u201a",
+        "cyrillic_mojibake_pattern"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/PRD-046.0.7-HF2_TASK_LIST.md",
+      "issues": [
+        "contains:\\u0420\\u0405",
+        "contains:\\u0420\\u0451",
+        "contains:\\u0420\\u045c",
+        "contains:\\u0420\\u045f",
+        "contains:\\u0420\\u0491",
+        "contains:\\u0421\\u0403",
+        "contains:\\u0421\\u040a",
+        "contains:\\u0421\\u201a",
+        "cyrillic_mojibake_pattern"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/PRD-046.0.8_TASK_LIST.md",
+      "issues": [
+        "contains:\\u0420\\u0405",
+        "contains:\\u0420\\u040e",
+        "contains:\\u0420\\u0451",
+        "contains:\\u0420\\u045f",
+        "contains:\\u0421\\u0403",
+        "contains:\\u0421\\u040a",
+        "contains:\\u0421\\u201a",
+        "cyrillic_mojibake_pattern"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/PRD-046.1.14_Production_Limited_Prompt_Constraint_Pilot_Results_Rollback_Quality_Gate_v1.md",
+      "issues": [
+        "contains:\\u0420\\u0405",
+        "contains:\\u0420\\u040e",
+        "contains:\\u0420\\u0451",
+        "contains:\\u0420\\u045c",
+        "contains:\\u0420\\u045f",
+        "contains:\\u0420\\u0491",
+        "contains:\\u0421\\u0403",
+        "contains:\\u0421\\u040a",
+        "contains:\\u0421\\u201a",
+        "cyrillic_mojibake_pattern"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/PRD-046.1.1_Diagnostic_Center_v1_Minimal_Runtime_Shadow_Mode_Contract_Eval_RU.md",
+      "issues": [
+        "contains:\\u0420\\u0405",
+        "contains:\\u0420\\u040e",
+        "contains:\\u0420\\u0451",
+        "contains:\\u0420\\u045c",
+        "contains:\\u0420\\u045f",
+        "contains:\\u0420\\u0491",
+        "contains:\\u0421\\u0403",
+        "contains:\\u0421\\u040a",
+        "contains:\\u0421\\u201a",
+        "cyrillic_mojibake_pattern"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/PRD-046.1.2-HF1_Artifact_Encoding_Hygiene_Test_Command_Log_UTF8_Guard_RU.md",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/PRD-046.1.21_Diagnostic_Center_Runtime_Pilot_Results_Rollback_Quality_Gate_v1.md",
+      "issues": [
+        "contains:\\u0420\\u0405",
+        "contains:\\u0420\\u040e",
+        "contains:\\u0420\\u0451",
+        "contains:\\u0420\\u045c",
+        "contains:\\u0420\\u045f",
+        "contains:\\u0420\\u0491",
+        "contains:\\u0421\\u0403",
+        "contains:\\u0421\\u040a",
+        "contains:\\u0421\\u201a",
+        "cyrillic_mojibake_pattern"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/PRD-046.1.23_TASK_LIST.md",
+      "issues": [
+        "contains:\\u0420\\u0405",
+        "contains:\\u0420\\u040e",
+        "contains:\\u0420\\u0451",
+        "contains:\\u0420\\u045f",
+        "contains:\\u0420\\u0491",
+        "contains:\\u0421\\u0403",
+        "contains:\\u0421\\u040a",
+        "contains:\\u0421\\u201a",
+        "cyrillic_mojibake_pattern"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/PRD-046.1.6_Controlled_Prompt_Constraint_Pilot_Limited_Runtime_Flag_v1_RU.md",
+      "issues": [
+        "contains:\\u0420\\u0405",
+        "contains:\\u0420\\u040e",
+        "contains:\\u0420\\u0451",
+        "contains:\\u0420\\u045c",
+        "contains:\\u0420\\u045f",
+        "contains:\\u0420\\u0491",
+        "contains:\\u0421\\u0403",
+        "contains:\\u0421\\u040a",
+        "contains:\\u0421\\u201a",
+        "cyrillic_mojibake_pattern"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/PRD-046.1_Diagnostic_Center_v1_Readiness_Architecture_PRD_RU.md",
+      "issues": [
+        "contains:\\u0420\\u0405",
+        "contains:\\u0420\\u040e",
+        "contains:\\u0420\\u0451",
+        "contains:\\u0420\\u045c",
+        "contains:\\u0420\\u045f",
+        "contains:\\u0420\\u0491",
+        "contains:\\u0421\\u0403",
+        "contains:\\u0421\\u040a",
+        "contains:\\u0421\\u201a",
+        "cyrillic_mojibake_pattern"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/PRD-047.11-HF2_TASK_LIST.md",
+      "issues": [
+        "contains:\\u0420\\u0451",
+        "contains:\\u0421\\u0403",
+        "contains:\\u0421\\u040a",
+        "contains:\\u0421\\u201a",
+        "cyrillic_mojibake_pattern"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/PRD-047.12.md",
+      "issues": [
+        "contains:\\u0420\\u0405",
+        "contains:\\u0420\\u040e",
+        "contains:\\u0420\\u0451",
+        "contains:\\u0420\\u045c",
+        "contains:\\u0420\\u045f",
+        "contains:\\u0420\\u0491",
+        "contains:\\u0421\\u0403",
+        "contains:\\u0421\\u040a",
+        "contains:\\u0421\\u201a",
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/PRD-047.12_NEW.md",
+      "issues": [
+        "contains:\\u0420\\u0405",
+        "contains:\\u0420\\u040e",
+        "contains:\\u0420\\u0451",
+        "contains:\\u0420\\u045c",
+        "contains:\\u0420\\u045f",
+        "contains:\\u0420\\u0491",
+        "contains:\\u0421\\u0403",
+        "contains:\\u0421\\u040a",
+        "contains:\\u0421\\u201a",
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/reports/PRD-046.0.4.2.1_IMPLEMENTATION_REPORT.md",
+      "issues": [
+        "contains:\\u0420\\u045c",
+        "cyrillic_mojibake_pattern"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-045.0/test_command_output.txt",
+      "issues": [
+        "utf8_decode_error"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-045.3.1/test_command_output.txt",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-045.5/test_command_output.txt",
+      "issues": [
+        "utf8_decode_error"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-045.6/test_command_output.txt",
+      "issues": [
+        "utf8_decode_error"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-045.6.2/test_command_output.txt",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-045.6.3/summary_processor_smoke.json",
+      "issues": [
+        "utf8_decode_error"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-045.7/test_command_output.txt",
+      "issues": [
+        "utf8_decode_error"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-045.7.1/test_command_output.txt",
+      "issues": [
+        "utf8_decode_error"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-046.0.10/test_command_output.txt",
+      "issues": [
+        "utf8_decode_error"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-046.0.10-HF1/test_command_output.txt",
+      "issues": [
+        "utf8_decode_error"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-046.0.11/test_command_output.txt",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-046.0.2/synthetic_boundary_smoke_output.json",
+      "issues": [
+        "utf8_decode_error"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-046.0.4/test_command_output.txt",
+      "issues": [
+        "utf8_decode_error"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-046.0.4.2/test_command_output.txt",
+      "issues": [
+        "utf8_decode_error"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-046.0.4.2.1/test_command_output.txt",
+      "issues": [
+        "utf8_decode_error"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-046.0.4.3/test_command_output.txt",
+      "issues": [
+        "utf8_decode_error"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-046.0.9/test_command_output.txt",
+      "issues": [
+        "utf8_decode_error"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-046.0.9-RUN1/test_command_output.txt",
+      "issues": [
+        "utf8_decode_error"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-046.1.20/test_command_output.txt",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-046.1.21-HF1/test_command_output.txt",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-046.1.22/test_command_output.txt",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-046.1.23/test_command_output.txt",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-046.1.28/test_command_output.txt",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-046.1.29/test_command_output.txt",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-047.0/test_command_output.txt",
+      "issues": [
+        "utf8_decode_error"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-047.0-HF1/test_command_output.txt",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-047.11-HF3/live_cases_result.json",
+      "issues": [
+        "contains:\\u0420\\u0405",
+        "contains:\\u0420\\u0451",
+        "contains:\\u0421\\u0403",
+        "cyrillic_mojibake_pattern"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-047.2/test_command_output.txt",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-047.11-HF3/dom_snapshots/hf3_web_chat.html",
+      "issues": [
+        "contains:\\u0420\\u0405",
+        "contains:\\u0420\\u0451",
+        "contains:\\u0420\\u045f",
+        "contains:\\u0420\\u0491",
+        "contains:\\u0421\\u0403",
+        "contains:\\u0421\\u201a",
+        "cyrillic_mojibake_pattern"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/scripts/run_prd_047_11_hf3.py",
+      "issues": [
+        "contains:\\u0420\\u0405",
+        "contains:\\u0420\\u040e",
+        "contains:\\u0420\\u0451",
+        "contains:\\u0420\\u045f",
+        "contains:\\u0420\\u0491",
+        "contains:\\u0421\\u0403",
+        "contains:\\u0421\\u040a",
+        "contains:\\u0421\\u201a",
+        "cyrillic_mojibake_pattern"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/scripts/run_prd_047_12_unified_dialogue_acceptance.py",
+      "issues": [
+        "contains:\\u0420\\u0405",
+        "contains:\\u0420\\u040e",
+        "contains:\\u0420\\u0451",
+        "contains:\\u0420\\u045c",
+        "contains:\\u0420\\u045f",
+        "contains:\\u0420\\u0491",
+        "contains:\\u0421\\u0403",
+        "contains:\\u0421\\u040a",
+        "contains:\\u0421\\u201a",
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/tools/validate_prd_artifact_encoding.py",
+      "issues": [
+        "contains:\\u0420\\u045f",
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/.cache_bot_agent/conversations/482e11fa-2a32-4d27-836b-445889ca89fd.json",
+      "issues": [
+        "contains:\\u0420\\u0405",
+        "contains:\\u0420\\u0451",
+        "contains:\\u0421\\u0403",
+        "cyrillic_mojibake_pattern"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/.venv/Lib/site-packages/click/utils.py",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/.venv/Lib/site-packages/pkg_resources/__init__.py",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/.venv/Lib/site-packages/transformers/tokenization_mistral_common.py",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/.venv/Lib/site-packages/huggingface_hub/utils/_subprocess.py",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/.venv/Lib/site-packages/joblib/test/test_func_inspect_special_encoding.py",
+      "issues": [
+        "utf8_decode_error"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/.venv/Lib/site-packages/pip/_vendor/pkg_resources/__init__.py",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/.venv_migrated_backup_2026-04-24/Lib/site-packages/click/utils.py",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/.venv_migrated_backup_2026-04-24/Lib/site-packages/pkg_resources/__init__.py",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/.venv_migrated_backup_2026-04-24/Lib/site-packages/transformers/tokenization_mistral_common.py",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/.venv_migrated_backup_2026-04-24/Lib/site-packages/huggingface_hub/utils/_subprocess.py",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/.venv_migrated_backup_2026-04-24/Lib/site-packages/joblib/test/test_func_inspect_special_encoding.py",
+      "issues": [
+        "utf8_decode_error"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/.venv_migrated_backup_2026-04-24/Lib/site-packages/pip/_vendor/pkg_resources/__init__.py",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/bot_agent/multiagent/stale_stub_detector.py",
+      "issues": [
+        "contains:\\u0420\\u0405",
+        "contains:\\u0420\\u0451",
+        "contains:\\u0421\\u0403",
+        "contains:\\u0421\\u040a",
+        "contains:\\u0421\\u201a",
+        "cyrillic_mojibake_pattern"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/bot_agent/multiagent/agents/thread_manager.py",
+      "issues": [
+        "contains:\\u0420\\u0405",
+        "contains:\\u0420\\u0451",
+        "contains:\\u0420\\u0491",
+        "contains:\\u0421\\u201a",
+        "cyrillic_mojibake_pattern"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/tests/inventory/test_no_mojibake_in_active_text_files.py",
+      "issues": [
+        "contains:\\u0420\\u0405",
+        "contains:\\u0420\\u045f",
+        "contains:\\u0420\\u0491",
+        "contains:\\u0421\\u0403",
+        "contains:\\u0421\\u201a"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/tests/multiagent/test_validator_agent.py",
+      "issues": [
+        "contains:\\u0420\\u0405",
+        "contains:\\u0420\\u040e",
+        "contains:\\u0420\\u0451",
+        "contains:\\u0420\\u045f",
+        "contains:\\u0420\\u0491",
+        "contains:\\u0421\\u0403",
+        "contains:\\u0421\\u040a",
+        "contains:\\u0421\\u201a",
+        "cyrillic_mojibake_pattern"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/web_ui/node_modules/iconv-lite/README.md",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/web_ui/node_modules/micromark-util-decode-numeric-character-reference/readme.md",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/web_ui/node_modules/micromark-util-symbol/lib/values.d.ts",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    }
+  ]
+}

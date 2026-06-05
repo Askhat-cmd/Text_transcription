@@ -8,13 +8,22 @@ from typing import Any
 
 DIALOGUE_PROFILE_SAFE_GUIDED = "safe_guided"
 DIALOGUE_PROFILE_MVP_FREE = "mvp_free_dialogue"
+DIALOGUE_PROFILE_CUSTOM_DEV = "custom_dev"
 ALLOWED_DIALOGUE_PROFILES = (
     DIALOGUE_PROFILE_SAFE_GUIDED,
     DIALOGUE_PROFILE_MVP_FREE,
+    DIALOGUE_PROFILE_CUSTOM_DEV,
 )
+PROFILE_ALIAS_TO_PRESET = {
+    DIALOGUE_PROFILE_SAFE_GUIDED: "safe_guided",
+    DIALOGUE_PROFILE_MVP_FREE: "free_dialogue_default",
+    DIALOGUE_PROFILE_CUSTOM_DEV: "custom_dev",
+}
+UNIFIED_DIALOGUE_POLICY_VERSION = "unified_dialogue_policy_v2"
 
-SAFE_GUIDED_CONTEXT_BUDGET_CHARS = 2800
+SAFE_GUIDED_CONTEXT_BUDGET_CHARS = 3200
 MVP_FREE_CONTEXT_BUDGET_CHARS = 7000
+CUSTOM_DEV_CONTEXT_BUDGET_CHARS = 8500
 
 _EXPANSION_MARKERS = (
     "развернуто",
@@ -89,6 +98,7 @@ _SARCASM_OR_NEGATIVE_FEEDBACK_MARKERS = (
     "это не ответ",
     "ты ушел от вопроса",
     "ты не ответил мне на вопрос",
+    "ты не ответил",
 )
 _APPLICATION_REQUEST_MARKERS = (
     "как применять",
@@ -103,6 +113,11 @@ def normalize_dialogue_profile(value: Any) -> str:
     if candidate in ALLOWED_DIALOGUE_PROFILES:
         return candidate
     return DIALOGUE_PROFILE_SAFE_GUIDED
+
+
+def resolve_profile_preset(profile: Any) -> str:
+    normalized = normalize_dialogue_profile(profile)
+    return PROFILE_ALIAS_TO_PRESET.get(normalized, "safe_guided")
 
 
 def detect_expansion_request(user_message: str) -> bool:
@@ -169,6 +184,8 @@ def context_budget_for_profile(profile: str) -> int:
     normalized = normalize_dialogue_profile(profile)
     if normalized == DIALOGUE_PROFILE_MVP_FREE:
         return MVP_FREE_CONTEXT_BUDGET_CHARS
+    if normalized == DIALOGUE_PROFILE_CUSTOM_DEV:
+        return CUSTOM_DEV_CONTEXT_BUDGET_CHARS
     return SAFE_GUIDED_CONTEXT_BUDGET_CHARS
 
 
@@ -181,6 +198,7 @@ def build_effective_dialogue_policy(
     knowledge_answer_guard: dict[str, Any],
 ) -> dict[str, Any]:
     normalized_profile = normalize_dialogue_profile(profile)
+    profile_preset = resolve_profile_preset(normalized_profile)
     message = str(user_message or "")
     knowledge_answer = (
         dict(knowledge_answer_guard.get("knowledge_answer", {}))
@@ -224,35 +242,40 @@ def build_effective_dialogue_policy(
         or explicit_answer_need
         or sarcasm_or_negative_feedback
     )
+    style_preference_priority = bool(
+        expansion_requested or explicit_short_support_requested or repair_and_expand_requested
+    )
 
     if safety_priority:
         answer_depth = "short"
     elif explicit_short_support_requested and not rich_answer_requested:
         answer_depth = "short"
-    elif normalized_profile == DIALOGUE_PROFILE_MVP_FREE and (
-        rich_answer_requested or concept_or_practice_need or explicit_answer_need
-    ):
+    elif explicit_one_step_requested and not rich_answer_requested:
+        answer_depth = "short"
+    elif profile_preset == "safe_guided":
+        answer_depth = "medium" if concept_or_practice_need or explicit_answer_need else "short"
+    elif profile_preset == "custom_dev":
         answer_depth = "long"
-    elif explicit_one_step_requested:
-        answer_depth = "short"
-    elif normalized_profile == DIALOGUE_PROFILE_MVP_FREE:
-        answer_depth = "medium"
+    elif rich_answer_requested or concept_or_practice_need or explicit_answer_need:
+        answer_depth = "long"
     else:
-        answer_depth = "short"
+        answer_depth = "medium"
 
-    planner_advisory = normalized_profile == DIALOGUE_PROFILE_MVP_FREE and not safety_priority
-    must_not_force_one_step = bool(
-        normalized_profile == DIALOGUE_PROFILE_MVP_FREE
-        and not explicit_one_step_requested
-        and (practice_overview_requested or rich_answer_requested or concept_or_practice_need)
-    )
     allow_richer_format = bool(
-        normalized_profile == DIALOGUE_PROFILE_MVP_FREE
+        not safety_priority
+        and profile_preset in {"free_dialogue_default", "custom_dev"}
         and not explicit_short_support_requested
         and (rich_answer_requested or concept_or_practice_need)
     )
-
-    human_like_enabled = normalized_profile == DIALOGUE_PROFILE_MVP_FREE and not safety_priority
+    practice_catalog_allowed = bool(
+        not safety_priority
+        and profile_preset in {"free_dialogue_default", "custom_dev"}
+        and practice_overview_requested
+    )
+    human_like_enabled = not safety_priority
+    writer_autonomy = "high" if profile_preset in {"free_dialogue_default", "custom_dev"} else "medium"
+    effective_safety_floor = "minimal_baseline"
+    planner_advisory = True
     base_constraints = [
         "max_sentences=5",
         "do_not_over_explain",
@@ -273,15 +296,36 @@ def build_effective_dialogue_policy(
             or application_request
         )
     )
-
     overrule_reason = "none"
     if allow_constraint_overrule:
         overrule_reason = "explicit_user_request_or_human_like_policy"
     if explicit_answer_need:
         overrule_reason = "direct_contextual_followup_to_previous_offer"
 
+    hard_boundaries = [
+        "safety",
+        "crisis_routing",
+        "no_diagnosis",
+        "no_medical_legal_financial_directives",
+        "no_spiritual_authority",
+        "no_raw_kb_quote_dumping",
+        "privacy_sanitized_trace_only",
+    ]
+    soft_guidance = [
+        "state",
+        "thread",
+        "planner",
+        "diagnostic_card",
+        "knowledge_context",
+        "style_preference",
+        "target_micro_shift",
+    ]
+
     return {
+        "version": UNIFIED_DIALOGUE_POLICY_VERSION,
         "profile": normalized_profile,
+        "active_profile_alias": normalized_profile,
+        "profile_preset": profile_preset,
         "authority_order": [
             "minimal_safety_baseline",
             "explicit_user_request",
@@ -290,58 +334,50 @@ def build_effective_dialogue_policy(
             "planner_and_diagnostic_advisory",
         ],
         "minimal_safety_baseline": True,
-        "writer_autonomy": (
-            "guarded_safety"
-            if safety_priority
-            else ("high" if normalized_profile == DIALOGUE_PROFILE_MVP_FREE else "guided")
-        ),
-        "planner_authority": "advisory" if planner_advisory else "guided",
-        "diagnostic_card_authority": "advisory" if planner_advisory else "guided",
-        "writer_move_authority": "advisory" if planner_advisory else "guided",
-        "active_line_authority": "advisory" if planner_advisory else "guided",
+        "effective_writer_autonomy": writer_autonomy,
+        "writer_autonomy": writer_autonomy,
+        "effective_safety_floor": effective_safety_floor,
+        "planner_authority": "advisory",
+        "diagnostic_card_authority": "advisory",
+        "writer_move_authority": "advisory",
+        "active_line_authority": "advisory",
         "knowledge_answer_priority": "high" if concept_or_practice_need else "normal",
-        "user_explicit_request_priority": (
-            "highest_after_safety" if normalized_profile == DIALOGUE_PROFILE_MVP_FREE else "balanced"
-        ),
+        "user_explicit_request_priority": "highest_after_safety",
         "answer_depth": answer_depth,
         "allow_numbered_lists": allow_richer_format or numbered_list_requested,
         "allow_examples": allow_richer_format or examples_requested,
-        "allow_practice_catalog": bool(
-            normalized_profile == DIALOGUE_PROFILE_MVP_FREE and practice_overview_requested
-        ),
-        "allow_multi_step_overview": bool(
-            normalized_profile == DIALOGUE_PROFILE_MVP_FREE and practice_overview_requested
-        ),
+        "allow_practice_catalog": practice_catalog_allowed,
+        "allow_multi_step_overview": practice_catalog_allowed,
         "human_like_answer_policy": {
             "enabled": human_like_enabled,
             "answer_style": "human_chatgpt_like" if human_like_enabled else "guided_compact",
-            "default_depth": "medium_to_long" if human_like_enabled else "short_to_medium",
-            "allow_long_answers": human_like_enabled,
-            "allow_lists": bool(human_like_enabled and (numbered_list_requested or rich_answer_requested)),
-            "allow_examples": bool(human_like_enabled and (examples_requested or rich_answer_requested)),
+            "default_depth": "medium_to_long" if profile_preset != "safe_guided" else "short_to_medium",
+            "allow_long_answers": profile_preset != "safe_guided",
+            "allow_lists": bool((profile_preset != "safe_guided") and (numbered_list_requested or rich_answer_requested)),
+            "allow_examples": bool((profile_preset != "safe_guided") and (examples_requested or rich_answer_requested)),
             "allow_direct_answer": True,
-            "allow_reflection_plus_explanation_plus_step": human_like_enabled,
-            "allow_multiple_options": human_like_enabled,
-            "question_is_optional": human_like_enabled,
+            "allow_reflection_plus_explanation_plus_step": profile_preset != "safe_guided",
+            "allow_multiple_options": profile_preset != "safe_guided",
+            "question_is_optional": True,
             "micro_step_only_when_user_explicitly_requests_one_step": True,
-            "do_not_force_question_at_end": human_like_enabled,
-            "do_not_force_practice_frame": human_like_enabled,
-            "do_not_force_max_sentences": human_like_enabled,
-            "respect_user_requested_format": human_like_enabled,
-            "sarcasm_and_dissatisfaction_repair": human_like_enabled,
-            "direct_answer_repair_when_user_complains": human_like_enabled,
+            "do_not_force_question_at_end": True,
+            "do_not_force_practice_frame": True,
+            "do_not_force_max_sentences": profile_preset != "safe_guided",
+            "respect_user_requested_format": True,
+            "sarcasm_and_dissatisfaction_repair": True,
+            "direct_answer_repair_when_user_complains": True,
         },
         "constraint_resolution": {
             "profile": normalized_profile,
-            "planner_authority": "advisory" if planner_advisory else "guided",
+            "planner_authority": "advisory",
             "overruled_constraints": base_constraints if allow_constraint_overrule else [],
             "overrule_reason": overrule_reason,
         },
-        "must_not_force_one_step": must_not_force_one_step,
+        "must_not_force_one_step": bool(not explicit_one_step_requested and (practice_overview_requested or rich_answer_requested or concept_or_practice_need)),
         "context_budget_chars": context_budget_for_profile(normalized_profile),
         "semantic_hits_budget": {
-            "max_hits": 4 if normalized_profile == DIALOGUE_PROFILE_MVP_FREE else 2,
-            "max_chars_per_hit": 900 if normalized_profile == DIALOGUE_PROFILE_MVP_FREE else 300,
+            "max_hits": 4 if profile_preset != "safe_guided" else 2,
+            "max_chars_per_hit": 900 if profile_preset != "safe_guided" else 300,
         },
         "expansion_requested": expansion_requested,
         "repair_and_expand_requested": repair_and_expand_requested,
@@ -355,18 +391,33 @@ def build_effective_dialogue_policy(
         "summary_request": summary_request,
         "sarcasm_or_negative_feedback": sarcasm_or_negative_feedback,
         "application_request": application_request,
+        "style_preference_priority": style_preference_priority,
         "active_concept": active_concept,
         "knowledge_answer_type": knowledge_answer_type,
         "planner_is_advisory": planner_advisory,
+        "final_answer_directive_enabled": True,
+        "final_answer_directive_role": "single_control_block",
+        "writer_context_package_role": "single_context_package",
+        "writer_first_prompt_assembly_enabled": True,
+        "legacy_blocks_visible_to_writer": False,
+        "legacy_blocks_source_signals_only": True,
+        "legacy_prompt_blocks_mode": "source_signals_only",
+        "diagnostic_center_role": "advisory_context_only",
+        "planner_role": "advisory_context_only",
+        "active_line_role": "advisory_context_only",
+        "diagnostic_card_role": "advisory_context_only",
+        "hard_boundaries": hard_boundaries,
+        "soft_guidance": soft_guidance,
+        "broad_rollout_allowed": False,
+        "production_ready": False,
+        "normal_user_activation_allowed": False,
         "mvp_overrides": {
-            "explicit_user_request_wins": normalized_profile == DIALOGUE_PROFILE_MVP_FREE,
-            "old_max_sentence_constraints_softened": normalized_profile == DIALOGUE_PROFILE_MVP_FREE,
-            "planner_advisory": planner_advisory,
-            "overview_questions_allow_lists": bool(
-                normalized_profile == DIALOGUE_PROFILE_MVP_FREE and practice_overview_requested
-            ),
-            "question_is_optional": human_like_enabled,
-            "repair_user_dissatisfaction": bool(human_like_enabled and sarcasm_or_negative_feedback),
+            "explicit_user_request_wins": True,
+            "old_max_sentence_constraints_softened": profile_preset != "safe_guided",
+            "planner_advisory": True,
+            "overview_questions_allow_lists": practice_catalog_allowed,
+            "question_is_optional": True,
+            "repair_user_dissatisfaction": True,
             "target_answer_depth": answer_depth,
         },
     }
@@ -413,7 +464,6 @@ def format_conversation_context_for_writer_with_meta(
             "older_context_omitted_chars": 0,
         }
 
-    # Keep latest context tail, not first N chars.
     tail = raw_context[-limit:]
     split_match = re.search(
         r"(RECENT\s+(?:FULL|EXACT|SUMMARIZED)\s+TURNS:|USER#turn_|ASSISTANT#turn_)",
@@ -508,26 +558,30 @@ def _normalize(text: str) -> str:
 
 __all__ = [
     "ALLOWED_DIALOGUE_PROFILES",
+    "DIALOGUE_PROFILE_CUSTOM_DEV",
     "DIALOGUE_PROFILE_MVP_FREE",
     "DIALOGUE_PROFILE_SAFE_GUIDED",
     "MVP_FREE_CONTEXT_BUDGET_CHARS",
     "SAFE_GUIDED_CONTEXT_BUDGET_CHARS",
+    "UNIFIED_DIALOGUE_POLICY_VERSION",
+    "PROFILE_ALIAS_TO_PRESET",
     "apply_active_concept_continuation",
     "build_effective_dialogue_policy",
     "context_budget_for_profile",
-    "detect_examples_request",
-    "detect_explicit_answer_need",
-    "detect_expansion_request",
-    "detect_explicit_one_step_request",
-    "detect_direct_concrete_request",
-    "detect_numbered_list_request",
-    "detect_summary_request",
-    "detect_sarcasm_or_negative_feedback",
     "detect_application_request",
+    "detect_direct_concrete_request",
+    "detect_examples_request",
+    "detect_expansion_request",
+    "detect_explicit_answer_need",
+    "detect_explicit_one_step_request",
+    "detect_numbered_list_request",
     "detect_practice_overview_request",
     "detect_repair_and_expand_request",
+    "detect_sarcasm_or_negative_feedback",
     "detect_short_support_request",
+    "detect_summary_request",
     "format_conversation_context_for_writer",
     "format_conversation_context_for_writer_with_meta",
     "normalize_dialogue_profile",
+    "resolve_profile_preset",
 ]

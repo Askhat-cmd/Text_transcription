@@ -1,0 +1,252 @@
+{
+  "status": "passed",
+  "items": [
+    {
+      "label": "Admin Config PanelMultiagent-first control surfacemultiagententrypoint: multiagent_adapterlegacy fallback: disabledshowokExportImportFull resetOverviewAgentsOrchestratorThreadsAgent PromptsRuntimeDiagnostic CenterMemoryAdvanced ControlsLLMRetrievalDiagnosticsRoutingPromptsCompatibilityОбзор мультиагентного runtimeОбновитьPipeline modemultiagent_onlyentrypoint: multiagent_adapterlegacy fallback: disabledАгенты5Calls380Errors4Последние трассы агентовvalidator0ms05.06.2026, 10:44:07in: Объясни нейросталкинг спокойно и структурно: дай краткое определение, 3 пункта применения и один пример. Используй жирное выделение для ключевого термина.out: blocked=False; reason=Nonewriter5755ms05.06.2026, 10:44:07in: Объясни нейросталкинг спокойно и структурно: дай краткое определение, 3 пункта применения и один пример. Используй жирное выделение для ключевого термина.out: **Нейросталкинг** — спокойное, любопытное внутреннее наблюдение за своими автоматическими реакциями (телесными ощущениями, мыслями, импульсами) с целью распознать повторяющиеся паттерны без осуждения и получить пространство для сознательного выбора поведения.\n\n1) Повышение самосознания: помогает замmemory_retrieval3307ms05.06.2026, 10:44:01in: Объясни нейросталкинг спокойно и структурно: дай краткое определение, 3 пункта применения и один пример. Используй жирное выделение для ключевого термина.out: hits=3; has_knowledge=Truethread_manager0ms05.06.2026, 10:43:58in: Объясни нейросталкинг спокойно и структурно: дай краткое определение, 3 пункта применения и один пример. Используй жирное выделение для ключевого термина.out: thread=tm_b636d201a174; phase=clarifystate_analyzer2870ms05.06.2026, 10:43:58in: Объясни нейросталкинг спокойно и структурно: дай краткое определение, 3 пункта применения и один пример. Используй жирное выделение для ключевого термина.out: state=window; intent=contact",
+      "category": "active_runtime_surface"
+    },
+    {
+      "label": "Admin Config PanelMultiagent-first control surfacemultiagententrypoint: multiagent_adapterlegacy fallback: disabledshowokExportImportFull reset",
+      "category": "legacy_or_historical_surface"
+    },
+    {
+      "label": "Admin Config PanelMultiagent-first control surfacemultiagententrypoint: multiagent_adapterlegacy fallback: disabledshowok",
+      "category": "legacy_or_historical_surface"
+    },
+    {
+      "label": "Admin Config PanelMultiagent-first control surfacemultiagententrypoint: multiagent_adapterlegacy fallback: disabled",
+      "category": "legacy_or_historical_surface"
+    },
+    {
+      "label": "Admin Config Panel",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "multiagententrypoint: multiagent_adapterlegacy fallback: disabled",
+      "category": "legacy_or_historical_surface"
+    },
+    {
+      "label": "showok",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "show",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "ExportImportFull reset",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "Export",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "Full reset",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "OverviewAgentsOrchestratorThreadsAgent PromptsRuntimeDiagnostic CenterMemoryAdvanced ControlsLLMRetrievalDiagnosticsRoutingPromptsCompatibility",
+      "category": "active_runtime_surface"
+    },
+    {
+      "label": "OverviewAgentsOrchestratorThreadsAgent PromptsRuntimeDiagnostic CenterMemory",
+      "category": "active_runtime_surface"
+    },
+    {
+      "label": "Overview",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "Agents",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "Orchestrator",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "Threads",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "Agent Prompts",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "Runtime",
+      "category": "active_runtime_surface"
+    },
+    {
+      "label": "Diagnostic Center",
+      "category": "advisory_surface"
+    },
+    {
+      "label": "Memory",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "Advanced Controls",
+      "category": "dev_only_surface"
+    },
+    {
+      "label": "LLMRetrievalDiagnosticsRoutingPromptsCompatibility",
+      "category": "dev_only_surface"
+    },
+    {
+      "label": "LLM",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "Retrieval",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "Diagnostics",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "Routing",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "Prompts",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "Compatibility",
+      "category": "dev_only_surface"
+    },
+    {
+      "label": "Обзор мультиагентного runtimeОбновитьPipeline modemultiagent_onlyentrypoint: multiagent_adapterlegacy fallback: disabledАгенты5Calls380Errors4Последние трассы агентовvalidator0ms05.06.2026, 10:44:07in: Объясни нейросталкинг спокойно и структурно: дай краткое определение, 3 пункта применения и один пример. Используй жирное выделение для ключевого термина.out: blocked=False; reason=Nonewriter5755ms05.06.2026, 10:44:07in: Объясни нейросталкинг спокойно и структурно: дай краткое определение, 3 пункта применения и один пример. Используй жирное выделение для ключевого термина.out: **Нейросталкинг** — спокойное, любопытное внутреннее наблюдение за своими автоматическими реакциями (телесными ощущениями, мыслями, импульсами) с целью распознать повторяющиеся паттерны без осуждения и получить пространство для сознательного выбора поведения.\n\n1) Повышение самосознания: помогает замmemory_retrieval3307ms05.06.2026, 10:44:01in: Объясни нейросталкинг спокойно и структурно: дай краткое определение, 3 пункта применения и один пример. Используй жирное выделение для ключевого термина.out: hits=3; has_knowledge=Truethread_manager0ms05.06.2026, 10:43:58in: Объясни нейросталкинг спокойно и структурно: дай краткое определение, 3 пункта применения и один пример. Используй жирное выделение для ключевого термина.out: thread=tm_b636d201a174; phase=clarifystate_analyzer2870ms05.06.2026, 10:43:58in: Объясни нейросталкинг спокойно и структурно: дай краткое определение, 3 пункта применения и один пример. Используй жирное выделение для ключевого термина.out: state=window; intent=contact",
+      "category": "active_runtime_surface"
+    },
+    {
+      "label": "Обзор мультиагентного runtimeОбновить",
+      "category": "active_runtime_surface"
+    },
+    {
+      "label": "Обзор мультиагентного runtime",
+      "category": "active_runtime_surface"
+    },
+    {
+      "label": "Обновить",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "Pipeline modemultiagent_onlyentrypoint: multiagent_adapterlegacy fallback: disabledАгенты5Calls380Errors4",
+      "category": "legacy_or_historical_surface"
+    },
+    {
+      "label": "Pipeline modemultiagent_onlyentrypoint: multiagent_adapterlegacy fallback: disabled",
+      "category": "legacy_or_historical_surface"
+    },
+    {
+      "label": "Pipeline mode",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "multiagent_only",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "entrypoint: multiagent_adapter",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "legacy fallback: disabled",
+      "category": "legacy_or_historical_surface"
+    },
+    {
+      "label": "Агенты5",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "Агенты",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "5",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "Calls380",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "Calls",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "380",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "Errors4",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "Errors",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "4",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "Последние трассы агентов",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "validator0ms05.06.2026, 10:44:07in: Объясни нейросталкинг спокойно и структурно: дай краткое определение, 3 пункта применения и один пример. Используй жирное выделение для ключевого термина.out: blocked=False; reason=Nonewriter5755ms05.06.2026, 10:44:07in: Объясни нейросталкинг спокойно и структурно: дай краткое определение, 3 пункта применения и один пример. Используй жирное выделение для ключевого термина.out: **Нейросталкинг** — спокойное, любопытное внутреннее наблюдение за своими автоматическими реакциями (телесными ощущениями, мыслями, импульсами) с целью распознать повторяющиеся паттерны без осуждения и получить пространство для сознательного выбора поведения.\n\n1) Повышение самосознания: помогает замmemory_retrieval3307ms05.06.2026, 10:44:01in: Объясни нейросталкинг спокойно и структурно: дай краткое определение, 3 пункта применения и один пример. Используй жирное выделение для ключевого термина.out: hits=3; has_knowledge=Truethread_manager0ms05.06.2026, 10:43:58in: Объясни нейросталкинг спокойно и структурно: дай краткое определение, 3 пункта применения и один пример. Используй жирное выделение для ключевого термина.out: thread=tm_b636d201a174; phase=clarifystate_analyzer2870ms05.06.2026, 10:43:58in: Объясни нейросталкинг спокойно и структурно: дай краткое определение, 3 пункта применения и один пример. Используй жирное выделение для ключевого термина.out: state=window; intent=contact",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "validator0ms05.06.2026, 10:44:07in: Объясни нейросталкинг спокойно и структурно: дай краткое определение, 3 пункта применения и один пример. Используй жирное выделение для ключевого термина.out: blocked=False; reason=None",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "validator0ms05.06.2026, 10:44:07",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "writer5755ms05.06.2026, 10:44:07in: Объясни нейросталкинг спокойно и структурно: дай краткое определение, 3 пункта применения и один пример. Используй жирное выделение для ключевого термина.out: **Нейросталкинг** — спокойное, любопытное внутреннее наблюдение за своими автоматическими реакциями (телесными ощущениями, мыслями, импульсами) с целью распознать повторяющиеся паттерны без осуждения и получить пространство для сознательного выбора поведения.\n\n1) Повышение самосознания: помогает зам",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "writer5755ms05.06.2026, 10:44:07",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "memory_retrieval3307ms05.06.2026, 10:44:01in: Объясни нейросталкинг спокойно и структурно: дай краткое определение, 3 пункта применения и один пример. Используй жирное выделение для ключевого термина.out: hits=3; has_knowledge=True",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "memory_retrieval3307ms05.06.2026, 10:44:01",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "thread_manager0ms05.06.2026, 10:43:58in: Объясни нейросталкинг спокойно и структурно: дай краткое определение, 3 пункта применения и один пример. Используй жирное выделение для ключевого термина.out: thread=tm_b636d201a174; phase=clarify",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "thread_manager0ms05.06.2026, 10:43:58",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "state_analyzer2870ms05.06.2026, 10:43:58in: Объясни нейросталкинг спокойно и структурно: дай краткое определение, 3 пункта применения и один пример. Используй жирное выделение для ключевого термина.out: state=window; intent=contact",
+      "category": "unknown_needs_followup"
+    },
+    {
+      "label": "state_analyzer2870ms05.06.2026, 10:43:58",
+      "category": "unknown_needs_followup"
+    }
+  ],
+  "counts": {
+    "active_runtime_surface": 7,
+    "legacy_or_historical_surface": 7,
+    "unknown_needs_followup": 42,
+    "advisory_surface": 1,
+    "dev_only_surface": 3
+  }
+}

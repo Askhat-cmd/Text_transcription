@@ -926,3 +926,23 @@ Consequences:
 - real browser/live cases can verify both prompt hygiene and answer behavior on the same runtime path;
 - the system stays unified: no duplicated orchestrator, no new guard branch, no KB/governance mutation.
 
+
+## ADR-073 - Unified dialogue policy v2 consolidates preset modes and dialogue-state resolvers in one runtime path
+
+Status: accepted
+
+Date: 2026-06-05
+
+Context: after the PRD-047.9..047.11 chain, `safe_guided` and `mvp_free_dialogue` still behaved like partially separate logic branches, while live follow-up failures (`да`, repair complaint, style preference, repeated direct question, close ack) showed that Writer needed one explicit answer obligation instead of more phrase-specific patches.
+
+Decision:
+- keep one multiagent runtime path and normalize behavior through `unified_dialogue_policy_v2`;
+- treat `safe_guided`, `free_dialogue_default`, and `mvp_free_dialogue` aliasing as preset resolution, not as separate orchestrators or API paths;
+- introduce deterministic dialogue-state layers: `dialogue_act_resolver_v1`, `last_assistant_offer_v1`, `unanswered_question_tracker_v1`, `dialogue_style_state_v1`, and `answer_obligation_resolver_v1`;
+- keep `final_answer_directive_v1` as the single Writer-facing control block and `writer_context_package_v1` as the single Writer context package;
+- preserve advisory-only roles for Diagnostic Center / Planner / Active Line / Diagnostic Card and keep minimal safety boundaries hard.
+
+Consequences:
+- short follow-ups, repairs, confirmations, and style requests are handled through reusable runtime state instead of exact-text patches;
+- Admin Runtime, live evidence, and browser/admin acceptance expose one coherent effective policy contract;
+- no new LLM agent, no new runtime branch, no KB governance mutation, and no production rollout were introduced.

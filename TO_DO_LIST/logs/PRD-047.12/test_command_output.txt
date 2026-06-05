@@ -1,0 +1,19 @@
+# PRD-047.12 Command Output
+
+## backend_pytest
+- command: `.venv\Scripts\python -m pytest tests/test_unified_dialogue_policy_v2.py tests/ui/test_runtime_unified_dialogue_policy_surface.py tests/test_final_answer_directive_v1.py tests/test_dialogue_pragmatics_v1.py tests/multiagent/test_writer_agent.py -q`
+- exit_code: `0`
+```text
+............................................                             [100%]
+============================== warnings summary ===============================
+tests/multiagent/test_writer_agent.py: 24 warnings
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_writer_agent.py:77: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    created_at=datetime.utcnow(),
+
+tests/multiagent/test_writer_agent.py: 24 warnings
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_writer_agent.py:78: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    updated_at=datetime.utcnow(),
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+44 passed, 48 warnings in 0.38s
+```

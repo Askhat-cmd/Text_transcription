@@ -1,6 +1,7 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
+PRD-047.12 completed as a passed unification cycle: `unified_dialogue_policy_v2` now owns preset resolution (`safe_guided`, `free_dialogue_default`, `mvp_free_dialogue` alias), dialogue-act / last-offer / unanswered-question / style-state / answer-obligation layers are wired through the single multiagent runtime, Writer-first prompt assembly exposes one effective control/context contract, Admin Runtime shows unified policy/resolver state, and the dedicated PRD-047.12 acceptance runner finished `dry=passed`, `direct=passed`, `live=passed`, `browser=passed`, `admin_surface=passed`. Artifacts live under `TO_DO_LIST/logs/PRD-047.12/`; no new runtime path, no new LLM agent, and no governance-authority mutation were introduced.
 PRD-047.11-HF3 completed as a residual reality-repair cycle on top of HF2: concrete situation answers no longer fall back to the formula stub `Сейчас полезнее не упражнение...` in MVP cases that need a contextual explanation, bare gratitude turns keep deterministic `intent=contact` and `nervous_state=window`, real localhost Web Chat/Admin proof moved back to `localhost:3000`, and HF3 artifacts now capture source inventory, HF2 audit, reset/memory proof, browser/admin snapshots, live cases, and encoding hygiene under `TO_DO_LIST/logs/PRD-047.11-HF3/`. HF3 remains a local stabilization hotfix, not a rollout PRD; Diagnostic Center/Planner/Active Line remain advisory-only, and production readiness is still not claimed.
 PRD-047.11-HF2 completed as a passed runtime/frontend repair: fresh chats now start under `fresh_chat_context_policy_v1`, Writer receives RAG only through `writer_context_package_v1`, greeting/repair turns no longer inherit stale mechanism context, current-chat reset and dev-only user-memory clear controls are explicit, and real browser/Admin proof passed on isolated live runtime (`8002/3001`). Required HF2 artifacts are stored in `TO_DO_LIST/logs/PRD-047.11-HF2/`, with `live_cases_passed=true`, `memory_controls_passed=true`, `markdown_browser_passed=true`, and `admin_screenshots_passed=true`.
 PRD-047.11-HF1 completed as a passed writer-prompt-diet repair: `mvp_free_dialogue` now keeps `FINAL ANSWER DIRECTIVE` writer-visible while collapsing legacy diagnostic/planner/active-line command pressure into a sanitized advisory summary, rewriting practice suppression to `no_exercise_but_answer_normally`, preserving raw observability in trace/admin, and removing stale runtime fallback phrases. Required HF1 artifacts are stored in `TO_DO_LIST/logs/PRD-047.11-HF1/`, with `writer_prompt_diet_eval=4/4 passed`.
@@ -52,7 +53,7 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 - Historical artifact encoding noise may be misread as current runtime corruption without normalization report.
 
 ## Next Planned PRD
-`PRD-047.12 — Unified Dialogue Profile Simplification / Safe Guided + MVP Consolidation v1`
+`PRD-047.13 — Live Dialogue Quality Polish / Human Reference Calibration v1`
 ## Do Not Do Yet
 - Do not activate broad Diagnostic Center runtime authority.
 - Do not enable normal-user activation.
@@ -67,7 +68,8 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 5. Keep full historical details in `TO_DO_LIST`, keep docs operational and compact.
 
 ## Last Updated
-- Date: 2026-06-04
+- Date: 2026-06-05
+- Source cycle: PRD-047.12
 - Source cycle: PRD-047.11-HF3
 - Source cycle: PRD-047.11-HF2
 - Source cycle: PRD-047.11-HF1

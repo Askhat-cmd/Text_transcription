@@ -1,0 +1,165 @@
+# PRD-047.12 Source Inventory
+
+- head: `2fdfaac8509470e9ffb118edfc9e81d587e3d8b6`
+- required_files:
+  - `docs/PROJECT_STATE.md` => `True`
+  - `docs/ROADMAP.md` => `True`
+  - `docs/PRD_INDEX.md` => `True`
+  - `docs/DECISIONS.md` => `True`
+  - `bot_psychologist/docs` => `True`
+- recent_commits:
+  - `2fdfaac PRD-047.11-HF3 post-push metadata sync`
+  - `ad1451c PRD-047.11-HF3 concrete answer fit and reset proof`
+  - `2af7ad9 PRD-047.11-HF2 fix artifact encoding`
+  - `041922b PRD-047.11-HF2 post-push metadata sync`
+  - `97b07c0 PRD-047.11-HF2 fresh chat isolation and real web proof`
+  - `3fa0d28 PRD-047.11-HF1 post-push metadata sync`
+  - `563a25e PRD-047.11-HF1 writer prompt diet and advisory sanitization`
+  - `9ab4d9b PRD-047.11-AUDIT mark warning status and delivery metadata`
+  - `e751188 PRD-047.11-AUDIT evidence-first runtime quality audit`
+  - `5ad243e PRD-047.11: mark completed and record delivery metadata`
+  - `1a47748 PRD-047.11: writer-first consolidation with live+markdown pass`
+  - `c03bf48 PRD-047.10-HF2 post-push metadata sync`
+- runtime_profiles:
+  - `bot_psychologist\web_ui\src\components\admin\AdminPanel.tsx:406:                        <div>active_profile_alias: {runtimeEffectiveData.dialogue_policy?.active_profile_alias ?? 'n/a'}</div>`
+  - `bot_psychologist\web_ui\src\components\admin\AdminPanel.tsx:407:                        <div>profile_preset: {runtimeEffectiveData.dialogue_policy?.profile_preset ?? 'n/a'}</div>`
+  - `TO_DO_LIST\PRD-047.12_NEW.md:303:    "active_profile_alias": "mvp_free_dialogue",`
+  - `TO_DO_LIST\PRD-047.12_NEW.md:304:    "profile_preset": "free_dialogue_default",`
+  - `TO_DO_LIST\PRD-047.12_NEW.md:339:Сделать `profile_preset` не runtime-веткой, а resolved config.`
+  - `TO_DO_LIST\PRD-047.12_NEW.md:404:profile_preset=free_dialogue_default`
+  - `TO_DO_LIST\PRD-047.12_NEW.md:417:profile_preset=safe_guided`
+  - `TO_DO_LIST\PRD-047.12_NEW.md:655:Resolver превращает `dialogue_act + state + profile_preset + hard/soft guidance` в конкретное обязательство для Writer.`
+  - `TO_DO_LIST\PRD-047.12_NEW.md:690:      "profile_preset=free_dialogue_default"`
+  - `TO_DO_LIST\PRD-047.12_NEW.md:708:- profile_preset;`
+  - `TO_DO_LIST\PRD-047.12_NEW.md:829:- active_profile_alias;`
+  - `TO_DO_LIST\PRD-047.12_NEW.md:830:- profile_preset;`
+- safe_guided_mentions:
+  - `docs\ROADMAP.md:4:- PRD-047.12: completed unified dialogue-policy consolidation over a single runtime path (`unified_dialogue_policy_v2`, preset resolution for `safe_guided`/`free_dialogue_default`/`mvp_free_dialogue`, dialogue-act + last-offer + unanswered-question + style-state + answer-obligation layers, writer-first prompt contract/admin visibility, and passed dry/direct/live/browser/admin evidence pack).`
+  - `docs\PROJECT_STATE.md:4:PRD-047.12 completed as a passed unification cycle: `unified_dialogue_policy_v2` now owns preset resolution (`safe_guided`, `free_dialogue_default`, `mvp_free_dialogue` alias), dialogue-act / last-offer / unanswered-question / style-state / answer-obligation layers are wired through the single multiagent runtime, Writer-first prompt assembly exposes one effective control/context contract, Admin Runtime shows unified policy/resolver state, and the dedicated PRD-047.12 acceptance runner finished `dry=passed`, `direct=passed`, `live=passed`, `browser=passed`, `admin_surface=passed`. Artifacts live under `TO_DO_LIST/logs/PRD-047.12/`; no new runtime path, no new LLM agent, and no governance-authority mutation were introduced.`
+  - `docs\PRD_INDEX.md:5:| PRD-047.12 | Unified Dialogue Policy v2 / Profile Presets Consolidation + Dialogue Act State | pending_push | pending | unified `unified_dialogue_policy_v2` runtime with preset resolution (`safe_guided`, `free_dialogue_default`, `mvp_free_dialogue` alias), new dialogue-act/offer/question/style/answer-obligation layers, writer-first prompt/admin/runtime visibility, dedicated acceptance runner, and passed `dry/direct/live/browser/admin` evidence pack under `TO_DO_LIST/logs/PRD-047.12/` | TO_DO_LIST/reports/PRD-047.12_IMPLEMENTATION_REPORT.md |`
+  - `docs\DECISIONS.md:88:- treat `safe_guided` and `mvp_free_dialogue` as presets of one `dialogue_policy` authority resolver;`
+  - `docs\DECISIONS.md:936:Context: after the PRD-047.9..047.11 chain, `safe_guided` and `mvp_free_dialogue` still behaved like partially separate logic branches, while live follow-up failures (`да`, repair complaint, style preference, repeated direct question, close ack) showed that Writer needed one explicit answer obligation instead of more phrase-specific patches.`
+  - `docs\DECISIONS.md:940:- treat `safe_guided`, `free_dialogue_default`, and `mvp_free_dialogue` aliasing as preset resolution, not as separate orchestrators or API paths;`
+  - `bot_psychologist\bot_agent\runtime_config.py:291:            "options": ["safe_guided", "mvp_free_dialogue"],`
+  - `bot_psychologist\bot_agent\runtime_config.py:294:            "note": "safe_guided=осторожный, mvp_free_dialogue=developer-local свободный MVP режим",`
+  - `bot_psychologist\bot_agent\runtime_config.py:797:        self.DIALOGUE_PROFILE = os.getenv("DIALOGUE_PROFILE", "safe_guided")`
+  - `bot_psychologist\web_ui\src\components\admin\AdminPanel.tsx:405:                        <div>value: {runtimeEffectiveData.dialogue_profile?.value ?? 'safe_guided'}</div>`
+  - `TO_DO_LIST\PRD-047.10_Human-like_Writer_Autonomy_MVP_Dialogue_Quality_Calibration_v1_RU.md:192:В `safe_guided` они могут оставаться прежними.  `
+  - `TO_DO_LIST\PRD-047.10_Human-like_Writer_Autonomy_MVP_Dialogue_Quality_Calibration_v1_RU.md:244:- `safe_guided` не получает высокую свободу по умолчанию;`
+- mvp_free_dialogue_mentions:
+  - `docs\ROADMAP.md:4:- PRD-047.12: completed unified dialogue-policy consolidation over a single runtime path (`unified_dialogue_policy_v2`, preset resolution for `safe_guided`/`free_dialogue_default`/`mvp_free_dialogue`, dialogue-act + last-offer + unanswered-question + style-state + answer-obligation layers, writer-first prompt contract/admin visibility, and passed dry/direct/live/browser/admin evidence pack).`
+  - `docs\ROADMAP.md:7:- PRD-047.11-HF1: completed writer prompt diet repair for `mvp_free_dialogue` (new `legacy_advisory_sanitizer.py`, sanitized advisory summary, `no_exercise_but_answer_normally` rewrite, stale runtime fallback cleanup, trace/admin preservation, HF1 tests, and dedicated runner/artifacts with `writer_prompt_diet_eval=4/4 passed`).`
+  - `docs\ROADMAP.md:13:- PRD-047.9: unified adaptive dialogue policy context-unclamp for `mvp_free_dialogue` (recency-preserved writer context budget, authority resolver, practice-overview routing shape, admin effective visibility, and mandatory live acceptance passed on fresh backend `:8016`).`
+  - `docs\PROJECT_STATE.md:4:PRD-047.12 completed as a passed unification cycle: `unified_dialogue_policy_v2` now owns preset resolution (`safe_guided`, `free_dialogue_default`, `mvp_free_dialogue` alias), dialogue-act / last-offer / unanswered-question / style-state / answer-obligation layers are wired through the single multiagent runtime, Writer-first prompt assembly exposes one effective control/context contract, Admin Runtime shows unified policy/resolver state, and the dedicated PRD-047.12 acceptance runner finished `dry=passed`, `direct=passed`, `live=passed`, `browser=passed`, `admin_surface=passed`. Artifacts live under `TO_DO_LIST/logs/PRD-047.12/`; no new runtime path, no new LLM agent, and no governance-authority mutation were introduced.`
+  - `docs\PROJECT_STATE.md:7:PRD-047.11-HF1 completed as a passed writer-prompt-diet repair: `mvp_free_dialogue` now keeps `FINAL ANSWER DIRECTIVE` writer-visible while collapsing legacy diagnostic/planner/active-line command pressure into a sanitized advisory summary, rewriting practice suppression to `no_exercise_but_answer_normally`, preserving raw observability in trace/admin, and removing stale runtime fallback phrases. Required HF1 artifacts are stored in `TO_DO_LIST/logs/PRD-047.11-HF1/`, with `writer_prompt_diet_eval=4/4 passed`.`
+  - `docs\PROJECT_STATE.md:12:PRD-047.10 completed human-like writer autonomy calibration in `mvp_free_dialogue`: `human_like_answer_policy` + `constraint_resolution` are now part of unified effective dialogue policy, Writer MVP compliance now handles sarcasm/dissatisfaction repair, structured summary requests, direct concrete answers, and explicit one-step preservation with trace/admin visibility; acceptance runner passed (`dry=passed`, `direct=passed`, `live=passed` on fresh backend `:8018`).`
+  - `docs\PROJECT_STATE.md:13:PRD-047.9 completed Unified Adaptive Dialogue Policy context-unclamp for `mvp_free_dialogue`: effective authority resolver (`minimal safety > explicit user request > knowledge/concept need > writer freedom > planner/diagnostic advisory`), recency-preserved writer context budget, practice-overview routing/planner shape, admin effective visibility, and live acceptance passed on fresh backend (`dry=passed`, `direct=passed`, `live=passed` on `:8016`).`
+  - `docs\PRD_INDEX.md:5:| PRD-047.12 | Unified Dialogue Policy v2 / Profile Presets Consolidation + Dialogue Act State | pending_push | pending | unified `unified_dialogue_policy_v2` runtime with preset resolution (`safe_guided`, `free_dialogue_default`, `mvp_free_dialogue` alias), new dialogue-act/offer/question/style/answer-obligation layers, writer-first prompt/admin/runtime visibility, dedicated acceptance runner, and passed `dry/direct/live/browser/admin` evidence pack under `TO_DO_LIST/logs/PRD-047.12/` | TO_DO_LIST/reports/PRD-047.12_IMPLEMENTATION_REPORT.md |`
+  - `docs\DECISIONS.md:12:- add deterministic `final_answer_directive_v1` as single conflict-resolved command block for Writer in `mvp_free_dialogue`;`
+  - `docs\DECISIONS.md:84:Context: `mvp_free_dialogue` introduced higher Writer freedom, but residual conflicts remained when old planner/diagnostic constraints and context truncation still dominated prompt behavior.`
+  - `docs\DECISIONS.md:88:- treat `safe_guided` and `mvp_free_dialogue` as presets of one `dialogue_policy` authority resolver;`
+  - `docs\DECISIONS.md:104:Context: after PRD-047.9 architectural unification, live owner feedback still showed formal/over-constrained answers in `mvp_free_dialogue` for direct concrete requests, dissatisfaction repair, and summary requests.`
+- final_answer_directive:
+  - `docs\ROADMAP.md:9:- PRD-047.11: completed writer-first consolidation end-to-end (new `final_answer_directive_v1`, stale stub detector, MVP prompt assembly advisory refactor, live evidence/admin/runtime extensions, tests, runner, artifacts) with final acceptance `passed` (`dry/direct/live=passed`, real Web Chat markdown smoke `passed`).`
+  - `docs\PROJECT_STATE.md:9:PRD-047.11 passed full Writer-first consolidation acceptance: `final_answer_directive_v1`, MVP prompt assembly cleanup, legacy-constraint suppression metadata, stale-stub detector, admin/runtime/UI exposure, live evidence enrichment, strict dry/direct/live runner, and real Web Chat markdown smoke are all green in final artifacts.`
+  - `docs\PRD_INDEX.md:10:| PRD-047.11 | MVP Dialogue Policy Consolidation / Writer-First Prompt Assembly v1 | passed | 1a47748 | added `final_answer_directive_v1`, strict stale-stub detector, writer prompt assembly refactor (`FINAL ANSWER DIRECTIVE` + advisory-only source signals), orchestrator/writer-contract/live-evidence integration, admin runtime/UI effective policy fields, PRD-047.11 runner and required artifacts; final acceptance passed (`stale_stub_absent=true`, `final_answer_directive_present=true`, `markdown_real_smoke_passed=true`) | TO_DO_LIST/reports/PRD-047.11_IMPLEMENTATION_REPORT.md |`
+  - `docs\DECISIONS.md:12:- add deterministic `final_answer_directive_v1` as single conflict-resolved command block for Writer in `mvp_free_dialogue`;`
+  - `docs\DECISIONS.md:942:- keep `final_answer_directive_v1` as the single Writer-facing control block and `writer_context_package_v1` as the single Writer context package;`
+  - `bot_psychologist\bot_agent\multiagent\agents\writer_agent.py:387:        ctx.setdefault("final_answer_directive_version", "final_answer_directive_v1")`
+  - `bot_psychologist\bot_agent\multiagent\agents\writer_agent.py:652:                ctx.get("final_answer_directive_version", "final_answer_directive_v1")`
+  - `bot_psychologist\bot_agent\multiagent\agents\writer_agent.py:653:                or "final_answer_directive_v1"`
+  - `bot_psychologist\bot_agent\multiagent\contracts\writer_contract.py:320:                final_answer_directive.get("version", "final_answer_directive_v1")`
+  - `bot_psychologist\bot_agent\multiagent\contracts\writer_contract.py:321:                or "final_answer_directive_v1"`
+  - `bot_psychologist\bot_agent\multiagent\contracts\writer_contract.py:661:                final_answer_directive.get("version", "final_answer_directive_v1")`
+  - `bot_psychologist\bot_agent\multiagent\contracts\writer_contract.py:662:                or "final_answer_directive_v1"`
+- writer_prompt:
+  - `docs\DECISIONS.md:880:- keep `FINAL ANSWER DIRECTIVE` as the main writer-visible governing block;`
+  - `docs\PROJECT_STATE.md:7:PRD-047.11-HF1 completed as a passed writer-prompt-diet repair: `mvp_free_dialogue` now keeps `FINAL ANSWER DIRECTIVE` writer-visible while collapsing legacy diagnostic/planner/active-line command pressure into a sanitized advisory summary, rewriting practice suppression to `no_exercise_but_answer_normally`, preserving raw observability in trace/admin, and removing stale runtime fallback phrases. Required HF1 artifacts are stored in `TO_DO_LIST/logs/PRD-047.11-HF1/`, with `writer_prompt_diet_eval=4/4 passed`.`
+  - `docs\PRD_INDEX.md:10:| PRD-047.11 | MVP Dialogue Policy Consolidation / Writer-First Prompt Assembly v1 | passed | 1a47748 | added `final_answer_directive_v1`, strict stale-stub detector, writer prompt assembly refactor (`FINAL ANSWER DIRECTIVE` + advisory-only source signals), orchestrator/writer-contract/live-evidence integration, admin runtime/UI effective policy fields, PRD-047.11 runner and required artifacts; final acceptance passed (`stale_stub_absent=true`, `final_answer_directive_present=true`, `markdown_real_smoke_passed=true`) | TO_DO_LIST/reports/PRD-047.11_IMPLEMENTATION_REPORT.md |`
+  - `TO_DO_LIST\PRD-045.2_writer_prompt_v2.md:310:`WRITER_USER_TEMPLATE` сейчас содержит:`
+  - `TO_DO_LIST\PRD-045.2_writer_prompt_v2.md:546:- [ ] `WRITER_USER_TEMPLATE` содержит внутреннюю инструкцию выбрать главный фокус/глубину/следующий ход.`
+  - `TO_DO_LIST\PRD-045.2_TASK_LIST.md:18:- [x] Добавить в `WRITER_USER_TEMPLATE` внутренний блок выбора фокуса/глубины/следующего хода.`
+  - `TO_DO_LIST\PRD-045.5_pattern_core_active_frame_foundation.md:473:Допустимо минимально добавить в `WRITER_USER_TEMPLATE`, если prompt уже форматирует все fields вручную:`
+  - `TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:442:Update `WRITER_USER_TEMPLATE` with a compact block:`
+  - `TO_DO_LIST\logs\PRD-047.12\source_inventory.md:52:  - `docs\PROJECT_STATE.md:6:PRD-047.11-HF1 completed as a passed writer-prompt-diet repair: `mvp_free_dialogue` now keeps `FINAL ANSWER DIRECTIVE` writer-visible while collapsing legacy diagnostic/planner/active-line command pressure into a sanitized advisory summary, rewriting practice suppression to `no_exercise_but_answer_normally`, preserving raw observability in trace/admin, and removing stale runtime fallback phrases. Required HF1 artifacts are stored in `TO_DO_LIST/logs/PRD-047.11-HF1/`, with `writer_prompt_diet_eval=4/4 passed`.``
+  - `TO_DO_LIST\logs\PRD-047.12\source_inventory.md:66:  - `docs\PRD_INDEX.md:9:| PRD-047.11 | MVP Dialogue Policy Consolidation / Writer-First Prompt Assembly v1 | passed | 1a47748 | added `final_answer_directive_v1`, strict stale-stub detector, writer prompt assembly refactor (`FINAL ANSWER DIRECTIVE` + advisory-only source signals), orchestrator/writer-contract/live-evidence integration, admin runtime/UI effective policy fields, PRD-047.11 runner and required artifacts; final acceptance passed (`stale_stub_absent=true`, `final_answer_directive_present=true`, `markdown_real_smoke_passed=true`) | TO_DO_LIST/reports/PRD-047.11_IMPLEMENTATION_REPORT.md |``
+  - `TO_DO_LIST\logs\PRD-047.12\source_inventory.md:76:  - `docs\PROJECT_STATE.md:6:PRD-047.11-HF1 completed as a passed writer-prompt-diet repair: `mvp_free_dialogue` now keeps `FINAL ANSWER DIRECTIVE` writer-visible while collapsing legacy diagnostic/planner/active-line command pressure into a sanitized advisory summary, rewriting practice suppression to `no_exercise_but_answer_normally`, preserving raw observability in trace/admin, and removing stale runtime fallback phrases. Required HF1 artifacts are stored in `TO_DO_LIST/logs/PRD-047.11-HF1/`, with `writer_prompt_diet_eval=4/4 passed`.``
+  - `TO_DO_LIST\logs\PRD-047.12\source_inventory.md:77:  - `docs\PRD_INDEX.md:9:| PRD-047.11 | MVP Dialogue Policy Consolidation / Writer-First Prompt Assembly v1 | passed | 1a47748 | added `final_answer_directive_v1`, strict stale-stub detector, writer prompt assembly refactor (`FINAL ANSWER DIRECTIVE` + advisory-only source signals), orchestrator/writer-contract/live-evidence integration, admin runtime/UI effective policy fields, PRD-047.11 runner and required artifacts; final acceptance passed (`stale_stub_absent=true`, `final_answer_directive_present=true`, `markdown_real_smoke_passed=true`) | TO_DO_LIST/reports/PRD-047.11_IMPLEMENTATION_REPORT.md |``
+- writer_context_package:
+  - `docs\ROADMAP.md:6:- PRD-047.11-HF2: passed fresh-chat isolation / context-aware RAG gate / real Web Chat markdown proof cycle (new `fresh_chat_context_policy_v1`, `writer_context_package_v1`, explicit current-chat reset + dev memory clear controls, writer-visible RAG suppression when gate denies inclusion, admin/runtime/UI visibility, browser markdown smoke, admin screenshots, and live acceptance on isolated backend/UI `:8002/:3001`).`
+  - `docs\PROJECT_STATE.md:6:PRD-047.11-HF2 completed as a passed runtime/frontend repair: fresh chats now start under `fresh_chat_context_policy_v1`, Writer receives RAG only through `writer_context_package_v1`, greeting/repair turns no longer inherit stale mechanism context, current-chat reset and dev-only user-memory clear controls are explicit, and real browser/Admin proof passed on isolated live runtime (`8002/3001`). Required HF2 artifacts are stored in `TO_DO_LIST/logs/PRD-047.11-HF2/`, with `live_cases_passed=true`, `memory_controls_passed=true`, `markdown_browser_passed=true`, and `admin_screenshots_passed=true`.`
+  - `docs\PRD_INDEX.md:7:| PRD-047.11-HF2 | Fresh Chat Context Isolation / Context-Aware RAG Gate / Real Web Chat Markdown v1 | passed | 97b07c0 | added `fresh_chat_context_policy_v1`, `writer_context_package_v1`, explicit session reset + user memory clear controls, writer-visible RAG gate suppression, greeting/repair runtime fixes, admin runtime/UI visibility, browser markdown proof, admin screenshots, and HF2 runner/artifacts (`live_cases=true`, `memory_controls=true`, `markdown_browser=true`, `admin_screenshots=true`) | TO_DO_LIST/reports/PRD-047.11-HF2_IMPLEMENTATION_REPORT.md |`
+  - `docs\DECISIONS.md:919:- introduce `writer_context_package_v1` as the final assembly boundary for writer-visible context;`
+  - `docs\DECISIONS.md:942:- keep `final_answer_directive_v1` as the single Writer-facing control block and `writer_context_package_v1` as the single Writer context package;`
+  - `bot_psychologist\scripts\run_prd_047_12_unified_dialogue_acceptance.py:251:        "writer_context_package": "writer_context_package_v1|WRITER CONTEXT PACKAGE",`
+  - `TO_DO_LIST\PRD-047.12_NEW.md:100:   - `writer_context_package_v1`;`
+  - `TO_DO_LIST\PRD-047.12_NEW.md:733:WRITER CONTEXT PACKAGE`
+  - `TO_DO_LIST\PRD-047.12.md:47:writer_context_package_v1`
+  - `bot_psychologist\bot_agent\multiagent\writer_context_package.py:11:WRITER_CONTEXT_PACKAGE_VERSION = "writer_context_package_v1"`
+  - `bot_psychologist\bot_agent\multiagent\writer_context_package.py:55:def build_writer_context_package_v1(`
+  - `bot_psychologist\bot_agent\multiagent\writer_context_package.py:124:__all__ = ["WRITER_CONTEXT_PACKAGE_VERSION", "build_writer_context_package_v1"]`
+- fresh_chat_context_policy:
+  - `docs\ROADMAP.md:6:- PRD-047.11-HF2: passed fresh-chat isolation / context-aware RAG gate / real Web Chat markdown proof cycle (new `fresh_chat_context_policy_v1`, `writer_context_package_v1`, explicit current-chat reset + dev memory clear controls, writer-visible RAG suppression when gate denies inclusion, admin/runtime/UI visibility, browser markdown smoke, admin screenshots, and live acceptance on isolated backend/UI `:8002/:3001`).`
+  - `docs\PROJECT_STATE.md:6:PRD-047.11-HF2 completed as a passed runtime/frontend repair: fresh chats now start under `fresh_chat_context_policy_v1`, Writer receives RAG only through `writer_context_package_v1`, greeting/repair turns no longer inherit stale mechanism context, current-chat reset and dev-only user-memory clear controls are explicit, and real browser/Admin proof passed on isolated live runtime (`8002/3001`). Required HF2 artifacts are stored in `TO_DO_LIST/logs/PRD-047.11-HF2/`, with `live_cases_passed=true`, `memory_controls_passed=true`, `markdown_browser_passed=true`, and `admin_screenshots_passed=true`.`
+  - `docs\PRD_INDEX.md:7:| PRD-047.11-HF2 | Fresh Chat Context Isolation / Context-Aware RAG Gate / Real Web Chat Markdown v1 | passed | 97b07c0 | added `fresh_chat_context_policy_v1`, `writer_context_package_v1`, explicit session reset + user memory clear controls, writer-visible RAG gate suppression, greeting/repair runtime fixes, admin runtime/UI visibility, browser markdown proof, admin screenshots, and HF2 runner/artifacts (`live_cases=true`, `memory_controls=true`, `markdown_browser=true`, `admin_screenshots=true`) | TO_DO_LIST/reports/PRD-047.11-HF2_IMPLEMENTATION_REPORT.md |`
+  - `docs\DECISIONS.md:900:- add deterministic `fresh_chat_context_policy_v1`;`
+  - `bot_psychologist\bot_agent\multiagent\orchestrator.py:45:    build_fresh_chat_context_policy_v1,`
+  - `bot_psychologist\bot_agent\multiagent\orchestrator.py:355:        fresh_chat_context_policy = build_fresh_chat_context_policy_v1(`
+  - `bot_psychologist\bot_agent\multiagent\fresh_chat_context_policy.py:9:FRESH_CHAT_CONTEXT_POLICY_VERSION = "fresh_chat_context_policy_v1"`
+  - `bot_psychologist\bot_agent\multiagent\fresh_chat_context_policy.py:90:def build_fresh_chat_context_policy_v1(`
+  - `bot_psychologist\bot_agent\multiagent\fresh_chat_context_policy.py:142:    "build_fresh_chat_context_policy_v1",`
+  - `TO_DO_LIST\logs\PRD-047.12\live_cases_result.json:290:              "version": "fresh_chat_context_policy_v1",`
+  - `TO_DO_LIST\logs\PRD-047.12\live_cases_result.json:315:                "version": "fresh_chat_context_policy_v1",`
+  - `TO_DO_LIST\logs\PRD-047.12\live_cases_result.json:450:            "version": "fresh_chat_context_policy_v1",`
+- rag_context_package:
+  - `docs\PRD_INDEX.md:7:| PRD-047.11-HF2 | Fresh Chat Context Isolation / Context-Aware RAG Gate / Real Web Chat Markdown v1 | passed | 97b07c0 | added `fresh_chat_context_policy_v1`, `writer_context_package_v1`, explicit session reset + user memory clear controls, writer-visible RAG gate suppression, greeting/repair runtime fixes, admin runtime/UI visibility, browser markdown proof, admin screenshots, and HF2 runner/artifacts (`live_cases=true`, `memory_controls=true`, `markdown_browser=true`, `admin_screenshots=true`) | TO_DO_LIST/reports/PRD-047.11-HF2_IMPLEMENTATION_REPORT.md |`
+  - `docs\DECISIONS.md:919:- introduce `writer_context_package_v1` as the final assembly boundary for writer-visible context;`
+  - `docs\DECISIONS.md:920:- allow trace/admin to retain `rag_candidates_for_trace`, but pass `rag_for_writer` only when the gate explicitly includes it;`
+  - `docs\DECISIONS.md:942:- keep `final_answer_directive_v1` as the single Writer-facing control block and `writer_context_package_v1` as the single Writer context package;`
+  - `docs\ROADMAP.md:6:- PRD-047.11-HF2: passed fresh-chat isolation / context-aware RAG gate / real Web Chat markdown proof cycle (new `fresh_chat_context_policy_v1`, `writer_context_package_v1`, explicit current-chat reset + dev memory clear controls, writer-visible RAG suppression when gate denies inclusion, admin/runtime/UI visibility, browser markdown smoke, admin screenshots, and live acceptance on isolated backend/UI `:8002/:3001`).`
+  - `docs\PROJECT_STATE.md:6:PRD-047.11-HF2 completed as a passed runtime/frontend repair: fresh chats now start under `fresh_chat_context_policy_v1`, Writer receives RAG only through `writer_context_package_v1`, greeting/repair turns no longer inherit stale mechanism context, current-chat reset and dev-only user-memory clear controls are explicit, and real browser/Admin proof passed on isolated live runtime (`8002/3001`). Required HF2 artifacts are stored in `TO_DO_LIST/logs/PRD-047.11-HF2/`, with `live_cases_passed=true`, `memory_controls_passed=true`, `markdown_browser_passed=true`, and `admin_screenshots_passed=true`.`
+  - `bot_psychologist\api\admin_routes.py:42:from bot_agent.multiagent.writer_context_package import WRITER_CONTEXT_PACKAGE_VERSION`
+  - `bot_psychologist\api\admin_routes.py:800:            "writer_context_package_role": str(effective_dialogue_policy.get("writer_context_package_role", "single_context_package")),`
+  - `bot_psychologist\api\admin_routes.py:812:            "writer_context_package_version": WRITER_CONTEXT_PACKAGE_VERSION,`
+  - `bot_psychologist\web_ui\src\types\admin.types.ts:236:    writer_context_package_version?: string;`
+  - `TO_DO_LIST\PRD-047.10-HF2_Live_Turn_Evidence_Export_Follow-up_Reliability_Repair_Markdown_Smoke_Verification_RU.md:332:    contextual_retrieval_decision: dict,`
+  - `TO_DO_LIST\PRD-047.10-HF2_Live_Turn_Evidence_Export_Follow-up_Reliability_Repair_Markdown_Smoke_Verification_RU.md:363:  "contextual_retrieval_decision": {},`
+- diagnostic_planner_active_line:
+  - `bot_psychologist\web_ui\src\types\admin.types.ts:229:    diagnostic_center_role?: string;`
+  - `bot_psychologist\web_ui\src\types\admin.types.ts:230:    planner_role?: string;`
+  - `bot_psychologist\web_ui\src\types\admin.types.ts:231:    active_line_role?: string;`
+  - `bot_psychologist\web_ui\src\types\admin.types.ts:232:    diagnostic_card_role?: string;`
+  - `bot_psychologist\api\admin_routes.py:801:            "diagnostic_center_role": str(effective_dialogue_policy.get("diagnostic_center_role", "advisory_context_only")),`
+  - `bot_psychologist\api\admin_routes.py:802:            "planner_role": str(effective_dialogue_policy.get("planner_role", "advisory_context_only")),`
+  - `bot_psychologist\api\admin_routes.py:803:            "active_line_role": str(effective_dialogue_policy.get("active_line_role", "advisory_context_only")),`
+  - `bot_psychologist\api\admin_routes.py:804:            "diagnostic_card_role": str(effective_dialogue_policy.get("diagnostic_card_role", "advisory_context_only")),`
+  - `bot_psychologist\bot_agent\multiagent\unified_dialogue_profile.py:24:        "diagnostic_center_role": "advisory_context_only",`
+  - `bot_psychologist\bot_agent\multiagent\unified_dialogue_profile.py:25:        "planner_role": "advisory_context_only",`
+  - `bot_psychologist\bot_agent\multiagent\unified_dialogue_profile.py:26:        "active_line_role": "advisory_context_only",`
+  - `bot_psychologist\bot_agent\multiagent\unified_dialogue_profile.py:27:        "diagnostic_card_role": "advisory_context_only",`
+- web_admin_profile_flags:
+  - `bot_psychologist\api\admin_routes.py:32:    resolve_profile_preset,`
+  - `bot_psychologist\api\admin_routes.py:665:    profile_preset = resolve_profile_preset(dialogue_profile)`
+  - `bot_psychologist\api\admin_routes.py:746:                "mvp_free" if profile_preset == "free_dialogue_default" else ("custom_dev" if profile_preset == "custom_dev" else "guided")`
+  - `bot_psychologist\api\admin_routes.py:751:            "writer_max_tokens": 3200 if profile_preset == "custom_dev" else (2500 if profile_preset == "free_dialogue_default" else 900),`
+  - `bot_psychologist\api\admin_routes.py:752:            "writer_target_tokens_default": 900 if profile_preset == "custom_dev" else (700 if profile_preset == "free_dialogue_default" else 300),`
+  - `bot_psychologist\api\admin_routes.py:753:            "writer_target_tokens_expanded": 2000 if profile_preset == "custom_dev" else (1500 if profile_preset == "free_dialogue_default" else 700),`
+  - `bot_psychologist\api\admin_routes.py:754:            "writer_allow_long_answer": profile_preset in {"free_dialogue_default", "custom_dev"},`
+  - `bot_psychologist\api\admin_routes.py:759:            "active_profile_alias": str(effective_dialogue_policy.get("active_profile_alias", dialogue_profile)),`
+  - `bot_psychologist\api\admin_routes.py:760:            "profile_preset": str(effective_dialogue_policy.get("profile_preset", profile_preset)),`
+  - `bot_psychologist\api\admin_routes.py:795:                3200 if profile_preset == "custom_dev" else (2500 if profile_preset == "free_dialogue_default" else 900)`
+  - `bot_psychologist\api\admin_routes.py:825:            "dialogue_act_resolver_enabled": True,`
+  - `bot_psychologist\api\admin_routes.py:839:            "profile_preset": profile_preset,`
+- web_chat_messages:
+  - `bot_psychologist\web_ui\src\styles\index.css:156:  .message-bot {`
+  - `bot_psychologist\web_ui\src\styles\index.css:258:.prose {`
+  - `bot_psychologist\web_ui\src\styles\index.css:262:.prose code {`
+  - `bot_psychologist\web_ui\src\styles\index.css:267:.prose pre {`
+  - `bot_psychologist\web_ui\src\styles\index.css:271:.prose a {`
+  - `bot_psychologist\web_ui\src\styles\index.css:275:.prose strong {`
+  - `bot_psychologist\web_ui\src\components\chat\Message.tsx:9:import ReactMarkdown from 'react-markdown';`
+  - `bot_psychologist\web_ui\src\components\chat\Message.tsx:56:          isUser ? 'message-user' : 'message-bot',`
+  - `bot_psychologist\web_ui\src\components\chat\Message.tsx:62:          'prose prose-sm max-w-none',`
+  - `bot_psychologist\web_ui\src\components\chat\Message.tsx:63:          isUser ? 'text-zinc-900' : 'dark:prose-invert'`
+  - `bot_psychologist\web_ui\src\components\chat\Message.tsx:65:          <ReactMarkdown remarkPlugins={[remarkGfm]} skipHtml>`
+  - `bot_psychologist\web_ui\src\components\chat\Message.tsx:67:          </ReactMarkdown>`

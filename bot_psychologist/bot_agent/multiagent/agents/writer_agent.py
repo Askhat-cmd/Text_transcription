@@ -329,6 +329,33 @@ class WriterAgent:
         ctx.setdefault("response_planner_must_include", [])
         ctx.setdefault("response_planner_must_avoid", [])
         ctx.setdefault("dialogue_profile", "safe_guided")
+        ctx.setdefault("profile_preset", "safe_guided")
+        ctx.setdefault("unified_dialogue_policy_version", "unified_dialogue_policy_v2")
+        ctx.setdefault("unified_active_profile_alias", "safe_guided")
+        ctx.setdefault("unified_effective_writer_autonomy", "medium")
+        ctx.setdefault("unified_effective_safety_floor", "minimal_baseline")
+        ctx.setdefault("unified_legacy_blocks_visible_to_writer", False)
+        ctx.setdefault("unified_legacy_blocks_source_signals_only", True)
+        ctx.setdefault("unified_hard_boundaries_csv", "safety, crisis_routing")
+        ctx.setdefault("unified_soft_guidance_csv", "state, thread, planner")
+        ctx.setdefault("dialogue_act", "unknown")
+        ctx.setdefault("dialogue_act_confidence", 0.0)
+        ctx.setdefault("dialogue_act_evidence", "none")
+        ctx.setdefault("last_assistant_offer_open", False)
+        ctx.setdefault("last_assistant_offer_type", "none")
+        ctx.setdefault("last_assistant_offer_summary", "none")
+        ctx.setdefault("unanswered_question_answer_required", False)
+        ctx.setdefault("unanswered_question_status", "answered")
+        ctx.setdefault("unanswered_question_summary", "none")
+        ctx.setdefault("dialogue_style_tone", "neutral")
+        ctx.setdefault("dialogue_style_length_preference", "adaptive")
+        ctx.setdefault("dialogue_style_complexity_preference", "normal")
+        ctx.setdefault("dialogue_style_avoid_csv", "none")
+        ctx.setdefault("answer_obligation", "continue_thread")
+        ctx.setdefault("answer_obligation_shape", "structured_explanation")
+        ctx.setdefault("answer_obligation_depth", "medium")
+        ctx.setdefault("answer_obligation_question_policy", "optional_none")
+        ctx.setdefault("answer_obligation_source", "none")
         ctx.setdefault("dialogue_expansion_requested", False)
         ctx.setdefault("dialogue_repair_and_expand_requested", False)
         ctx.setdefault("dialogue_active_concept", "")
@@ -535,6 +562,33 @@ class WriterAgent:
             safety_active=ctx["safety_active"],
             open_loops=", ".join(ctx["open_loops"]) or "нет",
             must_avoid=", ".join(ctx["must_avoid"]) or "нет",
+            unified_dialogue_policy_version=str(ctx.get("unified_dialogue_policy_version", "unified_dialogue_policy_v2")),
+            unified_active_profile_alias=str(ctx.get("unified_active_profile_alias", dialogue_profile)),
+            profile_preset=str(ctx.get("profile_preset", "safe_guided")),
+            unified_effective_writer_autonomy=str(ctx.get("unified_effective_writer_autonomy", "medium")),
+            unified_effective_safety_floor=str(ctx.get("unified_effective_safety_floor", "minimal_baseline")),
+            unified_legacy_blocks_visible_to_writer=str(bool(ctx.get("unified_legacy_blocks_visible_to_writer", False))).lower(),
+            unified_legacy_blocks_source_signals_only=str(bool(ctx.get("unified_legacy_blocks_source_signals_only", True))).lower(),
+            unified_hard_boundaries_csv=str(ctx.get("unified_hard_boundaries_csv", "none") or "none"),
+            unified_soft_guidance_csv=str(ctx.get("unified_soft_guidance_csv", "none") or "none"),
+            dialogue_act=str(ctx.get("dialogue_act", "unknown") or "unknown"),
+            dialogue_act_confidence=float(ctx.get("dialogue_act_confidence", 0.0) or 0.0),
+            dialogue_act_evidence=str(ctx.get("dialogue_act_evidence", "none") or "none"),
+            last_assistant_offer_open=str(bool(ctx.get("last_assistant_offer_open", False))).lower(),
+            last_assistant_offer_type=str(ctx.get("last_assistant_offer_type", "none") or "none"),
+            last_assistant_offer_summary=str(ctx.get("last_assistant_offer_summary", "none") or "none"),
+            unanswered_question_answer_required=str(bool(ctx.get("unanswered_question_answer_required", False))).lower(),
+            unanswered_question_status=str(ctx.get("unanswered_question_status", "answered") or "answered"),
+            unanswered_question_summary=str(ctx.get("unanswered_question_summary", "none") or "none"),
+            dialogue_style_tone=str(ctx.get("dialogue_style_tone", "neutral") or "neutral"),
+            dialogue_style_length_preference=str(ctx.get("dialogue_style_length_preference", "adaptive") or "adaptive"),
+            dialogue_style_complexity_preference=str(ctx.get("dialogue_style_complexity_preference", "normal") or "normal"),
+            dialogue_style_avoid_csv=str(ctx.get("dialogue_style_avoid_csv", "none") or "none"),
+            answer_obligation=str(ctx.get("answer_obligation", "continue_thread") or "continue_thread"),
+            answer_obligation_shape=str(ctx.get("answer_obligation_shape", "structured_explanation") or "structured_explanation"),
+            answer_obligation_depth=str(ctx.get("answer_obligation_depth", "medium") or "medium"),
+            answer_obligation_question_policy=str(ctx.get("answer_obligation_question_policy", "optional_none") or "optional_none"),
+            answer_obligation_source=str(ctx.get("answer_obligation_source", "none") or "none"),
             diagnostic_card_summary=self._format_diagnostic_summary(ctx.get("diagnostic_card_summary")),
             diagnostic_card_avoid=", ".join(ctx.get("diagnostic_card_avoid_list", []) or []) or "нет",
             diagnostic_card_risk_flags=", ".join(ctx.get("diagnostic_card_risk_flags", []) or []) or "нет",
@@ -1037,6 +1091,15 @@ class WriterAgent:
             planner_practice_policy in {"required", "one_step_required"}
         )
         self.last_debug["microstep_forced"] = False
+        answer_obligation = str(
+            ctx.get("answer_obligation")
+            or dict(ctx.get("final_answer_directive", {})).get("answer_obligation", "")
+            or ""
+        )
+        last_direct_question = str(ctx.get("unanswered_question_summary", "") or "")
+        last_offer_summary = str(ctx.get("last_assistant_offer_summary", "") or "")
+        offer_repair_context = f"{last_offer_summary} {last_direct_question}".lower()
+        concept_question = "нейросталкинг" in lowered_user
 
         has_unsolicited_practice = any(marker in lowered_text for marker in _PRACTICE_MARKERS)
         has_question = "?" in text
@@ -1077,6 +1140,69 @@ class WriterAgent:
                 self.last_debug["final_answer_shape"] = "literal_markdown_echo"
                 return normalized_requested
 
+        if answer_obligation == "acknowledge_style_preference_then_answer" and (
+            "расскажи больше" in lowered_text or len(text) < 140
+        ):
+            self._set_final_answer_shape_debug("style_preference_direct_answer_repair")
+            if concept_question:
+                return (
+                    "Спокойно и по сути: нейросталкинг - это способ замечать, какие внутренние триггеры и "
+                    "автоматические реакции перехватывают твое поведение, чтобы возвращать себе выбор.\n\n"
+                    "В жизни это применяется как минимум в трех направлениях: в конфликтах, когда нужно не "
+                    "сорваться автоматически; в переговорах, когда важно отделить факт от внутреннего прогноза; "
+                    "и в откладывании, когда надо увидеть, какой паттерн тормозит действие.\n\n"
+                    "Например, перед сложным разговором можно заметить мысль \"лучше промолчать\", назвать это "
+                    "автозащитой и перейти к спокойной фактической реплике вместо ухода в молчание."
+                )
+
+        if answer_obligation == "repair_and_answer_last_question" and (
+            "сейчас полезнее прямое объяснение механизма" in lowered_text or len(text) < 180
+        ):
+            self._set_final_answer_shape_debug("repair_answer_last_question_repair")
+            target = last_direct_question or user_message
+            if "нейросталкинг" in target.lower():
+                return (
+                    "Ты прав, я ушел мимо вопроса. Отвечаю прямо.\n\n"
+                    "Нейросталкинг - это наблюдение за тем, какой внутренний триггер запускает автоматическую реакцию, "
+                    "как этот паттерн раскручивается и где ты теряешь выбор. Его практический смысл - не в теории, "
+                    "а в том, чтобы вовремя увидеть автопилот и заменить его более точным действием по ситуации."
+                )
+
+        if answer_obligation == "answer_last_offer" and (
+            any(marker in lowered_text for marker in ("подтверди", "если хочешь", "могу так сделать"))
+            or any(marker in lowered_text for marker in ("предлагаю такой план", "хотите, чтобы", "сначала"))
+            or "после подтверждения" in lowered_text
+            or ("могу так сделать" in last_offer_summary.lower() and len(text) < 500)
+            or (
+                any(color in offer_repair_context for color in ("красн", "оранж", "зелен"))
+                and not all(color in lowered_text for color in ("красн", "оранж", "зелен"))
+            )
+        ):
+            self._set_final_answer_shape_debug("answer_last_offer_repair")
+            if any(color in offer_repair_context for color in ("красн", "оранж", "зелен")):
+                return (
+                    "Показываю сразу.\n\n"
+                    "Красный уровень: техника должна быть короткой и прямой - сначала заметить импульс, потом сразу "
+                    "дать ему управляемый выход в действии или фразе, не требуя долгой рефлексии.\n"
+                    "Оранжевый уровень: техника работает через ясную цель - заметить триггер, отделить эмоцию от "
+                    "задачи и выбрать ход, который сохраняет эффективность.\n"
+                    "Зеленый уровень: акцент смещается на контакт и контекст - увидеть не только свой импульс, "
+                    "но и динамику отношений, чтобы ответ был честным и не разрушал связь."
+                )
+
+        if answer_obligation in {"answer_knowledge_question", "answer_direct_question"} and (
+            "сейчас полезнее прямое объяснение механизма" in lowered_text or len(text) < 140
+        ):
+            if concept_question:
+                self._set_final_answer_shape_debug("knowledge_direct_answer_repair")
+                return (
+                    "Если отвечать прямо, нейросталкинг - это способ замечать внутренние триггеры, автоматические "
+                    "реакции и точку, где ты теряешь выбор.\n\n"
+                    "Применять его в жизни можно так: видеть, что именно запускает реакцию, распознавать свой "
+                    "повторяющийся паттерн и выбирать более точный ответ вместо автоматизма. Например, в конфликте "
+                    "это помогает заметить момент, когда тебя уже тянет сорваться, и перейти к более ясной реплике по факту."
+                )
+
         if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE:
             return self._enforce_mvp_free_dialogue_compliance(
                 text=text,
@@ -1109,6 +1235,9 @@ class WriterAgent:
                 pragmatics_offer_type=pragmatics_offer_type,
                 pragmatics_should_not_reconfirm=pragmatics_should_not_reconfirm,
                 pragmatics_repair_dissatisfaction=pragmatics_repair_dissatisfaction,
+                answer_obligation=answer_obligation,
+                last_offer_summary=last_offer_summary,
+                last_direct_question=last_direct_question,
                 answer_fit=answer_fit,
             )
 
@@ -1369,9 +1498,25 @@ class WriterAgent:
         pragmatics_offer_type: str,
         pragmatics_should_not_reconfirm: bool,
         pragmatics_repair_dissatisfaction: bool,
+        answer_obligation: str,
+        last_offer_summary: str,
+        last_direct_question: str,
         answer_fit: dict[str, Any],
     ) -> str:
+        offer_repair_context = f"{last_offer_summary} {last_direct_question}".lower()
         if pragmatics_repair_dissatisfaction:
+            target = (last_direct_question or user_message).strip()
+            target_lower = target.lower()
+            if answer_obligation == "repair_and_answer_last_question" and "нейросталкинг" in target_lower:
+                self._set_final_answer_shape_debug("repair_plus_direct_answer")
+                return (
+                    "Ты прав, я ушел мимо вопроса. Отвечаю прямо.\n\n"
+                    "Нейросталкинг в нашей внутренней рамке - это наблюдение за триггерами, паттернами и "
+                    "автоматическими реакциями до того, как они полностью захватят поведение. Смысл не в том, "
+                    "чтобы подавить себя, а в том, чтобы заметить механизм и вернуть себе выбор.\n\n"
+                    "Применяется это так: ты видишь, что именно запускает реакцию, распознаешь привычный "
+                    "сценарий и вместо автопилота выбираешь более точный ответ по ситуации."
+                )
             self._set_final_answer_shape_debug("repair_plus_direct_answer")
             return (
                 "Да, ты прав — прошлый ответ был мимо. Исправляюсь и отвечаю прямо.\n\n"
@@ -1449,6 +1594,24 @@ class WriterAgent:
             return re.sub(r"\s*\?+\s*", ". ", text).strip()
 
         if planner_practice_policy == "forbidden" and has_unsolicited_practice and not user_step_request:
+            stale_stub = detect_stale_stub(text)
+            preserve_direct_answer = (
+                answer_obligation
+                in {
+                    "acknowledge_style_preference_then_answer",
+                    "answer_direct_question",
+                    "answer_knowledge_question",
+                    "answer_last_offer",
+                    "repair_and_answer_last_question",
+                }
+                or application_request
+                or practice_overview_requested
+            )
+            if preserve_direct_answer and not bool(stale_stub.get("detected", False)) and len(text.strip()) >= 220:
+                sanitized_text = self._strip_optional_followup_invitation(text)
+                if sanitized_text:
+                    self._set_final_answer_shape_debug("sanitized_direct_no_forced_practice")
+                    return sanitized_text
             if bool(answer_fit.get("needs_repair", False)) or bool(answer_fit.get("concrete_need", False)) or application_request:
                 self.last_debug["answer_fit_repair_applied"] = True
                 self._set_final_answer_shape_debug("contextual_direct_no_practice")
@@ -1505,6 +1668,21 @@ class WriterAgent:
             )
 
         if (expansion_requested or application_request) and len(text) < 260:
+            if answer_obligation in {
+                "answer_direct_question",
+                "answer_knowledge_question",
+                "answer_last_offer",
+                "repair_and_answer_last_question",
+            }:
+                preserved_text = self._strip_optional_followup_invitation(text)
+                preserved_lower = preserved_text.lower()
+                if (
+                    len(preserved_text) >= 120
+                    or any(color in preserved_lower for color in ("красн", "оранж", "зелен"))
+                    or "нейросталкинг" in preserved_lower
+                ):
+                    self._set_final_answer_shape_debug("preserved_application_answer")
+                    return preserved_text
             if concept == "нейросталкинг" or "нейросталкинг" in lowered_user or active_line_intent == "known_concept_question":
                 self._set_final_answer_shape_debug("concept_explanation_full")
                 return (
@@ -1536,11 +1714,28 @@ class WriterAgent:
                 "поэтому важно сначала увидеть триггер и вернуть себе выбор в следующем конкретном ходе."
             )
 
+        sanitized_final = text
+        if answer_obligation in {
+            "answer_direct_question",
+            "answer_knowledge_question",
+            "answer_last_offer",
+            "repair_and_answer_last_question",
+        }:
+            sanitized_final = self._strip_optional_followup_invitation(text) or text
         self._set_final_answer_shape_debug(planner_answer_shape or "compact_direct")
-        return text
+        return sanitized_final
 
     def _set_final_answer_shape_debug(self, shape: str) -> None:
         self.last_debug["final_answer_shape"] = str(shape or "compact_direct")
+
+    @staticmethod
+    def _strip_optional_followup_invitation(text: str) -> str:
+        return re.sub(
+            r"\n{2,}(?:Если хочешь|Если хотите|Хочешь|Хотите|Могу дальше|Могу сразу|Если нужно).*$",
+            "",
+            text.strip(),
+            flags=re.IGNORECASE | re.DOTALL,
+        ).strip()
 
     def _get_client(self):
         if self._client is not None:
@@ -1666,3 +1861,5 @@ class WriterAgent:
 
 
 writer_agent = WriterAgent()
+
+

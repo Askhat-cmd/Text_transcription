@@ -173,6 +173,45 @@ SAFETY АКТИВЕН: {safety_active}
 НЕЛЬЗЯ ВКЛЮЧАТЬ (must_avoid):
 {must_avoid}
 
+UNIFIED DIALOGUE POLICY:
+version={unified_dialogue_policy_version}
+active_profile_alias={unified_active_profile_alias}
+profile_preset={profile_preset}
+effective_writer_autonomy={unified_effective_writer_autonomy}
+effective_safety_floor={unified_effective_safety_floor}
+legacy_blocks_visible_to_writer={unified_legacy_blocks_visible_to_writer}
+legacy_blocks_source_signals_only={unified_legacy_blocks_source_signals_only}
+hard_boundaries={unified_hard_boundaries_csv}
+soft_guidance={unified_soft_guidance_csv}
+
+DIALOGUE ACT RESOLUTION:
+dialogue_act={dialogue_act}
+confidence={dialogue_act_confidence}
+evidence={dialogue_act_evidence}
+
+LAST ASSISTANT OFFER:
+is_open={last_assistant_offer_open}
+offer_type={last_assistant_offer_type}
+offer_summary={last_assistant_offer_summary}
+
+UNANSWERED QUESTION STATE:
+answer_required={unanswered_question_answer_required}
+answer_status={unanswered_question_status}
+last_direct_user_question={unanswered_question_summary}
+
+DIALOGUE STYLE STATE:
+tone={dialogue_style_tone}
+length_preference={dialogue_style_length_preference}
+complexity_preference={dialogue_style_complexity_preference}
+avoid={dialogue_style_avoid_csv}
+
+ANSWER OBLIGATION:
+answer_obligation={answer_obligation}
+answer_shape={answer_obligation_shape}
+depth={answer_obligation_depth}
+question_policy={answer_obligation_question_policy}
+source={answer_obligation_source}
+
 FINAL ANSWER DIRECTIVE (ЕДИНСТВЕННЫЙ УПРАВЛЯЮЩИЙ БЛОК):
 version={final_answer_directive_version}
 directive_json:

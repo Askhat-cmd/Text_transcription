@@ -366,3 +366,159 @@ def test_literal_markdown_echo_request_is_preserved() -> None:
     assert result == requested_markdown
     assert agent.last_debug.get("format_request_repair_applied") is True
     assert agent.last_debug.get("final_answer_shape") == "literal_markdown_echo"
+
+
+def test_mvp_answer_last_offer_rewrites_repeated_offer_into_direct_answer() -> None:
+    agent = WriterAgent(client=_FakeClient("ok"), model="gpt-5-mini")
+    contract = _mvp_contract(
+        message="да",
+        dialogue_policy={
+            "answer_obligation_resolution": {
+                "answer_obligation": "answer_last_offer",
+            },
+            "last_assistant_offer": {
+                "is_open": True,
+                "offer_text_summary": "Да - могу так сделать. Сначала покажу адаптацию для Красного, Оранжевого и Зеленого уровней.",
+            },
+        },
+    )
+    result = agent._enforce_answer_compliance(
+        "Да - могу так сделать. Предлагаю такой план, прежде чем давать полную инструкцию.",
+        contract,
+    )
+    assert "красный уровень" in result.lower()
+    assert "оранжевый уровень" in result.lower()
+    assert "зеленый уровень" in result.lower()
+    assert agent.last_debug.get("final_answer_shape") == "answer_last_offer_repair"
+
+
+def test_mvp_answer_last_offer_skips_second_confirmation_and_returns_levels() -> None:
+    agent = WriterAgent(client=_FakeClient("ok"), model="gpt-5-mini")
+    contract = _mvp_contract(
+        message="да",
+        dialogue_policy={
+            "answer_obligation_resolution": {
+                "answer_obligation": "answer_last_offer",
+            },
+            "last_assistant_offer": {
+                "is_open": True,
+                "offer_text_summary": "Потом покажу адаптацию под Красный, Оранжевый и Зеленый уровни.",
+            },
+        },
+    )
+    result = agent._enforce_answer_compliance(
+        "После подтверждения я пришлю адаптацию в выбранном формате.",
+        contract,
+    )
+    assert "красный уровень" in result.lower()
+    assert "оранжевый уровень" in result.lower()
+    assert "зеленый уровень" in result.lower()
+    assert agent.last_debug.get("final_answer_shape") == "answer_last_offer_repair"
+
+
+def test_mvp_answer_last_offer_uses_last_direct_question_when_offer_summary_is_truncated() -> None:
+    agent = WriterAgent(client=_FakeClient("ok"), model="gpt-5-mini")
+    contract = _mvp_contract(
+        message="да",
+        dialogue_policy={
+            "answer_obligation_resolution": {
+                "answer_obligation": "answer_last_offer",
+            },
+            "last_assistant_offer": {
+                "is_open": True,
+                "offer_text_summary": "Хорошо - сначала выберем формат, потом продолжим.",
+            },
+            "unanswered_question_state": {
+                "last_direct_user_question": "Покажешь потом адаптацию под Красный, Оранжевый и Зеленый уровни?",
+            },
+        },
+    )
+    result = agent._enforce_answer_compliance(
+        "Какой формат предпочитаешь дальше?",
+        contract,
+    )
+    assert "красный уровень" in result.lower()
+    assert "оранжевый уровень" in result.lower()
+    assert "зеленый уровень" in result.lower()
+    assert agent.last_debug.get("final_answer_shape") == "answer_last_offer_repair"
+
+
+def test_mvp_repair_complaint_answers_saved_neurostalking_question() -> None:
+    agent = WriterAgent(client=_FakeClient("ok"), model="gpt-5-mini")
+    contract = _mvp_contract(
+        message="ты не ответил мне на вопрос",
+        dialogue_policy={
+            "answer_obligation_resolution": {
+                "answer_obligation": "repair_and_answer_last_question",
+            },
+            "unanswered_question_state": {
+                "last_direct_user_question": "что такое нейросталкинг?",
+            },
+        },
+    )
+    contract.dialogue_pragmatics = {"repair_user_dissatisfaction": True}
+    result = agent._enforce_answer_compliance("Ладно, тогда уточню иначе.", contract)
+    assert "ты прав" in result.lower()
+    assert "нейросталкинг" in result.lower()
+    assert "триггер" in result.lower()
+    assert agent.last_debug.get("final_answer_shape") in {
+        "repair_plus_direct_answer",
+        "repair_answer_last_question_repair",
+    }
+
+
+def test_mvp_preserves_substantive_knowledge_answer_when_practice_is_forbidden() -> None:
+    agent = WriterAgent(client=_FakeClient("ok"), model="gpt-5-mini")
+    contract = _mvp_contract(
+        message="повторю вопрос, что такое нейросталкинг, и как его применять?",
+        dialogue_policy={
+            "application_request": True,
+            "answer_obligation_resolution": {
+                "answer_obligation": "answer_knowledge_question",
+            },
+        },
+    )
+    response_text = (
+        "Нейросталкинг - это внутреннее наблюдение за триггерами, паттернами и автоматическими реакциями, "
+        "чтобы не сливаться с ними и возвращать себе выбор.\n\n"
+        "Применять его можно так: замечать, что запускает реакцию, видеть привычную последовательность "
+        "\"триггер -> мысль -> тело -> действие\" и выбирать более точный ответ вместо автопилота.\n\n"
+        "Если хочешь, могу потом разобрать это на твоем примере."
+    )
+    result = agent._enforce_answer_compliance(response_text, contract)
+    assert "нейросталкинг" in result.lower()
+    assert "применять" in result.lower()
+    assert "если хочешь" not in result.lower()
+
+
+def test_mvp_preserves_offer_outline_for_later_confirmation_flow() -> None:
+    agent = WriterAgent(client=_FakeClient("ok"), model="gpt-5-mini")
+    contract = _mvp_contract(
+        message="Можешь сначала предложить, а не отвечать целиком: покажешь потом, как адаптировать технику под Красный, Оранжевый и Зеленый уровни?",
+        dialogue_policy={
+            "application_request": True,
+            "answer_obligation_resolution": {
+                "answer_obligation": "answer_direct_question",
+            },
+        },
+        response_planner={
+            "next_move": "continue_active_line",
+            "answer_shape": "mechanism_explanation",
+            "question_policy": "optional_none",
+            "practice_policy": "forbidden",
+        },
+    )
+    response_text = (
+        "Сначала предложу саму идею, а затем отдельно покажу адаптацию под Красный, Оранжевый и Зеленый уровни.\n\n"
+        "Короткая схема такая: намерение, минимальный запуск и наблюдение результата.\n\n"
+        "Если хочешь, следующим сообщением сразу разложу это по трем уровням."
+    )
+    result = agent._enforce_answer_compliance(response_text, contract)
+    assert "красный" in result.lower()
+    assert "оранжевый" in result.lower()
+    assert "зеленый" in result.lower()
+    assert "следующим сообщением" not in result.lower()
+    assert agent.last_debug.get("final_answer_shape") in {
+        "sanitized_direct_no_forced_practice",
+        "preserved_application_answer",
+    }

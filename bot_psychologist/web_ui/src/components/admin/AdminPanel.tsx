@@ -401,13 +401,16 @@ export const AdminPanel: React.FC = () => {
                       </div>
                       <div className="rounded border border-slate-200 p-3">
                         <div className="font-medium">Dialogue Profile</div>
-                        <div>Dialogue Profile: safe_guided / mvp_free_dialogue</div>
+                        <div>Unified Policy: {runtimeEffectiveData.dialogue_policy?.version ?? 'n/a'}</div>
                         <div>value: {runtimeEffectiveData.dialogue_profile?.value ?? 'safe_guided'}</div>
+                        <div>active_profile_alias: {runtimeEffectiveData.dialogue_policy?.active_profile_alias ?? 'n/a'}</div>
+                        <div>profile_preset: {runtimeEffectiveData.dialogue_policy?.profile_preset ?? 'n/a'}</div>
                         <div>allowed_values: {(runtimeEffectiveData.dialogue_profile?.allowed_values ?? []).join(', ') || 'n/a'}</div>
                         <div>scope: {runtimeEffectiveData.dialogue_profile?.scope ?? 'n/a'}</div>
                         <div>developer_local_only: {String(Boolean(runtimeEffectiveData.dialogue_profile?.developer_local_only))}</div>
                         <div>description: {runtimeEffectiveData.dialogue_profile?.description ?? 'n/a'}</div>
                         <div>effective.writer_autonomy: {runtimeEffectiveData.dialogue_policy?.writer_autonomy ?? 'n/a'}</div>
+                        <div>effective.safety_floor: {runtimeEffectiveData.dialogue_policy?.effective_safety_floor ?? 'n/a'}</div>
                         <div>effective.planner_authority: {runtimeEffectiveData.dialogue_policy?.planner_authority ?? 'n/a'}</div>
                         <div>effective.diagnostic_card_authority: {runtimeEffectiveData.dialogue_policy?.diagnostic_card_authority ?? 'n/a'}</div>
                         <div>effective.writer_move_authority: {runtimeEffectiveData.dialogue_policy?.writer_move_authority ?? 'n/a'}</div>
@@ -415,12 +418,22 @@ export const AdminPanel: React.FC = () => {
                         <div>effective.allow_practice_catalog: {String(Boolean(runtimeEffectiveData.dialogue_policy?.allow_practice_catalog))}</div>
                         <div>final_answer_directive_enabled: {String(Boolean(runtimeEffectiveData.dialogue_policy?.final_answer_directive_enabled))}</div>
                         <div>final_answer_directive_version: {runtimeEffectiveData.dialogue_policy?.final_answer_directive_version ?? 'n/a'}</div>
+                        <div>final_answer_directive_role: {runtimeEffectiveData.dialogue_policy?.final_answer_directive_role ?? 'n/a'}</div>
+                        <div>writer_context_package_role: {runtimeEffectiveData.dialogue_policy?.writer_context_package_role ?? 'n/a'}</div>
                         <div>writer_first_prompt_assembly_enabled: {String(Boolean(runtimeEffectiveData.dialogue_policy?.writer_first_prompt_assembly_enabled))}</div>
                         <div>legacy_prompt_blocks_mode: {runtimeEffectiveData.dialogue_policy?.legacy_prompt_blocks_mode ?? 'n/a'}</div>
+                        <div>legacy_blocks_visible_to_writer: {String(Boolean(runtimeEffectiveData.dialogue_policy?.legacy_blocks_visible_to_writer))}</div>
+                        <div>legacy_blocks_source_signals_only: {String(Boolean(runtimeEffectiveData.dialogue_policy?.legacy_blocks_source_signals_only))}</div>
                         <div>diagnostic_center_role: {runtimeEffectiveData.dialogue_policy?.diagnostic_center_role ?? 'n/a'}</div>
                         <div>planner_role: {runtimeEffectiveData.dialogue_policy?.planner_role ?? 'n/a'}</div>
                         <div>active_line_role: {runtimeEffectiveData.dialogue_policy?.active_line_role ?? 'n/a'}</div>
                         <div>diagnostic_card_role: {runtimeEffectiveData.dialogue_policy?.diagnostic_card_role ?? 'n/a'}</div>
+                        <div>dialogue_act_resolver_enabled: {String(Boolean(runtimeEffectiveData.dialogue_policy?.dialogue_act_resolver_enabled))}</div>
+                        <div>last_offer_tracker_enabled: {String(Boolean(runtimeEffectiveData.dialogue_policy?.last_offer_tracker_enabled))}</div>
+                        <div>unanswered_question_tracker_enabled: {String(Boolean(runtimeEffectiveData.dialogue_policy?.unanswered_question_tracker_enabled))}</div>
+                        <div>style_state_enabled: {String(Boolean(runtimeEffectiveData.dialogue_policy?.style_state_enabled))}</div>
+                        <div>broad_rollout_allowed: {String(Boolean(runtimeEffectiveData.dialogue_policy?.broad_rollout_allowed))}</div>
+                        <div>production_ready: {String(Boolean(runtimeEffectiveData.dialogue_policy?.production_ready))}</div>
                         <div>human_like.enabled: {String(Boolean(runtimeEffectiveData.dialogue_policy?.human_like_answer_policy?.enabled))}</div>
                         <div>human_like.answer_style: {runtimeEffectiveData.dialogue_policy?.human_like_answer_policy?.answer_style ?? 'n/a'}</div>
                         <div>human_like.default_depth: {runtimeEffectiveData.dialogue_policy?.human_like_answer_policy?.default_depth ?? 'n/a'}</div>

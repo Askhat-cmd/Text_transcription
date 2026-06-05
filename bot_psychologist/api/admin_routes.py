@@ -24,9 +24,12 @@ from bot_agent.feature_flags import feature_flags
 from bot_agent.multiagent.orchestrator import orchestrator
 from bot_agent.multiagent.dialogue_policy import (
     ALLOWED_DIALOGUE_PROFILES,
+    DIALOGUE_PROFILE_CUSTOM_DEV,
     DIALOGUE_PROFILE_MVP_FREE,
+    UNIFIED_DIALOGUE_POLICY_VERSION,
     build_effective_dialogue_policy,
     normalize_dialogue_profile,
+    resolve_profile_preset,
 )
 from bot_agent.multiagent.final_answer_directive import FINAL_ANSWER_DIRECTIVE_VERSION
 from bot_agent.multiagent.fresh_chat_context_policy import FRESH_CHAT_CONTEXT_POLICY_VERSION
@@ -659,6 +662,7 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
     planner_drift_replay_status = _load_prd_047_6_planner_drift_replay_status()
     guided_live_testing_status = _load_prd_047_7_guided_live_testing_status()
     dialogue_profile = normalize_dialogue_profile(getattr(config, "DIALOGUE_PROFILE", "safe_guided"))
+    profile_preset = resolve_profile_preset(dialogue_profile)
     effective_dialogue_policy = build_effective_dialogue_policy(
         profile=dialogue_profile,
         user_message="",
@@ -739,21 +743,24 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
             "enabled": True,
             "version": WRITER_FREEDOM_CONTRACT_VERSION,
             "freedom_level": (
-                "mvp_free"
-                if str(effective_dialogue_policy.get("writer_autonomy", "")) == "high"
-                else "guided"
+                "mvp_free" if profile_preset == "free_dialogue_default" else ("custom_dev" if profile_preset == "custom_dev" else "guided")
             ),
             "mode_is_hint_not_cage": True,
             "question_limit": 1,
             "practice_requires_gate": True,
-            "writer_max_tokens": 2500 if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE else 600,
-            "writer_target_tokens_default": 700 if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE else 300,
-            "writer_target_tokens_expanded": 1500 if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE else 700,
-            "writer_allow_long_answer": dialogue_profile == DIALOGUE_PROFILE_MVP_FREE,
+            "writer_max_tokens": 3200 if profile_preset == "custom_dev" else (2500 if profile_preset == "free_dialogue_default" else 900),
+            "writer_target_tokens_default": 900 if profile_preset == "custom_dev" else (700 if profile_preset == "free_dialogue_default" else 300),
+            "writer_target_tokens_expanded": 2000 if profile_preset == "custom_dev" else (1500 if profile_preset == "free_dialogue_default" else 700),
+            "writer_allow_long_answer": profile_preset in {"free_dialogue_default", "custom_dev"},
         },
         "dialogue_policy": {
+            "version": str(effective_dialogue_policy.get("version", UNIFIED_DIALOGUE_POLICY_VERSION)),
             "profile": str(effective_dialogue_policy.get("profile", dialogue_profile)),
+            "active_profile_alias": str(effective_dialogue_policy.get("active_profile_alias", dialogue_profile)),
+            "profile_preset": str(effective_dialogue_policy.get("profile_preset", profile_preset)),
             "writer_autonomy": str(effective_dialogue_policy.get("writer_autonomy", "guided")),
+            "effective_writer_autonomy": str(effective_dialogue_policy.get("effective_writer_autonomy", "medium")),
+            "effective_safety_floor": str(effective_dialogue_policy.get("effective_safety_floor", "minimal_baseline")),
             "planner_authority": str(effective_dialogue_policy.get("planner_authority", "guided")),
             "diagnostic_card_authority": str(
                 effective_dialogue_policy.get("diagnostic_card_authority", "guided")
@@ -785,36 +792,20 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
                 else {}
             ),
             "writer_runtime_max_tokens_effective": (
-                2500 if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE else 600
+                3200 if profile_preset == "custom_dev" else (2500 if profile_preset == "free_dialogue_default" else 900)
             ),
-            "final_answer_directive_enabled": dialogue_profile == DIALOGUE_PROFILE_MVP_FREE,
+            "final_answer_directive_enabled": True,
             "final_answer_directive_version": FINAL_ANSWER_DIRECTIVE_VERSION,
-            "diagnostic_center_role": (
-                "advisory_context_only"
-                if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE
-                else "guided_legacy"
-            ),
-            "planner_role": (
-                "advisory_context_only"
-                if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE
-                else "guided_legacy"
-            ),
-            "active_line_role": (
-                "advisory_context_only"
-                if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE
-                else "guided_legacy"
-            ),
-            "diagnostic_card_role": (
-                "advisory_context_only"
-                if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE
-                else "guided_legacy"
-            ),
-            "legacy_prompt_blocks_mode": (
-                "source_signals_only"
-                if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE
-                else "legacy_visible_debug_only"
-            ),
-            "writer_first_prompt_assembly_enabled": dialogue_profile == DIALOGUE_PROFILE_MVP_FREE,
+            "final_answer_directive_role": str(effective_dialogue_policy.get("final_answer_directive_role", "single_control_block")),
+            "writer_context_package_role": str(effective_dialogue_policy.get("writer_context_package_role", "single_context_package")),
+            "diagnostic_center_role": str(effective_dialogue_policy.get("diagnostic_center_role", "advisory_context_only")),
+            "planner_role": str(effective_dialogue_policy.get("planner_role", "advisory_context_only")),
+            "active_line_role": str(effective_dialogue_policy.get("active_line_role", "advisory_context_only")),
+            "diagnostic_card_role": str(effective_dialogue_policy.get("diagnostic_card_role", "advisory_context_only")),
+            "legacy_prompt_blocks_mode": str(effective_dialogue_policy.get("legacy_prompt_blocks_mode", "source_signals_only")),
+            "legacy_blocks_visible_to_writer": bool(effective_dialogue_policy.get("legacy_blocks_visible_to_writer", False)),
+            "legacy_blocks_source_signals_only": bool(effective_dialogue_policy.get("legacy_blocks_source_signals_only", True)),
+            "writer_first_prompt_assembly_enabled": bool(effective_dialogue_policy.get("writer_first_prompt_assembly_enabled", True)),
             "legacy_advisory_sanitizer_version": "legacy_advisory_sanitizer_v1",
             "writer_visible_practice_semantics": "no_exercise_but_answer_normally",
             "fresh_chat_context_policy_version": FRESH_CHAT_CONTEXT_POLICY_VERSION,
@@ -831,17 +822,25 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
                 "developer_visible": True,
             },
             "web_chat_markdown_renderer": "react_markdown_gfm",
+            "dialogue_act_resolver_enabled": True,
+            "last_offer_tracker_enabled": True,
+            "unanswered_question_tracker_enabled": True,
+            "style_state_enabled": True,
+            "broad_rollout_allowed": False,
+            "production_ready": False,
+            "normal_user_activation_allowed": False,
         },
         "dialogue_profile": {
             "value": dialogue_profile,
             "allowed_values": list(ALLOWED_DIALOGUE_PROFILES),
             "scope": "developer_local",
-            "description": "Controls Writer freedom and response-depth behavior for MVP owner testing.",
+            "description": "Controls unified dialogue preset resolution for developer-local testing.",
             "developer_local_only": True,
+            "profile_preset": profile_preset,
             "warning": (
-                "Developer-local MVP mode. Freer, longer answers. Not production-ready."
-                if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE
-                else ""
+                "Developer-local free dialogue preset. Freer, longer answers. Not production-ready."
+                if profile_preset == "free_dialogue_default"
+                else ("Developer-local custom preset. Controlled experiments only." if profile_preset == "custom_dev" else "")
             ),
         },
         "active_line": {
@@ -858,7 +857,7 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
             "version": "response_planner_v1",
             "kind": "deterministic",
             "role": "next_meaningful_move_selector",
-            "advisory_mode": dialogue_profile == DIALOGUE_PROFILE_MVP_FREE,
+            "advisory_mode": True,
             "live_acceptance_requires_api_trace": True,
             "last_quality_calibration": response_planner_calibration,
         },

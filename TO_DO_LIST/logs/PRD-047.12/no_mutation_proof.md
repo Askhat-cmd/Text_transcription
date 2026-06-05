@@ -1,0 +1,21 @@
+# PRD-047.12 No Mutation Proof
+
+- generated_at_utc: `2026-06-05T05:44:10.175097+00:00`
+- diagnostic_center_deleted: `False`
+- diagnostic_center_hard_authority: `False`
+- planner_hard_authority: `False`
+- active_line_hard_authority: `False`
+- broad_rollout_allowed: `False`
+- production_ready: `False`
+- normal_user_activation_allowed: `False`
+- kb_governance_authority_fields_mutated: `False`
+- chroma_reindex_executed: `False`
+- new_runtime_path_created: `False`
+- legacy_cascade_returned: `False`
+- new_llm_agent_added: `False`
+- raw_provider_payload_committed: `False`
+- raw_private_logs_committed: `False`
+- env_or_secrets_committed: `False`
+- safe_guided_deleted: `False`
+- mvp_free_dialogue_deleted_without_alias: `False`
+- writer_gets_only_unified_sanitized_blocks: `True`

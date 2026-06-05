@@ -1,0 +1,10 @@
+{
+  "chat_url": "http://localhost:3000/chat",
+  "assistant_message_count": 9,
+  "has_strong": true,
+  "has_list": true,
+  "li_count_min": 3,
+  "paragraph_count_min": 2,
+  "raw_markdown_visible": false,
+  "status": "passed"
+}

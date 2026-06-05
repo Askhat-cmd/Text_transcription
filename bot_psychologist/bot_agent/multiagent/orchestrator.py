@@ -22,9 +22,14 @@ from .context_assembly import (
 from .contracts.writer_contract import WriterContract
 from .diagnostic_center import DIAGNOSTIC_CARD_VERSION, build_diagnostic_card_v1
 from .diagnostic_center_shadow import build_diagnostic_center_shadow_v1
+from .dialogue_act_resolver import build_dialogue_act_resolution_v1
 from .dialogue_pragmatics import (
     build_contextual_retrieval_decision_v1,
     build_dialogue_pragmatics_v1,
+)
+from .dialogue_style_state import (
+    build_dialogue_style_state_v1,
+    finalize_dialogue_style_state_v1,
 )
 from .dialogue_policy import (
     apply_active_concept_continuation,
@@ -33,6 +38,7 @@ from .dialogue_policy import (
     detect_repair_and_expand_request,
     normalize_dialogue_profile,
 )
+from .answer_obligation_resolver import build_answer_obligation_resolver_v1
 from .final_answer_directive import build_final_answer_directive_v1
 from .fresh_chat_context_policy import (
     FRESH_CHAT_CONTEXT_POLICY_VERSION,
@@ -66,6 +72,15 @@ from .response_planner import (
     build_response_planner_fallback_decision,
 )
 from .thread_storage import thread_storage
+from .last_assistant_offer_tracker import (
+    build_last_assistant_offer_v1,
+    update_last_assistant_offer_after_answer_v1,
+)
+from .unanswered_question_tracker import (
+    build_unanswered_question_state_v1,
+    update_unanswered_question_state_after_answer_v1,
+)
+from .unified_dialogue_profile import build_unified_dialogue_profile_v1
 from .writer_prompt_replay import build_writer_prompt_replay_runtime_shadow_v1
 
 
@@ -280,6 +295,63 @@ class MultiAgentOrchestrator:
             dialogue_policy=dialogue_policy,
         )
         dialogue_policy["dialogue_pragmatics"] = dict(dialogue_pragmatics)
+        previous_dialogue_state = (
+            dict(updated_thread.active_frame.get("dialogue_state", {}))
+            if isinstance(updated_thread.active_frame, dict)
+            else {}
+        )
+        current_turn_index = int(getattr(memory_bundle, "context_turns", 0) or 0) + 1
+        last_assistant_offer = build_last_assistant_offer_v1(
+            previous_state=(
+                dict(previous_dialogue_state.get("last_assistant_offer", {}))
+                if isinstance(previous_dialogue_state.get("last_assistant_offer"), dict)
+                else {}
+            ),
+            previous_assistant_message=previous_assistant_message,
+            dialogue_pragmatics=dialogue_pragmatics,
+        )
+        dialogue_act_resolution = build_dialogue_act_resolution_v1(
+            user_message=query,
+            dialogue_pragmatics=dialogue_pragmatics,
+            last_assistant_offer=last_assistant_offer,
+            knowledge_answer_guard=knowledge_answer_guard,
+        )
+        unanswered_question_state = build_unanswered_question_state_v1(
+            previous_state=(
+                dict(previous_dialogue_state.get("unanswered_question_state", {}))
+                if isinstance(previous_dialogue_state.get("unanswered_question_state"), dict)
+                else {}
+            ),
+            user_message=query,
+            dialogue_act_resolution=dialogue_act_resolution,
+            turn_index=current_turn_index,
+        )
+        dialogue_style_state = build_dialogue_style_state_v1(
+            previous_state=(
+                dict(previous_dialogue_state.get("dialogue_style_state", {}))
+                if isinstance(previous_dialogue_state.get("dialogue_style_state"), dict)
+                else {}
+            ),
+            user_message=query,
+            dialogue_act_resolution=dialogue_act_resolution,
+        )
+        answer_obligation_resolution = build_answer_obligation_resolver_v1(
+            dialogue_act_resolution=dialogue_act_resolution,
+            last_assistant_offer=last_assistant_offer,
+            unanswered_question_state=unanswered_question_state,
+            dialogue_style_state=dialogue_style_state,
+            dialogue_policy=dialogue_policy,
+        )
+        unified_dialogue_profile = build_unified_dialogue_profile_v1(
+            active_profile=dialogue_profile,
+            dialogue_style_state=dialogue_style_state,
+        )
+        dialogue_policy["unified_dialogue_profile"] = dict(unified_dialogue_profile)
+        dialogue_policy["dialogue_act_resolution"] = dict(dialogue_act_resolution)
+        dialogue_policy["last_assistant_offer"] = dict(last_assistant_offer)
+        dialogue_policy["unanswered_question_state"] = dict(unanswered_question_state)
+        dialogue_policy["dialogue_style_state"] = dict(dialogue_style_state)
+        dialogue_policy["answer_obligation_resolution"] = dict(answer_obligation_resolution)
         fresh_chat_context_policy = build_fresh_chat_context_policy_v1(
             user_message=query,
             recent_turns=list(memory_bundle.recent_turns or []),
@@ -388,6 +460,8 @@ class MultiAgentOrchestrator:
             knowledge_answer_guard=knowledge_answer_guard,
             thread_state=updated_thread,
             state_snapshot=state_snapshot,
+            answer_obligation_resolution=answer_obligation_resolution,
+            unified_dialogue_profile=unified_dialogue_profile,
         ).to_dict()
 
         writer_contract = WriterContract(
@@ -474,6 +548,34 @@ class MultiAgentOrchestrator:
         else:
             final_answer = draft_answer
 
+        updated_unanswered_question_state = update_unanswered_question_state_after_answer_v1(
+            current_state=unanswered_question_state,
+            answer_obligation_resolution=answer_obligation_resolution,
+        )
+        updated_dialogue_style_state = finalize_dialogue_style_state_v1(
+            current_state=dialogue_style_state,
+            turn_index=current_turn_index,
+        )
+        updated_last_assistant_offer = update_last_assistant_offer_after_answer_v1(
+            final_answer=final_answer,
+            turn_index=current_turn_index,
+        )
+        updated_thread.active_frame = dict(updated_thread.active_frame or {})
+        updated_thread.active_frame["dialogue_state"] = {
+            "unified_dialogue_profile": dict(unified_dialogue_profile),
+            "dialogue_act_resolution": dict(dialogue_act_resolution),
+            "last_assistant_offer": dict(updated_last_assistant_offer),
+            "unanswered_question_state": dict(updated_unanswered_question_state),
+            "dialogue_style_state": dict(updated_dialogue_style_state),
+            "answer_obligation_resolution": dict(answer_obligation_resolution),
+        }
+        updated_thread.active_frame["last_assistant_offer"] = dict(updated_last_assistant_offer)
+        updated_thread.active_frame["last_direct_user_question"] = str(
+            updated_unanswered_question_state.get("last_direct_user_question", "") or ""
+        )
+        updated_thread.active_frame["dialogue_style_state"] = dict(updated_dialogue_style_state)
+        thread_storage.save_active(updated_thread)
+
         live_turn_evidence = build_live_turn_evidence_v1(
             query=query,
             user_id=user_id,
@@ -492,6 +594,12 @@ class MultiAgentOrchestrator:
             dialogue_policy=dialogue_policy,
             dialogue_pragmatics=dialogue_pragmatics,
             contextual_retrieval_decision=retrieval_decision,
+            unified_dialogue_profile=unified_dialogue_profile,
+            dialogue_act_resolution=dialogue_act_resolution,
+            last_assistant_offer=updated_last_assistant_offer,
+            unanswered_question_state=updated_unanswered_question_state,
+            dialogue_style_state=updated_dialogue_style_state,
+            answer_obligation_resolution=answer_obligation_resolution,
             validation_result=validation_result,
         )
 
@@ -756,6 +864,12 @@ class MultiAgentOrchestrator:
                 "continuity_score": updated_thread.continuity_score,
                 "response_mode": updated_thread.response_mode,
                 "dialogue_profile": dialogue_profile,
+                "unified_dialogue_profile": dict(unified_dialogue_profile),
+                "dialogue_act_resolution": dict(dialogue_act_resolution),
+                "last_assistant_offer": dict(updated_last_assistant_offer),
+                "unanswered_question_state": dict(updated_unanswered_question_state),
+                "dialogue_style_state": dict(updated_dialogue_style_state),
+                "answer_obligation_resolution": dict(answer_obligation_resolution),
                 "request_type": behavior_request_type,
                 "practice_suppressed": practice_suppressed,
                 "practice_suppression_reasons": suppression_reasons,

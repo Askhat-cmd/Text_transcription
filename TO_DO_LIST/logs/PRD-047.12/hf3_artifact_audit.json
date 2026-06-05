@@ -1,0 +1,19 @@
+{
+  "generated_at_utc": "2026-06-05T05:41:10.489185+00:00",
+  "hf3_dir_exists": true,
+  "required_files_present": {
+    "TO_DO_LIST/reports/PRD-047.11-HF3_IMPLEMENTATION_REPORT.md": true,
+    "TO_DO_LIST/reports/PRD-047.11-HF3_NEXT_PRD_RECOMMENDATION.md": true,
+    "TO_DO_LIST/logs/PRD-047.11-HF3/live_cases_result.json": true,
+    "TO_DO_LIST/logs/PRD-047.11-HF3/live_cases_result.md": true,
+    "TO_DO_LIST/logs/PRD-047.11-HF3/browser_smoke_result.json": true,
+    "TO_DO_LIST/logs/PRD-047.11-HF3/browser_smoke_result.md": true,
+    "TO_DO_LIST/logs/PRD-047.11-HF3/admin_legacy_inventory.json": true,
+    "TO_DO_LIST/logs/PRD-047.11-HF3/admin_legacy_inventory.md": true
+  },
+  "hf3_live_status": "passed",
+  "hf3_browser_status": "warning",
+  "warnings_to_carry_forward": [
+    "hf3_browser_status:warning"
+  ]
+}

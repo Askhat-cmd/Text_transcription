@@ -1,4 +1,4 @@
-"""Writer-first final answer directive builder."""
+﻿"""Writer-first final answer directive builder."""
 
 from __future__ import annotations
 
@@ -6,18 +6,22 @@ import re
 from dataclasses import dataclass
 from typing import Any
 
-from .dialogue_policy import DIALOGUE_PROFILE_MVP_FREE, normalize_dialogue_profile
+from .dialogue_policy import (
+    DIALOGUE_PROFILE_MVP_FREE,
+    normalize_dialogue_profile,
+    resolve_profile_preset,
+)
 
 FINAL_ANSWER_DIRECTIVE_VERSION = "final_answer_directive_v1"
 FINAL_DIRECTIVE_AUTHORITY_ORDER = [
     "minimal_safety_baseline",
     "explicit_user_request",
-    "repair_or_dissatisfaction",
-    "accepted_previous_offer",
+    "answer_obligation",
+    "last_offer_or_unanswered_question_recovery",
+    "style_preference",
     "knowledge_or_concept_need",
-    "conversation_continuity",
-    "writer_freedom",
     "planner_and_diagnostic_advisory",
+    "writer_freedom",
 ]
 
 _REPAIR_MARKERS = (
@@ -35,7 +39,10 @@ _THANKS_MARKERS = ("спасибо", "благодарю", "thanks", "thank you"
 class FinalAnswerDirective:
     version: str
     profile: str
+    profile_preset: str
+    unified_dialogue_policy_version: str
     user_intent: str
+    dialogue_act: str
     answer_obligation: str
     must_answer: str
     answer_shape: str
@@ -50,6 +57,10 @@ class FinalAnswerDirective:
     diagnostic_card_role: str
     writer_autonomy: str
     hard_boundaries: list[str]
+    soft_guidance: list[str]
+    style_state_summary: dict[str, Any]
+    last_assistant_offer_summary: dict[str, Any]
+    unanswered_question_summary: dict[str, Any]
     advisory_context: dict[str, Any]
     suppressed_legacy_constraints: list[str]
     source_signals: dict[str, Any]
@@ -59,7 +70,10 @@ class FinalAnswerDirective:
         return {
             "version": self.version,
             "profile": self.profile,
+            "profile_preset": self.profile_preset,
+            "unified_dialogue_policy_version": self.unified_dialogue_policy_version,
             "user_intent": self.user_intent,
+            "dialogue_act": self.dialogue_act,
             "answer_obligation": self.answer_obligation,
             "must_answer": self.must_answer,
             "answer_shape": self.answer_shape,
@@ -74,6 +88,10 @@ class FinalAnswerDirective:
             "diagnostic_card_role": self.diagnostic_card_role,
             "writer_autonomy": self.writer_autonomy,
             "hard_boundaries": list(self.hard_boundaries),
+            "soft_guidance": list(self.soft_guidance),
+            "style_state_summary": dict(self.style_state_summary),
+            "last_assistant_offer_summary": dict(self.last_assistant_offer_summary),
+            "unanswered_question_summary": dict(self.unanswered_question_summary),
             "advisory_context": dict(self.advisory_context),
             "suppressed_legacy_constraints": list(self.suppressed_legacy_constraints),
             "source_signals": dict(self.source_signals),
@@ -86,7 +104,7 @@ def _normalize(text: str) -> str:
 
 
 def _is_yes_followup(text: str) -> bool:
-    return _normalize(text) in {"да", "ага", "ок", "окей", "yes", "yep", "да, конечно", "давай"}
+    return _normalize(text) in {"да", "ага", "ок", "окей", "yes", "yep", "да, конечно", "давай", "можно"}
 
 
 def _is_close_ack(text: str) -> bool:
@@ -110,7 +128,7 @@ def _is_comparison_request(text: str) -> bool:
     )
 
 
-def _derive_obligation(
+def _derive_obligation_fallback(
     *,
     user_message: str,
     dialogue_policy: dict[str, Any],
@@ -134,23 +152,9 @@ def _derive_obligation(
         and not bool(dialogue_policy.get("explicit_answer_need", False))
     )
     if fresh_simple_contact:
-        return (
-            "fresh_contact",
-            "respond_to_contact",
-            "simple_contact",
-            "short",
-            "optional_none",
-            "none",
-        )
+        return ("fresh_contact", "respond_to_contact", "simple_contact", "short", "optional_none", "none")
     if _is_close_ack(user_message):
-        return (
-            "close_ack",
-            "close_gently",
-            "close_with_short_ack",
-            "very_short",
-            "none",
-            "none",
-        )
+        return ("close_ack", "close_gently", "close_with_short_ack", "very_short", "none", "none")
     if _is_repair_message(user_message, pragmatics=dialogue_pragmatics, dialogue_policy=dialogue_policy):
         return (
             "repair_after_failed_answer",
@@ -160,53 +164,16 @@ def _derive_obligation(
             "do_not_ask_until_answered",
             "none",
         )
-    if bool(dialogue_pragmatics.get("is_contextual_followup", False)) and bool(
-        dialogue_pragmatics.get("should_not_ask_confirmation_again", False)
-    ) and _is_yes_followup(user_message):
+    if bool(dialogue_pragmatics.get("is_contextual_followup", False)) and bool(dialogue_pragmatics.get("should_not_ask_confirmation_again", False)) and _is_yes_followup(user_message):
         offer_type = str(dialogue_pragmatics.get("previous_assistant_offer_type", "unknown") or "unknown")
-        return (
-            "accepted_previous_offer",
-            "fulfill_previous_offer",
-            f"fulfill_offer:{offer_type}",
-            "medium",
-            "do_not_ask",
-            "optional_if_relevant",
-        )
+        return ("accepted_previous_offer", "fulfill_previous_offer", f"fulfill_offer:{offer_type}", "medium", "do_not_ask", "optional_if_relevant")
     if _is_comparison_request(user_message):
-        return (
-            "concept_comparison",
-            "compare_two_concepts_directly",
-            user_message.strip(),
-            "medium",
-            "optional_none",
-            "optional_if_relevant",
-        )
+        return ("concept_comparison", "compare_two_concepts_directly", user_message.strip(), "medium", "optional_none", "optional_if_relevant")
     if bool(dialogue_policy.get("practice_overview_requested", False)):
-        return (
-            "practice_overview",
-            "provide_multi_direction_practice_overview",
-            user_message.strip(),
-            "medium",
-            "optional_none",
-            "optional_if_relevant",
-        )
+        return ("practice_overview", "provide_multi_direction_practice_overview", user_message.strip(), "medium", "optional_none", "optional_if_relevant")
     if bool(dialogue_policy.get("explicit_answer_need", False)) or "?" in lowered:
-        return (
-            "direct_answer_need",
-            "answer_user_question_directly",
-            user_message.strip(),
-            "medium",
-            "optional_none",
-            "optional_if_relevant",
-        )
-    return (
-        "continuity",
-        "continue_line_with_focus",
-        user_message.strip(),
-        "medium",
-        "optional_none",
-        "optional_if_relevant",
-    )
+        return ("direct_answer_need", "answer_user_question_directly", user_message.strip(), "medium", "optional_none", "optional_if_relevant")
+    return ("continuity", "continue_line_with_focus", user_message.strip(), "medium", "optional_none", "optional_if_relevant")
 
 
 def _suppressed_constraints(*, profile: str, safety_active: bool) -> list[str]:
@@ -236,6 +203,8 @@ def build_final_answer_directive_v1(
     knowledge_answer_guard: dict[str, Any] | None,
     thread_state: Any,
     state_snapshot: Any,
+    answer_obligation_resolution: dict[str, Any] | None = None,
+    unified_dialogue_profile: dict[str, Any] | None = None,
 ) -> FinalAnswerDirective:
     policy = dict(dialogue_policy or {})
     pragmatics = dict(dialogue_pragmatics or {})
@@ -245,100 +214,95 @@ def build_final_answer_directive_v1(
     shadow = dict(diagnostic_center_shadow or {})
     retrieval = dict(retrieval_decision or {})
     knowledge = dict(knowledge_answer_guard or {})
-    profile = normalize_dialogue_profile(policy.get("profile", "safe_guided"))
-    safety_active = bool(getattr(state_snapshot, "safety_flag", False)) or bool(
-        getattr(thread_state, "safety_active", False)
-    )
+    obligation_resolution = dict(answer_obligation_resolution or {})
+    unified_policy = dict(unified_dialogue_profile or {})
 
-    user_intent, answer_obligation, must_answer, depth, question_policy, rag_policy = _derive_obligation(
+    profile = normalize_dialogue_profile(policy.get("profile", "safe_guided"))
+    profile_preset = str(policy.get("profile_preset") or resolve_profile_preset(profile))
+    safety_active = bool(getattr(state_snapshot, "safety_flag", False)) or bool(getattr(thread_state, "safety_active", False))
+
+    fallback_intent, fallback_obligation, fallback_style, fallback_depth, fallback_question_policy, fallback_rag_policy = _derive_obligation_fallback(
         user_message=user_message,
         dialogue_policy=policy,
         dialogue_pragmatics=pragmatics,
         knowledge_answer_guard=knowledge,
     )
-    if user_intent == "fresh_contact":
-        answer_shape = "simple_contact"
-    elif user_intent == "repair_after_failed_answer":
-        answer_shape = "repair_acknowledgement"
-    elif user_intent == "concept_comparison":
+
+    dialogue_act = str(
+        obligation_resolution.get("dialogue_act")
+        or dict(policy.get("dialogue_act_resolution", {})).get("dialogue_act", "unknown")
+    )
+    effective_user_intent = str(dialogue_act if dialogue_act and dialogue_act != "unknown" else fallback_intent)
+    answer_obligation = str(obligation_resolution.get("answer_obligation", fallback_obligation) or fallback_obligation)
+    answer_shape = str(obligation_resolution.get("answer_shape", planner.get("answer_shape", "compact_direct")) or planner.get("answer_shape", "compact_direct"))
+    depth = str(obligation_resolution.get("depth", fallback_depth) or fallback_depth)
+    question_policy = str(obligation_resolution.get("question_policy", planner.get("question_policy", fallback_question_policy)) or planner.get("question_policy", fallback_question_policy))
+    style_overrides = dict(obligation_resolution.get("style_overrides", {})) if isinstance(obligation_resolution.get("style_overrides"), dict) else {}
+    tone = str(style_overrides.get("tone", "neutral") or "neutral")
+    complexity = str(style_overrides.get("complexity_preference", "normal") or "normal")
+    style_bits = [tone]
+    if style_overrides.get("avoid_overexplaining"):
+        style_bits.append("brief")
+    if complexity != "normal":
+        style_bits.append(complexity)
+    style = ", ".join(style_bits) if obligation_resolution else fallback_style
+    practice_policy = str(planner.get("practice_policy", "forbidden") or "forbidden")
+    rag_policy = fallback_rag_policy
+    if retrieval.get("retrieval_action") in {"include_relevant_rag", "knowledge_grounding", "contextual_grounding"}:
+        rag_policy = "context_package_only"
+
+    if answer_shape == "compact_direct" and answer_obligation in {"answer_knowledge_question", "acknowledge_style_preference_then_answer", "answer_last_offer", "continue_thread"}:
+        answer_shape = "structured_explanation"
+    if answer_obligation == "compare_two_concepts_directly":
         answer_shape = "definition_then_difference_then_example"
-    else:
-        answer_shape = str(planner.get("answer_shape", "compact_direct") or "compact_direct")
-    style = "human_conversational"
-    if user_intent == "repair_after_failed_answer":
-        style = "brief_apology_then_direct_answer"
-    elif user_intent == "close_ack":
-        style = "short_warm_close"
 
-    advisory_only = profile == DIALOGUE_PROFILE_MVP_FREE and not safety_active
-    writer_autonomy = str(policy.get("writer_autonomy", "guided") or "guided")
-    if advisory_only and writer_autonomy != "guarded_safety":
-        writer_autonomy = "high"
-
-    source_signals = {
-        "dialogue_policy": policy,
-        "dialogue_pragmatics": pragmatics,
-        "response_planner": planner,
-        "active_line": line,
-        "diagnostic_card_summary": {
-            "situation_label": str(card.get("situation_label", "") or ""),
-            "suggested_writer_move": str(card.get("suggested_writer_move", "") or ""),
-            "current_need": str(card.get("current_need", "") or ""),
-            "confidence": float(card.get("confidence", 0.0) or 0.0),
-        },
-        "diagnostic_center_shadow": shadow,
-        "retrieval_decision": retrieval,
-        "knowledge_answer_guard": knowledge,
-    }
-
-    advisory_context = {
-        "planner_suggestion": str(planner.get("next_move", "") or ""),
-        "active_line_intent": str(line.get("user_intent", "unknown") or "unknown"),
-        "diagnostic_need": str(card.get("current_need", "") or ""),
-        "diagnostic_suggested_move": str(card.get("suggested_writer_move", "") or ""),
-    }
+    style_state_summary = dict(policy.get("dialogue_style_state", {})) if isinstance(policy.get("dialogue_style_state"), dict) else {}
+    last_offer_summary = dict(policy.get("last_assistant_offer", {})) if isinstance(policy.get("last_assistant_offer"), dict) else {}
+    unanswered_summary = dict(policy.get("unanswered_question_state", {})) if isinstance(policy.get("unanswered_question_state"), dict) else {}
 
     return FinalAnswerDirective(
         version=FINAL_ANSWER_DIRECTIVE_VERSION,
         profile=profile,
-        user_intent=user_intent,
+        profile_preset=profile_preset,
+        unified_dialogue_policy_version=str(unified_policy.get("version", policy.get("version", "unified_dialogue_policy_v2")) or "unified_dialogue_policy_v2"),
+        user_intent=effective_user_intent,
+        dialogue_act=str(dialogue_act or "unknown"),
         answer_obligation=answer_obligation,
-        must_answer=must_answer,
+        must_answer=str(unanswered_summary.get("last_direct_user_question", "") or str(user_message or "").strip()),
         answer_shape=answer_shape,
         depth=depth,
         style=style,
         question_policy=question_policy,
-        practice_policy=(
-            "safety_first"
-            if safety_active
-            else str(planner.get("practice_policy", "forbidden") or "forbidden")
-        ),
+        practice_policy=practice_policy,
         rag_policy=rag_policy,
-        diagnostic_center_role="advisory_context_only" if advisory_only else "guided_legacy",
-        planner_role="advisory_context_only" if advisory_only else "guided_legacy",
-        active_line_role="advisory_context_only" if advisory_only else "guided_legacy",
-        diagnostic_card_role="advisory_context_only" if advisory_only else "guided_legacy",
-        writer_autonomy=writer_autonomy,
-        hard_boundaries=[
-            "minimal_safety",
-            "privacy",
-            "no_diagnosis",
-            "no_medical_legal_financial_directives",
-        ],
-        advisory_context=advisory_context,
+        diagnostic_center_role=str(policy.get("diagnostic_center_role", unified_policy.get("diagnostic_center_role", "advisory_context_only")) or "advisory_context_only"),
+        planner_role=str(policy.get("planner_role", unified_policy.get("planner_role", "advisory_context_only")) or "advisory_context_only"),
+        active_line_role=str(policy.get("active_line_role", unified_policy.get("active_line_role", "advisory_context_only")) or "advisory_context_only"),
+        diagnostic_card_role=str(policy.get("diagnostic_card_role", unified_policy.get("diagnostic_card_role", "advisory_context_only")) or "advisory_context_only"),
+        writer_autonomy=str(policy.get("writer_autonomy", unified_policy.get("effective_writer_autonomy", "medium")) or "medium"),
+        hard_boundaries=[str(item) for item in list(policy.get("hard_boundaries", unified_policy.get("hard_boundaries", [])) or []) if str(item).strip()],
+        soft_guidance=[str(item) for item in list(policy.get("soft_guidance", unified_policy.get("soft_guidance", [])) or []) if str(item).strip()],
+        style_state_summary=style_state_summary,
+        last_assistant_offer_summary=last_offer_summary,
+        unanswered_question_summary=unanswered_summary,
+        advisory_context={
+            "response_planner": planner,
+            "active_line": line,
+            "diagnostic_card": card,
+            "diagnostic_center_shadow": shadow,
+            "retrieval": retrieval,
+            "knowledge_answer": knowledge.get("knowledge_answer", {}),
+        },
         suppressed_legacy_constraints=_suppressed_constraints(profile=profile, safety_active=safety_active),
-        source_signals=source_signals,
+        source_signals={
+            "dialogue_pragmatics": pragmatics,
+            "dialogue_act_resolution": dict(policy.get("dialogue_act_resolution", {})) if isinstance(policy.get("dialogue_act_resolution"), dict) else {},
+            "answer_obligation_resolution": obligation_resolution,
+            "style_state_summary": style_state_summary,
+        },
         conflict_resolution={
-            "authority_order": list(FINAL_DIRECTIVE_AUTHORITY_ORDER),
+            "authority_order": FINAL_DIRECTIVE_AUTHORITY_ORDER,
             "safety_active": safety_active,
-            "advisory_mode": advisory_only,
+            "advisory_mode": True,
         },
     )
-
-
-__all__ = [
-    "FINAL_ANSWER_DIRECTIVE_VERSION",
-    "FINAL_DIRECTIVE_AUTHORITY_ORDER",
-    "FinalAnswerDirective",
-    "build_final_answer_directive_v1",
-]

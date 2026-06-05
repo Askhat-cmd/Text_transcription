@@ -49,6 +49,10 @@ def _must_avoid_hit(text: str, must_avoid: list[str]) -> Optional[str]:
     return None
 
 
+def _safe_dict(value: object) -> dict:
+    return dict(value) if isinstance(value, dict) else {}
+
+
 class ValidatorAgent:
     """Rule-based validator: safety -> contract -> quality."""
 
@@ -111,10 +115,56 @@ class ValidatorAgent:
         spec = MODE_VIOLATION_PATTERNS.get(mode)
         if spec:
             hit = _contains_any(text, list(spec.get("patterns", [])))
-            if hit:
+            if hit and not self._is_soft_format_violation(mode=mode, contract=contract):
                 return str(spec.get("message", "mode_violation"))
 
         return None
+
+    @staticmethod
+    def _is_soft_format_violation(*, mode: str, contract: WriterContract) -> bool:
+        if mode not in {"validate", "regulate"}:
+            return False
+
+        policy = _safe_dict(getattr(contract, "dialogue_policy", None))
+        unified = _safe_dict(policy.get("unified_dialogue_profile"))
+        directive = _safe_dict(getattr(contract, "final_answer_directive", None))
+        obligation_payload = _safe_dict(policy.get("answer_obligation_resolution"))
+
+        profile_preset = str(
+            policy.get("profile_preset")
+            or unified.get("profile_preset")
+            or ""
+        ).strip()
+        if profile_preset != "free_dialogue_default":
+            return False
+
+        answer_obligation = str(
+            obligation_payload.get("answer_obligation")
+            or directive.get("answer_obligation")
+            or ""
+        ).strip()
+        answer_shape = str(
+            obligation_payload.get("answer_shape")
+            or directive.get("answer_shape")
+            or ""
+        ).strip()
+
+        if answer_obligation in {
+            "acknowledge_style_preference_then_answer",
+            "answer_direct_question",
+            "answer_knowledge_question",
+            "answer_concrete_situation",
+            "repair_and_answer_last_question",
+            "answer_last_offer",
+        }:
+            return True
+
+        return answer_shape in {
+            "structured_explanation",
+            "contextual_explanation",
+            "concept_explanation_full",
+            "structured_summary",
+        }
 
     @staticmethod
     def _check_quality(text: str) -> list[str]:
@@ -132,4 +182,3 @@ class ValidatorAgent:
 
 
 validator_agent = ValidatorAgent()
-

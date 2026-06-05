@@ -1,0 +1,12 @@
+{
+  "generated_at_utc": "2026-06-05T05:41:47.170823+00:00",
+  "status": "passed",
+  "checks": {
+    "version": true,
+    "dialogue_act_resolver_enabled": true,
+    "last_offer_tracker_enabled": true,
+    "unanswered_question_tracker_enabled": true,
+    "style_state_enabled": true,
+    "legacy_blocks_hidden": true
+  }
+}

@@ -48,6 +48,12 @@ def build_live_turn_evidence_v1(
     dialogue_policy: dict,
     dialogue_pragmatics: dict,
     contextual_retrieval_decision: dict,
+    unified_dialogue_profile: dict,
+    dialogue_act_resolution: dict,
+    last_assistant_offer: dict,
+    unanswered_question_state: dict,
+    dialogue_style_state: dict,
+    answer_obligation_resolution: dict,
     validation_result: Any,
 ) -> dict:
     contract_context = writer_contract.to_prompt_context() if hasattr(writer_contract, "to_prompt_context") else {}
@@ -112,7 +118,13 @@ def build_live_turn_evidence_v1(
         },
         "dialogue": {
             "policy": _safe_dict(dialogue_policy),
+            "unified_dialogue_policy": _safe_dict(unified_dialogue_profile),
             "pragmatics": _safe_dict(dialogue_pragmatics),
+            "dialogue_act_resolution": _safe_dict(dialogue_act_resolution),
+            "last_assistant_offer": _safe_dict(last_assistant_offer),
+            "unanswered_question_state": _safe_dict(unanswered_question_state),
+            "dialogue_style_state": _safe_dict(dialogue_style_state),
+            "answer_obligation_resolution": _safe_dict(answer_obligation_resolution),
             "fresh_chat_context_policy": _safe_dict(
                 contract_context.get("fresh_chat_context_policy", {})
             ),

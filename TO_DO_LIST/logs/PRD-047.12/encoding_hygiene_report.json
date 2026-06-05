@@ -1,0 +1,46 @@
+{
+  "generated_at_utc": "2026-06-05T05:44:13.133944+00:00",
+  "issue_file_count": 5,
+  "issue_count": 14,
+  "files": [
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/bot_agent/multiagent/stale_stub_detector.py",
+      "issues": [
+        "contains:\\u0420\\u0405",
+        "contains:\\u0420\\u0451",
+        "contains:\\u0421\\u0403",
+        "contains:\\u0421\\u040a",
+        "contains:\\u0421\\u201a",
+        "cyrillic_mojibake_pattern"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/bot_agent/multiagent/agents/thread_manager.py",
+      "issues": [
+        "contains:\\u0420\\u0405",
+        "contains:\\u0420\\u0451",
+        "contains:\\u0420\\u0491",
+        "contains:\\u0421\\u201a",
+        "cyrillic_mojibake_pattern"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/web_ui/node_modules/iconv-lite/README.md",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/web_ui/node_modules/micromark-util-decode-numeric-character-reference/readme.md",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/web_ui/node_modules/micromark-util-symbol/lib/values.d.ts",
+      "issues": [
+        "contains:\\ufffd"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "prd": "PRD-047.12",
+  "generated_at_utc": "2026-06-05T05:44:14.085886+00:00",
+  "final_status": "passed",
+  "dry_status": "passed",
+  "direct_status": "passed",
+  "live_status": "passed",
+  "browser_status": "passed",
+  "admin_surface_status": "passed",
+  "encoding_hygiene_issue_file_count": 5,
+  "no_mutation": {
+    "generated_at_utc": "2026-06-05T05:44:10.175097+00:00",
+    "diagnostic_center_deleted": false,
+    "diagnostic_center_hard_authority": false,
+    "planner_hard_authority": false,
+    "active_line_hard_authority": false,
+    "broad_rollout_allowed": false,
+    "production_ready": false,
+    "normal_user_activation_allowed": false,
+    "kb_governance_authority_fields_mutated": false,
+    "chroma_reindex_executed": false,
+    "new_runtime_path_created": false,
+    "legacy_cascade_returned": false,
+    "new_llm_agent_added": false,
+    "raw_provider_payload_committed": false,
+    "raw_private_logs_committed": false,
+    "env_or_secrets_committed": false,
+    "safe_guided_deleted": false,
+    "mvp_free_dialogue_deleted_without_alias": false,
+    "writer_gets_only_unified_sanitized_blocks": true
+  }
+}

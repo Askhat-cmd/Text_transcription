@@ -1,0 +1,11 @@
+# PRD-047.12 Runtime Startup
+
+- backend_url: `http://127.0.0.1:8001/api/v1`
+- frontend_url: `http://localhost:3000/chat`
+- health_status: `200`
+- admin_runtime_status: `200`
+- active_profile_alias: `mvp_free_dialogue`
+- profile_preset: `free_dialogue_default`
+- unified_dialogue_policy_version: `unified_dialogue_policy_v2`
+- diagnostic_center_mode: `advisory_context_only`
+- chat_url_check: `{'status': 200, 'length': 658}`

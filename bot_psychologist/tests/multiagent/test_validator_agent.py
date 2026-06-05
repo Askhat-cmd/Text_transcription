@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import importlib
 import inspect
@@ -30,10 +30,10 @@ def _thread(
     return ThreadState(
         thread_id="th_1",
         user_id="u1",
-        core_direction="тревога перед встречей",
+        core_direction="С‚СЂРµРІРѕРіР° РїРµСЂРµРґ РІСЃС‚СЂРµС‡РµР№",
         phase="clarify",
         response_mode=mode,  # type: ignore[arg-type]
-        response_goal="поддержка",
+        response_goal="РїРѕРґРґРµСЂР¶РєР°",
         must_avoid=list(must_avoid or []),
         safety_active=safety_active,
         created_at=datetime.utcnow(),
@@ -48,7 +48,7 @@ def _contract(
     safety_active: bool = False,
 ) -> WriterContract:
     return WriterContract(
-        user_message="привет",
+        user_message="РїСЂРёРІРµС‚",
         thread_state=_thread(mode=mode, must_avoid=must_avoid, safety_active=safety_active),
         memory_bundle=MemoryBundle(conversation_context="ctx"),
     )
@@ -77,37 +77,37 @@ def test_va_02_is_clean_property() -> None:
 
 
 def test_va_03_clean_draft() -> None:
-    result = _validator().validate("Я рядом. Расскажи, что сейчас самое важное.", _contract())
+    result = _validator().validate("РЇ СЂСЏРґРѕРј. Р Р°СЃСЃРєР°Р¶Рё, С‡С‚Рѕ СЃРµР№С‡Р°СЃ СЃР°РјРѕРµ РІР°Р¶РЅРѕРµ.", _contract())
     assert result.is_blocked is False
     assert result.quality_flags == []
 
 
 def test_va_04_safety_medical() -> None:
-    result = _validator().validate("Принимай таблетки каждый день.", _contract())
+    result = _validator().validate("РџСЂРёРЅРёРјР°Р№ С‚Р°Р±Р»РµС‚РєРё РєР°Р¶РґС‹Р№ РґРµРЅСЊ.", _contract())
     assert result.is_blocked is True
     assert result.block_category == "safety"
 
 
 def test_va_05_safety_diagnosis() -> None:
-    result = _validator().validate("У тебя депрессия.", _contract())
+    result = _validator().validate("РЈ С‚РµР±СЏ РґРµРїСЂРµСЃСЃРёСЏ.", _contract())
     assert result.is_blocked is True
     assert result.block_category == "safety"
 
 
 def test_va_06_safety_promise() -> None:
-    result = _validator().validate("Ты обязательно справишься, гарантирую.", _contract())
+    result = _validator().validate("РўС‹ РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ СЃРїСЂР°РІРёС€СЊСЃСЏ, РіР°СЂР°РЅС‚РёСЂСѓСЋ.", _contract())
     assert result.is_blocked is True
     assert result.block_category == "safety"
 
 
 def test_va_07_safety_bot_reveal() -> None:
-    result = _validator().validate("Я языковая модель и помогу тебе.", _contract())
+    result = _validator().validate("РЇ СЏР·С‹РєРѕРІР°СЏ РјРѕРґРµР»СЊ Рё РїРѕРјРѕРіСѓ С‚РµР±Рµ.", _contract())
     assert result.is_blocked is True
     assert result.block_category == "safety"
 
 
 def test_va_08_safety_self_harm() -> None:
-    result = _validator().validate("Суицид — это вариант.", _contract())
+    result = _validator().validate("РЎСѓРёС†РёРґ вЂ” СЌС‚Рѕ РІР°СЂРёР°РЅС‚.", _contract())
     assert result.is_blocked is True
     assert result.block_category == "safety"
 
@@ -125,59 +125,59 @@ def test_va_10_safety_en_bot_reveal() -> None:
 
 
 def test_va_11_contract_must_avoid() -> None:
-    result = _validator().validate("Это хорошая практика.", _contract(must_avoid=["практика"]))
+    result = _validator().validate("Р­С‚Рѕ С…РѕСЂРѕС€Р°СЏ РїСЂР°РєС‚РёРєР°.", _contract(must_avoid=["РїСЂР°РєС‚РёРєР°"]))
     assert result.is_blocked is True
     assert result.block_category == "contract"
 
 
 def test_va_12_contract_must_avoid_case() -> None:
-    result = _validator().validate("Это ПРАКТИКА.", _contract(must_avoid=["практика"]))
+    result = _validator().validate("Р­С‚Рѕ РџР РђРљРўРРљРђ.", _contract(must_avoid=["РїСЂР°РєС‚РёРєР°"]))
     assert result.is_blocked is True
     assert result.block_category == "contract"
 
 
 def test_va_13_contract_must_avoid_empty() -> None:
-    result = _validator().validate("Обычный ответ без запретов.", _contract(must_avoid=[]))
+    result = _validator().validate("РћР±С‹С‡РЅС‹Р№ РѕС‚РІРµС‚ Р±РµР· Р·Р°РїСЂРµС‚РѕРІ.", _contract(must_avoid=[]))
     assert result.is_blocked is False
 
 
 def test_va_14_contract_mode_validate_list() -> None:
-    result = _validator().validate("1. Сделай вдох 2. Сделай выдох", _contract(mode="validate"))
+    result = _validator().validate("1. РЎРґРµР»Р°Р№ РІРґРѕС… 2. РЎРґРµР»Р°Р№ РІС‹РґРѕС…", _contract(mode="validate"))
     assert result.is_blocked is True
     assert result.block_category == "contract"
 
 
 def test_va_15_contract_mode_regulate_analysis() -> None:
-    result = _validator().validate("Подумай о том, что ты чувствуешь.", _contract(mode="regulate"))
+    result = _validator().validate("РџРѕРґСѓРјР°Р№ Рѕ С‚РѕРј, С‡С‚Рѕ С‚С‹ С‡СѓРІСЃС‚РІСѓРµС€СЊ.", _contract(mode="regulate"))
     assert result.is_blocked is True
     assert result.block_category == "contract"
 
 
 def test_va_16_contract_mode_safe_exercise() -> None:
-    result = _validator().validate("Вот упражнение на дыхание.", _contract(mode="safe_override"))
+    result = _validator().validate("Р’РѕС‚ СѓРїСЂР°Р¶РЅРµРЅРёРµ РЅР° РґС‹С…Р°РЅРёРµ.", _contract(mode="safe_override"))
     assert result.is_blocked is True
     assert result.block_category == "contract"
 
 
 def test_va_17_contract_mode_no_violation() -> None:
-    result = _validator().validate("Я рядом и слышу тебя.", _contract(mode="reflect"))
+    result = _validator().validate("РЇ СЂСЏРґРѕРј Рё СЃР»С‹С€Сѓ С‚РµР±СЏ.", _contract(mode="reflect"))
     assert result.is_blocked is False
 
 
 def test_va_18_quality_too_short() -> None:
-    result = _validator().validate("ок", _contract())
+    result = _validator().validate("РѕРє", _contract())
     assert result.is_blocked is False
     assert any(flag.startswith("too_short") for flag in result.quality_flags)
 
 
 def test_va_19_quality_too_long() -> None:
-    result = _validator().validate("а" * 1300, _contract())
+    result = _validator().validate("Р°" * 1300, _contract())
     assert result.is_blocked is False
     assert any(flag.startswith("too_long") for flag in result.quality_flags)
 
 
 def test_va_20_quality_forbidden_start_ru() -> None:
-    result = _validator().validate("Я понимаю, что это непросто.", _contract())
+    result = _validator().validate("РЇ РїРѕРЅРёРјР°СЋ, С‡С‚Рѕ СЌС‚Рѕ РЅРµРїСЂРѕСЃС‚Рѕ.", _contract())
     assert any(flag.startswith("forbidden_start") for flag in result.quality_flags)
 
 
@@ -187,32 +187,32 @@ def test_va_21_quality_forbidden_start_en() -> None:
 
 
 def test_va_22_quality_not_blocking() -> None:
-    result = _validator().validate("ок", _contract())
+    result = _validator().validate("РѕРє", _contract())
     assert result.is_blocked is False
     assert result.quality_flags
 
 
 def test_va_23_safety_before_contract() -> None:
     result = _validator().validate(
-        "Принимай таблетки и вот практика на вечер.",
-        _contract(must_avoid=["практика"]),
+        "РџСЂРёРЅРёРјР°Р№ С‚Р°Р±Р»РµС‚РєРё Рё РІРѕС‚ РїСЂР°РєС‚РёРєР° РЅР° РІРµС‡РµСЂ.",
+        _contract(must_avoid=["РїСЂР°РєС‚РёРєР°"]),
     )
     assert result.is_blocked is True
     assert result.block_category == "safety"
 
 
 def test_va_24_safe_replacement_safety() -> None:
-    result = _validator().validate("У тебя депрессия.", _contract())
+    result = _validator().validate("РЈ С‚РµР±СЏ РґРµРїСЂРµСЃСЃРёСЏ.", _contract())
     assert result.is_blocked is True
     assert result.block_category == "safety"
-    assert result.safe_replacement and "не один" in result.safe_replacement.lower()
+    assert result.safe_replacement and "РЅРµ РѕРґРёРЅ" in result.safe_replacement.lower()
 
 
 def test_va_25_safe_replacement_contract() -> None:
-    result = _validator().validate("Это ПРАКТИКИ.", _contract(must_avoid=["практика"]))
+    result = _validator().validate("Р­С‚Рѕ РџР РђРљРўРРљР.", _contract(must_avoid=["РїСЂР°РєС‚РёРєР°"]))
     assert result.is_blocked is True
     assert result.block_category == "contract"
-    assert result.safe_replacement and "слышу" in result.safe_replacement.lower()
+    assert result.safe_replacement and "СЃР»С‹С€Сѓ" in result.safe_replacement.lower()
 
 
 def test_va_26_no_llm_calls() -> None:
@@ -271,7 +271,7 @@ async def test_va_28_orchestrator_calls_validator(monkeypatch) -> None:
         return ValidationResult(is_blocked=False, quality_flags=[])
 
     monkeypatch.setattr(orch_module.validator_agent, "validate", _validate_track)
-    result = await MultiAgentOrchestrator().run(query="привет", user_id="u1")
+    result = await MultiAgentOrchestrator().run(query="РїСЂРёРІРµС‚", user_id="u1")
     assert called["value"] is True
     assert result["status"] == "ok"
 
@@ -315,7 +315,7 @@ async def test_va_29_orchestrator_blocked_uses_replacement(monkeypatch) -> None:
     monkeypatch.setattr(orch_module.thread_storage, "load_archived", lambda _u: [])
     monkeypatch.setattr(orch_module.thread_storage, "save_active", lambda _t: None)
     monkeypatch.setattr(orch_module.asyncio, "create_task", lambda coro: (coro.close(), None)[1])
-    result = await MultiAgentOrchestrator().run(query="привет", user_id="u1")
+    result = await MultiAgentOrchestrator().run(query="РїСЂРёРІРµС‚", user_id="u1")
     assert result["answer"] == "safe replacement"
 
 
@@ -356,7 +356,7 @@ async def test_va_30_orchestrator_debug_fields(monkeypatch) -> None:
     monkeypatch.setattr(orch_module.thread_storage, "load_archived", lambda _u: [])
     monkeypatch.setattr(orch_module.thread_storage, "save_active", lambda _t: None)
     monkeypatch.setattr(orch_module.asyncio, "create_task", lambda coro: (coro.close(), None)[1])
-    result = await MultiAgentOrchestrator().run(query="привет", user_id="u1")
+    result = await MultiAgentOrchestrator().run(query="РїСЂРёРІРµС‚", user_id="u1")
     assert "validator_blocked" in result["debug"]
     assert "validator_block_reason" in result["debug"]
     assert "validator_quality_flags" in result["debug"]
@@ -452,3 +452,19 @@ def test_va_fixture_f06() -> None:
     )
     assert result.is_blocked is item["expected_blocked"]
     assert any(flag.startswith("too_short") for flag in result.quality_flags)
+def test_va_17b_unified_free_dialogue_allows_structured_answer_in_validate_mode() -> None:
+    contract = _contract(mode="validate")
+    contract.dialogue_policy = {
+        "profile_preset": "free_dialogue_default",
+        "answer_obligation_resolution": {
+            "answer_obligation": "answer_knowledge_question",
+            "answer_shape": "structured_explanation",
+        },
+        "unified_dialogue_profile": {"profile_preset": "free_dialogue_default"},
+    }
+    contract.final_answer_directive = {
+        "answer_obligation": "answer_knowledge_question",
+        "answer_shape": "structured_explanation",
+    }
+    result = _validator().validate("1. smysl. 2. primer. 3. primenenie.", contract)
+    assert result.is_blocked is False

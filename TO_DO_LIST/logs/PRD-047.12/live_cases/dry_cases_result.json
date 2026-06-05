@@ -1,0 +1,92 @@
+{
+  "generated_at_utc": "2026-06-05T05:41:47.169826+00:00",
+  "status": "passed",
+  "case_results": [
+    {
+      "case_id": "T01",
+      "status": "passed",
+      "checks": {
+        "dialogue_act": true,
+        "answer_obligation": true
+      },
+      "failed_checks": []
+    },
+    {
+      "case_id": "T02",
+      "status": "passed",
+      "checks": {
+        "dialogue_act_any": true
+      },
+      "failed_checks": []
+    },
+    {
+      "case_id": "T03",
+      "status": "passed",
+      "checks": {
+        "dialogue_act": true,
+        "answer_obligation": true
+      },
+      "failed_checks": []
+    },
+    {
+      "case_id": "T04",
+      "status": "passed",
+      "checks": {
+        "dialogue_act": true,
+        "answer_obligation": true
+      },
+      "failed_checks": []
+    },
+    {
+      "case_id": "T05",
+      "status": "passed",
+      "checks": {
+        "dialogue_act": true,
+        "answer_obligation": true
+      },
+      "failed_checks": []
+    },
+    {
+      "case_id": "T06",
+      "status": "passed",
+      "checks": {
+        "dialogue_act": true,
+        "answer_obligation": true
+      },
+      "failed_checks": []
+    },
+    {
+      "case_id": "T07",
+      "status": "passed",
+      "checks": {
+        "dialogue_act_any": true
+      },
+      "failed_checks": []
+    },
+    {
+      "case_id": "T08",
+      "status": "passed",
+      "checks": {
+        "dialogue_act": true,
+        "answer_obligation": true
+      },
+      "failed_checks": []
+    },
+    {
+      "case_id": "T09",
+      "status": "passed",
+      "checks": {
+        "runtime_only_case": true
+      },
+      "failed_checks": []
+    },
+    {
+      "case_id": "T10",
+      "status": "passed",
+      "checks": {
+        "runtime_only_case": true
+      },
+      "failed_checks": []
+    }
+  ]
+}

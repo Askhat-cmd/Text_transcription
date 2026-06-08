@@ -2,7 +2,7 @@
   "generated_at_utc": "2026-06-08T11:07:50.819218+00:00",
   "source_head_before": "258ea5abdf8749d0623696f4c8e7c71401f3e0ee",
   "main_commit": "2839a0d",
-  "post_push_metadata_commit": "pending",
+  "post_push_metadata_commit": "f82f9ce",
   "push_status": "pushed_to_origin_main",
   "final_status": "warning",
   "target_scope": "writer_agent high-confidence static repair/knowledge/direct-answer returns",

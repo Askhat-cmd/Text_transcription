@@ -50,6 +50,11 @@ class FinalAnswerDirective:
     style: str
     question_policy: str
     practice_policy: str
+    summary_request: bool
+    summary_scope: str
+    no_confirmation_needed: bool
+    no_practice_unless_requested: bool
+    summary_context_anchors: list[str]
     rag_policy: str
     diagnostic_center_role: str
     planner_role: str
@@ -81,6 +86,11 @@ class FinalAnswerDirective:
             "style": self.style,
             "question_policy": self.question_policy,
             "practice_policy": self.practice_policy,
+            "summary_request": bool(self.summary_request),
+            "summary_scope": self.summary_scope,
+            "no_confirmation_needed": bool(self.no_confirmation_needed),
+            "no_practice_unless_requested": bool(self.no_practice_unless_requested),
+            "summary_context_anchors": list(self.summary_context_anchors),
             "rag_policy": self.rag_policy,
             "diagnostic_center_role": self.diagnostic_center_role,
             "planner_role": self.planner_role,
@@ -259,6 +269,59 @@ def build_final_answer_directive_v1(
     style_state_summary = dict(policy.get("dialogue_style_state", {})) if isinstance(policy.get("dialogue_style_state"), dict) else {}
     last_offer_summary = dict(policy.get("last_assistant_offer", {})) if isinstance(policy.get("last_assistant_offer"), dict) else {}
     unanswered_summary = dict(policy.get("unanswered_question_state", {})) if isinstance(policy.get("unanswered_question_state"), dict) else {}
+    summary_request = bool(
+        answer_obligation == "summarize_current_conversation"
+        or dialogue_act == "summary_request"
+        or obligation_resolution.get("summary_request", False)
+    )
+    summary_scope = (
+        str(obligation_resolution.get("summary_scope", "") or "")
+        or str(dict(policy.get("dialogue_act_resolution", {})).get("summary_scope", "") or "")
+        or ("current_conversation" if summary_request else "")
+    )
+    no_confirmation_needed = bool(
+        summary_request
+        and (
+            obligation_resolution.get("no_confirmation_needed", True)
+            or obligation_resolution.get("should_not_confirm_last_offer", True)
+        )
+    )
+    no_practice_unless_requested = bool(
+        summary_request and obligation_resolution.get("no_practice_unless_requested", True)
+    )
+    summary_context_anchors: list[str] = []
+    for value in (
+        unanswered_summary.get("last_direct_user_question", ""),
+        last_offer_summary.get("offer_text_summary", ""),
+        user_message,
+    ):
+        anchor = str(value or "").strip()
+        if anchor and anchor not in summary_context_anchors:
+            summary_context_anchors.append(anchor[:180])
+    if summary_request:
+        answer_shape = "structured_summary"
+        answer_obligation = "summarize_current_conversation"
+        question_policy = "none"
+        practice_policy = "forbidden"
+        effective_user_intent = "summary_request"
+        soft_guidance = [
+            str(item)
+            for item in list(policy.get("soft_guidance", unified_policy.get("soft_guidance", [])) or [])
+            if str(item).strip()
+        ]
+        if "summarize_current_conversation_without_reconfirmation" not in soft_guidance:
+            soft_guidance.append("summarize_current_conversation_without_reconfirmation")
+    else:
+        soft_guidance = [
+            str(item)
+            for item in list(policy.get("soft_guidance", unified_policy.get("soft_guidance", [])) or [])
+            if str(item).strip()
+        ]
+    must_answer_value = (
+        "summary of current conversation"
+        if summary_request
+        else str(unanswered_summary.get("last_direct_user_question", "") or str(user_message or "").strip())
+    )
 
     return FinalAnswerDirective(
         version=FINAL_ANSWER_DIRECTIVE_VERSION,
@@ -268,12 +331,17 @@ def build_final_answer_directive_v1(
         user_intent=effective_user_intent,
         dialogue_act=str(dialogue_act or "unknown"),
         answer_obligation=answer_obligation,
-        must_answer=str(unanswered_summary.get("last_direct_user_question", "") or str(user_message or "").strip()),
+        must_answer=must_answer_value,
         answer_shape=answer_shape,
         depth=depth,
         style=style,
         question_policy=question_policy,
         practice_policy=practice_policy,
+        summary_request=summary_request,
+        summary_scope=summary_scope,
+        no_confirmation_needed=no_confirmation_needed,
+        no_practice_unless_requested=no_practice_unless_requested,
+        summary_context_anchors=summary_context_anchors if summary_request else [],
         rag_policy=rag_policy,
         diagnostic_center_role=str(policy.get("diagnostic_center_role", unified_policy.get("diagnostic_center_role", "advisory_context_only")) or "advisory_context_only"),
         planner_role=str(policy.get("planner_role", unified_policy.get("planner_role", "advisory_context_only")) or "advisory_context_only"),
@@ -281,7 +349,7 @@ def build_final_answer_directive_v1(
         diagnostic_card_role=str(policy.get("diagnostic_card_role", unified_policy.get("diagnostic_card_role", "advisory_context_only")) or "advisory_context_only"),
         writer_autonomy=str(policy.get("writer_autonomy", unified_policy.get("effective_writer_autonomy", "medium")) or "medium"),
         hard_boundaries=[str(item) for item in list(policy.get("hard_boundaries", unified_policy.get("hard_boundaries", [])) or []) if str(item).strip()],
-        soft_guidance=[str(item) for item in list(policy.get("soft_guidance", unified_policy.get("soft_guidance", [])) or []) if str(item).strip()],
+        soft_guidance=soft_guidance,
         style_state_summary=style_state_summary,
         last_assistant_offer_summary=last_offer_summary,
         unanswered_question_summary=unanswered_summary,
@@ -299,6 +367,10 @@ def build_final_answer_directive_v1(
             "dialogue_act_resolution": dict(policy.get("dialogue_act_resolution", {})) if isinstance(policy.get("dialogue_act_resolution"), dict) else {},
             "answer_obligation_resolution": obligation_resolution,
             "style_state_summary": style_state_summary,
+            "summary_request": summary_request,
+            "summary_scope": summary_scope,
+            "no_confirmation_needed": no_confirmation_needed,
+            "no_practice_unless_requested": no_practice_unless_requested,
         },
         conflict_resolution={
             "authority_order": FINAL_DIRECTIVE_AUTHORITY_ORDER,

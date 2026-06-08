@@ -304,33 +304,37 @@ def test_mvp_sarcasm_triggers_repair_answer_shape() -> None:
             "explicit_answer_need": True,
         },
     )
-    result = agent._enforce_answer_compliance("Спасибо за сообщение, чем еще помочь?", contract)
-    assert "исправляюсь" in result.lower()
-    assert agent.last_debug.get("final_answer_shape") == "repair_plus_direct_answer"
+    writer_text = "Спасибо за сообщение, чем еще помочь?"
+    result = agent._enforce_answer_compliance(writer_text, contract)
+    assert result == writer_text
+    assert agent.last_debug.get("no_stub_repair_signal", {}).get("recommended_action") == "writer_retry"
+    assert agent.last_debug.get("no_stub_repair_signal", {}).get("user_facing_replacement_created") is False
+    assert agent.last_debug.get("retry_recommended") is True
 
 
-def test_mvp_summary_request_returns_structured_summary() -> None:
+def test_mvp_summary_request_preserves_writer_text_without_static_summary() -> None:
     agent = WriterAgent(client=_FakeClient("ok"), model="gpt-5-mini")
     contract = _mvp_contract(
         message="обобщи весь разговор",
         dialogue_policy={"summary_request": True},
     )
-    result = agent._enforce_answer_compliance("Давай сделаем один шаг прямо сейчас.", contract)
-    assert "итог" in result.lower()
-    assert "1." in result
+    writer_text = "Мы уже обсудили контроль, напряжение перед действием и момент выбора."
+    result = agent._enforce_answer_compliance(writer_text, contract)
+    assert result == writer_text
     assert agent.last_debug.get("final_answer_shape") == "structured_summary"
 
 
-def test_mvp_direct_concrete_request_returns_variants() -> None:
+def test_mvp_direct_concrete_request_defers_to_gate_without_static_variants() -> None:
     agent = WriterAgent(client=_FakeClient("ok"), model="gpt-5-mini")
     contract = _mvp_contract(
         message="назови конкретно, какая черта во мне может цепляться",
         dialogue_policy={"direct_concrete_request": True},
     )
-    result = agent._enforce_answer_compliance("Давай исследуем это мягко.", contract)
-    assert "гиперконтроль" in result.lower()
-    assert "самообесценивание" in result.lower()
-    assert agent.last_debug.get("final_answer_shape") == "direct_answer_with_variants"
+    writer_text = "Давай исследуем это мягко."
+    result = agent._enforce_answer_compliance(writer_text, contract)
+    assert result == writer_text
+    assert agent.last_debug.get("no_stub_repair_signal", {}).get("recommended_action") == "writer_retry"
+    assert agent.last_debug.get("no_stub_repair_signal", {}).get("user_facing_replacement_created") is False
 
 
 def test_mvp_formula_stub_defers_to_acceptance_gate_without_static_answer() -> None:
@@ -368,7 +372,7 @@ def test_literal_markdown_echo_request_is_preserved() -> None:
     assert agent.last_debug.get("final_answer_shape") == "literal_markdown_echo"
 
 
-def test_mvp_answer_last_offer_rewrites_repeated_offer_into_direct_answer() -> None:
+def test_mvp_answer_last_offer_does_not_static_rewrite_repeated_offer() -> None:
     agent = WriterAgent(client=_FakeClient("ok"), model="gpt-5-mini")
     contract = _mvp_contract(
         message="да",
@@ -382,17 +386,14 @@ def test_mvp_answer_last_offer_rewrites_repeated_offer_into_direct_answer() -> N
             },
         },
     )
-    result = agent._enforce_answer_compliance(
-        "Да - могу так сделать. Предлагаю такой план, прежде чем давать полную инструкцию.",
-        contract,
-    )
-    assert "красный уровень" in result.lower()
-    assert "оранжевый уровень" in result.lower()
-    assert "зеленый уровень" in result.lower()
-    assert agent.last_debug.get("final_answer_shape") == "answer_last_offer_repair"
+    writer_text = "Да - могу так сделать. Предлагаю такой план, прежде чем давать полную инструкцию."
+    result = agent._enforce_answer_compliance(writer_text, contract)
+    assert result == writer_text
+    assert "красный уровень" not in result.lower()
+    assert agent.last_debug.get("no_stub_repair_signal", {}).get("user_facing_replacement_created") is not True
 
 
-def test_mvp_answer_last_offer_skips_second_confirmation_and_returns_levels() -> None:
+def test_mvp_answer_last_offer_skips_static_second_confirmation_rewrite() -> None:
     agent = WriterAgent(client=_FakeClient("ok"), model="gpt-5-mini")
     contract = _mvp_contract(
         message="да",
@@ -406,17 +407,14 @@ def test_mvp_answer_last_offer_skips_second_confirmation_and_returns_levels() ->
             },
         },
     )
-    result = agent._enforce_answer_compliance(
-        "После подтверждения я пришлю адаптацию в выбранном формате.",
-        contract,
-    )
-    assert "красный уровень" in result.lower()
-    assert "оранжевый уровень" in result.lower()
-    assert "зеленый уровень" in result.lower()
-    assert agent.last_debug.get("final_answer_shape") == "answer_last_offer_repair"
+    writer_text = "После подтверждения я пришлю адаптацию в выбранном формате."
+    result = agent._enforce_answer_compliance(writer_text, contract)
+    assert result == writer_text
+    assert "красный уровень" not in result.lower()
+    assert agent.last_debug.get("no_stub_repair_signal", {}).get("user_facing_replacement_created") is not True
 
 
-def test_mvp_answer_last_offer_uses_last_direct_question_when_offer_summary_is_truncated() -> None:
+def test_mvp_answer_last_offer_does_not_static_rewrite_from_last_direct_question() -> None:
     agent = WriterAgent(client=_FakeClient("ok"), model="gpt-5-mini")
     contract = _mvp_contract(
         message="да",
@@ -433,14 +431,11 @@ def test_mvp_answer_last_offer_uses_last_direct_question_when_offer_summary_is_t
             },
         },
     )
-    result = agent._enforce_answer_compliance(
-        "Какой формат предпочитаешь дальше?",
-        contract,
-    )
-    assert "красный уровень" in result.lower()
-    assert "оранжевый уровень" in result.lower()
-    assert "зеленый уровень" in result.lower()
-    assert agent.last_debug.get("final_answer_shape") == "answer_last_offer_repair"
+    writer_text = "Какой формат предпочитаешь дальше?"
+    result = agent._enforce_answer_compliance(writer_text, contract)
+    assert result == writer_text
+    assert "красный уровень" not in result.lower()
+    assert agent.last_debug.get("no_stub_repair_signal", {}).get("user_facing_replacement_created") is not True
 
 
 def test_mvp_repair_complaint_answers_saved_neurostalking_question() -> None:
@@ -457,14 +452,11 @@ def test_mvp_repair_complaint_answers_saved_neurostalking_question() -> None:
         },
     )
     contract.dialogue_pragmatics = {"repair_user_dissatisfaction": True}
-    result = agent._enforce_answer_compliance("Ладно, тогда уточню иначе.", contract)
-    assert "ты прав" in result.lower()
-    assert "нейросталкинг" in result.lower()
-    assert "триггер" in result.lower()
-    assert agent.last_debug.get("final_answer_shape") in {
-        "repair_plus_direct_answer",
-        "repair_answer_last_question_repair",
-    }
+    writer_text = "Ладно, тогда уточню иначе."
+    result = agent._enforce_answer_compliance(writer_text, contract)
+    assert result == writer_text
+    assert agent.last_debug.get("no_stub_repair_signal", {}).get("recommended_action") == "writer_retry"
+    assert agent.last_debug.get("no_stub_repair_signal", {}).get("user_facing_replacement_created") is False
 
 
 def test_mvp_preserves_substantive_knowledge_answer_when_practice_is_forbidden() -> None:

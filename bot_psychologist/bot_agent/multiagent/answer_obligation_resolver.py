@@ -74,6 +74,40 @@ def build_answer_obligation_resolver_v1(
             ],
         }
 
+    if act == "summary_request":
+        return {
+            "version": ANSWER_OBLIGATION_RESOLVER_VERSION,
+            "dialogue_act": "summary_request",
+            "answer_required": True,
+            "answer_obligation": "summarize_current_conversation",
+            "answer_shape": "structured_summary",
+            "question_policy": "none",
+            "practice_policy": "forbidden",
+            "depth": depth if depth != "short" else "medium",
+            "must_answer": "summary of current conversation",
+            "must_not": [
+                "ask whether the user wants a summary",
+                "answer the previous assistant offer instead of summarizing",
+                "add a practice unless the user explicitly asked for one",
+            ],
+            "writer_should": [
+                "summarize the current conversation in the Writer's own words",
+                "use available current conversation context as source",
+                "keep planner and diagnostic content advisory only",
+            ],
+            "summary_request": True,
+            "summary_scope": "current_conversation",
+            "should_not_confirm_last_offer": True,
+            "no_confirmation_needed": True,
+            "no_practice_unless_requested": True,
+            "style_overrides": style_overrides,
+            "source": [
+                "dialogue_act=summary_request",
+                "explicit_user_request=summary",
+                f"profile_preset={profile_preset}",
+            ],
+        }
+
     if act == "confirmation_to_last_offer" and bool(last_offer.get("is_open")):
         offer_type = str(last_offer.get("offer_type", "none") or "none")
         shape = "structured_explanation"
@@ -156,17 +190,6 @@ def build_answer_obligation_resolver_v1(
             "depth": depth,
             "style_overrides": style_overrides,
             "source": ["dialogue_act=direct_question", f"profile_preset={profile_preset}"],
-        }
-
-    if act == "summary_request":
-        return {
-            "version": ANSWER_OBLIGATION_RESOLVER_VERSION,
-            "answer_obligation": "continue_thread",
-            "answer_shape": "structured_summary",
-            "question_policy": "none",
-            "depth": depth if depth != "short" else "medium",
-            "style_overrides": style_overrides,
-            "source": ["dialogue_act=summary_request", f"profile_preset={profile_preset}"],
         }
 
     if act in {"greeting", "contact_open"}:

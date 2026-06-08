@@ -1,5 +1,23 @@
 # Architecture Decisions
 
+## ADR-072 - Explicit summary requests own route and obligation without canned answers
+
+Status: accepted
+
+Date: 2026-06-08
+
+Context: PRD-047.14 and HF1.2 left a focused risk where explicit recap/summary requests could be mistaken for confirmation of the previous assistant offer or handled by static Writer summary text.
+
+Decision:
+- explicit current-conversation summary requests resolve to `dialogue_act=summary_request` before last-offer confirmation;
+- the answer obligation is `summarize_current_conversation`;
+- `final_answer_directive_v1` exposes summary metadata to Writer while preserving Writer authorship;
+- Writer must not create a canned summary replacement;
+- `final_answer_acceptance_gate_v1` blocks reconfirmation/last-offer misanswers and recommends retry/quarantine without producing replacement text;
+- no new LLM agent, runtime path, KB/governance authority, frontend path, or rollout activation is introduced.
+
+Consequences: summary turns can be tracked and retried honestly without contaminating last-offer state or healthy context memory.
+
 ## ADR-071 - PRD-047.13-HF1 closes active cleanup noise without runtime mutation
 
 Status: accepted

@@ -1,0 +1,197 @@
+{
+  "generated_at_utc": "2026-06-08T11:33:03.901876+00:00",
+  "status": "passed",
+  "cases": [
+    {
+      "name": "reconfirmation_blocked",
+      "answer": "Хочешь, чтобы я подвел итог нашего разговора?",
+      "directive": {
+        "summary_request": true,
+        "summary_scope": "current_conversation",
+        "summary_context_anchors": []
+      },
+      "expected_status": "failed",
+      "expected_check": "summary_request_reconfirmed_instead_of_answered",
+      "gate": {
+        "version": "final_answer_acceptance_gate_v1",
+        "status": "failed",
+        "severity": "blocker",
+        "failed_checks": [
+          "summary_request_reconfirmed_instead_of_answered"
+        ],
+        "warnings": [],
+        "stale_stub_detected": false,
+        "stale_stub_detail": {
+          "detected": false,
+          "matched_phrase": "",
+          "detector_kind": ""
+        },
+        "answer_considered_real": false,
+        "can_mark_question_answered": false,
+        "can_save_as_healthy_context": false,
+        "can_use_as_summary_source": false,
+        "can_save_last_assistant_offer": false,
+        "must_quarantine_answer": true,
+        "retry_recommended": true,
+        "template_family_guard": {
+          "version": "template_family_guard_v1",
+          "checked": true,
+          "leak_detected": false,
+          "markers": [],
+          "action": "passed",
+          "contamination_quarantined": false,
+          "user_facing_replacement_created": false
+        },
+        "no_stub_repair_signal": {
+          "user_facing_replacement_created": false
+        },
+        "input_summary": {
+          "dialogue_act": "summary_request",
+          "answer_obligation": "summarize_current_conversation",
+          "unanswered_answer_required": false,
+          "last_offer_open": true,
+          "style_length_preference": ""
+        },
+        "quality_signals": {
+          "concrete_need": false,
+          "concrete_anchor_hits": [],
+          "user_answer_overlap_ratio": 0.75,
+          "previous_answer_similarity": 0.133,
+          "markdown_requested": false,
+          "markdown_detected": false,
+          "summary_request": true
+        },
+        "quarantine_reason": "summary_request_reconfirmed_instead_of_answered"
+      },
+      "passed": true
+    },
+    {
+      "name": "last_offer_answer_blocked",
+      "answer": "Да, могу так сделать после подтверждения: выбери формат практики.",
+      "directive": {
+        "summary_request": true,
+        "summary_scope": "current_conversation",
+        "summary_context_anchors": []
+      },
+      "expected_status": "failed",
+      "expected_check": "summary_answered_last_offer_instead",
+      "gate": {
+        "version": "final_answer_acceptance_gate_v1",
+        "status": "failed",
+        "severity": "blocker",
+        "failed_checks": [
+          "summary_answered_last_offer_instead"
+        ],
+        "warnings": [],
+        "stale_stub_detected": false,
+        "stale_stub_detail": {
+          "detected": false,
+          "matched_phrase": "",
+          "detector_kind": ""
+        },
+        "answer_considered_real": false,
+        "can_mark_question_answered": false,
+        "can_save_as_healthy_context": false,
+        "can_use_as_summary_source": false,
+        "can_save_last_assistant_offer": false,
+        "must_quarantine_answer": true,
+        "retry_recommended": true,
+        "template_family_guard": {
+          "version": "template_family_guard_v1",
+          "checked": true,
+          "leak_detected": false,
+          "markers": [],
+          "action": "passed",
+          "contamination_quarantined": false,
+          "user_facing_replacement_created": false
+        },
+        "no_stub_repair_signal": {
+          "user_facing_replacement_created": false
+        },
+        "input_summary": {
+          "dialogue_act": "summary_request",
+          "answer_obligation": "summarize_current_conversation",
+          "unanswered_answer_required": false,
+          "last_offer_open": true,
+          "style_length_preference": ""
+        },
+        "quality_signals": {
+          "concrete_need": false,
+          "concrete_anchor_hits": [],
+          "user_answer_overlap_ratio": 0.0,
+          "previous_answer_similarity": 0.418,
+          "markdown_requested": false,
+          "markdown_detected": false,
+          "summary_request": true
+        },
+        "quarantine_reason": "summary_answered_last_offer_instead"
+      },
+      "passed": true
+    },
+    {
+      "name": "real_summary_passed",
+      "answer": "Итог разговора: ты описывал напряжение перед действием, автоматический контроль и момент выбора. Мы сфокусировались на отделении фактов от прогноза риска.",
+      "directive": {
+        "summary_request": true,
+        "summary_scope": "current_conversation",
+        "summary_context_anchors": [
+          "напряжение перед действием",
+          "автоматический контроль",
+          "момент выбора"
+        ]
+      },
+      "expected_status": "passed",
+      "expected_check": "",
+      "gate": {
+        "version": "final_answer_acceptance_gate_v1",
+        "status": "passed",
+        "severity": "none",
+        "failed_checks": [],
+        "warnings": [],
+        "stale_stub_detected": false,
+        "stale_stub_detail": {
+          "detected": false,
+          "matched_phrase": "",
+          "detector_kind": ""
+        },
+        "answer_considered_real": true,
+        "can_mark_question_answered": true,
+        "can_save_as_healthy_context": true,
+        "can_use_as_summary_source": true,
+        "can_save_last_assistant_offer": false,
+        "must_quarantine_answer": false,
+        "retry_recommended": false,
+        "template_family_guard": {
+          "version": "template_family_guard_v1",
+          "checked": true,
+          "leak_detected": false,
+          "markers": [],
+          "action": "passed",
+          "contamination_quarantined": false,
+          "user_facing_replacement_created": false
+        },
+        "no_stub_repair_signal": {
+          "user_facing_replacement_created": false
+        },
+        "input_summary": {
+          "dialogue_act": "summary_request",
+          "answer_obligation": "summarize_current_conversation",
+          "unanswered_answer_required": false,
+          "last_offer_open": true,
+          "style_length_preference": ""
+        },
+        "quality_signals": {
+          "concrete_need": false,
+          "concrete_anchor_hits": [],
+          "user_answer_overlap_ratio": 0.5,
+          "previous_answer_similarity": 0.261,
+          "markdown_requested": false,
+          "markdown_detected": false,
+          "summary_request": true
+        },
+        "quarantine_reason": ""
+      },
+      "passed": true
+    }
+  ]
+}

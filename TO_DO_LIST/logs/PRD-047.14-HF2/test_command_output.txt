@@ -1,0 +1,119 @@
+﻿PRD-047.14-HF2 validation started 2026-06-08T16:31:40.7065632+05:00
+
+>>> py_compile_runtime: .venv\Scripts\python.exe -m py_compile bot_agent\multiagent\dialogue_act_resolver.py bot_agent\multiagent\answer_obligation_resolver.py bot_agent\multiagent\final_answer_directive.py bot_agent\multiagent\final_answer_acceptance_gate.py bot_agent\multiagent\contracts\writer_contract.py bot_agent\multiagent\agents\writer_agent.py
+
+<<< exit_code=0 duration_ms=183
+
+>>> pytest_summary_contracts: .venv\Scripts\python.exe -m pytest -q tests\test_summary_request_routing_v1.py tests\test_answer_obligation_summary_request_v1.py tests\test_final_answer_acceptance_gate_v1.py tests\multiagent\test_writer_agent.py
+........................................                                 [100%]
+============================== warnings summary ===============================
+tests/multiagent/test_writer_agent.py: 24 warnings
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_writer_agent.py:77: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    created_at=datetime.utcnow(),
+
+tests/multiagent/test_writer_agent.py: 24 warnings
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_writer_agent.py:78: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    updated_at=datetime.utcnow(),
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+40 passed, 48 warnings in 0.40s
+
+<<< exit_code=0 duration_ms=1067
+
+>>> pytest_no_stub_regression: .venv\Scripts\python.exe -m pytest -q tests\test_no_hardcoded_user_facing_replies_v1.py tests\test_writer_retry_conversion_no_stub_v1.py
+...                                                                      [100%]
+============================== warnings summary ===============================
+tests/test_writer_retry_conversion_no_stub_v1.py::test_known_concept_repair_returns_original_text_and_sets_retry_signal
+  C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_retry_conversion_no_stub_v1.py:30: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    created_at=datetime.utcnow(),
+
+tests/test_writer_retry_conversion_no_stub_v1.py::test_known_concept_repair_returns_original_text_and_sets_retry_signal
+  C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_retry_conversion_no_stub_v1.py:31: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    updated_at=datetime.utcnow(),
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+3 passed, 2 warnings in 0.34s
+
+<<< exit_code=0 duration_ms=963
+
+>>> pytest_writer_contracts: .venv\Scripts\python.exe -m pytest -q tests\test_writer_contract_knowledge_answer.py tests\test_writer_contract_response_planner.py tests\test_writer_contract_response_planner_answer_fit.py tests\test_writer_contract_context_package.py tests\multiagent\test_writer_contract.py
+.........                                                                [100%]
+============================== warnings summary ===============================
+tests/test_writer_contract_knowledge_answer.py::test_writer_contract_prompt_context_contains_knowledge_answer_block
+tests/test_writer_contract_knowledge_answer.py::test_writer_prompt_contains_knowledge_answer_routing_markers
+tests/test_writer_contract_knowledge_answer.py::test_writer_post_enforces_known_concept_compliance
+  C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_contract_knowledge_answer.py:59: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    created_at=datetime.utcnow(),
+
+tests/test_writer_contract_knowledge_answer.py::test_writer_contract_prompt_context_contains_knowledge_answer_block
+tests/test_writer_contract_knowledge_answer.py::test_writer_prompt_contains_knowledge_answer_routing_markers
+tests/test_writer_contract_knowledge_answer.py::test_writer_post_enforces_known_concept_compliance
+  C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_contract_knowledge_answer.py:60: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    updated_at=datetime.utcnow(),
+
+tests/test_writer_contract_response_planner.py::test_writer_contract_prompt_context_has_response_planner_fields
+tests/test_writer_contract_response_planner.py::test_writer_contract_stays_backward_compatible_without_response_planner
+tests/test_writer_contract_response_planner_answer_fit.py::test_writer_contract_exposes_answer_fit_related_planner_fields
+tests/test_writer_contract_context_package.py::test_writer_contract_uses_context_package_for_prompt_context
+tests/test_writer_contract_context_package.py::test_writer_contract_keeps_backward_compat_without_context_package
+tests/multiagent/test_writer_contract.py::test_writer_contract_prompt_context_contains_semantic_fields
+  <string>:23: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+tests/test_writer_contract_response_planner.py::test_writer_contract_prompt_context_has_response_planner_fields
+tests/test_writer_contract_response_planner.py::test_writer_contract_stays_backward_compatible_without_response_planner
+tests/test_writer_contract_response_planner_answer_fit.py::test_writer_contract_exposes_answer_fit_related_planner_fields
+tests/test_writer_contract_context_package.py::test_writer_contract_uses_context_package_for_prompt_context
+tests/test_writer_contract_context_package.py::test_writer_contract_keeps_backward_compat_without_context_package
+tests/multiagent/test_writer_contract.py::test_writer_contract_prompt_context_contains_semantic_fields
+  <string>:24: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+9 passed, 18 warnings in 0.33s
+
+<<< exit_code=0 duration_ms=939
+
+>>> pytest_planner_practice: .venv\Scripts\python.exe -m pytest -q tests\test_unified_dialogue_policy_v2.py tests\test_response_planner.py tests\test_response_planner_mvp_free_dialogue.py tests\test_response_planner_mvp_practice_catalog.py tests\test_knowledge_answer_practice_overview_routing.py
+......................                                                   [100%]
+22 passed in 0.33s
+
+<<< exit_code=0 duration_ms=929
+
+>>> hf2_acceptance_runner: python ..\TO_DO_LIST\tools\PRD-047.14-HF2\run_summary_routing_acceptance.py
+cmd : 2026-06-08 16:31:45,513 | bot_agent.multiagent.thread_storage | INFO | [THREAD_STORAGE] storage_dir=C:\My_practic
+e\Text_transcription\bot_psychologist\data\threads
+At C:\Users\video\AppData\Local\Temp\run_hf2_validation.ps1:19 char:13
++   $output = cmd /c $item.cmd 2>&1
++             ~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (2026-06-08 16:3...st\data\threads:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+2026-06-08 16:31:45,518 | bot_agent | INFO | Bot Agent v0.11.0 initialized | pipeline: semantic->rerank->topK->llm | le
+gacy_graph: disabled
+{
+  "generated_at_utc": "2026-06-08T11:31:45.781223+00:00",
+  "source_head_before": "2695e0c22418a5b58c0b53bc46f5f8d0d5f94114",
+  "main_commit": "pending",
+  "post_push_metadata_commit": "pending",
+  "push_status": "pending",
+  "final_status": "warning",
+  "summary_routing_status": "passed",
+  "summary_obligation_status": "passed",
+  "final_directive_summary_status": "passed",
+  "final_answer_gate_summary_status": "passed",
+  "no_stub_summary_scan_status": "passed",
+  "runtime_mutation_scope_status": "passed",
+  "encoding_gate_status": "passed",
+  "tests_status": "pending",
+  "docs_sync_status": "passed",
+  "live_status": "not_required_contract_acceptance_only",
+  "new_llm_agent_added": false,
+  "new_runtime_path_added": false,
+  "new_user_facing_stub_created": false,
+  "kb_governance_mutated": false,
+  "frontend_mutated": false,
+  "known_blockers": "",
+  "known_warnings": "validation commands pending; HF1.2 out-of-scope no-stub/static candidates remain outside summary scope",
+  "next_prd": "PRD-047.15 - Contextual Retrieval Query Composer Agent v1"
+}
+
+<<< exit_code=0 duration_ms=860

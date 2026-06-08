@@ -1,0 +1,9 @@
+{
+  "generated_at_utc": "2026-06-08T11:33:04.201269+00:00",
+  "encoding_gate_status": "passed",
+  "files_checked_count": 36,
+  "issues": [],
+  "allowed_source_fixtures": [
+    "TO_DO_LIST/PRD-047.14-HF2_Summary_Request_Routing_Answer_Obligation_Repair_v1_RU.md"
+  ]
+}

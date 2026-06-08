@@ -344,6 +344,14 @@ class WriterContract:
             "depth": str(final_answer_directive.get("depth", "") or ""),
             "style": str(final_answer_directive.get("style", "") or ""),
             "question_policy": str(final_answer_directive.get("question_policy", "") or ""),
+            "summary_request": bool(final_answer_directive.get("summary_request", False)),
+            "summary_scope": str(final_answer_directive.get("summary_scope", "") or ""),
+            "no_confirmation_needed": bool(
+                final_answer_directive.get("no_confirmation_needed", False)
+            ),
+            "no_practice_unless_requested": bool(
+                final_answer_directive.get("no_practice_unless_requested", False)
+            ),
             "writer_autonomy": str(final_answer_directive.get("writer_autonomy", "") or ""),
             "acceptance_gate_feedback": (
                 dict(final_answer_directive.get("acceptance_gate_feedback", {}))
@@ -648,6 +656,23 @@ class WriterContract:
                 [str(item) for item in list(answer_obligation_resolution.get("source", []) or []) if str(item).strip()]
             ) or "none",
             "final_answer_directive": final_answer_directive,
+            "final_answer_summary_request": bool(
+                final_answer_directive.get("summary_request", False)
+            ),
+            "final_answer_summary_scope": str(
+                final_answer_directive.get("summary_scope", "") or ""
+            ),
+            "final_answer_no_confirmation_needed": bool(
+                final_answer_directive.get("no_confirmation_needed", False)
+            ),
+            "final_answer_no_practice_unless_requested": bool(
+                final_answer_directive.get("no_practice_unless_requested", False)
+            ),
+            "final_answer_summary_context_anchors": [
+                str(item)
+                for item in list(final_answer_directive.get("summary_context_anchors", []) or [])
+                if str(item).strip()
+            ],
             "final_answer_directive_json": json.dumps(
                 final_answer_directive,
                 ensure_ascii=False,

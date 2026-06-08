@@ -1,0 +1,150 @@
+{
+  "generated_at_utc": "2026-06-08T11:33:03.897108+00:00",
+  "status": "passed",
+  "required": {
+    "summary_request": true,
+    "summary_scope": "current_conversation",
+    "no_confirmation_needed": true,
+    "no_practice_unless_requested": true,
+    "answer_obligation": "summarize_current_conversation",
+    "answer_shape": "structured_summary",
+    "question_policy": "none",
+    "practice_policy": "forbidden"
+  },
+  "directive": {
+    "version": "final_answer_directive_v1",
+    "profile": "mvp_free_dialogue",
+    "profile_preset": "free_dialogue_default",
+    "unified_dialogue_policy_version": "unified_dialogue_policy_v2",
+    "user_intent": "summary_request",
+    "dialogue_act": "summary_request",
+    "answer_obligation": "summarize_current_conversation",
+    "must_answer": "summary of current conversation",
+    "answer_shape": "structured_summary",
+    "depth": "medium",
+    "style": "neutral",
+    "question_policy": "none",
+    "practice_policy": "forbidden",
+    "summary_request": true,
+    "summary_scope": "current_conversation",
+    "no_confirmation_needed": true,
+    "no_practice_unless_requested": true,
+    "summary_context_anchors": [
+      "Могу дать практику наблюдения.",
+      "сделай резюме нашей беседы"
+    ],
+    "rag_policy": "optional_if_relevant",
+    "diagnostic_center_role": "advisory_context_only",
+    "planner_role": "advisory_context_only",
+    "active_line_role": "advisory_context_only",
+    "diagnostic_card_role": "advisory_context_only",
+    "writer_autonomy": "medium",
+    "hard_boundaries": [],
+    "soft_guidance": [
+      "summarize_current_conversation_without_reconfirmation"
+    ],
+    "style_state_summary": {},
+    "last_assistant_offer_summary": {
+      "is_open": true,
+      "offer_type": "practice",
+      "offer_text_summary": "Могу дать практику наблюдения."
+    },
+    "unanswered_question_summary": {},
+    "advisory_context": {
+      "response_planner": {
+        "answer_shape": "one_step",
+        "practice_policy": "optional_if_relevant"
+      },
+      "active_line": {},
+      "diagnostic_card": {},
+      "diagnostic_center_shadow": {},
+      "retrieval": {},
+      "knowledge_answer": {}
+    },
+    "suppressed_legacy_constraints": [
+      "writer_move.max_sentences=5",
+      "writer_move.max_questions=1",
+      "writer_move.must_do.ask_one_specific_question",
+      "diagnostic_card.ask_at_most_one_question",
+      "response_planner.response_depth=short",
+      "active_line.should_ask_question=true",
+      "active_line.practice_suppression_active=true"
+    ],
+    "source_signals": {
+      "dialogue_pragmatics": {
+        "is_contextual_followup": true
+      },
+      "dialogue_act_resolution": {
+        "version": "dialogue_act_resolver_v1",
+        "dialogue_act": "summary_request",
+        "confidence": 0.92,
+        "evidence": [
+          "summary_request_markers"
+        ],
+        "not_exact_match_rule": true,
+        "reason": "explicit_current_conversation_summary_request",
+        "summary_scope": "current_conversation",
+        "should_not_confirm_last_offer": true,
+        "no_confirmation_needed": true
+      },
+      "answer_obligation_resolution": {
+        "version": "answer_obligation_resolver_v1",
+        "dialogue_act": "summary_request",
+        "answer_required": true,
+        "answer_obligation": "summarize_current_conversation",
+        "answer_shape": "structured_summary",
+        "question_policy": "none",
+        "practice_policy": "forbidden",
+        "depth": "medium",
+        "must_answer": "summary of current conversation",
+        "must_not": [
+          "ask whether the user wants a summary",
+          "answer the previous assistant offer instead of summarizing",
+          "add a practice unless the user explicitly asked for one"
+        ],
+        "writer_should": [
+          "summarize the current conversation in the Writer's own words",
+          "use available current conversation context as source",
+          "keep planner and diagnostic content advisory only"
+        ],
+        "summary_request": true,
+        "summary_scope": "current_conversation",
+        "should_not_confirm_last_offer": true,
+        "no_confirmation_needed": true,
+        "no_practice_unless_requested": true,
+        "style_overrides": {
+          "tone": "neutral",
+          "length_preference": "adaptive",
+          "complexity_preference": "normal",
+          "avoid": [],
+          "avoid_overexplaining": false,
+          "avoid_unrequested_practice": false
+        },
+        "source": [
+          "dialogue_act=summary_request",
+          "explicit_user_request=summary",
+          "profile_preset=free_dialogue_default"
+        ]
+      },
+      "style_state_summary": {},
+      "summary_request": true,
+      "summary_scope": "current_conversation",
+      "no_confirmation_needed": true,
+      "no_practice_unless_requested": true
+    },
+    "conflict_resolution": {
+      "authority_order": [
+        "minimal_safety_baseline",
+        "explicit_user_request",
+        "answer_obligation",
+        "last_offer_or_unanswered_question_recovery",
+        "style_preference",
+        "knowledge_or_concept_need",
+        "planner_and_diagnostic_advisory",
+        "writer_freedom"
+      ],
+      "safety_active": false,
+      "advisory_mode": true
+    }
+  }
+}

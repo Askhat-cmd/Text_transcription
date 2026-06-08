@@ -68,6 +68,32 @@ _CONCRETE_USER_ANCHORS = (
     "сжим",
     "конфликт",
 )
+_SUMMARY_RECONFIRM_MARKERS = (
+    "хочешь чтобы я подвел итог",
+    "хочешь, чтобы я подвел итог",
+    "хочешь чтобы я подвёл итог",
+    "хочешь, чтобы я подвёл итог",
+    "хотите чтобы я подвел итог",
+    "хотите, чтобы я подвел итог",
+    "хотите чтобы я подвёл итог",
+    "хотите, чтобы я подвёл итог",
+    "могу подвести итог",
+    "могу сделать резюме",
+    "подвести итог?",
+    "сделать резюме?",
+    "do you want me to summarize",
+    "would you like a summary",
+)
+_SUMMARY_LAST_OFFER_MARKERS = (
+    "могу так сделать",
+    "после подтверждения",
+    "подтверди",
+    "выбери формат",
+    "скажи что выбрать",
+    "да, могу",
+    "начнем после",
+    "начнём после",
+)
 
 
 def _normalize(text: str) -> str:
@@ -276,6 +302,26 @@ def build_final_answer_acceptance_gate_v1(
         if target and target_overlap < 0.10 and "нейросталкинг" not in _normalize(answer):
             failed_checks.append("repair_failed_to_answer_recovered_question")
 
+    summary_request = bool(
+        dialogue_act == "summary_request"
+        or answer_obligation == "summarize_current_conversation"
+        or directive.get("summary_request", False)
+    )
+    if summary_request:
+        if "?" in answer and _contains_any(answer, _SUMMARY_RECONFIRM_MARKERS):
+            failed_checks.append("summary_request_reconfirmed_instead_of_answered")
+        if _contains_any(answer, _SUMMARY_LAST_OFFER_MARKERS):
+            failed_checks.append("summary_answered_last_offer_instead")
+        summary_anchors = [
+            str(item).strip()
+            for item in list(directive.get("summary_context_anchors", []) or [])
+            if str(item).strip()
+        ]
+        if summary_anchors:
+            summary_overlap = max((_overlap_ratio(anchor, answer) for anchor in summary_anchors), default=0.0)
+            if summary_overlap < 0.06 and len(answer) < 700:
+                failed_checks.append("summary_answer_lacks_conversation_context")
+
     user_close = _contains_any(user, _CLOSE_MARKERS)
     answer_continues = _contains_any(answer, ("продолж", "механизм", "разбер", "практик", "шаг"))
     if user_close and answer_continues and dialogue_act in {"close_ack", "repair_complaint", "unknown"}:
@@ -308,6 +354,9 @@ def build_final_answer_acceptance_gate_v1(
         "answer_too_generic_for_concrete_situation",
         "answer_does_not_address_direct_question",
         "repair_failed_to_answer_recovered_question",
+        "summary_request_reconfirmed_instead_of_answered",
+        "summary_answered_last_offer_instead",
+        "summary_answer_lacks_conversation_context",
         "negative_goodbye_not_closed",
         "greeting_answered_with_mechanism_explanation",
         "self_intro_answered_with_lecture",
@@ -316,6 +365,7 @@ def build_final_answer_acceptance_gate_v1(
     status = "failed" if failed_checks else ("warning" if warnings else "passed")
     severity = "blocker" if high else ("medium" if failed_checks else ("low" if warnings else "none"))
     can_accept = status == "passed"
+    can_save_last_assistant_offer = bool(can_accept and not summary_request)
 
     return {
         "version": FINAL_ANSWER_ACCEPTANCE_GATE_VERSION,
@@ -329,7 +379,7 @@ def build_final_answer_acceptance_gate_v1(
         "can_mark_question_answered": bool(can_accept),
         "can_save_as_healthy_context": bool(can_accept),
         "can_use_as_summary_source": bool(can_accept),
-        "can_save_last_assistant_offer": bool(can_accept),
+        "can_save_last_assistant_offer": can_save_last_assistant_offer,
         "must_quarantine_answer": not bool(can_accept),
         "retry_recommended": bool(status == "failed"),
         "template_family_guard": {
@@ -359,6 +409,7 @@ def build_final_answer_acceptance_gate_v1(
             "previous_answer_similarity": round(float(_similarity(previous_text, answer)), 3),
             "markdown_requested": bool(_markdown_requested(user)),
             "markdown_detected": bool(_answer_has_markdown(answer)),
+            "summary_request": bool(summary_request),
         },
         "quarantine_reason": ", ".join(failed_checks),
     }

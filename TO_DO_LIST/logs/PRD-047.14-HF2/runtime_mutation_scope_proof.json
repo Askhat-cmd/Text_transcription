@@ -1,0 +1,39 @@
+{
+  "generated_at_utc": "2026-06-08T11:33:03.999834+00:00",
+  "status": "passed",
+  "changed_files": [
+    "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+    "bot_psychologist/bot_agent/multiagent/answer_obligation_resolver.py",
+    "bot_psychologist/bot_agent/multiagent/contracts/writer_contract.py",
+    "bot_psychologist/bot_agent/multiagent/dialogue_act_resolver.py",
+    "bot_psychologist/bot_agent/multiagent/final_answer_acceptance_gate.py",
+    "bot_psychologist/bot_agent/multiagent/final_answer_directive.py",
+    "bot_psychologist/tests/multiagent/test_writer_agent.py",
+    "docs/DECISIONS.md",
+    "docs/PRD_INDEX.md",
+    "docs/PROJECT_STATE.md",
+    "docs/ROADMAP.md",
+    "TO_DO_LIST/PRD-047.14-HF2_Summary_Request_Routing_Answer_Obligation_Repair_v1_RU.md",
+    "TO_DO_LIST/PRD-047.14-HF2_TASK_LIST.md",
+    "TO_DO_LIST/logs/PRD-047.14-HF2/",
+    "TO_DO_LIST/reports/PRD-047.14-HF2_IMPLEMENTATION_REPORT.md",
+    "TO_DO_LIST/reports/PRD-047.14-HF2_NEXT_PRD_RECOMMENDATION.md",
+    "TO_DO_LIST/tools/PRD-047.14-HF2/",
+    "bot_psychologist/tests/test_answer_obligation_summary_request_v1.py",
+    "bot_psychologist/tests/test_summary_request_routing_v1.py"
+  ],
+  "allowed_changed_runtime_files": [
+    "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+    "bot_psychologist/bot_agent/multiagent/answer_obligation_resolver.py",
+    "bot_psychologist/bot_agent/multiagent/contracts/writer_contract.py",
+    "bot_psychologist/bot_agent/multiagent/dialogue_act_resolver.py",
+    "bot_psychologist/bot_agent/multiagent/final_answer_acceptance_gate.py",
+    "bot_psychologist/bot_agent/multiagent/final_answer_directive.py"
+  ],
+  "disallowed_changed_files": [],
+  "disallowed_runtime_files": [],
+  "new_runtime_path_added": false,
+  "new_llm_agent_added": false,
+  "kb_governance_mutated": false,
+  "frontend_mutated": false
+}

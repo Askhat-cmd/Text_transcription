@@ -1,0 +1,135 @@
+{
+  "generated_at_utc": "2026-06-08T11:33:03.894212+00:00",
+  "status": "passed",
+  "cases": [
+    {
+      "name": "explicit_summary_outranks_open_offer",
+      "message": "подведи итог нашего разговора",
+      "expected": "summary_request",
+      "last_offer": {
+        "is_open": true,
+        "offer_type": "practice"
+      },
+      "pragmatics": {
+        "is_contextual_followup": true
+      },
+      "detector": {
+        "is_summary_request": true,
+        "reason": "explicit_current_conversation_summary_request",
+        "confidence": 0.92,
+        "summary_scope": "current_conversation",
+        "should_not_confirm_last_offer": true,
+        "no_confirmation_needed": true
+      },
+      "act": {
+        "version": "dialogue_act_resolver_v1",
+        "dialogue_act": "summary_request",
+        "confidence": 0.92,
+        "evidence": [
+          "summary_request_markers"
+        ],
+        "not_exact_match_rule": true,
+        "reason": "explicit_current_conversation_summary_request",
+        "summary_scope": "current_conversation",
+        "should_not_confirm_last_offer": true,
+        "no_confirmation_needed": true
+      },
+      "passed": true
+    },
+    {
+      "name": "recap_wording",
+      "message": "собери всё вместе: к чему мы пришли?",
+      "expected": "summary_request",
+      "detector": {
+        "is_summary_request": true,
+        "reason": "explicit_current_conversation_summary_request",
+        "confidence": 0.92,
+        "summary_scope": "current_conversation",
+        "should_not_confirm_last_offer": true,
+        "no_confirmation_needed": true
+      },
+      "act": {
+        "version": "dialogue_act_resolver_v1",
+        "dialogue_act": "summary_request",
+        "confidence": 0.92,
+        "evidence": [
+          "summary_request_markers"
+        ],
+        "not_exact_match_rule": true,
+        "reason": "explicit_current_conversation_summary_request",
+        "summary_scope": "current_conversation",
+        "should_not_confirm_last_offer": true,
+        "no_confirmation_needed": true
+      },
+      "passed": true
+    },
+    {
+      "name": "short_yes_not_summary",
+      "message": "да",
+      "expected": "confirmation_to_last_offer",
+      "last_offer": {
+        "is_open": true,
+        "offer_type": "example"
+      },
+      "pragmatics": {
+        "is_contextual_followup": true
+      },
+      "detector": {
+        "is_summary_request": false,
+        "reason": "no_summary_marker",
+        "confidence": 0.0
+      },
+      "act": {
+        "version": "dialogue_act_resolver_v1",
+        "dialogue_act": "confirmation_to_last_offer",
+        "confidence": 0.9,
+        "evidence": [
+          "last_assistant_offer_open",
+          "short_affirmative_reply"
+        ],
+        "not_exact_match_rule": true
+      },
+      "passed": true
+    },
+    {
+      "name": "direct_next_step_not_summary",
+      "message": "в итоге что мне делать прямо сейчас?",
+      "expected_not": "summary_request",
+      "detector": {
+        "is_summary_request": false,
+        "reason": "summary_negative_marker",
+        "confidence": 0.0
+      },
+      "act": {
+        "version": "dialogue_act_resolver_v1",
+        "dialogue_act": "direct_question",
+        "confidence": 0.8,
+        "evidence": [
+          "question_mark"
+        ],
+        "not_exact_match_rule": true
+      },
+      "passed": true
+    },
+    {
+      "name": "external_doc_not_current_summary",
+      "message": "подведи итог по документу",
+      "expected_detector": false,
+      "detector": {
+        "is_summary_request": false,
+        "reason": "summary_negative_marker",
+        "confidence": 0.0
+      },
+      "act": {
+        "version": "dialogue_act_resolver_v1",
+        "dialogue_act": "unknown",
+        "confidence": 0.4,
+        "evidence": [
+          "fallback_unknown"
+        ],
+        "not_exact_match_rule": true
+      },
+      "passed": true
+    }
+  ]
+}

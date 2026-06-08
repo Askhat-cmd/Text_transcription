@@ -1,0 +1,56 @@
+{
+  "generated_at_utc": "2026-06-08T11:33:03.895701+00:00",
+  "status": "passed",
+  "act": {
+    "version": "dialogue_act_resolver_v1",
+    "dialogue_act": "summary_request",
+    "confidence": 0.92,
+    "evidence": [
+      "summary_request_markers"
+    ],
+    "not_exact_match_rule": true,
+    "reason": "explicit_current_conversation_summary_request",
+    "summary_scope": "current_conversation",
+    "should_not_confirm_last_offer": true,
+    "no_confirmation_needed": true
+  },
+  "obligation": {
+    "version": "answer_obligation_resolver_v1",
+    "dialogue_act": "summary_request",
+    "answer_required": true,
+    "answer_obligation": "summarize_current_conversation",
+    "answer_shape": "structured_summary",
+    "question_policy": "none",
+    "practice_policy": "forbidden",
+    "depth": "medium",
+    "must_answer": "summary of current conversation",
+    "must_not": [
+      "ask whether the user wants a summary",
+      "answer the previous assistant offer instead of summarizing",
+      "add a practice unless the user explicitly asked for one"
+    ],
+    "writer_should": [
+      "summarize the current conversation in the Writer's own words",
+      "use available current conversation context as source",
+      "keep planner and diagnostic content advisory only"
+    ],
+    "summary_request": true,
+    "summary_scope": "current_conversation",
+    "should_not_confirm_last_offer": true,
+    "no_confirmation_needed": true,
+    "no_practice_unless_requested": true,
+    "style_overrides": {
+      "tone": "neutral",
+      "length_preference": "adaptive",
+      "complexity_preference": "normal",
+      "avoid": [],
+      "avoid_overexplaining": false,
+      "avoid_unrequested_practice": false
+    },
+    "source": [
+      "dialogue_act=summary_request",
+      "explicit_user_request=summary",
+      "profile_preset=free_dialogue_default"
+    ]
+  }
+}

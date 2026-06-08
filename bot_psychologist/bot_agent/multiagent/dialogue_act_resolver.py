@@ -78,7 +78,48 @@ _STYLE_MARKERS = (
     "без лекции",
     "без воды",
 )
-_SUMMARY_MARKERS = ("подведи итог", "суммируй", "резюме", "summary", "summarize")
+_SUMMARY_MARKERS = (
+    "подведи итог",
+    "подведи краткий итог",
+    "итог разговора",
+    "итог нашей беседы",
+    "итог нашего разговора",
+    "краткий итог",
+    "сделай итог",
+    "дай итог",
+    "сделай резюме",
+    "резюмируй",
+    "обобщи весь разговор",
+    "обобщи наш разговор",
+    "обобщи переписку",
+    "суммируй",
+    "собери кратко",
+    "собери все вместе",
+    "собери всё вместе",
+    "к чему мы пришли",
+    "что мы поняли",
+    "recap",
+    "summary",
+    "summarize",
+    "summarise",
+    "conversation summary",
+    "what did we cover",
+    "what have we concluded",
+)
+_SUMMARY_NEGATIVE_MARKERS = (
+    "в итоге что делать",
+    "в итоге что мне делать",
+    "итого ",
+    "итого:",
+    "сделай вывод из",
+    "подведи итог по документу",
+    "подведи итог статьи",
+    "подведи итог отчета",
+    "подведи итог отчёта",
+    "summary of this article",
+    "summarize this article",
+    "summarize this document",
+)
 _PRACTICE_MARKERS = ("практик", "упражн", "шаг", "что делать", "что сделать")
 _CLARIFICATION_MARKERS = ("что именно", "в каком смысле", "уточни", "clarify")
 _TOPIC_SHIFT_MARKERS = ("другая тема", "другой вопрос", "сменим тему", "новая тема")
@@ -129,6 +170,61 @@ def _contains_any(text: str, markers: tuple[str, ...]) -> bool:
     return any(marker in lowered for marker in markers)
 
 
+def detect_summary_request_route_v1(user_message: str) -> dict[str, Any]:
+    """Detect explicit current-conversation summary requests without stealing other intents."""
+
+    lowered = _normalize(user_message)
+    if not lowered:
+        return {
+            "is_summary_request": False,
+            "reason": "empty_user_message",
+            "confidence": 0.0,
+        }
+
+    if _contains_any(lowered, _SUMMARY_NEGATIVE_MARKERS):
+        return {
+            "is_summary_request": False,
+            "reason": "summary_negative_marker",
+            "confidence": 0.0,
+        }
+    if re.search(r"\bитого\s*[:=]?\s*\d", lowered):
+        return {
+            "is_summary_request": False,
+            "reason": "arithmetic_or_total_marker",
+            "confidence": 0.0,
+        }
+    if lowered.startswith("итог:"):
+        return {
+            "is_summary_request": False,
+            "reason": "user_statement_not_request",
+            "confidence": 0.0,
+        }
+
+    marker_hit = _contains_any(lowered, _SUMMARY_MARKERS)
+    if not marker_hit:
+        return {
+            "is_summary_request": False,
+            "reason": "no_summary_marker",
+            "confidence": 0.0,
+        }
+
+    if any(marker in lowered for marker in ("цитат", "стать", "документ", "отчет", "отчёт", "pdf", "url")):
+        return {
+            "is_summary_request": False,
+            "reason": "external_source_summary",
+            "confidence": 0.0,
+        }
+
+    return {
+        "is_summary_request": True,
+        "reason": "explicit_current_conversation_summary_request",
+        "confidence": 0.92,
+        "summary_scope": "current_conversation",
+        "should_not_confirm_last_offer": True,
+        "no_confirmation_needed": True,
+    }
+
+
 def _is_short_ack(text: str) -> bool:
     words = _extract_words(text)
     return bool(words) and len(words) <= 3 and all(word in _AFFIRM_MARKERS or word in {"понял", "ясно", "ладно"} for word in words)
@@ -174,13 +270,18 @@ def build_dialogue_act_resolution_v1(
             "not_exact_match_rule": True,
         }
 
-    if _contains_any(lowered, _SUMMARY_MARKERS):
+    summary_route = detect_summary_request_route_v1(lowered)
+    if bool(summary_route.get("is_summary_request", False)):
         return {
             "version": DIALOGUE_ACT_RESOLVER_VERSION,
             "dialogue_act": "summary_request",
-            "confidence": 0.90,
+            "confidence": float(summary_route.get("confidence", 0.92) or 0.92),
             "evidence": ["summary_request_markers"],
             "not_exact_match_rule": True,
+            "reason": str(summary_route.get("reason", "explicit_current_conversation_summary_request") or ""),
+            "summary_scope": "current_conversation",
+            "should_not_confirm_last_offer": True,
+            "no_confirmation_needed": True,
         }
 
     if _contains_any(lowered, _TOPIC_SHIFT_MARKERS):
@@ -374,4 +475,8 @@ def build_dialogue_act_resolution_v1(
     }
 
 
-__all__ = ["DIALOGUE_ACT_RESOLVER_VERSION", "build_dialogue_act_resolution_v1"]
+__all__ = [
+    "DIALOGUE_ACT_RESOLVER_VERSION",
+    "build_dialogue_act_resolution_v1",
+    "detect_summary_request_route_v1",
+]

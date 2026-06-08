@@ -1,0 +1,42 @@
+﻿{
+    "generated_at_utc":  "2026-06-08T11:31:45.9516670Z",
+    "tests_status":  "passed",
+    "commands":  [
+                     {
+                         "name":  "py_compile_runtime",
+                         "command":  ".venv\\Scripts\\python.exe -m py_compile bot_agent\\multiagent\\dialogue_act_resolver.py bot_agent\\multiagent\\answer_obligation_resolver.py bot_agent\\multiagent\\final_answer_directive.py bot_agent\\multiagent\\final_answer_acceptance_gate.py bot_agent\\multiagent\\contracts\\writer_contract.py bot_agent\\multiagent\\agents\\writer_agent.py",
+                         "exit_code":  0,
+                         "duration_ms":  183
+                     },
+                     {
+                         "name":  "pytest_summary_contracts",
+                         "command":  ".venv\\Scripts\\python.exe -m pytest -q tests\\test_summary_request_routing_v1.py tests\\test_answer_obligation_summary_request_v1.py tests\\test_final_answer_acceptance_gate_v1.py tests\\multiagent\\test_writer_agent.py",
+                         "exit_code":  0,
+                         "duration_ms":  1067
+                     },
+                     {
+                         "name":  "pytest_no_stub_regression",
+                         "command":  ".venv\\Scripts\\python.exe -m pytest -q tests\\test_no_hardcoded_user_facing_replies_v1.py tests\\test_writer_retry_conversion_no_stub_v1.py",
+                         "exit_code":  0,
+                         "duration_ms":  963
+                     },
+                     {
+                         "name":  "pytest_writer_contracts",
+                         "command":  ".venv\\Scripts\\python.exe -m pytest -q tests\\test_writer_contract_knowledge_answer.py tests\\test_writer_contract_response_planner.py tests\\test_writer_contract_response_planner_answer_fit.py tests\\test_writer_contract_context_package.py tests\\multiagent\\test_writer_contract.py",
+                         "exit_code":  0,
+                         "duration_ms":  939
+                     },
+                     {
+                         "name":  "pytest_planner_practice",
+                         "command":  ".venv\\Scripts\\python.exe -m pytest -q tests\\test_unified_dialogue_policy_v2.py tests\\test_response_planner.py tests\\test_response_planner_mvp_free_dialogue.py tests\\test_response_planner_mvp_practice_catalog.py tests\\test_knowledge_answer_practice_overview_routing.py",
+                         "exit_code":  0,
+                         "duration_ms":  929
+                     },
+                     {
+                         "name":  "hf2_acceptance_runner",
+                         "command":  "python ..\\TO_DO_LIST\\tools\\PRD-047.14-HF2\\run_summary_routing_acceptance.py",
+                         "exit_code":  0,
+                         "duration_ms":  860
+                     }
+                 ]
+}

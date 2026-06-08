@@ -1,8 +1,8 @@
-﻿# PRD Index
+# PRD Index
 
 | PRD | Название | Статус | Commit | Что изменилось | Отчёт |
 | --- | --- | --- | --- | --- | --- |
-| PRD-047.14 | Residual Legacy Runtime Modularity / Template Leakage Audit v1 | blocker | pending | audit-only blocker report: active template-family leakage found in `bot_psychologist/bot_agent/multiagent/concrete_answer_fit.py`, static summary/recap routing risk classified, runtime modularity and memory contamination paths audited, no runtime mutation performed, next repair recommended as `PRD-047.14-HF1` | TO_DO_LIST/reports/PRD-047.14_IMPLEMENTATION_REPORT.md |
+| PRD-047.14 | Residual Legacy Runtime Modularity / Template Leakage Audit v1 | blocker | 801e81c | audit-only blocker report: active template-family leakage found in `bot_psychologist/bot_agent/multiagent/concrete_answer_fit.py`, static summary/recap routing risk classified, runtime modularity and memory contamination paths audited, no runtime mutation performed, next repair recommended as `PRD-047.14-HF1` | TO_DO_LIST/reports/PRD-047.14_IMPLEMENTATION_REPORT.md |
 | PRD-047.13-HF1 | Complete Cleanup Closure / Legacy Split Removal / Docs Truth Finalization v1 | passed | b564fba | closes active cleanup noise after PRD-047.13: docs truth finalization, preset/alias split closure proof, empty artifact closure, active legacy-label cleanup, no runtime mutation, and regression revalidation | TO_DO_LIST/reports/PRD-047.13-HF1_IMPLEMENTATION_REPORT.md |
 | PRD-047.13 | Project Cleanup / Legacy Noise Reduction / Docs Truth Sync / Admin Surface Inventory | passed | 52caf78 | cleanup-only inventory/docs/admin/log hygiene step after accepted PRD-047.12-HF1; no runtime mutation, no archive/delete without manifest | TO_DO_LIST/reports/PRD-047.13_IMPLEMENTATION_REPORT.md |
 | PRD-047.12-HF1 | Final Answer Acceptance Gate / Real Live Loop / Web Markdown Rendering / Docs Truth Sync | passed | 328fdc0 | added `final_answer_acceptance_gate_v1`, stale-stub quarantine, one Writer retry through existing contract, real live/browser proof, Admin Runtime gate visibility, Web Chat markdown proof, and docs truth sync over existing unified runtime | TO_DO_LIST/reports/PRD-047.12-HF1_IMPLEMENTATION_REPORT.md |
@@ -139,4 +139,3 @@ PRD-046.1.36 Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1.
 - prd_id: PRD-046.1.35-HF4
 - commit_hash: 3a3c6a32a0c29551440432c0a266ab7cbab25b20
 - push_status: pushed_to_origin_main
-

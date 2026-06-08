@@ -2,7 +2,7 @@
   "generated_at_utc": "2026-06-08T09:25:41.674287+00:00",
   "source_head_before": "777c9e3f4b01a826e0b1be385924c14eb954a73f",
   "main_commit": "4c2c689",
-  "post_push_metadata_commit": "pending",
+  "post_push_metadata_commit": "016c7af",
   "push_status": "pushed_to_origin_main",
   "final_status": "blocker",
   "hardcoded_candidates_total": 1501,

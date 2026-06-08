@@ -43,7 +43,7 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
-- PRD-047.13-HF1 is the active cleanup closure step: docs truth finalization, legacy split label cleanup, empty artifact closure, and no-runtime-mutation proof.
+- No active PRD-047.13 cleanup blocker remains; PRD-047.13-HF1 closed active docs, legacy-label, empty-artifact, duplicate-doc, and unknown-current-doc noise with no runtime mutation.
 - No active PRD-047.12 blocker remains; unified dialogue policy v2 is accepted on the current developer-local runtime baseline.
 
 ## Next

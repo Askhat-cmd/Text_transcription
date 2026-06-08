@@ -1,0 +1,12 @@
+{
+  "generated_at_utc": "2026-06-08T06:02:28.826951+00:00",
+  "status": "passed",
+  "pytest_exit_code": 0,
+  "frontend_build_exit_code": 0,
+  "runtime_baseline_not_worse": true,
+  "optional_hf1_acceptance": {
+    "command": "python bot_psychologist/scripts/run_prd_047_12_hf1_acceptance.py --dry",
+    "status": "skipped_to_avoid_mutating_historical_prd_047_12_hf1_artifacts",
+    "reason": "The available runner has no --dry flag and writes PRD-047.12-HF1 reports; HF1 cleanup avoids historical artifact churn."
+  }
+}

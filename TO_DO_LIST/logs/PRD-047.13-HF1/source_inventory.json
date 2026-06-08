@@ -1,0 +1,58 @@
+{
+  "generated_at_utc": "2026-06-08T06:02:09.826412+00:00",
+  "source_head_before": "faad22a6a9cc222e275cb4e799583de3d8631747",
+  "required_sources": [
+    {
+      "path": "TO_DO_LIST/PRD-047.13-HF1.md",
+      "exists": true,
+      "size_bytes": 26238
+    },
+    {
+      "path": "TO_DO_LIST/PRD-047.13-HF1_TASK_LIST.md",
+      "exists": true,
+      "size_bytes": 3738
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.13/empty_artifacts_report.json",
+      "exists": true,
+      "size_bytes": 36946
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.13/encoding_scan_report.json",
+      "exists": true,
+      "size_bytes": 27623
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.13/legacy_terms_report.json",
+      "exists": true,
+      "size_bytes": 204433
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.13/unified_policy_split_closure_audit.json",
+      "exists": false,
+      "size_bytes": 0
+    }
+  ],
+  "active_docs_checked": [
+    "docs/PROJECT_STATE.md",
+    "docs/ROADMAP.md",
+    "docs/PRD_INDEX.md",
+    "docs/DECISIONS.md",
+    "bot_psychologist/docs/README.md",
+    "bot_psychologist/docs/PROJECT_STATUS_CURRENT.md",
+    "bot_psychologist/docs/ARCHITECTURE_CURRENT.md",
+    "bot_psychologist/docs/UNIFIED_DIALOGUE_POLICY_V2.md",
+    "bot_psychologist/docs/RUNTIME_PROFILES_AND_PRESETS.md",
+    "bot_psychologist/docs/FINAL_ANSWER_ACCEPTANCE_GATE.md",
+    "bot_psychologist/docs/NO_STUB_DIALOGUE_POLICY.md",
+    "bot_psychologist/docs/REAL_LIVE_ACCEPTANCE_PROTOCOL.md",
+    "bot_psychologist/docs/WEB_CHAT_MARKDOWN_RENDERING.md",
+    "bot_psychologist/docs/DIAGNOSTIC_CENTER_BOUNDARY.md"
+  ],
+  "admin_label_files_checked": [
+    "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
+    "bot_psychologist/web_ui/src/components/admin/DiagnosticCenterTab.tsx",
+    "bot_psychologist/web_ui/src/components/admin/AdminOverviewTab.tsx",
+    "bot_psychologist/web_ui/src/components/admin/OrchestratorTab.tsx"
+  ]
+}

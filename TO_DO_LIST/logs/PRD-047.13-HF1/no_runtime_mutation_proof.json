@@ -1,0 +1,23 @@
+{
+  "generated_at_utc": "2026-06-08T06:02:10.198318+00:00",
+  "status": "passed",
+  "changed_runtime_files": [],
+  "changed_ui_label_files": [
+    "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
+    "bot_psychologist/web_ui/src/components/admin/DiagnosticCenterTab.tsx"
+  ],
+  "ui_label_changes_behavior_unchanged": true,
+  "no_writer_logic_changed": true,
+  "no_orchestrator_logic_changed": true,
+  "no_dialogue_act_resolver_logic_changed": true,
+  "no_final_answer_gate_logic_changed": true,
+  "no_rag_chroma_changes": true,
+  "no_prompt_behavior_changes": true,
+  "no_runtime_path_created": true,
+  "no_new_llm_agent": true,
+  "diagnostic_center_not_deleted": true,
+  "diagnostic_center_advisory_only": true,
+  "production_ready": false,
+  "broad_rollout_allowed": false,
+  "normal_user_activation_allowed": false
+}

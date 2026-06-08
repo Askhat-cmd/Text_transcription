@@ -1,0 +1,14 @@
+{
+  "generated_at_utc": "2026-06-08T06:02:10.036252+00:00",
+  "status": "passed",
+  "misleading_admin_labels_count": 0,
+  "diagnostic_center_label_includes_advisory_boundary": true,
+  "profile_labels_explain_preset_alias": true,
+  "dev_only_surfaces_labeled": true,
+  "changed_files": [
+    "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
+    "bot_psychologist/web_ui/src/components/admin/DiagnosticCenterTab.tsx"
+  ],
+  "change_type": "label/help-text only",
+  "runtime_impact": "none"
+}

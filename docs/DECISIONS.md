@@ -1,4 +1,20 @@
-﻿# Architecture Decisions
+# Architecture Decisions
+
+## ADR-071 - PRD-047.13-HF1 closes active cleanup noise without runtime mutation
+
+Status: accepted
+
+Date: 2026-06-08
+
+Context: PRD-047.13 produced a cleanup inventory and proved runtime non-mutation, but active documentation still contained stale next-PRD references, living-doc metadata gaps, and potentially misleading profile/admin labels. Historical empty artifacts and encoding warnings also needed explicit closure classification.
+
+Decision:
+- PRD-047.13-HF1 may change docs, cleanup reports, manifests, placeholder explanations, and Web Admin help labels only;
+- `safe_guided`, `mvp_free_dialogue`, and `free_dialogue_default` are documented as presets/aliases of `unified_dialogue_policy_v2`, not separate systems;
+- historical artifacts remain preserved or manifest-classified; active empty/noisy artifacts must be closed;
+- Writer, Orchestrator, Dialogue Act Resolver, Final Answer Acceptance Gate, RAG/Chroma, prompt behavior, Diagnostic Center authority, production flags, and runtime paths remain unchanged.
+
+Consequences: PRD-047.13-HF1 is the final cleanup closure before `PRD-047.14 - Live Dialogue Quality Polish / Human Reference Calibration v1`.
 
 ## ADR-070 - PRD-047.13 cleanup boundary preserves runtime baseline
 
@@ -15,6 +31,7 @@ Decision:
 - `production_ready=false`, `broad_rollout_allowed=false`, and `normal_user_activation_allowed=false` remain invariant.
 
 Consequences: cleanup evidence lives under `TO_DO_LIST/logs/PRD-047.13/`; live dialogue quality work moves to PRD-047.14.
+
 ## ADR-068 - Writer-first prompt assembly for MVP profile
 
 Status: accepted

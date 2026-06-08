@@ -130,7 +130,10 @@ export const DiagnosticCenterTab: React.FC<Props> = ({ data, onRefresh, onSave, 
       </section>
 
       <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-        <h4 className="text-sm font-semibold text-slate-800">Boundary Flags</h4>
+        <h4 className="text-sm font-semibold text-slate-800">Boundary Flags (advisory-only, dev-local)</h4>
+        <p className="mt-1 text-xs text-slate-500">
+          Diagnostic Center visibility does not grant hard authority, production rollout, or normal-user activation.
+        </p>
         <div className="mt-2 grid grid-cols-1 gap-2 md:grid-cols-2 text-sm">
           <div className="rounded border border-slate-200 px-3 py-2">production_ready={String(Boolean(boundary?.production_ready))}</div>
           <div className="rounded border border-slate-200 px-3 py-2">broad_rollout_allowed={String(Boolean(boundary?.broad_rollout_allowed))}</div>

@@ -1,0 +1,12 @@
+{
+  "generated_at_utc": "2026-06-08T06:02:10.033254+00:00",
+  "status": "passed",
+  "active_duplicate_docs_count": 0,
+  "canonical_docs": {
+    "project_state": "docs/PROJECT_STATE.md",
+    "runtime_docs_index": "bot_psychologist/docs/README.md",
+    "unified_policy": "bot_psychologist/docs/UNIFIED_DIALOGUE_POLICY_V2.md",
+    "runtime_profiles": "bot_psychologist/docs/RUNTIME_PROFILES_AND_PRESETS.md"
+  },
+  "historical_or_reference_docs": "Other bot_psychologist/docs/*.md files remain reference docs unless listed in README living docs section."
+}

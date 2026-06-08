@@ -59,7 +59,7 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 - Historical artifact encoding noise may be misread as current runtime corruption without normalization report.
 
 ## Next Planned PRD
-`PRD-047.13 — Live Dialogue Quality Polish / Human Reference Calibration v1`
+`PRD-047.14 — Live Dialogue Quality Polish / Human Reference Calibration v1`
 ## Do Not Do Yet
 - Do not activate broad Diagnostic Center runtime authority.
 - Do not enable normal-user activation.

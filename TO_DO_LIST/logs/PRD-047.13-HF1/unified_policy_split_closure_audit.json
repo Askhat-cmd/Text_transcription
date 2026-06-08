@@ -1,0 +1,18 @@
+{
+  "generated_at_utc": "2026-06-08T06:02:10.038253+00:00",
+  "status": "passed",
+  "runtime_paths_count": 1,
+  "active_policy_surface": "unified_dialogue_policy_v2",
+  "safe_guided_status": "preset",
+  "mvp_free_dialogue_status": "alias",
+  "free_dialogue_default_status": "preset",
+  "active_bypass_count": 0,
+  "misleading_admin_labels_count": 0,
+  "misleading_docs_count": 0,
+  "evidence": [
+    "dialogue_policy.py defines UNIFIED_DIALOGUE_POLICY_VERSION=unified_dialogue_policy_v2 and PROFILE_ALIAS_TO_PRESET.",
+    "runtime_adapter.py exposes runtime_entrypoint=multiagent_adapter.",
+    "AdminPanel labels profile values as presets resolved by unified_dialogue_policy_v2.",
+    "UNIFIED_DIALOGUE_POLICY_V2.md states profile names are presets/aliases, not separate systems."
+  ]
+}

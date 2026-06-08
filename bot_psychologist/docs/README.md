@@ -1,7 +1,11 @@
 # Bot Psychologist Docs Index
 
 - status: current
-- last_verified_prd: PRD-047.13
+- last_verified_prd: PRD-047.13-HF1
+- source_of_truth: docs/PROJECT_STATE.md; docs/PRD_INDEX.md; /api/admin/runtime/effective
+- active_now: true
+- not_production_ready: true
+- related_artifacts: TO_DO_LIST/logs/PRD-047.13-HF1; TO_DO_LIST/reports/PRD-047.13-HF1_IMPLEMENTATION_REPORT.md
 - verification_scope: cleanup-only inventory, documentation truth sync, no runtime behavior changes
 
 This index separates living runtime documentation from historical evidence. Treat the files below as the current documentation surface unless a later PRD updates this index.
@@ -37,9 +41,15 @@ This index separates living runtime documentation from historical evidence. Trea
 
 Historical docs, migration notes, PRD artifacts, old generated reports, and archived evidence are reference-only. They must not override the living runtime docs or Admin Runtime effective payload.
 
+## How To Test
+
+- Run the targeted backend regression listed in `TO_DO_LIST/logs/PRD-047.13-HF1/test_command_output.txt`.
+- Run `npm run build` from `bot_psychologist/web_ui`.
+- Verify current effective policy through `/api/admin/runtime/effective`.
+
 ## PRD-047.13 Cleanup Boundary
 
-PRD-047.13 is documentation and artifact cleanup only. It does not change Writer, Orchestrator, Dialogue Act, RAG, Chroma retrieval, Diagnostic Center authority, Web Chat runtime behavior, or safety policy.
+PRD-047.13-HF1 closes documentation and artifact cleanup noise after PRD-047.13. It does not change Writer, Orchestrator, Dialogue Act, RAG, Chroma retrieval, Diagnostic Center authority, Web Chat runtime behavior, or safety policy.
 
 Current flags remain developer-local:
 
@@ -49,4 +59,4 @@ Current flags remain developer-local:
 
 Recommended next work item:
 
-- `PRD-047.14` - Runtime Context Quality Dashboard / Admin Evidence UX.
+- `PRD-047.14` - Live Dialogue Quality Polish / Human Reference Calibration v1.

@@ -43,10 +43,11 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
+- PRD-047.13-HF1 is the active cleanup closure step: docs truth finalization, legacy split label cleanup, empty artifact closure, and no-runtime-mutation proof.
 - No active PRD-047.12 blocker remains; unified dialogue policy v2 is accepted on the current developer-local runtime baseline.
 
 ## Next
-1. Start `PRD-047.13` for live dialogue quality polish / human-reference calibration on top of the passed unified dialogue-policy baseline.
+1. Start `PRD-047.14` for live dialogue quality polish / human-reference calibration on top of the passed unified dialogue-policy baseline after cleanup closure.
 2. Treat any further `PRD-047.12-HF*` only as residual regression repair if fresh live/browser/admin evidence reopens follow-up, preset-resolution, or rendering issues.
 
 ## Later

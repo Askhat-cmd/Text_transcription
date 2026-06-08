@@ -400,7 +400,10 @@ export const AdminPanel: React.FC = () => {
                         <div>writer_allow_long_answer: {String(Boolean(runtimeEffectiveData.writer_freedom_contract?.writer_allow_long_answer))}</div>
                       </div>
                       <div className="rounded border border-slate-200 p-3">
-                        <div className="font-medium">Dialogue Profile</div>
+                        <div className="font-medium">Dialogue Profile Preset / Alias</div>
+                        <div className="text-xs text-slate-500">
+                          Profiles are presets resolved by unified_dialogue_policy_v2, not separate runtime paths.
+                        </div>
                         <div>Unified Policy: {runtimeEffectiveData.dialogue_policy?.version ?? 'n/a'}</div>
                         <div>value: {runtimeEffectiveData.dialogue_profile?.value ?? 'safe_guided'}</div>
                         <div>active_profile_alias: {runtimeEffectiveData.dialogue_policy?.active_profile_alias ?? 'n/a'}</div>
@@ -429,7 +432,7 @@ export const AdminPanel: React.FC = () => {
                         <div>legacy_prompt_blocks_mode: {runtimeEffectiveData.dialogue_policy?.legacy_prompt_blocks_mode ?? 'n/a'}</div>
                         <div>legacy_blocks_visible_to_writer: {String(Boolean(runtimeEffectiveData.dialogue_policy?.legacy_blocks_visible_to_writer))}</div>
                         <div>legacy_blocks_source_signals_only: {String(Boolean(runtimeEffectiveData.dialogue_policy?.legacy_blocks_source_signals_only))}</div>
-                        <div>diagnostic_center_role: {runtimeEffectiveData.dialogue_policy?.diagnostic_center_role ?? 'n/a'}</div>
+                        <div>diagnostic_center_role: {runtimeEffectiveData.dialogue_policy?.diagnostic_center_role ?? 'n/a'} (advisory-only boundary)</div>
                         <div>planner_role: {runtimeEffectiveData.dialogue_policy?.planner_role ?? 'n/a'}</div>
                         <div>active_line_role: {runtimeEffectiveData.dialogue_policy?.active_line_role ?? 'n/a'}</div>
                         <div>diagnostic_card_role: {runtimeEffectiveData.dialogue_policy?.diagnostic_card_role ?? 'n/a'}</div>

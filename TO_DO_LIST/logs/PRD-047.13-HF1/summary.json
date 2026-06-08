@@ -1,0 +1,15 @@
+{
+  "prd": "PRD-047.13-HF1",
+  "generated_at_utc": "2026-06-08T06:02:29.209526+00:00",
+  "final_status": "passed",
+  "docs_truth_status": "passed",
+  "legacy_split_status": "removed_or_alias_only",
+  "active_doc_contradictions_count": 0,
+  "active_misleading_legacy_terms_count": 0,
+  "active_empty_artifacts_count": 0,
+  "active_duplicate_docs_count": 0,
+  "unknown_current_docs_count": 0,
+  "runtime_mutation_status": "passed",
+  "regression_status": "passed",
+  "git_hygiene_status": "passed"
+}

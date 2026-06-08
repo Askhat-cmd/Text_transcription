@@ -987,3 +987,22 @@ Consequences:
 - Admin Runtime, live evidence, and browser/admin acceptance expose one coherent effective policy contract;
 - no new LLM agent, no new runtime branch, no KB governance mutation, and no production rollout were introduced.
 
+## ADR-074 - User-facing static replies are not allowed outside narrow safety/minimal-contact boundaries
+
+Status: accepted
+
+Date: 2026-06-08
+
+Context: PRD-047.14-HF1.1 audited remaining hardcoded user-facing reply candidates after the active template-family fallback repair. The audit found active static explanation/repair/direct-answer candidates that can bypass Writer authorship if left as runtime answer factories.
+
+Decision:
+- keep Writer as the owner of semantic final answers;
+- allow static user-facing text only for narrow safety or minimal-contact boundaries with trace evidence;
+- treat repair/explanation/knowledge-answer stubs as candidates for targeted removal or conversion to Writer retry/contract signals;
+- keep detector constants, test fixtures, historical artifacts, and docs outside the user-facing reply boundary;
+- preserve audit-only no runtime mutation in PRD-047.14-HF1.1 and defer removal to `PRD-047.14-HF1.2`.
+
+Consequences:
+- no-stub boundary evidence is now explicit and reproducible;
+- future cleanup must remove or convert active static reply factories without adding a new Writer/orchestrator branch;
+- safety/minimal fallback exceptions remain narrow, documented, and auditable.

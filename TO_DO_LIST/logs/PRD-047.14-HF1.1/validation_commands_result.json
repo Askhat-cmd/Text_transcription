@@ -1,0 +1,11 @@
+﻿{
+    "py_compile_status":  "passed",
+    "py_compile_exit":  0,
+    "pytest_exit":  0,
+    "pytest_status":  "passed",
+    "audit_status":  "expected_nonzero_blocker",
+    "audit_exit":  1,
+    "generated_at_utc":  "2026-06-08T09:23:26.2429862Z",
+    "output_path":  "TO_DO_LIST/logs/PRD-047.14-HF1.1/test_command_output.txt",
+    "tests_status":  "passed"
+}

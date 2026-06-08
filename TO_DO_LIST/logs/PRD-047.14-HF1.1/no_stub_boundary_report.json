@@ -1,0 +1,67 @@
+{
+  "generated_at_utc": "2026-06-08T09:25:41.453619+00:00",
+  "status": "blocker",
+  "no_new_user_facing_stub_created": true,
+  "runtime_mutation_performed": false,
+  "summary": {
+    "generated_at_utc": "2026-06-08T09:25:41.419431+00:00",
+    "final_status": "blocker",
+    "hardcoded_candidates_total": 1501,
+    "active_user_facing_candidates": 131,
+    "blocker_stub_user_facing_count": 55,
+    "warning_needs_targeted_refactor_count": 41,
+    "allowed_safety_boundary_count": 16,
+    "allowed_minimal_boundary_count": 19,
+    "allowed_non_user_facing_count": 1370,
+    "unknown_active_candidates_count": 0,
+    "classification_counts": {
+      "allowed_non_user_facing": 1370,
+      "blocker_stub_user_facing": 55,
+      "warning_needs_targeted_refactor": 41,
+      "allowed_safety_boundary": 16,
+      "allowed_minimal_boundary": 19
+    },
+    "top_risky_files": [
+      [
+        "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+        49
+      ],
+      [
+        "bot_psychologist/bot_agent/multiagent/diagnostic_center.py",
+        17
+      ],
+      [
+        "bot_psychologist/bot_agent/multiagent/active_line.py",
+        11
+      ],
+      [
+        "bot_psychologist/bot_agent/multiagent/agents/validator_agent.py",
+        4
+      ],
+      [
+        "bot_psychologist/bot_agent/onboarding_flow.py",
+        3
+      ],
+      [
+        "bot_psychologist/bot_agent/prompt_registry_v2.py",
+        2
+      ],
+      [
+        "bot_psychologist/bot_agent/path_builder.py",
+        1
+      ],
+      [
+        "bot_psychologist/bot_agent/practices_recommender.py",
+        1
+      ],
+      [
+        "bot_psychologist/bot_agent/prompt_system_base.md",
+        1
+      ],
+      [
+        "bot_psychologist/bot_agent/multiagent/dialogue_act_resolver.py",
+        1
+      ]
+    ]
+  }
+}

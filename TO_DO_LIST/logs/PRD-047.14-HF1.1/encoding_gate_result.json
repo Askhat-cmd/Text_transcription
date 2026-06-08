@@ -1,0 +1,24 @@
+{
+  "generated_at_utc": "2026-06-08T09:25:41.673322+00:00",
+  "encoding_gate_status": "passed",
+  "files_checked_count": 23,
+  "allowed_source_fixtures_count": 3,
+  "allowed_source_fixtures": [
+    {
+      "path": "TO_DO_LIST/PRD-047.14-HF1.1_Hardcoded_User_Facing_Reply_Inventory_No_Stub_Boundary_Audit_v1_RU.md",
+      "marker_id": "replacement_char",
+      "reason": "User-supplied PRD source contains pre-existing mojibake; generated artifacts are still checked strictly."
+    },
+    {
+      "path": "TO_DO_LIST/PRD-047.14-HF1.1_Hardcoded_User_Facing_Reply_Inventory_No_Stub_Boundary_Audit_v1_RU.md",
+      "marker_id": "mojibake_r_pe",
+      "reason": "User-supplied PRD source contains pre-existing mojibake; generated artifacts are still checked strictly."
+    },
+    {
+      "path": "TO_DO_LIST/PRD-047.14-HF1.1_Hardcoded_User_Facing_Reply_Inventory_No_Stub_Boundary_Audit_v1_RU.md",
+      "marker_id": "mojibake_s_soft",
+      "reason": "User-supplied PRD source contains pre-existing mojibake; generated artifacts are still checked strictly."
+    }
+  ],
+  "issues": []
+}

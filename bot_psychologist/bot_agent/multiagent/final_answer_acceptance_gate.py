@@ -7,6 +7,7 @@ from difflib import SequenceMatcher
 from typing import Any
 
 from .stale_stub_detector import detect_stale_stub
+from .template_family_guard import detect_template_family_leakage
 
 
 FINAL_ANSWER_ACCEPTANCE_GATE_VERSION = "final_answer_acceptance_gate_v1"
@@ -213,6 +214,9 @@ def build_final_answer_acceptance_gate_v1(
     stale = detect_stale_stub(answer)
     if bool(stale.get("detected", False)):
         failed_checks.append("stale_stub_detected")
+    template_family_guard = detect_template_family_leakage(answer)
+    if bool(template_family_guard.get("leak_detected", False)):
+        failed_checks.append("template_family_leakage_detected")
 
     validator_blocked = bool(getattr(validator_result, "is_blocked", False))
     if not answer or bool(writer.get("error")) or validator_blocked:
@@ -291,6 +295,7 @@ def build_final_answer_acceptance_gate_v1(
     warnings = sorted(set(warnings))
     blocker_checks = {
         "stale_stub_detected",
+        "template_family_leakage_detected",
         "writer_error_or_empty_answer",
         "answer_too_generic_for_concrete_situation",
         "answer_does_not_address_direct_question",
@@ -315,9 +320,17 @@ def build_final_answer_acceptance_gate_v1(
         "answer_considered_real": bool(can_accept),
         "can_mark_question_answered": bool(can_accept),
         "can_save_as_healthy_context": bool(can_accept),
+        "can_use_as_summary_source": bool(can_accept),
         "can_save_last_assistant_offer": bool(can_accept),
         "must_quarantine_answer": not bool(can_accept),
         "retry_recommended": bool(status == "failed"),
+        "template_family_guard": {
+            **template_family_guard,
+            "contamination_quarantined": bool(
+                template_family_guard.get("leak_detected", False)
+                and not can_accept
+            ),
+        },
         "input_summary": {
             "dialogue_act": dialogue_act,
             "answer_obligation": answer_obligation,

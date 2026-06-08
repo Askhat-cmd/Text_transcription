@@ -26,7 +26,7 @@ from ..dialogue_policy import (
     format_conversation_context_for_writer_with_meta,
     normalize_dialogue_profile,
 )
-from ..concrete_answer_fit import build_contextual_no_practice_answer, evaluate_concrete_answer_fit
+from ..concrete_answer_fit import evaluate_concrete_answer_fit
 from ..stale_stub_detector import detect_stale_stub
 from ..prompt_constraint_section import format_prompt_constraint_section_v1
 from ..contracts.writer_contract import WriterContract
@@ -1391,12 +1391,9 @@ class WriterAgent:
                 return "Да, ты прав: я сдвинулся не туда. Вернусь к сути и продолжу разбор механизма без практики."
 
         if planner_practice_policy == "forbidden" and has_unsolicited_practice:
-            if active_line_intent == "understand_mechanism":
-                return (
-                    "Сейчас полезнее удержать фокус на механизме: попытка заранее все проконтролировать "
-                    "съедает ресурс еще до старта действия."
-                )
-            return "Сейчас лучше продолжить смысловую линию без перехода к практике."
+            self.last_debug["template_leakage_repair_deferred_to_gate"] = True
+            self._set_final_answer_shape_debug("template_repair_deferred_to_gate")
+            return self._strip_optional_followup_invitation(text) or text
 
         if (
             (planner_next_move == "deepen_mechanism" or user_mechanism_request)
@@ -1634,11 +1631,13 @@ class WriterAgent:
                     return sanitized_text
             if bool(answer_fit.get("needs_repair", False)) or bool(answer_fit.get("concrete_need", False)) or application_request:
                 self.last_debug["answer_fit_repair_applied"] = True
-                self._set_final_answer_shape_debug("contextual_direct_no_practice")
-                return build_contextual_no_practice_answer(user_message=user_message, concept=concept)
+                self.last_debug["template_leakage_repair_deferred_to_gate"] = True
+                self._set_final_answer_shape_debug("template_repair_deferred_to_gate")
+                return self._strip_optional_followup_invitation(text) or text
             self.last_debug["answer_fit_repair_applied"] = True
-            self._set_final_answer_shape_debug("contextual_direct_no_practice")
-            return build_contextual_no_practice_answer(user_message=user_message, concept=concept)
+            self.last_debug["template_leakage_repair_deferred_to_gate"] = True
+            self._set_final_answer_shape_debug("template_repair_deferred_to_gate")
+            return self._strip_optional_followup_invitation(text) or text
 
         if practice_overview_requested or planner_answer_shape == "practice_catalog_explanation":
             list_items = re.findall(r"(?m)^\s*(?:[-*•]|\d+[.)])\s+", text)
@@ -1721,16 +1720,10 @@ class WriterAgent:
 
         stale_stub = detect_stale_stub(text)
         if bool(stale_stub.get("detected", False)):
-            if bool(answer_fit.get("concrete_need", False)):
-                self.last_debug["answer_fit_repair_applied"] = True
-                self._set_final_answer_shape_debug("contextual_stale_stub_repair")
-                return build_contextual_no_practice_answer(user_message=user_message, concept=concept)
-            self._set_final_answer_shape_debug("stale_stub_repaired_direct")
-            return (
-                "Исправляю прошлую заготовку и отвечаю прямо. "
-                "Здесь механизм в том, что контроль включается заранее и забирает ресурс до действия; "
-                "поэтому важно сначала увидеть триггер и вернуть себе выбор в следующем конкретном ходе."
-            )
+            self.last_debug["answer_fit_repair_applied"] = bool(answer_fit.get("concrete_need", False))
+            self.last_debug["template_leakage_repair_deferred_to_gate"] = True
+            self._set_final_answer_shape_debug("stale_stub_retry_deferred_to_gate")
+            return text
 
         sanitized_final = text
         if answer_obligation in {

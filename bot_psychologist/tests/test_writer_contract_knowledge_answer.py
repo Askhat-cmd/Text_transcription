@@ -117,7 +117,7 @@ async def test_writer_prompt_contains_knowledge_answer_routing_markers() -> None
     assert "knowledge_answer_first=true" in user_input
     assert "do_not_ask_user_to_define_term_before_answering=true" in user_input
     assert "practice_allowed=false" in user_input
-    assert "practice_ban_instruction=true" in user_input
+    assert "practice_ban_instruction=no_exercise_but_answer_normally" in user_input
     assert "known_concept_clarification_ban=true" in user_input
     assert "external_surveillance_frame_ban=true" in user_input
 

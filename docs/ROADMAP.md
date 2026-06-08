@@ -1,6 +1,8 @@
 ﻿# Roadmap
 
 ## Done
+- PRD-047.14-HF1: removed active hardcoded template-family fallback from `concrete_answer_fit.py`, added detector-only `template_family_guard_v1` to the existing final-answer acceptance gate, changed Writer call sites to defer problematic drafts to existing retry/quarantine instead of canned replacement answers, and added tests/artifacts proving active template hits after repair are `0`.
+
 - PRD-047.14: completed residual legacy/runtime modularity/template leakage audit with blocker outcome and no runtime mutation. The audit found active template-family leakage in `bot_psychologist/bot_agent/multiagent/concrete_answer_fit.py`, static summary/recap routing risk, modularity hot spots, no-mutation proof, encoding gate, and next repair recommendation `PRD-047.14-HF1 - Template Leakage Quarantine / Summary Contamination Guard v1`.
 
 - PRD-047.13: completed project cleanup/docs truth-sync/admin surface inventory after the accepted PRD-047.12-HF1 baseline. It was cleanup-only: no Writer, Orchestrator, Gate, Dialogue Act Resolver, RAG/Chroma, Diagnostic Center authority, prompt behavior, production rollout, or normal-user activation changes.
@@ -45,13 +47,14 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
-- PRD-047.14 closed as an audit blocker: active template-family leakage remains classified and unfixed by design because the PRD was no-runtime-mutation audit-only.
+- PRD-047.14-HF1 closed the active template-family leakage blocker; the remaining PRD-047.14 warning is summary/recap routing.
+- PRD-047.14 closed as an audit blocker, then HF1 repaired the active template-family leakage without broadening runtime authority.
 - No active PRD-047.13 cleanup blocker remains; PRD-047.13-HF1 closed active docs, legacy-label, empty-artifact, duplicate-doc, and unknown-current-doc noise with no runtime mutation.
 - No active PRD-047.12 blocker remains; unified dialogue policy v2 is accepted on the current developer-local runtime baseline.
 
 ## Next
-1. Start `PRD-047.14-HF1 - Template Leakage Quarantine / Summary Contamination Guard v1` to remove/quarantine active template-family leakage and repair summary/recap routing without broad rollout.
-2. Treat live dialogue quality polish as later work after the leakage and summary contamination blockers are closed.
+1. Start `PRD-047.14-HF2 - Summary Request Routing / Answer Obligation Repair v1`.
+2. Treat live dialogue quality polish as later work after summary routing is repaired or explicitly accepted as non-blocking.
 
 ## Later
 - Operational hardening for governed limited runtime.

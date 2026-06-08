@@ -1,0 +1,11 @@
+# memory_contamination_guard_result
+
+- generated_at_utc: `2026-06-08T08:07:46.804883+00:00`
+- status: `passed`
+- version: `memory_contamination_guard_v1`
+- contaminated: `True`
+- healthy_memory_allowed: `False`
+- summary_source_allowed: `False`
+- last_assistant_offer_allowed: `False`
+- quarantine_reason: `answer_does_not_address_direct_question, answer_too_generic_for_concrete_situation, template_family_leakage_detected`
+- template_family_guard: `{"version": "template_family_guard_v1", "checked": true, "leak_detected": true, "markers": ["belief_check", "central_belief", "facts_vs_conclusion", "numbered_answer_skeleton", "numbered_belief_skeleton", "single_mechanism_reduction", "unraveling_practical_sense"], "action": "retry_or_quarantine", "contamination_quarantined": true, "user_facing_replacement_created": false}`

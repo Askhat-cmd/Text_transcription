@@ -333,7 +333,7 @@ def test_mvp_direct_concrete_request_returns_variants() -> None:
     assert agent.last_debug.get("final_answer_shape") == "direct_answer_with_variants"
 
 
-def test_mvp_formula_stub_rewritten_into_contextual_no_practice_answer() -> None:
+def test_mvp_formula_stub_defers_to_acceptance_gate_without_static_answer() -> None:
     agent = WriterAgent(client=_FakeClient("ok"), model="gpt-5-mini")
     contract = _mvp_contract(
         message="в разговоре с начальником я опять сжимаюсь и ухожу в молчание, объясни по моей ситуации без практик",
@@ -347,12 +347,12 @@ def test_mvp_formula_stub_rewritten_into_contextual_no_practice_answer() -> None
         "внимание еще до действия, поэтому энергия уходит в внутренний спор."
     )
     result = agent._enforce_answer_compliance(response_text, contract)
-    assert "в разговоре с начальником" in result.lower()
-    assert "сейчас полезнее не упражнение" not in result.lower()
-    assert agent.last_debug.get("final_answer_shape") == "contextual_direct_no_practice"
+    assert result == response_text
+    assert agent.last_debug.get("final_answer_shape") == "template_repair_deferred_to_gate"
     evaluator = agent.last_debug.get("answer_fit_evaluator") or {}
     assert evaluator.get("fit_status") == "fail"
     assert agent.last_debug.get("answer_fit_repair_applied") is True
+    assert agent.last_debug.get("template_leakage_repair_deferred_to_gate") is True
 
 
 def test_literal_markdown_echo_request_is_preserved() -> None:

@@ -1,0 +1,251 @@
+﻿PRD-047.14-HF1 validation transcript
+Generated: 2026-06-08T08:07:44.5841187Z
+
+## hf1 gate
+WORKDIR: C:\My_practice\Text_transcription
+COMMAND: python TO_DO_LIST\tools\PRD-047.14-HF1\run_template_leakage_hf1_gate.py
+{
+  "generated_at_utc": "2026-06-08T08:07:45.750332+00:00",
+  "source_head_before": "a7fa1f668a5d4509067c3f5582de8283914a7cd3",
+  "main_commit": "pending",
+  "post_push_metadata_commit": "pending",
+  "push_status": "pending",
+  "final_status": "passed",
+  "template_active_hits_before": 6,
+  "template_active_hits_after": 0,
+  "hardcoded_answer_factories_before": "build_contextual_no_practice_answer",
+  "hardcoded_answer_factories_after": "removed",
+  "concrete_answer_fit_status": "static_builder_removed",
+  "template_family_guard_status": "passed",
+  "memory_contamination_guard_status": "passed",
+  "summary_contamination_guard_status": "covered_by_can_use_as_summary_source",
+  "tests_status": "pending",
+  "live_status": "skipped_not_required",
+  "runtime_mutation_status": "passed",
+  "encoding_gate_status": "passed",
+  "docs_sync_status": "pending",
+  "known_warnings": "summary routing warning remains from PRD-047.14",
+  "known_blockers": "",
+  "next_prd": "PRD-047.14-HF2 - Summary Request Routing / Answer Obligation Repair v1"
+}
+EXIT_CODE: 0
+
+## hf1 acceptance
+WORKDIR: C:\My_practice\Text_transcription
+COMMAND: python TO_DO_LIST\tools\PRD-047.14-HF1\run_template_leakage_hf1_acceptance.py
+2026-06-08 13:07:46,798 | bot_agent.multiagent.thread_storage | INFO | [THREAD_STORAGE] storage_dir=C:\My_practice\Text_transcription\bot_psychologist\data\threads
+2026-06-08 13:07:46,802 | bot_agent | INFO | Bot Agent v0.11.0 initialized | pipeline: semantic->rerank->topK->llm | legacy_graph: disabled
+{
+  "generated_at_utc": "2026-06-08T08:07:46.804883+00:00",
+  "status": "passed",
+  "cases_passed": 5,
+  "cases_total": 5,
+  "cases": [
+    {
+      "id": "HF1-TL-001",
+      "type": "bad_answer_detector",
+      "passed": true,
+      "details": {
+        "version": "template_family_guard_v1",
+        "checked": true,
+        "leak_detected": true,
+        "markers": [
+          "belief_check",
+          "central_belief",
+          "facts_vs_conclusion",
+          "numbered_answer_skeleton",
+          "numbered_belief_skeleton",
+          "single_mechanism_reduction",
+          "unraveling_practical_sense"
+        ],
+        "action": "retry_or_quarantine",
+        "contamination_quarantined": true,
+        "user_facing_replacement_created": false
+      }
+    },
+    {
+      "id": "HF1-TL-002",
+      "type": "clean_answer_detector",
+      "passed": true,
+      "details": {
+        "version": "template_family_guard_v1",
+        "checked": true,
+        "leak_detected": false,
+        "markers": [],
+        "action": "passed",
+        "contamination_quarantined": false,
+        "user_facing_replacement_created": false
+      }
+    },
+    {
+      "id": "HF1-TL-003",
+      "type": "final_answer_gate_quarantine",
+      "passed": true,
+      "details": {
+        "status": "failed",
+        "failed_checks": [
+          "answer_does_not_address_direct_question",
+          "answer_too_generic_for_concrete_situation",
+          "template_family_leakage_detected"
+        ],
+        "template_family_guard": {
+          "version": "template_family_guard_v1",
+          "checked": true,
+          "leak_detected": true,
+          "markers": [
+            "belief_check",
+            "central_belief",
+            "facts_vs_conclusion",
+            "numbered_answer_skeleton",
+            "numbered_belief_skeleton",
+            "single_mechanism_reduction",
+            "unraveling_practical_sense"
+          ],
+          "action": "retry_or_quarantine",
+          "contamination_quarantined": true,
+          "user_facing_replacement_created": false
+        }
+      }
+    },
+    {
+      "id": "HF1-TL-004",
+      "type": "clean_answer_gate_pass",
+      "passed": true,
+      "details": {
+        "status": "passed",
+        "template_family_guard": {
+          "version": "template_family_guard_v1",
+          "checked": true,
+          "leak_detected": false,
+          "markers": [],
+          "action": "passed",
+          "contamination_quarantined": false,
+          "user_facing_replacement_created": false
+        }
+      }
+    },
+    {
+      "id": "HF1-TL-005",
+      "type": "memory_contamination_guard",
+      "passed": true,
+      "details": {
+        "version": "memory_contamination_guard_v1",
+        "contaminated": true,
+        "healthy_memory_allowed": false,
+        "summary_source_allowed": false,
+        "last_assistant_offer_allowed": false,
+        "quarantine_reason": "answer_does_not_address_direct_question, answer_too_generic_for_concrete_situation, template_family_leakage_detected",
+        "template_family_guard": {
+          "version": "template_family_guard_v1",
+          "checked": true,
+          "leak_detected": true,
+          "markers": [
+            "belief_check",
+            "central_belief",
+            "facts_vs_conclusion",
+            "numbered_answer_skeleton",
+            "numbered_belief_skeleton",
+            "single_mechanism_reduction",
+            "unraveling_practical_sense"
+          ],
+          "action": "retry_or_quarantine",
+          "contamination_quarantined": true,
+          "user_facing_replacement_created": false
+        }
+      }
+    }
+  ]
+}
+EXIT_CODE: 0
+
+## py compile
+WORKDIR: C:\My_practice\Text_transcription
+COMMAND: python -m py_compile bot_psychologist\bot_agent\multiagent\template_family_guard.py bot_psychologist\bot_agent\multiagent\concrete_answer_fit.py bot_psychologist\bot_agent\multiagent\final_answer_acceptance_gate.py bot_psychologist\bot_agent\multiagent\agents\writer_agent.py TO_DO_LIST\tools\PRD-047.14-HF1\run_template_leakage_hf1_gate.py TO_DO_LIST\tools\PRD-047.14-HF1\run_template_leakage_hf1_acceptance.py
+EXIT_CODE: 0
+
+## pytest final answer gate
+WORKDIR: C:\My_practice\Text_transcription\bot_psychologist
+COMMAND: .\.venv\Scripts\python.exe -m pytest tests/test_final_answer_acceptance_gate_v1.py -q
+.....                                                                    [100%]
+5 passed in 0.27s
+EXIT_CODE: 0
+
+## pytest template family guard
+WORKDIR: C:\My_practice\Text_transcription\bot_psychologist
+COMMAND: .\.venv\Scripts\python.exe -m pytest tests/test_template_family_leakage_guard_v1.py -q
+....                                                                     [100%]
+4 passed in 0.28s
+EXIT_CODE: 0
+
+## pytest concrete answer fit no static template
+WORKDIR: C:\My_practice\Text_transcription\bot_psychologist
+COMMAND: .\.venv\Scripts\python.exe -m pytest tests/test_concrete_answer_fit_no_static_template.py -q
+...                                                                      [100%]
+============================== warnings summary ===============================
+tests/test_concrete_answer_fit_no_static_template.py::test_writer_defers_formula_stub_to_gate_instead_of_static_rewrite
+  C:\My_practice\Text_transcription\bot_psychologist\tests\test_concrete_answer_fit_no_static_template.py:30: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    created_at=datetime.utcnow(),
+
+tests/test_concrete_answer_fit_no_static_template.py::test_writer_defers_formula_stub_to_gate_instead_of_static_rewrite
+  C:\My_practice\Text_transcription\bot_psychologist\tests\test_concrete_answer_fit_no_static_template.py:31: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    updated_at=datetime.utcnow(),
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+3 passed, 2 warnings in 0.29s
+EXIT_CODE: 0
+
+## pytest targeted regression suite
+WORKDIR: C:\My_practice\Text_transcription\bot_psychologist
+COMMAND: .\.venv\Scripts\python.exe -m pytest tests/test_final_answer_acceptance_gate_v1.py tests/test_knowledge_answer_practice_overview_routing.py tests/test_writer_contract_knowledge_answer.py tests/test_writer_contract_response_planner_answer_fit.py -q
+...........                                                              [100%]
+============================== warnings summary ===============================
+tests/test_writer_contract_knowledge_answer.py::test_writer_contract_prompt_context_contains_knowledge_answer_block
+tests/test_writer_contract_knowledge_answer.py::test_writer_prompt_contains_knowledge_answer_routing_markers
+tests/test_writer_contract_knowledge_answer.py::test_writer_post_enforces_known_concept_compliance
+  C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_contract_knowledge_answer.py:59: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    created_at=datetime.utcnow(),
+
+tests/test_writer_contract_knowledge_answer.py::test_writer_contract_prompt_context_contains_knowledge_answer_block
+tests/test_writer_contract_knowledge_answer.py::test_writer_prompt_contains_knowledge_answer_routing_markers
+tests/test_writer_contract_knowledge_answer.py::test_writer_post_enforces_known_concept_compliance
+  C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_contract_knowledge_answer.py:60: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    updated_at=datetime.utcnow(),
+
+tests/test_writer_contract_response_planner_answer_fit.py::test_writer_contract_exposes_answer_fit_related_planner_fields
+  <string>:23: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+tests/test_writer_contract_response_planner_answer_fit.py::test_writer_contract_exposes_answer_fit_related_planner_fields
+  <string>:24: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+11 passed, 8 warnings in 0.30s
+EXIT_CODE: 0
+
+## hf1 gate final after docs sync
+WORKDIR: C:\My_practice\Text_transcription
+COMMAND: python TO_DO_LIST\tools\PRD-047.14-HF1\run_template_leakage_hf1_gate.py
+{
+  "generated_at_utc": "2026-06-08T08:11:29.454829+00:00",
+  "source_head_before": "a7fa1f668a5d4509067c3f5582de8283914a7cd3",
+  "main_commit": "pending",
+  "post_push_metadata_commit": "pending",
+  "push_status": "pending",
+  "final_status": "passed",
+  "template_active_hits_before": 6,
+  "template_active_hits_after": 0,
+  "hardcoded_answer_factories_before": "build_contextual_no_practice_answer",
+  "hardcoded_answer_factories_after": "removed",
+  "concrete_answer_fit_status": "static_builder_removed",
+  "template_family_guard_status": "passed",
+  "memory_contamination_guard_status": "passed",
+  "summary_contamination_guard_status": "covered_by_can_use_as_summary_source",
+  "tests_status": "passed",
+  "live_status": "skipped_not_required",
+  "runtime_mutation_status": "passed",
+  "encoding_gate_status": "passed",
+  "docs_sync_status": "passed",
+  "known_warnings": "summary routing warning remains from PRD-047.14",
+  "known_blockers": "",
+  "next_prd": "PRD-047.14-HF2 - Summary Request Routing / Answer Obligation Repair v1"
+}
+EXIT_CODE: 0

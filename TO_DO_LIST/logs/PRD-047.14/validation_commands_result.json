@@ -1,0 +1,36 @@
+﻿{
+    "generated_at_utc":  "2026-06-08T07:32:59.6593069Z",
+    "validation_commands_status":  "warning_existing_runtime_regression_and_expected_audit_blocker",
+    "tests_status":  "warning_existing_runtime_regression",
+    "commands":  [
+                     {
+                         "name":  "summary routing live read-only probe",
+                         "command":  "python TO_DO_LIST/tools/PRD-047.14/run_summary_routing_audit.py --mode live --base-url http://127.0.0.1:8001",
+                         "workdir":  "C:/My_practice/Text_transcription",
+                         "exit_code":  0,
+                         "note":  "backend health available; chat/query write paths intentionally skipped"
+                     },
+                     {
+                         "name":  "audit tools py_compile",
+                         "command":  "python -m py_compile TO_DO_LIST/tools/PRD-047.14/run_prd_047_14_audit.py TO_DO_LIST/tools/PRD-047.14/run_summary_routing_audit.py",
+                         "workdir":  "C:/My_practice/Text_transcription",
+                         "exit_code":  0,
+                         "note":  "audit tools compile"
+                     },
+                     {
+                         "name":  "targeted runtime regression pytest",
+                         "command":  ".venv/Scripts/python.exe -m pytest tests/test_final_answer_acceptance_gate_v1.py tests/test_knowledge_answer_practice_overview_routing.py tests/test_writer_contract_knowledge_answer.py tests/test_writer_contract_response_planner_answer_fit.py -q",
+                         "workdir":  "C:/My_practice/Text_transcription/bot_psychologist",
+                         "exit_code":  1,
+                         "note":  "1 existing stale expectation failed: test expects practice_ban_instruction=true; 10 passed; PRD-047.14 did not mutate runtime/tests"
+                     },
+                     {
+                         "name":  "final static audit",
+                         "command":  "python TO_DO_LIST/tools/PRD-047.14/run_prd_047_14_audit.py --mode static",
+                         "workdir":  "C:/My_practice/Text_transcription",
+                         "exit_code":  1,
+                         "note":  "expected non-zero because audit intentionally reports active template leakage blocker"
+                     }
+                 ],
+    "failed_commands_count":  2
+}

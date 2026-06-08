@@ -1,0 +1,26 @@
+{
+  "generated_at_utc": "2026-06-08T07:34:14.971546+00:00",
+  "status": "passed",
+  "changed_files": [
+    "docs/PRD_INDEX.md",
+    "docs/PROJECT_STATE.md",
+    "docs/ROADMAP.md",
+    "TO_DO_LIST/PRD-047.14_Residual_Legacy_Runtime_Modularity_Template_Leakage_Audit_v1_RU.md",
+    "TO_DO_LIST/PRD-047.14_TASK_LIST.md",
+    "TO_DO_LIST/logs/PRD-047.14/",
+    "TO_DO_LIST/reports/PRD-047.14_IMPLEMENTATION_REPORT.md",
+    "TO_DO_LIST/reports/PRD-047.14_NEXT_PRD_RECOMMENDATION.md",
+    "TO_DO_LIST/tools/"
+  ],
+  "disallowed_changed_files": [],
+  "no_writer_behavior_changed": true,
+  "no_prompt_assembly_changed": true,
+  "no_orchestrator_changed": true,
+  "no_dialogue_act_resolver_changed": true,
+  "no_answer_obligation_changed": true,
+  "no_final_answer_gate_changed": true,
+  "no_rag_chroma_changes": true,
+  "no_diagnostic_center_authority_change": true,
+  "no_new_llm_agent": true,
+  "no_new_runtime_path": true
+}

@@ -1,0 +1,105 @@
+{
+  "generated_at_utc": "2026-06-08T07:34:14.906191+00:00",
+  "status": "warning",
+  "high_risk_count": 3,
+  "items": [
+    {
+      "file": "bot_psychologist/bot_agent/multiagent/orchestrator.py",
+      "lines_total": 1105,
+      "function_count": 7,
+      "largest_function_lines": 923,
+      "import_count": 41,
+      "responsibility_tags": [
+        "routing",
+        "prompt_assembly",
+        "memory_write",
+        "trace",
+        "safety",
+        "api"
+      ],
+      "god_object_risk": "high",
+      "reason": "4+ responsibility tags; largest function >120 lines; large file mixes routing/prompt/memory/trace"
+    },
+    {
+      "file": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "lines_total": 1883,
+      "function_count": 22,
+      "largest_function_lines": 680,
+      "import_count": 16,
+      "responsibility_tags": [
+        "routing",
+        "prompt_assembly",
+        "memory_write",
+        "trace",
+        "safety",
+        "api"
+      ],
+      "god_object_risk": "high",
+      "reason": "4+ responsibility tags; largest function >120 lines; large file mixes routing/prompt/memory/trace; very large multi-responsibility file"
+    },
+    {
+      "file": "bot_psychologist/bot_agent/multiagent/dialogue_policy.py",
+      "lines_total": 587,
+      "function_count": 24,
+      "largest_function_lines": 232,
+      "import_count": 3,
+      "responsibility_tags": [
+        "routing",
+        "prompt_assembly",
+        "memory_write",
+        "trace",
+        "safety"
+      ],
+      "god_object_risk": "medium",
+      "reason": "4+ responsibility tags; largest function >120 lines"
+    },
+    {
+      "file": "bot_psychologist/bot_agent/multiagent/response_planner.py",
+      "lines_total": 904,
+      "function_count": 18,
+      "largest_function_lines": 574,
+      "import_count": 5,
+      "responsibility_tags": [
+        "routing",
+        "memory_write",
+        "safety"
+      ],
+      "god_object_risk": "medium",
+      "reason": "largest function >120 lines"
+    },
+    {
+      "file": "bot_psychologist/bot_agent/multiagent/contracts/writer_contract.py",
+      "lines_total": 749,
+      "function_count": 2,
+      "largest_function_lines": 661,
+      "import_count": 13,
+      "responsibility_tags": [
+        "routing",
+        "prompt_assembly",
+        "memory_write",
+        "trace",
+        "safety"
+      ],
+      "god_object_risk": "medium",
+      "reason": "4+ responsibility tags; largest function >120 lines"
+    },
+    {
+      "file": "bot_psychologist/api/admin_routes.py",
+      "lines_total": 2082,
+      "function_count": 81,
+      "largest_function_lines": 245,
+      "import_count": 29,
+      "responsibility_tags": [
+        "routing",
+        "prompt_assembly",
+        "memory_write",
+        "trace",
+        "safety",
+        "api",
+        "admin_visibility"
+      ],
+      "god_object_risk": "high",
+      "reason": "4+ responsibility tags; largest function >120 lines; large file mixes routing/prompt/memory/trace; very large multi-responsibility file"
+    }
+  ]
+}

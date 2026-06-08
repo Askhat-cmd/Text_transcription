@@ -1,0 +1,52 @@
+{
+  "generated_at_utc": "2026-06-08T07:29:15.455327+00:00",
+  "mode": "dry",
+  "summary_routing_status": "warning_static_risk",
+  "summary_misroute_count": 0,
+  "summary_static_risk_count": 3,
+  "dedicated_summary_dialogue_act_present": true,
+  "dedicated_summary_answer_obligation_present": false,
+  "confirmation_to_last_offer_risk_present": true,
+  "cases": [
+    {
+      "id": "summary_recap_001",
+      "query": "Подведи краткий итог нашей беседы.",
+      "expected_dialogue_act": "summary_request",
+      "expected_answer_obligation": "summarize_conversation",
+      "mode": "dry_static",
+      "observed_static_route": "no_dedicated_summary_route_detected_static",
+      "confirmation_to_last_offer_risk_present": true,
+      "risk": "static_warning",
+      "runtime_mutated": false
+    },
+    {
+      "id": "summary_recap_002",
+      "query": "Кратко резюмируй, к чему мы пришли.",
+      "expected_dialogue_act": "summary_request",
+      "expected_answer_obligation": "summarize_conversation",
+      "mode": "dry_static",
+      "observed_static_route": "no_dedicated_summary_route_detected_static",
+      "confirmation_to_last_offer_risk_present": true,
+      "risk": "static_warning",
+      "runtime_mutated": false
+    },
+    {
+      "id": "summary_recap_003",
+      "query": "Собери выводы из нашего диалога.",
+      "expected_dialogue_act": "summary_request",
+      "expected_answer_obligation": "summarize_conversation",
+      "mode": "dry_static",
+      "observed_static_route": "no_dedicated_summary_route_detected_static",
+      "confirmation_to_last_offer_risk_present": true,
+      "risk": "static_warning",
+      "runtime_mutated": false
+    }
+  ],
+  "runtime_mutated": false,
+  "note": "Dry audit is static. It identifies routing risk but does not confirm a live runtime bug.",
+  "live_status": "skipped_no_read_only_summary_route_endpoint",
+  "backend_available": true,
+  "health_url": "http://127.0.0.1:8001/api/v1/health",
+  "health_response_sample": "{\"status\":\"healthy\",\"version\":\"0.6.1\",\"timestamp\":\"2026-06-08T12:29:15.566399\",\"data_source\":\"api\",\"blocks_loaded\":247,\"bot_data_base_api\":\"available\",\"modules\":{\"bot_agent\":true,\"conversation_memory\":true,\"state_classifier\":true,\"path_builder\":true,\"api\":true}}",
+  "reason": "Chat/query endpoints can mutate conversation state; audit-only PRD avoids live write paths."
+}

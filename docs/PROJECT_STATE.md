@@ -1,11 +1,13 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
+PRD-047.14 completed as an audit-only blocker cycle, not a runtime repair. The audit found active template-family leakage in `bot_psychologist/bot_agent/multiagent/concrete_answer_fit.py` and static summary/recap routing risk (`summary_request` has no dedicated answer-obligation route while `confirmation_to_last_offer` risk is present). No Writer, Orchestrator, prompts, policy, RAG/Chroma, Admin API, Web UI runtime, KB/governance, or database files were changed. Required artifacts are stored under `TO_DO_LIST/logs/PRD-047.14/`; the next repair path is `PRD-047.14-HF1 - Template Leakage Quarantine / Summary Contamination Guard v1`.
+
 PRD-047.13-HF1 completed cleanup closure after PRD-047.13: active docs contradictions, misleading legacy labels, active empty artifacts, active duplicate docs, and unknown current docs are closed with no runtime mutation. PRD-047.13 completed as the cleanup-only inventory and docs truth-sync step. It inventoried docs, reports, logs, admin surfaces, legacy terms, empty artifacts, and encoding/corruption candidates after the accepted PRD-047.12-HF1 baseline, without changing Writer, Orchestrator, Final Answer Acceptance Gate, Stale Stub Detector, Dialogue Act Resolver, RAG/Chroma, Diagnostic Center authority, or prompt/runtime behavior.
 
 PRD-047.12-HF1 is accepted as the current engineering baseline: `final_answer_acceptance_gate_v1` runs after Writer/Validator, failed/stale final answers are quarantined before unanswered-question closure, healthy context memory, and last-offer seeding, and Admin Runtime exposes gate capability. Web Chat markdown rendering uses the existing `ReactMarkdown` path with stronger real assistant bubble styling. Required live/browser/encoding/no-mutation artifacts passed under `TO_DO_LIST/logs/PRD-047.12-HF1/`.
 
-Current rollout boundary remains unchanged: `production_ready=false`, `broad_rollout_allowed=false`, and `normal_user_activation_allowed=false`. Next planned quality work after cleanup is `PRD-047.14 - Live Dialogue Quality Polish / Human Reference Calibration v1`.
+Current rollout boundary remains unchanged: `production_ready=false`, `broad_rollout_allowed=false`, and `normal_user_activation_allowed=false`. Next planned quality work is `PRD-047.14-HF1 - Template Leakage Quarantine / Summary Contamination Guard v1`.
 
 PRD-047.12 completed as a passed unification cycle: `unified_dialogue_policy_v2` now owns preset resolution (`safe_guided`, `free_dialogue_default`, `mvp_free_dialogue` alias), dialogue-act / last-offer / unanswered-question / style-state / answer-obligation layers are wired through the single multiagent runtime, Writer-first prompt assembly exposes one effective control/context contract, Admin Runtime shows unified policy/resolver state, and the dedicated PRD-047.12 acceptance runner finished `dry=passed`, `direct=passed`, `live=passed`, `browser=passed`, `admin_surface=passed`. Artifacts live under `TO_DO_LIST/logs/PRD-047.12/`; no new runtime path, no new LLM agent, and no governance-authority mutation were introduced.
 PRD-047.11-HF3 completed as a residual reality-repair cycle on top of HF2: concrete situation answers no longer fall back to the formula stub `Сейчас полезнее не упражнение...` in MVP cases that need a contextual explanation, bare gratitude turns keep deterministic `intent=contact` and `nervous_state=window`, real localhost Web Chat/Admin proof moved back to `localhost:3000`, and HF3 artifacts now capture source inventory, HF2 audit, reset/memory proof, browser/admin snapshots, live cases, and encoding hygiene under `TO_DO_LIST/logs/PRD-047.11-HF3/`. HF3 remains a local stabilization hotfix, not a rollout PRD; Diagnostic Center/Planner/Active Line remain advisory-only, and production readiness is still not claimed.
@@ -59,7 +61,7 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 - Historical artifact encoding noise may be misread as current runtime corruption without normalization report.
 
 ## Next Planned PRD
-`PRD-047.14 — Live Dialogue Quality Polish / Human Reference Calibration v1`
+`PRD-047.14-HF1 - Template Leakage Quarantine / Summary Contamination Guard v1`
 ## Do Not Do Yet
 - Do not activate broad Diagnostic Center runtime authority.
 - Do not enable normal-user activation.

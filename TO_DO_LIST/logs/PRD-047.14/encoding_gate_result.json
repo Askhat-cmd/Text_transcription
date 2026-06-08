@@ -1,0 +1,14 @@
+{
+  "generated_at_utc": "2026-06-08T07:34:15.101891+00:00",
+  "encoding_gate_status": "passed",
+  "files_checked_count": 35,
+  "allowed_fixture_count": 1,
+  "allowed_fixtures": [
+    {
+      "path": "TO_DO_LIST/PRD-047.14_Residual_Legacy_Runtime_Modularity_Template_Leakage_Audit_v1_RU.md",
+      "marker": "'\\ufffd'",
+      "reason": "PRD source intentionally lists forbidden marker as encoding-gate fixture."
+    }
+  ],
+  "issues": []
+}

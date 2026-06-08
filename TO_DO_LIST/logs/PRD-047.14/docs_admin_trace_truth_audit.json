@@ -1,0 +1,47 @@
+{
+  "generated_at_utc": "2026-06-08T07:34:14.913945+00:00",
+  "status": "passed",
+  "warning_count": 0,
+  "items": [
+    {
+      "path": "docs/PROJECT_STATE.md",
+      "issues": [],
+      "status": "passed"
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "issues": [],
+      "status": "passed"
+    },
+    {
+      "path": "docs/PRD_INDEX.md",
+      "issues": [],
+      "status": "passed"
+    },
+    {
+      "path": "docs/DECISIONS.md",
+      "issues": [],
+      "status": "passed"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-047.13-HF1_IMPLEMENTATION_REPORT.md",
+      "issues": [],
+      "status": "passed"
+    },
+    {
+      "path": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
+      "issues": [],
+      "status": "passed"
+    },
+    {
+      "path": "bot_psychologist/web_ui/src/components/admin/DiagnosticCenterTab.tsx",
+      "issues": [],
+      "status": "passed"
+    },
+    {
+      "path": "bot_psychologist/api/admin_routes.py",
+      "issues": [],
+      "status": "passed"
+    }
+  ]
+}

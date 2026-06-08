@@ -1,0 +1,31 @@
+﻿PRD-047.14 validation transcript
+Generated: 2026-06-08T07:32:59.7294784Z
+
+## summary routing live read-only probe
+COMMAND: python TO_DO_LIST/tools/PRD-047.14/run_summary_routing_audit.py --mode live --base-url http://127.0.0.1:8001
+EXIT_CODE: 0
+RESULT: backend health available; live chat/query write paths skipped by design because PRD-047.14 is audit-only.
+SUMMARY_STATUS: warning_static_risk
+SUMMARY_MISROUTE_COUNT: 0
+SUMMARY_STATIC_RISK_COUNT: 3
+LIVE_STATUS: skipped_no_read_only_summary_route_endpoint
+
+## audit tools py_compile
+COMMAND: python -m py_compile TO_DO_LIST/tools/PRD-047.14/run_prd_047_14_audit.py TO_DO_LIST/tools/PRD-047.14/run_summary_routing_audit.py
+EXIT_CODE: 0
+RESULT: passed.
+
+## targeted runtime regression pytest
+WORKDIR: C:/My_practice/Text_transcription/bot_psychologist
+COMMAND: .venv/Scripts/python.exe -m pytest tests/test_final_answer_acceptance_gate_v1.py tests/test_knowledge_answer_practice_overview_routing.py tests/test_writer_contract_knowledge_answer.py tests/test_writer_contract_response_planner_answer_fit.py -q
+EXIT_CODE: 1
+RESULT: 10 passed, 1 failed, 8 warnings.
+FAILED_TEST: tests/test_writer_contract_knowledge_answer.py::test_writer_prompt_contains_knowledge_answer_routing_markers
+REASON: existing stale expectation requires practice_ban_instruction=true in Writer prompt. PRD-047.14 made no runtime/test behavior changes, so this is recorded as an existing regression risk, not repaired in this audit-only PRD.
+
+## final static audit
+COMMAND: python TO_DO_LIST/tools/PRD-047.14/run_prd_047_14_audit.py --mode static
+EXIT_CODE: 1
+RESULT: expected non-zero because final_status=blocker.
+BLOCKER: active template-family leakage remains in bot_psychologist/bot_agent/multiagent/concrete_answer_fit.py.
+GATES: runtime_mutation_status=passed; encoding_gate_status=passed; docs_truth_status=passed.

@@ -1,0 +1,23 @@
+{
+  "generated_at_utc": "2026-06-08T07:29:15.451290+00:00",
+  "cases": [
+    {
+      "id": "summary_recap_001",
+      "query": "Подведи краткий итог нашей беседы.",
+      "expected_dialogue_act": "summary_request",
+      "expected_answer_obligation": "summarize_conversation"
+    },
+    {
+      "id": "summary_recap_002",
+      "query": "Кратко резюмируй, к чему мы пришли.",
+      "expected_dialogue_act": "summary_request",
+      "expected_answer_obligation": "summarize_conversation"
+    },
+    {
+      "id": "summary_recap_003",
+      "query": "Собери выводы из нашего диалога.",
+      "expected_dialogue_act": "summary_request",
+      "expected_answer_obligation": "summarize_conversation"
+    }
+  ]
+}

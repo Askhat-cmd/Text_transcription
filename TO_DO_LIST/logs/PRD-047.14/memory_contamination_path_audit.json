@@ -1,0 +1,1047 @@
+{
+  "generated_at_utc": "2026-06-08T07:34:14.791144+00:00",
+  "status": "passed",
+  "memory_related_paths_count": 173,
+  "active_memory_template_warning_count": 0,
+  "template_leakage_status": "blocker",
+  "items": [
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/memory_retrieval.py",
+      "classification": "active_runtime",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/memory_retrieval_config.py",
+      "classification": "active_runtime",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/thread_manager.py",
+      "classification": "active_runtime",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/thread_manager_prompts.py",
+      "classification": "active_prompt_surface",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/memory_bundle.py",
+      "classification": "active_runtime",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/thread_state.py",
+      "classification": "active_runtime",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/turn_llm_summary.py",
+      "classification": "active_runtime",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/prompts/turn_llm_summary_v1.md",
+      "classification": "active_prompt_surface",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/thread_storage.py",
+      "classification": "active_runtime",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/turn_summary_service.py",
+      "classification": "active_runtime",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "bot_psychologist/docs/thread_lifecycle.md",
+      "classification": "active_docs",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "bot_psychologist/web_ui/src/components/admin/ThreadsTab.tsx",
+      "classification": "active_admin_surface",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/live_feedback/PRD-047.7/reports/sample_session_summary.json",
+      "classification": "reference",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/live_feedback/PRD-047.7/reports/sample_session_summary.md",
+      "classification": "reference",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-045.6.3/summary_processor_smoke.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-045.6.3/turn_summary_eval_snapshot.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-045.6.3-HF1/summary_processor_pending_to_ready_smoke.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-045.6.3-HF1/turn_summary_eval_snapshot.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.11/final_runtime_readiness_summary.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.5/enrichment_diff_summary.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.5-APPLY1/apply_diff_summary.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.5-HF1/enrichment_calibration_diff_summary.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.5-HF1/enrichment_diff_summary.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.5-RUN1/enrichment_calibration_diff_summary.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.5-RUN1/enrichment_diff_summary.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.5-RUN1/real_enrichment_diff_summary.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.5-RUN1-HF2/enrichment_calibration_diff_summary.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.5-RUN1-HF2/enrichment_diff_summary.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.5-RUN1-HF2/real_enrichment_diff_summary.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.5-RUN1-HF3/enrichment_calibration_diff_summary.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.5-RUN1-HF3/enrichment_diff_summary.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.5-RUN1-HF3/real_enrichment_diff_summary.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.9.1/review_decisions_summary.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.9.1-HF1/review_decisions_summary.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_normal_user_summary.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_quality_summary.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_rollback_summary.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_trace_sanitization_summary.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.35-HF1/memory_retrieval_delivery_trace.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.35-HF2/memory_agent_delivery_probe.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.35-HF3/memory_agent_delivery_probe.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.10-HF2/live_turn_exports/HF2-001/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.10-HF2/live_turn_exports/HF2-001/turn_02.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.10-HF2/live_turn_exports/HF2-002/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.10-HF2/live_turn_exports/HF2-002/turn_02.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.10-HF2/live_turn_exports/HF2-003/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.10-HF2/live_turn_exports/HF2-003/turn_02.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.10-HF2/live_turn_exports/HF2-004/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.10-HF2/live_turn_exports/HF2-004/turn_02.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.10-HF2/live_turn_exports/HF2-005/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.10-HF2/live_turn_exports/HF2-005/turn_02.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.10-HF2/live_turn_exports/HF2-006/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.10-HF2/live_turn_exports/HF2-006/turn_02.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.10-HF2/live_turn_exports/HF2-007/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.10-HF2/live_turn_exports/HF2-008/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.10-HF2/live_turn_exports/HF2-008/turn_02.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.10-HF2/live_turn_exports/HF2-008/turn_03.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.10-HF2/live_turn_exports/summary.md",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-001-ddee6668/01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-001-ddee6668/01_final_answer.md",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-001-ddee6668/01_writer_prompt.txt",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-001-ddee6668/02.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-001-ddee6668/02_final_answer.md",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-001-ddee6668/02_writer_prompt.txt",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-001-ddee6668/conversation.md",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-002-2aa1fe77/01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-002-2aa1fe77/01_final_answer.md",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-002-2aa1fe77/01_writer_prompt.txt",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-002-2aa1fe77/conversation.md",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-003-849d4585/01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-003-849d4585/01_final_answer.md",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-003-849d4585/01_writer_prompt.txt",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-003-849d4585/conversation.md",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-004-5d2cfa1f/01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-004-5d2cfa1f/01_final_answer.md",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-004-5d2cfa1f/01_writer_prompt.txt",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-004-5d2cfa1f/conversation.md",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-005-1ad6b671/01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-005-1ad6b671/01_final_answer.md",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-005-1ad6b671/01_writer_prompt.txt",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-005-1ad6b671/conversation.md",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-006-8b62b29f/01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-006-8b62b29f/01_final_answer.md",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-006-8b62b29f/01_writer_prompt.txt",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-006-8b62b29f/conversation.md",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-BOSS-001/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-BOSS-002/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-BOSS-003/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-DA-001/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-DA-002/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-DA-003/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-FU-001/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-FU-001/turn_02.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-FU-002/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-FU-003/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-GR-001/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-GR-002/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-GR-002/turn_02.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-GR-003/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-OE-001/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-OE-002/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-OE-003/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-RP-001/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-RP-002/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-RP-003/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/live_turn_exports/HF2-LIVE-001/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/live_turn_exports/HF2-LIVE-002/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/live_turn_exports/HF2-LIVE-002/turn_02.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/live_turn_exports/HF2-LIVE-003/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/live_turn_exports/HF2-LIVE-004/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/live_turn_exports/HF2-LIVE-005/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/live_turn_exports/HF2-LIVE-005/turn_02.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/user_memory_profile_clear_event.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/live_turn_exports/HF3-C01/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/live_turn_exports/HF3-C02/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/live_turn_exports/HF3-C03/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/live_turn_exports/HF3-C04/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/raw_traces/user_memory_profile_clear_event.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/summary.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T01/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T02/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T03/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T04/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T04/turn_02.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T05/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T05/turn_02.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T06/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T07/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T08/turn_01.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/summary.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L01/cycle_1_turn_1.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L01/cycle_2_turn_1.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 7,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L05/cycle_1_turn_1.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 7,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L05/cycle_2_turn_1.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 7,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L06/cycle_1_turn_1.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L06/cycle_1_turn_2.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L06/cycle_2_turn_1.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L06/cycle_2_turn_2.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L07/cycle_1_turn_1.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L07/cycle_2_turn_1.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L08/cycle_1_turn_1.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L08/cycle_2_turn_1.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L10/cycle_1_turn_1.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L10/cycle_2_turn_1.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/summary.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.13/summary.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.13-HF1/iterations/iteration_01_summary.md",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.13-HF1/iterations/iteration_02_summary.md",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.13-HF1/summary.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14/implementation_summary.json",
+      "classification": "current_audit_artifact",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14/memory_contamination_path_audit.json",
+      "classification": "current_audit_artifact",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14/memory_contamination_path_audit.md",
+      "classification": "current_audit_artifact",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14/summary_routing_audit.json",
+      "classification": "current_audit_artifact",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14/summary_routing_audit.md",
+      "classification": "current_audit_artifact",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14/summary_routing_cases.json",
+      "classification": "current_audit_artifact",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14/template_leakage_audit_summary.json",
+      "classification": "current_audit_artifact",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14/template_leakage_audit_summary.md",
+      "classification": "current_audit_artifact",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.5/planner_answer_fit_summary.md",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.5-HF1/planner_answer_fit_summary.md",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.6/planner_drift_summary.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-045.4_thread_manager_diagnostics_v1.md",
+      "classification": "prd_source_or_reference",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-045.6.1_context_assembly_calibration_micro_summary_quality_guard.md",
+      "classification": "prd_source_or_reference",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-045.6.3-HF1_Turn_Summary_Eval_Validator_Processor_Evidence_Calibration_v1.md",
+      "classification": "prd_source_or_reference",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-045.6.3_Async_Turn_LLM_Summary_Store_v1.md",
+      "classification": "prd_source_or_reference",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-045.6_context_assembly_turn_micro_summary.md",
+      "classification": "prd_source_or_reference",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-046.0.11_Final_Runtime_Readiness_Summary_v1_RU.md",
+      "classification": "prd_source_or_reference",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-046.0.5_Offline_LLM_Summary_Lens_Enrichment_v1.md",
+      "classification": "prd_source_or_reference",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-045.4_THREAD_DIAGNOSTICS_SMOKE_REPORT.json",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-045.4_THREAD_DIAGNOSTICS_SMOKE_REPORT.md",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-045.6.3_CONTEXT_ASSEMBLY_SUMMARY_TRACE_REPORT.md",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-045.6.3_TURN_SUMMARY_CONTRACT_REPORT.md",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.0.11_FINAL_RUNTIME_READINESS_SUMMARY.md",
+      "classification": "historical_evidence",
+      "template_marker_count": 0,
+      "risk": "low"
+    },
+    {
+      "path": "TO_DO_LIST/tools/PRD-047.14/run_summary_routing_audit.py",
+      "classification": "audit_tool",
+      "template_marker_count": 0,
+      "risk": "low"
+    }
+  ]
+}

@@ -1,0 +1,329 @@
+{
+  "generated_at_utc": "2026-06-08T07:34:14.423524+00:00",
+  "items": [
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/concrete_answer_fit.py",
+      "phrase": "в твоем описании важно не свести все к одному общему механизму",
+      "classification": "active_blocker",
+      "path_classification": "active_runtime"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/concrete_answer_fit.py",
+      "phrase": "Сначала отдели факты от вывода",
+      "classification": "active_blocker",
+      "path_classification": "active_runtime"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/concrete_answer_fit.py",
+      "phrase": "Затем найди центральное убеждение",
+      "classification": "active_blocker",
+      "path_classification": "active_runtime"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/concrete_answer_fit.py",
+      "phrase": "После этого проверь",
+      "classification": "active_blocker",
+      "path_classification": "active_runtime"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/concrete_answer_fit.py",
+      "phrase": "Практический смысл распутывания",
+      "classification": "active_blocker",
+      "path_classification": "active_runtime"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/cycles/cycle_01.json",
+      "phrase": "в твоем описании важно не свести все к одному общему механизму",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/cycles/cycle_01.json",
+      "phrase": "Сначала отдели факты от вывода",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/cycles/cycle_02.json",
+      "phrase": "в твоем описании важно не свести все к одному общему механизму",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/cycles/cycle_02.json",
+      "phrase": "Сначала отдели факты от вывода",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_acceptance_cycles.json",
+      "phrase": "в твоем описании важно не свести все к одному общему механизму",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_acceptance_cycles.json",
+      "phrase": "Сначала отдели факты от вывода",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_cases_result.json",
+      "phrase": "в твоем описании важно не свести все к одному общему механизму",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_cases_result.json",
+      "phrase": "Сначала отдели факты от вывода",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_cases_result.md",
+      "phrase": "в твоем описании важно не свести все к одному общему механизму",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L01/cycle_2_turn_1.json",
+      "phrase": "в твоем описании важно не свести все к одному общему механизму",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L01/cycle_2_turn_1.json",
+      "phrase": "Сначала отдели факты от вывода",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L01/cycle_2_turn_1.json",
+      "phrase": "Затем найди центральное убеждение",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L01/cycle_2_turn_1.json",
+      "phrase": "После этого проверь",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L01/cycle_2_turn_1.json",
+      "phrase": "Практический смысл распутывания",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L05/cycle_1_turn_1.json",
+      "phrase": "в твоем описании важно не свести все к одному общему механизму",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L05/cycle_1_turn_1.json",
+      "phrase": "Сначала отдели факты от вывода",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L05/cycle_1_turn_1.json",
+      "phrase": "Затем найди центральное убеждение",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L05/cycle_1_turn_1.json",
+      "phrase": "После этого проверь",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L05/cycle_1_turn_1.json",
+      "phrase": "Практический смысл распутывания",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L05/cycle_2_turn_1.json",
+      "phrase": "в твоем описании важно не свести все к одному общему механизму",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L05/cycle_2_turn_1.json",
+      "phrase": "Сначала отдели факты от вывода",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L05/cycle_2_turn_1.json",
+      "phrase": "Затем найди центральное убеждение",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L05/cycle_2_turn_1.json",
+      "phrase": "После этого проверь",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L05/cycle_2_turn_1.json",
+      "phrase": "Практический смысл распутывания",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L01_cycle_2_trace.json",
+      "phrase": "в твоем описании важно не свести все к одному общему механизму",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L01_cycle_2_trace.json",
+      "phrase": "Сначала отдели факты от вывода",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L01_cycle_2_trace.json",
+      "phrase": "Затем найди центральное убеждение",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L01_cycle_2_trace.json",
+      "phrase": "После этого проверь",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L01_cycle_2_trace.json",
+      "phrase": "Практический смысл распутывания",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L05_cycle_1_trace.json",
+      "phrase": "в твоем описании важно не свести все к одному общему механизму",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L05_cycle_1_trace.json",
+      "phrase": "Сначала отдели факты от вывода",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L05_cycle_1_trace.json",
+      "phrase": "Затем найди центральное убеждение",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L05_cycle_1_trace.json",
+      "phrase": "После этого проверь",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L05_cycle_1_trace.json",
+      "phrase": "Практический смысл распутывания",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L05_cycle_2_trace.json",
+      "phrase": "в твоем описании важно не свести все к одному общему механизму",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L05_cycle_2_trace.json",
+      "phrase": "Сначала отдели факты от вывода",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L05_cycle_2_trace.json",
+      "phrase": "Затем найди центральное убеждение",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L05_cycle_2_trace.json",
+      "phrase": "После этого проверь",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L05_cycle_2_trace.json",
+      "phrase": "Практический смысл распутывания",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "historical_evidence"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14/template_family_exact_hits.json",
+      "phrase": "в твоем описании важно не свести все к одному общему механизму",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "current_audit_artifact"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14/template_family_exact_hits.json",
+      "phrase": "Сначала отдели факты от вывода",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "current_audit_artifact"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14/template_family_exact_hits.json",
+      "phrase": "Затем найди центральное убеждение",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "current_audit_artifact"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14/template_family_exact_hits.json",
+      "phrase": "После этого проверь",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "current_audit_artifact"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14/template_family_exact_hits.json",
+      "phrase": "Практический смысл распутывания",
+      "classification": "historical_or_current_audit_evidence",
+      "path_classification": "current_audit_artifact"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-047.14_Residual_Legacy_Runtime_Modularity_Template_Leakage_Audit_v1_RU.md",
+      "phrase": "в твоем описании важно не свести все к одному общему механизму",
+      "classification": "prd_source_reference",
+      "path_classification": "prd_source_or_reference"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-047.14_Residual_Legacy_Runtime_Modularity_Template_Leakage_Audit_v1_RU.md",
+      "phrase": "Сначала отдели факты от вывода",
+      "classification": "prd_source_reference",
+      "path_classification": "prd_source_or_reference"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-047.14_Residual_Legacy_Runtime_Modularity_Template_Leakage_Audit_v1_RU.md",
+      "phrase": "Затем найди центральное убеждение",
+      "classification": "prd_source_reference",
+      "path_classification": "prd_source_or_reference"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-047.14_Residual_Legacy_Runtime_Modularity_Template_Leakage_Audit_v1_RU.md",
+      "phrase": "После этого проверь",
+      "classification": "prd_source_reference",
+      "path_classification": "prd_source_or_reference"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-047.14_Residual_Legacy_Runtime_Modularity_Template_Leakage_Audit_v1_RU.md",
+      "phrase": "Практический смысл распутывания",
+      "classification": "prd_source_reference",
+      "path_classification": "prd_source_or_reference"
+    }
+  ]
+}

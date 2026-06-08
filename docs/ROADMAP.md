@@ -1,6 +1,8 @@
-﻿# Roadmap
+# Roadmap
 
 ## Done
+- PRD-047.14-HF1.2: completed targeted hardcoded reply removal / Writer retry conversion with warning status. High-confidence Writer semantic repair/knowledge/direct-answer static returns were converted to `no_stub_repair_signal_v1` and existing final-answer gate retry/quarantine flow (`writer_agent_stub_blockers=31->0`, `new_user_facing_stub_created=false`, encoding/runtime-scope/tests passed); out-of-scope/advisory/safety-minimal and summary-routing candidates remain documented.
+
 - PRD-047.14-HF1.1: completed hardcoded user-facing reply inventory / no-stub boundary audit with no runtime mutation. The audit classified all active candidates (`blocker_stub_user_facing=55`, `warning_needs_targeted_refactor=41`, `unknown_active=0`), preserved safety/minimal boundaries as documented exceptions, passed encoding/no-mutation gates, and selected `PRD-047.14-HF1.2 - Hardcoded Reply Removal / Writer Retry Conversion v1` as the next targeted repair.
 
 - PRD-047.14-HF1: removed active hardcoded template-family fallback from `concrete_answer_fit.py`, added detector-only `template_family_guard_v1` to the existing final-answer acceptance gate, changed Writer call sites to defer problematic drafts to existing retry/quarantine instead of canned replacement answers, and added tests/artifacts proving active template hits after repair are `0`.
@@ -49,15 +51,15 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
-- PRD-047.14-HF1.1 closed as an audit-only blocker: no-stub boundary evidence is complete, but active hardcoded user-facing reply candidates remain for targeted removal.
+- PRD-047.14-HF1.2 closed the target Writer blocker set; remaining hardcoded/static candidates are out-of-scope/advisory/safety-minimal or summary-routing debt.
 - PRD-047.14-HF1 closed the active template-family leakage blocker; the remaining PRD-047.14 warning is summary/recap routing.
 - PRD-047.14 closed as an audit blocker, then HF1 repaired the active template-family leakage without broadening runtime authority.
 - No active PRD-047.13 cleanup blocker remains; PRD-047.13-HF1 closed active docs, legacy-label, empty-artifact, duplicate-doc, and unknown-current-doc noise with no runtime mutation.
 - No active PRD-047.12 blocker remains; unified dialogue policy v2 is accepted on the current developer-local runtime baseline.
 
 ## Next
-1. Start `PRD-047.14-HF1.2 - Hardcoded Reply Removal / Writer Retry Conversion v1`.
-2. Resume `PRD-047.14-HF2 - Summary Request Routing / Answer Obligation Repair v1` after the remaining hardcoded reply boundary is repaired or explicitly accepted.
+1. Start `PRD-047.14-HF2 - Summary Request Routing / Answer Obligation Repair v1`.
+2. Keep remaining advisory/static boundary cleanup as later targeted work if final-answer exposure is proven.
 
 ## Later
 - Operational hardening for governed limited runtime.
@@ -87,5 +89,7 @@ PRD-046.1.36 Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1.
 - push_status: pushed_to_origin_main
 
 ## Done
+- PRD-047.14-HF1.2: completed targeted hardcoded reply removal / Writer retry conversion with warning status. High-confidence Writer semantic repair/knowledge/direct-answer static returns were converted to `no_stub_repair_signal_v1` and existing final-answer gate retry/quarantine flow (`writer_agent_stub_blockers=31->0`, `new_user_facing_stub_created=false`, encoding/runtime-scope/tests passed); out-of-scope/advisory/safety-minimal and summary-routing candidates remain documented.
+
 - PRD-046.1.36: creator-live pilot acceptance completed with source/runtime/admin/creator-pilot/rollback/normal-user/safety gates.
 

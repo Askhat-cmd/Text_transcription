@@ -1,0 +1,12 @@
+{
+  "generated_at_utc": "2026-06-08T11:07:50.816443+00:00",
+  "encoding_gate_status": "passed",
+  "nul_bytes_found": 0,
+  "utf16_like_interleaving_found": false,
+  "mojibake_issues_count": 0,
+  "files_checked_count": 32,
+  "issues": [],
+  "allowed_source_fixtures": [
+    "TO_DO_LIST/PRD-047.14-HF1.2_Hardcoded_Reply_Removal_Writer_Retry_Conversion_v1_RU.md"
+  ]
+}

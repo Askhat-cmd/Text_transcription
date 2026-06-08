@@ -221,6 +221,13 @@ def build_final_answer_acceptance_gate_v1(
     validator_blocked = bool(getattr(validator_result, "is_blocked", False))
     if not answer or bool(writer.get("error")) or validator_blocked:
         failed_checks.append("writer_error_or_empty_answer")
+    no_stub_signal = (
+        dict(writer.get("no_stub_repair_signal", {}))
+        if isinstance(writer.get("no_stub_repair_signal"), dict)
+        else {}
+    )
+    if no_stub_signal:
+        failed_checks.append("no_stub_repair_signal")
 
     concrete_need = _looks_like_concrete_situation(
         user_message=user,
@@ -297,6 +304,7 @@ def build_final_answer_acceptance_gate_v1(
         "stale_stub_detected",
         "template_family_leakage_detected",
         "writer_error_or_empty_answer",
+        "no_stub_repair_signal",
         "answer_too_generic_for_concrete_situation",
         "answer_does_not_address_direct_question",
         "repair_failed_to_answer_recovered_question",
@@ -329,6 +337,12 @@ def build_final_answer_acceptance_gate_v1(
             "contamination_quarantined": bool(
                 template_family_guard.get("leak_detected", False)
                 and not can_accept
+            ),
+        },
+        "no_stub_repair_signal": {
+            **no_stub_signal,
+            "user_facing_replacement_created": bool(
+                no_stub_signal.get("user_facing_replacement_created", False)
             ),
         },
         "input_summary": {

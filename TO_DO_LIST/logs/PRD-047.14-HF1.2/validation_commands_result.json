@@ -1,0 +1,12 @@
+﻿{
+    "static_acceptance_exit":  0,
+    "static_acceptance_status":  "passed",
+    "existing_targeted_pytest_exit":  0,
+    "output_path":  "TO_DO_LIST/logs/PRD-047.14-HF1.2/test_command_output.txt",
+    "generated_at_utc":  "2026-06-08T11:06:56.4556101Z",
+    "runtime_py_compile_exit":  0,
+    "targeted_no_stub_pytest_exit":  0,
+    "regression_pytest_exit":  0,
+    "tool_py_compile_exit":  0,
+    "tests_status":  "passed"
+}

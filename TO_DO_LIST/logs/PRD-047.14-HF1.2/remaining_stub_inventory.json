@@ -1,0 +1,287 @@
+{
+  "generated_at_utc": "2026-06-08T11:07:50.856675+00:00",
+  "target_blockers_after": [],
+  "writer_warning_or_boundary_inventory": [
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_answer_compliance",
+      "line": 1251,
+      "classification": "allowed_safety_or_minimal_boundary",
+      "preview": "Привет. Рад знакомству. Можем спокойно начать: принеси любой вопрос или тему, которую хочешь разобрать."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_answer_compliance",
+      "line": 1265,
+      "classification": "allowed_safety_or_minimal_boundary",
+      "preview": "Пожалуйста. Рад, что стало чуть яснее."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_answer_compliance",
+      "line": 1268,
+      "classification": "allowed_safety_or_minimal_boundary",
+      "preview": "Я рядом. Сейчас важнее чуть стабилизироваться и снизить внутреннюю перегрузку."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_answer_compliance",
+      "line": 1271,
+      "classification": "allowed_safety_or_minimal_boundary",
+      "preview": "Я рядом. Сейчас не нужно ничего разбирать. Можно просто немного снизить внутреннее давление."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_answer_compliance",
+      "line": 1274,
+      "classification": "allowed_safety_or_minimal_boundary",
+      "preview": "Я рядом. Сейчас не нужно всё разбирать. Можно просто немного снизить внутреннее давление."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_answer_compliance",
+      "line": 1277,
+      "classification": "allowed_safety_or_minimal_boundary",
+      "preview": "Я рядом. Сейчас важнее короткая опора здесь-и-сейчас, без перегруза."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_answer_compliance",
+      "line": 1283,
+      "classification": "allowed_safety_or_minimal_boundary",
+      "preview": "Я рядом. Сейчас важнее чуть стабилизироваться и снизить внутреннюю перегрузку. Без разбора, только опора здесь-и-сейчас."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_answer_compliance",
+      "line": 1290,
+      "classification": "allowed_safety_or_minimal_boundary",
+      "preview": "Пожалуйста. Рад, что стало чуть яснее."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_answer_compliance",
+      "line": 1296,
+      "classification": "allowed_safety_or_minimal_boundary",
+      "preview": "Я рядом. Сейчас не нужно ничего разбирать. Можно просто немного снизить внутреннее давление."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_answer_compliance",
+      "line": 1369,
+      "classification": "allowed_safety_or_minimal_boundary",
+      "preview": "Я рядом. Продолжим спокойно и без лишней нагрузки."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_answer_compliance",
+      "line": 1406,
+      "classification": "warning_out_of_scope_or_low_confidence",
+      "preview": "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_answer_compliance",
+      "line": 1259,
+      "classification": "allowed_safety_or_minimal_boundary",
+      "preview": "Я рядом. Сейчас не нужно ничего разбирать. Можно просто немного снизить внутреннее давление."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_answer_compliance",
+      "line": 1301,
+      "classification": "warning_out_of_scope_or_low_confidence",
+      "preview": "Если выбрать один узел прямо сейчас, что больше всего сжимает тебя в этой ситуации?"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_answer_compliance",
+      "line": 1306,
+      "classification": "warning_out_of_scope_or_low_confidence",
+      "preview": "Похоже, это сильно выматывает. Если взять один конкретный эпизод, где это ощущается острее всего?"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_answer_compliance",
+      "line": 1339,
+      "classification": "warning_out_of_scope_or_low_confidence",
+      "preview": "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_answer_compliance",
+      "line": 1341,
+      "classification": "allowed_safety_or_minimal_boundary",
+      "preview": "Я рядом. Сейчас не нужно ничего разбирать. Можно просто немного снизить внутреннее давление."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_answer_compliance",
+      "line": 1343,
+      "classification": "allowed_safety_or_minimal_boundary",
+      "preview": "Я рядом. Сейчас важнее чуть стабилизироваться и снизить внутреннюю перегрузку. Без разбора, только опора здесь-и-сейчас."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_answer_compliance",
+      "line": 1362,
+      "classification": "warning_out_of_scope_or_low_confidence",
+      "preview": "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_answer_compliance",
+      "line": 1364,
+      "classification": "allowed_safety_or_minimal_boundary",
+      "preview": "Я рядом. Сейчас не нужно ничего разбирать. Можно просто немного снизить внутреннее давление."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_answer_compliance",
+      "line": 1366,
+      "classification": "allowed_safety_or_minimal_boundary",
+      "preview": "Я рядом. Сейчас важнее чуть стабилизироваться и снизить внутреннюю перегрузку. Без разбора, только опора здесь-и-сейчас."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_answer_compliance",
+      "line": 1368,
+      "classification": "allowed_safety_or_minimal_boundary",
+      "preview": "Пожалуйста. Рад, что стало чуть яснее."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_answer_compliance",
+      "line": 1372,
+      "classification": "warning_out_of_scope_or_low_confidence",
+      "preview": "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_answer_compliance",
+      "line": 1416,
+      "classification": "warning_out_of_scope_or_low_confidence",
+      "preview": "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_answer_compliance",
+      "line": 1429,
+      "classification": "warning_out_of_scope_or_low_confidence",
+      "preview": "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_answer_compliance",
+      "line": 1432,
+      "classification": "warning_out_of_scope_or_low_confidence",
+      "preview": "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_answer_compliance",
+      "line": 1436,
+      "classification": "allowed_safety_or_minimal_boundary",
+      "preview": "Я рядом. Сейчас важнее чуть стабилизироваться и снизить внутреннюю перегрузку. Без разбора, только опора здесь-и-сейчас."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_mvp_free_dialogue_compliance",
+      "line": 1579,
+      "classification": "warning_out_of_scope_or_low_confidence",
+      "preview": "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_mvp_free_dialogue_compliance",
+      "line": 1583,
+      "classification": "allowed_safety_or_minimal_boundary",
+      "preview": "Соберу итог по разговору коротко и по сути. 1. Что с тобой происходит сейчас. Есть внутренний конфликт между желанием действовать и автоматической защитой через контроль. 2. Где за"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_enforce_mvp_free_dialogue_compliance",
+      "line": 1573,
+      "classification": "allowed_safety_or_minimal_boundary",
+      "preview": "Я рядом. Сейчас важнее немного стабилизироваться и снизить перегруз, без лишнего давления."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_static_fallback",
+      "line": 1825,
+      "classification": "warning_out_of_scope_or_low_confidence",
+      "preview": "Я слышу тебя."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_static_fallback",
+      "line": 1804,
+      "classification": "allowed_safety_or_minimal_boundary",
+      "preview": "Я рядом. Сейчас важнее чуть стабилизироваться и снизить внутреннюю перегрузку. Без разбора, только опора здесь-и-сейчас."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_static_fallback",
+      "line": 1806,
+      "classification": "allowed_safety_or_minimal_boundary",
+      "preview": "Я рядом. Сейчас не нужно ничего разбирать. Можно просто немного снизить внутреннее давление."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_static_fallback",
+      "line": 1808,
+      "classification": "warning_out_of_scope_or_low_confidence",
+      "preview": "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_static_fallback",
+      "line": 1810,
+      "classification": "allowed_safety_or_minimal_boundary",
+      "preview": "Пожалуйста. Рад, что стало чуть яснее."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_static_fallback",
+      "line": 1812,
+      "classification": "warning_out_of_scope_or_low_confidence",
+      "preview": "Если выбрать один узел прямо сейчас, что больше всего сжимает тебя в этой ситуации?"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_static_fallback",
+      "line": 1816,
+      "classification": "allowed_safety_or_minimal_boundary",
+      "preview": "Я рядом. Продолжим спокойно."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_static_fallback",
+      "line": 1820,
+      "classification": "warning_out_of_scope_or_low_confidence",
+      "preview": "Я здесь. Ты не один."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_static_fallback",
+      "line": 1822,
+      "classification": "allowed_safety_or_minimal_boundary",
+      "preview": "Я слышу тебя. Я рядом."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_static_fallback",
+      "line": 1824,
+      "classification": "allowed_safety_or_minimal_boundary",
+      "preview": "Сделай медленный вдох. Я рядом."
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "function": "_static_fallback",
+      "line": 1815,
+      "classification": "allowed_safety_or_minimal_boundary",
+      "preview": "Я рядом. Давай продолжим спокойно, без лишней нагрузки."
+    }
+  ],
+  "out_of_scope_remaining_candidates_count": 64
+}

@@ -1006,3 +1006,22 @@ Consequences:
 - no-stub boundary evidence is now explicit and reproducible;
 - future cleanup must remove or convert active static reply factories without adding a new Writer/orchestrator branch;
 - safety/minimal fallback exceptions remain narrow, documented, and auditable.
+
+## ADR-074 Amendment - Static repair answers must become Writer retry/contract signals
+
+Status: accepted
+
+Date: 2026-06-08
+
+Context: PRD-047.14-HF1.2 removed the high-confidence Writer-side static semantic repair class found by HF1.1 without replacing it with new canned text.
+
+Decision:
+- static user-facing repair or knowledge answers are not valid runtime fixes;
+- when Writer output fails, runtime must provide feedback to Writer through existing gate/retry/directive signals or quarantine state effects;
+- runtime may not replace Writer with a canned semantic answer;
+- `no_stub_repair_signal_v1` is a control/observability signal only and must carry `user_facing_replacement_created=false`.
+
+Consequences:
+- final-answer authorship remains with Writer;
+- failed repair attempts are retried or quarantined by the existing final-answer acceptance gate;
+- remaining summary/advisory/static candidates require separate PRD scope instead of hidden in-place rewriting.

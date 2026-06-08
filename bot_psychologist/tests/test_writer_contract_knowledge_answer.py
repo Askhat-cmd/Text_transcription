@@ -127,9 +127,12 @@ async def test_writer_post_enforces_known_concept_compliance() -> None:
     bad_answer = "Это внешнее слежение и биофидбек. О каком варианте ты говоришь?"
     client = _BadAnswerFakeClient(output_text=bad_answer)
     agent = WriterAgent(client=client, model="gpt-5-mini")
-    fixed_answer = await agent.write(_contract())
-    lowered = fixed_answer.lower()
-    assert "внешнее слежение" not in lowered
-    assert "биофидбек" not in lowered
-    assert "о каком варианте" not in lowered
-    assert "паттерн" in lowered
+    result = await agent.write(_contract())
+
+    assert result == bad_answer
+    assert agent.last_debug["retry_recommended"] is True
+    signal = agent.last_debug["no_stub_repair_signal"]
+    assert signal["version"] == "no_stub_repair_signal_v1"
+    assert signal["reason"] == "known_concept_neurostalking_repair"
+    assert signal["recommended_action"] == "writer_retry"
+    assert signal["user_facing_replacement_created"] is False

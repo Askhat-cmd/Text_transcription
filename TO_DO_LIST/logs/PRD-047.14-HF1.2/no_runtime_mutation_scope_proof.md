@@ -1,0 +1,12 @@
+# No Runtime Mutation Scope Proof
+
+- generated_at_utc: `2026-06-08T11:07:50.655437+00:00`
+- status: `passed`
+- runtime_mutation_allowed: `True`
+- allowed_changed_runtime_files: `['bot_psychologist/bot_agent/multiagent/agents/writer_agent.py', 'bot_psychologist/bot_agent/multiagent/final_answer_acceptance_gate.py']`
+- disallowed_changed_files: `[]`
+- disallowed_runtime_files: `[]`
+- new_runtime_path_added: `False`
+- new_llm_agent_added: `False`
+- new_user_facing_stub_created: `False`
+- changed_files: `["bot_psychologist/bot_agent/multiagent/agents/writer_agent.py", "bot_psychologist/bot_agent/multiagent/final_answer_acceptance_gate.py", "bot_psychologist/tests/test_writer_contract_knowledge_answer.py", "docs/DECISIONS.md", "docs/PRD_INDEX.md", "docs/PROJECT_STATE.md", "docs/ROADMAP.md", "TO_DO_LIST/PRD-047.14-HF1.2_Hardcoded_Reply_Removal_Writer_Retry_Conversion_v1_RU.md", "TO_DO_LIST/PRD-047.14-HF1.2_TASK_LIST.md", "TO_DO_LIST/logs/PRD-047.14-HF1.2/", "TO_DO_LIST/reports/PRD-047.14-HF1.2_IMPLEMENTATION_REPORT.md", "TO_DO_LIST/reports/PRD-047.14-HF1.2_NEXT_PRD_RECOMMENDATION.md", "TO_DO_LIST/tools/PRD-047.14-HF1.2/", "bot_psychologist/tests/test_no_hardcoded_user_facing_replies_v1.py", "bot_psychologist/tests/test_writer_retry_conversion_no_stub_v1.py"]`

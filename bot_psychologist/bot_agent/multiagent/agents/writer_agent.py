@@ -1094,10 +1094,10 @@ class WriterAgent:
             "greeting_answered_with_mechanism_explanation" in gate_failed_checks
             and _contains_any(lowered_user, ("здравств", "привет", "добрый день", "добрый вечер"))
         ):
-            self._set_final_answer_shape_debug("acceptance_gate_greeting_repair")
-            return (
-                "Здравствуйте. Рад вас слышать. Я здесь, чтобы спокойно поговорить и помочь с тем, "
-                "что сейчас важно. Можете написать одним-двумя предложениями, с чего хотите начать."
+            return self._defer_no_stub_repair(
+                signal="acceptance_gate_greeting_repair",
+                text=text,
+                must_answer="greeting_without_mechanism_lecture",
             )
         self.last_debug["legacy_constraints_suppressed"] = [
             str(item)
@@ -1163,29 +1163,22 @@ class WriterAgent:
         if answer_obligation == "acknowledge_style_preference_then_answer" and (
             "расскажи больше" in lowered_text or len(text) < 140
         ):
-            self._set_final_answer_shape_debug("style_preference_direct_answer_repair")
             if concept_question:
-                return (
-                    "Спокойно и по сути: нейросталкинг - это способ замечать, какие внутренние триггеры и "
-                    "автоматические реакции перехватывают твое поведение, чтобы возвращать себе выбор.\n\n"
-                    "В жизни это применяется как минимум в трех направлениях: в конфликтах, когда нужно не "
-                    "сорваться автоматически; в переговорах, когда важно отделить факт от внутреннего прогноза; "
-                    "и в откладывании, когда надо увидеть, какой паттерн тормозит действие.\n\n"
-                    "Например, перед сложным разговором можно заметить мысль \"лучше промолчать\", назвать это "
-                    "автозащитой и перейти к спокойной фактической реплике вместо ухода в молчание."
+                return self._defer_no_stub_repair(
+                    signal="style_preference_direct_answer_repair",
+                    text=text,
+                    must_answer="known_concept_question",
                 )
 
         if answer_obligation == "repair_and_answer_last_question" and (
             "сейчас полезнее прямое объяснение механизма" in lowered_text or len(text) < 180
         ):
-            self._set_final_answer_shape_debug("repair_answer_last_question_repair")
             target = last_direct_question or user_message
             if "нейросталкинг" in target.lower():
-                return (
-                    "Ты прав, я ушел мимо вопроса. Отвечаю прямо.\n\n"
-                    "Нейросталкинг - это наблюдение за тем, какой внутренний триггер запускает автоматическую реакцию, "
-                    "как этот паттерн раскручивается и где ты теряешь выбор. Его практический смысл - не в теории, "
-                    "а в том, чтобы вовремя увидеть автопилот и заменить его более точным действием по ситуации."
+                return self._defer_no_stub_repair(
+                    signal="repair_answer_last_question_repair",
+                    text=text,
+                    must_answer=target,
                 )
 
         if answer_obligation == "answer_last_offer" and (
@@ -1198,29 +1191,21 @@ class WriterAgent:
                 and not all(color in lowered_text for color in ("красн", "оранж", "зелен"))
             )
         ):
-            self._set_final_answer_shape_debug("answer_last_offer_repair")
             if any(color in offer_repair_context for color in ("красн", "оранж", "зелен")):
-                return (
-                    "Показываю сразу.\n\n"
-                    "Красный уровень: техника должна быть короткой и прямой - сначала заметить импульс, потом сразу "
-                    "дать ему управляемый выход в действии или фразе, не требуя долгой рефлексии.\n"
-                    "Оранжевый уровень: техника работает через ясную цель - заметить триггер, отделить эмоцию от "
-                    "задачи и выбрать ход, который сохраняет эффективность.\n"
-                    "Зеленый уровень: акцент смещается на контакт и контекст - увидеть не только свой импульс, "
-                    "но и динамику отношений, чтобы ответ был честным и не разрушал связь."
+                return self._defer_no_stub_repair(
+                    signal="answer_last_offer_repair",
+                    text=text,
+                    must_answer=last_offer_summary or last_direct_question or "last_assistant_offer",
                 )
 
         if answer_obligation in {"answer_knowledge_question", "answer_direct_question"} and (
             "сейчас полезнее прямое объяснение механизма" in lowered_text or len(text) < 140
         ):
             if concept_question:
-                self._set_final_answer_shape_debug("knowledge_direct_answer_repair")
-                return (
-                    "Если отвечать прямо, нейросталкинг - это способ замечать внутренние триггеры, автоматические "
-                    "реакции и точку, где ты теряешь выбор.\n\n"
-                    "Применять его в жизни можно так: видеть, что именно запускает реакцию, распознавать свой "
-                    "повторяющийся паттерн и выбирать более точный ответ вместо автоматизма. Например, в конфликте "
-                    "это помогает заметить момент, когда тебя уже тянет сорваться, и перейти к более ясной реплике по факту."
+                return self._defer_no_stub_repair(
+                    signal="knowledge_direct_answer_repair",
+                    text=text,
+                    must_answer="known_concept_question",
                 )
 
         if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE:
@@ -1321,28 +1306,32 @@ class WriterAgent:
                 return "Похоже, это сильно выматывает. Если взять один конкретный эпизод, где это ощущается острее всего?"
 
         if user_repair_signal:
-            return "Да, ты прав: я сдвинулся не туда. Вернусь к сути и продолжу разбор механизма без практики."
+            return self._defer_no_stub_repair(
+                signal="user_repair_signal",
+                text=text,
+                must_answer=user_message,
+            )
 
         # Known concept answer-first path: enforce direct internal meaning framing
         # before generic question-policy rewrites.
         if should_answer_directly and (asks_define_known_term or has_external_surveillance_frame):
             if "самореализац" in lowered_user and ("коррелир" in lowered_user or "связан" in lowered_user):
-                return (
-                    "Если держаться внутреннего смысла термина, Нейросталкинг связан с самореализацией через "
-                    "снятие автопилота. Самореализация требует проявляться и выбирать своё направление, а "
-                    "Нейросталкинг помогает заметить паттерны, триггеры и автоматические реакции, которые "
-                    "мешают проявляться и действовать из авторства."
+                return self._defer_no_stub_repair(
+                    signal="known_concept_correlation_repair",
+                    text=text,
+                    must_answer=user_message,
                 )
             if concept == "нейросталкинг":
-                return (
-                    "В нашей внутренней рамке Нейросталкинг — это наблюдение за паттернами, триггерами и "
-                    "автоматическими реакциями: как включается программа и где запускается страдание, чтобы "
-                    "не сливаться с реакцией полностью."
+                return self._defer_no_stub_repair(
+                    signal="known_concept_neurostalking_repair",
+                    text=text,
+                    must_answer=user_message,
                 )
             if concept == "самореализация":
-                return (
-                    "В нашей внутренней рамке самореализация — это раскрытие потенциала через осознанный выбор "
-                    "и авторство, а не повторение автоматических паттернов."
+                return self._defer_no_stub_repair(
+                    signal="known_concept_self_realization_repair",
+                    text=text,
+                    must_answer=user_message,
                 )
 
         if planner_question_policy == "none" and has_question:
@@ -1354,14 +1343,16 @@ class WriterAgent:
                 return "Я рядом. Сейчас важнее чуть стабилизироваться и снизить внутреннюю перегрузку. Без разбора, только опора здесь-и-сейчас."
             if planner_next_move == "answer_known_concept":
                 if "самореализац" in lowered_user and "нейросталкинг" in lowered_user:
-                    return (
-                        "В нашей внутренней рамке Нейросталкинг поддерживает самореализацию: он помогает заметить "
-                        "автоматические паттерны, которые мешают действовать из авторства и собственного выбора."
+                    return self._defer_no_stub_repair(
+                        signal="known_concept_correlation_repair",
+                        text=text,
+                        must_answer=user_message,
                     )
                 if "нейросталкинг" in lowered_user:
-                    return (
-                        "В нашей внутренней рамке Нейросталкинг — это наблюдение за паттернами, триггерами и "
-                        "автоматическими реакциями, чтобы не сливаться с ними и возвращать себе выбор."
+                    return self._defer_no_stub_repair(
+                        signal="known_concept_neurostalking_repair",
+                        text=text,
+                        must_answer=user_message,
                     )
             return re.sub(r"\s*\?+\s*", ". ", text).strip()
         if planner_question_policy == "none" and _contains_any(
@@ -1380,15 +1371,20 @@ class WriterAgent:
             if planner_next_move == "give_direct_step" or planner_answer_shape == "one_step":
                 return "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
             if planner_next_move == "deepen_mechanism" or planner_answer_shape == "mechanism_explanation":
-                return (
-                    "Ключевой механизм застревания в том, что мозг включает контроль и прогнозирование до старта: "
-                    "ресурс уходит на проверку риска, а не на действие. Поэтому энергия тратится заранее, и шаг не запускается."
+                return self._defer_no_stub_repair(
+                    signal="mechanism_explanation_repair",
+                    text=text,
+                    must_answer=user_message,
                 )
 
         if planner_next_move == "repair_misalignment":
             has_repair_forbidden = _contains_any(lowered_text, ("практик", "упражн", "таймер", "шаг"))
             if has_question or has_repair_forbidden or len(text) > 480:
-                return "Да, ты прав: я сдвинулся не туда. Вернусь к сути и продолжу разбор механизма без практики."
+                return self._defer_no_stub_repair(
+                    signal="repair_misalignment",
+                    text=text,
+                    must_answer=user_message,
+                )
 
         if planner_practice_policy == "forbidden" and has_unsolicited_practice:
             self.last_debug["template_leakage_repair_deferred_to_gate"] = True
@@ -1400,9 +1396,10 @@ class WriterAgent:
             and (planner_question_policy == "none" or user_requests_no_question)
             and (len(text) > 700 or has_question or has_unsolicited_practice or user_requests_no_practice)
         ):
-            return (
-                "Ключевой механизм застревания в том, что мозг включает контроль и прогнозирование до старта: "
-                "ресурс уходит на проверку риска, а не на действие. Поэтому энергия тратится заранее, и шаг не запускается."
+            return self._defer_no_stub_repair(
+                signal="mechanism_explanation_repair",
+                text=text,
+                must_answer=user_message,
             )
 
         if planner_answer_shape == "one_step" or planner_next_move == "give_direct_step":
@@ -1438,27 +1435,35 @@ class WriterAgent:
             if planner_next_move == "stabilize_safety" or planner_answer_shape == "safety_grounding":
                 return "Я рядом. Сейчас важнее чуть стабилизироваться и снизить внутреннюю перегрузку. Без разбора, только опора здесь-и-сейчас."
             if active_line_intent == "correction_of_bot" or active_line_repair_mode:
-                return (
-                    "Да, ты прав: я слишком рано сдвинулся в действие. "
-                    "Тут важнее вернуться к механизму застревания и его разбору."
+                return self._defer_no_stub_repair(
+                    signal="active_line_correction_repair",
+                    text=text,
+                    must_answer=user_message,
                 )
             if active_line_intent == "understand_mechanism":
-                return (
-                    "Здесь важнее увидеть механизм: прогнозирование и контроль пытаются снизить риск, "
-                    "но забирают ресурс еще до начала действия."
+                return self._defer_no_stub_repair(
+                    signal="active_line_mechanism_repair",
+                    text=text,
+                    must_answer=user_message,
                 )
-            return "Сейчас лучше остаться в разборе смысла и механизма, без перехода к действиям."
+            return self._defer_no_stub_repair(
+                signal="practice_suppression_meaning_repair",
+                text=text,
+                must_answer=user_message,
+            )
 
         if not active_line_revoicing_allowed and starts_with_mechanical_revoicing(text):
             if active_line_intent == "correction_of_bot" or active_line_repair_mode:
-                return (
-                    "Да, здесь я сдвинулся не туда. Вернусь к сути: не к практике, "
-                    "а к механизму, из-за которого ты застреваешь."
+                return self._defer_no_stub_repair(
+                    signal="active_line_revoicing_correction_repair",
+                    text=text,
+                    must_answer=user_message,
                 )
             if active_line_intent == "understand_mechanism":
-                return (
-                    "Смысловой узел тут не в пересказе вопроса, а в том, "
-                    "как попытка заранее обезопасить старт съедает энергию до действия."
+                return self._defer_no_stub_repair(
+                    signal="active_line_revoicing_mechanism_repair",
+                    text=text,
+                    must_answer=user_message,
                 )
             parts = re.split(r"(?<=[.!?])\s+", text, maxsplit=1)
             if len(parts) == 2 and parts[1].strip():
@@ -1466,19 +1471,22 @@ class WriterAgent:
 
         if planner_next_move == "answer_known_concept" and planner_practice_policy == "forbidden":
             if "самореализац" in lowered_user and "нейросталкинг" in lowered_user:
-                return (
-                    "В нашей внутренней рамке Нейросталкинг поддерживает самореализацию: он помогает заметить "
-                    "автоматические паттерны, которые мешают действовать из авторства и собственного выбора."
+                return self._defer_no_stub_repair(
+                    signal="known_concept_correlation_repair",
+                    text=text,
+                    must_answer=user_message,
                 )
             if "нейросталкинг" in lowered_user:
-                return (
-                    "В нашей внутренней рамке Нейросталкинг — это наблюдение за паттернами, триггерами и "
-                    "автоматическими реакциями, чтобы не сливаться с ними и возвращать себе выбор."
+                return self._defer_no_stub_repair(
+                    signal="known_concept_neurostalking_repair",
+                    text=text,
+                    must_answer=user_message,
                 )
             if "самореализац" in lowered_user:
-                return (
-                    "В нашей внутренней рамке самореализация — это раскрытие потенциала через осознанный выбор "
-                    "и авторство, а не движение по автоматическим сценариям."
+                return self._defer_no_stub_repair(
+                    signal="known_concept_self_realization_repair",
+                    text=text,
+                    must_answer=user_message,
                 )
         return text
 
@@ -1525,20 +1533,15 @@ class WriterAgent:
             target = (last_direct_question or user_message).strip()
             target_lower = target.lower()
             if answer_obligation == "repair_and_answer_last_question" and "нейросталкинг" in target_lower:
-                self._set_final_answer_shape_debug("repair_plus_direct_answer")
-                return (
-                    "Ты прав, я ушел мимо вопроса. Отвечаю прямо.\n\n"
-                    "Нейросталкинг в нашей внутренней рамке - это наблюдение за триггерами, паттернами и "
-                    "автоматическими реакциями до того, как они полностью захватят поведение. Смысл не в том, "
-                    "чтобы подавить себя, а в том, чтобы заметить механизм и вернуть себе выбор.\n\n"
-                    "Применяется это так: ты видишь, что именно запускает реакцию, распознаешь привычный "
-                    "сценарий и вместо автопилота выбираешь более точный ответ по ситуации."
+                return self._defer_no_stub_repair(
+                    signal="mvp_repair_answer_last_question",
+                    text=text,
+                    must_answer=target,
                 )
-            self._set_final_answer_shape_debug("repair_plus_direct_answer")
-            return (
-                "Да, ты прав — прошлый ответ был мимо. Исправляюсь и отвечаю прямо.\n\n"
-                "Фраза может быть такой: **«Сейчас во мне включилась реакция: тело напряглось, мысль появилась, "
-                "импульс пошёл. Я это вижу — и беру паузу перед действием».**"
+            return self._defer_no_stub_repair(
+                signal="mvp_repair_user_dissatisfaction",
+                text=text,
+                must_answer=target or user_message,
             )
 
         if pragmatics_contextual_followup and pragmatics_should_not_reconfirm:
@@ -1546,24 +1549,22 @@ class WriterAgent:
                 text = re.sub(r"\s*\?+\s*", ". ", text).strip()
                 lowered_text = text.lower()
             if "сфокусируюсь на разборе" in lowered_text or "без практик по умолчанию" in lowered_text:
-                self._set_final_answer_shape_debug("contextual_followup_direct_fulfillment")
                 if pragmatics_offer_type in {"short_phrase", "one_step", "practice_observation"}:
-                    return (
-                        "Да. Фраза может быть такой: **«Тело напряглось — я это замечаю — беру паузу и выбираю ответ, "
-                        "а не автопилот».**"
+                    return self._defer_no_stub_repair(
+                        signal="mvp_contextual_followup_short_phrase",
+                        text=text,
+                        must_answer=last_offer_summary or user_message,
                     )
                 if pragmatics_offer_type in {"example", "application", "explanation"}:
-                    return (
-                        "Да, разберем на примере. Допустим, начальник говорит решение, с которым ты не согласен.\n\n"
-                        "1. Триггер: слышишь фразу и сразу сжимаешься.\n"
-                        "2. Автопаттерн: мысль «если возражу, это будет неуважительно».\n"
-                        "3. Импульс: промолчать и согласиться.\n"
-                        "4. Осознанный сдвиг: пауза на несколько секунд и короткая фактическая реплика без атаки.\n\n"
-                        "Так ты не подавляешь себя и не идешь в конфликт лоб в лоб, а возвращаешь себе выбор."
+                    return self._defer_no_stub_repair(
+                        signal="mvp_contextual_followup_example",
+                        text=text,
+                        must_answer=last_offer_summary or user_message,
                     )
-                return (
-                    "Да, продолжаю по твоему запросу прямо. "
-                    "Ключевой механизм здесь в том, что реакция включается автоматически, и пауза возвращает выбор."
+                return self._defer_no_stub_repair(
+                    signal="mvp_contextual_followup_direct",
+                    text=text,
+                    must_answer=last_offer_summary or user_message,
                 )
 
         if planner_safety_priority or planner_next_move == "stabilize_safety" or planner_answer_shape == "safety_grounding":
@@ -1588,22 +1589,17 @@ class WriterAgent:
             )
 
         if sarcasm_or_negative_feedback:
-            self._set_final_answer_shape_debug("repair_plus_direct_answer")
-            return (
-                "Ты прав, прошлый ответ был мимо сути. Исправляюсь и отвечаю прямо.\n\n"
-                "Если тебе нужен рабочий ориентир, смотри на три узла: где запускается триггер, "
-                "какой автопаттерн перехватывает реакцию, и какой конкретный ответ возвращает тебе выбор в этой ситуации.\n\n"
-                "Если хочешь, могу сразу разобрать это на твоем примере в формате: механизм -> варианты -> фраза/действие."
+            return self._defer_no_stub_repair(
+                signal="mvp_sarcasm_negative_feedback_repair",
+                text=text,
+                must_answer=user_message,
             )
 
         if direct_concrete_request:
-            self._set_final_answer_shape_debug("direct_answer_with_variants")
-            return (
-                "Если отвечать прямо, чаще всего цепляет не одна «черта», а связка из нескольких паттернов.\n\n"
-                "1. Гиперконтроль: попытка заранее исключить риск, из-за чего шаг откладывается.\n"
-                "2. Самообесценивание: внутренний фильтр «мой ответ недостаточно хороший».\n"
-                "3. Избегание конфликта: импульс не проявляться, чтобы не встретиться с напряжением.\n\n"
-                "Это не диагноз, а рабочие гипотезы. Можно проверить, какая из них сильнее включается в твоей конкретной ситуации."
+            return self._defer_no_stub_repair(
+                signal="mvp_direct_concrete_request_repair",
+                text=text,
+                must_answer=user_message,
             )
 
         if explicit_answer_need and has_question and planner_question_policy in {"none", "optional_none"}:
@@ -1642,20 +1638,10 @@ class WriterAgent:
         if practice_overview_requested or planner_answer_shape == "practice_catalog_explanation":
             list_items = re.findall(r"(?m)^\s*(?:[-*•]|\d+[.)])\s+", text)
             if len(list_items) < 3 or len(text) < 420:
-                self._set_final_answer_shape_debug("practice_catalog_explanation")
-                return (
-                    "В нашей рамке нейросталкинга это лучше смотреть не как один шаг, а как несколько "
-                    "практических направлений.\n\n"
-                    "1. Практика наблюдения триггера. Смысл: вовремя заметить момент, где включается автопилот. "
-                    "Пример: в разговоре с начальником отследить первую мысль «сейчас лучше промолчать», чтобы не "
-                    "провалиться в автоматическое согласие.\n"
-                    "2. Практика распознавания паттерна реакции. Смысл: увидеть повторяющийся сценарий (контроль, "
-                    "самообесценивание, избегание) и назвать его простыми словами. Пример: заметить, что перед "
-                    "важной задачей включается цикл «перепроверяю и откладываю старт».\n"
-                    "3. Практика микро-сдвига поведения. Смысл: вернуть себе выбор через небольшой осознанный ход. "
-                    "Пример: вместо внутреннего спора сформулировать одну короткую фактическую реплику или начать "
-                    "первый фрагмент задачи на фиксированное короткое время.\n\n"
-                    "Если хочешь, могу затем развернуть любую из этих практик в более подробный пошаговый разбор."
+                return self._defer_no_stub_repair(
+                    signal="mvp_practice_catalog_repair",
+                    text=text,
+                    must_answer="practice_catalog_explanation",
                 )
 
         if planner_question_policy == "none" and has_question and not expansion_requested:
@@ -1663,25 +1649,17 @@ class WriterAgent:
             return re.sub(r"\s*\?+\s*", ". ", text).strip()
 
         if repair_and_expand_requested or user_repair_signal:
-            self._set_final_answer_shape_debug("repair_and_expand")
-            return (
-                "Ты прав, мой прошлый ответ был слишком узким. Объясню ясно и по-человечески.\n\n"
-                "Нейросталкинг в нашей рамке - это способ замечать автоматические паттерны мышления и реакции до того, "
-                "как они полностью перехватят твоё поведение. Это не про внешнюю слежку и не про поиск \"правильного состояния\", "
-                "а про возвращение себе выбора в конкретном моменте.\n\n"
-                "Как это применять в жизни: сначала замечаешь триггер, потом паттерн реакции, потом делаешь минимальный осознанный сдвиг "
-                "в сторону нужного действия. Например, в разговоре с начальником можно поймать момент, когда включается страх выглядеть грубо, "
-                "и вместо молчаливого согласия дать короткую уважительную реплику по факту."
+            return self._defer_no_stub_repair(
+                signal="mvp_repair_and_expand",
+                text=text,
+                must_answer=user_message,
             )
 
         if should_answer_directly and (asks_define_known_term or has_external_surveillance_frame):
-            self._set_final_answer_shape_debug("concept_explanation_full")
-            return (
-                "В нашей внутренней рамке нейросталкинг - это наблюдение за паттернами, триггерами и автоматическими реакциями, "
-                "чтобы не сливаться с ними и возвращать себе выбор. Это не внешнее слежение и не биофидбек-термин, а практичный язык "
-                "для осознанного поведения в повседневных ситуациях.\n\n"
-                "На практике это выглядит так: замечаешь, где включается автопилот, называешь механизм простыми словами и выбираешь "
-                "следующий шаг, который поддерживает твою цель."
+            return self._defer_no_stub_repair(
+                signal="mvp_concept_explanation_repair",
+                text=text,
+                must_answer=user_message,
             )
 
         if (expansion_requested or application_request) and len(text) < 260:
@@ -1701,21 +1679,15 @@ class WriterAgent:
                     self._set_final_answer_shape_debug("preserved_application_answer")
                     return preserved_text
             if concept == "нейросталкинг" or "нейросталкинг" in lowered_user or active_line_intent == "known_concept_question":
-                self._set_final_answer_shape_debug("concept_explanation_full")
-                return (
-                    "Давай развернуто. Нейросталкинг - это наблюдение за внутренними паттернами: что запускает реакцию, "
-                    "как она раскручивается и где ты теряешь выбор. Смысл не в том, чтобы подавить эмоции, а в том, чтобы увидеть "
-                    "механизм до автоматического действия.\n\n"
-                    "Это не теория ради теории. В жизни он помогает в переговорах, конфликтах и откладывании: ты замечаешь триггер, "
-                    "отделяешь факт от внутреннего прогноза и выбираешь более точный ответ по ситуации.\n\n"
-                    "Пример: в разговоре с начальником появляется мысль \"если возражу, буду невежливым\". Нейросталкинг позволяет "
-                    "увидеть этот автопилот и перейти к спокойной фактической формулировке вместо молчаливого согласия."
+                return self._defer_no_stub_repair(
+                    signal="mvp_concept_expansion_repair",
+                    text=text,
+                    must_answer=user_message,
                 )
-            self._set_final_answer_shape_debug("expanded_explanation")
-            return (
-                "Разверну объяснение глубже. Здесь важно не сводить ответ к одной фразе: сначала обозначить механизм, "
-                "потом показать, как он проявляется в быту, и затем дать практический способ применения без перегруза.\n\n"
-                "Если держать этот порядок, ответ становится понятным и полезным, а не абстрактным."
+            return self._defer_no_stub_repair(
+                signal="mvp_expanded_explanation_repair",
+                text=text,
+                must_answer=user_message,
             )
 
         stale_stub = detect_stale_stub(text)
@@ -1738,6 +1710,30 @@ class WriterAgent:
 
     def _set_final_answer_shape_debug(self, shape: str) -> None:
         self.last_debug["final_answer_shape"] = str(shape or "compact_direct")
+
+    def _defer_no_stub_repair(self, *, signal: str, text: str, must_answer: str = "") -> str:
+        """Signal the existing acceptance gate/retry path instead of writing a canned answer."""
+
+        shape = str(signal or "no_stub_repair").strip() or "no_stub_repair"
+        self._set_final_answer_shape_debug(f"{shape}_deferred_to_gate")
+        failed_checks = [
+            str(item)
+            for item in list(self.last_debug.get("compliance_failed_checks", []) or [])
+            if str(item).strip()
+        ]
+        if "no_stub_repair_signal" not in failed_checks:
+            failed_checks.append("no_stub_repair_signal")
+        payload = {
+            "version": "no_stub_repair_signal_v1",
+            "reason": shape,
+            "recommended_action": "writer_retry",
+            "must_answer": str(must_answer or "").strip(),
+            "user_facing_replacement_created": False,
+        }
+        self.last_debug["compliance_failed_checks"] = failed_checks
+        self.last_debug["no_stub_repair_signal"] = payload
+        self.last_debug["retry_recommended"] = True
+        return self._strip_optional_followup_invitation(text) or text
 
     @staticmethod
     def _strip_optional_followup_invitation(text: str) -> str:

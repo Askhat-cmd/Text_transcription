@@ -1,9 +1,9 @@
 {
   "generated_at_utc": "2026-06-08T11:33:04.203217+00:00",
   "source_head_before": "2695e0c22418a5b58c0b53bc46f5f8d0d5f94114",
-  "main_commit": "pending",
+  "main_commit": "8b51631",
   "post_push_metadata_commit": "pending",
-  "push_status": "pending",
+  "push_status": "pushed_to_origin_main",
   "final_status": "warning",
   "summary_routing_status": "passed",
   "summary_obligation_status": "passed",

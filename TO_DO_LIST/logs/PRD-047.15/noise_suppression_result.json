@@ -1,0 +1,108 @@
+{
+  "generated_at_utc": "2026-06-08T11:59:57.137567+00:00",
+  "status": "passed",
+  "cases_passed": 3,
+  "cases_total": 3,
+  "cases": [
+    {
+      "name": "short_support_suppresses",
+      "payload": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "none",
+        "retrieval_action": "suppress_rag",
+        "query_source": "last_assistant_offer",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "",
+        "inherited_offer_type": "short_support",
+        "confidence": 0.9,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "accepted_short_support_offer_no_kb_needed",
+        "reason": "short support or one-step offer can be fulfilled from dialogue context",
+        "evidence": [
+          "short_contextual_followup",
+          "last_offer_inherited",
+          "noise_suppression"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expect": {
+        "retrieval_action": "suppress_rag",
+        "include": false
+      },
+      "group": "noise",
+      "passed": true
+    },
+    {
+      "name": "greeting_suppresses",
+      "payload": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "none",
+        "retrieval_action": "suppress_rag",
+        "query_source": "current_user_message",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "",
+        "inherited_offer_type": "",
+        "confidence": 0.9,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "contact_or_close_turn_no_kb_needed",
+        "reason": "greeting/contact/close should not retrieve KB without explicit knowledge need",
+        "evidence": [
+          "noise_suppression",
+          "contact_or_close"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expect": {
+        "retrieval_action": "suppress_rag",
+        "include": false
+      },
+      "group": "noise",
+      "passed": true
+    },
+    {
+      "name": "one_step_suppresses",
+      "payload": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "none",
+        "retrieval_action": "suppress_rag",
+        "query_source": "answer_obligation",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "",
+        "inherited_offer_type": "",
+        "confidence": 0.76,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "direct_one_step_no_kb_needed",
+        "reason": "one-step direct response should not be overloaded by KB",
+        "evidence": [
+          "noise_suppression",
+          "one_step"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expect": {
+        "retrieval_action": "suppress_rag",
+        "include": false
+      },
+      "group": "noise",
+      "passed": true
+    }
+  ]
+}

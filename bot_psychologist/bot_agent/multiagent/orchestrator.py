@@ -19,7 +19,12 @@ from .context_assembly import (
     CONTEXT_ASSEMBLY_TRACE_VERSION,
     build_context_assembly_package_v1,
 )
+from .contextual_retrieval_query_composer import (
+    build_contextual_retrieval_query_composer_v1,
+    merge_composer_into_retrieval_decision_v1,
+)
 from .contracts.writer_contract import WriterContract
+from .contracts.thread_state import ThreadState
 from .diagnostic_center import DIAGNOSTIC_CARD_VERSION, build_diagnostic_card_v1
 from .diagnostic_center_shadow import build_diagnostic_center_shadow_v1
 from .dialogue_act_resolver import build_dialogue_act_resolution_v1
@@ -226,10 +231,52 @@ class MultiAgentOrchestrator:
             thread_storage.archive_thread(current_thread, reason="new_thread")
         thread_storage.save_active(updated_thread)
 
+        previous_dialogue_state_for_retrieval = (
+            dict(current_thread.active_frame.get("dialogue_state", {}))
+            if current_thread is not None
+            and isinstance(getattr(current_thread, "active_frame", None), dict)
+            and isinstance(current_thread.active_frame.get("dialogue_state"), dict)
+            else {}
+        )
+        pre_retrieval_last_offer = (
+            dict(previous_dialogue_state_for_retrieval.get("last_assistant_offer", {}))
+            if isinstance(previous_dialogue_state_for_retrieval.get("last_assistant_offer"), dict)
+            else (
+                dict(current_thread.active_frame.get("last_assistant_offer", {}))
+                if current_thread is not None
+                and isinstance(getattr(current_thread, "active_frame", None), dict)
+                and isinstance(current_thread.active_frame.get("last_assistant_offer"), dict)
+                else {}
+            )
+        )
+        pre_retrieval_composer = build_contextual_retrieval_query_composer_v1(
+            user_message=query,
+            last_assistant_offer=pre_retrieval_last_offer,
+            thread_state=(
+                dict(updated_thread.active_frame)
+                if isinstance(updated_thread.active_frame, dict)
+                else {}
+            ),
+        )
+        retrieval_thread = ThreadState.from_dict(updated_thread.to_dict())
+        retrieval_action_pre = str(pre_retrieval_composer.get("retrieval_action", "") or "")
+        if retrieval_action_pre in {"suppress_rag", "use_current_context_only"}:
+            retrieval_user_message = ""
+            retrieval_thread.core_direction = ""
+            retrieval_thread.open_loops = []
+        elif retrieval_action_pre in {"query_kb", "query_memory", "query_kb_and_memory"} and str(
+            pre_retrieval_composer.get("composed_query", "") or ""
+        ).strip():
+            retrieval_user_message = str(pre_retrieval_composer.get("composed_query", "") or "").strip()
+            retrieval_thread.core_direction = ""
+            retrieval_thread.open_loops = []
+        else:
+            retrieval_user_message = query
+
         t0 = time.perf_counter()
         memory_bundle = await memory_retrieval_agent.assemble(
-            user_message=query,
-            thread_state=updated_thread,
+            user_message=retrieval_user_message,
+            thread_state=retrieval_thread,
             user_id=user_id,
         )
         t_memory = int((time.perf_counter() - t0) * 1000)
@@ -464,6 +511,42 @@ class MultiAgentOrchestrator:
             answer_obligation_resolution=answer_obligation_resolution,
             unified_dialogue_profile=unified_dialogue_profile,
         ).to_dict()
+        contextual_retrieval_query_composer = build_contextual_retrieval_query_composer_v1(
+            user_message=query,
+            recent_turns=list(memory_bundle.recent_turns or []),
+            last_assistant_offer=last_assistant_offer,
+            dialogue_pragmatics=dialogue_pragmatics,
+            dialogue_act_resolution=dialogue_act_resolution,
+            answer_obligation_resolution=answer_obligation_resolution,
+            final_answer_directive=final_answer_directive,
+            active_line=active_line_state,
+            response_planner=response_planner_state,
+            diagnostic_card=diagnostic_card.to_dict(),
+            diagnostic_center_shadow=diagnostic_center_shadow,
+            knowledge_answer_guard=knowledge_answer_guard,
+            retrieval_decision_previous=retrieval_decision,
+            memory_bundle_summary={
+                "rag_query": getattr(memory_bundle, "rag_query", "") or "",
+                "semantic_hits_count": len(list(memory_bundle.semantic_hits or [])),
+                "has_relevant_knowledge": bool(memory_bundle.has_relevant_knowledge),
+                "fresh_chat_is_greeting_or_contact": bool(
+                    fresh_chat_context_policy.get("is_greeting_or_contact", False)
+                ),
+            },
+            current_concept=active_concept,
+            thread_state=(
+                dict(updated_thread.active_frame)
+                if isinstance(updated_thread.active_frame, dict)
+                else {}
+            ),
+        )
+        contextual_retrieval_query_composer["pre_retrieval"] = dict(pre_retrieval_composer)
+        contextual_retrieval_query_composer["executed_rag_query"] = getattr(memory_bundle, "rag_query", "") or ""
+        retrieval_decision = merge_composer_into_retrieval_decision_v1(
+            retrieval_decision=retrieval_decision,
+            composer_payload=contextual_retrieval_query_composer,
+        )
+        dialogue_policy["retrieval_decision"] = dict(retrieval_decision)
 
         writer_contract = WriterContract(
             user_message=query,
@@ -880,6 +963,7 @@ class MultiAgentOrchestrator:
                 "fresh_chat_context_policy_version": FRESH_CHAT_CONTEXT_POLICY_VERSION,
                 "fresh_chat_context_policy": dict(fresh_chat_context_policy),
                 "retrieval_decision": dict(retrieval_decision),
+                "contextual_retrieval_query_composer": dict(contextual_retrieval_query_composer),
                 "final_answer_directive": dict(final_answer_directive),
                 "final_answer_acceptance_gate": dict(final_answer_acceptance_gate),
                 "final_answer_acceptance_retry_attempted": bool(acceptance_retry_attempted),

@@ -1,0 +1,21 @@
+{
+  "generated_at_utc": "2026-06-08T11:59:57.210689+00:00",
+  "status": "passed",
+  "runtime_mutation_allowed": true,
+  "allowed_changed_runtime_files": [
+    "bot_psychologist/bot_agent/multiagent/contextual_retrieval_query_composer.py",
+    "bot_psychologist/bot_agent/multiagent/contracts/retrieval_query_contract.py",
+    "bot_psychologist/bot_agent/multiagent/contracts/writer_contract.py",
+    "bot_psychologist/bot_agent/multiagent/orchestrator.py",
+    "bot_psychologist/bot_agent/multiagent/writer_context_package.py"
+  ],
+  "disallowed_changed_files": [],
+  "disallowed_runtime_files": [],
+  "new_logical_agent_layer_added": true,
+  "new_llm_agent_added": false,
+  "new_runtime_path_added": false,
+  "new_user_facing_stub_created": false,
+  "db_schema_mutated": false,
+  "kb_governance_mutated": false,
+  "frontend_mutated": false
+}

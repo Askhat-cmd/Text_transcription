@@ -60,6 +60,15 @@ def build_writer_context_package_v1(
     fresh_chat_context_policy: dict[str, Any] | None,
 ) -> dict[str, Any]:
     retrieval = dict(retrieval_decision or {})
+    composer = (
+        dict(retrieval.get("composer", {}))
+        if isinstance(retrieval.get("composer"), dict)
+        else (
+            dict(retrieval.get("contextual_retrieval_query_composer", {}))
+            if isinstance(retrieval.get("contextual_retrieval_query_composer"), dict)
+            else {}
+        )
+    )
     fresh_policy = dict(fresh_chat_context_policy or {})
     recent_turns = _writer_recent_turns_from_package(context_package)
     if not recent_turns:
@@ -118,6 +127,15 @@ def build_writer_context_package_v1(
         "rag_for_writer": rag_for_writer,
         "rag_candidates_for_trace": rag_candidates_for_trace,
         "rag_gate_decision": retrieval,
+        "contextual_retrieval_query_composer": composer,
+        "contextual_retrieval_query_composer_version": str(
+            composer.get("version", "contextual_retrieval_query_composer_v1")
+            or "contextual_retrieval_query_composer_v1"
+        ),
+        "retrieval_query_source": str(composer.get("query_source", "") or ""),
+        "composed_retrieval_query": str(composer.get("composed_query", "") or ""),
+        "retrieval_need": str(composer.get("retrieval_need", "") or ""),
+        "writer_can_ignore_rag": bool(composer.get("writer_can_ignore_rag", True)),
     }
 
 

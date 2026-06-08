@@ -212,6 +212,15 @@ class WriterContract:
                 else {}
             )
         )
+        contextual_retrieval_query_composer = (
+            dict(retrieval_decision.get("composer", {}))
+            if isinstance(retrieval_decision.get("composer"), dict)
+            else (
+                dict(retrieval_decision.get("contextual_retrieval_query_composer", {}))
+                if isinstance(retrieval_decision.get("contextual_retrieval_query_composer"), dict)
+                else {}
+            )
+        )
         unified_dialogue_policy = (
             dict(dialogue_policy.get("unified_dialogue_profile", {}))
             if isinstance(dialogue_policy.get("unified_dialogue_profile"), dict)
@@ -750,6 +759,35 @@ class WriterContract:
             ),
             "dialogue_pragmatics_reason": str(dialogue_pragmatics.get("reason", "none") or "none"),
             "retrieval_decision": retrieval_decision,
+            "contextual_retrieval_query_composer": contextual_retrieval_query_composer,
+            "contextual_retrieval_query_composer_version": str(
+                contextual_retrieval_query_composer.get(
+                    "version",
+                    "contextual_retrieval_query_composer_v1",
+                )
+                or "contextual_retrieval_query_composer_v1"
+            ),
+            "retrieval_query_source": str(
+                contextual_retrieval_query_composer.get("query_source", "") or ""
+            ),
+            "composed_retrieval_query": str(
+                contextual_retrieval_query_composer.get("composed_query", "") or ""
+            ),
+            "retrieval_need": str(
+                contextual_retrieval_query_composer.get("retrieval_need", "") or ""
+            ),
+            "retrieval_query_composer_action": str(
+                contextual_retrieval_query_composer.get("retrieval_action", "") or ""
+            ),
+            "retrieval_query_composer_writer_can_ignore_rag": bool(
+                contextual_retrieval_query_composer.get("writer_can_ignore_rag", True)
+            ),
+            "retrieval_query_composer_no_user_facing_text_created": bool(
+                contextual_retrieval_query_composer.get(
+                    "no_user_facing_text_created",
+                    True,
+                )
+            ),
             "retrieval_decision_version": str(
                 retrieval_decision.get("retrieval_decision_version", "contextual_retrieval_gating_v1")
                 or "contextual_retrieval_gating_v1"

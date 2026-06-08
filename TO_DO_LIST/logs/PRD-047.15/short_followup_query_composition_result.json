@@ -1,0 +1,83 @@
+{
+  "generated_at_utc": "2026-06-08T11:59:57.133350+00:00",
+  "status": "passed",
+  "cases_passed": 2,
+  "cases_total": 2,
+  "cases": [
+    {
+      "name": "short_followup_inherits_offer",
+      "payload": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "knowledge_context",
+        "retrieval_action": "query_kb",
+        "query_source": "last_assistant_offer",
+        "composed_query": "нейросталкинг автоматизм объяснение наблюдение внутреннее наблюдение защитный механизм внутренний шаг",
+        "query_terms": [
+          "нейросталкинг",
+          "автоматизм",
+          "объяснение",
+          "наблюдение",
+          "внутреннее наблюдение",
+          "защитный механизм",
+          "внутренний шаг"
+        ],
+        "inherited_topic": "нейросталкинг автоматизм",
+        "inherited_offer_type": "explain_concept",
+        "confidence": 0.86,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": true,
+        "max_chunks_for_writer": 2,
+        "max_chars_per_chunk": 650,
+        "suppress_reason": "",
+        "reason": "short acceptance inherits retrieval topic from previous assistant offer",
+        "evidence": [
+          "short_contextual_followup",
+          "last_offer_inherited"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expect": {
+        "retrieval_action": "query_kb",
+        "query_source": "last_assistant_offer",
+        "not_query": "Да, хорошо"
+      },
+      "group": "short_followup",
+      "passed": true
+    },
+    {
+      "name": "low_confidence_trace_only",
+      "payload": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "none",
+        "retrieval_action": "trace_only",
+        "query_source": "last_assistant_offer",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "",
+        "inherited_offer_type": "unknown",
+        "confidence": 0.55,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "low_confidence_inherited_topic",
+        "reason": "accepted previous offer but no reliable retrieval topic found",
+        "evidence": [
+          "short_contextual_followup",
+          "low_confidence"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expect": {
+        "retrieval_action": "trace_only",
+        "include": false
+      },
+      "group": "short_followup",
+      "passed": true
+    }
+  ]
+}

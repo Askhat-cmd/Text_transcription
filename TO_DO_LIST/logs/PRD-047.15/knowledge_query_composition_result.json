@@ -1,0 +1,87 @@
+{
+  "generated_at_utc": "2026-06-08T11:59:57.136177+00:00",
+  "status": "passed",
+  "cases_passed": 2,
+  "cases_total": 2,
+  "cases": [
+    {
+      "name": "knowledge_question",
+      "payload": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "knowledge_context",
+        "retrieval_action": "query_kb",
+        "query_source": "current_user_message",
+        "composed_query": "нейросталкинг внутреннее наблюдение автоматизм защитный механизм внутренний шаг",
+        "query_terms": [
+          "нейросталкинг",
+          "внутреннее наблюдение",
+          "автоматизм",
+          "защитный механизм",
+          "внутренний шаг"
+        ],
+        "inherited_topic": "нейросталкинг",
+        "inherited_offer_type": "",
+        "confidence": 0.88,
+        "writer_can_ignore_rag": false,
+        "include_for_writer_if_found": true,
+        "max_chunks_for_writer": 3,
+        "max_chars_per_chunk": 700,
+        "suppress_reason": "",
+        "reason": "knowledge question needs compact KB support",
+        "evidence": [
+          "knowledge_question",
+          "query_composed_from_current_message"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expect": {
+        "retrieval_action": "query_kb",
+        "contains_query": "нейросталкинг",
+        "include": true
+      },
+      "group": "knowledge",
+      "passed": true
+    },
+    {
+      "name": "practice_overview",
+      "payload": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "practice_context",
+        "retrieval_action": "query_kb",
+        "query_source": "current_user_message",
+        "composed_query": "практики use_when avoid_when наблюдение мягкое распутывание",
+        "query_terms": [
+          "практики",
+          "use_when",
+          "avoid_when",
+          "наблюдение",
+          "мягкое распутывание"
+        ],
+        "inherited_topic": "",
+        "inherited_offer_type": "",
+        "confidence": 0.84,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": true,
+        "max_chunks_for_writer": 3,
+        "max_chars_per_chunk": 650,
+        "suppress_reason": "",
+        "reason": "practice overview can use compact KB context",
+        "evidence": [
+          "practice_overview",
+          "knowledge_context_useful"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expect": {
+        "retrieval_action": "query_kb",
+        "retrieval_need": "practice_context"
+      },
+      "group": "knowledge",
+      "passed": true
+    }
+  ]
+}

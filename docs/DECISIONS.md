@@ -1,5 +1,23 @@
 # Architecture Decisions
 
+## ADR-074 - Retrieval query composition is contextual and advisory, not literal-last-message search
+
+Status: accepted
+
+Date: 2026-06-08
+
+Context: after summary routing and no-stub repairs, retrieval remained the next bottleneck: short contextual replies such as `??, ??????` can require the previous assistant offer topic, while summary/contact/support turns often should not retrieve external KB at all.
+
+Decision:
+- add deterministic `contextual_retrieval_query_composer_v1` as an internal agent-like layer;
+- compose retrieval need, action, query source, compact query terms, and writer inclusion policy from dialogue context, not only the current user utterance;
+- suppress RAG when chunks would be noise for summary/contact/close/support/safety/one-step turns;
+- expose composer payload through retrieval decision, writer context package, WriterContract prompt context, and trace/debug;
+- keep Writer as final answer author;
+- do not create user-facing text, canned replies, a new LLM agent, DB/KB/frontend mutation, or a separate runtime path.
+
+Consequences: retrieval becomes contextual and observable while remaining advisory and deterministic; live calibration is delegated to PRD-047.15-HF1.
+
 ## ADR-072 - Explicit summary requests own route and obligation without canned answers
 
 Status: accepted

@@ -1,6 +1,8 @@
 # Roadmap
 
 ## Done
+- PRD-047.15: completed deterministic Contextual Retrieval Query Composer v1 with warning status. Added `contextual_retrieval_query_composer_v1` and stable retrieval-query contract, composed retrieval intent/query from dialogue context and last-offer state, suppressed noisy RAG for summary/contact/support/one-step turns, exposed composer payload through `retrieval_decision`, `writer_context_package_v1`, WriterContract prompt context, and trace. No LLM agent, user-facing text, DB/KB/frontend mutation, or new runtime path was added; validation/runtime-scope/encoding/no-stub composer scan passed.
+
 - PRD-047.14-HF2: completed summary request routing / answer obligation repair with warning status. Explicit conversation-summary requests now resolve to `summary_request` and `summarize_current_conversation`, outrank open last-offer confirmation, expose summary metadata in final directive / WriterContract, remove the old canned summary path, and use final-answer gate retry/quarantine for reconfirmation or last-offer misanswers. Validation/runtime-scope/encoding/no-stub summary scan passed; remaining warning is HF1.2 out-of-scope static/advisory candidates.
 
 - PRD-047.14-HF1.2: completed targeted hardcoded reply removal / Writer retry conversion with warning status. High-confidence Writer semantic repair/knowledge/direct-answer static returns were converted to `no_stub_repair_signal_v1` and existing final-answer gate retry/quarantine flow (`writer_agent_stub_blockers=31->0`, `new_user_facing_stub_created=false`, encoding/runtime-scope/tests passed); out-of-scope/advisory/safety-minimal and summary-routing candidates remain documented.
@@ -53,6 +55,7 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
+- PRD-047.15 closed deterministic retrieval query composition baseline; live/owner trace calibration remains the next focused work.
 - PRD-047.14-HF2 closed summary-routing debt; remaining hardcoded/static candidates are out-of-scope/advisory/safety-minimal and require separate final-answer exposure proof before mutation.
 - PRD-047.14-HF1.2 closed the target Writer blocker set; remaining hardcoded/static candidates are out-of-scope/advisory/safety-minimal.
 - PRD-047.14-HF1 closed the active template-family leakage blocker; the remaining PRD-047.14 warning is summary/recap routing.
@@ -61,7 +64,7 @@
 - No active PRD-047.12 blocker remains; unified dialogue policy v2 is accepted on the current developer-local runtime baseline.
 
 ## Next
-1. Start `PRD-047.15 - Contextual Retrieval Query Composer Agent v1`.
+1. Start `PRD-047.15-HF1 - Contextual Retrieval Composer Live Calibration / Owner Trace Review v1`.
 2. Keep remaining advisory/static boundary cleanup as later targeted work if final-answer exposure is proven.
 
 ## Later

@@ -11,6 +11,12 @@ WRITER_PATH = (
     / "agents"
     / "writer_agent.py"
 )
+COMPOSER_PATH = (
+    Path(__file__).resolve().parents[1]
+    / "bot_agent"
+    / "multiagent"
+    / "contextual_retrieval_query_composer.py"
+)
 TARGET_FUNCTIONS = {"_enforce_answer_compliance", "_enforce_mvp_free_dialogue_compliance"}
 HIGH_CONFIDENCE_MARKERS = (
     "нейросталкинг",
@@ -66,5 +72,28 @@ def test_writer_compliance_has_no_high_confidence_static_semantic_returns() -> N
                 continue
             if any(marker in lowered for marker in HIGH_CONFIDENCE_MARKERS):
                 offenders.append(f"{node.name}:{child.lineno}:{literal[:90]}")
+
+    assert offenders == []
+
+
+def test_contextual_retrieval_composer_has_no_user_facing_static_returns() -> None:
+    tree = ast.parse(COMPOSER_PATH.read_text(encoding="utf-8-sig"))
+    offenders: list[str] = []
+    final_answer_like_markers = (
+        "вот объяснение",
+        "нейросталкинг — это",
+        "главный вывод",
+        "сделай такой шаг",
+        "я рядом",
+    )
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Return):
+            continue
+        literal = _literal_string(node.value)
+        if not literal:
+            continue
+        lowered = literal.lower()
+        if any(marker in lowered for marker in final_answer_like_markers):
+            offenders.append(f"{node.lineno}:{literal[:90]}")
 
     assert offenders == []

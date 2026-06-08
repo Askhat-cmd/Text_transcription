@@ -1,0 +1,48 @@
+﻿{
+    "generated_at_utc":  "2026-06-08T11:58:57.1863535Z",
+    "tests_status":  "passed",
+    "commands":  [
+                     {
+                         "name":  "acceptance_static",
+                         "command":  "python TO_DO_LIST\\tools\\PRD-047.15\\run_contextual_retrieval_composer_acceptance.py --mode static",
+                         "cwd":  "C:\\My_practice\\Text_transcription",
+                         "exit_code":  0,
+                         "duration_ms":  873
+                     },
+                     {
+                         "name":  "py_compile_acceptance_tool",
+                         "command":  "python -m py_compile TO_DO_LIST\\tools\\PRD-047.15\\run_contextual_retrieval_composer_acceptance.py",
+                         "cwd":  "C:\\My_practice\\Text_transcription",
+                         "exit_code":  0,
+                         "duration_ms":  113
+                     },
+                     {
+                         "name":  "py_compile_runtime",
+                         "command":  "python -m py_compile bot_psychologist\\bot_agent\\multiagent\\contextual_retrieval_query_composer.py bot_psychologist\\bot_agent\\multiagent\\context_assembly.py bot_psychologist\\bot_agent\\multiagent\\writer_context_package.py bot_psychologist\\bot_agent\\multiagent\\contracts\\writer_contract.py bot_psychologist\\bot_agent\\multiagent\\orchestrator.py bot_psychologist\\bot_agent\\multiagent\\contracts\\retrieval_query_contract.py",
+                         "cwd":  "C:\\My_practice\\Text_transcription",
+                         "exit_code":  0,
+                         "duration_ms":  140
+                     },
+                     {
+                         "name":  "pytest_composer_integration",
+                         "command":  ".venv\\Scripts\\python.exe -m pytest tests/test_contextual_retrieval_query_composer_v1.py tests/test_contextual_retrieval_integration_v1.py tests/test_writer_contract_contextual_retrieval_v1.py -q",
+                         "cwd":  "C:\\My_practice\\Text_transcription\\bot_psychologist",
+                         "exit_code":  0,
+                         "duration_ms":  927
+                     },
+                     {
+                         "name":  "pytest_summary_regression",
+                         "command":  ".venv\\Scripts\\python.exe -m pytest tests/test_summary_request_routing_v1.py tests/test_answer_obligation_summary_request_v1.py tests/test_final_answer_acceptance_gate_v1.py -q",
+                         "cwd":  "C:\\My_practice\\Text_transcription\\bot_psychologist",
+                         "exit_code":  0,
+                         "duration_ms":  920
+                     },
+                     {
+                         "name":  "pytest_no_stub_writer_knowledge_practice",
+                         "command":  ".venv\\Scripts\\python.exe -m pytest tests/test_no_hardcoded_user_facing_replies_v1.py tests/test_writer_retry_conversion_no_stub_v1.py tests/test_writer_contract_knowledge_answer.py tests/test_writer_contract_response_planner_answer_fit.py tests/test_knowledge_answer_practice_overview_routing.py -q",
+                         "cwd":  "C:\\My_practice\\Text_transcription\\bot_psychologist",
+                         "exit_code":  0,
+                         "duration_ms":  1163
+                     }
+                 ]
+}

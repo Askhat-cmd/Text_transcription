@@ -1,0 +1,41 @@
+{
+  "generated_at_utc": "2026-06-08T11:59:57.134833+00:00",
+  "status": "passed",
+  "cases_passed": 1,
+  "cases_total": 1,
+  "cases": [
+    {
+      "name": "summary_current_context_only",
+      "payload": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "conversation_context",
+        "retrieval_action": "use_current_context_only",
+        "query_source": "summary_request",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "",
+        "inherited_offer_type": "",
+        "confidence": 0.95,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "summary_request_current_conversation_only",
+        "reason": "summary of current conversation should not introduce external KB",
+        "evidence": [
+          "summary_request",
+          "no_external_kb_by_default"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expect": {
+        "retrieval_action": "use_current_context_only",
+        "include": false
+      },
+      "group": "summary",
+      "passed": true
+    }
+  ]
+}

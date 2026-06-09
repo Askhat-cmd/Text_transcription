@@ -1,0 +1,149 @@
+PRD-047.15-HF1 validation run 2026-06-09T09:13:42.5595054+05:00
+
+## run_composer_trace_review_pack
+workdir: C:\My_practice\Text_transcription
+
+2026-06-09 09:13:43,105 | bot_agent.multiagent.thread_storage | INFO | [THREAD_STORAGE] storage_dir=C:\My_practice\Text_transcription\bot_psychologist\data\threads
+2026-06-09 09:13:43,110 | bot_agent | INFO | Bot Agent v0.11.0 initialized | pipeline: semantic->rerank->topK->llm | legacy_graph: disabled
+{
+  "status": "ok",
+  "metrics": {
+    "cases_total": 40,
+    "automated_expected_match_count": 33,
+    "automated_expected_match_rate": 0.825,
+    "false_positive_rag_count": 1,
+    "false_negative_rag_count": 6,
+    "weak_query_count": 0,
+    "summary_external_kb_leak_count": 0,
+    "literal_short_reply_query_count": 0,
+    "no_stub_violations_count": 0,
+    "llm_candidate_cases_count": 8,
+    "noisy_chunk_risk_count": 1,
+    "needs_more_context_fields_count": 9
+  },
+  "decision_recommendation": "build_hybrid_llm_assist_for_low_confidence_cases"
+}
+
+exit_code: 0
+
+
+## extract_composer_live_traces
+workdir: C:\My_practice\Text_transcription
+
+{
+  "status": "ok",
+  "live_trace_status": "available",
+  "matches_count": 227
+}
+
+exit_code: 0
+
+
+## run_composer_live_calibration_acceptance_initial
+workdir: C:\My_practice\Text_transcription
+
+{
+  "final_status": "warning",
+  "cases_total": 40,
+  "automated_expected_match_rate": 0.825,
+  "literal_short_reply_query_count": 0,
+  "summary_external_kb_leak_count": 0,
+  "no_stub_violations_count": 0,
+  "false_positive_rag_count": 1,
+  "false_negative_rag_count": 6,
+  "weak_query_count": 0,
+  "llm_candidate_cases_count": 8,
+  "owner_review_status": "sheet_created",
+  "live_trace_status": "available",
+  "decision_recommendation": "build_hybrid_llm_assist_for_low_confidence_cases",
+  "runtime_mutation_status": "passed",
+  "llm_calls_added": false,
+  "new_runtime_path_added": false,
+  "new_user_facing_stub_created": false,
+  "encoding_gate_status": "passed",
+  "tests_status": "not_run",
+  "known_warnings": "owner review sheet is created but owner scores are not completed; mixed/low-confidence cases indicate future hybrid calibration candidates; HF1.2 out-of-scope static/advisory candidates remain outside this PRD",
+  "known_blockers": "",
+  "missing_required_artifacts": [],
+  "generated_at_utc": "2026-06-09T04:13:44.683744+00:00"
+}
+
+exit_code: 0
+
+
+## py_compile_hf1_tools
+workdir: C:\My_practice\Text_transcription
+
+
+
+exit_code: 0
+
+
+## pytest_hf1_schema_owner
+workdir: C:\My_practice\Text_transcription\bot_psychologist
+
+......                                                                   [100%]
+6 passed in 0.06s
+
+exit_code: 0
+
+
+## pytest_prd04715_regression
+workdir: C:\My_practice\Text_transcription\bot_psychologist
+
+..............                                                           [100%]
+============================== warnings summary ===============================
+tests/test_writer_contract_contextual_retrieval_v1.py::test_writer_contract_prompt_context_exposes_composer_fields
+  C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_contract_contextual_retrieval_v1.py:18: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    created_at=datetime.utcnow(),
+
+tests/test_writer_contract_contextual_retrieval_v1.py::test_writer_contract_prompt_context_exposes_composer_fields
+  C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_contract_contextual_retrieval_v1.py:19: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    updated_at=datetime.utcnow(),
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+14 passed, 2 warnings in 0.30s
+
+exit_code: 0
+
+
+## pytest_no_stub_summary_acceptance_regression
+workdir: C:\My_practice\Text_transcription\bot_psychologist
+
+............                                                             [100%]
+12 passed in 0.35s
+
+exit_code: 0
+
+
+## run_composer_live_calibration_acceptance_final
+workdir: C:\My_practice\Text_transcription
+
+{
+  "final_status": "warning",
+  "cases_total": 40,
+  "automated_expected_match_rate": 0.825,
+  "literal_short_reply_query_count": 0,
+  "summary_external_kb_leak_count": 0,
+  "no_stub_violations_count": 0,
+  "false_positive_rag_count": 1,
+  "false_negative_rag_count": 6,
+  "weak_query_count": 0,
+  "llm_candidate_cases_count": 8,
+  "owner_review_status": "sheet_created",
+  "live_trace_status": "available",
+  "decision_recommendation": "build_hybrid_llm_assist_for_low_confidence_cases",
+  "runtime_mutation_status": "passed",
+  "llm_calls_added": false,
+  "new_runtime_path_added": false,
+  "new_user_facing_stub_created": false,
+  "encoding_gate_status": "passed",
+  "tests_status": "passed",
+  "known_warnings": "owner review sheet is created but owner scores are not completed; mixed/low-confidence cases indicate future hybrid calibration candidates; HF1.2 out-of-scope static/advisory candidates remain outside this PRD",
+  "known_blockers": "",
+  "missing_required_artifacts": [],
+  "generated_at_utc": "2026-06-09T04:13:48.016262+00:00"
+}
+
+exit_code: 0
+

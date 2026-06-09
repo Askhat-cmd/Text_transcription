@@ -1,0 +1,609 @@
+[
+  {
+    "case_id": "SF01",
+    "group": "short_contextual_followup",
+    "user_message": "Да",
+    "expected_category": "inherit_concept_query",
+    "expected_retrieval_actions": [
+      "query_kb"
+    ],
+    "last_assistant_offer": {
+      "is_open": true,
+      "offer_type": "explain_concept",
+      "offer_text_summary": "Показать через нейросталкинг, автоматизм и внутренний шаг."
+    },
+    "dialogue_pragmatics": {
+      "is_contextual_followup": true,
+      "previous_assistant_offer_type": "explain_concept"
+    }
+  },
+  {
+    "case_id": "SF02",
+    "group": "short_contextual_followup",
+    "user_message": "Да, хорошо",
+    "expected_category": "query_practice_context",
+    "expected_retrieval_actions": [
+      "query_kb"
+    ],
+    "last_assistant_offer": {
+      "is_open": true,
+      "offer_type": "practice_observation",
+      "offer_text_summary": "Показать практику наблюдения в нейросталкинге без давления."
+    },
+    "dialogue_pragmatics": {
+      "is_contextual_followup": true,
+      "previous_assistant_offer_type": "practice_observation"
+    }
+  },
+  {
+    "case_id": "SF03",
+    "group": "short_contextual_followup",
+    "user_message": "Давай",
+    "expected_category": "suppress_short_support",
+    "expected_retrieval_actions": [
+      "suppress_rag"
+    ],
+    "last_assistant_offer": {
+      "is_open": true,
+      "offer_type": "short_support",
+      "offer_text_summary": "Могу просто коротко поддержать тебя без разбора."
+    }
+  },
+  {
+    "case_id": "SF04",
+    "group": "short_contextual_followup",
+    "user_message": "Покажи",
+    "expected_category": "warning_needs_hybrid_or_more_context",
+    "expected_retrieval_actions": [
+      "query_kb"
+    ],
+    "last_assistant_offer": {
+      "is_open": true,
+      "offer_type": "example",
+      "offer_text_summary": "Показать пример нейросталкинга на обычной реакции."
+    },
+    "dialogue_pragmatics": {
+      "is_contextual_followup": true
+    }
+  },
+  {
+    "case_id": "SF05",
+    "group": "short_contextual_followup",
+    "user_message": "Продолжай",
+    "expected_category": "warning_needs_hybrid_or_more_context",
+    "expected_retrieval_actions": [
+      "query_kb"
+    ],
+    "last_assistant_offer": {
+      "is_open": true,
+      "offer_type": "explain_concept",
+      "offer_text_summary": "Продолжить объяснение защитного механизма и автоматизма."
+    },
+    "dialogue_pragmatics": {
+      "is_contextual_followup": true
+    }
+  },
+  {
+    "case_id": "SF06",
+    "group": "short_contextual_followup",
+    "user_message": "Можно",
+    "expected_category": "use_current_context_only",
+    "expected_retrieval_actions": [
+      "use_current_context_only",
+      "trace_only"
+    ],
+    "last_assistant_offer": {
+      "is_open": true,
+      "offer_type": "summary",
+      "offer_text_summary": "Сделать короткое резюме текущей линии разговора."
+    },
+    "dialogue_pragmatics": {
+      "is_contextual_followup": true
+    }
+  },
+  {
+    "case_id": "SF07",
+    "group": "short_contextual_followup",
+    "user_message": "Ок",
+    "expected_category": "inherit_concept_query",
+    "expected_retrieval_actions": [
+      "query_kb"
+    ],
+    "last_assistant_offer": {
+      "is_open": true,
+      "offer_type": "example",
+      "offer_text_summary": "Разобрать пример нейросталкинга через автоматизм."
+    }
+  },
+  {
+    "case_id": "SF08",
+    "group": "short_contextual_followup",
+    "user_message": "Хорошо, дальше",
+    "expected_category": "warning_needs_hybrid_or_more_context",
+    "expected_retrieval_actions": [
+      "query_kb"
+    ],
+    "last_assistant_offer": {
+      "is_open": true,
+      "offer_type": "explanation",
+      "offer_text_summary": "Продолжить про самореализацию и внутренний выбор."
+    },
+    "dialogue_pragmatics": {
+      "is_contextual_followup": true
+    }
+  },
+  {
+    "case_id": "SF09",
+    "group": "short_contextual_followup",
+    "user_message": "Да",
+    "expected_category": "suppress_short_support",
+    "expected_retrieval_actions": [
+      "suppress_rag"
+    ],
+    "last_assistant_offer": {
+      "is_open": true,
+      "offer_type": "one_step",
+      "offer_text_summary": "Дать один маленький шаг на сейчас."
+    }
+  },
+  {
+    "case_id": "SF10",
+    "group": "short_contextual_followup",
+    "user_message": "Да, хорошо",
+    "expected_category": "use_current_context_only",
+    "expected_retrieval_actions": [
+      "use_current_context_only"
+    ],
+    "last_assistant_offer": {
+      "is_open": true,
+      "offer_type": "summary",
+      "offer_text_summary": "Собрать резюме текущей беседы без внешней теории."
+    }
+  },
+  {
+    "case_id": "SM01",
+    "group": "summary_request",
+    "user_message": "Подведи краткий итог нашей беседы.",
+    "expected_category": "use_current_context_only",
+    "expected_retrieval_actions": [
+      "use_current_context_only"
+    ],
+    "dialogue_act_resolution": {
+      "dialogue_act": "summary_request"
+    },
+    "answer_obligation_resolution": {
+      "answer_obligation": "summarize_current_conversation"
+    }
+  },
+  {
+    "case_id": "SM02",
+    "group": "summary_request",
+    "user_message": "Сделай резюме.",
+    "expected_category": "use_current_context_only",
+    "expected_retrieval_actions": [
+      "use_current_context_only"
+    ],
+    "dialogue_act_resolution": {
+      "dialogue_act": "summary_request"
+    },
+    "answer_obligation_resolution": {
+      "answer_obligation": "summarize_current_conversation"
+    }
+  },
+  {
+    "case_id": "SM03",
+    "group": "summary_request",
+    "user_message": "К чему мы пришли?",
+    "expected_category": "use_current_context_only",
+    "expected_retrieval_actions": [
+      "use_current_context_only"
+    ],
+    "dialogue_act_resolution": {
+      "dialogue_act": "summary_request"
+    },
+    "answer_obligation_resolution": {
+      "answer_obligation": "summarize_current_conversation"
+    }
+  },
+  {
+    "case_id": "SM04",
+    "group": "summary_request",
+    "user_message": "Что мы поняли?",
+    "expected_category": "use_current_context_only",
+    "expected_retrieval_actions": [
+      "use_current_context_only"
+    ],
+    "dialogue_act_resolution": {
+      "dialogue_act": "summary_request"
+    },
+    "answer_obligation_resolution": {
+      "answer_obligation": "summarize_current_conversation"
+    }
+  },
+  {
+    "case_id": "SM05",
+    "group": "summary_request",
+    "user_message": "Дай summary.",
+    "expected_category": "use_current_context_only",
+    "expected_retrieval_actions": [
+      "use_current_context_only"
+    ],
+    "dialogue_act_resolution": {
+      "dialogue_act": "summary_request"
+    },
+    "answer_obligation_resolution": {
+      "answer_obligation": "summarize_current_conversation"
+    }
+  },
+  {
+    "case_id": "SM06",
+    "group": "summary_request",
+    "user_message": "Собери всё вместе.",
+    "expected_category": "use_current_context_only",
+    "expected_retrieval_actions": [
+      "use_current_context_only"
+    ],
+    "dialogue_act_resolution": {
+      "dialogue_act": "summary_request"
+    },
+    "answer_obligation_resolution": {
+      "answer_obligation": "summarize_current_conversation"
+    }
+  },
+  {
+    "case_id": "KQ01",
+    "group": "knowledge_question",
+    "user_message": "Что такое нейросталкинг?",
+    "expected_category": "query_kb",
+    "expected_retrieval_actions": [
+      "query_kb"
+    ],
+    "dialogue_act_resolution": {
+      "dialogue_act": "knowledge_question"
+    },
+    "knowledge_answer_guard": {
+      "knowledge_answer": {
+        "needed": true,
+        "concept": "нейросталкинг"
+      }
+    }
+  },
+  {
+    "case_id": "KQ02",
+    "group": "knowledge_question",
+    "user_message": "Объясни Кузницу Духа простыми словами.",
+    "expected_category": "query_kb",
+    "expected_retrieval_actions": [
+      "query_kb"
+    ],
+    "dialogue_act_resolution": {
+      "dialogue_act": "knowledge_question"
+    },
+    "knowledge_answer_guard": {
+      "knowledge_answer": {
+        "needed": true,
+        "concept": "кузница духа"
+      }
+    }
+  },
+  {
+    "case_id": "KQ03",
+    "group": "knowledge_question",
+    "user_message": "Что значит автоматизм?",
+    "expected_category": "query_kb",
+    "expected_retrieval_actions": [
+      "query_kb"
+    ],
+    "dialogue_act_resolution": {
+      "dialogue_act": "knowledge_question"
+    },
+    "knowledge_answer_guard": {
+      "knowledge_answer": {
+        "needed": true,
+        "concept": "автоматизм"
+      }
+    }
+  },
+  {
+    "case_id": "KQ04",
+    "group": "knowledge_question",
+    "user_message": "Как работает защитный механизм?",
+    "expected_category": "query_kb",
+    "expected_retrieval_actions": [
+      "query_kb"
+    ],
+    "dialogue_act_resolution": {
+      "dialogue_act": "knowledge_question"
+    },
+    "knowledge_answer_guard": {
+      "knowledge_answer": {
+        "needed": true,
+        "concept": "защитный механизм"
+      }
+    }
+  },
+  {
+    "case_id": "KQ05",
+    "group": "knowledge_question",
+    "user_message": "Чем отличается наблюдение от контроля?",
+    "expected_category": "query_kb",
+    "expected_retrieval_actions": [
+      "query_kb"
+    ],
+    "dialogue_act_resolution": {
+      "dialogue_act": "knowledge_question"
+    },
+    "knowledge_answer_guard": {
+      "knowledge_answer": {
+        "needed": true,
+        "concept": "наблюдение"
+      }
+    }
+  },
+  {
+    "case_id": "KQ06",
+    "group": "knowledge_question",
+    "user_message": "Расскажи про самореализацию.",
+    "expected_category": "query_kb",
+    "expected_retrieval_actions": [
+      "query_kb"
+    ],
+    "dialogue_act_resolution": {
+      "dialogue_act": "knowledge_question"
+    },
+    "knowledge_answer_guard": {
+      "knowledge_answer": {
+        "needed": true,
+        "concept": "самореализация"
+      }
+    }
+  },
+  {
+    "case_id": "KQ07",
+    "group": "knowledge_question",
+    "user_message": "Как работает нейросталкинг в живом диалоге?",
+    "expected_category": "query_kb",
+    "expected_retrieval_actions": [
+      "query_kb"
+    ],
+    "dialogue_act_resolution": {
+      "dialogue_act": "knowledge_question"
+    },
+    "knowledge_answer_guard": {
+      "knowledge_answer": {
+        "needed": true,
+        "concept": "нейросталкинг"
+      }
+    }
+  },
+  {
+    "case_id": "KQ08",
+    "group": "knowledge_question",
+    "user_message": "Что значит внутренняя наблюдательность?",
+    "expected_category": "query_kb",
+    "expected_retrieval_actions": [
+      "query_kb"
+    ],
+    "dialogue_act_resolution": {
+      "dialogue_act": "knowledge_question"
+    },
+    "knowledge_answer_guard": {
+      "knowledge_answer": {
+        "needed": true,
+        "concept": "наблюдение"
+      }
+    }
+  },
+  {
+    "case_id": "MX01",
+    "group": "mixed_context",
+    "user_message": "Подведи итог и свяжи это с нейросталкингом.",
+    "expected_category": "mixed_query_or_hybrid_needed",
+    "expected_retrieval_actions": [
+      "query_kb",
+      "query_kb_and_memory"
+    ],
+    "current_concept": "нейросталкинг",
+    "dialogue_act_resolution": {
+      "dialogue_act": "summary_request"
+    },
+    "answer_obligation_resolution": {
+      "answer_obligation": "summarize_current_conversation"
+    }
+  },
+  {
+    "case_id": "MX02",
+    "group": "mixed_context",
+    "user_message": "Покажи это через Кузницу.",
+    "expected_category": "mixed_query_or_hybrid_needed",
+    "expected_retrieval_actions": [
+      "query_kb"
+    ],
+    "current_concept": "кузница духа",
+    "dialogue_pragmatics": {
+      "is_contextual_followup": true
+    }
+  },
+  {
+    "case_id": "MX03",
+    "group": "mixed_context",
+    "user_message": "Да, но на моём примере.",
+    "expected_category": "query_kb_and_memory_or_hybrid",
+    "expected_retrieval_actions": [
+      "query_kb_and_memory"
+    ],
+    "current_concept": "нейросталкинг",
+    "last_assistant_offer": {
+      "is_open": true,
+      "offer_type": "explain_concept",
+      "offer_text_summary": "Пояснить нейросталкинг на примере пользователя."
+    },
+    "dialogue_pragmatics": {
+      "is_contextual_followup": true
+    }
+  },
+  {
+    "case_id": "MX04",
+    "group": "mixed_context",
+    "user_message": "А как это связано с автоматизмом?",
+    "expected_category": "query_kb",
+    "expected_retrieval_actions": [
+      "query_kb"
+    ],
+    "dialogue_pragmatics": {
+      "is_contextual_followup": true
+    },
+    "knowledge_answer_guard": {
+      "knowledge_answer": {
+        "needed": true,
+        "concept": "автоматизм"
+      }
+    }
+  },
+  {
+    "case_id": "MX05",
+    "group": "mixed_context",
+    "user_message": "Теперь дай практику по этому.",
+    "expected_category": "query_practice_context",
+    "expected_retrieval_actions": [
+      "query_kb"
+    ],
+    "current_concept": "нейросталкинг",
+    "dialogue_pragmatics": {
+      "is_contextual_followup": true
+    }
+  },
+  {
+    "case_id": "MX06",
+    "group": "mixed_context",
+    "user_message": "Суммируй и дай практику по нейросталкингу.",
+    "expected_category": "query_kb_and_memory_or_hybrid",
+    "expected_retrieval_actions": [
+      "query_kb_and_memory",
+      "query_kb"
+    ],
+    "current_concept": "нейросталкинг",
+    "dialogue_act_resolution": {
+      "dialogue_act": "summary_request"
+    },
+    "answer_obligation_resolution": {
+      "answer_obligation": "summarize_current_conversation"
+    }
+  },
+  {
+    "case_id": "MX07",
+    "group": "mixed_context",
+    "user_message": "Объясни коротко, но с примером из нашей беседы.",
+    "expected_category": "query_kb_and_memory_or_hybrid",
+    "expected_retrieval_actions": [
+      "query_kb_and_memory",
+      "query_kb"
+    ],
+    "current_concept": "нейросталкинг",
+    "dialogue_pragmatics": {
+      "is_contextual_followup": true
+    }
+  },
+  {
+    "case_id": "MX08",
+    "group": "mixed_context",
+    "user_message": "Что из этого относится к защитному механизму?",
+    "expected_category": "query_kb",
+    "expected_retrieval_actions": [
+      "query_kb"
+    ],
+    "dialogue_pragmatics": {
+      "is_contextual_followup": true
+    },
+    "knowledge_answer_guard": {
+      "knowledge_answer": {
+        "needed": true,
+        "concept": "защитный механизм"
+      }
+    }
+  },
+  {
+    "case_id": "NS01",
+    "group": "noise_suppression",
+    "user_message": "Привет.",
+    "expected_category": "suppress_rag",
+    "expected_retrieval_actions": [
+      "suppress_rag"
+    ]
+  },
+  {
+    "case_id": "NS02",
+    "group": "noise_suppression",
+    "user_message": "Спасибо.",
+    "expected_category": "suppress_rag",
+    "expected_retrieval_actions": [
+      "suppress_rag"
+    ]
+  },
+  {
+    "case_id": "NS03",
+    "group": "noise_suppression",
+    "user_message": "Пока.",
+    "expected_category": "suppress_rag",
+    "expected_retrieval_actions": [
+      "suppress_rag"
+    ]
+  },
+  {
+    "case_id": "NS04",
+    "group": "noise_suppression",
+    "user_message": "Просто поддержи.",
+    "expected_category": "suppress_rag",
+    "expected_retrieval_actions": [
+      "suppress_rag"
+    ],
+    "response_planner": {
+      "next_move": "give_short_support",
+      "answer_shape": "short_support"
+    }
+  },
+  {
+    "case_id": "NS05",
+    "group": "noise_suppression",
+    "user_message": "Что сделать прямо сейчас?",
+    "expected_category": "suppress_rag",
+    "expected_retrieval_actions": [
+      "suppress_rag"
+    ],
+    "response_planner": {
+      "answer_shape": "one_step"
+    }
+  },
+  {
+    "case_id": "NS06",
+    "group": "noise_suppression",
+    "user_message": "Один шаг.",
+    "expected_category": "suppress_rag",
+    "expected_retrieval_actions": [
+      "suppress_rag"
+    ],
+    "response_planner": {
+      "answer_shape": "one_step"
+    }
+  },
+  {
+    "case_id": "NS07",
+    "group": "noise_suppression",
+    "user_message": "Не надо теории.",
+    "expected_category": "trace_only",
+    "expected_retrieval_actions": [
+      "trace_only",
+      "suppress_rag"
+    ]
+  },
+  {
+    "case_id": "NS08",
+    "group": "noise_suppression",
+    "user_message": "Скажи коротко.",
+    "expected_category": "trace_only",
+    "expected_retrieval_actions": [
+      "trace_only",
+      "suppress_rag"
+    ]
+  }
+]

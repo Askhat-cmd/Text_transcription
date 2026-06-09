@@ -1061,3 +1061,23 @@ Consequences:
 - final-answer authorship remains with Writer;
 - failed repair attempts are retried or quarantined by the existing final-answer acceptance gate;
 - remaining summary/advisory/static candidates require separate PRD scope instead of hidden in-place rewriting.
+
+## ADR-075 - LLM-assisted retrieval composer requires trace evidence and deterministic pre-pass gating
+
+Status: accepted
+
+Date: 2026-06-09
+
+Context: PRD-047.15 introduced deterministic `contextual_retrieval_query_composer_v1` and left a warning that mixed/low-confidence live dialogue cases require owner-trace calibration before any LLM assistance is designed.
+
+Decision:
+- keep Composer v1 deterministic until trace/owner evidence proves where LLM assistance is needed;
+- require replay/live trace review, owner review sheet, and blocker gates before changing retrieval behavior;
+- if LLM assistance is introduced later, default to a hybrid design: deterministic pre-pass handles high-confidence cases, LLM handles only low-confidence/mixed cases through strict metadata-only JSON;
+- LLM Composer output must never contain final answers, advice text, canned explanations, or user-facing therapy phrases;
+- Writer remains the only final answer author.
+
+Consequences:
+- HF1 can close as warning without runtime mutation because owner scores are pending;
+- future hybrid work has a concrete evidence base and must preserve no-stub/no-new-runtime-path boundaries;
+- heuristic-only tuning, hybrid assistance, or further owner review can be selected from trace metrics instead of subjective impressions.

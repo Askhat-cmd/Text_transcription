@@ -1,0 +1,8 @@
+{
+  "encoding_gate_status": "passed",
+  "nul_bytes_found": 0,
+  "utf16_like_interleaving_found": false,
+  "mojibake_issues_count": 0,
+  "files_checked_count": 32,
+  "issues": []
+}

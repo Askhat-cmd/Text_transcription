@@ -1,0 +1,2258 @@
+{
+  "prd_id": "PRD-047.15-HF1",
+  "generated_at_utc": "2026-06-09T04:13:43.118666+00:00",
+  "mode": "replay",
+  "metrics": {
+    "cases_total": 40,
+    "automated_expected_match_count": 33,
+    "automated_expected_match_rate": 0.825,
+    "false_positive_rag_count": 1,
+    "false_negative_rag_count": 6,
+    "weak_query_count": 0,
+    "summary_external_kb_leak_count": 0,
+    "literal_short_reply_query_count": 0,
+    "no_stub_violations_count": 0,
+    "llm_candidate_cases_count": 8,
+    "noisy_chunk_risk_count": 1,
+    "needs_more_context_fields_count": 9
+  },
+  "decision_recommendation": "build_hybrid_llm_assist_for_low_confidence_cases",
+  "traces": [
+    {
+      "case_id": "SF01",
+      "group": "short_contextual_followup",
+      "user_message": "Да",
+      "last_assistant_offer": {
+        "is_open": true,
+        "offer_type": "explain_concept",
+        "offer_text_summary": "Показать через нейросталкинг, автоматизм и внутренний шаг."
+      },
+      "dialogue_act": "",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "knowledge_context",
+        "retrieval_action": "query_kb",
+        "query_source": "last_assistant_offer",
+        "composed_query": "нейросталкинг автоматизм объяснение наблюдение внутреннее наблюдение защитный механизм внутренний шаг",
+        "query_terms": [
+          "нейросталкинг",
+          "автоматизм",
+          "объяснение",
+          "наблюдение",
+          "внутреннее наблюдение",
+          "защитный механизм",
+          "внутренний шаг"
+        ],
+        "inherited_topic": "нейросталкинг автоматизм",
+        "inherited_offer_type": "explain_concept",
+        "confidence": 0.86,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": true,
+        "max_chunks_for_writer": 2,
+        "max_chars_per_chunk": 650,
+        "suppress_reason": "",
+        "reason": "short acceptance inherits retrieval topic from previous assistant offer",
+        "evidence": [
+          "short_contextual_followup",
+          "last_offer_inherited"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "inherit_concept_query",
+      "expected_retrieval_actions": [
+        "query_kb"
+      ],
+      "computed_category": "inherit_concept_query",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "SF02",
+      "group": "short_contextual_followup",
+      "user_message": "Да, хорошо",
+      "last_assistant_offer": {
+        "is_open": true,
+        "offer_type": "practice_observation",
+        "offer_text_summary": "Показать практику наблюдения в нейросталкинге без давления."
+      },
+      "dialogue_act": "",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "knowledge_context",
+        "retrieval_action": "query_kb",
+        "query_source": "last_assistant_offer",
+        "composed_query": "нейросталкинг практики объяснение наблюдение внутреннее наблюдение автоматизм защитный механизм внутренний шаг use_when avoid_when мягкое распутывание",
+        "query_terms": [
+          "нейросталкинг",
+          "практики",
+          "объяснение",
+          "наблюдение",
+          "внутреннее наблюдение",
+          "автоматизм",
+          "защитный механизм",
+          "внутренний шаг",
+          "use_when",
+          "avoid_when",
+          "мягкое распутывание"
+        ],
+        "inherited_topic": "нейросталкинг практики",
+        "inherited_offer_type": "practice_observation",
+        "confidence": 0.86,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": true,
+        "max_chunks_for_writer": 2,
+        "max_chars_per_chunk": 650,
+        "suppress_reason": "",
+        "reason": "short acceptance inherits retrieval topic from previous assistant offer",
+        "evidence": [
+          "short_contextual_followup",
+          "last_offer_inherited"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "query_practice_context",
+      "expected_retrieval_actions": [
+        "query_kb"
+      ],
+      "computed_category": "inherit_concept_query",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "SF03",
+      "group": "short_contextual_followup",
+      "user_message": "Давай",
+      "last_assistant_offer": {
+        "is_open": true,
+        "offer_type": "short_support",
+        "offer_text_summary": "Могу просто коротко поддержать тебя без разбора."
+      },
+      "dialogue_act": "",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "none",
+        "retrieval_action": "suppress_rag",
+        "query_source": "last_assistant_offer",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "",
+        "inherited_offer_type": "short_support",
+        "confidence": 0.9,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "accepted_short_support_offer_no_kb_needed",
+        "reason": "short support or one-step offer can be fulfilled from dialogue context",
+        "evidence": [
+          "short_contextual_followup",
+          "last_offer_inherited",
+          "noise_suppression"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "suppress_short_support",
+      "expected_retrieval_actions": [
+        "suppress_rag"
+      ],
+      "computed_category": "suppress_rag",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "SF04",
+      "group": "short_contextual_followup",
+      "user_message": "Покажи",
+      "last_assistant_offer": {
+        "is_open": true,
+        "offer_type": "example",
+        "offer_text_summary": "Показать пример нейросталкинга на обычной реакции."
+      },
+      "dialogue_act": "",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "none",
+        "retrieval_action": "suppress_rag",
+        "query_source": "current_user_message",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "",
+        "inherited_offer_type": "",
+        "confidence": 0.9,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "contact_or_close_turn_no_kb_needed",
+        "reason": "greeting/contact/close should not retrieve KB without explicit knowledge need",
+        "evidence": [
+          "noise_suppression",
+          "contact_or_close"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "warning_needs_hybrid_or_more_context",
+      "expected_retrieval_actions": [
+        "query_kb"
+      ],
+      "computed_category": "suppress_rag",
+      "review_flags": {
+        "good_fit": false,
+        "false_positive_rag": false,
+        "false_negative_rag": true,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": true,
+        "needs_more_context_fields": true
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "SF05",
+      "group": "short_contextual_followup",
+      "user_message": "Продолжай",
+      "last_assistant_offer": {
+        "is_open": true,
+        "offer_type": "explain_concept",
+        "offer_text_summary": "Продолжить объяснение защитного механизма и автоматизма."
+      },
+      "dialogue_act": "",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "memory_context",
+        "retrieval_action": "trace_only",
+        "query_source": "mixed_context",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "",
+        "inherited_offer_type": "explain_concept",
+        "confidence": 0.58,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "contextual_followup_without_knowledge_need",
+        "reason": "recent dialogue context is preferred over noisy KB",
+        "evidence": [
+          "contextual_followup",
+          "recent_context_preferred"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "warning_needs_hybrid_or_more_context",
+      "expected_retrieval_actions": [
+        "query_kb"
+      ],
+      "computed_category": "trace_only",
+      "review_flags": {
+        "good_fit": false,
+        "false_positive_rag": false,
+        "false_negative_rag": true,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": true,
+        "needs_more_context_fields": true
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "SF06",
+      "group": "short_contextual_followup",
+      "user_message": "Можно",
+      "last_assistant_offer": {
+        "is_open": true,
+        "offer_type": "summary",
+        "offer_text_summary": "Сделать короткое резюме текущей линии разговора."
+      },
+      "dialogue_act": "",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "memory_context",
+        "retrieval_action": "trace_only",
+        "query_source": "mixed_context",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "",
+        "inherited_offer_type": "summary",
+        "confidence": 0.58,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "contextual_followup_without_knowledge_need",
+        "reason": "recent dialogue context is preferred over noisy KB",
+        "evidence": [
+          "contextual_followup",
+          "recent_context_preferred"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "use_current_context_only",
+      "expected_retrieval_actions": [
+        "use_current_context_only",
+        "trace_only"
+      ],
+      "computed_category": "trace_only",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": true
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "SF07",
+      "group": "short_contextual_followup",
+      "user_message": "Ок",
+      "last_assistant_offer": {
+        "is_open": true,
+        "offer_type": "example",
+        "offer_text_summary": "Разобрать пример нейросталкинга через автоматизм."
+      },
+      "dialogue_act": "",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "knowledge_context",
+        "retrieval_action": "query_kb",
+        "query_source": "last_assistant_offer",
+        "composed_query": "нейросталкинг автоматизм объяснение наблюдение внутреннее наблюдение защитный механизм внутренний шаг",
+        "query_terms": [
+          "нейросталкинг",
+          "автоматизм",
+          "объяснение",
+          "наблюдение",
+          "внутреннее наблюдение",
+          "защитный механизм",
+          "внутренний шаг"
+        ],
+        "inherited_topic": "нейросталкинг автоматизм",
+        "inherited_offer_type": "example",
+        "confidence": 0.86,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": true,
+        "max_chunks_for_writer": 2,
+        "max_chars_per_chunk": 650,
+        "suppress_reason": "",
+        "reason": "short acceptance inherits retrieval topic from previous assistant offer",
+        "evidence": [
+          "short_contextual_followup",
+          "last_offer_inherited"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "inherit_concept_query",
+      "expected_retrieval_actions": [
+        "query_kb"
+      ],
+      "computed_category": "inherit_concept_query",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "SF08",
+      "group": "short_contextual_followup",
+      "user_message": "Хорошо, дальше",
+      "last_assistant_offer": {
+        "is_open": true,
+        "offer_type": "explanation",
+        "offer_text_summary": "Продолжить про самореализацию и внутренний выбор."
+      },
+      "dialogue_act": "",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "memory_context",
+        "retrieval_action": "trace_only",
+        "query_source": "mixed_context",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "",
+        "inherited_offer_type": "explanation",
+        "confidence": 0.58,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "contextual_followup_without_knowledge_need",
+        "reason": "recent dialogue context is preferred over noisy KB",
+        "evidence": [
+          "contextual_followup",
+          "recent_context_preferred"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "warning_needs_hybrid_or_more_context",
+      "expected_retrieval_actions": [
+        "query_kb"
+      ],
+      "computed_category": "trace_only",
+      "review_flags": {
+        "good_fit": false,
+        "false_positive_rag": false,
+        "false_negative_rag": true,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": true,
+        "needs_more_context_fields": true
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "SF09",
+      "group": "short_contextual_followup",
+      "user_message": "Да",
+      "last_assistant_offer": {
+        "is_open": true,
+        "offer_type": "one_step",
+        "offer_text_summary": "Дать один маленький шаг на сейчас."
+      },
+      "dialogue_act": "",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "none",
+        "retrieval_action": "suppress_rag",
+        "query_source": "last_assistant_offer",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "",
+        "inherited_offer_type": "one_step",
+        "confidence": 0.9,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "accepted_short_support_offer_no_kb_needed",
+        "reason": "short support or one-step offer can be fulfilled from dialogue context",
+        "evidence": [
+          "short_contextual_followup",
+          "last_offer_inherited",
+          "noise_suppression"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "suppress_short_support",
+      "expected_retrieval_actions": [
+        "suppress_rag"
+      ],
+      "computed_category": "suppress_rag",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "SF10",
+      "group": "short_contextual_followup",
+      "user_message": "Да, хорошо",
+      "last_assistant_offer": {
+        "is_open": true,
+        "offer_type": "summary",
+        "offer_text_summary": "Собрать резюме текущей беседы без внешней теории."
+      },
+      "dialogue_act": "",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "knowledge_context",
+        "retrieval_action": "query_kb",
+        "query_source": "last_assistant_offer",
+        "composed_query": "объяснение наблюдение механизм",
+        "query_terms": [
+          "объяснение",
+          "наблюдение",
+          "механизм"
+        ],
+        "inherited_topic": "объяснение наблюдение",
+        "inherited_offer_type": "summary",
+        "confidence": 0.86,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": true,
+        "max_chunks_for_writer": 2,
+        "max_chars_per_chunk": 650,
+        "suppress_reason": "",
+        "reason": "short acceptance inherits retrieval topic from previous assistant offer",
+        "evidence": [
+          "short_contextual_followup",
+          "last_offer_inherited"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "use_current_context_only",
+      "expected_retrieval_actions": [
+        "use_current_context_only"
+      ],
+      "computed_category": "inherit_concept_query",
+      "review_flags": {
+        "good_fit": false,
+        "false_positive_rag": true,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "SM01",
+      "group": "summary_request",
+      "user_message": "Подведи краткий итог нашей беседы.",
+      "last_assistant_offer": {},
+      "dialogue_act": "summary_request",
+      "answer_obligation": "summarize_current_conversation",
+      "summary_request": true,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "conversation_context",
+        "retrieval_action": "use_current_context_only",
+        "query_source": "summary_request",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "",
+        "inherited_offer_type": "",
+        "confidence": 0.95,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "summary_request_current_conversation_only",
+        "reason": "summary of current conversation should not introduce external KB",
+        "evidence": [
+          "summary_request",
+          "no_external_kb_by_default"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "use_current_context_only",
+      "expected_retrieval_actions": [
+        "use_current_context_only"
+      ],
+      "computed_category": "use_current_context_only",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "SM02",
+      "group": "summary_request",
+      "user_message": "Сделай резюме.",
+      "last_assistant_offer": {},
+      "dialogue_act": "summary_request",
+      "answer_obligation": "summarize_current_conversation",
+      "summary_request": true,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "conversation_context",
+        "retrieval_action": "use_current_context_only",
+        "query_source": "summary_request",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "",
+        "inherited_offer_type": "",
+        "confidence": 0.95,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "summary_request_current_conversation_only",
+        "reason": "summary of current conversation should not introduce external KB",
+        "evidence": [
+          "summary_request",
+          "no_external_kb_by_default"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "use_current_context_only",
+      "expected_retrieval_actions": [
+        "use_current_context_only"
+      ],
+      "computed_category": "use_current_context_only",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "SM03",
+      "group": "summary_request",
+      "user_message": "К чему мы пришли?",
+      "last_assistant_offer": {},
+      "dialogue_act": "summary_request",
+      "answer_obligation": "summarize_current_conversation",
+      "summary_request": true,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "conversation_context",
+        "retrieval_action": "use_current_context_only",
+        "query_source": "summary_request",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "",
+        "inherited_offer_type": "",
+        "confidence": 0.95,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "summary_request_current_conversation_only",
+        "reason": "summary of current conversation should not introduce external KB",
+        "evidence": [
+          "summary_request",
+          "no_external_kb_by_default"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "use_current_context_only",
+      "expected_retrieval_actions": [
+        "use_current_context_only"
+      ],
+      "computed_category": "use_current_context_only",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "SM04",
+      "group": "summary_request",
+      "user_message": "Что мы поняли?",
+      "last_assistant_offer": {},
+      "dialogue_act": "summary_request",
+      "answer_obligation": "summarize_current_conversation",
+      "summary_request": true,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "conversation_context",
+        "retrieval_action": "use_current_context_only",
+        "query_source": "summary_request",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "",
+        "inherited_offer_type": "",
+        "confidence": 0.95,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "summary_request_current_conversation_only",
+        "reason": "summary of current conversation should not introduce external KB",
+        "evidence": [
+          "summary_request",
+          "no_external_kb_by_default"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "use_current_context_only",
+      "expected_retrieval_actions": [
+        "use_current_context_only"
+      ],
+      "computed_category": "use_current_context_only",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "SM05",
+      "group": "summary_request",
+      "user_message": "Дай summary.",
+      "last_assistant_offer": {},
+      "dialogue_act": "summary_request",
+      "answer_obligation": "summarize_current_conversation",
+      "summary_request": true,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "conversation_context",
+        "retrieval_action": "use_current_context_only",
+        "query_source": "summary_request",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "",
+        "inherited_offer_type": "",
+        "confidence": 0.95,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "summary_request_current_conversation_only",
+        "reason": "summary of current conversation should not introduce external KB",
+        "evidence": [
+          "summary_request",
+          "no_external_kb_by_default"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "use_current_context_only",
+      "expected_retrieval_actions": [
+        "use_current_context_only"
+      ],
+      "computed_category": "use_current_context_only",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "SM06",
+      "group": "summary_request",
+      "user_message": "Собери всё вместе.",
+      "last_assistant_offer": {},
+      "dialogue_act": "summary_request",
+      "answer_obligation": "summarize_current_conversation",
+      "summary_request": true,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "conversation_context",
+        "retrieval_action": "use_current_context_only",
+        "query_source": "summary_request",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "",
+        "inherited_offer_type": "",
+        "confidence": 0.95,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "summary_request_current_conversation_only",
+        "reason": "summary of current conversation should not introduce external KB",
+        "evidence": [
+          "summary_request",
+          "no_external_kb_by_default"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "use_current_context_only",
+      "expected_retrieval_actions": [
+        "use_current_context_only"
+      ],
+      "computed_category": "use_current_context_only",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "KQ01",
+      "group": "knowledge_question",
+      "user_message": "Что такое нейросталкинг?",
+      "last_assistant_offer": {},
+      "dialogue_act": "knowledge_question",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "knowledge_context",
+        "retrieval_action": "query_kb",
+        "query_source": "current_user_message",
+        "composed_query": "нейросталкинг внутреннее наблюдение автоматизм защитный механизм внутренний шаг",
+        "query_terms": [
+          "нейросталкинг",
+          "внутреннее наблюдение",
+          "автоматизм",
+          "защитный механизм",
+          "внутренний шаг"
+        ],
+        "inherited_topic": "нейросталкинг",
+        "inherited_offer_type": "",
+        "confidence": 0.88,
+        "writer_can_ignore_rag": false,
+        "include_for_writer_if_found": true,
+        "max_chunks_for_writer": 3,
+        "max_chars_per_chunk": 700,
+        "suppress_reason": "",
+        "reason": "knowledge question needs compact KB support",
+        "evidence": [
+          "knowledge_question",
+          "query_composed_from_current_message"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "query_kb",
+      "expected_retrieval_actions": [
+        "query_kb"
+      ],
+      "computed_category": "query_kb",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "KQ02",
+      "group": "knowledge_question",
+      "user_message": "Объясни Кузницу Духа простыми словами.",
+      "last_assistant_offer": {},
+      "dialogue_act": "knowledge_question",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "knowledge_context",
+        "retrieval_action": "query_kb",
+        "query_source": "current_user_message",
+        "composed_query": "кузница духа объяснение механизм наблюдение",
+        "query_terms": [
+          "кузница духа",
+          "объяснение",
+          "механизм",
+          "наблюдение"
+        ],
+        "inherited_topic": "кузница духа",
+        "inherited_offer_type": "",
+        "confidence": 0.88,
+        "writer_can_ignore_rag": false,
+        "include_for_writer_if_found": true,
+        "max_chunks_for_writer": 3,
+        "max_chars_per_chunk": 700,
+        "suppress_reason": "",
+        "reason": "knowledge question needs compact KB support",
+        "evidence": [
+          "knowledge_question",
+          "query_composed_from_current_message"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "query_kb",
+      "expected_retrieval_actions": [
+        "query_kb"
+      ],
+      "computed_category": "query_kb",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "KQ03",
+      "group": "knowledge_question",
+      "user_message": "Что значит автоматизм?",
+      "last_assistant_offer": {},
+      "dialogue_act": "knowledge_question",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "knowledge_context",
+        "retrieval_action": "query_kb",
+        "query_source": "current_user_message",
+        "composed_query": "автоматизм объяснение механизм наблюдение",
+        "query_terms": [
+          "автоматизм",
+          "объяснение",
+          "механизм",
+          "наблюдение"
+        ],
+        "inherited_topic": "автоматизм",
+        "inherited_offer_type": "",
+        "confidence": 0.88,
+        "writer_can_ignore_rag": false,
+        "include_for_writer_if_found": true,
+        "max_chunks_for_writer": 3,
+        "max_chars_per_chunk": 700,
+        "suppress_reason": "",
+        "reason": "knowledge question needs compact KB support",
+        "evidence": [
+          "knowledge_question",
+          "query_composed_from_current_message"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "query_kb",
+      "expected_retrieval_actions": [
+        "query_kb"
+      ],
+      "computed_category": "query_kb",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "KQ04",
+      "group": "knowledge_question",
+      "user_message": "Как работает защитный механизм?",
+      "last_assistant_offer": {},
+      "dialogue_act": "knowledge_question",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "knowledge_context",
+        "retrieval_action": "query_kb",
+        "query_source": "current_user_message",
+        "composed_query": "защитный механизм объяснение механизм наблюдение",
+        "query_terms": [
+          "защитный механизм",
+          "объяснение",
+          "механизм",
+          "наблюдение"
+        ],
+        "inherited_topic": "защитный механизм",
+        "inherited_offer_type": "",
+        "confidence": 0.88,
+        "writer_can_ignore_rag": false,
+        "include_for_writer_if_found": true,
+        "max_chunks_for_writer": 3,
+        "max_chars_per_chunk": 700,
+        "suppress_reason": "",
+        "reason": "knowledge question needs compact KB support",
+        "evidence": [
+          "knowledge_question",
+          "query_composed_from_current_message"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "query_kb",
+      "expected_retrieval_actions": [
+        "query_kb"
+      ],
+      "computed_category": "query_kb",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "KQ05",
+      "group": "knowledge_question",
+      "user_message": "Чем отличается наблюдение от контроля?",
+      "last_assistant_offer": {},
+      "dialogue_act": "knowledge_question",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "knowledge_context",
+        "retrieval_action": "query_kb",
+        "query_source": "current_user_message",
+        "composed_query": "объяснение механизм наблюдение",
+        "query_terms": [
+          "объяснение",
+          "механизм",
+          "наблюдение"
+        ],
+        "inherited_topic": "наблюдение",
+        "inherited_offer_type": "",
+        "confidence": 0.88,
+        "writer_can_ignore_rag": false,
+        "include_for_writer_if_found": true,
+        "max_chunks_for_writer": 3,
+        "max_chars_per_chunk": 700,
+        "suppress_reason": "",
+        "reason": "knowledge question needs compact KB support",
+        "evidence": [
+          "knowledge_question",
+          "query_composed_from_current_message"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "query_kb",
+      "expected_retrieval_actions": [
+        "query_kb"
+      ],
+      "computed_category": "query_kb",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "KQ06",
+      "group": "knowledge_question",
+      "user_message": "Расскажи про самореализацию.",
+      "last_assistant_offer": {},
+      "dialogue_act": "knowledge_question",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "knowledge_context",
+        "retrieval_action": "query_kb",
+        "query_source": "current_user_message",
+        "composed_query": "самореализация ценности действие внутренний выбор",
+        "query_terms": [
+          "самореализация",
+          "ценности",
+          "действие",
+          "внутренний выбор"
+        ],
+        "inherited_topic": "самореализация",
+        "inherited_offer_type": "",
+        "confidence": 0.88,
+        "writer_can_ignore_rag": false,
+        "include_for_writer_if_found": true,
+        "max_chunks_for_writer": 3,
+        "max_chars_per_chunk": 700,
+        "suppress_reason": "",
+        "reason": "knowledge question needs compact KB support",
+        "evidence": [
+          "knowledge_question",
+          "query_composed_from_current_message"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "query_kb",
+      "expected_retrieval_actions": [
+        "query_kb"
+      ],
+      "computed_category": "query_kb",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "KQ07",
+      "group": "knowledge_question",
+      "user_message": "Как работает нейросталкинг в живом диалоге?",
+      "last_assistant_offer": {},
+      "dialogue_act": "knowledge_question",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "knowledge_context",
+        "retrieval_action": "query_kb",
+        "query_source": "current_user_message",
+        "composed_query": "нейросталкинг внутреннее наблюдение автоматизм защитный механизм внутренний шаг",
+        "query_terms": [
+          "нейросталкинг",
+          "внутреннее наблюдение",
+          "автоматизм",
+          "защитный механизм",
+          "внутренний шаг"
+        ],
+        "inherited_topic": "нейросталкинг",
+        "inherited_offer_type": "",
+        "confidence": 0.88,
+        "writer_can_ignore_rag": false,
+        "include_for_writer_if_found": true,
+        "max_chunks_for_writer": 3,
+        "max_chars_per_chunk": 700,
+        "suppress_reason": "",
+        "reason": "knowledge question needs compact KB support",
+        "evidence": [
+          "knowledge_question",
+          "query_composed_from_current_message"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "query_kb",
+      "expected_retrieval_actions": [
+        "query_kb"
+      ],
+      "computed_category": "query_kb",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "KQ08",
+      "group": "knowledge_question",
+      "user_message": "Что значит внутренняя наблюдательность?",
+      "last_assistant_offer": {},
+      "dialogue_act": "knowledge_question",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "knowledge_context",
+        "retrieval_action": "query_kb",
+        "query_source": "current_user_message",
+        "composed_query": "объяснение механизм наблюдение",
+        "query_terms": [
+          "объяснение",
+          "механизм",
+          "наблюдение"
+        ],
+        "inherited_topic": "наблюдение",
+        "inherited_offer_type": "",
+        "confidence": 0.88,
+        "writer_can_ignore_rag": false,
+        "include_for_writer_if_found": true,
+        "max_chunks_for_writer": 3,
+        "max_chars_per_chunk": 700,
+        "suppress_reason": "",
+        "reason": "knowledge question needs compact KB support",
+        "evidence": [
+          "knowledge_question",
+          "query_composed_from_current_message"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "query_kb",
+      "expected_retrieval_actions": [
+        "query_kb"
+      ],
+      "computed_category": "query_kb",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "MX01",
+      "group": "mixed_context",
+      "user_message": "Подведи итог и свяжи это с нейросталкингом.",
+      "last_assistant_offer": {},
+      "dialogue_act": "summary_request",
+      "answer_obligation": "summarize_current_conversation",
+      "summary_request": true,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "mixed",
+        "retrieval_action": "query_kb",
+        "query_source": "mixed_context",
+        "composed_query": "нейросталкинг summary_context внутреннее наблюдение автоматизм защитный механизм внутренний шаг",
+        "query_terms": [
+          "нейросталкинг",
+          "summary_context",
+          "внутреннее наблюдение",
+          "автоматизм",
+          "защитный механизм",
+          "внутренний шаг"
+        ],
+        "inherited_topic": "нейросталкинг",
+        "inherited_offer_type": "",
+        "confidence": 0.72,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": true,
+        "max_chunks_for_writer": 2,
+        "max_chars_per_chunk": 600,
+        "suppress_reason": "",
+        "reason": "summary request explicitly asks to connect current conversation with a concept",
+        "evidence": [
+          "summary_request",
+          "explicit_concept_link"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "mixed_query_or_hybrid_needed",
+      "expected_retrieval_actions": [
+        "query_kb",
+        "query_kb_and_memory"
+      ],
+      "computed_category": "query_kb",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": true,
+        "needs_hybrid_llm": true,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "MX02",
+      "group": "mixed_context",
+      "user_message": "Покажи это через Кузницу.",
+      "last_assistant_offer": {},
+      "dialogue_act": "",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "none",
+        "retrieval_action": "suppress_rag",
+        "query_source": "current_user_message",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "",
+        "inherited_offer_type": "",
+        "confidence": 0.9,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "contact_or_close_turn_no_kb_needed",
+        "reason": "greeting/contact/close should not retrieve KB without explicit knowledge need",
+        "evidence": [
+          "noise_suppression",
+          "contact_or_close"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "mixed_query_or_hybrid_needed",
+      "expected_retrieval_actions": [
+        "query_kb"
+      ],
+      "computed_category": "suppress_rag",
+      "review_flags": {
+        "good_fit": false,
+        "false_positive_rag": false,
+        "false_negative_rag": true,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": true,
+        "needs_more_context_fields": true
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "MX03",
+      "group": "mixed_context",
+      "user_message": "Да, но на моём примере.",
+      "last_assistant_offer": {
+        "is_open": true,
+        "offer_type": "explain_concept",
+        "offer_text_summary": "Пояснить нейросталкинг на примере пользователя."
+      },
+      "dialogue_act": "",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "memory_context",
+        "retrieval_action": "trace_only",
+        "query_source": "mixed_context",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "нейросталкинг",
+        "inherited_offer_type": "explain_concept",
+        "confidence": 0.58,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "contextual_followup_without_knowledge_need",
+        "reason": "recent dialogue context is preferred over noisy KB",
+        "evidence": [
+          "contextual_followup",
+          "recent_context_preferred"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "query_kb_and_memory_or_hybrid",
+      "expected_retrieval_actions": [
+        "query_kb_and_memory"
+      ],
+      "computed_category": "trace_only",
+      "review_flags": {
+        "good_fit": false,
+        "false_positive_rag": false,
+        "false_negative_rag": true,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": true,
+        "needs_more_context_fields": true
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "MX04",
+      "group": "mixed_context",
+      "user_message": "А как это связано с автоматизмом?",
+      "last_assistant_offer": {},
+      "dialogue_act": "",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "knowledge_context",
+        "retrieval_action": "query_kb",
+        "query_source": "current_user_message",
+        "composed_query": "автоматизм объяснение механизм наблюдение",
+        "query_terms": [
+          "автоматизм",
+          "объяснение",
+          "механизм",
+          "наблюдение"
+        ],
+        "inherited_topic": "автоматизм",
+        "inherited_offer_type": "",
+        "confidence": 0.88,
+        "writer_can_ignore_rag": false,
+        "include_for_writer_if_found": true,
+        "max_chunks_for_writer": 3,
+        "max_chars_per_chunk": 700,
+        "suppress_reason": "",
+        "reason": "knowledge question needs compact KB support",
+        "evidence": [
+          "knowledge_question",
+          "query_composed_from_current_message"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "query_kb",
+      "expected_retrieval_actions": [
+        "query_kb"
+      ],
+      "computed_category": "query_kb",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "MX05",
+      "group": "mixed_context",
+      "user_message": "Теперь дай практику по этому.",
+      "last_assistant_offer": {},
+      "dialogue_act": "",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "practice_context",
+        "retrieval_action": "query_kb",
+        "query_source": "current_user_message",
+        "composed_query": "нейросталкинг практики use_when avoid_when внутреннее наблюдение автоматизм защитный механизм внутренний шаг наблюдение мягкое распутывание",
+        "query_terms": [
+          "нейросталкинг",
+          "практики",
+          "use_when",
+          "avoid_when",
+          "внутреннее наблюдение",
+          "автоматизм",
+          "защитный механизм",
+          "внутренний шаг",
+          "наблюдение",
+          "мягкое распутывание"
+        ],
+        "inherited_topic": "нейросталкинг",
+        "inherited_offer_type": "",
+        "confidence": 0.84,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": true,
+        "max_chunks_for_writer": 3,
+        "max_chars_per_chunk": 650,
+        "suppress_reason": "",
+        "reason": "practice overview can use compact KB context",
+        "evidence": [
+          "practice_overview",
+          "knowledge_context_useful"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "query_practice_context",
+      "expected_retrieval_actions": [
+        "query_kb"
+      ],
+      "computed_category": "query_practice_context",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "MX06",
+      "group": "mixed_context",
+      "user_message": "Суммируй и дай практику по нейросталкингу.",
+      "last_assistant_offer": {},
+      "dialogue_act": "summary_request",
+      "answer_obligation": "summarize_current_conversation",
+      "summary_request": true,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "conversation_context",
+        "retrieval_action": "use_current_context_only",
+        "query_source": "summary_request",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "",
+        "inherited_offer_type": "",
+        "confidence": 0.95,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "summary_request_current_conversation_only",
+        "reason": "summary of current conversation should not introduce external KB",
+        "evidence": [
+          "summary_request",
+          "no_external_kb_by_default"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "query_kb_and_memory_or_hybrid",
+      "expected_retrieval_actions": [
+        "query_kb_and_memory",
+        "query_kb"
+      ],
+      "computed_category": "use_current_context_only",
+      "review_flags": {
+        "good_fit": false,
+        "false_positive_rag": false,
+        "false_negative_rag": true,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": true,
+        "needs_more_context_fields": true
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "MX07",
+      "group": "mixed_context",
+      "user_message": "Объясни коротко, но с примером из нашей беседы.",
+      "last_assistant_offer": {},
+      "dialogue_act": "",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "knowledge_context",
+        "retrieval_action": "query_kb",
+        "query_source": "current_user_message",
+        "composed_query": "нейросталкинг внутреннее наблюдение автоматизм защитный механизм внутренний шаг",
+        "query_terms": [
+          "нейросталкинг",
+          "внутреннее наблюдение",
+          "автоматизм",
+          "защитный механизм",
+          "внутренний шаг"
+        ],
+        "inherited_topic": "нейросталкинг",
+        "inherited_offer_type": "",
+        "confidence": 0.88,
+        "writer_can_ignore_rag": false,
+        "include_for_writer_if_found": true,
+        "max_chunks_for_writer": 3,
+        "max_chars_per_chunk": 700,
+        "suppress_reason": "",
+        "reason": "knowledge question needs compact KB support",
+        "evidence": [
+          "knowledge_question",
+          "query_composed_from_current_message"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "query_kb_and_memory_or_hybrid",
+      "expected_retrieval_actions": [
+        "query_kb_and_memory",
+        "query_kb"
+      ],
+      "computed_category": "query_kb",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": true,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "MX08",
+      "group": "mixed_context",
+      "user_message": "Что из этого относится к защитному механизму?",
+      "last_assistant_offer": {},
+      "dialogue_act": "",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "knowledge_context",
+        "retrieval_action": "query_kb",
+        "query_source": "current_user_message",
+        "composed_query": "защитный механизм объяснение механизм наблюдение",
+        "query_terms": [
+          "защитный механизм",
+          "объяснение",
+          "механизм",
+          "наблюдение"
+        ],
+        "inherited_topic": "защитный механизм",
+        "inherited_offer_type": "",
+        "confidence": 0.88,
+        "writer_can_ignore_rag": false,
+        "include_for_writer_if_found": true,
+        "max_chunks_for_writer": 3,
+        "max_chars_per_chunk": 700,
+        "suppress_reason": "",
+        "reason": "knowledge question needs compact KB support",
+        "evidence": [
+          "knowledge_question",
+          "query_composed_from_current_message"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "query_kb",
+      "expected_retrieval_actions": [
+        "query_kb"
+      ],
+      "computed_category": "query_kb",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "NS01",
+      "group": "noise_suppression",
+      "user_message": "Привет.",
+      "last_assistant_offer": {},
+      "dialogue_act": "",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "none",
+        "retrieval_action": "suppress_rag",
+        "query_source": "current_user_message",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "",
+        "inherited_offer_type": "",
+        "confidence": 0.9,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "contact_or_close_turn_no_kb_needed",
+        "reason": "greeting/contact/close should not retrieve KB without explicit knowledge need",
+        "evidence": [
+          "noise_suppression",
+          "contact_or_close"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "suppress_rag",
+      "expected_retrieval_actions": [
+        "suppress_rag"
+      ],
+      "computed_category": "suppress_rag",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "NS02",
+      "group": "noise_suppression",
+      "user_message": "Спасибо.",
+      "last_assistant_offer": {},
+      "dialogue_act": "",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "none",
+        "retrieval_action": "suppress_rag",
+        "query_source": "current_user_message",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "",
+        "inherited_offer_type": "",
+        "confidence": 0.9,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "contact_or_close_turn_no_kb_needed",
+        "reason": "greeting/contact/close should not retrieve KB without explicit knowledge need",
+        "evidence": [
+          "noise_suppression",
+          "contact_or_close"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "suppress_rag",
+      "expected_retrieval_actions": [
+        "suppress_rag"
+      ],
+      "computed_category": "suppress_rag",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "NS03",
+      "group": "noise_suppression",
+      "user_message": "Пока.",
+      "last_assistant_offer": {},
+      "dialogue_act": "",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "none",
+        "retrieval_action": "suppress_rag",
+        "query_source": "current_user_message",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "",
+        "inherited_offer_type": "",
+        "confidence": 0.9,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "contact_or_close_turn_no_kb_needed",
+        "reason": "greeting/contact/close should not retrieve KB without explicit knowledge need",
+        "evidence": [
+          "noise_suppression",
+          "contact_or_close"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "suppress_rag",
+      "expected_retrieval_actions": [
+        "suppress_rag"
+      ],
+      "computed_category": "suppress_rag",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "NS04",
+      "group": "noise_suppression",
+      "user_message": "Просто поддержи.",
+      "last_assistant_offer": {},
+      "dialogue_act": "",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "none",
+        "retrieval_action": "suppress_rag",
+        "query_source": "answer_obligation",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "",
+        "inherited_offer_type": "",
+        "confidence": 0.88,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "support_or_safety_turn_no_kb_needed",
+        "reason": "support/safety response should not be overloaded by KB",
+        "evidence": [
+          "noise_suppression",
+          "planner_support_or_safety"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "suppress_rag",
+      "expected_retrieval_actions": [
+        "suppress_rag"
+      ],
+      "computed_category": "suppress_rag",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "NS05",
+      "group": "noise_suppression",
+      "user_message": "Что сделать прямо сейчас?",
+      "last_assistant_offer": {},
+      "dialogue_act": "",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "none",
+        "retrieval_action": "suppress_rag",
+        "query_source": "answer_obligation",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "",
+        "inherited_offer_type": "",
+        "confidence": 0.76,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "direct_one_step_no_kb_needed",
+        "reason": "one-step direct response should not be overloaded by KB",
+        "evidence": [
+          "noise_suppression",
+          "one_step"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "suppress_rag",
+      "expected_retrieval_actions": [
+        "suppress_rag"
+      ],
+      "computed_category": "suppress_rag",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "NS06",
+      "group": "noise_suppression",
+      "user_message": "Один шаг.",
+      "last_assistant_offer": {},
+      "dialogue_act": "",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "none",
+        "retrieval_action": "suppress_rag",
+        "query_source": "answer_obligation",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "",
+        "inherited_offer_type": "",
+        "confidence": 0.76,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "direct_one_step_no_kb_needed",
+        "reason": "one-step direct response should not be overloaded by KB",
+        "evidence": [
+          "noise_suppression",
+          "one_step"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "suppress_rag",
+      "expected_retrieval_actions": [
+        "suppress_rag"
+      ],
+      "computed_category": "suppress_rag",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": false
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "NS07",
+      "group": "noise_suppression",
+      "user_message": "Не надо теории.",
+      "last_assistant_offer": {},
+      "dialogue_act": "",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "none",
+        "retrieval_action": "trace_only",
+        "query_source": "current_user_message",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "",
+        "inherited_offer_type": "",
+        "confidence": 0.45,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "no_clear_retrieval_need",
+        "reason": "no reliable knowledge or memory retrieval need detected",
+        "evidence": [
+          "fallback_trace_only"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "trace_only",
+      "expected_retrieval_actions": [
+        "trace_only",
+        "suppress_rag"
+      ],
+      "computed_category": "trace_only",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": true
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    },
+    {
+      "case_id": "NS08",
+      "group": "noise_suppression",
+      "user_message": "Скажи коротко.",
+      "last_assistant_offer": {},
+      "dialogue_act": "",
+      "answer_obligation": "",
+      "summary_request": false,
+      "composer": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "none",
+        "retrieval_action": "trace_only",
+        "query_source": "current_user_message",
+        "composed_query": "",
+        "query_terms": [],
+        "inherited_topic": "",
+        "inherited_offer_type": "",
+        "confidence": 0.45,
+        "writer_can_ignore_rag": true,
+        "include_for_writer_if_found": false,
+        "max_chunks_for_writer": 0,
+        "max_chars_per_chunk": 0,
+        "suppress_reason": "no_clear_retrieval_need",
+        "reason": "no reliable knowledge or memory retrieval need detected",
+        "evidence": [
+          "fallback_trace_only"
+        ],
+        "no_user_facing_text_created": true
+      },
+      "expected_category": "trace_only",
+      "expected_retrieval_actions": [
+        "trace_only",
+        "suppress_rag"
+      ],
+      "computed_category": "trace_only",
+      "review_flags": {
+        "good_fit": true,
+        "false_positive_rag": false,
+        "false_negative_rag": false,
+        "weak_query": false,
+        "noisy_chunk_risk": false,
+        "needs_hybrid_llm": false,
+        "needs_more_context_fields": true
+      },
+      "owner_review": {
+        "score": null,
+        "note": "",
+        "labels": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,2692 @@
+{
+  "prd_id": "PRD-047.15-HF1",
+  "generated_at_utc": "2026-06-09T04:13:44.147127+00:00",
+  "live_trace_status": "available",
+  "matches_count": 227,
+  "live_candidates_count": 178,
+  "matches": [
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.10-HF1/dialogue_pragmatics_direct.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.10-HF1/dialogue_pragmatics_live.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.10-HF2/followup_reliability_direct.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.10-HF2/followup_reliability_live.json",
+      "matched_terms": [
+        "retrieval_action"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_cases_result.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/final_answer_acceptance_gate_result.json",
+      "matched_terms": [
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/source_inventory.json",
+      "matched_terms": [
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/test_command_output.txt",
+      "matched_terms": [
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.13/file_classification_manifest.json",
+      "matched_terms": [
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.13/no_runtime_mutation_proof.json",
+      "matched_terms": [
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.13/no_runtime_mutation_proof.md",
+      "matched_terms": [
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14/source_inventory.json",
+      "matched_terms": [
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14/test_command_output.txt",
+      "matched_terms": [
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14/validation_commands_result.json",
+      "matched_terms": [
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14-HF1/no_runtime_mutation_proof.json",
+      "matched_terms": [
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14-HF1/no_runtime_mutation_proof.md",
+      "matched_terms": [
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14-HF1/source_focus_audit.json",
+      "matched_terms": [
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14-HF1/source_focus_audit.md",
+      "matched_terms": [
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14-HF1/test_command_output.txt",
+      "matched_terms": [
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14-HF1/validation_commands_result.json",
+      "matched_terms": [
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14-HF1.1/hardcoded_reply_classification.json",
+      "matched_terms": [
+        "retrieval_need"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14-HF1.1/hardcoded_reply_inventory.json",
+      "matched_terms": [
+        "retrieval_need"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14-HF1.2/no_runtime_mutation_scope_proof.json",
+      "matched_terms": [
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14-HF1.2/no_runtime_mutation_scope_proof.md",
+      "matched_terms": [
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14-HF2/final_answer_gate_summary_result.json",
+      "matched_terms": [
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14-HF2/runtime_mutation_scope_proof.json",
+      "matched_terms": [
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14-HF2/runtime_mutation_scope_proof.md",
+      "matched_terms": [
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14-HF2/test_command_output.txt",
+      "matched_terms": [
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.14-HF2/validation_commands_result.json",
+      "matched_terms": [
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.15/contextual_retrieval_composer_acceptance.json",
+      "matched_terms": [
+        "contextual_retrieval_query_composer",
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.15/implementation_summary.json",
+      "matched_terms": [
+        "contextual_retrieval_query_composer"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.15/knowledge_query_composition_result.json",
+      "matched_terms": [
+        "contextual_retrieval_query_composer",
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.15/noise_suppression_result.json",
+      "matched_terms": [
+        "contextual_retrieval_query_composer",
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.15/runtime_mutation_scope_proof.json",
+      "matched_terms": [
+        "contextual_retrieval_query_composer"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.15/runtime_mutation_scope_proof.md",
+      "matched_terms": [
+        "contextual_retrieval_query_composer"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.15/short_followup_query_composition_result.json",
+      "matched_terms": [
+        "contextual_retrieval_query_composer",
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.15/summary_retrieval_suppression_result.json",
+      "matched_terms": [
+        "contextual_retrieval_query_composer",
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.15/test_command_output.txt",
+      "matched_terms": [
+        "contextual_retrieval_query_composer",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.15/validation_commands_result.json",
+      "matched_terms": [
+        "contextual_retrieval_query_composer",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.15/writer_contract_contextual_retrieval_result.json",
+      "matched_terms": [
+        "contextual_retrieval_query_composer",
+        "retrieval_query_source"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.15-HF1/composer_calibration_cases.json",
+      "matched_terms": [
+        "retrieval_action"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.15-HF1/composer_trace_review_results.json",
+      "matched_terms": [
+        "contextual_retrieval_query_composer",
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.15-HF1/composer_trace_schema.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.15-HF1/composer_trace_schema.md",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.15-HF1/live_trace_inventory.json",
+      "matched_terms": [
+        "contextual_retrieval_query_composer",
+        "retrieval_query_source",
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.15-HF1/live_trace_inventory.md",
+      "matched_terms": [
+        "contextual_retrieval_query_composer",
+        "retrieval_query_source",
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.15-HF1/llm_hybrid_decision_brief.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.15-HF1/owner_trace_review_sheet.md",
+      "matched_terms": [
+        "retrieval_action"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/prompt_canvases/HF1-L01_cycle_1.json",
+      "matched_terms": [
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/prompt_canvases/HF1-L01_cycle_2.json",
+      "matched_terms": [
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L01_cycle_1_trace.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L01_cycle_2_trace.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L05_cycle_1_trace.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L05_cycle_2_trace.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L06_cycle_1_trace.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L06_cycle_2_trace.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L07_cycle_1_trace.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L07_cycle_2_trace.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L08_cycle_1_trace.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L08_cycle_2_trace.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L10_cycle_1_trace.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L10_cycle_2_trace.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L01/cycle_1_turn_1.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L01/cycle_2_turn_1.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L05/cycle_1_turn_1.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L05/cycle_2_turn_1.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L06/cycle_1_turn_1.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L06/cycle_1_turn_2.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L06/cycle_2_turn_1.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L06/cycle_2_turn_2.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L07/cycle_1_turn_1.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L07/cycle_2_turn_1.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L08/cycle_1_turn_1.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L08/cycle_2_turn_1.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L10/cycle_1_turn_1.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L10/cycle_2_turn_1.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T01_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T01_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T02_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T02_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T03_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T03_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T04_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T04_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T05_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T05_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T06_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T06_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T07_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T07_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T08_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T08_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T01/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T02/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T03/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T04/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T04/turn_02.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T05/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T05/turn_02.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T06/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T07/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T08/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/raw_traces/current_chat_reset_new_turn_payload.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/raw_traces/current_chat_reset_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/raw_traces/HF3-C01_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/raw_traces/HF3-C01_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/raw_traces/HF3-C02_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/raw_traces/HF3-C02_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/raw_traces/HF3-C03_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/raw_traces/HF3-C03_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/raw_traces/HF3-C04_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/raw_traces/HF3-C04_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/live_turn_exports/HF3-C01/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/live_turn_exports/HF3-C02/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/live_turn_exports/HF3-C03/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/live_turn_exports/HF3-C04/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-001_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-001_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-001_turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-002_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-002_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-002_turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-002_turn_02.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-003_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-003_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-003_turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-004_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-004_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-004_turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-005_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-005_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-005_turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-005_turn_02.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/live_turn_exports/HF2-LIVE-001/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/live_turn_exports/HF2-LIVE-002/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/live_turn_exports/HF2-LIVE-002/turn_02.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/live_turn_exports/HF2-LIVE-003/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/live_turn_exports/HF2-LIVE-004/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/live_turn_exports/HF2-LIVE-005/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/live_turn_exports/HF2-LIVE-005/turn_02.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF1/prompt_canvases/HF1-001.txt",
+      "matched_terms": [
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF1/prompt_canvases/HF1-002.txt",
+      "matched_terms": [
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF1/prompt_canvases/HF1-003.txt",
+      "matched_terms": [
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF1/prompt_canvases/HF1-004.txt",
+      "matched_terms": [
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF1/raw_traces/HF1-001.json",
+      "matched_terms": [
+        "retrieval_action"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF1/raw_traces/HF1-002.json",
+      "matched_terms": [
+        "retrieval_action"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF1/raw_traces/HF1-003.json",
+      "matched_terms": [
+        "retrieval_action"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF1/raw_traces/HF1-004.json",
+      "matched_terms": [
+        "retrieval_action"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-BOSS-001_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-BOSS-001_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-BOSS-002_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-BOSS-002_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-BOSS-003_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-BOSS-003_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-DA-001_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-DA-001_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-DA-002_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-DA-002_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-DA-003_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-DA-003_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-FU-001_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-FU-001_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-FU-002_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-FU-002_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-FU-003_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-FU-003_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-GR-001_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-GR-001_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-GR-002_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-GR-002_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-GR-003_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-GR-003_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-OE-001_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-OE-001_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-OE-002_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-OE-002_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-OE-003_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-OE-003_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-RP-001_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-RP-001_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-RP-002_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-RP-002_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-RP-003_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-RP-003_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-BOSS-001/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-BOSS-002/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-BOSS-003/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-DA-001/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-DA-002/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-DA-003/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-FU-001/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-FU-001/turn_02.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-FU-002/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-FU-003/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-GR-001/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-GR-002/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-GR-002/turn_02.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-GR-003/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-OE-001/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/live_turn_exports/AUDIT-OE-002/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    }
+  ],
+  "live_candidates": [
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.10-HF1/dialogue_pragmatics_live.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.10-HF2/followup_reliability_live.json",
+      "matched_terms": [
+        "retrieval_action"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_cases_result.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.15-HF1/live_trace_inventory.json",
+      "matched_terms": [
+        "contextual_retrieval_query_composer",
+        "retrieval_query_source",
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.15-HF1/live_trace_inventory.md",
+      "matched_terms": [
+        "contextual_retrieval_query_composer",
+        "retrieval_query_source",
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L01_cycle_1_trace.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L01_cycle_2_trace.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L05_cycle_1_trace.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L05_cycle_2_trace.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L06_cycle_1_trace.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L06_cycle_2_trace.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L07_cycle_1_trace.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L07_cycle_2_trace.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L08_cycle_1_trace.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L08_cycle_2_trace.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L10_cycle_1_trace.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/raw_traces/HF1-L10_cycle_2_trace.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L01/cycle_1_turn_1.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L01/cycle_2_turn_1.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L05/cycle_1_turn_1.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L05/cycle_2_turn_1.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L06/cycle_1_turn_1.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L06/cycle_1_turn_2.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L06/cycle_2_turn_1.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L06/cycle_2_turn_2.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L07/cycle_1_turn_1.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L07/cycle_2_turn_1.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L08/cycle_1_turn_1.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L08/cycle_2_turn_1.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L10/cycle_1_turn_1.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/live_turn_exports/HF1-L10/cycle_2_turn_1.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag",
+        "final_answer_acceptance_gate"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T01_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T01_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T02_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T02_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T03_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T03_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T04_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T04_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T05_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T05_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T06_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T06_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T07_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T07_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T08_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/raw_traces/T08_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T01/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T02/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T03/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T04/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T04/turn_02.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T05/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T05/turn_02.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T06/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T07/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12/live_turn_exports/T08/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/raw_traces/current_chat_reset_new_turn_payload.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/raw_traces/current_chat_reset_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/raw_traces/HF3-C01_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/raw_traces/HF3-C01_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/raw_traces/HF3-C02_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/raw_traces/HF3-C02_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/raw_traces/HF3-C03_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/raw_traces/HF3-C03_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/raw_traces/HF3-C04_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/raw_traces/HF3-C04_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/live_turn_exports/HF3-C01/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/live_turn_exports/HF3-C02/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/live_turn_exports/HF3-C03/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF3/live_turn_exports/HF3-C04/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-001_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-001_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-001_turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-002_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-002_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-002_turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-002_turn_02.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-003_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-003_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-003_turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-004_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-004_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-004_turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-005_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-005_trace_latest.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-005_turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/raw_traces/HF2-LIVE-005_turn_02.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/live_turn_exports/HF2-LIVE-001/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/live_turn_exports/HF2-LIVE-002/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/live_turn_exports/HF2-LIVE-002/turn_02.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/live_turn_exports/HF2-LIVE-003/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/live_turn_exports/HF2-LIVE-004/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/live_turn_exports/HF2-LIVE-005/turn_01.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF2/live_turn_exports/HF2-LIVE-005/turn_02.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF1/raw_traces/HF1-001.json",
+      "matched_terms": [
+        "retrieval_action"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF1/raw_traces/HF1-002.json",
+      "matched_terms": [
+        "retrieval_action"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF1/raw_traces/HF1-003.json",
+      "matched_terms": [
+        "retrieval_action"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-HF1/raw_traces/HF1-004.json",
+      "matched_terms": [
+        "retrieval_action"
+      ],
+      "live_hint": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11-AUDIT/raw_traces/AUDIT-BOSS-001_traces_full.json",
+      "matched_terms": [
+        "retrieval_need",
+        "retrieval_action",
+        "writer_can_ignore_rag"
+      ],
+      "live_hint": true
+    }
+  ]
+}

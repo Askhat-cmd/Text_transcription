@@ -1,0 +1,32 @@
+{
+  "schema_id": "contextual_retrieval_composer_trace_schema_v1",
+  "required_fields": [
+    "case_id",
+    "user_message",
+    "last_assistant_offer",
+    "dialogue_act",
+    "answer_obligation",
+    "summary_request",
+    "composer.version",
+    "composer.mode",
+    "composer.retrieval_need",
+    "composer.retrieval_action",
+    "composer.query_source",
+    "composer.composed_query",
+    "composer.query_terms",
+    "composer.inherited_topic",
+    "composer.inherited_offer_type",
+    "composer.confidence",
+    "composer.writer_can_ignore_rag",
+    "composer.include_for_writer_if_found",
+    "composer.reason",
+    "composer.evidence",
+    "composer.no_user_facing_text_created",
+    "expected_category",
+    "computed_category",
+    "review_flags"
+  ],
+  "runtime_behavior_mutation": false,
+  "llm_calls_allowed": false,
+  "no_user_facing_text_created_required": true
+}

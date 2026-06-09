@@ -1,6 +1,8 @@
 # Roadmap
 
 ## Done
+- PRD-047.15-HF1: completed calibration/owner-review evidence pack for deterministic `contextual_retrieval_query_composer_v1` with warning status and no runtime mutation. Added 40 replay cases, schema/results/owner sheet/live inventory/decision brief/acceptance artifacts and tests; blocker gates passed, owner scores remain pending, and mixed cases recommend future hybrid LLM-assisted Composer only after owner review.
+
 - PRD-047.15: completed deterministic Contextual Retrieval Query Composer v1 with warning status. Added `contextual_retrieval_query_composer_v1` and stable retrieval-query contract, composed retrieval intent/query from dialogue context and last-offer state, suppressed noisy RAG for summary/contact/support/one-step turns, exposed composer payload through `retrieval_decision`, `writer_context_package_v1`, WriterContract prompt context, and trace. No LLM agent, user-facing text, DB/KB/frontend mutation, or new runtime path was added; validation/runtime-scope/encoding/no-stub composer scan passed.
 
 - PRD-047.14-HF2: completed summary request routing / answer obligation repair with warning status. Explicit conversation-summary requests now resolve to `summary_request` and `summarize_current_conversation`, outrank open last-offer confirmation, expose summary metadata in final directive / WriterContract, remove the old canned summary path, and use final-answer gate retry/quarantine for reconfirmation or last-offer misanswers. Validation/runtime-scope/encoding/no-stub summary scan passed; remaining warning is HF1.2 out-of-scope static/advisory candidates.

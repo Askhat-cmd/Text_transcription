@@ -1,0 +1,129 @@
+{
+  "prd_id": "PRD-047.15-HF1",
+  "generated_at_utc": "2026-06-09T04:13:43.122102+00:00",
+  "evidence_summary": {
+    "cases_total": 40,
+    "automated_expected_match_count": 33,
+    "automated_expected_match_rate": 0.825,
+    "false_positive_rag_count": 1,
+    "false_negative_rag_count": 6,
+    "weak_query_count": 0,
+    "summary_external_kb_leak_count": 0,
+    "literal_short_reply_query_count": 0,
+    "no_stub_violations_count": 0,
+    "llm_candidate_cases_count": 8,
+    "noisy_chunk_risk_count": 1,
+    "needs_more_context_fields_count": 9
+  },
+  "recommendation": "build_hybrid_llm_assist_for_low_confidence_cases",
+  "options": [
+    {
+      "id": "A",
+      "name": "Heuristic-only Composer",
+      "description": "Current deterministic v1 with rule improvements.",
+      "pros": [
+        "predictable",
+        "cheap",
+        "no latency",
+        "easy to test",
+        "stable trace",
+        "low risk of hallucinated retrieval intent",
+        "no extra provider dependency"
+      ],
+      "cons": [
+        "brittle on subtle context",
+        "needs many rules",
+        "weak on ambiguous mixed cases",
+        "may miss implicit user intent",
+        "manual maintenance grows over time"
+      ],
+      "best_use": [
+        "clear routing",
+        "summary suppression",
+        "greetings/close/support",
+        "obvious knowledge questions",
+        "obvious short follow-up with strong last offer"
+      ]
+    },
+    {
+      "id": "B",
+      "name": "Hybrid Heuristics + LLM-assisted Composer",
+      "description": "Heuristics handle high-confidence cases; LLM is called only for ambiguous/mixed/low-confidence cases.",
+      "pros": [
+        "keeps deterministic safety for simple cases",
+        "improves ambiguous context",
+        "controls cost/latency",
+        "allows better query rewriting",
+        "can output structured JSON only",
+        "easier to gate than LLM-first"
+      ],
+      "cons": [
+        "more complex architecture",
+        "needs JSON validation",
+        "needs timeout/fallback",
+        "must prevent user-facing text",
+        "needs cost/latency monitoring",
+        "possible model drift"
+      ],
+      "best_use": [
+        "mixed cases",
+        "implicit topic shifts",
+        "weak inherited topic",
+        "query rewrite",
+        "KB vs memory decision"
+      ]
+    },
+    {
+      "id": "C",
+      "name": "LLM-first Composer",
+      "description": "LLM decides retrieval need/query/inclusion for most turns.",
+      "pros": [
+        "highest flexibility",
+        "better semantic interpretation",
+        "fewer brittle rules",
+        "can understand complex implicit context"
+      ],
+      "cons": [
+        "higher cost",
+        "higher latency",
+        "less deterministic",
+        "harder to test",
+        "possible hallucinated query",
+        "provider dependency",
+        "more safety/validation required",
+        "may become hidden authority over Writer"
+      ],
+      "best_use": [
+        "only after trace evidence proves deterministic/hybrid insufficient"
+      ]
+    }
+  ],
+  "future_hybrid_architecture_sketch": [
+    "deterministic pre-pass",
+    "use heuristic decision for high-confidence cases",
+    "call future LLM Query Composer only for low-confidence or mixed cases",
+    "validate strict metadata-only JSON schema",
+    "apply no-user-facing-text gate",
+    "merge into retrieval_decision",
+    "Writer receives compact context and remains final answer author"
+  ],
+  "llm_output_schema_metadata_only": {
+    "retrieval_need": "string",
+    "retrieval_action": "string",
+    "query_source": "string",
+    "composed_query": "string",
+    "query_terms": [],
+    "confidence": 0.0,
+    "writer_can_ignore_rag": true,
+    "include_for_writer_if_found": false,
+    "reason": "string",
+    "no_user_facing_text_created": true
+  },
+  "forbidden_llm_output": [
+    "final answer",
+    "advice to user",
+    "therapy phrase",
+    "canned explanation",
+    "full summary text"
+  ]
+}

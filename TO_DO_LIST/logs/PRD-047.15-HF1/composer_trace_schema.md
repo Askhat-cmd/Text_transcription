@@ -1,0 +1,26 @@
+# PRD-047.15-HF1 Composer Trace Schema
+
+- `case_id`
+- `user_message`
+- `last_assistant_offer`
+- `dialogue_act`
+- `answer_obligation`
+- `summary_request`
+- `composer.version`
+- `composer.mode`
+- `composer.retrieval_need`
+- `composer.retrieval_action`
+- `composer.query_source`
+- `composer.composed_query`
+- `composer.query_terms`
+- `composer.inherited_topic`
+- `composer.inherited_offer_type`
+- `composer.confidence`
+- `composer.writer_can_ignore_rag`
+- `composer.include_for_writer_if_found`
+- `composer.reason`
+- `composer.evidence`
+- `composer.no_user_facing_text_created`
+- `expected_category`
+- `computed_category`
+- `review_flags`

@@ -1,0 +1,24 @@
+# PRD-047.15-HF1 Calibration Acceptance
+
+- final_status: `warning`
+- cases_total: `40`
+- automated_expected_match_rate: `0.825`
+- literal_short_reply_query_count: `0`
+- summary_external_kb_leak_count: `0`
+- no_stub_violations_count: `0`
+- false_positive_rag_count: `1`
+- false_negative_rag_count: `6`
+- weak_query_count: `0`
+- llm_candidate_cases_count: `8`
+- owner_review_status: `sheet_created`
+- live_trace_status: `available`
+- decision_recommendation: `build_hybrid_llm_assist_for_low_confidence_cases`
+- runtime_mutation_status: `passed`
+- llm_calls_added: `False`
+- new_runtime_path_added: `False`
+- new_user_facing_stub_created: `False`
+- encoding_gate_status: `passed`
+- tests_status: `passed`
+- known_warnings: `owner review sheet is created but owner scores are not completed; mixed/low-confidence cases indicate future hybrid calibration candidates; HF1.2 out-of-scope static/advisory candidates remain outside this PRD`
+- known_blockers: ``
+- generated_at_utc: `2026-06-09T04:17:05.191759+00:00`

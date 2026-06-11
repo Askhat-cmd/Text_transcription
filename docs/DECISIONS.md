@@ -1099,3 +1099,23 @@ Consequences:
 - HF1 can close as warning without runtime mutation because owner scores are pending;
 - future hybrid work has a concrete evidence base and must preserve no-stub/no-new-runtime-path boundaries;
 - heuristic-only tuning, hybrid assistance, or further owner review can be selected from trace metrics instead of subjective impressions.
+
+## ADR-077 - Hybrid Retrieval visibility is a developer observability surface, not runtime authority
+
+Status: accepted
+
+Date: 2026-06-11
+
+Context: PRD-047.15-HF2-R2 closed the gap between backend hybrid retrieval metadata and what the developer can actually see in Web Admin and Web Trace. The risk was to accidentally turn this visibility work into a second runtime authority layer or another legacy admin control center.
+
+Decision:
+- treat Hybrid Retrieval visibility as read-only developer observability;
+- keep Writer as final answer author and keep planner metadata advisory;
+- expose planner model/max tokens/mode plus planned/executed query metadata in Runtime, Web Trace, and compact trace summary;
+- remove duplicate Advanced Controls sub-tabs from the primary admin surface and keep Compatibility as the only explicit legacy/read-only lane;
+- move legacy runtime status such as dialogue-profile alias and knowledge-graph state into compatibility/read-only presentation instead of deleting backend knobs blindly.
+
+Consequences:
+- hybrid retrieval decisions are visible end-to-end without changing runtime behavior;
+- Runtime tab becomes more trustworthy as an effective-state surface instead of a mixed editable legacy surface;
+- future work can focus on retrieval quality and chunk metadata instead of more admin UI duplication.

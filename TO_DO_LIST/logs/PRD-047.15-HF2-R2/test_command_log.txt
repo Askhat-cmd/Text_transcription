@@ -1,0 +1,7 @@
+runner_started=2026-06-11T11:04:57.822592+00:00
+mode=all
+api_base=http://127.0.0.1:8001
+web_base=http://localhost:3000
+session_id=745d278b-78a2-45e3-8424-fbfab5716ced
+user_id=hf2_r2_user_20260611_110457
+final_status=passed

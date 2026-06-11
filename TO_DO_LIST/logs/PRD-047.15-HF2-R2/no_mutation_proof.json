@@ -1,0 +1,15 @@
+{
+  "prd_id": "PRD-047.15-HF2-R2",
+  "status": "passed",
+  "generated_at": "2026-06-11T11:06:00+00:00",
+  "runtime_logic_mutated": false,
+  "kb_governance_mutated": false,
+  "db_schema_mutated": false,
+  "chroma_index_mutated": false,
+  "writer_authority_changed": false,
+  "notes": [
+    "HF2-R2 added read-only visibility fields and UI cleanup only.",
+    "Hybrid Retrieval Planner algorithm/authority was not changed.",
+    "Knowledge Graph backend flag was not deleted; only primary admin presentation was moved to compatibility status."
+  ]
+}

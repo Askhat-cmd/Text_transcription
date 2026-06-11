@@ -48,6 +48,30 @@ function createTrace(): MultiAgentTraceData {
     memory_context: {
       conversation_context: 'User: привет\nAssistant: привет!\n---',
       rag_query: 'привет поддержка',
+      hybrid_retrieval: {
+        planner_version: 'hybrid_retrieval_planner_v1_r1',
+        planner_mode: 'shadow',
+        planner_model: 'gpt-5-nano',
+        planner_max_tokens: 320,
+        retrieval_action: 'query_kb',
+        planned_composed_query: 'паника контроль механизм',
+        executed_rag_query: 'паника контроль механизм',
+        legacy_rag_query: 'привет поддержка',
+        query_before_rag_proof: true,
+        needed_chunk_types: ['mechanism', 'concept'],
+        mechanism_hints: ['panic_regulation'],
+        depth_level_hint: 1,
+        safety_layer_required: false,
+        allowed_use_filter_hint: ['writer_support'],
+        constraints_for_writer: ['no_theory'],
+        retrieval_gap_reason: '',
+        writer_can_ignore_rag: true,
+        rag_skipped_reason: '',
+        llm_called: false,
+        llm_reason: 'universal_gate_resolved',
+        fallback_used: false,
+        universal_gate: 'clear_kb_ask',
+      },
       semantic_hits: [
         {
           chunk_id: 'c1',
@@ -98,6 +122,36 @@ function createTrace(): MultiAgentTraceData {
       safety_events: 0,
       validator_blocks: 0,
     },
+    hybrid_retrieval_plan: {
+      retrieval_action: 'query_kb',
+      needed_chunk_types: ['mechanism', 'concept'],
+      mechanism_hints: ['panic_regulation'],
+      constraints_for_writer: ['no_theory'],
+    },
+    hybrid_retrieval_planner_version: 'hybrid_retrieval_planner_v1_r1',
+    hybrid_retrieval_planner_mode: 'shadow',
+    hybrid_retrieval_plan_valid: true,
+    hybrid_retrieval_plan_error: null,
+    hybrid_retrieval_universal_gate: 'clear_kb_ask',
+    hybrid_retrieval_llm_called: false,
+    hybrid_retrieval_llm_reason: 'universal_gate_resolved',
+    hybrid_retrieval_fallback_used: false,
+    planned_composed_query: 'паника контроль механизм',
+    executed_rag_query: 'паника контроль механизм',
+    legacy_rag_query: 'привет поддержка',
+    query_before_rag_proof: true,
+    retrieval_action: 'query_kb',
+    rag_skipped_reason: '',
+    needed_chunk_types: ['mechanism', 'concept'],
+    mechanism_hints: ['panic_regulation'],
+    retrieval_gap_reason: '',
+    writer_can_ignore_rag: true,
+    depth_level_hint: 1,
+    safety_layer_required: false,
+    allowed_use_filter_hint: ['writer_support'],
+    constraints_for_writer: ['no_theory'],
+    planner_model: 'gpt-5-nano',
+    planner_max_tokens: 320,
   };
 }
 
@@ -241,6 +295,23 @@ describe('MultiAgentTraceWidget (rev2)', () => {
     clickButtonContains(harness.container, 'Аномалии');
     expect(harness.container.textContent).toContain('calm');
     expect(harness.container.textContent).toContain('SLOW_WRITER');
+    harness.cleanup();
+  });
+
+  it('renders hybrid retrieval visibility block', () => {
+    const harness = renderWidget(
+      React.createElement(MultiAgentTraceWidget, {
+        trace: createTrace(),
+        isExpanded: true,
+      })
+    );
+    expect(harness.container.textContent).toContain('Hybrid Retrieval');
+    clickButtonContains(harness.container, 'Hybrid Retrieval');
+    clickButtonContains(harness.container, 'Queries');
+    clickButtonContains(harness.container, 'Planner metadata');
+    expect(harness.container.textContent).toContain('gpt-5-nano');
+    expect(harness.container.textContent).toContain('паника контроль механизм');
+    expect(harness.container.textContent).toContain('panic_regulation');
     harness.cleanup();
   });
 

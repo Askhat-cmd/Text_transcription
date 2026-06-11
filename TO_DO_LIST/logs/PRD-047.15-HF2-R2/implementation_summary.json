@@ -1,0 +1,18 @@
+{
+  "prd_id": "PRD-047.15-HF2-R2",
+  "status": "passed",
+  "generated_at": "2026-06-11T11:06:00+00:00",
+  "backend_admin_visibility": "passed",
+  "web_admin_visibility": "passed",
+  "web_trace_visibility": "passed",
+  "compact_trace_visibility": "passed",
+  "browser_screenshots_saved": true,
+  "acceptance_runner_status": "passed",
+  "bounded_cleanup_scope": [
+    "runtime legacy alias presentation",
+    "knowledge graph compatibility-only visibility",
+    "advanced controls duplicate tab removal",
+    "hybrid retrieval runtime card",
+    "hybrid retrieval web trace card"
+  ]
+}

@@ -135,6 +135,22 @@ def _compatibility_runtime_payload() -> dict[str, Any]:
         "pipeline_mode_legacy_value": None,
         "pipeline_mode_read_only": True,
         "legacy_modes_selectable": False,
+        "dialogue_profile_alias": {
+            "primary_profile": "safe_guided",
+            "legacy_alias": "safe_guided",
+            "modern_label": "guided",
+            "surface_role": "compatibility_only",
+        },
+        "knowledge_graph": {
+            "enabled": bool(getattr(config, "ENABLE_KNOWLEDGE_GRAPH", False)),
+            "status": (
+                "enabled_optional_legacy"
+                if bool(getattr(config, "ENABLE_KNOWLEDGE_GRAPH", False))
+                else "disabled_legacy"
+            ),
+            "surface_role": "compatibility_only",
+            "note": "Legacy graph subsystem is not a primary runtime control surface.",
+        },
     }
 
 
@@ -669,6 +685,12 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
     hybrid_retrieval_planner_settings = get_hybrid_retrieval_planner_settings()
     dialogue_profile = normalize_dialogue_profile(getattr(config, "DIALOGUE_PROFILE", "safe_guided"))
     profile_preset = resolve_profile_preset(dialogue_profile)
+    compatibility_payload["dialogue_profile_alias"] = {
+        "primary_profile": profile_preset,
+        "legacy_alias": dialogue_profile,
+        "modern_label": profile_preset,
+        "surface_role": "compatibility_only",
+    }
     effective_dialogue_policy = build_effective_dialogue_policy(
         profile=dialogue_profile,
         user_message="",
@@ -852,6 +874,9 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
             "description": "Controls unified dialogue preset resolution for developer-local testing.",
             "developer_local_only": True,
             "profile_preset": profile_preset,
+            "primary_profile": profile_preset,
+            "legacy_alias": dialogue_profile,
+            "legacy_alias_visible_in_runtime": False,
             "warning": (
                 "Developer-local free dialogue preset. Freer, longer answers. Not production-ready."
                 if profile_preset == "free_dialogue_default"
@@ -880,6 +905,8 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
             "enabled": bool(hybrid_retrieval_planner_settings.get("enabled", True)),
             "version": HYBRID_RETRIEVAL_PLANNER_VERSION,
             "mode": str(hybrid_retrieval_planner_settings.get("mode", "shadow") or "shadow"),
+            "model": str(hybrid_retrieval_planner_settings.get("model", "gpt-5-nano") or "gpt-5-nano"),
+            "max_tokens": int(hybrid_retrieval_planner_settings.get("max_tokens", 320) or 320),
             "default_safe_mode": "shadow",
             "metadata_only": True,
             "query_before_rag_supported": True,

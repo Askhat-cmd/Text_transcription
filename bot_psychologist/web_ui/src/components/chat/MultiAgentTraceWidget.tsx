@@ -177,6 +177,14 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
   const anomalies = trace.anomalies || [];
   const dash: SessionDashboardTrace | null | undefined = trace.session_dashboard;
   const totalLatency = Math.max(trace.total_latency_ms, 1);
+  const hybrid = memory?.hybrid_retrieval || null;
+  const hybridSummaryAvailable = Boolean(
+    trace.hybrid_retrieval_planner_version ||
+      trace.hybrid_retrieval_plan ||
+      hybrid ||
+      trace.planned_composed_query ||
+      trace.executed_rag_query
+  );
 
   const timeline = [
     { key: 'state', label: 'State', ms: Math.max(trace.agents.state_analyzer.latency_ms, 0), className: 'bg-blue-500' },
@@ -296,6 +304,57 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
                 </div>
               </div>
             </div>
+          </AccordionSection>
+
+          <AccordionSection
+            title={
+              hybridSummaryAvailable
+                ? `Hybrid Retrieval | ${trace.hybrid_retrieval_planner_mode || hybrid?.planner_mode || 'n/a'} | ${trace.retrieval_action || hybrid?.retrieval_action || 'n/a'}`
+                : 'Hybrid Retrieval | not available for this turn'
+            }
+          >
+            {hybridSummaryAvailable ? (
+              <div className="space-y-2">
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <MetaItem label="VERSION" value={trace.hybrid_retrieval_planner_version || hybrid?.planner_version || '—'} />
+                  <MetaItem label="MODE" value={trace.hybrid_retrieval_planner_mode || hybrid?.planner_mode || '—'} highlight />
+                  <MetaItem label="MODEL" value={trace.planner_model || hybrid?.planner_model || '—'} />
+                  <MetaItem label="MAX TOKENS" value={trace.planner_max_tokens ?? hybrid?.planner_max_tokens ?? '—'} />
+                  <MetaItem label="ACTION" value={trace.retrieval_action || hybrid?.retrieval_action || '—'} highlight />
+                  <MetaItem label="UNIVERSAL GATE" value={trace.hybrid_retrieval_universal_gate || hybrid?.universal_gate || '—'} />
+                  <MetaItem label="PLAN VALID" value={trace.hybrid_retrieval_plan_valid == null ? '—' : String(Boolean(trace.hybrid_retrieval_plan_valid))} />
+                  <MetaItem label="FALLBACK USED" value={trace.hybrid_retrieval_fallback_used == null ? String(Boolean(hybrid?.fallback_used)) : String(Boolean(trace.hybrid_retrieval_fallback_used))} />
+                  <MetaItem label="LLM CALLED" value={trace.hybrid_retrieval_llm_called == null ? String(Boolean(hybrid?.llm_called)) : String(Boolean(trace.hybrid_retrieval_llm_called))} />
+                  <MetaItem label="WRITER CAN IGNORE RAG" value={trace.writer_can_ignore_rag == null ? String(Boolean(hybrid?.writer_can_ignore_rag)) : String(Boolean(trace.writer_can_ignore_rag))} />
+                </div>
+
+                <AccordionSection title="Queries" nested>
+                  <div className="space-y-1 text-xs">
+                    <div><span className="text-slate-500">planned:</span> {trace.planned_composed_query || hybrid?.planned_composed_query || '—'}</div>
+                    <div><span className="text-slate-500">executed:</span> {trace.executed_rag_query || hybrid?.executed_rag_query || '—'}</div>
+                    <div><span className="text-slate-500">legacy:</span> {trace.legacy_rag_query || hybrid?.legacy_rag_query || '—'}</div>
+                    <div><span className="text-slate-500">query_before_rag_proof:</span> {String(Boolean(trace.query_before_rag_proof ?? hybrid?.query_before_rag_proof))}</div>
+                    <div><span className="text-slate-500">rag_skipped_reason:</span> {trace.rag_skipped_reason || hybrid?.rag_skipped_reason || '—'}</div>
+                    <div><span className="text-slate-500">plan_error:</span> {trace.hybrid_retrieval_plan_error || '—'}</div>
+                    <div><span className="text-slate-500">llm_reason:</span> {trace.hybrid_retrieval_llm_reason || hybrid?.llm_reason || '—'}</div>
+                  </div>
+                </AccordionSection>
+
+                <AccordionSection title="Planner metadata" nested>
+                  <div className="space-y-1 text-xs">
+                    <div>needed_chunk_types: {(trace.needed_chunk_types || hybrid?.needed_chunk_types || []).join(', ') || '—'}</div>
+                    <div>mechanism_hints: {(trace.mechanism_hints || hybrid?.mechanism_hints || []).join(', ') || '—'}</div>
+                    <div>allowed_use_filter_hint: {(trace.allowed_use_filter_hint || hybrid?.allowed_use_filter_hint || []).join(', ') || '—'}</div>
+                    <div>constraints_for_writer: {(trace.constraints_for_writer || hybrid?.constraints_for_writer || []).join(', ') || '—'}</div>
+                    <div>depth_level_hint: {trace.depth_level_hint ?? hybrid?.depth_level_hint ?? '—'}</div>
+                    <div>safety_layer_required: {String(Boolean(trace.safety_layer_required ?? hybrid?.safety_layer_required))}</div>
+                    <div>retrieval_gap_reason: {trace.retrieval_gap_reason || hybrid?.retrieval_gap_reason || '—'}</div>
+                  </div>
+                </AccordionSection>
+              </div>
+            ) : (
+              <div className="text-xs text-slate-500">Hybrid Retrieval: not available for this turn</div>
+            )}
           </AccordionSection>
 
           {memory && (

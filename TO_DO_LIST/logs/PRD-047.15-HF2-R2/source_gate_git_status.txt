@@ -1,0 +1,12 @@
+git status --short
+?? TO_DO_LIST/PRD-047.15-HF2-R2_Backend_Web_Admin_Web_Trace_Sync_Hybrid_Retrieval_Visibility_REV3_RU.md
+?? TO_DO_LIST/PRD-047.15-HF2-R2_TASK_LIST.md
+?? TO_DO_LIST/context/WAKE_UP_DB_STRUCTURE_ADAPTED_FOR_NEO_MindBot_PRD_Reference_RU_v1.1.md
+?? "TO_DO_LIST/context/Wake Up \320\241\320\242\320\240\320\243\320\232\320\242\320\243\320\240\320\220.md"
+?? "TO_DO_LIST/context/\320\241\320\232\320\240\320\230\320\235\320\253 \320\222\320\225\320\221 \320\220\320\224\320\234\320\230\320\235\320\232\320\230/"
+
+git rev-parse HEAD
+8001ade9ddbb40efb25b3f69d3953ee4199cf561
+
+git branch --show-current
+main

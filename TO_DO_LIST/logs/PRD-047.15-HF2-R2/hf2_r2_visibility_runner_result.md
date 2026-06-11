@@ -1,0 +1,9 @@
+# HF2-R2 Visibility Runner
+
+- status: passed
+- prd_id: "PRD-047.15-HF2-R2"
+- generated_at: "2026-06-11T11:05:37.416800+00:00"
+- direct: {"status": "passed", "runtime_mode": "shadow", "runtime_model": "gpt-5-nano", "runtime_max_tokens": 320}
+- live: {"status": "passed", "session_id": "745d278b-78a2-45e3-8424-fbfab5716ced", "user_id": "hf2_r2_user_20260611_110457", "retrieval_action": "trace_only", "planner_mode": "shadow", "planner_model": "gpt-5-nano", "query_before_rag_proof": false}
+- browser: {"status": "passed", "screenshots": ["C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.15-HF2-R2\\screenshots\\admin_runtime_cleanup_after.png", "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.15-HF2-R2\\screenshots\\admin_advanced_controls_after.png", "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.15-HF2-R2\\screenshots\\admin_hybrid_retrieval_planner.png", "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.15-HF2-R2\\screenshots\\web_trace_hybrid_retrieval.png"]}
+- parity: {"prd_id": "PRD-047.15-HF2-R2", "status": "passed", "generated_at": "2026-06-11T11:05:29.733088+00:00", "checks": {"runtime_model_visible": true, "runtime_max_tokens_visible": true, "runtime_hybrid_card_contract": true, "trace_root_fields_visible": true, "trace_memory_summary_visible": true, "compact_summary_visible": true, "compatibility_legacy_status_visible": true}, "summary": {"planner_mode": "shadow", "retrieval_action": "trace_only", "planner_model": "gpt-5-nano"}}

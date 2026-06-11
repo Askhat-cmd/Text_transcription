@@ -344,6 +344,10 @@ def test_multiagent_trace_endpoint_returns_200() -> None:
                 "retrieval_action": "query_kb",
                 "composed_query": "planned hi",
                 "needed_chunk_types": ["concept"],
+                "mechanism_hints": ["panic_regulation"],
+                "depth_level_hint": 1,
+                "allowed_use_filter_hint": ["writer_support"],
+                "constraints_for_writer": ["no_theory"],
                 "writer_can_ignore_rag": True,
             },
             "hybrid_retrieval_plan_valid": True,
@@ -356,6 +360,8 @@ def test_multiagent_trace_endpoint_returns_200() -> None:
             "executed_rag_query": "hi hello",
             "legacy_rag_query": "hi hello",
             "query_before_rag_proof": False,
+            "retrieval_action": "query_kb",
+            "rag_skipped_reason": "",
             "retrieval_gap_reason": "",
             "user_profile": {"patterns": ["p"], "values": ["v"], "progress_notes": ["n"]},
             "has_relevant_knowledge": True,
@@ -420,6 +426,13 @@ def test_multiagent_trace_endpoint_returns_200() -> None:
     assert payload["hybrid_retrieval_planner_mode"] == "shadow"
     assert payload["hybrid_retrieval_plan"]["retrieval_action"] == "query_kb"
     assert payload["memory_context"]["hybrid_retrieval"]["planned_composed_query"] == "planned hi"
+    assert payload["memory_context"]["hybrid_retrieval"]["planner_model"] == "gpt-5-nano"
+    assert payload["retrieval_action"] == "query_kb"
+    assert payload["needed_chunk_types"] == ["concept"]
+    assert payload["mechanism_hints"] == ["panic_regulation"]
+    assert payload["constraints_for_writer"] == ["no_theory"]
+    assert payload["planner_model"] == "gpt-5-nano"
+    assert payload["planner_max_tokens"] == 320
     assert "sd_level" not in payload
     assert "user_level" not in payload
     assert isinstance(payload["session_dashboard"]["total_turns"], int)

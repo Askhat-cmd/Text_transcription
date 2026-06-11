@@ -477,6 +477,22 @@ class MultiAgentTraceResponse(BaseModel):
     hybrid_retrieval_llm_called: Optional[bool] = None
     hybrid_retrieval_llm_reason: Optional[str] = None
     hybrid_retrieval_fallback_used: Optional[bool] = None
+    planned_composed_query: Optional[str] = None
+    executed_rag_query: Optional[str] = None
+    legacy_rag_query: Optional[str] = None
+    query_before_rag_proof: Optional[bool] = None
+    retrieval_action: Optional[str] = None
+    rag_skipped_reason: Optional[str] = None
+    needed_chunk_types: List[str] = Field(default_factory=list)
+    mechanism_hints: List[str] = Field(default_factory=list)
+    retrieval_gap_reason: Optional[str] = None
+    writer_can_ignore_rag: Optional[bool] = None
+    depth_level_hint: Optional[int] = None
+    safety_layer_required: Optional[bool] = None
+    allowed_use_filter_hint: List[str] = Field(default_factory=list)
+    constraints_for_writer: List[str] = Field(default_factory=list)
+    planner_model: Optional[str] = None
+    planner_max_tokens: Optional[int] = None
     live_turn_evidence: Optional[Dict[str, Any]] = None
 
 

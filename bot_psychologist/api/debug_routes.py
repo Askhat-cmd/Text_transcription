@@ -22,6 +22,7 @@ from .models import (
 )
 from .session_store import SessionStore, get_session_store
 from bot_agent.config import config
+from bot_agent.multiagent.hybrid_retrieval_planner import get_hybrid_retrieval_planner_settings
 
 router = APIRouter(prefix="/api/debug", tags=["debug"])
 logger = logging.getLogger(__name__)
@@ -227,6 +228,58 @@ def _compact_trace_payload(raw_trace: Dict[str, Any]) -> Dict[str, Any]:
             if isinstance(stage, dict) and not bool(stage.get("skipped"))
         ]
 
+    hybrid_plan = trace.get("hybrid_retrieval_plan") if isinstance(trace.get("hybrid_retrieval_plan"), dict) else {}
+    retrieval_decision = trace.get("retrieval_decision") if isinstance(trace.get("retrieval_decision"), dict) else {}
+    decision_hybrid_plan = (
+        retrieval_decision.get("hybrid_retrieval_plan")
+        if isinstance(retrieval_decision.get("hybrid_retrieval_plan"), dict)
+        else {}
+    )
+    hybrid_retrieval_summary = {
+        "mode": (
+            trace.get("hybrid_retrieval_planner_mode")
+            or retrieval_decision.get("hybrid_retrieval_planner_mode")
+        ),
+        "action": (
+            trace.get("retrieval_action")
+            or hybrid_plan.get("retrieval_action")
+            or decision_hybrid_plan.get("retrieval_action")
+        ),
+        "universal_gate": (
+            trace.get("hybrid_retrieval_universal_gate")
+            or retrieval_decision.get("hybrid_retrieval_universal_gate")
+        ),
+        "planned_query": (
+            trace.get("planned_composed_query")
+            or retrieval_decision.get("planned_composed_query")
+        ),
+        "executed_query": (
+            trace.get("executed_rag_query")
+            or retrieval_decision.get("composer", {}).get("hybrid_retrieval_trace", {}).get("executed_rag_query")
+            if isinstance(retrieval_decision.get("composer"), dict)
+            else trace.get("executed_rag_query")
+        ),
+        "query_before_rag_proof": (
+            trace.get("query_before_rag_proof")
+            if trace.get("query_before_rag_proof") is not None
+            else retrieval_decision.get("composer", {}).get("hybrid_retrieval_trace", {}).get("query_before_rag_proof")
+            if isinstance(retrieval_decision.get("composer"), dict)
+            else None
+        ),
+        "fallback_used": (
+            trace.get("hybrid_retrieval_fallback_used")
+            if trace.get("hybrid_retrieval_fallback_used") is not None
+            else retrieval_decision.get("hybrid_retrieval_fallback_used")
+        ),
+        "llm_called": (
+            trace.get("hybrid_retrieval_llm_called")
+            if trace.get("hybrid_retrieval_llm_called") is not None
+            else retrieval_decision.get("hybrid_retrieval_llm_called")
+        ),
+    }
+    if any(value not in (None, "", [], {}) for value in hybrid_retrieval_summary.values()):
+        trace["hybrid_retrieval_summary"] = hybrid_retrieval_summary
+
     return trace
 
 
@@ -393,20 +446,61 @@ async def get_multiagent_trace(
     else:
         memory_written_preview = str(memory_written or "")
 
+    planner_settings = get_hybrid_retrieval_planner_settings()
+    hybrid_plan = debug.get("hybrid_retrieval_plan") if isinstance(debug.get("hybrid_retrieval_plan"), dict) else {}
+    hybrid_retrieval_context = {
+        "planner_version": str(debug.get("hybrid_retrieval_planner_version", "") or ""),
+        "planner_mode": str(debug.get("hybrid_retrieval_planner_mode", "") or ""),
+        "planner_model": str(planner_settings.get("model", "") or ""),
+        "planner_max_tokens": _safe_int(planner_settings.get("max_tokens")),
+        "retrieval_action": str(debug.get("retrieval_action") or hybrid_plan.get("retrieval_action", "") or ""),
+        "planned_composed_query": str(debug.get("planned_composed_query", "") or ""),
+        "executed_rag_query": str(debug.get("executed_rag_query", "") or ""),
+        "legacy_rag_query": str(debug.get("legacy_rag_query", "") or ""),
+        "query_before_rag_proof": bool(debug.get("query_before_rag_proof", False)),
+        "needed_chunk_types": [str(item) for item in list(hybrid_plan.get("needed_chunk_types", []) or []) if str(item).strip()],
+        "mechanism_hints": [str(item) for item in list(hybrid_plan.get("mechanism_hints", []) or []) if str(item).strip()],
+        "depth_level_hint": _safe_int(hybrid_plan.get("depth_level_hint")),
+        "safety_layer_required": (
+            bool(hybrid_plan.get("safety_layer_required"))
+            if hybrid_plan.get("safety_layer_required") is not None
+            else None
+        ),
+        "allowed_use_filter_hint": [
+            str(item) for item in list(hybrid_plan.get("allowed_use_filter_hint", []) or []) if str(item).strip()
+        ],
+        "constraints_for_writer": [
+            str(item) for item in list(hybrid_plan.get("constraints_for_writer", []) or []) if str(item).strip()
+        ],
+        "retrieval_gap_reason": str(debug.get("retrieval_gap_reason", "") or ""),
+        "writer_can_ignore_rag": (
+            bool(hybrid_plan.get("writer_can_ignore_rag"))
+            if hybrid_plan.get("writer_can_ignore_rag") is not None
+            else None
+        ),
+        "rag_skipped_reason": str(debug.get("rag_skipped_reason", "") or ""),
+        "llm_called": (
+            bool(debug.get("hybrid_retrieval_llm_called"))
+            if debug.get("hybrid_retrieval_llm_called") is not None
+            else None
+        ),
+        "llm_reason": str(debug.get("hybrid_retrieval_llm_reason", "") or ""),
+        "fallback_used": (
+            bool(debug.get("hybrid_retrieval_fallback_used"))
+            if debug.get("hybrid_retrieval_fallback_used") is not None
+            else None
+        ),
+        "universal_gate": str(debug.get("hybrid_retrieval_universal_gate", "") or ""),
+    }
+    if not any(value not in (None, "", [], {}) for value in hybrid_retrieval_context.values()):
+        hybrid_retrieval_context = {}
+
     memory_context = MemoryContextTrace(
         conversation_context=str(debug.get("conversation_context", "") or ""),
         rag_query=str(debug.get("rag_query", "") or ""),
         hybrid_retrieval=(
-            {
-                "planner_version": str(debug.get("hybrid_retrieval_planner_version", "") or ""),
-                "planner_mode": str(debug.get("hybrid_retrieval_planner_mode", "") or ""),
-                "planned_composed_query": str(debug.get("planned_composed_query", "") or ""),
-                "executed_rag_query": str(debug.get("executed_rag_query", "") or ""),
-                "legacy_rag_query": str(debug.get("legacy_rag_query", "") or ""),
-                "query_before_rag_proof": bool(debug.get("query_before_rag_proof", False)),
-                "retrieval_gap_reason": str(debug.get("retrieval_gap_reason", "") or ""),
-            }
-            if debug.get("hybrid_retrieval_planner_version") is not None
+            hybrid_retrieval_context
+            if hybrid_retrieval_context
             else None
         ),
         semantic_hits=semantic_hits,
@@ -690,6 +784,70 @@ async def get_multiagent_trace(
             if debug.get("hybrid_retrieval_fallback_used") is not None
             else None
         ),
+        planned_composed_query=(
+            str(debug.get("planned_composed_query"))
+            if debug.get("planned_composed_query") is not None
+            else None
+        ),
+        executed_rag_query=(
+            str(debug.get("executed_rag_query"))
+            if debug.get("executed_rag_query") is not None
+            else None
+        ),
+        legacy_rag_query=(
+            str(debug.get("legacy_rag_query"))
+            if debug.get("legacy_rag_query") is not None
+            else None
+        ),
+        query_before_rag_proof=(
+            bool(debug.get("query_before_rag_proof"))
+            if debug.get("query_before_rag_proof") is not None
+            else None
+        ),
+        retrieval_action=(
+            str(debug.get("retrieval_action"))
+            if debug.get("retrieval_action") is not None
+            else (
+                str(hybrid_plan.get("retrieval_action"))
+                if hybrid_plan.get("retrieval_action") is not None
+                else None
+            )
+        ),
+        rag_skipped_reason=(
+            str(debug.get("rag_skipped_reason"))
+            if debug.get("rag_skipped_reason") is not None
+            else None
+        ),
+        needed_chunk_types=[
+            str(item) for item in list(hybrid_plan.get("needed_chunk_types", []) or []) if str(item).strip()
+        ],
+        mechanism_hints=[
+            str(item) for item in list(hybrid_plan.get("mechanism_hints", []) or []) if str(item).strip()
+        ],
+        retrieval_gap_reason=(
+            str(debug.get("retrieval_gap_reason"))
+            if debug.get("retrieval_gap_reason") is not None
+            else None
+        ),
+        writer_can_ignore_rag=(
+            bool(hybrid_plan.get("writer_can_ignore_rag"))
+            if hybrid_plan.get("writer_can_ignore_rag") is not None
+            else None
+        ),
+        depth_level_hint=_safe_int(hybrid_plan.get("depth_level_hint")),
+        safety_layer_required=(
+            bool(hybrid_plan.get("safety_layer_required"))
+            if hybrid_plan.get("safety_layer_required") is not None
+            else None
+        ),
+        allowed_use_filter_hint=[
+            str(item) for item in list(hybrid_plan.get("allowed_use_filter_hint", []) or []) if str(item).strip()
+        ],
+        constraints_for_writer=[
+            str(item) for item in list(hybrid_plan.get("constraints_for_writer", []) or []) if str(item).strip()
+        ],
+        planner_model=str(planner_settings.get("model")) if planner_settings.get("model") is not None else None,
+        planner_max_tokens=_safe_int(planner_settings.get("max_tokens")),
         live_turn_evidence=(
             debug.get("live_turn_evidence")
             if isinstance(debug.get("live_turn_evidence"), dict)

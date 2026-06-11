@@ -1,0 +1,51 @@
+{
+  "full_trace_fields_present_before_hf2_r2": [
+    "hybrid_retrieval_plan",
+    "hybrid_retrieval_planner_version",
+    "hybrid_retrieval_planner_mode",
+    "hybrid_retrieval_plan_valid",
+    "hybrid_retrieval_plan_error",
+    "hybrid_retrieval_universal_gate",
+    "hybrid_retrieval_llm_called",
+    "hybrid_retrieval_llm_reason",
+    "hybrid_retrieval_fallback_used",
+    "planned_composed_query",
+    "executed_rag_query",
+    "legacy_rag_query",
+    "query_before_rag_proof",
+    "retrieval_gap_reason"
+  ],
+  "plan_payload_fields_present_before_hf2_r2": [
+    "retrieval_action",
+    "composed_query",
+    "needed_chunk_types",
+    "mechanism_hints",
+    "depth_level_hint",
+    "safety_layer_required",
+    "allowed_use_filter_hint",
+    "constraints_for_writer",
+    "writer_can_ignore_rag",
+    "retrieval_gap_reason",
+    "confidence"
+  ],
+  "admin_runtime_fields_present_before_hf2_r2": [
+    "hybrid_retrieval_planner.enabled",
+    "hybrid_retrieval_planner.version",
+    "hybrid_retrieval_planner.mode",
+    "hybrid_retrieval_planner.default_safe_mode",
+    "hybrid_retrieval_planner.metadata_only",
+    "hybrid_retrieval_planner.query_before_rag_supported",
+    "hybrid_retrieval_planner.writer_final_author_preserved",
+    "hybrid_retrieval_planner.allowed_modes",
+    "hybrid_retrieval_planner.llm_optional_for_complex_cases",
+    "hybrid_retrieval_planner.domain_specific_hardcoding_allowed"
+  ],
+  "missing_or_not_visible_before_hf2_r2": [
+    "admin_runtime.hybrid_retrieval_planner.model",
+    "admin_runtime.hybrid_retrieval_planner.max_tokens",
+    "web_trace.hybrid_retrieval_section",
+    "compact_trace.hybrid_retrieval_summary",
+    "admin_runtime.read_only_compatibility_status_for_dialogue_profile_alias",
+    "admin_runtime.read_only_compatibility_status_for_knowledge_graph"
+  ]
+}

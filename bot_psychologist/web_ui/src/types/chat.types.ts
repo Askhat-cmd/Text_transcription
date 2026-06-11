@@ -81,6 +81,30 @@ export interface SemanticHitTrace {
 export interface MemoryContextTrace {
   conversation_context: string;
   rag_query: string;
+  hybrid_retrieval?: {
+    planner_version?: string;
+    planner_mode?: string;
+    planner_model?: string;
+    planner_max_tokens?: number | null;
+    retrieval_action?: string;
+    planned_composed_query?: string;
+    executed_rag_query?: string;
+    legacy_rag_query?: string;
+    query_before_rag_proof?: boolean;
+    needed_chunk_types?: string[];
+    mechanism_hints?: string[];
+    depth_level_hint?: number | null;
+    safety_layer_required?: boolean | null;
+    allowed_use_filter_hint?: string[];
+    constraints_for_writer?: string[];
+    retrieval_gap_reason?: string;
+    writer_can_ignore_rag?: boolean | null;
+    rag_skipped_reason?: string;
+    llm_called?: boolean | null;
+    llm_reason?: string;
+    fallback_used?: boolean | null;
+    universal_gate?: string;
+  } | null;
   semantic_hits: SemanticHitTrace[];
   user_profile_patterns: string[];
   user_profile_values: string[];
@@ -137,6 +161,32 @@ export interface MultiAgentTraceData {
   turn_diff?: TurnDiffTrace | null;
   anomalies?: AnomalyItem[];
   session_dashboard?: SessionDashboardTrace | null;
+  hybrid_retrieval_plan?: Record<string, unknown> | null;
+  hybrid_retrieval_planner_version?: string | null;
+  hybrid_retrieval_planner_mode?: string | null;
+  hybrid_retrieval_plan_valid?: boolean | null;
+  hybrid_retrieval_plan_error?: string | null;
+  hybrid_retrieval_universal_gate?: string | null;
+  hybrid_retrieval_llm_called?: boolean | null;
+  hybrid_retrieval_llm_reason?: string | null;
+  hybrid_retrieval_fallback_used?: boolean | null;
+  planned_composed_query?: string | null;
+  executed_rag_query?: string | null;
+  legacy_rag_query?: string | null;
+  query_before_rag_proof?: boolean | null;
+  retrieval_action?: string | null;
+  rag_skipped_reason?: string | null;
+  needed_chunk_types?: string[];
+  mechanism_hints?: string[];
+  retrieval_gap_reason?: string | null;
+  writer_can_ignore_rag?: boolean | null;
+  depth_level_hint?: number | null;
+  safety_layer_required?: boolean | null;
+  allowed_use_filter_hint?: string[];
+  constraints_for_writer?: string[];
+  planner_model?: string | null;
+  planner_max_tokens?: number | null;
+  live_turn_evidence?: Record<string, unknown> | null;
 }
 
 export interface Message {

@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "session_id": "745d278b-78a2-45e3-8424-fbfab5716ced",
+  "user_id": "hf2_r2_user_20260611_110457",
+  "retrieval_action": "trace_only",
+  "planner_mode": "shadow",
+  "planner_model": "gpt-5-nano",
+  "query_before_rag_proof": false
+}

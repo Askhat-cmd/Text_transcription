@@ -76,6 +76,11 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 
 ## Next Planned PRD
 `PRD-047.15-HF1 - Contextual Retrieval Composer Live Calibration / Owner Trace Review v1`
+
+## HF2-R2 Runtime Visibility State
+Hybrid Retrieval Planner visibility is now synchronized across backend admin runtime, Web Admin Runtime, multiagent trace, and compact trace summary.
+Advanced Controls is compatibility-only; duplicate legacy sub-tabs are no longer presented as primary control centers.
+Knowledge Graph runtime flag remains backend-legacy/optional but is shown as compatibility status instead of a modern primary Runtime toggle.
 ## Do Not Do Yet
 - Do not activate broad Diagnostic Center runtime authority.
 - Do not enable normal-user activation.
@@ -120,6 +125,11 @@ PRD-046.1.36 Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1.
 - prd_id: PRD-046.1.37
 - commit_hash: ff77155
 - push_status: pushed_to_origin_main
+
+## PRD-047.15-HF2-R2 Delivery Metadata
+- prd_id: PRD-047.15-HF2-R2
+- commit_hash: pending_post_commit
+- push_status: pending_post_push
 
 ## Diagnostic Center Track Status
 Diagnostic Center Track Status: CLOSED FOR CURRENT PHASE

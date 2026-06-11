@@ -59,7 +59,7 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
-- PRD-047.15-HF2-R1 closed the backend/runtime side of query-before-RAG; the remaining follow-up gap is Web Admin / Web Trace visibility parity for the new planner fields.
+- PRD-047.15-HF2-R2 closed Web Admin / Web Trace / compact trace visibility parity for the hybrid retrieval planner and cleaned bounded admin-surface legacy noise.
 - PRD-047.15 closed deterministic retrieval query composition baseline; live/owner trace calibration remains the next focused work.
 - PRD-047.14-HF2 closed summary-routing debt; remaining hardcoded/static candidates are out-of-scope/advisory/safety-minimal and require separate final-answer exposure proof before mutation.
 - PRD-047.14-HF1.2 closed the target Writer blocker set; remaining hardcoded/static candidates are out-of-scope/advisory/safety-minimal.
@@ -69,8 +69,8 @@
 - No active PRD-047.12 blocker remains; unified dialogue policy v2 is accepted on the current developer-local runtime baseline.
 
 ## Next
-1. Start `Backend ↔ Web Admin ↔ Web Trace Sync` for hybrid retrieval planner visibility parity.
-2. Prepare `PRD-047.16 - Mechanism-Aware Knowledge Base Preparation / Chunk Metadata v1` after the visibility sync.
+1. Start `PRD-047.16 - Mechanism-Aware Knowledge Base Preparation / Chunk Metadata v1`.
+2. Prepare follow-up retrieval-quality work only after mechanism/chunk metadata evidence is available.
 
 ## Later
 - Operational hardening for governed limited runtime.

@@ -1,0 +1,14 @@
+{
+  "prd_id": "PRD-047.15-HF2-R2",
+  "status": "passed",
+  "generated_at": "2026-06-11T11:06:00+00:00",
+  "utf8_artifacts_written": true,
+  "known_mojibake_created_by_hf2_r2": false,
+  "checked_outputs": [
+    "TO_DO_LIST/PRD-047.15-HF2-R2_TASK_LIST.md",
+    "TO_DO_LIST/logs/PRD-047.15-HF2-R2/*.md",
+    "TO_DO_LIST/logs/PRD-047.15-HF2-R2/*.json",
+    "TO_DO_LIST/reports/PRD-047.15-HF2-R2_IMPLEMENTATION_REPORT.md",
+    "TO_DO_LIST/reports/PRD-047.15-HF2-R2_NEXT_PRD_RECOMMENDATION.md"
+  ]
+}

@@ -80,6 +80,13 @@ def test_traces_compact_format_strips_heavy_fields() -> None:
             "context_written": "large memory write",
             "memory_turns_content": [{"turn_index": 1, "role": "user", "text_preview": "hi"}],
             "semantic_hits_detail": [{"block_id": "b1", "score": 0.77, "text_preview": "x"}],
+            "hybrid_retrieval_planner_mode": "shadow",
+            "hybrid_retrieval_universal_gate": "clear_kb_ask",
+            "hybrid_retrieval_fallback_used": False,
+            "hybrid_retrieval_llm_called": False,
+            "hybrid_retrieval_plan": {"retrieval_action": "query_kb"},
+            "planned_composed_query": "planned hi",
+            "executed_rag_query": "executed hi",
             "pipeline_stages": [
                 {"name": "state_classifier", "duration_ms": 10, "skipped": False},
                 {"name": "sd_classifier", "duration_ms": 0, "skipped": True},
@@ -108,6 +115,8 @@ def test_traces_compact_format_strips_heavy_fields() -> None:
     assert "context_written" not in trace
     assert "memory_turns_content" not in trace
     assert "semantic_hits_detail" not in trace
+    assert trace["hybrid_retrieval_summary"]["mode"] == "shadow"
+    assert trace["hybrid_retrieval_summary"]["action"] == "query_kb"
     assert all(not stage.get("skipped") for stage in trace.get("pipeline_stages", []))
     assert "system_prompt_preview" not in trace["llm_calls"][0]
     assert trace["llm_calls"][0]["step"] == "answer"

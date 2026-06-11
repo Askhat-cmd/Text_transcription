@@ -119,6 +119,18 @@ export interface AdminRuntimeEffectiveResponse {
     pipeline_mode_legacy_value?: string | null;
     pipeline_mode_read_only: boolean;
     legacy_modes_selectable: boolean;
+    dialogue_profile_alias?: {
+      primary_profile?: string;
+      legacy_alias?: string;
+      modern_label?: string;
+      surface_role?: string;
+    };
+    knowledge_graph?: {
+      enabled?: boolean;
+      status?: string;
+      surface_role?: string;
+      note?: string;
+    };
   };
   agents: Record<string, Record<string, unknown>>;
   status: AdminStatusResponse;
@@ -188,7 +200,25 @@ export interface AdminRuntimeEffectiveResponse {
     scope?: string;
     description?: string;
     developer_local_only?: boolean;
+    profile_preset?: string;
+    primary_profile?: string;
+    legacy_alias?: string;
+    legacy_alias_visible_in_runtime?: boolean;
     warning?: string;
+  };
+  hybrid_retrieval_planner?: {
+    enabled?: boolean;
+    version?: string;
+    mode?: string;
+    model?: string;
+    max_tokens?: number;
+    default_safe_mode?: string;
+    metadata_only?: boolean;
+    query_before_rag_supported?: boolean;
+    writer_final_author_preserved?: boolean;
+    allowed_modes?: string[];
+    llm_optional_for_complex_cases?: boolean;
+    domain_specific_hardcoding_allowed?: boolean;
   };
   dialogue_policy?: {
     version?: string;

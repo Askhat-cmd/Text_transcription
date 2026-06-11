@@ -5,7 +5,6 @@ import { useOrchestrator } from '../../hooks/useOrchestrator';
 import { GROUP_COLORS } from '../../constants/adminColors';
 import type { HistoryEntry } from '../../types/admin.types';
 import { ConfigGroupPanel } from './ConfigGroupPanel';
-import { PromptEditorPanel } from './PromptEditorPanel';
 import { HistoryPanel } from './HistoryPanel';
 import { AgentsTab } from './AgentsTab';
 import { OrchestratorTab } from './OrchestratorTab';
@@ -23,11 +22,6 @@ type Tab =
   | 'runtime'
   | 'diagnostic_center'
   | 'memory'
-  | 'llm'
-  | 'retrieval'
-  | 'diagnostics'
-  | 'routing'
-  | 'prompts'
   | 'compatibility';
 
 const PRIMARY_TABS: { key: Tab; label: string; hoverColor: string }[] = [
@@ -42,22 +36,10 @@ const PRIMARY_TABS: { key: Tab; label: string; hoverColor: string }[] = [
 ];
 
 const ADVANCED_TABS: { key: Tab; label: string; hoverColor: string }[] = [
-  { key: 'llm', label: 'LLM', hoverColor: 'hover:bg-violet-500/20' },
-  { key: 'retrieval', label: 'Retrieval', hoverColor: 'hover:bg-blue-500/20' },
-  { key: 'diagnostics', label: 'Diagnostics', hoverColor: 'hover:bg-cyan-500/20' },
-  { key: 'routing', label: 'Routing', hoverColor: 'hover:bg-cyan-500/20' },
-  { key: 'prompts', label: 'Prompts', hoverColor: 'hover:bg-rose-500/20' },
   { key: 'compatibility', label: 'Compatibility', hoverColor: 'hover:bg-amber-500/20' },
 ];
 
-const ROUTING_ADVANCED_KEYS = new Set([
-  'FAST_DETECTOR_ENABLED',
-  'FAST_DETECTOR_CONFIDENCE_THRESHOLD',
-  'STATE_CLASSIFIER_ENABLED',
-  'STATE_CLASSIFIER_CONFIDENCE_THRESHOLD',
-]);
-
-const ADVANCED_TAB_KEYS = new Set<Tab>(['llm', 'retrieval', 'diagnostics', 'routing', 'prompts', 'compatibility']);
+const ADVANCED_TAB_KEYS = new Set<Tab>(['compatibility']);
 
 export const AdminPanel: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('overview');
@@ -69,22 +51,16 @@ export const AdminPanel: React.FC = () => {
 
   const {
     configData,
-    prompts,
-    selectedPrompt,
     statusData,
     runtimeEffectiveData,
-    diagnosticsEffectiveData,
     diagnosticCenterEffectiveData,
     isLoading,
     isSaving,
     error,
-    promptError,
     successMessage,
     clearError,
     loadConfig,
     loadPrompts,
-    loadPromptDetail,
-    retryPromptDetailLoad,
     loadRuntimeEffective,
     loadDiagnosticsEffective,
     loadDiagnosticCenterEffective,
@@ -95,9 +71,6 @@ export const AdminPanel: React.FC = () => {
     saveConfigParam,
     resetConfigParam,
     resetAllConfig,
-    savePrompt,
-    resetPrompt,
-    resetAllPrompts,
     exportOverrides,
     importOverrides,
   } = useAdminConfig();
@@ -142,26 +115,6 @@ export const AdminPanel: React.FC = () => {
     await importOverrides(file);
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
-
-  const routingGroup = configData?.groups?.routing;
-  const filteredRoutingGroup = routingGroup ?? null;
-  const routingPolicyGroup = filteredRoutingGroup
-    ? {
-        ...filteredRoutingGroup,
-        params: Object.fromEntries(
-          Object.entries(filteredRoutingGroup.params).filter(([key]) => !ROUTING_ADVANCED_KEYS.has(key)),
-        ),
-      }
-    : null;
-  const routingAdvancedGroup = filteredRoutingGroup
-    ? {
-        ...filteredRoutingGroup,
-        label: 'Advanced Routing Controls',
-        params: Object.fromEntries(
-          Object.entries(filteredRoutingGroup.params).filter(([key]) => ROUTING_ADVANCED_KEYS.has(key)),
-        ),
-      }
-    : null;
 
   const pipelineBadgeClass = 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
   const runtimeEntrypoint = orchestratorConfig?.runtime_entrypoint ?? 'multiagent_adapter';
@@ -329,21 +282,22 @@ export const AdminPanel: React.FC = () => {
               </div>
             )}
 
-            {(activeTab === 'llm' || activeTab === 'retrieval' || activeTab === 'memory' || activeTab === 'runtime') && (
+            {(activeTab === 'memory' || activeTab === 'runtime') && (
               <div className="mt-4 space-y-4">
-                {Object.entries(configData.groups)
-                  .filter(([groupKey]) => groupKey === activeTab)
-                  .map(([groupKey, group]) => (
-                    <ConfigGroupPanel
-                      key={groupKey}
-                      groupKey={groupKey}
-                      group={group}
-                      onSave={saveConfigParam}
-                      onReset={handleResetConfigParam}
-                      isSaving={isSaving}
-                      accentColor={GROUP_COLORS[groupKey] ?? 'blue'}
-                    />
-                  ))}
+                {activeTab === 'memory' &&
+                  Object.entries(configData.groups)
+                    .filter(([groupKey]) => groupKey === activeTab)
+                    .map(([groupKey, group]) => (
+                      <ConfigGroupPanel
+                        key={groupKey}
+                        groupKey={groupKey}
+                        group={group}
+                        onSave={saveConfigParam}
+                        onReset={handleResetConfigParam}
+                        isSaving={isSaving}
+                        accentColor={GROUP_COLORS[groupKey] ?? 'blue'}
+                      />
+                    ))}
 
                 {activeTab === 'runtime' && statusData && (
                   <div className="bg-white rounded-xl border border-slate-200 shadow-md p-4">
@@ -405,8 +359,9 @@ export const AdminPanel: React.FC = () => {
                           Profiles are presets resolved by unified_dialogue_policy_v2, not separate runtime paths.
                         </div>
                         <div>Unified Policy: {runtimeEffectiveData.dialogue_policy?.version ?? 'n/a'}</div>
-                        <div>value: {runtimeEffectiveData.dialogue_profile?.value ?? 'safe_guided'}</div>
-                        <div>active_profile_alias: {runtimeEffectiveData.dialogue_policy?.active_profile_alias ?? 'n/a'}</div>
+                        <div>primary_profile: {runtimeEffectiveData.dialogue_profile?.primary_profile ?? runtimeEffectiveData.dialogue_profile?.profile_preset ?? 'guided'}</div>
+                        <div>legacy_alias: {runtimeEffectiveData.dialogue_profile?.legacy_alias ?? runtimeEffectiveData.dialogue_policy?.active_profile_alias ?? 'n/a'}</div>
+                        <div>legacy_alias_visible_in_runtime: {String(Boolean(runtimeEffectiveData.dialogue_profile?.legacy_alias_visible_in_runtime))}</div>
                         <div>profile_preset: {runtimeEffectiveData.dialogue_policy?.profile_preset ?? 'n/a'}</div>
                         <div>allowed_values: {(runtimeEffectiveData.dialogue_profile?.allowed_values ?? []).join(', ') || 'n/a'}</div>
                         <div>scope: {runtimeEffectiveData.dialogue_profile?.scope ?? 'n/a'}</div>
@@ -545,81 +500,55 @@ export const AdminPanel: React.FC = () => {
                           Current chat reset is session-only. Memory profile clear stays developer-visible only.
                         </div>
                       </div>
+                      <div className="rounded border border-slate-200 p-3" data-testid="hf2-hybrid-retrieval-runtime">
+                        <div className="font-medium">Hybrid Retrieval Planner</div>
+                        <div>enabled: {String(Boolean(runtimeEffectiveData.hybrid_retrieval_planner?.enabled))}</div>
+                        <div>version: {runtimeEffectiveData.hybrid_retrieval_planner?.version ?? 'n/a'}</div>
+                        <div>mode: {runtimeEffectiveData.hybrid_retrieval_planner?.mode ?? 'n/a'}</div>
+                        <div>model: {runtimeEffectiveData.hybrid_retrieval_planner?.model ?? 'n/a'}</div>
+                        <div>max_tokens: {runtimeEffectiveData.hybrid_retrieval_planner?.max_tokens ?? 'n/a'}</div>
+                        <div>default_safe_mode: {runtimeEffectiveData.hybrid_retrieval_planner?.default_safe_mode ?? 'n/a'}</div>
+                        <div>metadata_only: {String(Boolean(runtimeEffectiveData.hybrid_retrieval_planner?.metadata_only))}</div>
+                        <div>query_before_rag_supported: {String(Boolean(runtimeEffectiveData.hybrid_retrieval_planner?.query_before_rag_supported))}</div>
+                        <div>writer_final_author_preserved: {String(Boolean(runtimeEffectiveData.hybrid_retrieval_planner?.writer_final_author_preserved))}</div>
+                        <div>allowed_modes: {(runtimeEffectiveData.hybrid_retrieval_planner?.allowed_modes ?? []).join(', ') || 'n/a'}</div>
+                        <div>llm_optional_for_complex_cases: {String(Boolean(runtimeEffectiveData.hybrid_retrieval_planner?.llm_optional_for_complex_cases))}</div>
+                        <div className="mt-2 rounded border border-blue-200 bg-blue-50 px-2 py-1 text-xs text-blue-900">
+                          Visibility-only developer surface. Planner metadata is observable here; Writer remains final author.
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}
-              </div>
-            )}
-
-            {activeTab === 'diagnostics' && (
-              <div className="mt-4 bg-white rounded-xl border border-slate-200 shadow-md p-5 space-y-3">
-                <h3 className="text-lg font-semibold text-slate-800">Diagnostics v1</h3>
-                <div className="text-sm text-slate-600">Policy-level diagnostics surface.</div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-                  <div className="rounded border border-slate-200 p-3">
-                    <div className="font-medium text-slate-700">Contract</div>
-                    <div>contract: {String(diagnosticsEffectiveData?.active_contract?.contract_version ?? 'n/a')}</div>
-                    <div>interaction policy: {String(diagnosticsEffectiveData?.active_contract?.interaction_mode_policy ?? 'n/a')}</div>
-                  </div>
-                  <div className="rounded border border-slate-200 p-3">
-                    <div className="font-medium text-slate-700">Policies</div>
-                    <div>informational narrowing: {diagnosticsEffectiveData?.policies?.informational_narrowing_enabled ? 'on' : 'off'}</div>
-                    <div>mixed query handling: {diagnosticsEffectiveData?.policies?.mixed_query_handling_enabled ? 'on' : 'off'}</div>
-                    <div>user correction protocol: {diagnosticsEffectiveData?.policies?.user_correction_protocol_enabled ? 'on' : 'off'}</div>
-                    <div>first-turn richness: {diagnosticsEffectiveData?.policies?.first_turn_richness_policy_enabled ? 'on' : 'off'}</div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {activeTab === 'routing' && filteredRoutingGroup && (
-              <div className="mt-4 space-y-4">
-                {routingPolicyGroup && Object.keys(routingPolicyGroup.params).length > 0 && (
-                  <ConfigGroupPanel
-                    groupKey="routing"
-                    group={routingPolicyGroup}
-                    onSave={saveConfigParam}
-                    onReset={handleResetConfigParam}
-                    isSaving={isSaving}
-                    accentColor={GROUP_COLORS.routing ?? 'cyan'}
-                  />
-                )}
-                {routingAdvancedGroup && Object.keys(routingAdvancedGroup.params).length > 0 && (
-                  <details className="bg-white rounded-xl border border-slate-200 shadow-sm">
-                    <summary className="cursor-pointer select-none px-4 py-3 text-sm font-medium text-slate-700">Advanced Routing Controls</summary>
-                    <div className="px-4 pb-4">
-                      <ConfigGroupPanel
-                        groupKey="routing-advanced"
-                        group={routingAdvancedGroup}
-                        onSave={saveConfigParam}
-                        onReset={handleResetConfigParam}
-                        isSaving={isSaving}
-                        accentColor={GROUP_COLORS.routing ?? 'cyan'}
-                      />
-                    </div>
-                  </details>
-                )}
-              </div>
-            )}
-
-            {activeTab === 'prompts' && (
-              <div className="mt-4 bg-white rounded-xl border border-slate-200 p-5 shadow-md h-[70vh]">
-                <PromptEditorPanel
-                  prompts={prompts}
-                  selectedPrompt={selectedPrompt}
-                  promptError={promptError}
-                  onSelect={loadPromptDetail}
-                  onRetryLoad={retryPromptDetailLoad}
-                  onSave={savePrompt}
-                  onReset={resetPrompt}
-                  onResetAll={resetAllPrompts}
-                  isSaving={isSaving}
-                />
               </div>
             )}
 
             {activeTab === 'compatibility' && (
               <div className="mt-4 space-y-4">
+                {runtimeEffectiveData && (
+                  <div className="bg-white rounded-xl border border-slate-200 shadow-md p-4" data-testid="hf2-compatibility-runtime-status">
+                    <h3 className="font-semibold text-slate-800 mb-3">Compatibility / Legacy Status</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-slate-700">
+                      <div className="rounded border border-slate-200 p-3">
+                        <div className="font-medium">Dialogue Profile Alias</div>
+                        <div>primary_profile: {runtimeEffectiveData.compatibility?.dialogue_profile_alias?.primary_profile ?? 'n/a'}</div>
+                        <div>legacy_alias: {runtimeEffectiveData.compatibility?.dialogue_profile_alias?.legacy_alias ?? 'n/a'}</div>
+                        <div>modern_label: {runtimeEffectiveData.compatibility?.dialogue_profile_alias?.modern_label ?? 'n/a'}</div>
+                        <div>surface_role: {runtimeEffectiveData.compatibility?.dialogue_profile_alias?.surface_role ?? 'n/a'}</div>
+                      </div>
+                      <div className="rounded border border-slate-200 p-3">
+                        <div className="font-medium">Knowledge Graph</div>
+                        <div>enabled: {String(Boolean(runtimeEffectiveData.compatibility?.knowledge_graph?.enabled))}</div>
+                        <div>status: {runtimeEffectiveData.compatibility?.knowledge_graph?.status ?? 'n/a'}</div>
+                        <div>surface_role: {runtimeEffectiveData.compatibility?.knowledge_graph?.surface_role ?? 'n/a'}</div>
+                        <div className="mt-1 text-xs text-slate-500">{runtimeEffectiveData.compatibility?.knowledge_graph?.note ?? 'n/a'}</div>
+                      </div>
+                    </div>
+                    <div className="mt-3 rounded border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-900">
+                      Advanced Controls is compatibility-only in HF2-R2. Duplicate legacy sub-tabs were removed from the primary admin navigation.
+                    </div>
+                  </div>
+                )}
                 {configData.groups.storage && (
                   <ConfigGroupPanel
                     groupKey="storage"

@@ -128,8 +128,8 @@ PRD-046.1.36 Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1.
 
 ## PRD-047.15-HF2-R2 Delivery Metadata
 - prd_id: PRD-047.15-HF2-R2
-- commit_hash: pending_post_commit
-- push_status: pending_post_push
+- commit_hash: 3480666
+- push_status: pushed_to_origin_main
 
 ## Diagnostic Center Track Status
 Diagnostic Center Track Status: CLOSED FOR CURRENT PHASE

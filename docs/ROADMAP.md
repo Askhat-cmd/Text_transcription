@@ -1,6 +1,8 @@
 # Roadmap
 
 ## Done
+- PRD-047.15-HF2-R1: completed Hybrid Retrieval Planner / Query-Before-RAG with passed acceptance. Added `hybrid_retrieval_planner_v1_r1` and strict planner contract, moved approved retrieval metadata ahead of RAG execution, wired `retrieval_plan` into `MemoryRetrievalAgent`, exposed query-before-RAG trace/debug/API fields, removed production domain-specific composer hardcoding, and passed direct/live acceptance (`16/16`, `6/6`) plus anti-overengineering/encoding/no-mutation gates.
+
 - PRD-047.15-HF1: completed calibration/owner-review evidence pack for deterministic `contextual_retrieval_query_composer_v1` with warning status and no runtime mutation. Added 40 replay cases, schema/results/owner sheet/live inventory/decision brief/acceptance artifacts and tests; blocker gates passed, owner scores remain pending, and mixed cases recommend future hybrid LLM-assisted Composer only after owner review.
 
 - PRD-047.15: completed deterministic Contextual Retrieval Query Composer v1 with warning status. Added `contextual_retrieval_query_composer_v1` and stable retrieval-query contract, composed retrieval intent/query from dialogue context and last-offer state, suppressed noisy RAG for summary/contact/support/one-step turns, exposed composer payload through `retrieval_decision`, `writer_context_package_v1`, WriterContract prompt context, and trace. No LLM agent, user-facing text, DB/KB/frontend mutation, or new runtime path was added; validation/runtime-scope/encoding/no-stub composer scan passed.
@@ -57,6 +59,7 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
+- PRD-047.15-HF2-R1 closed the backend/runtime side of query-before-RAG; the remaining follow-up gap is Web Admin / Web Trace visibility parity for the new planner fields.
 - PRD-047.15 closed deterministic retrieval query composition baseline; live/owner trace calibration remains the next focused work.
 - PRD-047.14-HF2 closed summary-routing debt; remaining hardcoded/static candidates are out-of-scope/advisory/safety-minimal and require separate final-answer exposure proof before mutation.
 - PRD-047.14-HF1.2 closed the target Writer blocker set; remaining hardcoded/static candidates are out-of-scope/advisory/safety-minimal.
@@ -66,8 +69,8 @@
 - No active PRD-047.12 blocker remains; unified dialogue policy v2 is accepted on the current developer-local runtime baseline.
 
 ## Next
-1. Start `PRD-047.15-HF1 - Contextual Retrieval Composer Live Calibration / Owner Trace Review v1`.
-2. Keep remaining advisory/static boundary cleanup as later targeted work if final-answer exposure is proven.
+1. Start `Backend ↔ Web Admin ↔ Web Trace Sync` for hybrid retrieval planner visibility parity.
+2. Prepare `PRD-047.16 - Mechanism-Aware Knowledge Base Preparation / Chunk Metadata v1` after the visibility sync.
 
 ## Later
 - Operational hardening for governed limited runtime.

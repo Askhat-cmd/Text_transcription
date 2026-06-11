@@ -1,5 +1,23 @@
 # Architecture Decisions
 
+## ADR-076 - Hybrid Retrieval Planner owns metadata-only query-before-RAG, not Writer authority
+
+Status: accepted
+
+Date: 2026-06-11
+
+Context: after PRD-047.15 and HF1, retrieval still had a structural flaw: the runtime could compose a better retrieval query in trace, while `MemoryRetrievalAgent` had already executed RAG from legacy `_build_rag_query(...)`. Complex/mixed cases also risked pushing more and more domain-specific composer heuristics into production logic.
+
+Decision:
+- add `hybrid_retrieval_planner_v1_r1` as a metadata-only planner inside the existing multiagent runtime path;
+- keep deterministic universal retrieval gates for simple cases and allow optional strict-JSON LLM planning only for complex/low-confidence cases;
+- approve retrieval metadata before RAG execution and pass it into `MemoryRetrievalAgent.assemble(..., retrieval_plan=...)`;
+- preserve Writer as the only author of user-facing text; planner output must never become a reply draft;
+- expose planned query, executed query, query-before-RAG proof, planner validity/fallback, mode, chunk-type hints, and mechanism hints in trace/debug/API;
+- keep conservative defaults (`shadow` safe mode, no broad rollout, no normal-user activation) and forbid production domain-specific hardcoded concept expansions in the composer/planner layer.
+
+Consequences: retrieval execution is now observable and auditable as a first-class pre-RAG contract; live `apply` validation can prove planned and executed queries match when enabled; Writer freedom and governance boundaries remain intact; further work shifts from backend plumbing to UI visibility sync and later KB chunk metadata quality.
+
 ## ADR-074 - Retrieval query composition is contextual and advisory, not literal-last-message search
 
 Status: accepted

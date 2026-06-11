@@ -1,4 +1,4 @@
-# Project Status Current
+# Project Status Current (Текущий статус проекта)
 
 - status: current
 - last_verified_prd: PRD-047.13-HF1
@@ -7,21 +7,20 @@
 - not_production_ready: true
 - related_artifacts: TO_DO_LIST/logs/PRD-047.13-HF1; TO_DO_LIST/reports/PRD-047.13-HF1_IMPLEMENTATION_REPORT.md
 
-## Active Now
-- Unified multiagent runtime is active.
-- Final Answer Acceptance Gate is active after Writer/Validator.
-- Stale Stub Quarantine is active for failed final answers.
-- Web Chat markdown has real bubble styling and browser smoke evidence.
+## Active Now (Активно сейчас)
+- Активен unified multiagent runtime.
+- Final Answer Acceptance Gate активен после Writer/Validator.
+- Stale Stub Quarantine активен для failed final answers.
+- Web Chat markdown имеет реальное bubble styling и browser smoke evidence.
 
-## Not Production Ready
+## Not Production Ready (Не готово к production)
 - `production_ready=false`.
 - `broad_rollout_allowed=false`.
 - `normal_user_activation_allowed=false`.
 
-## How To Test
-- Use targeted backend tests and HF1 live/browser runner.
-- Review artifacts under `TO_DO_LIST/logs/PRD-047.12-HF1/`.
+## How To Test (Как тестировать)
+- Используйте targeted backend tests и HF1 live/browser runner.
+- Просмотрите артефакты в `TO_DO_LIST/logs/PRD-047.12-HF1/`.
 
-## PRD-047.13-HF1 cleanup closure note
-- This document was re-verified during cleanup closure; runtime behavior was not changed.
-
+## PRD-047.13-HF1 cleanup closure note (Заметка о закрытии cleanup PRD-047.13-HF1)
+- Документ повторно проверен при закрытии cleanup; runtime behavior не менялся.

@@ -1,0 +1,2739 @@
+{
+  "prd": "PRD-047.15-HF2-R1",
+  "generated_at_utc": "2026-06-11T05:29:44.931627+00:00",
+  "mode": "direct",
+  "planner_mode": "apply",
+  "total_cases": 16,
+  "passed": 16,
+  "warnings": 0,
+  "failed": 0,
+  "llm_calls_expected": 6,
+  "llm_calls_actual": 6,
+  "query_before_rag_passed": true,
+  "anti_overengineering_passed": true,
+  "api_trace_fields_present": true,
+  "anti_overengineering_report": {
+    "status": "passed",
+    "findings": []
+  },
+  "case_results": [
+    {
+      "case_id": "HRP-001",
+      "description": "greeting suppresses rag",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "retrieval_action",
+          "ok": true,
+          "expected": "suppress_rag",
+          "actual": "suppress_rag"
+        },
+        {
+          "name": "universal_gate",
+          "ok": true,
+          "expected": "greeting",
+          "actual": "greeting"
+        },
+        {
+          "name": "llm_called",
+          "ok": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "plan_valid",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "query_before_rag_proof",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "rag_skipped_reason",
+          "ok": true,
+          "expected": "suppress_rag",
+          "actual": "suppress_rag"
+        },
+        {
+          "name": "writer_can_ignore_rag",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "trace_fields_present",
+          "ok": true,
+          "expected": [
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_universal_gate",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_fallback_used"
+          ],
+          "actual": [
+            "executed_rag_query",
+            "hybrid_retrieval_fallback_used",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_universal_gate",
+            "legacy_rag_query",
+            "mechanism_hints",
+            "needed_chunk_types",
+            "planned_composed_query",
+            "query_before_rag_proof",
+            "retrieval_gap_reason",
+            "writer_can_ignore_rag"
+          ]
+        }
+      ],
+      "plan_result": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "mode": "apply",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": false,
+          "retrieval_action": "suppress_rag",
+          "composed_query": "",
+          "needed_chunk_types": [
+            "general_text"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 0,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.98
+        },
+        "valid": true,
+        "error": null,
+        "universal_gate": "greeting",
+        "llm_called": false,
+        "llm_reason": "universal_gate_resolved",
+        "fallback_used": false
+      },
+      "trace": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "retrieval_plan_applied": true,
+        "retrieval_plan_mode": "apply",
+        "retrieval_action": "suppress_rag",
+        "planned_composed_query": "",
+        "executed_rag_query": "",
+        "legacy_rag_query": "Привет retrieval quality check",
+        "query_before_rag_proof": true,
+        "rag_skipped_reason": "suppress_rag",
+        "retrieval_gap_reason": "planner_suppressed_rag",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": false,
+          "retrieval_action": "suppress_rag",
+          "composed_query": "",
+          "needed_chunk_types": [
+            "general_text"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 0,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.98
+        }
+      },
+      "writer_context": {
+        "retrieval_action": "suppress_rag",
+        "composed_query": "",
+        "needed_chunk_types": [
+          "general_text"
+        ],
+        "mechanism_hints": [],
+        "depth_level_hint": 0,
+        "writer_can_ignore_rag": true,
+        "chunks": []
+      },
+      "llm_calls_actual": 0,
+      "api_trace_fields_present": true
+    },
+    {
+      "case_id": "HRP-002",
+      "description": "thanks suppresses rag",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "retrieval_action",
+          "ok": true,
+          "expected": "suppress_rag",
+          "actual": "suppress_rag"
+        },
+        {
+          "name": "universal_gate",
+          "ok": true,
+          "expected": "thanks_or_farewell",
+          "actual": "thanks_or_farewell"
+        },
+        {
+          "name": "llm_called",
+          "ok": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "plan_valid",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "query_before_rag_proof",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "rag_skipped_reason",
+          "ok": true,
+          "expected": "suppress_rag",
+          "actual": "suppress_rag"
+        },
+        {
+          "name": "writer_can_ignore_rag",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "trace_fields_present",
+          "ok": true,
+          "expected": [
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_universal_gate",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_fallback_used"
+          ],
+          "actual": [
+            "executed_rag_query",
+            "hybrid_retrieval_fallback_used",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_universal_gate",
+            "legacy_rag_query",
+            "mechanism_hints",
+            "needed_chunk_types",
+            "planned_composed_query",
+            "query_before_rag_proof",
+            "retrieval_gap_reason",
+            "writer_can_ignore_rag"
+          ]
+        }
+      ],
+      "plan_result": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "mode": "apply",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": false,
+          "retrieval_action": "suppress_rag",
+          "composed_query": "",
+          "needed_chunk_types": [
+            "general_text"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 0,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.97
+        },
+        "valid": true,
+        "error": null,
+        "universal_gate": "thanks_or_farewell",
+        "llm_called": false,
+        "llm_reason": "universal_gate_resolved",
+        "fallback_used": false
+      },
+      "trace": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "retrieval_plan_applied": true,
+        "retrieval_plan_mode": "apply",
+        "retrieval_action": "suppress_rag",
+        "planned_composed_query": "",
+        "executed_rag_query": "",
+        "legacy_rag_query": "Спасибо, пока retrieval quality check",
+        "query_before_rag_proof": true,
+        "rag_skipped_reason": "suppress_rag",
+        "retrieval_gap_reason": "planner_suppressed_rag",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": false,
+          "retrieval_action": "suppress_rag",
+          "composed_query": "",
+          "needed_chunk_types": [
+            "general_text"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 0,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.97
+        }
+      },
+      "writer_context": {
+        "retrieval_action": "suppress_rag",
+        "composed_query": "",
+        "needed_chunk_types": [
+          "general_text"
+        ],
+        "mechanism_hints": [],
+        "depth_level_hint": 0,
+        "writer_can_ignore_rag": true,
+        "chunks": []
+      },
+      "llm_calls_actual": 0,
+      "api_trace_fields_present": true
+    },
+    {
+      "case_id": "HRP-003",
+      "description": "formatting request uses current context only",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "retrieval_action",
+          "ok": true,
+          "expected": "use_current_context_only",
+          "actual": "use_current_context_only"
+        },
+        {
+          "name": "universal_gate",
+          "ok": true,
+          "expected": "formatting_request",
+          "actual": "formatting_request"
+        },
+        {
+          "name": "llm_called",
+          "ok": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "plan_valid",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "query_before_rag_proof",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "rag_skipped_reason",
+          "ok": true,
+          "expected": "use_current_context_only",
+          "actual": "use_current_context_only"
+        },
+        {
+          "name": "writer_can_ignore_rag",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "trace_fields_present",
+          "ok": true,
+          "expected": [
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_universal_gate",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_fallback_used"
+          ],
+          "actual": [
+            "executed_rag_query",
+            "hybrid_retrieval_fallback_used",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_universal_gate",
+            "legacy_rag_query",
+            "mechanism_hints",
+            "needed_chunk_types",
+            "planned_composed_query",
+            "query_before_rag_proof",
+            "retrieval_gap_reason",
+            "writer_can_ignore_rag"
+          ]
+        }
+      ],
+      "plan_result": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "mode": "apply",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": false,
+          "retrieval_action": "use_current_context_only",
+          "composed_query": "",
+          "needed_chunk_types": [
+            "general_text"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 0,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [
+            "list_ok"
+          ],
+          "confidence": 0.92
+        },
+        "valid": true,
+        "error": null,
+        "universal_gate": "formatting_request",
+        "llm_called": false,
+        "llm_reason": "universal_gate_resolved",
+        "fallback_used": false
+      },
+      "trace": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "retrieval_plan_applied": true,
+        "retrieval_plan_mode": "apply",
+        "retrieval_action": "use_current_context_only",
+        "planned_composed_query": "",
+        "executed_rag_query": "",
+        "legacy_rag_query": "Сделай списком и без воды retrieval quality check",
+        "query_before_rag_proof": true,
+        "rag_skipped_reason": "use_current_context_only",
+        "retrieval_gap_reason": "planner_suppressed_rag",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": false,
+          "retrieval_action": "use_current_context_only",
+          "composed_query": "",
+          "needed_chunk_types": [
+            "general_text"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 0,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [
+            "list_ok"
+          ],
+          "confidence": 0.92
+        }
+      },
+      "writer_context": {
+        "retrieval_action": "use_current_context_only",
+        "composed_query": "",
+        "needed_chunk_types": [
+          "general_text"
+        ],
+        "mechanism_hints": [],
+        "depth_level_hint": 0,
+        "writer_can_ignore_rag": true,
+        "chunks": []
+      },
+      "llm_calls_actual": 0,
+      "api_trace_fields_present": true
+    },
+    {
+      "case_id": "HRP-004",
+      "description": "summary request uses current context only",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "retrieval_action",
+          "ok": true,
+          "expected": "use_current_context_only",
+          "actual": "use_current_context_only"
+        },
+        {
+          "name": "universal_gate",
+          "ok": true,
+          "expected": "summary_request",
+          "actual": "summary_request"
+        },
+        {
+          "name": "llm_called",
+          "ok": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "plan_valid",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "query_before_rag_proof",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "rag_skipped_reason",
+          "ok": true,
+          "expected": "use_current_context_only",
+          "actual": "use_current_context_only"
+        },
+        {
+          "name": "writer_can_ignore_rag",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "trace_fields_present",
+          "ok": true,
+          "expected": [
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_universal_gate",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_fallback_used"
+          ],
+          "actual": [
+            "executed_rag_query",
+            "hybrid_retrieval_fallback_used",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_universal_gate",
+            "legacy_rag_query",
+            "mechanism_hints",
+            "needed_chunk_types",
+            "planned_composed_query",
+            "query_before_rag_proof",
+            "retrieval_gap_reason",
+            "writer_can_ignore_rag"
+          ]
+        }
+      ],
+      "plan_result": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "mode": "apply",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": false,
+          "retrieval_action": "use_current_context_only",
+          "composed_query": "",
+          "needed_chunk_types": [
+            "general_text"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 0,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.95
+        },
+        "valid": true,
+        "error": null,
+        "universal_gate": "summary_request",
+        "llm_called": false,
+        "llm_reason": "universal_gate_resolved",
+        "fallback_used": false
+      },
+      "trace": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "retrieval_plan_applied": true,
+        "retrieval_plan_mode": "apply",
+        "retrieval_action": "use_current_context_only",
+        "planned_composed_query": "",
+        "executed_rag_query": "",
+        "legacy_rag_query": "Подведи итог по нашему разговору retrieval quality check",
+        "query_before_rag_proof": true,
+        "rag_skipped_reason": "use_current_context_only",
+        "retrieval_gap_reason": "planner_suppressed_rag",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": false,
+          "retrieval_action": "use_current_context_only",
+          "composed_query": "",
+          "needed_chunk_types": [
+            "general_text"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 0,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.95
+        }
+      },
+      "writer_context": {
+        "retrieval_action": "use_current_context_only",
+        "composed_query": "",
+        "needed_chunk_types": [
+          "general_text"
+        ],
+        "mechanism_hints": [],
+        "depth_level_hint": 0,
+        "writer_can_ignore_rag": true,
+        "chunks": []
+      },
+      "llm_calls_actual": 0,
+      "api_trace_fields_present": true
+    },
+    {
+      "case_id": "HRP-005",
+      "description": "explicit no avoids kb",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "retrieval_action",
+          "ok": true,
+          "expected": "use_current_context_only",
+          "actual": "use_current_context_only"
+        },
+        {
+          "name": "universal_gate",
+          "ok": true,
+          "expected": "explicit_reject",
+          "actual": "explicit_reject"
+        },
+        {
+          "name": "llm_called",
+          "ok": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "plan_valid",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "query_before_rag_proof",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "rag_skipped_reason",
+          "ok": true,
+          "expected": "use_current_context_only",
+          "actual": "use_current_context_only"
+        },
+        {
+          "name": "writer_can_ignore_rag",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "trace_fields_present",
+          "ok": true,
+          "expected": [
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_universal_gate",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_fallback_used"
+          ],
+          "actual": [
+            "executed_rag_query",
+            "hybrid_retrieval_fallback_used",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_universal_gate",
+            "legacy_rag_query",
+            "mechanism_hints",
+            "needed_chunk_types",
+            "planned_composed_query",
+            "query_before_rag_proof",
+            "retrieval_gap_reason",
+            "writer_can_ignore_rag"
+          ]
+        }
+      ],
+      "plan_result": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "mode": "apply",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": false,
+          "retrieval_action": "use_current_context_only",
+          "composed_query": "",
+          "needed_chunk_types": [
+            "general_text"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 0,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.86
+        },
+        "valid": true,
+        "error": null,
+        "universal_gate": "explicit_reject",
+        "llm_called": false,
+        "llm_reason": "universal_gate_resolved",
+        "fallback_used": false
+      },
+      "trace": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "retrieval_plan_applied": true,
+        "retrieval_plan_mode": "apply",
+        "retrieval_action": "use_current_context_only",
+        "planned_composed_query": "",
+        "executed_rag_query": "",
+        "legacy_rag_query": "Нет, не надо retrieval quality check",
+        "query_before_rag_proof": true,
+        "rag_skipped_reason": "use_current_context_only",
+        "retrieval_gap_reason": "planner_suppressed_rag",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": false,
+          "retrieval_action": "use_current_context_only",
+          "composed_query": "",
+          "needed_chunk_types": [
+            "general_text"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 0,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.86
+        }
+      },
+      "writer_context": {
+        "retrieval_action": "use_current_context_only",
+        "composed_query": "",
+        "needed_chunk_types": [
+          "general_text"
+        ],
+        "mechanism_hints": [],
+        "depth_level_hint": 0,
+        "writer_can_ignore_rag": true,
+        "chunks": []
+      },
+      "llm_calls_actual": 0,
+      "api_trace_fields_present": true
+    },
+    {
+      "case_id": "HRP-006",
+      "description": "clear kb ask",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "retrieval_action",
+          "ok": true,
+          "expected": "query_kb",
+          "actual": "query_kb"
+        },
+        {
+          "name": "universal_gate",
+          "ok": true,
+          "expected": "clear_kb_ask",
+          "actual": "clear_kb_ask"
+        },
+        {
+          "name": "llm_called",
+          "ok": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "plan_valid",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "query_before_rag_proof",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "writer_can_ignore_rag",
+          "ok": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "executed_query_vs_planned",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "composed_query_contains:нейросталкинг",
+          "ok": true,
+          "expected": "нейросталкинг",
+          "actual": "нейросталкинг"
+        },
+        {
+          "name": "trace_fields_present",
+          "ok": true,
+          "expected": [
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_universal_gate",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_fallback_used"
+          ],
+          "actual": [
+            "executed_rag_query",
+            "hybrid_retrieval_fallback_used",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_universal_gate",
+            "legacy_rag_query",
+            "mechanism_hints",
+            "needed_chunk_types",
+            "planned_composed_query",
+            "query_before_rag_proof",
+            "retrieval_gap_reason",
+            "writer_can_ignore_rag"
+          ]
+        }
+      ],
+      "plan_result": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "mode": "apply",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": true,
+          "retrieval_action": "query_kb",
+          "composed_query": "нейросталкинг",
+          "needed_chunk_types": [
+            "concept",
+            "source_fragment"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 1,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": false,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.84
+        },
+        "valid": true,
+        "error": null,
+        "universal_gate": "clear_kb_ask",
+        "llm_called": false,
+        "llm_reason": "universal_gate_resolved",
+        "fallback_used": false
+      },
+      "trace": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "retrieval_plan_applied": true,
+        "retrieval_plan_mode": "apply",
+        "retrieval_action": "query_kb",
+        "planned_composed_query": "нейросталкинг",
+        "executed_rag_query": "нейросталкинг",
+        "legacy_rag_query": "Что такое нейросталкинг? retrieval quality check",
+        "query_before_rag_proof": true,
+        "rag_skipped_reason": "",
+        "retrieval_gap_reason": "",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": true,
+          "retrieval_action": "query_kb",
+          "composed_query": "нейросталкинг",
+          "needed_chunk_types": [
+            "concept",
+            "source_fragment"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 1,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": false,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.84
+        }
+      },
+      "writer_context": {
+        "retrieval_action": "query_kb",
+        "composed_query": "нейросталкинг",
+        "needed_chunk_types": [
+          "concept",
+          "source_fragment"
+        ],
+        "mechanism_hints": [],
+        "depth_level_hint": 1,
+        "writer_can_ignore_rag": false,
+        "chunks": []
+      },
+      "llm_calls_actual": 0,
+      "api_trace_fields_present": true
+    },
+    {
+      "case_id": "HRP-007",
+      "description": "short yes after open offer",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "retrieval_action",
+          "ok": true,
+          "expected": "use_current_context_only",
+          "actual": "use_current_context_only"
+        },
+        {
+          "name": "universal_gate",
+          "ok": true,
+          "expected": "short_accept_followup",
+          "actual": "short_accept_followup"
+        },
+        {
+          "name": "llm_called",
+          "ok": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "plan_valid",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "query_before_rag_proof",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "rag_skipped_reason",
+          "ok": true,
+          "expected": "use_current_context_only",
+          "actual": "use_current_context_only"
+        },
+        {
+          "name": "writer_can_ignore_rag",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "trace_fields_present",
+          "ok": true,
+          "expected": [
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_universal_gate",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_fallback_used"
+          ],
+          "actual": [
+            "executed_rag_query",
+            "hybrid_retrieval_fallback_used",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_universal_gate",
+            "legacy_rag_query",
+            "mechanism_hints",
+            "needed_chunk_types",
+            "planned_composed_query",
+            "query_before_rag_proof",
+            "retrieval_gap_reason",
+            "writer_can_ignore_rag"
+          ]
+        }
+      ],
+      "plan_result": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "mode": "apply",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": false,
+          "retrieval_action": "use_current_context_only",
+          "composed_query": "",
+          "needed_chunk_types": [
+            "general_text"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 0,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.81
+        },
+        "valid": true,
+        "error": null,
+        "universal_gate": "short_accept_followup",
+        "llm_called": false,
+        "llm_reason": "universal_gate_resolved",
+        "fallback_used": false
+      },
+      "trace": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "retrieval_plan_applied": true,
+        "retrieval_plan_mode": "apply",
+        "retrieval_action": "use_current_context_only",
+        "planned_composed_query": "",
+        "executed_rag_query": "",
+        "legacy_rag_query": "да retrieval quality check",
+        "query_before_rag_proof": true,
+        "rag_skipped_reason": "use_current_context_only",
+        "retrieval_gap_reason": "planner_suppressed_rag",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": false,
+          "retrieval_action": "use_current_context_only",
+          "composed_query": "",
+          "needed_chunk_types": [
+            "general_text"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 0,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.81
+        }
+      },
+      "writer_context": {
+        "retrieval_action": "use_current_context_only",
+        "composed_query": "",
+        "needed_chunk_types": [
+          "general_text"
+        ],
+        "mechanism_hints": [],
+        "depth_level_hint": 0,
+        "writer_can_ignore_rag": true,
+        "chunks": []
+      },
+      "llm_calls_actual": 0,
+      "api_trace_fields_present": true
+    },
+    {
+      "case_id": "HRP-008",
+      "description": "complex followup triggers llm planner",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "retrieval_action",
+          "ok": true,
+          "expected": "query_kb_and_memory",
+          "actual": "query_kb_and_memory"
+        },
+        {
+          "name": "llm_called",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "plan_valid",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "query_before_rag_proof",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "writer_can_ignore_rag",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "needed_chunk_types_contains:mechanism",
+          "ok": true,
+          "expected": "mechanism",
+          "actual": [
+            "mechanism",
+            "dialogue_move"
+          ]
+        },
+        {
+          "name": "needed_chunk_types_contains:dialogue_move",
+          "ok": true,
+          "expected": "dialogue_move",
+          "actual": [
+            "mechanism",
+            "dialogue_move"
+          ]
+        },
+        {
+          "name": "mechanism_hints_contains:control_as_safety",
+          "ok": true,
+          "expected": "control_as_safety",
+          "actual": [
+            "control_as_safety"
+          ]
+        },
+        {
+          "name": "trace_fields_present",
+          "ok": true,
+          "expected": [
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_universal_gate",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_fallback_used"
+          ],
+          "actual": [
+            "executed_rag_query",
+            "hybrid_retrieval_fallback_used",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_universal_gate",
+            "legacy_rag_query",
+            "mechanism_hints",
+            "needed_chunk_types",
+            "planned_composed_query",
+            "query_before_rag_proof",
+            "retrieval_gap_reason",
+            "writer_can_ignore_rag"
+          ]
+        }
+      ],
+      "plan_result": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "mode": "apply",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": true,
+          "retrieval_action": "query_kb_and_memory",
+          "composed_query": "личный пример контроль безопасность механизм",
+          "needed_chunk_types": [
+            "mechanism",
+            "dialogue_move"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [
+            "control_as_safety"
+          ],
+          "depth_level_hint": 1,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [
+            "no_theory"
+          ],
+          "confidence": 0.83
+        },
+        "valid": true,
+        "error": null,
+        "universal_gate": "complex_or_low_confidence",
+        "llm_called": true,
+        "llm_reason": "complex_or_low_confidence",
+        "fallback_used": false,
+        "llm_tokens_prompt": 21,
+        "llm_tokens_completion": 41,
+        "llm_tokens_total": 62
+      },
+      "trace": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "retrieval_plan_applied": true,
+        "retrieval_plan_mode": "apply",
+        "retrieval_action": "query_kb_and_memory",
+        "planned_composed_query": "личный пример контроль безопасность механизм",
+        "executed_rag_query": "личный пример контроль безопасность механизм",
+        "legacy_rag_query": "Да, но на моем примере и без теории retrieval quality check",
+        "query_before_rag_proof": true,
+        "rag_skipped_reason": "",
+        "retrieval_gap_reason": "",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": true,
+          "retrieval_action": "query_kb_and_memory",
+          "composed_query": "личный пример контроль безопасность механизм",
+          "needed_chunk_types": [
+            "mechanism",
+            "dialogue_move"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [
+            "control_as_safety"
+          ],
+          "depth_level_hint": 1,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [
+            "no_theory"
+          ],
+          "confidence": 0.83
+        }
+      },
+      "writer_context": {
+        "retrieval_action": "query_kb_and_memory",
+        "composed_query": "личный пример контроль безопасность механизм",
+        "needed_chunk_types": [
+          "mechanism",
+          "dialogue_move"
+        ],
+        "mechanism_hints": [
+          "control_as_safety"
+        ],
+        "depth_level_hint": 1,
+        "writer_can_ignore_rag": true,
+        "chunks": []
+      },
+      "llm_calls_actual": 1,
+      "api_trace_fields_present": true
+    },
+    {
+      "case_id": "HRP-009",
+      "description": "complex mixed request triggers llm planner",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "retrieval_action",
+          "ok": true,
+          "expected": "query_kb",
+          "actual": "query_kb"
+        },
+        {
+          "name": "llm_called",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "plan_valid",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "query_before_rag_proof",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "needed_chunk_types_contains:mechanism",
+          "ok": true,
+          "expected": "mechanism",
+          "actual": [
+            "mechanism",
+            "concept"
+          ]
+        },
+        {
+          "name": "needed_chunk_types_contains:concept",
+          "ok": true,
+          "expected": "concept",
+          "actual": [
+            "mechanism",
+            "concept"
+          ]
+        },
+        {
+          "name": "trace_fields_present",
+          "ok": true,
+          "expected": [
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_universal_gate",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_fallback_used"
+          ],
+          "actual": [
+            "executed_rag_query",
+            "hybrid_retrieval_fallback_used",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_universal_gate",
+            "legacy_rag_query",
+            "mechanism_hints",
+            "needed_chunk_types",
+            "planned_composed_query",
+            "query_before_rag_proof",
+            "retrieval_gap_reason",
+            "writer_can_ignore_rag"
+          ]
+        }
+      ],
+      "plan_result": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "mode": "apply",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": true,
+          "retrieval_action": "query_kb",
+          "composed_query": "контроль стыд отношения механизм",
+          "needed_chunk_types": [
+            "mechanism",
+            "concept"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [
+            "control_as_safety"
+          ],
+          "depth_level_hint": 2,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.79
+        },
+        "valid": true,
+        "error": null,
+        "universal_gate": "complex_or_low_confidence",
+        "llm_called": true,
+        "llm_reason": "complex_or_low_confidence",
+        "fallback_used": false,
+        "llm_tokens_prompt": 21,
+        "llm_tokens_completion": 41,
+        "llm_tokens_total": 62
+      },
+      "trace": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "retrieval_plan_applied": true,
+        "retrieval_plan_mode": "apply",
+        "retrieval_action": "query_kb",
+        "planned_composed_query": "контроль стыд отношения механизм",
+        "executed_rag_query": "контроль стыд отношения механизм",
+        "legacy_rag_query": "Объясни, как это связано между контролем, стыдом и отношениями retrieval quality check",
+        "query_before_rag_proof": true,
+        "rag_skipped_reason": "",
+        "retrieval_gap_reason": "",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": true,
+          "retrieval_action": "query_kb",
+          "composed_query": "контроль стыд отношения механизм",
+          "needed_chunk_types": [
+            "mechanism",
+            "concept"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [
+            "control_as_safety"
+          ],
+          "depth_level_hint": 2,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.79
+        }
+      },
+      "writer_context": {
+        "retrieval_action": "query_kb",
+        "composed_query": "контроль стыд отношения механизм",
+        "needed_chunk_types": [
+          "mechanism",
+          "concept"
+        ],
+        "mechanism_hints": [
+          "control_as_safety"
+        ],
+        "depth_level_hint": 2,
+        "writer_can_ignore_rag": true,
+        "chunks": []
+      },
+      "llm_calls_actual": 1,
+      "api_trace_fields_present": true
+    },
+    {
+      "case_id": "HRP-010",
+      "description": "safety signal requires safety and mechanism chunks",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "retrieval_action",
+          "ok": true,
+          "expected": "query_kb",
+          "actual": "query_kb"
+        },
+        {
+          "name": "universal_gate",
+          "ok": true,
+          "expected": "safety_signal",
+          "actual": "safety_signal"
+        },
+        {
+          "name": "llm_called",
+          "ok": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "plan_valid",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "query_before_rag_proof",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "executed_query_vs_planned",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "needed_chunk_types_contains:safety",
+          "ok": true,
+          "expected": "safety",
+          "actual": [
+            "safety",
+            "mechanism",
+            "dialogue_move"
+          ]
+        },
+        {
+          "name": "needed_chunk_types_contains:mechanism",
+          "ok": true,
+          "expected": "mechanism",
+          "actual": [
+            "safety",
+            "mechanism",
+            "dialogue_move"
+          ]
+        },
+        {
+          "name": "needed_chunk_types_contains:dialogue_move",
+          "ok": true,
+          "expected": "dialogue_move",
+          "actual": [
+            "safety",
+            "mechanism",
+            "dialogue_move"
+          ]
+        },
+        {
+          "name": "mechanism_hints_contains:control_as_safety",
+          "ok": true,
+          "expected": "control_as_safety",
+          "actual": [
+            "control_as_safety",
+            "panic_regulation",
+            "loss_of_control_as_threat"
+          ]
+        },
+        {
+          "name": "mechanism_hints_contains:panic_regulation",
+          "ok": true,
+          "expected": "panic_regulation",
+          "actual": [
+            "control_as_safety",
+            "panic_regulation",
+            "loss_of_control_as_threat"
+          ]
+        },
+        {
+          "name": "mechanism_hints_contains:loss_of_control_as_threat",
+          "ok": true,
+          "expected": "loss_of_control_as_threat",
+          "actual": [
+            "control_as_safety",
+            "panic_regulation",
+            "loss_of_control_as_threat"
+          ]
+        },
+        {
+          "name": "trace_fields_present",
+          "ok": true,
+          "expected": [
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_universal_gate",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_fallback_used"
+          ],
+          "actual": [
+            "executed_rag_query",
+            "hybrid_retrieval_fallback_used",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_universal_gate",
+            "legacy_rag_query",
+            "mechanism_hints",
+            "needed_chunk_types",
+            "planned_composed_query",
+            "query_before_rag_proof",
+            "retrieval_gap_reason",
+            "writer_can_ignore_rag"
+          ]
+        }
+      ],
+      "plan_result": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "mode": "apply",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": true,
+          "retrieval_action": "query_kb",
+          "composed_query": "жены паника она говорит что если перестанет контролировать умрет safety",
+          "needed_chunk_types": [
+            "safety",
+            "mechanism",
+            "dialogue_move"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [
+            "control_as_safety",
+            "panic_regulation",
+            "loss_of_control_as_threat"
+          ],
+          "depth_level_hint": 1,
+          "safety_layer_required": true,
+          "allowed_use_filter_hint": [
+            "writer_support",
+            "diagnostic_hint"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.9
+        },
+        "valid": true,
+        "error": null,
+        "universal_gate": "safety_signal",
+        "llm_called": false,
+        "llm_reason": "universal_gate_resolved",
+        "fallback_used": false
+      },
+      "trace": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "retrieval_plan_applied": true,
+        "retrieval_plan_mode": "apply",
+        "retrieval_action": "query_kb",
+        "planned_composed_query": "жены паника она говорит что если перестанет контролировать умрет safety",
+        "executed_rag_query": "жены паника она говорит что если перестанет контролировать умрет safety",
+        "legacy_rag_query": "У жены паника, она говорит, что если перестанет контролировать — умрет retrieval quality check",
+        "query_before_rag_proof": true,
+        "rag_skipped_reason": "",
+        "retrieval_gap_reason": "",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": true,
+          "retrieval_action": "query_kb",
+          "composed_query": "жены паника она говорит что если перестанет контролировать умрет safety",
+          "needed_chunk_types": [
+            "safety",
+            "mechanism",
+            "dialogue_move"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [
+            "control_as_safety",
+            "panic_regulation",
+            "loss_of_control_as_threat"
+          ],
+          "depth_level_hint": 1,
+          "safety_layer_required": true,
+          "allowed_use_filter_hint": [
+            "writer_support",
+            "diagnostic_hint"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.9
+        }
+      },
+      "writer_context": {
+        "retrieval_action": "query_kb",
+        "composed_query": "жены паника она говорит что если перестанет контролировать умрет safety",
+        "needed_chunk_types": [
+          "safety",
+          "mechanism",
+          "dialogue_move"
+        ],
+        "mechanism_hints": [
+          "control_as_safety",
+          "panic_regulation",
+          "loss_of_control_as_threat"
+        ],
+        "depth_level_hint": 1,
+        "writer_can_ignore_rag": true,
+        "chunks": []
+      },
+      "llm_calls_actual": 0,
+      "api_trace_fields_present": true
+    },
+    {
+      "case_id": "HRP-011",
+      "description": "invalid llm json falls back",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "retrieval_action",
+          "ok": true,
+          "expected": "trace_only",
+          "actual": "trace_only"
+        },
+        {
+          "name": "llm_called",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "plan_valid",
+          "ok": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "fallback_used",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "query_before_rag_proof",
+          "ok": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "retrieval_gap_reason",
+          "ok": true,
+          "expected": "legacy_fallback_used",
+          "actual": "legacy_fallback_used"
+        },
+        {
+          "name": "trace_fields_present",
+          "ok": true,
+          "expected": [
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_universal_gate",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_fallback_used"
+          ],
+          "actual": [
+            "executed_rag_query",
+            "hybrid_retrieval_fallback_used",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_universal_gate",
+            "legacy_rag_query",
+            "mechanism_hints",
+            "needed_chunk_types",
+            "planned_composed_query",
+            "query_before_rag_proof",
+            "retrieval_gap_reason",
+            "writer_can_ignore_rag"
+          ]
+        }
+      ],
+      "plan_result": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "mode": "apply",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": false,
+          "retrieval_action": "trace_only",
+          "composed_query": "",
+          "needed_chunk_types": [
+            "general_text"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 0,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "legacy_fallback_used",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.0
+        },
+        "valid": false,
+        "error": "no_user_facing_text_created_must_be_true",
+        "universal_gate": "complex_or_low_confidence",
+        "llm_called": true,
+        "llm_reason": "complex_or_low_confidence",
+        "fallback_used": true,
+        "llm_tokens_prompt": 21,
+        "llm_tokens_completion": 41,
+        "llm_tokens_total": 62
+      },
+      "trace": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "retrieval_plan_applied": false,
+        "retrieval_plan_mode": "apply",
+        "retrieval_action": "trace_only",
+        "planned_composed_query": "",
+        "executed_rag_query": "Да, но на моем примере retrieval quality check",
+        "legacy_rag_query": "Да, но на моем примере retrieval quality check",
+        "query_before_rag_proof": false,
+        "rag_skipped_reason": "",
+        "retrieval_gap_reason": "legacy_fallback_used",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": false,
+          "retrieval_action": "trace_only",
+          "composed_query": "",
+          "needed_chunk_types": [
+            "general_text"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 0,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "legacy_fallback_used",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.0
+        }
+      },
+      "writer_context": {
+        "retrieval_action": "trace_only",
+        "composed_query": "",
+        "needed_chunk_types": [
+          "general_text"
+        ],
+        "mechanism_hints": [],
+        "depth_level_hint": 0,
+        "writer_can_ignore_rag": true,
+        "chunks": []
+      },
+      "llm_calls_actual": 1,
+      "api_trace_fields_present": true
+    },
+    {
+      "case_id": "HRP-012",
+      "description": "llm error falls back safely",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "retrieval_action",
+          "ok": true,
+          "expected": "trace_only",
+          "actual": "trace_only"
+        },
+        {
+          "name": "llm_called",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "plan_valid",
+          "ok": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "fallback_used",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "query_before_rag_proof",
+          "ok": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "retrieval_gap_reason",
+          "ok": true,
+          "expected": "legacy_fallback_used",
+          "actual": "legacy_fallback_used"
+        },
+        {
+          "name": "trace_fields_present",
+          "ok": true,
+          "expected": [
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_universal_gate",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_fallback_used"
+          ],
+          "actual": [
+            "executed_rag_query",
+            "hybrid_retrieval_fallback_used",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_universal_gate",
+            "legacy_rag_query",
+            "mechanism_hints",
+            "needed_chunk_types",
+            "planned_composed_query",
+            "query_before_rag_proof",
+            "retrieval_gap_reason",
+            "writer_can_ignore_rag"
+          ]
+        }
+      ],
+      "plan_result": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "mode": "apply",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": false,
+          "retrieval_action": "trace_only",
+          "composed_query": "",
+          "needed_chunk_types": [
+            "general_text"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 0,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "legacy_fallback_used",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.0
+        },
+        "valid": false,
+        "error": "RuntimeError:planner timeout",
+        "universal_gate": "complex_or_low_confidence",
+        "llm_called": true,
+        "llm_reason": "complex_or_low_confidence",
+        "fallback_used": true
+      },
+      "trace": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "retrieval_plan_applied": false,
+        "retrieval_plan_mode": "apply",
+        "retrieval_action": "trace_only",
+        "planned_composed_query": "",
+        "executed_rag_query": "Да, но свяжи это с моим случаем retrieval quality check",
+        "legacy_rag_query": "Да, но свяжи это с моим случаем retrieval quality check",
+        "query_before_rag_proof": false,
+        "rag_skipped_reason": "",
+        "retrieval_gap_reason": "legacy_fallback_used",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": false,
+          "retrieval_action": "trace_only",
+          "composed_query": "",
+          "needed_chunk_types": [
+            "general_text"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 0,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "legacy_fallback_used",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.0
+        }
+      },
+      "writer_context": {
+        "retrieval_action": "trace_only",
+        "composed_query": "",
+        "needed_chunk_types": [
+          "general_text"
+        ],
+        "mechanism_hints": [],
+        "depth_level_hint": 0,
+        "writer_can_ignore_rag": true,
+        "chunks": []
+      },
+      "llm_calls_actual": 1,
+      "api_trace_fields_present": true
+    },
+    {
+      "case_id": "HRP-013",
+      "description": "shadow mode keeps legacy executed query",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "retrieval_action",
+          "ok": true,
+          "expected": "query_kb",
+          "actual": "query_kb"
+        },
+        {
+          "name": "universal_gate",
+          "ok": true,
+          "expected": "clear_kb_ask",
+          "actual": "clear_kb_ask"
+        },
+        {
+          "name": "llm_called",
+          "ok": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "plan_valid",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "query_before_rag_proof",
+          "ok": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "executed_query_vs_planned",
+          "ok": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "trace_fields_present",
+          "ok": true,
+          "expected": [
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_universal_gate",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_fallback_used"
+          ],
+          "actual": [
+            "executed_rag_query",
+            "hybrid_retrieval_fallback_used",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_universal_gate",
+            "legacy_rag_query",
+            "mechanism_hints",
+            "needed_chunk_types",
+            "planned_composed_query",
+            "query_before_rag_proof",
+            "retrieval_gap_reason",
+            "writer_can_ignore_rag"
+          ]
+        }
+      ],
+      "plan_result": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "mode": "shadow",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": true,
+          "retrieval_action": "query_kb",
+          "composed_query": "нейросталкинг",
+          "needed_chunk_types": [
+            "concept",
+            "source_fragment"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 1,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": false,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.84
+        },
+        "valid": true,
+        "error": null,
+        "universal_gate": "clear_kb_ask",
+        "llm_called": false,
+        "llm_reason": "universal_gate_resolved",
+        "fallback_used": false
+      },
+      "trace": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "retrieval_plan_applied": false,
+        "retrieval_plan_mode": "shadow",
+        "retrieval_action": "query_kb",
+        "planned_composed_query": "нейросталкинг",
+        "executed_rag_query": "Что такое нейросталкинг? retrieval quality check",
+        "legacy_rag_query": "Что такое нейросталкинг? retrieval quality check",
+        "query_before_rag_proof": false,
+        "rag_skipped_reason": "",
+        "retrieval_gap_reason": "",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": true,
+          "retrieval_action": "query_kb",
+          "composed_query": "нейросталкинг",
+          "needed_chunk_types": [
+            "concept",
+            "source_fragment"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 1,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": false,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.84
+        }
+      },
+      "writer_context": {
+        "retrieval_action": "query_kb",
+        "composed_query": "нейросталкинг",
+        "needed_chunk_types": [
+          "concept",
+          "source_fragment"
+        ],
+        "mechanism_hints": [],
+        "depth_level_hint": 1,
+        "writer_can_ignore_rag": false,
+        "chunks": []
+      },
+      "llm_calls_actual": 0,
+      "api_trace_fields_present": true
+    },
+    {
+      "case_id": "HRP-014",
+      "description": "apply mode uses composed query",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "retrieval_action",
+          "ok": true,
+          "expected": "query_kb",
+          "actual": "query_kb"
+        },
+        {
+          "name": "universal_gate",
+          "ok": true,
+          "expected": "clear_kb_ask",
+          "actual": "clear_kb_ask"
+        },
+        {
+          "name": "llm_called",
+          "ok": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "plan_valid",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "query_before_rag_proof",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "executed_query_vs_planned",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "trace_fields_present",
+          "ok": true,
+          "expected": [
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_universal_gate",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_fallback_used"
+          ],
+          "actual": [
+            "executed_rag_query",
+            "hybrid_retrieval_fallback_used",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_universal_gate",
+            "legacy_rag_query",
+            "mechanism_hints",
+            "needed_chunk_types",
+            "planned_composed_query",
+            "query_before_rag_proof",
+            "retrieval_gap_reason",
+            "writer_can_ignore_rag"
+          ]
+        }
+      ],
+      "plan_result": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "mode": "apply",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": true,
+          "retrieval_action": "query_kb",
+          "composed_query": "нейросталкинг",
+          "needed_chunk_types": [
+            "concept",
+            "source_fragment"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 1,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": false,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.84
+        },
+        "valid": true,
+        "error": null,
+        "universal_gate": "clear_kb_ask",
+        "llm_called": false,
+        "llm_reason": "universal_gate_resolved",
+        "fallback_used": false
+      },
+      "trace": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "retrieval_plan_applied": true,
+        "retrieval_plan_mode": "apply",
+        "retrieval_action": "query_kb",
+        "planned_composed_query": "нейросталкинг",
+        "executed_rag_query": "нейросталкинг",
+        "legacy_rag_query": "Что такое нейросталкинг? retrieval quality check",
+        "query_before_rag_proof": true,
+        "rag_skipped_reason": "",
+        "retrieval_gap_reason": "",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": true,
+          "retrieval_action": "query_kb",
+          "composed_query": "нейросталкинг",
+          "needed_chunk_types": [
+            "concept",
+            "source_fragment"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 1,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": false,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.84
+        }
+      },
+      "writer_context": {
+        "retrieval_action": "query_kb",
+        "composed_query": "нейросталкинг",
+        "needed_chunk_types": [
+          "concept",
+          "source_fragment"
+        ],
+        "mechanism_hints": [],
+        "depth_level_hint": 1,
+        "writer_can_ignore_rag": false,
+        "chunks": []
+      },
+      "llm_calls_actual": 0,
+      "api_trace_fields_present": true
+    },
+    {
+      "case_id": "HRP-015",
+      "description": "writer_can_ignore_rag reaches writer context",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "retrieval_action",
+          "ok": true,
+          "expected": "query_kb",
+          "actual": "query_kb"
+        },
+        {
+          "name": "llm_called",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "plan_valid",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "writer_can_ignore_rag",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "trace_fields_present",
+          "ok": true,
+          "expected": [
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_universal_gate",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_fallback_used"
+          ],
+          "actual": [
+            "executed_rag_query",
+            "hybrid_retrieval_fallback_used",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_universal_gate",
+            "legacy_rag_query",
+            "mechanism_hints",
+            "needed_chunk_types",
+            "planned_composed_query",
+            "query_before_rag_proof",
+            "retrieval_gap_reason",
+            "writer_can_ignore_rag"
+          ]
+        }
+      ],
+      "plan_result": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "mode": "apply",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": true,
+          "retrieval_action": "query_kb",
+          "composed_query": "пример механизм",
+          "needed_chunk_types": [
+            "mechanism"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [
+            "control_as_safety"
+          ],
+          "depth_level_hint": 1,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [
+            "no_theory"
+          ],
+          "confidence": 0.8
+        },
+        "valid": true,
+        "error": null,
+        "universal_gate": "complex_or_low_confidence",
+        "llm_called": true,
+        "llm_reason": "complex_or_low_confidence",
+        "fallback_used": false,
+        "llm_tokens_prompt": 21,
+        "llm_tokens_completion": 41,
+        "llm_tokens_total": 62
+      },
+      "trace": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "retrieval_plan_applied": true,
+        "retrieval_plan_mode": "apply",
+        "retrieval_action": "query_kb",
+        "planned_composed_query": "пример механизм",
+        "executed_rag_query": "пример механизм",
+        "legacy_rag_query": "Да, но на моем примере и без теории retrieval quality check",
+        "query_before_rag_proof": true,
+        "rag_skipped_reason": "",
+        "retrieval_gap_reason": "",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": true,
+          "retrieval_action": "query_kb",
+          "composed_query": "пример механизм",
+          "needed_chunk_types": [
+            "mechanism"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [
+            "control_as_safety"
+          ],
+          "depth_level_hint": 1,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [
+            "no_theory"
+          ],
+          "confidence": 0.8
+        }
+      },
+      "writer_context": {
+        "retrieval_action": "query_kb",
+        "composed_query": "пример механизм",
+        "needed_chunk_types": [
+          "mechanism"
+        ],
+        "mechanism_hints": [
+          "control_as_safety"
+        ],
+        "depth_level_hint": 1,
+        "writer_can_ignore_rag": true,
+        "chunks": []
+      },
+      "llm_calls_actual": 1,
+      "api_trace_fields_present": true
+    },
+    {
+      "case_id": "HRP-016",
+      "description": "retrieval gap is trace-visible",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "retrieval_action",
+          "ok": true,
+          "expected": "query_kb",
+          "actual": "query_kb"
+        },
+        {
+          "name": "llm_called",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "plan_valid",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "retrieval_gap_reason",
+          "ok": true,
+          "expected": "missing_chunk_type_metadata",
+          "actual": "missing_chunk_type_metadata"
+        },
+        {
+          "name": "trace_fields_present",
+          "ok": true,
+          "expected": [
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_universal_gate",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_fallback_used"
+          ],
+          "actual": [
+            "executed_rag_query",
+            "hybrid_retrieval_fallback_used",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_universal_gate",
+            "legacy_rag_query",
+            "mechanism_hints",
+            "needed_chunk_types",
+            "planned_composed_query",
+            "query_before_rag_proof",
+            "retrieval_gap_reason",
+            "writer_can_ignore_rag"
+          ]
+        }
+      ],
+      "plan_result": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "mode": "apply",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": true,
+          "retrieval_action": "query_kb",
+          "composed_query": "пример механизм",
+          "needed_chunk_types": [
+            "mechanism"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 1,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "missing_chunk_type_metadata",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.77
+        },
+        "valid": true,
+        "error": null,
+        "universal_gate": "complex_or_low_confidence",
+        "llm_called": true,
+        "llm_reason": "complex_or_low_confidence",
+        "fallback_used": false,
+        "llm_tokens_prompt": 21,
+        "llm_tokens_completion": 41,
+        "llm_tokens_total": 62
+      },
+      "trace": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "retrieval_plan_applied": true,
+        "retrieval_plan_mode": "apply",
+        "retrieval_action": "query_kb",
+        "planned_composed_query": "пример механизм",
+        "executed_rag_query": "пример механизм",
+        "legacy_rag_query": "Объясни это на моем примере retrieval quality check",
+        "query_before_rag_proof": true,
+        "rag_skipped_reason": "",
+        "retrieval_gap_reason": "missing_chunk_type_metadata",
+        "plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": true,
+          "retrieval_action": "query_kb",
+          "composed_query": "пример механизм",
+          "needed_chunk_types": [
+            "mechanism"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 1,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "missing_chunk_type_metadata",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.77
+        }
+      },
+      "writer_context": {
+        "retrieval_action": "query_kb",
+        "composed_query": "пример механизм",
+        "needed_chunk_types": [
+          "mechanism"
+        ],
+        "mechanism_hints": [],
+        "depth_level_hint": 1,
+        "writer_can_ignore_rag": true,
+        "chunks": []
+      },
+      "llm_calls_actual": 1,
+      "api_trace_fields_present": true
+    }
+  ]
+}

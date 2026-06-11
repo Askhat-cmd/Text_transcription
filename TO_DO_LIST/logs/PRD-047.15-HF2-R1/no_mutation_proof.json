@@ -1,0 +1,42 @@
+{
+    "schema_version":  "prd_047_15_hf2_r1_no_mutation_proof_v1",
+    "prd":  "PRD-047.15-HF2-R1",
+    "checked_at_utc":  "2026-06-11T05:43:31.0763481Z",
+    "source_head_before":  "f2fefd6ede64150ebb81afd6b9db286fb6036ed2",
+    "runtime_mutation_allowed":  true,
+    "changed_runtime_files":  [
+                                  "bot_psychologist/api/admin_routes.py",
+                                  "bot_psychologist/api/debug_routes.py",
+                                  "bot_psychologist/api/models.py",
+                                  "bot_psychologist/bot_agent/feature_flags.py",
+                                  "bot_psychologist/bot_agent/multiagent/agents/memory_retrieval.py",
+                                  "bot_psychologist/bot_agent/multiagent/contextual_retrieval_query_composer.py",
+                                  "bot_psychologist/bot_agent/multiagent/contracts/hybrid_retrieval_planner_contract.py",
+                                  "bot_psychologist/bot_agent/multiagent/contracts/memory_bundle.py",
+                                  "bot_psychologist/bot_agent/multiagent/contracts/writer_contract.py",
+                                  "bot_psychologist/bot_agent/multiagent/hybrid_retrieval_planner.py",
+                                  "bot_psychologist/bot_agent/multiagent/orchestrator.py",
+                                  "bot_psychologist/bot_agent/multiagent/writer_context_package.py",
+                                  "bot_psychologist/scripts/run_prd_047_15_hf2_r1_hybrid_retrieval_planner.py",
+                                  "bot_psychologist/tests/multiagent/test_memory_retrieval.py",
+                                  "bot_psychologist/tests/test_admin_runtime_contract.py",
+                                  "bot_psychologist/tests/test_hybrid_retrieval_admin_runtime_contract.py",
+                                  "bot_psychologist/tests/test_hybrid_retrieval_anti_overengineering.py",
+                                  "bot_psychologist/tests/test_hybrid_retrieval_planner_v1.py",
+                                  "bot_psychologist/tests/test_multiagent_trace.py",
+                                  "bot_psychologist/tests/test_writer_contract_contextual_retrieval_v1.py"
+                              ],
+    "kb_governance_mutated":  false,
+    "chroma_reindexed":  false,
+    "db_schema_mutated":  false,
+    "frontend_mutated":  false,
+    "new_llm_agent_added":  false,
+    "new_runtime_path_added":  false,
+    "planner_user_facing_text_created":  false,
+    "broad_rollout_enabled":  false,
+    "normal_user_activation_enabled":  false,
+    "prohibited_mutations_found":  [
+
+                                   ],
+    "status":  "passed"
+}

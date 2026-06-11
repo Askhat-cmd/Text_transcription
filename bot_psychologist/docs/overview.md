@@ -1,11 +1,11 @@
-﻿# Обзор проекта
+﻿# Project Overview (Обзор проекта)
 
-## Что это
+## What Is This (Что это)
 
 `Bot Psychologist` — runtime-система Neo MindBot для рефлексивного диалога с пользователем.
 Система использует multiagent pipeline, retrieval, memory и debug trace observability.
 
-## Текущий статус
+## Current Status (Текущий статус)
 
 - Active runtime: `multiagent_adapter`.
 - Pipeline version: `multiagent_v1`.
@@ -14,13 +14,13 @@
 - `answer_adaptive.py` сохранен только как compatibility shim.
 - Telegram adapter присутствует как future integration layer (не active production channel).
 
-## Для кого
+## For Whom (Для кого)
 
 - Для разработчиков, поддерживающих runtime и API.
 - Для QA/Dev-проверок через Web UI и debug endpoints.
 - Для операционного контроля через admin runtime contract.
 
-## Как работает поток запроса
+## How Request Flow Works (Как работает поток запроса)
 
 1. Web UI/API отправляет запрос в FastAPI (`api/main.py`).
 2. Chat routes вызывают `multiagent_adapter` runtime.
@@ -28,7 +28,7 @@
 4. Формируется ответ и debug trace.
 5. Ответ и trace доступны в Web UI и debug endpoints.
 
-## Основные точки входа
+## Main Entry Points (Основные точки входа)
 
 - Backend: `api/main.py`
 - Chat routes: `api/routes/chat.py`
@@ -36,7 +36,7 @@
 - Runtime adapter: `bot_agent/multiagent/runtime_adapter.py`
 - Compatibility shim: `bot_agent/answer_adaptive.py`
 
-## Ключевые документы
+## Key Documents (Ключевые документы)
 
 - [Architecture](./architecture.md)
 - [Multiagent Architecture](./multiagent_architecture.md)

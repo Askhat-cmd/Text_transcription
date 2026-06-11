@@ -1,64 +1,63 @@
-﻿# Bot Agent
+﻿# Bot Agent (Bot Agent)
 
-## Role
+## Role (Роль)
 
-`bot_agent` is the core runtime package. It converts a user message into a final assistant answer plus diagnostic trace payload.
+`bot_agent` — основной runtime package. Преобразует user message в финальный assistant answer плюс diagnostic trace payload.
 
-## Completion Snapshot
+## Completion Snapshot (Снимок завершения)
 
 - Answer-adaptive modularization waves: `1-144` (completed)
-- `answer_adaptive.py`: facade-orchestrator only
-- Facade size: `418` lines
-- Completion test baseline: `501 passed, 13 skipped`
+- `answer_adaptive.py`: только facade-orchestrator
+- Размер facade: `418` строк
+- Baseline completion tests: `501 passed, 13 skipped`
 
-## Main Runtime Path
+## Main Runtime Path (Основной runtime path)
 
-1. Read request context and session state.
-2. Detect state and resolve route/pre-routing mode.
-3. Retrieve and rerank relevant chunks.
-4. Build prompt stack and runtime context.
-5. Run LLM call.
-6. Validate and format output.
-7. Update memory and finalize trace.
+1. Чтение request context и session state.
+2. Detect state и разрешение route/pre-routing mode.
+3. Retrieve и rerank relevant chunks.
+4. Сборка prompt stack и runtime context.
+5. LLM call.
+6. Validate и format output.
+7. Update memory и finalize trace.
 
-## Architecture After Refactoring
+## Architecture After Refactoring (Архитектура после рефакторинга)
 
-### Facade Entrypoint
+### Facade entrypoint
 
 - `answer_adaptive.py`
-  - keeps public runtime entrypoint `answer_question_adaptive(...)`
-  - wires stage modules and compatibility exports used by tests/contracts
+  - сохраняет public runtime entrypoint `answer_question_adaptive(...)`
+  - подключает stage modules и compatibility exports, используемые tests/contracts
 
-### Adaptive Runtime Modules
+### Adaptive runtime modules
 
 Полный список модулей и их назначение: [docs/architecture.md](./architecture.md)
 
-## Data Contracts
+## Data contracts (Data contracts)
 
-Important contracts used by Bot Agent:
+Важные contracts, используемые Bot Agent:
 
-- API request/response models in `api/models.py`
-- Trace schema structures in `trace_schema.py`
-- Runtime config snapshot from `runtime_config.py`
+- API request/response models в `api/models.py`
+- Trace schema structures в `trace_schema.py`
+- Runtime config snapshot из `runtime_config.py`
 
-## Observability Hooks
+## Observability hooks (Observability hooks)
 
-Bot Agent emits structured telemetry consumed by:
+Bot Agent эмитирует structured telemetry, потребляемую:
 
-- Inline debug trace in Web UI
+- Inline debug trace в Web UI
 - Session metrics endpoint
 - LLM payload endpoint
 - Trace export JSON
 
-## Current Notes
+## Current Notes (Текущие заметки)
 
-- `response_utils.py (removed in Wave 142)` was removed in Wave 142.
-- No open modularization TODO remains in active strategy.
+- `response_utils.py (removed in Wave 142)` удалён в Wave 142.
+- Открытых modularization TODO в active strategy не осталось.
 
-## Related Docs
+## Related Docs (Связанные документы)
 
 - [Architecture](./architecture.md)
 - [Overview](./overview.md)
 - [Testing](./testing.md)
 - [Trace Runtime](./trace_runtime.md)
-

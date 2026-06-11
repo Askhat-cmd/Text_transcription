@@ -1,6 +1,6 @@
-# Мультиагентная архитектура NEO
+# NEO Multiagent Architecture (Мультиагентная архитектура NEO)
 
-## Обзор
+## Overview (Обзор)
 
 Документ описывает актуальную мультиагентную архитектуру рантайма в `bot_psychologist`.
 Система введена в Эпохе 4 (PRD-017..PRD-025) и является единственным активным runtime после PRD-036/037/039.
@@ -15,7 +15,7 @@
 - [Система безопасности](./safety_system.md)
 - [Переход с legacy](./migration_legacy_to_multiagent.md)
 
-## Схема пайплайна
+## Pipeline Diagram (Схема пайплайна)
 
 ```text
 User Message
@@ -50,7 +50,7 @@ User Message
 Final Answer + Multiagent Debug Payload
 ```
 
-## Агенты
+## Agents (Агенты)
 
 ### State Analyzer Agent
 
@@ -193,7 +193,7 @@ Final Answer + Multiagent Debug Payload
 7. неблокирующий `memory_retrieval_agent.update(...)`;
 8. возврат стандартного результата + `debug`.
 
-## Контракты данных
+## Data Contracts (Контракты данных)
 
 Полные таблицы полей: [multiagent_contracts.md](./multiagent_contracts.md)
 
@@ -209,7 +209,7 @@ Final Answer + Multiagent Debug Payload
 ### WriterContract
 - единый вход Writer (`user_message + thread_state + memory_bundle`).
 
-## Feature Flags
+## Feature Flags (флаги функций)
 
 Файл: `bot_agent/feature_flags.py`
 
@@ -223,7 +223,7 @@ Final Answer + Multiagent Debug Payload
 - `MULTIAGENT_TEMPERATURE` (str->float, default: `0.7`)
 - `THREAD_STORAGE_DIR` (str, default: `bot_psychologist/data/threads`)
 
-## Конфигурация
+## Configuration (Конфигурация)
 
 Практический минимум `.env`:
 
@@ -240,9 +240,9 @@ THREAD_STORAGE_DIR=bot_psychologist/data/threads
 
 Замечания:
 - `THREAD_STORAGE_DIR` разрешается в абсолютный путь в `thread_storage.py` через `Path(...).resolve()`.
-- Legacy cascade implementation physically removed in PRD-041; `answer_adaptive.py` kept only as compatibility shim.
+- Legacy cascade физически удалён в PRD-041; `answer_adaptive.py` сохранён только как compatibility shim.
 
-## Пример вывода orchestrator.run()
+## orchestrator.run() Output Example (Пример вывода orchestrator.run())
 
 Ниже упрощенный реальный пример структуры ответа:
 
@@ -308,7 +308,7 @@ THREAD_STORAGE_DIR=bot_psychologist/data/threads
 - `response_mode` — режим ответа, который Writer должен выдержать.
 - `debug` — единый payload для trace API и диагностики.
 
-## Режимы ответа (`response_mode`)
+## response_mode (Режимы ответа)
 
 Базовые режимы из `ThreadState`:
 - `reflect` — отражение и удержание контакта.

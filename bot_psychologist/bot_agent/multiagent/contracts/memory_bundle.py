@@ -91,6 +91,7 @@ class MemoryBundle:
     context_turns: int = 0
     knowledge_policy_trace: dict[str, Any] = field(default_factory=dict)
     rag_retrieval_trace: dict[str, Any] = field(default_factory=dict)
+    hybrid_retrieval_trace: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -107,6 +108,7 @@ class MemoryBundle:
             "context_turns": int(self.context_turns),
             "knowledge_policy_trace": dict(self.knowledge_policy_trace or {}),
             "rag_retrieval_trace": dict(self.rag_retrieval_trace or {}),
+            "hybrid_retrieval_trace": dict(self.hybrid_retrieval_trace or {}),
         }
 
     @classmethod
@@ -155,6 +157,11 @@ class MemoryBundle:
             rag_retrieval_trace=(
                 dict(payload.get("rag_retrieval_trace", {}))
                 if isinstance(payload.get("rag_retrieval_trace"), dict)
+                else {}
+            ),
+            hybrid_retrieval_trace=(
+                dict(payload.get("hybrid_retrieval_trace", {}))
+                if isinstance(payload.get("hybrid_retrieval_trace"), dict)
                 else {}
             ),
         )

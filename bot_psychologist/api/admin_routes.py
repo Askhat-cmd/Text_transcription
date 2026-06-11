@@ -34,6 +34,10 @@ from bot_agent.multiagent.dialogue_policy import (
 from bot_agent.multiagent.final_answer_directive import FINAL_ANSWER_DIRECTIVE_VERSION
 from bot_agent.multiagent.final_answer_acceptance_gate import FINAL_ANSWER_ACCEPTANCE_GATE_VERSION
 from bot_agent.multiagent.fresh_chat_context_policy import FRESH_CHAT_CONTEXT_POLICY_VERSION
+from bot_agent.multiagent.hybrid_retrieval_planner import (
+    HYBRID_RETRIEVAL_PLANNER_VERSION,
+    get_hybrid_retrieval_planner_settings,
+)
 from bot_agent.multiagent.planner_drift_monitor import get_planner_drift_summary
 from bot_agent.multiagent.philosophy_kernel import (
     KERNEL_V1,
@@ -662,6 +666,7 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
     response_planner_calibration = _load_prd_047_4_response_planner_calibration_status()
     planner_drift_replay_status = _load_prd_047_6_planner_drift_replay_status()
     guided_live_testing_status = _load_prd_047_7_guided_live_testing_status()
+    hybrid_retrieval_planner_settings = get_hybrid_retrieval_planner_settings()
     dialogue_profile = normalize_dialogue_profile(getattr(config, "DIALOGUE_PROFILE", "safe_guided"))
     profile_preset = resolve_profile_preset(dialogue_profile)
     effective_dialogue_policy = build_effective_dialogue_policy(
@@ -870,6 +875,18 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
             "advisory_mode": True,
             "live_acceptance_requires_api_trace": True,
             "last_quality_calibration": response_planner_calibration,
+        },
+        "hybrid_retrieval_planner": {
+            "enabled": bool(hybrid_retrieval_planner_settings.get("enabled", True)),
+            "version": HYBRID_RETRIEVAL_PLANNER_VERSION,
+            "mode": str(hybrid_retrieval_planner_settings.get("mode", "shadow") or "shadow"),
+            "default_safe_mode": "shadow",
+            "metadata_only": True,
+            "query_before_rag_supported": True,
+            "writer_final_author_preserved": True,
+            "allowed_modes": ["off", "shadow", "apply"],
+            "llm_optional_for_complex_cases": True,
+            "domain_specific_hardcoding_allowed": False,
         },
         "planner_drift_guard": {
             "enabled": True,

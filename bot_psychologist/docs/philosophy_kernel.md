@@ -1,23 +1,23 @@
-﻿# Philosophy Kernel
+﻿# Philosophy Kernel (Ядро философии)
 
-## Scope
-`PRD-047.1` introduced internal `NEO Philosophy Kernel`.
-`PRD-047.2` calibrated quality and compactness gates.
+## Scope (Область)
+`PRD-047.1` ввёл internal `NEO Philosophy Kernel`.
+`PRD-047.2` откалибровал quality и compactness gates.
 
-Module:
+Модуль:
 - `bot_agent/multiagent/philosophy_kernel.py`
 
-Version:
+Версия:
 - `neo_philosophy_kernel_v1`
 
-## Design Rules
-- Internal lens layer only, not a user quote source.
-- Compact and structured prompt blocks.
-- No long raw source passages in prompt/trace.
-- Safety and hard boundaries remain authoritative.
+## Design Rules (Правила проектирования)
+- Только internal lens layer, не user quote source.
+- Compact и structured prompt blocks.
+- Без длинных raw source passages в prompt/trace.
+- Safety и hard boundaries остаются authoritative.
 
-## Runtime Payload
-`build_philosophy_kernel_runtime_payload(...)` returns:
+## Runtime Payload (Runtime payload данных)
+`build_philosophy_kernel_runtime_payload(...)` возвращает:
 - `kernel_version`
 - `kernel_enabled`
 - `quote_policy`
@@ -28,26 +28,26 @@ Version:
 - `writer_freedom_prompt_block`
 - `prompt_compactness`
 
-## Deterministic Lens Selection
-Rules include:
+## Deterministic Lens Selection (Детерминированный выбор lens)
+Правила включают:
 - `нейросталкинг` -> `neurostalking`
 - imperfect-self phrases -> `imperfect_self_program`
 - driver-pressure phrases -> `drivers`
 - inner-loop phrases -> `autopilot`
 - short-support requests -> `resource_first_contact` + depth suppression
 
-PRD-047.2 selector calibration aliases include:
+Калибровочные aliases selector PRD-047.2 включают:
 - imperfect-self: `прошивка`, `потерплю неудачу`
 - drivers: `не буду сильным`
 - short-support: `не нужны практики`, `побудь со мной коротко`
 
-## Prompt Compactness Gate
-Tracked and enforced:
+## Prompt Compactness Gate (Gate компактности prompt)
+Отслеживается и enforce:
 - `philosophy_kernel_prompt_block_chars <= 1800`
 - `writer_freedom_contract_chars <= 1000`
 - `combined_chars <= 2600`
 - `selected_lenses_count <= 3`
 
-## Trace and Admin
-- Trace includes sanitized kernel metadata + compactness block.
-- Admin runtime effective includes kernel status, budget limits, and last quality calibration summary.
+## Trace and Admin (Trace и Admin-панель)
+- Trace включает sanitized kernel metadata + compactness block.
+- Admin runtime effective включает kernel status, budget limits и last quality calibration summary.

@@ -1,6 +1,6 @@
-# REST API (Phase 5)
+# REST API Phase 5 (REST API, Phase 5)
 
-## Навигация
+## Navigation (Навигация)
 
 - [Назад к README](../README.md)
 - [Обзор проекта](./overview.md)
@@ -9,7 +9,7 @@
 
 ---
 
-## Описание и назначение
+## Description and Purpose (Описание и назначение)
 
 **Назначение документа**: Полное описание REST API Bot Psychologist, всех endpoints, аутентификации и примеров использования.
 
@@ -24,25 +24,25 @@
 
 ---
 
-## Обзор API
+## API Overview (Обзор API)
 
-### Базовый URL
+### Base URL (Базовый URL)
 
 ```
 http://localhost:8000/api/v1
 ```
 
-### Версия
+### Version (Версия)
 
 **v0.5.0** (Phase 5)
 
-### Формат данных
+### Data Format (Формат данных)
 
 - **Request**: JSON
 - **Response**: JSON
 - **Content-Type**: `application/json`
 
-### Документация
+### Documentation (Документация)
 
 - **Swagger UI**: `http://localhost:8000/api/docs`
 - **ReDoc**: `http://localhost:8000/api/redoc`
@@ -50,7 +50,7 @@ http://localhost:8000/api/v1
 
 ---
 
-## Аутентификация
+## Authentication (Аутентификация)
 
 ### API Keys
 
@@ -60,7 +60,7 @@ http://localhost:8000/api/v1
 X-API-Key: your-api-key-here
 ```
 
-### Предустановленные ключи
+### Preset Keys (Предустановленные ключи)
 
 - **test-key-001**: Test Client (100 req/min)
 - **dev-key-001**: Development (1000 req/min)
@@ -75,7 +75,7 @@ X-API-Key: your-api-key-here
 
 ---
 
-## Endpoints
+## Endpoints (эндпоинты)
 
 ### Questions Endpoints
 
@@ -313,7 +313,7 @@ X-API-Key: your-api-key-here
 
 ---
 
-## Модели данных
+## Data Models (Модели данных)
 
 ### Request Models
 
@@ -373,7 +373,7 @@ X-API-Key: your-api-key-here
 
 ---
 
-## Примеры использования
+## Usage Examples (Примеры использования)
 
 ### cURL
 
@@ -476,9 +476,9 @@ console.log(data.answer);
 
 ---
 
-## Обработка ошибок
+## Error Handling (Обработка ошибок)
 
-### Коды статусов
+### Status Codes (Коды статусов)
 
 - **200 OK** — успешный запрос
 - **400 Bad Request** — невалидные данные запроса
@@ -486,7 +486,7 @@ console.log(data.answer);
 - **429 Too Many Requests** — превышен rate limit
 - **500 Internal Server Error** — ошибка сервера
 
-### Формат ошибки
+### Error Format (Формат ошибки)
 
 ```json
 {
@@ -499,7 +499,7 @@ console.log(data.answer);
 
 ---
 
-## Middleware
+## Middleware (Middleware)
 
 ### CORS
 Разрешены origins:
@@ -515,12 +515,12 @@ console.log(data.answer);
 - `127.0.0.1`
 - `*.example.com`
 
-### Логирование
+### Logging (Логирование)
 Все запросы логируются с временем выполнения.
 
 ---
 
-## Навигация
+## Navigation (Навигация)
 
 - [Обзор проекта](./overview.md)
 - [Архитектура](./architecture.md)

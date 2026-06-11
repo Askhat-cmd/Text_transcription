@@ -1,17 +1,17 @@
-﻿# Миграция: legacy cascade → multiagent runtime
+﻿# Legacy to Multiagent Migration (Миграция: legacy cascade → multiagent runtime)
 
-## Текущий статус
+## Current Status (Текущий статус)
 
 После PRD-036/037/039 проект работает в режиме **multiagent-only**:
 - `active_runtime = multiagent`
 - `runtime_entrypoint = multiagent_adapter`
 - `legacy_fallback_used = false`
 
-`answer_adaptive.py` сохранен как compatibility shim и больше не является legacy runtime entrypoint.
+`answer_adaptive.py` сохранён как compatibility shim и больше не является legacy runtime entrypoint.
 
-## Runtime source of truth
+## Source of truth runtime (Source of truth runtime)
 
-Проверять активный runtime нужно через Admin runtime contract:
+Проверять active runtime нужно через Admin runtime contract:
 - `GET /api/admin/runtime/effective`
 - `GET /api/v1/admin/runtime/effective`
 
@@ -27,21 +27,21 @@
 - `LEGACY_PIPELINE_ENABLED`
 - `NEO_MINDBOT_ENABLED`
 
-Если `LEGACY_PIPELINE_ENABLED=true`, legacy runtime все равно не включается.
+Если `LEGACY_PIPELINE_ENABLED=true`, legacy runtime всё равно не включается.
 
-## Статус после PRD-041
+## Status After PRD-041 (Статус после PRD-041)
 
-Legacy cascade implementation was physically removed in PRD-041.
+Legacy cascade implementation физически удалён в PRD-041.
 `answer_adaptive.py` оставлен только как compatibility shim и больше не содержит legacy body.
 
-## Статус после PRD-042
+## Status After PRD-042 (Статус после PRD-042)
 
 PRD-042 закрыл post-purge stabilization:
 - debug endpoint `/api/debug/session/{session_id}/multiagent-trace` стабилизирован fallback lookup-ом;
-- при отсутствии trace endpoint возвращает явный диагностический payload;
-- добавлены regression-тесты на import safety, trace consistency и runtime smoke.
+- при отсутствии trace endpoint возвращает явный diagnostic payload;
+- добавлены regression tests на import safety, trace consistency и runtime smoke.
 
-## Рекомендуемые проверки
+## Recommended Checks (Рекомендуемые проверки)
 
 ```bash
 pytest tests/test_feature_flags.py -q

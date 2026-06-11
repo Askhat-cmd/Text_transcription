@@ -1,4 +1,4 @@
-# Unified Dialogue Policy V2
+# Unified Dialogue Policy V2 (Единая политика диалога V2)
 
 - status: current
 - last_verified_prd: PRD-047.13-HF1
@@ -7,23 +7,23 @@
 - not_production_ready: true
 - related_artifacts: TO_DO_LIST/logs/PRD-047.13-HF1; TO_DO_LIST/reports/PRD-047.13-HF1_IMPLEMENTATION_REPORT.md
 
-## Active Now
-- `safe_guided`, `mvp_free_dialogue`, and `free_dialogue_default` resolve through one unified policy surface.
-- `mvp_free_dialogue` is a compatibility alias/preset, not a separate orchestrator or API path.
-- The authority order remains: minimal safety, explicit user request, knowledge/concept need, writer freedom, planner/diagnostic advisory.
+## Active Now (Активно сейчас)
+- `safe_guided`, `mvp_free_dialogue` и `free_dialogue_default` разрешаются через одну unified policy surface.
+- `mvp_free_dialogue` — compatibility alias/preset, а не отдельный orchestrator или API path.
+- Порядок authority сохраняется: minimal safety, explicit user request, knowledge/concept need, writer freedom, planner/diagnostic advisory.
 
-## Not Production Ready
-- Developer-local profiles are not broad rollout profiles.
-- Planner and diagnostic blocks are not hard authority over final answer content.
+## Not Production Ready (Не готово к production)
+- Developer-local profiles — не broad rollout profiles.
+- Planner и diagnostic blocks не являются hard authority над содержимым final answer.
 
-## How To Test
-- Check `/api/admin/runtime/effective` for `dialogue_policy.version`, `active_profile_alias`, and `profile_preset`.
-- Run architecture audit artifacts under `TO_DO_LIST/logs/PRD-047.12-HF1/`.
+## How To Test (Как тестировать)
+- Проверьте `/api/admin/runtime/effective` на `dialogue_policy.version`, `active_profile_alias` и `profile_preset`.
+- Запустите architecture audit artifacts в `TO_DO_LIST/logs/PRD-047.12-HF1/`.
 
-## PRD-047.13-HF1 cleanup closure note
-- This document was re-verified during cleanup closure; runtime behavior was not changed.
+## PRD-047.13-HF1 cleanup closure note (Заметка о закрытии cleanup PRD-047.13-HF1)
+- Документ повторно проверен при закрытии cleanup; runtime behavior не менялся.
 
-## PRD-047.13-HF1 Split Closure
-- `unified_dialogue_policy_v2` is the only current policy surface.
-- `safe_guided`, `mvp_free_dialogue`, and `free_dialogue_default` are preset/alias values resolved by the unified policy, not separate systems.
-- Profile-specific depth/token/planner settings are treated as configuration inside the same runtime path.
+## PRD-047.13-HF1 Split Closure (Закрытие split PRD-047.13-HF1)
+- `unified_dialogue_policy_v2` — единственная текущая policy surface.
+- `safe_guided`, `mvp_free_dialogue` и `free_dialogue_default` — значения preset/alias, разрешаемые unified policy, а не отдельные системы.
+- Profile-specific depth/token/planner settings трактуются как configuration внутри того же runtime path.

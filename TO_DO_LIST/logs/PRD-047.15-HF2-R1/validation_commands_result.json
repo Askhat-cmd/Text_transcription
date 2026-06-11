@@ -1,0 +1,44 @@
+{
+    "prd":  "PRD-047.15-HF2-R1",
+    "generated_at_utc":  "2026-06-11T05:43:31.0243487Z",
+    "source_head_before":  "f2fefd6ede64150ebb81afd6b9db286fb6036ed2",
+    "checks":  [
+                   {
+                       "name":  "pytest_hybrid_retrieval_suite",
+                       "status":  "passed",
+                       "passed":  76,
+                       "failed":  0,
+                       "warnings":  73
+                   },
+                   {
+                       "name":  "direct_acceptance_runner",
+                       "status":  "passed",
+                       "cases_total":  16,
+                       "passed":  16,
+                       "failed":  0,
+                       "llm_calls_actual":  6,
+                       "query_before_rag_passed":  true
+                   },
+                   {
+                       "name":  "live_acceptance_runner",
+                       "status":  "passed",
+                       "cases_total":  6,
+                       "passed":  6,
+                       "failed":  0,
+                       "query_before_rag_passed":  true,
+                       "api_trace_fields_present":  true
+                   },
+                   {
+                       "name":  "anti_overengineering_scan",
+                       "status":  "passed",
+                       "findings":  [
+
+                                    ]
+                   },
+                   {
+                       "name":  "runtime_effective_check_apply_mode",
+                       "status":  "passed",
+                       "mode":  "apply"
+                   }
+               ]
+}

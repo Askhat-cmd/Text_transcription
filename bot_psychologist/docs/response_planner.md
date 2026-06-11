@@ -1,23 +1,23 @@
-# Response Planner
+# Response Planner (Планировщик ответов)
 
-## Scope
-`Response Planner v1` is a deterministic layer between Active Line and Writer.
+## Scope (Область)
+`Response Planner v1` — детерминированный слой между Active Line и Writer.
 
-Version:
+Версия:
 - `response_planner_v1`
 
-Planner does not generate user-facing text and is not an LLM agent.
+Planner не генерирует user-facing text и не является LLM agent.
 
-## Inputs
+## Inputs (Входы)
 - `user_message`
 - `thread_state`
 - `state_snapshot`
 - `active_line`
 - `knowledge_answer_guard`
-- `philosophy_kernel` (metadata only)
+- `philosophy_kernel` (только metadata)
 
-## Decision Output
-Main fields:
+## Decision Output (Выход решения)
+Основные поля:
 - `enabled`
 - `next_move`
 - `answer_shape`
@@ -33,37 +33,37 @@ Main fields:
 - `confidence`
 - `rationale`
 
-## Core Rules
-- One answer = one next meaningful move.
-- Safety and known-concept routing remain hard boundaries.
-- Practice is not default and requires explicit allow path.
-- If Active Line suppresses revoicing/questions/practice, planner mirrors that in policy fields.
+## Core Rules (Основные правила)
+- Один answer = один next meaningful move.
+- Safety и known-concept routing остаются hard boundaries.
+- Practice не является default и требует explicit allow path.
+- Если Active Line подавляет revoicing/questions/practice, planner отражает это в policy fields.
 
-## PRD-047.5 Calibration Additions
-- Added deterministic text detectors for weak live groups:
+## PRD-047.5 Calibration Additions (Дополнения калибровки PRD-047.5)
+- Добавлены deterministic text detectors для слабых live groups:
   - low-resource
   - soft-distress (safety-adjacent)
   - defensive world-blame framing
   - explicit no-question request
   - close/thanks turns
-  - explicit direct-step/practice request with negated-practice handling
+  - explicit direct-step/practice request с negated-practice handling
   - repair-misalignment text
-- Added mechanism/practice-suppression override path to avoid false action routing when user asks to continue mechanism analysis without practice.
-- Kept safety, knowledge-answer routing, and practice-gate boundaries as hard constraints.
+- Добавлен mechanism/practice-suppression override path, чтобы избежать false action routing, когда user просит продолжить mechanism analysis без practice.
+- Safety, knowledge-answer routing и practice-gate boundaries сохранены как hard constraints.
 
-## Runtime Integration
-- Orchestrator builds planner decision before `WriterContract`.
-- `WriterContract.response_planner` is optional and backward compatible.
-- Prompt context gets compact planner fields; Writer remains constrained by compliance checks.
+## Runtime Integration (Интеграция в runtime)
+- Orchestrator строит planner decision до `WriterContract`.
+- `WriterContract.response_planner` опционален и backward compatible.
+- Prompt context получает compact planner fields; Writer остаётся ограничен compliance checks.
 
-## Trace and API
+## Trace and API (Trace и API-интеграция)
 - `debug.response_planner`
 - `debug.response_planner_version`
 - `debug.response_planner_error`
-- `/api/v1/debug/multiagent-trace` mirrors planner fields.
+- `/api/v1/debug/multiagent-trace` отражает planner fields.
 
-## Admin Runtime Visibility
-`/api/admin/runtime/effective` exposes read-only:
+## Admin Runtime Visibility (Видимость в Admin Runtime)
+`/api/admin/runtime/effective` экспонирует read-only:
 - `response_planner.enabled`
 - `response_planner.version`
 - `response_planner.kind`
@@ -71,9 +71,9 @@ Main fields:
 - `response_planner.live_acceptance_requires_api_trace`
 - `response_planner.last_quality_calibration`
 
-No admin editing surface is added in this PRD.
+Admin editing surface в этом PRD не добавляется.
 
-## Calibration Artifacts
+## Calibration Artifacts (Артефакты калибровки)
 - `TO_DO_LIST/logs/PRD-047.4/response_planner_dry.json`
 - `TO_DO_LIST/logs/PRD-047.4/response_planner_direct.json`
 - `TO_DO_LIST/logs/PRD-047.4/response_planner_live.json`
@@ -84,9 +84,9 @@ No admin editing surface is added in this PRD.
 - `TO_DO_LIST/logs/PRD-047.5/planner_answer_fit_live.json`
 - `TO_DO_LIST/logs/PRD-047.5/planner_answer_fit_trace_samples.json`
 
-## PRD-047.5-HF1 Repair Notes
-- Fixed false-positive acceptance class where planner selected `stabilize_safety/safety_grounding` but final answer drifted to mechanism explanation.
-- Runner strict checks now gate:
+## PRD-047.5-HF1 Repair Notes (Заметки repair PRD-047.5-HF1)
+- Исправлен false-positive acceptance class, где planner выбирал `stabilize_safety/safety_grounding`, но final answer уходил в mechanism explanation.
+- Runner strict checks теперь gate:
   - safety-grounding no-mechanism language
   - short-support compact support shape
   - `question_policy=none` strict no-question/no-question-invite markers
@@ -98,16 +98,16 @@ No admin editing surface is added in this PRD.
   - `TO_DO_LIST/logs/PRD-047.5-HF1/planner_answer_fit_live.json`
   - `TO_DO_LIST/logs/PRD-047.5-HF1/answer_fit_false_positive_regression.json`
 
-## PRD-047.6 Runtime Drift Guard
-- Added deterministic runtime monitor `planner_drift_guard_v1`:
-  - compares `response_planner` vs `final_answer`;
-  - emits per-turn `status`, `severity`, `flags`, and obedience fields;
-  - stores rolling counters in an in-memory monitor window (`max=100`).
-- Drift guard is `observe_only`:
-  - does not block user answers;
-  - does not rewrite final answer text;
-  - does not introduce new LLM agents.
-- New trace fields:
+## PRD-047.6 Runtime Drift Guard (Runtime Drift Guard, PRD-047.6)
+- Добавлен deterministic runtime monitor `planner_drift_guard_v1`:
+  - сравнивает `response_planner` vs `final_answer`;
+  - эмитирует per-turn `status`, `severity`, `flags` и obedience fields;
+  - хранит rolling counters в in-memory monitor window (`max=100`).
+- Drift guard — `observe_only`:
+  - не блокирует user answers;
+  - не переписывает final answer text;
+  - не вводит новых LLM agents.
+- Новые trace fields:
   - `planner_drift_guard_version`
   - `planner_drift_guard`
   - `planner_drift_guard_error`
@@ -119,17 +119,17 @@ No admin editing surface is added in this PRD.
   - `TO_DO_LIST/logs/PRD-047.6/planner_drift_summary.json`
   - `TO_DO_LIST/logs/PRD-047.6/planner_drift_negative_regression.json`
 
-## PRD-047.9 Unified Adaptive Policy Additions
-- Added planner shape for concept-practice overview requests:
+## PRD-047.9 Unified Adaptive Policy Additions (Дополнения Unified Adaptive Policy PRD-047.9)
+- Добавлен planner shape для concept-practice overview requests:
   - `next_move=answer_practice_overview`
   - `answer_shape=practice_catalog_explanation`
   - `response_depth=long`
   - `question_policy=optional_none`
   - `practice_policy=overview_allowed`
-- Added explicit one-step override branch:
-  - if user explicitly asks for one micro-step, planner still returns `one_step`.
-- Added stale-active-line signal support (`active_line_stale`) so current concept/practice request can override old line pressure in MVP profile.
+- Добавлена explicit one-step override branch:
+  - если user явно просит one micro-step, planner всё равно возвращает `one_step`.
+- Добавлена поддержка stale-active-line signal (`active_line_stale`), чтобы current concept/practice request мог override old line pressure в MVP profile.
 
-## PRD-047.10 Update (2026-06-01)
-- `response_planner` remains advisory in MVP profile and does not become a blocking rewriter layer.
-- Human-like behavior upgrades (repair/summary/direct concrete response shapes) are applied in Writer compliance and unified policy, while planner authority stays deterministic advisory.
+## PRD-047.10 Update (2026-06-01) (Обновление PRD-047.10)
+- `response_planner` остаётся advisory в MVP profile и не становится blocking rewriter layer.
+- Human-like behavior upgrades (repair/summary/direct concrete response shapes) применяются в Writer compliance и unified policy, при этом planner authority остаётся deterministic advisory.

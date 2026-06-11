@@ -1,10 +1,10 @@
-﻿# Testing Matrix
+﻿# Testing Matrix (Матрица тестирования)
 
-## Goal
+## Goal (Цель)
 
 Минимальный обязательный набор проверок перед merge для multiagent-only runtime.
 
-## Core runtime checks
+## Core runtime checks (Основные runtime checks)
 
 ```bash
 pytest tests/test_feature_flags.py -q
@@ -17,31 +17,31 @@ pytest tests/api -q
 pytest tests/multiagent -q
 ```
 
-Expected:
+Ожидается:
 - `active_runtime=multiagent` в admin runtime contract
 - `legacy.fallback_enabled=false`
 - `legacy.cascade_status=physically_removed`
 - отсутствуют legacy runtime mode переключатели
 - `bot_agent/adaptive_runtime/` отсутствует (PRD-041 physical purge)
 - `answer_adaptive.py` не содержит legacy cascade body
-- `/api/debug/session/{id}/multiagent-trace` стабилен (200 на доступный trace или диагностический 404 payload)
+- `/api/debug/session/{id}/multiagent-trace` стабилен (200 на доступный trace или diagnostic 404 payload)
 
-## Telegram/registration package
+## Telegram/registration package (Пакет Telegram/registration)
 
 ```bash
 pytest tests/registration tests/telegram_adapter -q
 ```
 
-## Runtime contract smoke
+## Runtime contract smoke (Smoke runtime contract)
 
-1. `GET /api/admin/runtime/effective` returns `active_runtime: "multiagent"`.
-2. `pipeline_mode` is `multiagent_only`.
-3. `deprecated_runtime_flags` includes `MULTIAGENT_ENABLED` and `LEGACY_PIPELINE_ENABLED`.
-4. If `LEGACY_PIPELINE_ENABLED=true`, runtime still stays multiagent.
-5. `tests/inventory/test_physical_legacy_purge.py` passes.
-6. `tests/api/test_multiagent_trace_storage_consistency.py` passes.
+1. `GET /api/admin/runtime/effective` возвращает `active_runtime: "multiagent"`.
+2. `pipeline_mode` — `multiagent_only`.
+3. `deprecated_runtime_flags` включает `MULTIAGENT_ENABLED` и `LEGACY_PIPELINE_ENABLED`.
+4. Если `LEGACY_PIPELINE_ENABLED=true`, runtime всё равно остаётся multiagent.
+5. `tests/inventory/test_physical_legacy_purge.py` проходит.
+6. `tests/api/test_multiagent_trace_storage_consistency.py` проходит.
 
-## PASS criteria
+## PASS criteria (Критерии PASS)
 
-- Все команды выше green.
-- Нет regressions в runtime contract и multiagent тестах.
+- Все команды выше — green.
+- Нет regressions в runtime contract и multiagent tests.

@@ -12,6 +12,6 @@
 | `bot_agent/user_level_types.py` | Используется `path_builder` и тестами типов | `bot_agent/path_builder.py`, `tests/unit/test_user_level_adapter_removed.py` | Active helper dependency | No | Yes |
 | `bot_agent/memory_v12.py` | Активный контракт snapshot memory | `bot_agent/memory_context.py`, `bot_agent/memory_updater.py`, memory contract tests | Active dependency | No | Yes |
 
-## Conclusion
+## Conclusion (Вывод)
 - Эти модули не являются частью active multiagent runtime entrypoint (`multiagent_adapter`), но имеют текущие импортёры.
 - Удаление возможно только после отдельного scoped-аудита и отдельного PRD на каждый кластер зависимостей.

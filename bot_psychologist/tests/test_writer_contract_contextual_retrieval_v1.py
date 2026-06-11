@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 from datetime import datetime
 
@@ -26,7 +26,7 @@ def _composer() -> dict:
         "retrieval_need": "knowledge_context",
         "retrieval_action": "query_kb",
         "query_source": "last_assistant_offer",
-        "composed_query": "нейросталкинг автоматизм наблюдение",
+        "composed_query": "РЅРµР№СЂРѕСЃС‚Р°Р»РєРёРЅРі Р°РІС‚РѕРјР°С‚РёР·Рј РЅР°Р±Р»СЋРґРµРЅРёРµ",
         "writer_can_ignore_rag": True,
         "include_for_writer_if_found": True,
         "no_user_facing_text_created": True,
@@ -46,15 +46,16 @@ def test_writer_context_package_exposes_composer_payload() -> None:
     )
 
     assert package["contextual_retrieval_query_composer"]["query_source"] == "last_assistant_offer"
-    assert package["composed_retrieval_query"] == "нейросталкинг автоматизм наблюдение"
+    assert package["composed_retrieval_query"] == "РЅРµР№СЂРѕСЃС‚Р°Р»РєРёРЅРі Р°РІС‚РѕРјР°С‚РёР·Рј РЅР°Р±Р»СЋРґРµРЅРёРµ"
     assert package["writer_can_ignore_rag"] is True
+    assert package["retrieval_context"]["retrieval_action"] == "trace_only"
 
 
 def test_writer_contract_prompt_context_exposes_composer_fields() -> None:
     contract = WriterContract(
-        user_message="да",
+        user_message="РґР°",
         thread_state=_thread(),
-        memory_bundle=MemoryBundle(conversation_context="User: вопрос\nAssistant: offer"),
+        memory_bundle=MemoryBundle(conversation_context="User: РІРѕРїСЂРѕСЃ\nAssistant: offer"),
         retrieval_decision={
             "composer": _composer(),
             "rag_included_count": 0,
@@ -65,6 +66,8 @@ def test_writer_contract_prompt_context_exposes_composer_fields() -> None:
 
     assert ctx["contextual_retrieval_query_composer_version"] == "contextual_retrieval_query_composer_v1"
     assert ctx["retrieval_query_source"] == "last_assistant_offer"
-    assert ctx["composed_retrieval_query"] == "нейросталкинг автоматизм наблюдение"
+    assert ctx["composed_retrieval_query"] == "РЅРµР№СЂРѕСЃС‚Р°Р»РєРёРЅРі Р°РІС‚РѕРјР°С‚РёР·Рј РЅР°Р±Р»СЋРґРµРЅРёРµ"
     assert ctx["retrieval_query_composer_action"] == "query_kb"
     assert ctx["retrieval_query_composer_no_user_facing_text_created"] is True
+    assert isinstance(ctx["retrieval_context"], dict)
+

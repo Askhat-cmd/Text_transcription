@@ -1,4 +1,4 @@
-# No Stub Dialogue Policy
+# No Stub Dialogue Policy (Политика диалога без stub)
 
 - status: current
 - last_verified_prd: PRD-047.13-HF1
@@ -7,18 +7,17 @@
 - not_production_ready: true
 - related_artifacts: TO_DO_LIST/logs/PRD-047.13-HF1; TO_DO_LIST/reports/PRD-047.13-HF1_IMPLEMENTATION_REPORT.md
 
-## Active Now
-- Known stale phrases are detected by `stale_stub_detector`.
-- Final answers containing stale mechanism stubs fail `final_answer_acceptance_gate_v1`.
-- Failed answers do not close unanswered questions and do not become healthy context.
+## Active Now (Активно сейчас)
+- Известные stale phrases обнаруживаются `stale_stub_detector`.
+- Final answers со stale mechanism stubs не проходят `final_answer_acceptance_gate_v1`.
+- Failed answers не закрывают unanswered questions и не становятся healthy context.
 
-## Not Production Ready
-- This policy is a runtime acceptance gate, not a complete dialogue quality solution.
+## Not Production Ready (Не готово к production)
+- Эта policy — runtime acceptance gate, а не полное решение качества диалога.
 
-## How To Test
-- Run stale detector tests.
-- Run gate tests with PRD-HF1 stale phrases.
+## How To Test (Как тестировать)
+- Запустите stale detector tests.
+- Запустите gate tests с PRD-HF1 stale phrases.
 
-## PRD-047.13-HF1 cleanup closure note
-- This document was re-verified during cleanup closure; runtime behavior was not changed.
-
+## PRD-047.13-HF1 cleanup closure note (Заметка о закрытии cleanup PRD-047.13-HF1)
+- Документ повторно проверен при закрытии cleanup; runtime behavior не менялся.

@@ -396,6 +396,19 @@ async def get_multiagent_trace(
     memory_context = MemoryContextTrace(
         conversation_context=str(debug.get("conversation_context", "") or ""),
         rag_query=str(debug.get("rag_query", "") or ""),
+        hybrid_retrieval=(
+            {
+                "planner_version": str(debug.get("hybrid_retrieval_planner_version", "") or ""),
+                "planner_mode": str(debug.get("hybrid_retrieval_planner_mode", "") or ""),
+                "planned_composed_query": str(debug.get("planned_composed_query", "") or ""),
+                "executed_rag_query": str(debug.get("executed_rag_query", "") or ""),
+                "legacy_rag_query": str(debug.get("legacy_rag_query", "") or ""),
+                "query_before_rag_proof": bool(debug.get("query_before_rag_proof", False)),
+                "retrieval_gap_reason": str(debug.get("retrieval_gap_reason", "") or ""),
+            }
+            if debug.get("hybrid_retrieval_planner_version") is not None
+            else None
+        ),
         semantic_hits=semantic_hits,
         user_profile_patterns=[str(v) for v in (profile.get("patterns") or [])],
         user_profile_values=[str(v) for v in (profile.get("values") or [])],
@@ -630,6 +643,51 @@ async def get_multiagent_trace(
         retrieval_decision=(
             debug.get("retrieval_decision")
             if isinstance(debug.get("retrieval_decision"), dict)
+            else None
+        ),
+        hybrid_retrieval_plan=(
+            debug.get("hybrid_retrieval_plan")
+            if isinstance(debug.get("hybrid_retrieval_plan"), dict)
+            else None
+        ),
+        hybrid_retrieval_planner_version=(
+            str(debug.get("hybrid_retrieval_planner_version"))
+            if debug.get("hybrid_retrieval_planner_version") is not None
+            else None
+        ),
+        hybrid_retrieval_planner_mode=(
+            str(debug.get("hybrid_retrieval_planner_mode"))
+            if debug.get("hybrid_retrieval_planner_mode") is not None
+            else None
+        ),
+        hybrid_retrieval_plan_valid=(
+            bool(debug.get("hybrid_retrieval_plan_valid"))
+            if debug.get("hybrid_retrieval_plan_valid") is not None
+            else None
+        ),
+        hybrid_retrieval_plan_error=(
+            str(debug.get("hybrid_retrieval_plan_error"))
+            if debug.get("hybrid_retrieval_plan_error") is not None
+            else None
+        ),
+        hybrid_retrieval_universal_gate=(
+            str(debug.get("hybrid_retrieval_universal_gate"))
+            if debug.get("hybrid_retrieval_universal_gate") is not None
+            else None
+        ),
+        hybrid_retrieval_llm_called=(
+            bool(debug.get("hybrid_retrieval_llm_called"))
+            if debug.get("hybrid_retrieval_llm_called") is not None
+            else None
+        ),
+        hybrid_retrieval_llm_reason=(
+            str(debug.get("hybrid_retrieval_llm_reason"))
+            if debug.get("hybrid_retrieval_llm_reason") is not None
+            else None
+        ),
+        hybrid_retrieval_fallback_used=(
+            bool(debug.get("hybrid_retrieval_fallback_used"))
+            if debug.get("hybrid_retrieval_fallback_used") is not None
             else None
         ),
         live_turn_evidence=(

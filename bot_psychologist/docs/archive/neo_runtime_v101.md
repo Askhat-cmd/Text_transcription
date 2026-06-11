@@ -1,8 +1,8 @@
-# Neo Runtime Notes
+# Neo Runtime Notes (Заметки Neo Runtime)
 
-This file is kept as a stable link target for runtime notes.
+Файл сохранён как stable link target для runtime notes.
 
-## Current Runtime Baseline
+## Current Runtime Baseline (Текущий baseline runtime)
 
 - Active production path: adaptive runtime.
 - Deterministic route resolver enabled.
@@ -10,20 +10,20 @@ This file is kept as a stable link target for runtime notes.
 - Output validation enabled.
 - Trace contract version: `v2`.
 
-## Operational Checks
+## Operational Checks (Операционные проверки)
 
-- Non-stream and stream paths must produce aligned trace semantics.
-- Debug payload endpoint must expose full API to LLM observability for developer sessions.
-- Session metrics should summarize runtime performance without hidden fields.
+- Non-stream и stream paths должны производить aligned trace semantics.
+- Debug payload endpoint должен expose full API to LLM observability для developer sessions.
+- Session metrics должны summarize runtime performance без hidden fields.
 
-## Recommended Smoke Checks
+## Recommended Smoke Checks (Рекомендуемые smoke checks)
 
-1. Send a message in Web UI and verify a full assistant answer.
-2. Open inline trace and validate status chips + deep sections.
-3. Open LLM canvas and confirm payload visibility.
-4. Export trace JSON and verify `trace_contract_version = "v2"`.
+1. Отправьте сообщение в Web UI и проверьте полный assistant answer.
+2. Откройте inline trace и validate status chips + deep sections.
+3. Откройте LLM canvas и подтвердите payload visibility.
+4. Export trace JSON и проверьте `trace_contract_version = "v2"`.
 
-## Related files
+## Related files (Связанные файлы)
 
 - `api/routes.py`
 - `api/debug_routes.py`

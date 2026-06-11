@@ -105,12 +105,18 @@ def build_writer_context_package_v1(
     rag_candidates_for_trace: list[dict[str, Any]] = []
     for hit in list(memory_bundle.semantic_hits or []):
         chunk_id = str(getattr(hit, "chunk_id", "") or "")
+        chunking_quality = (
+            dict(getattr(hit, "chunking_quality", {}) or {})
+            if isinstance(getattr(hit, "chunking_quality", None), dict)
+            else {}
+        )
         rag_candidates_for_trace.append(
             {
                 "chunk_id": chunk_id,
                 "source": str(getattr(hit, "source", "unknown") or "unknown"),
                 "score": float(getattr(hit, "score", 0.0) or 0.0),
                 "content_preview": str(getattr(hit, "content", "") or "")[:240],
+                "chunk_type": str(chunking_quality.get("chunk_type", "general_text") or "general_text"),
                 "included_for_writer": chunk_id in included_chunk_ids,
                 "reason_not_included": (
                     ""
@@ -119,6 +125,32 @@ def build_writer_context_package_v1(
                 ),
             }
         )
+
+    retrieval_context_chunks = []
+    for item in rag_for_writer:
+        if not isinstance(item, dict):
+            continue
+        chunking_quality = (
+            dict(item.get("chunking_quality", {}))
+            if isinstance(item.get("chunking_quality"), dict)
+            else {}
+        )
+        retrieval_context_chunks.append(
+            {
+                "chunk_id": str(item.get("chunk_id", "") or ""),
+                "chunk_type": str(chunking_quality.get("chunk_type", "general_text") or "general_text"),
+                "summary": str(item.get("content", "") or "")[:160],
+                "content_preview": str(item.get("content", "") or "")[:240],
+                "allowed_use": ["writer_support"],
+                "why_included": str(retrieval.get("rag_included_reason", "") or "selected_for_writer"),
+            }
+        )
+
+    hybrid_plan = (
+        dict(retrieval.get("hybrid_retrieval_plan", {}))
+        if isinstance(retrieval.get("hybrid_retrieval_plan"), dict)
+        else {}
+    )
 
     return {
         "version": WRITER_CONTEXT_PACKAGE_VERSION,
@@ -132,10 +164,39 @@ def build_writer_context_package_v1(
             composer.get("version", "contextual_retrieval_query_composer_v1")
             or "contextual_retrieval_query_composer_v1"
         ),
+        "hybrid_retrieval_plan": hybrid_plan,
+        "hybrid_retrieval_planner_mode": str(
+            retrieval.get("hybrid_retrieval_planner_mode", "shadow") or "shadow"
+        ),
         "retrieval_query_source": str(composer.get("query_source", "") or ""),
         "composed_retrieval_query": str(composer.get("composed_query", "") or ""),
         "retrieval_need": str(composer.get("retrieval_need", "") or ""),
         "writer_can_ignore_rag": bool(composer.get("writer_can_ignore_rag", True)),
+        "retrieval_context": {
+            "retrieval_action": str(
+                hybrid_plan.get("retrieval_action", retrieval.get("retrieval_action", "trace_only"))
+                or retrieval.get("retrieval_action", "trace_only")
+            ),
+            "composed_query": str(
+                hybrid_plan.get("composed_query", retrieval.get("planned_composed_query", ""))
+                or retrieval.get("planned_composed_query", "")
+            ),
+            "needed_chunk_types": [
+                str(item)
+                for item in list(hybrid_plan.get("needed_chunk_types", retrieval.get("needed_chunk_types", [])) or [])
+                if str(item).strip()
+            ],
+            "mechanism_hints": [
+                str(item)
+                for item in list(hybrid_plan.get("mechanism_hints", retrieval.get("mechanism_hints", [])) or [])
+                if str(item).strip()
+            ],
+            "depth_level_hint": int(hybrid_plan.get("depth_level_hint", 0) or 0),
+            "writer_can_ignore_rag": bool(
+                hybrid_plan.get("writer_can_ignore_rag", composer.get("writer_can_ignore_rag", True))
+            ),
+            "chunks": retrieval_context_chunks,
+        },
     }
 
 

@@ -1,0 +1,156 @@
+# PRD-047.15-HF2-R1 Hybrid Retrieval Planner Runner
+
+- generated_at_utc: `2026-06-11T05:29:44.931627+00:00`
+- mode: `direct`
+- planner_mode: `apply`
+- total_cases: `16`
+- passed: `16`
+- warnings: `0`
+- failed: `0`
+- llm_calls_expected: `6`
+- llm_calls_actual: `6`
+- query_before_rag_passed: `True`
+- anti_overengineering_passed: `True`
+- api_trace_fields_present: `True`
+
+## Cases
+- HRP-001: `passed` - greeting suppresses rag
+  - retrieval_action: ok
+  - universal_gate: ok
+  - llm_called: ok
+  - plan_valid: ok
+  - query_before_rag_proof: ok
+  - rag_skipped_reason: ok
+  - writer_can_ignore_rag: ok
+  - trace_fields_present: ok
+- HRP-002: `passed` - thanks suppresses rag
+  - retrieval_action: ok
+  - universal_gate: ok
+  - llm_called: ok
+  - plan_valid: ok
+  - query_before_rag_proof: ok
+  - rag_skipped_reason: ok
+  - writer_can_ignore_rag: ok
+  - trace_fields_present: ok
+- HRP-003: `passed` - formatting request uses current context only
+  - retrieval_action: ok
+  - universal_gate: ok
+  - llm_called: ok
+  - plan_valid: ok
+  - query_before_rag_proof: ok
+  - rag_skipped_reason: ok
+  - writer_can_ignore_rag: ok
+  - trace_fields_present: ok
+- HRP-004: `passed` - summary request uses current context only
+  - retrieval_action: ok
+  - universal_gate: ok
+  - llm_called: ok
+  - plan_valid: ok
+  - query_before_rag_proof: ok
+  - rag_skipped_reason: ok
+  - writer_can_ignore_rag: ok
+  - trace_fields_present: ok
+- HRP-005: `passed` - explicit no avoids kb
+  - retrieval_action: ok
+  - universal_gate: ok
+  - llm_called: ok
+  - plan_valid: ok
+  - query_before_rag_proof: ok
+  - rag_skipped_reason: ok
+  - writer_can_ignore_rag: ok
+  - trace_fields_present: ok
+- HRP-006: `passed` - clear kb ask
+  - retrieval_action: ok
+  - universal_gate: ok
+  - llm_called: ok
+  - plan_valid: ok
+  - query_before_rag_proof: ok
+  - writer_can_ignore_rag: ok
+  - executed_query_vs_planned: ok
+  - composed_query_contains:нейросталкинг: ok
+  - trace_fields_present: ok
+- HRP-007: `passed` - short yes after open offer
+  - retrieval_action: ok
+  - universal_gate: ok
+  - llm_called: ok
+  - plan_valid: ok
+  - query_before_rag_proof: ok
+  - rag_skipped_reason: ok
+  - writer_can_ignore_rag: ok
+  - trace_fields_present: ok
+- HRP-008: `passed` - complex followup triggers llm planner
+  - retrieval_action: ok
+  - llm_called: ok
+  - plan_valid: ok
+  - query_before_rag_proof: ok
+  - writer_can_ignore_rag: ok
+  - needed_chunk_types_contains:mechanism: ok
+  - needed_chunk_types_contains:dialogue_move: ok
+  - mechanism_hints_contains:control_as_safety: ok
+  - trace_fields_present: ok
+- HRP-009: `passed` - complex mixed request triggers llm planner
+  - retrieval_action: ok
+  - llm_called: ok
+  - plan_valid: ok
+  - query_before_rag_proof: ok
+  - needed_chunk_types_contains:mechanism: ok
+  - needed_chunk_types_contains:concept: ok
+  - trace_fields_present: ok
+- HRP-010: `passed` - safety signal requires safety and mechanism chunks
+  - retrieval_action: ok
+  - universal_gate: ok
+  - llm_called: ok
+  - plan_valid: ok
+  - query_before_rag_proof: ok
+  - executed_query_vs_planned: ok
+  - needed_chunk_types_contains:safety: ok
+  - needed_chunk_types_contains:mechanism: ok
+  - needed_chunk_types_contains:dialogue_move: ok
+  - mechanism_hints_contains:control_as_safety: ok
+  - mechanism_hints_contains:panic_regulation: ok
+  - mechanism_hints_contains:loss_of_control_as_threat: ok
+  - trace_fields_present: ok
+- HRP-011: `passed` - invalid llm json falls back
+  - retrieval_action: ok
+  - llm_called: ok
+  - plan_valid: ok
+  - fallback_used: ok
+  - query_before_rag_proof: ok
+  - retrieval_gap_reason: ok
+  - trace_fields_present: ok
+- HRP-012: `passed` - llm error falls back safely
+  - retrieval_action: ok
+  - llm_called: ok
+  - plan_valid: ok
+  - fallback_used: ok
+  - query_before_rag_proof: ok
+  - retrieval_gap_reason: ok
+  - trace_fields_present: ok
+- HRP-013: `passed` - shadow mode keeps legacy executed query
+  - retrieval_action: ok
+  - universal_gate: ok
+  - llm_called: ok
+  - plan_valid: ok
+  - query_before_rag_proof: ok
+  - executed_query_vs_planned: ok
+  - trace_fields_present: ok
+- HRP-014: `passed` - apply mode uses composed query
+  - retrieval_action: ok
+  - universal_gate: ok
+  - llm_called: ok
+  - plan_valid: ok
+  - query_before_rag_proof: ok
+  - executed_query_vs_planned: ok
+  - trace_fields_present: ok
+- HRP-015: `passed` - writer_can_ignore_rag reaches writer context
+  - retrieval_action: ok
+  - llm_called: ok
+  - plan_valid: ok
+  - writer_can_ignore_rag: ok
+  - trace_fields_present: ok
+- HRP-016: `passed` - retrieval gap is trace-visible
+  - retrieval_action: ok
+  - llm_called: ok
+  - plan_valid: ok
+  - retrieval_gap_reason: ok
+  - trace_fields_present: ok

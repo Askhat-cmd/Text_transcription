@@ -1,0 +1,33 @@
+PRD-047.15-HF2-R1 validation run 2026-06-11
+
+## pytest_hybrid_retrieval_suite
+workdir: C:\My_practice\Text_transcription\bot_psychologist
+command:
+.venv\Scripts\python -m pytest tests\test_hybrid_retrieval_planner_v1.py tests\multiagent\test_memory_retrieval.py tests\test_multiagent_trace.py tests\test_hybrid_retrieval_admin_runtime_contract.py tests\test_hybrid_retrieval_anti_overengineering.py tests\test_writer_contract_contextual_retrieval_v1.py tests\test_contextual_retrieval_query_composer_v1.py tests\test_contextual_retrieval_integration_v1.py tests\api\test_multiagent_trace_contract.py tests\test_admin_runtime_contract.py -q
+result:
+76 passed, 73 warnings
+exit_code: 0
+
+## direct_acceptance_runner
+workdir: C:\My_practice\Text_transcription\bot_psychologist
+command:
+.venv\Scripts\python scripts\run_prd_047_15_hf2_r1_hybrid_retrieval_planner.py --mode direct --planner-mode apply
+result:
+16 passed, 0 failed, llm_calls_actual=6, query_before_rag_passed=true, anti_overengineering_passed=true
+exit_code: 0
+
+## live_acceptance_runner
+workdir: C:\My_practice\Text_transcription\bot_psychologist
+command:
+.venv\Scripts\python scripts\run_prd_047_15_hf2_r1_hybrid_retrieval_planner.py --mode live --planner-mode apply --output-json ..\TO_DO_LIST\logs\PRD-047.15-HF2-R1\live_smoke_result.json --output-md ..\TO_DO_LIST\logs\PRD-047.15-HF2-R1\live_smoke_result.md
+result:
+6 passed, 0 failed, query_before_rag_passed=true, api_trace_fields_present=true, anti_overengineering_passed=true
+exit_code: 0
+
+## runtime_effective_check_apply_mode
+workdir: C:\My_practice\Text_transcription
+command:
+Invoke-RestMethod http://127.0.0.1:8001/api/admin/runtime/effective (X-API-Key: dev-key-001)
+result:
+hybrid_retrieval_planner.mode=apply
+exit_code: 0

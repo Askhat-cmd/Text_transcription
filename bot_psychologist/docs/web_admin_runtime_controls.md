@@ -1,12 +1,12 @@
-﻿# Web Admin Runtime Controls
+﻿# Web Admin Runtime Controls (Управление runtime в Web Admin)
 
-## Runtime Effective Endpoints
+## Runtime Effective Endpoints (Эффективные runtime endpoints)
 Read-only runtime truth:
 - `GET /api/admin/runtime/effective`
 - `GET /api/v1/admin/runtime/effective`
 
-## Philosophy Kernel Effective Block
-Includes:
+## Effective Block Philosophy Kernel (Блок Philosophy Kernel)
+Включает:
 - `kernel_enabled`
 - `kernel_version`
 - `selected_lenses_visible`
@@ -15,14 +15,14 @@ Includes:
 - `prompt_budget`
 - `quality_calibration`
 
-`quality_calibration` is loaded from PRD-047.2 direct artifact when available:
+`quality_calibration` загружается из PRD-047.2 direct artifact, когда доступен:
 - `last_prd`
 - `last_direct_passed`
 - `last_direct_cases_total`
 - `artifact_present`
 
-## Writer Freedom Effective Block
-Includes:
+## Effective Block Writer Freedom (Блок Writer Freedom)
+Включает:
 - `enabled`
 - `version`
 - `freedom_level`
@@ -30,8 +30,8 @@ Includes:
 - `question_limit`
 - `practice_requires_gate`
 
-## Active Line Effective Block
-Includes:
+## Effective Block Active Line (Блок Active Line)
+Включает:
 - `enabled`
 - `version`
 - `revoicing_policy`
@@ -40,8 +40,8 @@ Includes:
 - `continuity_mode`
 - `last_quality_calibration`
 
-## Response Planner Effective Block
-Includes:
+## Effective Block Response Planner (Блок Response Planner)
+Включает:
 - `enabled`
 - `version`
 - `kind`
@@ -49,8 +49,8 @@ Includes:
 - `live_acceptance_requires_api_trace`
 - `last_quality_calibration`
 
-## Planner Drift Guard Effective Block
-Includes:
+## Effective Block Planner Drift Guard (Блок Planner Drift Guard)
+Включает:
 - `enabled`
 - `version`
 - `mode=observe_only`
@@ -58,11 +58,11 @@ Includes:
 - `window_size`
 - `thresholds.warning_violation_rate`
 - `thresholds.critical_rate`
-- `last_summary` (rolling counters/rates/by_flag)
-- `last_replay_status` (last PRD-047.6 direct/live artifact status)
+- `last_summary` (скользящие счётчики/rates/by_flag)
+- `last_replay_status` (статус direct/live artifact PRD-047.6)
 
-## Guided Live Testing Effective Block
-Includes:
+## Effective Block Guided Live Testing (Блок Guided Live Testing)
+Включает:
 - `enabled`
 - `schema_version` (`live_feedback_v1`)
 - `mode` (`developer_local`)
@@ -72,21 +72,21 @@ Includes:
 - `scenario_count`
 - `last_session_summary_available`
 
-## Admin UI Surface
-`web_ui/src/components/admin/AdminPanel.tsx` renders read-only runtime cards for:
-- philosophy kernel version/enabled/selected-lenses visibility
-- prompt budget limits
-- last quality calibration status
-- writer freedom contract state
-- active line runtime state/calibration summary
-- response planner runtime state/calibration summary
-- planner drift guard runtime status/thresholds/rolling counters/replay status
-- guided live testing runtime capture mode/status
+## Admin UI Surface (Поверхность Admin UI)
+`web_ui/src/components/admin/AdminPanel.tsx` рендерит read-only runtime cards для:
+- версия/enabled/видимость selected lenses philosophy kernel
+- лимиты prompt budget
+- статус последней калибровки качества
+- состояние writer freedom contract
+- состояние runtime Active Line / сводка калибровки
+- состояние runtime Response Planner / сводка калибровки
+- статус runtime Planner Drift Guard / thresholds / rolling counters / replay
+- режим/статус захвата runtime Guided Live Testing
 
-No prompt/source editor is added in this PRD.
+Prompt/source editor в этом PRD не добавляется.
 
-## PRD-047.9 Dialogue Policy Effective Block
-`/api/admin/runtime/effective` now also exposes explicit effective profile policy:
+## Effective Block Dialogue Policy PRD-047.9 (Блок Dialogue Policy PRD-047.9)
+`/api/admin/runtime/effective` теперь также экспонирует explicit effective profile policy:
 - `dialogue_policy.profile`
 - `dialogue_policy.writer_autonomy`
 - `dialogue_policy.planner_authority`
@@ -99,11 +99,11 @@ No prompt/source editor is added in this PRD.
 - `dialogue_policy.allow_practice_catalog`
 - `dialogue_policy.writer_runtime_max_tokens_effective`
 
-Web Admin Runtime tab renders these fields as read-only so profile value and effective behavior stay consistent.
+Web Admin Runtime tab рендерит эти поля как read-only, чтобы profile value и effective behavior оставались согласованными.
 
-## PRD-047.10 Update (2026-06-01)
-- Runtime effective `dialogue_policy` now includes:
+## PRD-047.10 Update (2026-06-01) (Обновление PRD-047.10)
+- Runtime effective `dialogue_policy` теперь включает:
   - `human_like_answer_policy` (MVP human-like autonomy contract),
-  - `constraint_resolution` (advisory overrule audit metadata).
-- Runtime tab should display these blocks as read-only effective truth.
-- This remains developer-local calibration surface; no production rollout semantics are implied.
+  - `constraint_resolution` (audit metadata advisory overrule).
+- Runtime tab должна отображать эти blocks как read-only effective truth.
+- Это остаётся developer-local calibration surface; production rollout semantics не подразумеваются.

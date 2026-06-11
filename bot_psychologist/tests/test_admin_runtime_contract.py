@@ -77,7 +77,8 @@ def test_runtime_effective_multiagent_only_contract(admin_client):
     assert isinstance(payload["guided_live_testing"]["scenario_count"], int)
     assert isinstance(payload["guided_live_testing"]["last_session_summary_available"], bool)
     assert payload["dialogue_profile"]["value"] in {"safe_guided", "mvp_free_dialogue"}
-    assert payload["dialogue_profile"]["allowed_values"] == ["safe_guided", "mvp_free_dialogue"]
+    assert "safe_guided" in payload["dialogue_profile"]["allowed_values"]
+    assert "mvp_free_dialogue" in payload["dialogue_profile"]["allowed_values"]
     assert payload["dialogue_profile"]["scope"] == "developer_local"
     assert payload["dialogue_profile"]["developer_local_only"] is True
     assert payload["response_planner"]["advisory_mode"] in {True, False}

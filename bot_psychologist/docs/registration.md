@@ -1,15 +1,15 @@
-# Registration и Access Control
+# Registration and Access Control (Registration и Access Control)
 
-## 1. Overview
+## Overview (Обзор)
 
 Пакет `api/registration/` отвечает за регистрацию, логин, сессии доступа и безопасную привязку Telegram-аккаунта к существующему `user_id`.
 
 Место в архитектуре:
 - `api/identity/` хранит канонического пользователя и связанные внешние идентичности;
 - `api/registration/` управляет доступом (`username`, `access_key`, `session_token`, `invite_key`, `link_code`);
-- `api/telegram_adapter/` использует registration-контракт для подтвержденной привязки Telegram.
+- `api/telegram_adapter/` использует registration-контракт для подтверждённой привязки Telegram.
 
-## 2. User Registration Flow
+## User Registration Flow (Поток регистрации пользователя)
 
 ```text
 register (username + invite_key)
@@ -159,7 +159,7 @@ Response:
 - `401` invalid/expired session token
 - `403` admin role required
 
-## 4. Roles & Access
+## Roles & Access (Роли и доступ)
 
 Основные роли профиля:
 - `admin`
@@ -178,7 +178,7 @@ Response:
 - confirm-link: только internal контур (`X-Internal-Key` + `X-Request-HMAC`);
 - invite-keys: только `admin` через Bearer session token.
 
-## 5. Security
+## Security (Безопасность)
 
 - Для `access_key` используется Argon2 (`pwdlib`), а не простой `sha256`.
 - `LinkAttemptGuard`: 5 попыток / 15 минут на `telegram_user_id`.
@@ -188,12 +188,12 @@ Response:
 
 На старте `DatabaseBootstrap`:
 - гарантирует схему registration-таблиц;
-- сидирует API keys (`dev-key-001`, `test-key-001`, `internal-telegram-key`, с учетом env override);
+- сидирует API keys (`dev-key-001`, `test-key-001`, `internal-telegram-key`, с учётом env override);
 - может создать первого admin-пользователя при наличии `ADMIN_USERNAME` + `ADMIN_INVITE_KEY`.
 
 Режим идемпотентный: повторный запуск не ломает существующие данные.
 
-## 7. Module Structure
+## Module Structure (Структура модуля)
 
 `api/registration/`:
 - `models.py` — pydantic-модели request/response.
@@ -204,7 +204,7 @@ Response:
 - `guards.py` — защитные лимиты (`LinkAttemptGuard`).
 - `bootstrap.py` — инициализация и seed-данные.
 
-## 8. Related Tests
+## Related Tests (Связанные тесты)
 
 Registration:
 - `tests/registration/test_security.py`

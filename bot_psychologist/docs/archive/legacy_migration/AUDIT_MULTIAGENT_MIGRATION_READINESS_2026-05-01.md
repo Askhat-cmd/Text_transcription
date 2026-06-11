@@ -1,6 +1,6 @@
 ﻿# AUDIT Multiagent Migration Readiness — 2026-05-01
 
-## Область аудита
+## Audit Scope (Область аудита)
 Проверка фактической готовности проекта к полному удалению каскадного (legacy/adaptive) рантайма после перехода на мультиагентную архитектуру.
 
 Проверены слои:
@@ -9,7 +9,7 @@
 - admin/web surfaces
 - тестовые контракты и инвентарные фикстуры
 
-## Что проверено
+## What Was Checked (Что проверено)
 - Поиск runtime-точек входа и переключателей (`MULTIAGENT_ENABLED`, legacy-маркеры).
 - Проверка фактической связки `api -> answer_adaptive -> multiagent|cascade`.
 - Проверка тест-контрактов на требуемое legacy-поведение.
@@ -21,7 +21,7 @@
 
 Результат тест-прогона: **29 passed**.
 
-## Текущая архитектурная картина (факт)
+## Current Architecture Picture (Факт) (Текущая архитектурная картина)
 
 ### 1) Runtime entrypoint всё ещё через фасад `answer_adaptive`
 - `bot_psychologist/api/routes/chat.py` вызывает `answer_question_adaptive(...)`.
@@ -62,19 +62,19 @@
 - `bot_psychologist/.env`: `MULTIAGENT_ENABLED=true` (локально включено)
 - `bot_psychologist/.env.example`: `MULTIAGENT_ENABLED=false` (по умолчанию путь всё ещё legacy-first)
 
-## Вердикт
+## Verdict (Вердикт)
 
-## Готов ли проект к полному удалению каскадной системы сейчас?
+## Is Project Ready for Full Legacy Removal Now? (Готов ли проект к полному удалению каскадной системы сейчас?)
 **Нет, не готов.**
 
 Причина: каскадный runtime остаётся частью рабочего контура (entrypoint + fallback + тест-контракт + admin режимы + trace sanitization).
 
-## Оценка стадии миграции
+## Migration Stage Assessment (Оценка стадии миграции)
 - Мультиагентный контур: **реально рабочий**.
 - Архитектура перехода: **гибридная (coexistence)**.
 - Готовность к hard purge legacy: **низкая/средняя**, пока не удалены блокеры ниже.
 
-## Критические блокеры перед удалением legacy
+## Critical Blockers Before Legacy Removal (Критические блокеры перед удалением legacy)
 1. Убрать fallback из `answer_adaptive` (или полностью убрать `answer_adaptive` из runtime-path).
 2. Перевести API entrypoint на прямой `multiagent orchestrator`.
 3. Удалить `legacy_adaptive` и `hybrid` режимы из admin/web contracts.
@@ -82,12 +82,12 @@
 5. Обновить `.env.example` на multiagent-first (без legacy pipeline defaults).
 6. Удалить/переписать trace sanitizers, когда legacy поля больше не могут появляться.
 
-## Минимальный безопасный план purge (рекомендуемый)
+## Minimum Safe Purge Plan (Recommended) (Минимальный безопасный план purge)
 1. **Cutover PR**: API/Telegram entrypoints -> только multiagent orchestrator.
 2. **Contract PR**: убрать `legacy_adaptive/hybrid` из admin/web типов и endpoint payload.
 3. **Trace PR**: новый контракт без `_strip_legacy_*` слоя.
 4. **Tests PR**: удалить legacy inventory fixtures/tests, заменить на multiagent invariants.
 5. **Cleanup PR**: физически удалить `adaptive_runtime` и неиспользуемые legacy-модули после зелёного полного прогона.
 
-## Доп. наблюдение
+## Additional Observation (Доп. наблюдение)
 В нескольких файлах есть признаки mojibake (битая кодировка в комментариях/docstrings). Это не блокирует миграцию как архитектуру, но ухудшает поддерживаемость и обзор trace/docs.

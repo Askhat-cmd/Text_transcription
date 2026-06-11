@@ -1,0 +1,1011 @@
+{
+  "prd": "PRD-047.15-HF2-R1",
+  "generated_at_utc": "2026-06-11T05:39:47.306416+00:00",
+  "mode": "live",
+  "planner_mode": "apply",
+  "api_base": "http://127.0.0.1:8001",
+  "total_cases": 6,
+  "passed": 6,
+  "warnings": 0,
+  "failed": 0,
+  "llm_calls_expected": 0,
+  "llm_calls_actual": 0,
+  "query_before_rag_passed": true,
+  "anti_overengineering_passed": true,
+  "api_trace_fields_present": true,
+  "anti_overengineering_report": {
+    "status": "passed",
+    "findings": []
+  },
+  "case_results": [
+    {
+      "case_id": "HRP-001",
+      "description": "greeting suppresses rag",
+      "status": "passed",
+      "session_id": "prd-047.15-hf2-r1-hrp-001",
+      "checks": [
+        {
+          "name": "retrieval_action",
+          "ok": true,
+          "expected": "suppress_rag",
+          "actual": "suppress_rag"
+        },
+        {
+          "name": "universal_gate",
+          "ok": true,
+          "expected": "greeting",
+          "actual": "greeting"
+        },
+        {
+          "name": "llm_called",
+          "ok": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "query_before_rag_proof",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "trace_fields_present",
+          "ok": true,
+          "expected": [
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_universal_gate",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_fallback_used"
+          ],
+          "actual": [
+            "agents",
+            "anomalies",
+            "dialogue_pragmatics",
+            "hybrid_retrieval_fallback_used",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_universal_gate",
+            "live_turn_evidence",
+            "memory_context",
+            "pipeline_version",
+            "planner_drift_guard",
+            "planner_drift_guard_error",
+            "planner_drift_guard_version",
+            "planner_drift_summary",
+            "quality_trace",
+            "quality_trace_error",
+            "quality_trace_version",
+            "response_planner",
+            "response_planner_error",
+            "response_planner_version",
+            "retrieval_decision",
+            "session_dashboard",
+            "session_id",
+            "thread_diagnostics",
+            "thread_diagnostics_version",
+            "total_latency_ms",
+            "turn_diff",
+            "turn_index",
+            "writer_llm"
+          ]
+        }
+      ],
+      "adaptive_payload": {
+        "status": "ok",
+        "answer_preview": "Привет. Рада, что ты написал(а). Как сейчас настроение? Иногда помогает назвать одно слово про ощущение — это сразу делает опыт чуть яснее. Хочешь просто поболтать или есть что-то, о чём хочешь рассказать?",
+        "metadata": {
+          "state_analyzer_api_mode": "heuristic",
+          "tokens_completion": 210,
+          "response_mode": "validate",
+          "legacy_fallback_used": false,
+          "phase": "clarify",
+          "writer_api_mode": "responses",
+          "estimated_cost_usd": 0.001088,
+          "model_used": "gpt-5-mini",
+          "runtime_entrypoint": "multiagent_adapter",
+          "runtime_user_scope": "prd-047.15-hf2-r1-hrp-001",
+          "tokens_total": 2883,
+          "continuity_score": 1.0,
+          "relation_to_thread": "continue",
+          "runtime": "multiagent",
+          "tokens_prompt": 2673,
+          "thread_id": "tm_f61d1d43e2d7",
+          "pipeline_version": "multiagent_v1",
+          "recommended_mode": "validate",
+          "direct_multiagent_cutover": true,
+          "user_id": "75eb53da-6453-4f7a-a973-d9f301f9c019",
+          "session_id": "prd-047.15-hf2-r1-hrp-001",
+          "conversation_id": "9277c868-3639-43bd-8798-9ae00cf49a73"
+        }
+      },
+      "trace_payload": {
+        "hybrid_retrieval_plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": false,
+          "retrieval_action": "suppress_rag",
+          "composed_query": "",
+          "needed_chunk_types": [
+            "general_text"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 0,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.98
+        },
+        "hybrid_retrieval_planner_mode": "apply",
+        "hybrid_retrieval_universal_gate": "greeting",
+        "hybrid_retrieval_llm_called": false,
+        "memory_context": {
+          "conversation_context": "СТОРЯ ДАЛОГА (последние обороты):\n\nОбмен #1:\n  Пользователь: Привет\n  Бот: Привет. Рада, что ты написал(а). Какой сейчас у тебя настрой — хочешь просто поболтать или есть что-то, о чём хочется сказать?\n\nОбмен #2:\n  Пользователь: Привет\n  Бот: Привет. Рада, что ты написал(а). Какой сейчас у тебя настрой? Небольшой момент, который часто помогает — проговорить вслух одно слово про ощущение (например «устал», «спокоен», «тревожен») — это сразу...\n---",
+          "rag_query": "",
+          "hybrid_retrieval": {
+            "planner_version": "hybrid_retrieval_planner_v1_r1",
+            "planner_mode": "apply",
+            "planned_composed_query": "",
+            "executed_rag_query": "",
+            "legacy_rag_query": "Привет",
+            "query_before_rag_proof": true,
+            "retrieval_gap_reason": "planner_suppressed_rag"
+          },
+          "semantic_hits": [],
+          "user_profile_patterns": [],
+          "user_profile_values": [],
+          "memory_written_preview": "user: Привет\nassistant: Привет. Рада, что ты написал(а). Как сейчас настроение? Иногда помогает назвать одно слово про ощущение — это сразу делает опыт чуть яснее. Хочешь просто поболтать или есть что-то, о чём хочешь расска\nthread_id: tm_f61d1d43e2d7 | phase: clarify"
+        }
+      },
+      "warning": null
+    },
+    {
+      "case_id": "HRP-002",
+      "description": "thanks suppresses rag",
+      "status": "passed",
+      "session_id": "prd-047.15-hf2-r1-hrp-002",
+      "checks": [
+        {
+          "name": "retrieval_action",
+          "ok": true,
+          "expected": "suppress_rag",
+          "actual": "suppress_rag"
+        },
+        {
+          "name": "universal_gate",
+          "ok": true,
+          "expected": "thanks_or_farewell",
+          "actual": "thanks_or_farewell"
+        },
+        {
+          "name": "llm_called",
+          "ok": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "query_before_rag_proof",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "trace_fields_present",
+          "ok": true,
+          "expected": [
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_universal_gate",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_fallback_used"
+          ],
+          "actual": [
+            "agents",
+            "anomalies",
+            "dialogue_pragmatics",
+            "hybrid_retrieval_fallback_used",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_universal_gate",
+            "live_turn_evidence",
+            "memory_context",
+            "pipeline_version",
+            "planner_drift_guard",
+            "planner_drift_guard_error",
+            "planner_drift_guard_version",
+            "planner_drift_summary",
+            "quality_trace",
+            "quality_trace_error",
+            "quality_trace_version",
+            "response_planner",
+            "response_planner_error",
+            "response_planner_version",
+            "retrieval_decision",
+            "session_dashboard",
+            "session_id",
+            "thread_diagnostics",
+            "thread_diagnostics_version",
+            "total_latency_ms",
+            "turn_diff",
+            "turn_index",
+            "writer_llm"
+          ]
+        }
+      ],
+      "adaptive_payload": {
+        "status": "ok",
+        "answer_preview": "Спасибо — до скорого. Было приятно побеседовать. Если захочешь вернуться, я здесь. Береги себя.",
+        "metadata": {
+          "state_analyzer_api_mode": "responses",
+          "tokens_completion": 88,
+          "response_mode": "validate",
+          "legacy_fallback_used": false,
+          "phase": "clarify",
+          "writer_api_mode": "responses",
+          "estimated_cost_usd": 0.000822,
+          "model_used": "gpt-5-mini",
+          "runtime_entrypoint": "multiagent_adapter",
+          "runtime_user_scope": "prd-047.15-hf2-r1-hrp-002",
+          "tokens_total": 2673,
+          "continuity_score": 1.0,
+          "relation_to_thread": "continue",
+          "runtime": "multiagent",
+          "tokens_prompt": 2585,
+          "thread_id": "tm_21b5d989a8a5",
+          "pipeline_version": "multiagent_v1",
+          "recommended_mode": "validate",
+          "direct_multiagent_cutover": true,
+          "user_id": "75eb53da-6453-4f7a-a973-d9f301f9c019",
+          "session_id": "prd-047.15-hf2-r1-hrp-002",
+          "conversation_id": "26ba0857-cb81-4628-9b10-d094fdea9028"
+        }
+      },
+      "trace_payload": {
+        "hybrid_retrieval_plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": false,
+          "retrieval_action": "suppress_rag",
+          "composed_query": "",
+          "needed_chunk_types": [
+            "general_text"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 0,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.97
+        },
+        "hybrid_retrieval_planner_mode": "apply",
+        "hybrid_retrieval_universal_gate": "thanks_or_farewell",
+        "hybrid_retrieval_llm_called": false,
+        "memory_context": {
+          "conversation_context": "СТОРЯ ДАЛОГА (последние обороты):\n\nОбмен #1:\n  Пользователь: Спасибо, пока\n  Бот: Пожалуйста — пока. Было приятно поговорить; возвращайся, когда захочешь. Береги себя.\n\nОбмен #2:\n  Пользователь: Спасибо, пока\n  Бот: Пожалуйста — пока. Было приятно пообщаться. Если захочешь вернуться — я рядом. Береги себя.\n---",
+          "rag_query": "",
+          "hybrid_retrieval": {
+            "planner_version": "hybrid_retrieval_planner_v1_r1",
+            "planner_mode": "apply",
+            "planned_composed_query": "",
+            "executed_rag_query": "",
+            "legacy_rag_query": "Спасибо, пока",
+            "query_before_rag_proof": true,
+            "retrieval_gap_reason": "planner_suppressed_rag"
+          },
+          "semantic_hits": [],
+          "user_profile_patterns": [],
+          "user_profile_values": [],
+          "memory_written_preview": "user: Спасибо, пока\nassistant: Спасибо — до скорого. Было приятно побеседовать. Если захочешь вернуться, я здесь. Береги себя.\nthread_id: tm_21b5d989a8a5 | phase: clarify"
+        }
+      },
+      "warning": null
+    },
+    {
+      "case_id": "HRP-003",
+      "description": "formatting request uses current context only",
+      "status": "passed",
+      "session_id": "prd-047.15-hf2-r1-hrp-003",
+      "checks": [
+        {
+          "name": "retrieval_action",
+          "ok": true,
+          "expected": "use_current_context_only",
+          "actual": "use_current_context_only"
+        },
+        {
+          "name": "universal_gate",
+          "ok": true,
+          "expected": "formatting_request",
+          "actual": "formatting_request"
+        },
+        {
+          "name": "llm_called",
+          "ok": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "query_before_rag_proof",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "trace_fields_present",
+          "ok": true,
+          "expected": [
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_universal_gate",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_fallback_used"
+          ],
+          "actual": [
+            "agents",
+            "anomalies",
+            "dialogue_pragmatics",
+            "hybrid_retrieval_fallback_used",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_universal_gate",
+            "live_turn_evidence",
+            "memory_context",
+            "pipeline_version",
+            "planner_drift_guard",
+            "planner_drift_guard_error",
+            "planner_drift_guard_version",
+            "planner_drift_summary",
+            "quality_trace",
+            "quality_trace_error",
+            "quality_trace_version",
+            "response_planner",
+            "response_planner_error",
+            "response_planner_version",
+            "retrieval_decision",
+            "session_dashboard",
+            "session_id",
+            "thread_diagnostics",
+            "thread_diagnostics_version",
+            "total_latency_ms",
+            "turn_diff",
+            "turn_index",
+            "writer_llm"
+          ]
+        }
+      ],
+      "adaptive_payload": {
+        "status": "ok",
+        "answer_preview": "1) Укажи тему или вопрос для списка.  \n2) Укажи желаемую длину: короткий (3–5), средний (6–10), подробный (10+).  \n3) Нужны примеры к каждому пункту? (да/нет).  \n4) Предпочитаемый язык ответа (если не русский).",
+        "metadata": {
+          "state_analyzer_api_mode": "responses",
+          "tokens_completion": 187,
+          "response_mode": "reflect",
+          "legacy_fallback_used": false,
+          "phase": "clarify",
+          "writer_api_mode": "responses",
+          "estimated_cost_usd": 0.001061,
+          "model_used": "gpt-5-mini",
+          "runtime_entrypoint": "multiagent_adapter",
+          "runtime_user_scope": "prd-047.15-hf2-r1-hrp-003",
+          "tokens_total": 2933,
+          "continuity_score": 1.0,
+          "relation_to_thread": "continue",
+          "runtime": "multiagent",
+          "tokens_prompt": 2746,
+          "thread_id": "tm_7ae93f5eec24",
+          "pipeline_version": "multiagent_v1",
+          "recommended_mode": "reflect",
+          "direct_multiagent_cutover": true,
+          "user_id": "75eb53da-6453-4f7a-a973-d9f301f9c019",
+          "session_id": "prd-047.15-hf2-r1-hrp-003",
+          "conversation_id": "4fe5ed38-235a-4d1d-8b52-783304d7e4f8"
+        }
+      },
+      "trace_payload": {
+        "hybrid_retrieval_plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": false,
+          "retrieval_action": "use_current_context_only",
+          "composed_query": "",
+          "needed_chunk_types": [
+            "general_text"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 0,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [
+            "list_ok"
+          ],
+          "confidence": 0.92
+        },
+        "hybrid_retrieval_planner_mode": "apply",
+        "hybrid_retrieval_universal_gate": "formatting_request",
+        "hybrid_retrieval_llm_called": false,
+        "memory_context": {
+          "conversation_context": "СТОРЯ ДАЛОГА (последние обороты):\n\nОбмен #1:\n  Пользователь: Сделай списком и без воды\n  Бот: 1. Уточни тему или вопрос, по которому нужен список.  \n2. Укажи желаемую длину (короткий 3–5 пунктов / средний 6–10 / подробный 10+).  \n3. Хочешь примеры к каждому пункту? (да/нет)\n\nОбмен #2:\n  Пользователь: Сделай списком и без воды\n  Бот: 1) Уточни тему или вопрос для списка.  \n2) Выбери длину: короткий (3–5), средний (6–10), подробный (10+).  \n3) Нужны примеры к каждому пункту? (да/нет).\n---",
+          "rag_query": "",
+          "hybrid_retrieval": {
+            "planner_version": "hybrid_retrieval_planner_v1_r1",
+            "planner_mode": "apply",
+            "planned_composed_query": "",
+            "executed_rag_query": "",
+            "legacy_rag_query": "Сделай списком и без воды",
+            "query_before_rag_proof": true,
+            "retrieval_gap_reason": "planner_suppressed_rag"
+          },
+          "semantic_hits": [],
+          "user_profile_patterns": [],
+          "user_profile_values": [],
+          "memory_written_preview": "user: Сделай списком и без воды\nassistant: 1) Укажи тему или вопрос для списка.  \n2) Укажи желаемую длину: короткий (3–5), средний (6–10), подробный (10+).  \n3) Нужны примеры к каждому пункту? (да/нет).  \n4) Предпочитаемый язык ответа (если не\nthread_id: tm_7ae93f5eec24 | phase: clarify"
+        }
+      },
+      "warning": null
+    },
+    {
+      "case_id": "HRP-004",
+      "description": "summary request uses current context only",
+      "status": "passed",
+      "session_id": "prd-047.15-hf2-r1-hrp-004",
+      "checks": [
+        {
+          "name": "retrieval_action",
+          "ok": true,
+          "expected": "use_current_context_only",
+          "actual": "use_current_context_only"
+        },
+        {
+          "name": "universal_gate",
+          "ok": true,
+          "expected": "summary_request",
+          "actual": "summary_request"
+        },
+        {
+          "name": "llm_called",
+          "ok": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "query_before_rag_proof",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "trace_fields_present",
+          "ok": true,
+          "expected": [
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_universal_gate",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_fallback_used"
+          ],
+          "actual": [
+            "agents",
+            "anomalies",
+            "dialogue_pragmatics",
+            "hybrid_retrieval_fallback_used",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_universal_gate",
+            "live_turn_evidence",
+            "memory_context",
+            "pipeline_version",
+            "planner_drift_guard",
+            "planner_drift_guard_error",
+            "planner_drift_guard_version",
+            "planner_drift_summary",
+            "quality_trace",
+            "quality_trace_error",
+            "quality_trace_version",
+            "response_planner",
+            "response_planner_error",
+            "response_planner_version",
+            "retrieval_decision",
+            "session_dashboard",
+            "session_id",
+            "thread_diagnostics",
+            "thread_diagnostics_version",
+            "total_latency_ms",
+            "turn_diff",
+            "turn_index",
+            "writer_llm"
+          ]
+        }
+      ],
+      "adaptive_payload": {
+        "status": "ok",
+        "answer_preview": "Коротко и по сути — итог нашего разговора:\n\n1) Что произошло: вы дважды попросили «подвести итог по нашему разговору». До этих просьб содержательной беседы не было — ваш запрос стал первым явным действием в чате.  \n2) Как я это интерпретирую: вы хотите получить структурированный ",
+        "metadata": {
+          "state_analyzer_api_mode": "responses",
+          "tokens_completion": 281,
+          "response_mode": "reflect",
+          "legacy_fallback_used": false,
+          "phase": "clarify",
+          "writer_api_mode": "responses",
+          "estimated_cost_usd": 0.001287,
+          "model_used": "gpt-5-mini",
+          "runtime_entrypoint": "multiagent_adapter",
+          "runtime_user_scope": "prd-047.15-hf2-r1-hrp-004",
+          "tokens_total": 3180,
+          "continuity_score": 1.0,
+          "relation_to_thread": "continue",
+          "runtime": "multiagent",
+          "tokens_prompt": 2899,
+          "thread_id": "tm_b352dd6716c7",
+          "pipeline_version": "multiagent_v1",
+          "recommended_mode": "reflect",
+          "direct_multiagent_cutover": true,
+          "user_id": "75eb53da-6453-4f7a-a973-d9f301f9c019",
+          "session_id": "prd-047.15-hf2-r1-hrp-004",
+          "conversation_id": "bfdf3963-f4f3-4796-bcb2-b0e463cee1ac"
+        }
+      },
+      "trace_payload": {
+        "hybrid_retrieval_plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": false,
+          "retrieval_action": "use_current_context_only",
+          "composed_query": "",
+          "needed_chunk_types": [
+            "general_text"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 0,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.95
+        },
+        "hybrid_retrieval_planner_mode": "apply",
+        "hybrid_retrieval_universal_gate": "summary_request",
+        "hybrid_retrieval_llm_called": false,
+        "memory_context": {
+          "conversation_context": "СТОРЯ ДАЛОГА (последние обороты):\n\nОбмен #1:\n  Пользователь: Подведи итог по нашему разговору\n  Бот: У нас был короткий обмен: вы попросили подвести итог нашего разговора. Поскольку до этого не было содержания обсуждения, фактический итог — что разговор только начат, и ваша просьба — первый явный зап...\n\nОбмен #2:\n  Пользователь: Подведи итог по нашему разговору\n  Бот: Коротко и по сути:\n\n1) Что произошло: вы попросили подвести итог нашего разговора. До этого не было содержательной беседы — ваш запрос был первым явным действием в чате.  \n2) Как я это понял: цель — п...\n---",
+          "rag_query": "",
+          "hybrid_retrieval": {
+            "planner_version": "hybrid_retrieval_planner_v1_r1",
+            "planner_mode": "apply",
+            "planned_composed_query": "",
+            "executed_rag_query": "",
+            "legacy_rag_query": "Подведи итог по нашему разговору",
+            "query_before_rag_proof": true,
+            "retrieval_gap_reason": "planner_suppressed_rag"
+          },
+          "semantic_hits": [],
+          "user_profile_patterns": [],
+          "user_profile_values": [],
+          "memory_written_preview": "user: Подведи итог по нашему разговору\nassistant: Коротко и по сути — итог нашего разговора:\n\n1) Что произошло: вы дважды попросили «подвести итог по нашему разговору». До этих просьб содержательной беседы не было — ваш запрос стал первым явным дейст\nthread_id: tm_b352dd6716c7 | phase: clarify"
+        }
+      },
+      "warning": null
+    },
+    {
+      "case_id": "HRP-006",
+      "description": "clear kb ask",
+      "status": "passed",
+      "session_id": "prd-047.15-hf2-r1-hrp-006",
+      "checks": [
+        {
+          "name": "retrieval_action",
+          "ok": true,
+          "expected": "query_kb",
+          "actual": "query_kb"
+        },
+        {
+          "name": "universal_gate",
+          "ok": true,
+          "expected": "clear_kb_ask",
+          "actual": "clear_kb_ask"
+        },
+        {
+          "name": "llm_called",
+          "ok": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "query_before_rag_proof",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "trace_fields_present",
+          "ok": true,
+          "expected": [
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_universal_gate",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_fallback_used"
+          ],
+          "actual": [
+            "agents",
+            "anomalies",
+            "dialogue_pragmatics",
+            "hybrid_retrieval_fallback_used",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_universal_gate",
+            "live_turn_evidence",
+            "memory_context",
+            "pipeline_version",
+            "planner_drift_guard",
+            "planner_drift_guard_error",
+            "planner_drift_guard_version",
+            "planner_drift_summary",
+            "quality_trace",
+            "quality_trace_error",
+            "quality_trace_version",
+            "response_planner",
+            "response_planner_error",
+            "response_planner_version",
+            "retrieval_decision",
+            "session_dashboard",
+            "session_id",
+            "thread_diagnostics",
+            "thread_diagnostics_version",
+            "total_latency_ms",
+            "turn_diff",
+            "turn_index",
+            "writer_llm"
+          ]
+        }
+      ],
+      "adaptive_payload": {
+        "status": "ok",
+        "answer_preview": "Нейросталкинг — это внутренняя практика внимательного, нейтрального наблюдения за своими автоматическими мыслями, эмоциями и телесными реакциями в моменте. Название метафорическое: «сталкер» здесь не в смысле преследования другого человека, а в значении «тот, кто внимательно отсл",
+        "metadata": {
+          "state_analyzer_api_mode": "responses",
+          "tokens_completion": 436,
+          "response_mode": "reflect",
+          "legacy_fallback_used": false,
+          "phase": "clarify",
+          "writer_api_mode": "responses",
+          "estimated_cost_usd": 0.001729,
+          "model_used": "gpt-5-mini",
+          "runtime_entrypoint": "multiagent_adapter",
+          "runtime_user_scope": "prd-047.15-hf2-r1-hrp-006",
+          "tokens_total": 3863,
+          "continuity_score": 1.0,
+          "relation_to_thread": "continue",
+          "runtime": "multiagent",
+          "tokens_prompt": 3427,
+          "thread_id": "tm_ad3bd2a4ad47",
+          "pipeline_version": "multiagent_v1",
+          "recommended_mode": "reflect",
+          "direct_multiagent_cutover": true,
+          "user_id": "75eb53da-6453-4f7a-a973-d9f301f9c019",
+          "session_id": "prd-047.15-hf2-r1-hrp-006",
+          "conversation_id": "faaae5e4-7336-48ea-b38c-9dc25ef14098"
+        }
+      },
+      "trace_payload": {
+        "hybrid_retrieval_plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": true,
+          "retrieval_action": "query_kb",
+          "composed_query": "нейросталкинг",
+          "needed_chunk_types": [
+            "concept",
+            "source_fragment"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 1,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": false,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.84
+        },
+        "hybrid_retrieval_planner_mode": "apply",
+        "hybrid_retrieval_universal_gate": "clear_kb_ask",
+        "hybrid_retrieval_llm_called": false,
+        "memory_context": {
+          "conversation_context": "СТОРЯ ДАЛОГА (последние обороты):\n\nОбмен #1:\n  Пользователь: Что такое нейросталкинг?\n  Бот: Нейросталкинг — это внутренняя практика наблюдения за своими автоматическими мыслями, чувствами и телесными реакциями с нейтральным любопытством, как будто «следишь» за работой своего мозга, не пытаяс...\n\nОбмен #2:\n  Пользователь: Что такое нейросталкинг?\n  Бот: Нейросталкинг — это внутренняя практика внимательного, нейтрального наблюдения за своими автоматическими мыслями, эмоциями и телесными реакциями в моменте. Простыми словами: ты замечаешь, что происход...\n---",
+          "rag_query": "нейросталкинг",
+          "hybrid_retrieval": {
+            "planner_version": "hybrid_retrieval_planner_v1_r1",
+            "planner_mode": "apply",
+            "planned_composed_query": "нейросталкинг",
+            "executed_rag_query": "нейросталкинг",
+            "legacy_rag_query": "Что такое нейросталкинг?",
+            "query_before_rag_proof": true,
+            "retrieval_gap_reason": ""
+          },
+          "semantic_hits": [
+            {
+              "chunk_id": "2fc538fa-d37a-4559-bfed-1a3ff829e731",
+              "source": "book",
+              "score": 0.08657720155071756,
+              "content_preview": "Название может ввести в заблуждение. Сталкинг — преследование? Слежка? Нет. Образ другой.…",
+              "content_full": "Название может ввести в заблуждение. Сталкинг — преследование? Слежка? Нет. Образ другой.…"
+            },
+            {
+              "chunk_id": "ae905f5d-9ca4-40ed-88e4-d43f73e9afa8",
+              "source": "book",
+              "score": 0.05751795691802684,
+              "content_preview": "*** Девять глав до этой — это была карта. Подробная, с масштабом, с легендой.…",
+              "content_full": "*** Девять глав до этой — это была карта. Подробная, с масштабом, с легендой.…"
+            }
+          ],
+          "user_profile_patterns": [],
+          "user_profile_values": [],
+          "memory_written_preview": "user: Что такое нейросталкинг?\nassistant: Нейросталкинг — это внутренняя практика внимательного, нейтрального наблюдения за своими автоматическими мыслями, эмоциями и телесными реакциями в моменте. Название метафорическое: «сталкер» здесь не \nthread_id: tm_ad3bd2a4ad47 | phase: clarify"
+        }
+      },
+      "warning": null
+    },
+    {
+      "case_id": "HRP-010",
+      "description": "safety signal requires safety and mechanism chunks",
+      "status": "passed",
+      "session_id": "prd-047.15-hf2-r1-hrp-010",
+      "checks": [
+        {
+          "name": "retrieval_action",
+          "ok": true,
+          "expected": "query_kb",
+          "actual": "query_kb"
+        },
+        {
+          "name": "universal_gate",
+          "ok": true,
+          "expected": "safety_signal",
+          "actual": "safety_signal"
+        },
+        {
+          "name": "llm_called",
+          "ok": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "query_before_rag_proof",
+          "ok": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "trace_fields_present",
+          "ok": true,
+          "expected": [
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_universal_gate",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_fallback_used"
+          ],
+          "actual": [
+            "agents",
+            "anomalies",
+            "dialogue_pragmatics",
+            "hybrid_retrieval_fallback_used",
+            "hybrid_retrieval_llm_called",
+            "hybrid_retrieval_llm_reason",
+            "hybrid_retrieval_plan",
+            "hybrid_retrieval_plan_error",
+            "hybrid_retrieval_plan_valid",
+            "hybrid_retrieval_planner_mode",
+            "hybrid_retrieval_planner_version",
+            "hybrid_retrieval_universal_gate",
+            "live_turn_evidence",
+            "memory_context",
+            "pipeline_version",
+            "planner_drift_guard",
+            "planner_drift_guard_error",
+            "planner_drift_guard_version",
+            "planner_drift_summary",
+            "quality_trace",
+            "quality_trace_error",
+            "quality_trace_version",
+            "response_planner",
+            "response_planner_error",
+            "response_planner_version",
+            "retrieval_decision",
+            "session_dashboard",
+            "session_id",
+            "thread_diagnostics",
+            "thread_diagnostics_version",
+            "total_latency_ms",
+            "turn_diff",
+            "turn_index",
+            "writer_llm"
+          ]
+        }
+      ],
+      "adaptive_payload": {
+        "status": "ok",
+        "answer_preview": "Это очень сильное и пугающее чувство — когда человек говорит «если я перестану контролировать — умру», для неё это звучит как немедленная угроза. Ниже — коротко про то, что может происходить внутри, как вы можете откликнуться сейчас и какой один спокойный вопрос задать.\n\n1) Что м",
+        "metadata": {
+          "state_analyzer_api_mode": "responses",
+          "tokens_completion": 634,
+          "response_mode": "regulate",
+          "legacy_fallback_used": false,
+          "phase": "clarify",
+          "writer_api_mode": "responses",
+          "estimated_cost_usd": 0.001975,
+          "model_used": "gpt-5-mini",
+          "runtime_entrypoint": "multiagent_adapter",
+          "runtime_user_scope": "prd-047.15-hf2-r1-hrp-010",
+          "tokens_total": 3464,
+          "continuity_score": 1.0,
+          "relation_to_thread": "continue",
+          "runtime": "multiagent",
+          "tokens_prompt": 2830,
+          "thread_id": "tm_212e9fb1dbd5",
+          "pipeline_version": "multiagent_v1",
+          "recommended_mode": "regulate",
+          "direct_multiagent_cutover": true,
+          "user_id": "75eb53da-6453-4f7a-a973-d9f301f9c019",
+          "session_id": "prd-047.15-hf2-r1-hrp-010",
+          "conversation_id": "525987d9-3639-401f-b7fb-7f207759cf01"
+        }
+      },
+      "trace_payload": {
+        "hybrid_retrieval_plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": true,
+          "retrieval_action": "query_kb",
+          "composed_query": "жены паника она говорит что если перестанет контролировать умрет safety",
+          "needed_chunk_types": [
+            "safety",
+            "mechanism",
+            "dialogue_move"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [
+            "control_as_safety",
+            "panic_regulation",
+            "loss_of_control_as_threat"
+          ],
+          "depth_level_hint": 1,
+          "safety_layer_required": true,
+          "allowed_use_filter_hint": [
+            "writer_support",
+            "diagnostic_hint"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": true,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.9
+        },
+        "hybrid_retrieval_planner_mode": "apply",
+        "hybrid_retrieval_universal_gate": "safety_signal",
+        "hybrid_retrieval_llm_called": false,
+        "memory_context": {
+          "conversation_context": "СТОРЯ ДАЛОГА (последние обороты):\n\nОбмен #1:\n  Пользователь: У жены паника, она говорит, что если перестанет контролировать — умрет\n  Бот: Это звучит очень пугающе — когда человек говорит «если я перестану контролировать, я умру», внутри включается сильная паника. Сначала важно просто принять, что сейчас у неё очень сильный страх и он ка...\n\nОбмен #2:\n  Пользователь: У жены паника, она говорит, что если перестанет контролировать — умрет\n  Бот: Это очень сильное и пугающее ощущение — когда человек говорит «если я перестану контролировать — умру», внутри действительно включается паника, как будто угроза реальна и немедленна. Вот как можно пон...\n---",
+          "rag_query": "жены паника она говорит что если перестанет контролировать умрет safety",
+          "hybrid_retrieval": {
+            "planner_version": "hybrid_retrieval_planner_v1_r1",
+            "planner_mode": "apply",
+            "planned_composed_query": "жены паника она говорит что если перестанет контролировать умрет safety",
+            "executed_rag_query": "жены паника она говорит что если перестанет контролировать умрет safety",
+            "legacy_rag_query": "У жены паника, она говорит, что если перестанет контролировать — умрет",
+            "query_before_rag_proof": true,
+            "retrieval_gap_reason": ""
+          },
+          "semantic_hits": [
+            {
+              "chunk_id": "47928bce-3306-4351-862e-290b3edeea59",
+              "source": "book",
+              "score": 0.11877795054552541,
+              "content_preview": "Последнее. Страдание даёт иллюзию контроля. Если ты страдаешь — ты что-то делаешь. Работаешь над собой. Стараешься.…",
+              "content_full": "Последнее. Страдание даёт иллюзию контроля. Если ты страдаешь — ты что-то делаешь. Работаешь над собой. Стараешься.…"
+            },
+            {
+              "chunk_id": "7b61940d-f6ff-46f8-9514-797efaf0ad00",
+              "source": "book",
+              "score": 0.09661541463560741,
+              "content_preview": "*Это реальные вопросы участников сессий. Они возникают почти у всех. Если ты читаешь и узнаёшь свой вопрос — значит,…",
+              "content_full": "*Это реальные вопросы участников сессий. Они возникают почти у всех. Если ты читаешь и узнаёшь свой вопрос — значит,…"
+            },
+            {
+              "chunk_id": "3dfeca39-dbb2-4da0-b12f-15ef07fdad2b",
+              "source": "book",
+              "score": 0.08930781444106835,
+              "content_preview": "И ещё один момент: если ты ждёшь результата — спроси себя, что именно ты ждёшь.…",
+              "content_full": "И ещё один момент: если ты ждёшь результата — спроси себя, что именно ты ждёшь.…"
+            }
+          ],
+          "user_profile_patterns": [],
+          "user_profile_values": [],
+          "memory_written_preview": "user: У жены паника, она говорит, что если перестанет контролировать — умрет\nassistant: Это очень сильное и пугающее чувство — когда человек говорит «если я перестану контролировать — умру», для неё это звучит как немедленная угроза. Ниже — коротко про то, что может происходить внутри, к\nthread_id: tm_212e9fb1dbd5 | phase: clarify"
+        }
+      },
+      "warning": null
+    }
+  ]
+}

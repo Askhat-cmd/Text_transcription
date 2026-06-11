@@ -1,0 +1,99 @@
+{
+    "schema_version":  "encoding_hygiene_report_v1",
+    "prd":  "PRD-047.15-HF2-R1",
+    "generated_at_utc":  "2026-06-11T05:43:32.8303563Z",
+    "checked_files":  [
+                          {
+                              "path":  "TO_DO_LIST/PRD-047.15-HF2-R1_Hybrid_Retrieval_Planner_Anti_Overengineering_RU.md",
+                              "utf8_decode_ok":  true,
+                              "has_utf8_bom":  false,
+                              "contains_null_bytes":  false,
+                              "replacement_char_count":  1,
+                              "status":  "passed"
+                          },
+                          {
+                              "path":  "TO_DO_LIST/PRD-047.15-HF2-R1_TASK_LIST.md",
+                              "utf8_decode_ok":  true,
+                              "has_utf8_bom":  false,
+                              "contains_null_bytes":  false,
+                              "replacement_char_count":  0,
+                              "status":  "passed"
+                          },
+                          {
+                              "path":  "TO_DO_LIST/logs/PRD-047.15-HF2-R1/source_gate_git_status.txt",
+                              "utf8_decode_ok":  true,
+                              "has_utf8_bom":  false,
+                              "contains_null_bytes":  false,
+                              "replacement_char_count":  0,
+                              "status":  "passed"
+                          },
+                          {
+                              "path":  "TO_DO_LIST/logs/PRD-047.15-HF2-R1/source_gate_retrieval_map.md",
+                              "utf8_decode_ok":  true,
+                              "has_utf8_bom":  false,
+                              "contains_null_bytes":  false,
+                              "replacement_char_count":  0,
+                              "status":  "passed"
+                          },
+                          {
+                              "path":  "TO_DO_LIST/logs/PRD-047.15-HF2-R1/hf2_r1_runner_result.json",
+                              "utf8_decode_ok":  true,
+                              "has_utf8_bom":  false,
+                              "contains_null_bytes":  false,
+                              "replacement_char_count":  0,
+                              "status":  "passed"
+                          },
+                          {
+                              "path":  "TO_DO_LIST/logs/PRD-047.15-HF2-R1/hf2_r1_runner_result.md",
+                              "utf8_decode_ok":  true,
+                              "has_utf8_bom":  false,
+                              "contains_null_bytes":  false,
+                              "replacement_char_count":  0,
+                              "status":  "passed"
+                          },
+                          {
+                              "path":  "TO_DO_LIST/logs/PRD-047.15-HF2-R1/live_smoke_result.json",
+                              "utf8_decode_ok":  true,
+                              "has_utf8_bom":  false,
+                              "contains_null_bytes":  false,
+                              "replacement_char_count":  0,
+                              "status":  "passed"
+                          },
+                          {
+                              "path":  "TO_DO_LIST/logs/PRD-047.15-HF2-R1/live_smoke_result.md",
+                              "utf8_decode_ok":  true,
+                              "has_utf8_bom":  false,
+                              "contains_null_bytes":  false,
+                              "replacement_char_count":  0,
+                              "status":  "passed"
+                          },
+                          {
+                              "path":  "TO_DO_LIST/logs/PRD-047.15-HF2-R1/test_command_output.txt",
+                              "utf8_decode_ok":  true,
+                              "has_utf8_bom":  false,
+                              "contains_null_bytes":  false,
+                              "replacement_char_count":  0,
+                              "status":  "passed"
+                          },
+                          {
+                              "path":  "TO_DO_LIST/logs/PRD-047.15-HF2-R1/validation_commands_result.json",
+                              "utf8_decode_ok":  true,
+                              "has_utf8_bom":  false,
+                              "contains_null_bytes":  false,
+                              "replacement_char_count":  0,
+                              "status":  "passed"
+                          },
+                          {
+                              "path":  "TO_DO_LIST/logs/PRD-047.15-HF2-R1/no_mutation_proof.json",
+                              "utf8_decode_ok":  true,
+                              "has_utf8_bom":  false,
+                              "contains_null_bytes":  false,
+                              "replacement_char_count":  0,
+                              "status":  "passed"
+                          }
+                      ],
+    "failed_files":  [
+
+                     ],
+    "overall_status":  "passed"
+}

@@ -1,6 +1,6 @@
-# Поток данных от voice_bot_pipeline
+# Data Flow from voice_bot_pipeline (Поток данных от voice_bot_pipeline)
 
-## Навигация
+## Navigation (Навигация)
 
 - [Назад к README](../README.md)
 - [Обзор проекта](./overview.md)
@@ -9,7 +9,7 @@
 
 ---
 
-## Описание и назначение
+## Description and Purpose (Описание и назначение)
 
 **Назначение документа**: Описать поток данных от `voice_bot_pipeline` к `bot_psychologist`, структуру данных и способы их использования.
 
@@ -23,7 +23,7 @@
 
 ---
 
-## сточник данных
+## Data Source (Источник данных)
 
 ### voice_bot_pipeline/data/
 
@@ -42,7 +42,7 @@ voice_bot_pipeline/
 
 ---
 
-## Структура данных Legacy SAG v2.0 ()
+## Legacy SAG v2.0 Data Structure (Структура данных Legacy SAG v2.0)
 
 ### Формат файла: `*.for_vector.json`
 
@@ -89,7 +89,7 @@ voice_bot_pipeline/
 }
 ```
 
-### Ключевые поля
+### Key Fields (Ключевые поля)
 
 #### document_metadata
 - `video_id` — ID видео YouTube
@@ -123,7 +123,7 @@ voice_bot_pipeline/
 
 ---
 
-## Процесс загрузки данных
+## Data Loading Process (Процесс загрузки данных)
 
 ### DataLoader (`bot_agent/data_loader.py`)
 
@@ -139,7 +139,7 @@ data_loader._video_id_to_doc # Dict[str, Document]
 data_loader._block_id_to_block # Dict[str, Block]
 ```
 
-### Шаги загрузки
+### Loading Steps (Шаги загрузки)
 
 1. **Поиск файлов**
    ```python
@@ -168,7 +168,7 @@ data_loader._block_id_to_block # Dict[str, Block]
 
 ---
 
-## спользование данных в Bot Agent
+## Data Usage in Bot Agent (Использование данных в Bot Agent)
 
 ### Phase 1: Базовый QA
 
@@ -222,9 +222,9 @@ data_loader._block_id_to_block # Dict[str, Block]
 
 ---
 
-## Knowledge Graph из данных
+## Knowledge Graph (Граф знаний) из данных
 
-### Построение графа
+### Graph Construction (Построение графа)
 
 ```python
 # GraphClient загружает граф из всех блоков
@@ -236,7 +236,7 @@ graph_client.edges        # List[GraphEdge]
 graph_client.adjacency    # Dict[str, List[str]]
 ```
 
-### Типы узлов
+### Node Types (Типы узлов)
 
 - **CONCEPT** — абстрактный концепт (осознавание, трансформация)
 - **PRACTICE** — практика (медитация, дыхание)
@@ -245,7 +245,7 @@ graph_client.adjacency    # Dict[str, List[str]]
 - **PATTERN** — паттерн поведения
 - **PROCESS_STAGE** — этап процесса
 
-### Типы связей
+### Edge Types (Типы связей)
 
 - **IS_PRACTICE_FOR** — практика для концепта
 - **IS_TECHNIQUE_FOR** — техника для концепта
@@ -258,7 +258,7 @@ graph_client.adjacency    # Dict[str, List[str]]
 
 ---
 
-## Поток данных в системе
+## Data Flow in System (Поток данных в системе)
 
 ```
 voice_bot_pipeline/data/sag_final/
@@ -280,27 +280,27 @@ voice_bot_pipeline/data/sag_final/
 
 ---
 
-## Оптимизации
+## Optimizations (Оптимизации)
 
-### Кэширование
+### Caching (Кэширование)
 
 - **В памяти**: все документы и блоки загружаются один раз при старте
 - **На диске**: история диалогов в `.cache_bot_agent/conversations/`
 
-### ндексация
+### Indexing (Индексация)
 
 - **По video_id**: быстрый поиск документа по ID видео
 - **По block_id**: быстрый поиск блока по ID
 - **TF-IDF индекс**: построение при первом запросе
 
-### Ленивая загрузка
+### Lazy Loading (Ленивая загрузка)
 
 - **Knowledge Graph**: загружается при первом использовании
 - **стория диалога**: загружается при первом запросе пользователя
 
 ---
 
-## Навигация
+## Navigation (Навигация)
 
 - [Обзор проекта](./overview.md)
 - [Архитектура](./architecture.md)

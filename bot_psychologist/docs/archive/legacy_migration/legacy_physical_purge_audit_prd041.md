@@ -1,15 +1,15 @@
-﻿# PRD-041 Legacy Physical Purge Audit
+﻿# PRD-041 Legacy Physical Purge Audit (Аудит Legacy Physical Purge PRD-041)
 
-## Scope
+## Scope (Область)
 
-Import graph snapshot for legacy cascade candidates before physical purge.
+Import graph snapshot для legacy cascade candidates перед physical purge.
 
-## Classification Table
+## Classification Table (Таблица классификации)
 
 | Path | Category | Current imports/callers | Action | Reason |
 |---|---|---|---|---|
-| `bot_agent/answer_adaptive.py` | `KEEP_COMPAT_SHIM` | Public import via `bot_agent.__init__`, direct tests/imports | shrink to tiny shim | Public compatibility surface remains, legacy body must be removed |
-| `bot_agent/adaptive_runtime/` | `DELETE_NOW` | Imported only by legacy body in `answer_adaptive.py`; no active runtime entrypoint imports | delete directory | Legacy stage implementation no longer used after multiagent cutover |
+| `bot_agent/answer_adaptive.py` | `KEEP_COMPAT_SHIM` | Public import via `bot_agent.__init__`, direct tests/imports | shrink to tiny shim | Public compatibility surface остаётся, legacy body должен быть удалён |
+| `bot_agent/adaptive_runtime/` | `DELETE_NOW` | Imported only by legacy body in `answer_adaptive.py`; no active runtime entrypoint imports | delete directory | Legacy stage implementation больше не используется после multiagent cutover |
 | `bot_agent/state_classifier.py` | `REVIEW` | Imported by `diagnostics_classifier.py`, `path_builder.py`, many tests | keep for now | Not safe to delete in PRD-041 without wider refactor |
 | `bot_agent/route_resolver.py` | `REVIEW` | Used by legacy tests/fixtures and helper flows | keep for now | Requires separate contract cleanup before delete |
 | `bot_agent/decision/` | `REVIEW` | Used by dedicated decision tests/scripts; imported by legacy path | keep for now | Not active runtime-critical, but still referenced by non-PRD041 suites |
@@ -18,12 +18,12 @@ Import graph snapshot for legacy cascade candidates before physical purge.
 | `bot_agent/user_level_types.py` | `KEEP_ACTIVE` | Imported by `path_builder.py` (active) | keep | Shared type used outside legacy cascade |
 | `bot_agent/memory_v12.py` | `KEEP_ACTIVE` | Imported by `memory_updater.py` and `memory_context.py` | keep | Active memory snapshot dependency |
 
-## Notes
+## Notes (Заметки)
 
 - Import graph helper: `bot_psychologist/scripts/legacy_import_graph.py`
 - Post-purge stabilization follow-up: `docs/post_purge_stabilization_audit_prd042.md`
 - Remaining REVIEW modules register: `docs/post_purge_remaining_review_modules_prd042.md`
-- Key removal boundary for PRD-041:
+- Key removal boundary для PRD-041:
   - remove `_answer_question_adaptive_legacy_cascade` body
   - remove all `adaptive_runtime` imports from `answer_adaptive.py`
   - remove physical directory `bot_agent/adaptive_runtime/`

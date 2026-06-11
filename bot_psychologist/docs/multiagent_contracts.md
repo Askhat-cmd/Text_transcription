@@ -1,4 +1,4 @@
-# Контракты мультиагентной системы
+# Multiagent System Contracts (Контракты мультиагентной системы)
 
 Документ описывает dataclass-контракты, используемые в Эпохе 4.
 
@@ -134,7 +134,7 @@
 | `safe_replacement` | `str \| None` | text | Безопасная замена ответа |
 | `quality_flags` | `list[str]` | список | Нефатальные предупреждения качества |
 
-## Поля debug-вывода `orchestrator.run()`
+## orchestrator.run() Debug Output Fields (Поля debug-вывода orchestrator.run())
 
 Источник: `bot_agent/multiagent/orchestrator.py`
 

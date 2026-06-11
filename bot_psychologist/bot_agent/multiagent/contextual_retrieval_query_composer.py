@@ -11,7 +11,7 @@ from .contracts.retrieval_query_contract import (
 )
 
 
-_WORD_RE = re.compile(r"[a-zA-Zа-яА-ЯёЁ0-9]+")
+_WORD_RE = re.compile(r"[a-zA-Zа-яА-ЯёЁ0-9_-]+")
 _AFFIRM_MARKERS = {"да", "давай", "ага", "угу", "ок", "окей", "okay", "ok", "yes", "sure", "хорошо"}
 _GREETING_MARKERS = ("привет", "здравствуй", "здравствуйте", "hello", "hi", "hey")
 _CONTACT_MARKERS = ("давай знакомиться", "приятно познакомиться", "меня зовут", "my name is")
@@ -29,14 +29,26 @@ _KNOWLEDGE_MARKERS = (
 _PRACTICE_MARKERS = ("какие практики", "практики есть", "дай практик", "упражнения", "practice")
 _ONE_STEP_MARKERS = ("что сделать прямо сейчас", "один шаг", "первый шаг", "микрошаг", "microstep")
 _FORMAT_ONLY_MARKERS = ("markdown", "таблиц", "список", "жирн", "заголов")
-_KNOWN_CONCEPT_TERMS = (
-    "нейросталкинг",
-    "неосталкинг",
-    "самореализация",
-    "кузница духа",
-    "автоматизм",
-    "защитный механизм",
-)
+_GENERIC_QUERY_STOPWORDS = {
+    "что",
+    "такое",
+    "значит",
+    "объясни",
+    "расскажи",
+    "покажи",
+    "дай",
+    "как",
+    "это",
+    "есть",
+    "мой",
+    "моем",
+    "моём",
+    "примере",
+    "какие",
+    "practice",
+    "summary",
+    "recap",
+}
 
 
 def _normalize(text: str) -> str:
@@ -61,7 +73,7 @@ def _dedupe_terms(items: list[str]) -> list[str]:
     seen: set[str] = set()
     result: list[str] = []
     for item in items:
-        term = _normalize(item).strip(" .,:;!?")
+        term = _normalize(item).strip(" .,:;!?-_")
         if not term or term in seen:
             continue
         seen.add(term)
@@ -70,31 +82,19 @@ def _dedupe_terms(items: list[str]) -> list[str]:
 
 
 def _extract_known_terms(*texts: str) -> list[str]:
-    combined = _normalize(" ".join(str(item or "") for item in texts))
-    terms = [term for term in _KNOWN_CONCEPT_TERMS if term in combined]
-    if "практик" in combined and "практики" not in terms:
-        terms.append("практики")
-    return _dedupe_terms(terms)
-
-
-def _conceptual_expansions(terms: list[str]) -> list[str]:
-    expansions: list[str] = []
-    normalized = set(_normalize(term) for term in terms)
-    if "нейросталкинг" in normalized or "неосталкинг" in normalized:
-        expansions.extend(["внутреннее наблюдение", "автоматизм", "защитный механизм", "внутренний шаг"])
-    if "самореализация" in normalized:
-        expansions.extend(["ценности", "действие", "внутренний выбор"])
-    if "практики" in normalized:
-        expansions.extend(["наблюдение", "use_when", "avoid_when", "мягкое распутывание"])
-    if not expansions:
-        expansions.extend(["объяснение", "механизм", "наблюдение"])
-    return expansions
+    terms: list[str] = []
+    for word in _words(" ".join(str(item or "") for item in texts)):
+        normalized = _normalize(word)
+        if len(normalized) < 3 or normalized in _GENERIC_QUERY_STOPWORDS:
+            continue
+        if normalized not in terms:
+            terms.append(normalized)
+    return _dedupe_terms(terms[:10])
 
 
 def _compose_query(*sources: str, fallback_terms: list[str] | None = None, max_chars: int = 280) -> tuple[str, list[str]]:
     terms = _extract_known_terms(*sources)
     terms.extend(list(fallback_terms or []))
-    terms.extend(_conceptual_expansions(terms))
     terms = _dedupe_terms(terms)
     query = " ".join(terms).strip()
     if not query:
@@ -161,39 +161,27 @@ def build_contextual_retrieval_query_composer_v1(
 ) -> dict[str, Any]:
     """Create retrieval intent/query from dialogue context, not just the last utterance."""
 
-    del diagnostic_center_shadow, retrieval_decision_previous
+    del recent_turns, final_answer_directive, active_line, diagnostic_card, diagnostic_center_shadow, retrieval_decision_previous
     text = str(user_message or "")
     lowered = _normalize(text)
     pragmatics = dict(dialogue_pragmatics or {})
     act = dict(dialogue_act_resolution or {})
     obligation = dict(answer_obligation_resolution or {})
-    directive = dict(final_answer_directive or {})
     planner = dict(response_planner or {})
-    card = dict(diagnostic_card or {})
     guard = dict(knowledge_answer_guard or {})
     knowledge_answer = dict(guard.get("knowledge_answer", {})) if isinstance(guard.get("knowledge_answer"), dict) else {}
     last_offer = dict(last_assistant_offer or {})
     memory = dict(memory_bundle_summary or {})
     thread = dict(thread_state or {})
-    active = dict(active_line or {})
 
-    dialogue_act = str(act.get("dialogue_act", "") or directive.get("dialogue_act", "") or "")
-    answer_obligation = str(
-        obligation.get("answer_obligation", "")
-        or directive.get("answer_obligation", "")
-        or ""
-    )
-    offer_type = str(
-        last_offer.get("offer_type", "")
-        or pragmatics.get("previous_assistant_offer_type", "")
-        or ""
-    )
+    dialogue_act = str(act.get("dialogue_act", "") or "")
+    answer_obligation = str(obligation.get("answer_obligation", "") or "")
+    offer_type = str(last_offer.get("offer_type", "") or pragmatics.get("previous_assistant_offer_type", "") or "")
     offer_summary = str(last_offer.get("offer_text_summary", "") or "")
     inherited_topic = str(
         pragmatics.get("inherited_topic", "")
         or knowledge_answer.get("concept", "")
         or current_concept
-        or active.get("active_concept", "")
         or thread.get("active_concept", "")
         or ""
     ).strip()
@@ -203,7 +191,7 @@ def build_contextual_retrieval_query_composer_v1(
     evidence: list[str] = []
 
     if dialogue_act == "summary_request" or answer_obligation == "summarize_current_conversation":
-        if any(term in lowered for term in _KNOWN_CONCEPT_TERMS) and any(marker in lowered for marker in ("свяжи", "через", "с точки зрения")):
+        if inherited_topic and any(term in lowered for term in ("свяжи", "через", "с точки зрения")):
             query, terms = _compose_query(text, inherited_topic, fallback_terms=["summary_context"])
             return _payload(
                 retrieval_need="mixed",
@@ -218,8 +206,8 @@ def build_contextual_retrieval_query_composer_v1(
                 include_for_writer_if_found=True,
                 max_chunks_for_writer=2,
                 max_chars_per_chunk=600,
-                reason="summary request explicitly asks to connect current conversation with a concept",
-                evidence=["summary_request", "explicit_concept_link"],
+                reason="summary request explicitly asks to connect current conversation with a topic",
+                evidence=["summary_request", "explicit_topic_link"],
             )
         return _payload(
             retrieval_need="conversation_context",
@@ -295,7 +283,7 @@ def build_contextual_retrieval_query_composer_v1(
                 reason="short support or one-step offer can be fulfilled from dialogue context",
                 evidence=["short_contextual_followup", "last_offer_inherited", "noise_suppression"],
             )
-        if offer_type in {"explain_concept", "explanation", "example", "application", "practice_observation", "summary"} or _extract_known_terms(offer_summary, inherited_topic):
+        if offer_type in {"explain_concept", "explanation", "example", "application", "practice_observation", "summary"} or inherited_topic:
             query, terms = _compose_query(offer_summary, inherited_topic, fallback_terms=["объяснение", "наблюдение"])
             return _payload(
                 retrieval_need="knowledge_context",

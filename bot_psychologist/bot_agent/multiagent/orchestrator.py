@@ -50,6 +50,10 @@ from .fresh_chat_context_policy import (
     FRESH_CHAT_CONTEXT_POLICY_VERSION,
     build_fresh_chat_context_policy_v1,
 )
+from .hybrid_retrieval_planner import (
+    HYBRID_RETRIEVAL_PLANNER_VERSION,
+    build_hybrid_retrieval_plan_v1,
+)
 from .knowledge_policy import build_safe_knowledge_debug_detail_v1
 from .knowledge_answer_routing_guard import build_knowledge_answer_routing_guard
 from .live_turn_evidence import build_live_turn_evidence_v1
@@ -259,25 +263,59 @@ class MultiAgentOrchestrator:
             ),
         )
         retrieval_thread = ThreadState.from_dict(updated_thread.to_dict())
-        retrieval_action_pre = str(pre_retrieval_composer.get("retrieval_action", "") or "")
-        if retrieval_action_pre in {"suppress_rag", "use_current_context_only"}:
-            retrieval_user_message = ""
-            retrieval_thread.core_direction = ""
-            retrieval_thread.open_loops = []
-        elif retrieval_action_pre in {"query_kb", "query_memory", "query_kb_and_memory"} and str(
-            pre_retrieval_composer.get("composed_query", "") or ""
-        ).strip():
-            retrieval_user_message = str(pre_retrieval_composer.get("composed_query", "") or "").strip()
-            retrieval_thread.core_direction = ""
-            retrieval_thread.open_loops = []
-        else:
-            retrieval_user_message = query
+        planner_client_getter = getattr(state_analyzer_agent, "_get_client", None)
+        planner_client = planner_client_getter() if callable(planner_client_getter) else None
+        hybrid_retrieval_plan = await build_hybrid_retrieval_plan_v1(
+            user_message=query,
+            recent_turns_compact=[],
+            last_assistant_offer=pre_retrieval_last_offer,
+            thread_state_compact={
+                "thread_id": str(updated_thread.thread_id or ""),
+                "phase": str(updated_thread.phase or ""),
+                "response_mode": str(updated_thread.response_mode or ""),
+                "core_direction": str(updated_thread.core_direction or "")[:200],
+                "open_loops": [str(item) for item in list(updated_thread.open_loops or [])[:2]],
+                "active_concept": str(
+                    dict(updated_thread.active_frame).get("active_concept", "")
+                    if isinstance(updated_thread.active_frame, dict)
+                    else ""
+                ),
+                "safety_active": bool(updated_thread.safety_active),
+            },
+            state_snapshot_compact={
+                "nervous_state": str(state_snapshot.nervous_state or ""),
+                "intent": str(state_snapshot.intent or ""),
+                "safety_active": bool(state_snapshot.safety_flag or updated_thread.safety_active),
+            },
+            dialogue_pragmatics={},
+            fresh_chat_policy={},
+            constraints=[
+                item
+                for item, enabled in (
+                    ("no_theory", "без теории" in query.lower()),
+                    ("no_practice", ("без практик" in query.lower()) or ("без упражнений" in query.lower())),
+                    ("keep_brief", "короче" in query.lower()),
+                )
+                if enabled
+            ],
+            client=planner_client,
+        )
+        pre_retrieval_composer["hybrid_retrieval_plan"] = (
+            dict(hybrid_retrieval_plan.get("plan", {}))
+            if isinstance(hybrid_retrieval_plan.get("plan"), dict)
+            else {}
+        )
+        pre_retrieval_composer["hybrid_retrieval_universal_gate"] = str(
+            hybrid_retrieval_plan.get("universal_gate", "")
+            or ""
+        )
 
         t0 = time.perf_counter()
         memory_bundle = await memory_retrieval_agent.assemble(
-            user_message=retrieval_user_message,
+            user_message=query,
             thread_state=retrieval_thread,
             user_id=user_id,
+            retrieval_plan=hybrid_retrieval_plan,
         )
         t_memory = int((time.perf_counter() - t0) * 1000)
         self._record_agent_metric(
@@ -286,6 +324,11 @@ class MultiAgentOrchestrator:
             user_id=user_id,
             input_preview=query,
             output_preview=f"hits={len(memory_bundle.semantic_hits)}; has_knowledge={memory_bundle.has_relevant_knowledge}",
+        )
+        hybrid_retrieval_trace = (
+            dict(getattr(memory_bundle, "hybrid_retrieval_trace", {}) or {})
+            if isinstance(getattr(memory_bundle, "hybrid_retrieval_trace", None), dict)
+            else {}
         )
         context_package = build_context_assembly_package_v1(
             user_message=query,
@@ -458,6 +501,27 @@ class MultiAgentOrchestrator:
             semantic_hits=list(memory_bundle.semantic_hits or []),
             fresh_chat_context_policy=fresh_chat_context_policy,
         )
+        retrieval_decision["hybrid_retrieval_planner_version"] = HYBRID_RETRIEVAL_PLANNER_VERSION
+        retrieval_decision["hybrid_retrieval_planner_mode"] = str(hybrid_retrieval_plan.get("mode", "shadow") or "shadow")
+        retrieval_decision["hybrid_retrieval_plan"] = (
+            dict(hybrid_retrieval_plan.get("plan", {}))
+            if isinstance(hybrid_retrieval_plan.get("plan"), dict)
+            else {}
+        )
+        retrieval_decision["hybrid_retrieval_plan_valid"] = bool(hybrid_retrieval_plan.get("valid", False))
+        retrieval_decision["hybrid_retrieval_plan_error"] = hybrid_retrieval_plan.get("error")
+        retrieval_decision["hybrid_retrieval_universal_gate"] = str(
+            hybrid_retrieval_plan.get("universal_gate", "")
+            or ""
+        )
+        retrieval_decision["hybrid_retrieval_llm_called"] = bool(hybrid_retrieval_plan.get("llm_called", False))
+        retrieval_decision["hybrid_retrieval_llm_reason"] = str(
+            hybrid_retrieval_plan.get("llm_reason", "")
+            or ""
+        )
+        retrieval_decision["hybrid_retrieval_fallback_used"] = bool(
+            hybrid_retrieval_plan.get("fallback_used", False)
+        )
         dialogue_policy["retrieval_decision"] = dict(retrieval_decision)
         diagnostic_card = build_diagnostic_card_v1(
             user_message=query,
@@ -542,9 +606,42 @@ class MultiAgentOrchestrator:
         )
         contextual_retrieval_query_composer["pre_retrieval"] = dict(pre_retrieval_composer)
         contextual_retrieval_query_composer["executed_rag_query"] = getattr(memory_bundle, "rag_query", "") or ""
+        contextual_retrieval_query_composer["hybrid_retrieval_plan"] = (
+            dict(hybrid_retrieval_plan.get("plan", {}))
+            if isinstance(hybrid_retrieval_plan.get("plan"), dict)
+            else {}
+        )
         retrieval_decision = merge_composer_into_retrieval_decision_v1(
             retrieval_decision=retrieval_decision,
             composer_payload=contextual_retrieval_query_composer,
+        )
+        retrieval_decision["planned_composed_query"] = str(
+            dict(hybrid_retrieval_plan.get("plan", {})).get("composed_query", "")
+            if isinstance(hybrid_retrieval_plan.get("plan"), dict)
+            else ""
+        )
+        retrieval_decision["executed_rag_query"] = str(
+            hybrid_retrieval_trace.get("executed_rag_query", getattr(memory_bundle, "rag_query", "") or "")
+        )
+        retrieval_decision["legacy_rag_query"] = str(
+            hybrid_retrieval_trace.get("legacy_rag_query", "")
+        )
+        retrieval_decision["query_before_rag_proof"] = bool(
+            hybrid_retrieval_trace.get("query_before_rag_proof", False)
+        )
+        retrieval_decision["retrieval_gap_reason"] = str(
+            hybrid_retrieval_trace.get("retrieval_gap_reason", "")
+            or ""
+        )
+        retrieval_decision["needed_chunk_types"] = list(
+            dict(hybrid_retrieval_plan.get("plan", {})).get("needed_chunk_types", [])
+            if isinstance(hybrid_retrieval_plan.get("plan"), dict)
+            else []
+        )
+        retrieval_decision["mechanism_hints"] = list(
+            dict(hybrid_retrieval_plan.get("plan", {})).get("mechanism_hints", [])
+            if isinstance(hybrid_retrieval_plan.get("plan"), dict)
+            else []
         )
         dialogue_policy["retrieval_decision"] = dict(retrieval_decision)
 
@@ -958,6 +1055,53 @@ class MultiAgentOrchestrator:
                 "writer_chunks_candidate_detail": writer_chunks_candidate_detail,
                 "semantic_hits_raw_redacted": True,
                 "rag_retrieval_trace": dict(memory_bundle.rag_retrieval_trace or {}),
+                "hybrid_retrieval_planner_version": HYBRID_RETRIEVAL_PLANNER_VERSION,
+                "hybrid_retrieval_planner_mode": str(hybrid_retrieval_plan.get("mode", "shadow") or "shadow"),
+                "hybrid_retrieval_plan": (
+                    dict(hybrid_retrieval_plan.get("plan", {}))
+                    if isinstance(hybrid_retrieval_plan.get("plan"), dict)
+                    else {}
+                ),
+                "hybrid_retrieval_plan_valid": bool(hybrid_retrieval_plan.get("valid", False)),
+                "hybrid_retrieval_plan_error": hybrid_retrieval_plan.get("error"),
+                "hybrid_retrieval_universal_gate": str(hybrid_retrieval_plan.get("universal_gate", "") or ""),
+                "hybrid_retrieval_llm_called": bool(hybrid_retrieval_plan.get("llm_called", False)),
+                "hybrid_retrieval_llm_reason": str(hybrid_retrieval_plan.get("llm_reason", "") or ""),
+                "hybrid_retrieval_fallback_used": bool(hybrid_retrieval_plan.get("fallback_used", False)),
+                "planned_composed_query": str(
+                    hybrid_retrieval_trace.get("planned_composed_query", "")
+                    or ""
+                ),
+                "executed_rag_query": str(
+                    hybrid_retrieval_trace.get("executed_rag_query", "")
+                    or ""
+                ),
+                "legacy_rag_query": str(
+                    hybrid_retrieval_trace.get("legacy_rag_query", "")
+                    or ""
+                ),
+                "query_before_rag_proof": bool(
+                    hybrid_retrieval_trace.get("query_before_rag_proof", False)
+                ),
+                "needed_chunk_types": list(
+                    dict(hybrid_retrieval_plan.get("plan", {})).get("needed_chunk_types", [])
+                    if isinstance(hybrid_retrieval_plan.get("plan"), dict)
+                    else []
+                ),
+                "mechanism_hints": list(
+                    dict(hybrid_retrieval_plan.get("plan", {})).get("mechanism_hints", [])
+                    if isinstance(hybrid_retrieval_plan.get("plan"), dict)
+                    else []
+                ),
+                "retrieval_gap_reason": str(
+                    hybrid_retrieval_trace.get("retrieval_gap_reason", "")
+                    or ""
+                ),
+                "writer_can_ignore_rag": bool(
+                    dict(hybrid_retrieval_plan.get("plan", {})).get("writer_can_ignore_rag", True)
+                    if isinstance(hybrid_retrieval_plan.get("plan"), dict)
+                    else True
+                ),
                 "knowledge_policy_trace": dict(memory_bundle.knowledge_policy_trace or {}),
                 "dialogue_pragmatics": dict(dialogue_pragmatics),
                 "fresh_chat_context_policy_version": FRESH_CHAT_CONTEXT_POLICY_VERSION,

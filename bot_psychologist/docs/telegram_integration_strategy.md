@@ -1,12 +1,12 @@
-# Telegram Integration Strategy
+# Telegram Integration Strategy (Стратегия интеграции Telegram)
 
-## Статус на 2026-05-01
+## Status as of 2026-05-01 (Статус на 2026-05-01)
 
 - PRD-015A реализован: identity/conversation-контракт и strict linking.
 - PRD-015B-v2 + PRD-016-v2 реализованы: transport-слой Telegram (`mock`, `polling`, `webhook`), регистрация и привязка.
-- По умолчанию Telegram отключен в локальной среде (`TELEGRAM_ENABLED=false`), включается через env.
+- По умолчанию Telegram отключён в локальной среде (`TELEGRAM_ENABLED=false`), включается через env.
 
-## Что уже реализовано
+## Already Implemented (Что уже реализовано)
 
 - Пакет `api/telegram_adapter/`:
   - `config.py` — feature flags и режимы запуска;
@@ -24,24 +24,24 @@
   - `X-Internal-Key` + `X-Request-HMAC` для `confirm-link`;
   - `LinkAttemptGuard` ограничивает brute-force по коду.
 
-## Целевой runtime-поток
+## Target runtime flow (Целевой runtime-поток)
 
 1. Принять Telegram update (webhook/polling/mock).
 2. Преобразовать payload в `TelegramUpdateModel`.
 3. Резолвить identity по `telegram_user_id`.
 4. Для linked identity получить/создать conversation с `channel="telegram"`.
-5. Передать сообщение в runtime (`/api/v1/questions/adaptive` логика).
+5. Передать сообщение в runtime (логика `/api/v1/questions/adaptive`).
 6. Вернуть/отправить ответ в Telegram.
 
-## Ограничения текущего этапа
+## Current Stage Limitations (Ограничения текущего этапа)
 
 - Full production hardening (алерты, расширенный аудит, эксплуатационные SLO) не финализированы.
 - Для production необходимы:
-  - отдельный секрет-менеджмент;
+  - отдельный secret-менеджмент;
   - строгий контроль webhook URL и TLS;
   - централизованный мониторинг ошибок transport/outbound.
 
-## Рекомендуемые проверки
+## Recommended Checks (Рекомендуемые проверки)
 
 ```bash
 pytest tests/telegram_adapter/test_models.py tests/telegram_adapter/test_adapter.py tests/telegram_adapter/test_service.py tests/api/test_telegram_mock_routes.py -q

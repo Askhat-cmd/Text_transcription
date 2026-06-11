@@ -8,6 +8,7 @@ import logging
 from typing import Any
 
 from ..contracts.memory_bundle import MemoryBundle, SemanticHit, UserProfile
+from ..contracts.hybrid_retrieval_planner_contract import HYBRID_RETRIEVAL_PLANNER_VERSION
 from ..contracts.thread_state import ThreadState
 from ..knowledge_policy import apply_knowledge_policy_v1
 from ..knowledge_answer_routing_guard import select_lexical_override_hits
@@ -163,14 +164,21 @@ class MemoryRetrievalAgent:
         user_message: str,
         thread_state: ThreadState,
         user_id: str,
+        retrieval_plan: dict[str, Any] | None = None,
     ) -> MemoryBundle:
         n_turns = self._resolve_n_turns(thread_state)
-        rag_query = self._build_rag_query(user_message, thread_state)
+        legacy_rag_query = self._build_rag_query(user_message, thread_state)
+        retrieval_runtime = self._resolve_retrieval_runtime(
+            retrieval_plan=retrieval_plan,
+            legacy_rag_query=legacy_rag_query,
+        )
+        rag_query = str(retrieval_runtime.get("executed_rag_query", "") or "")
+        rag_should_load = bool(retrieval_runtime.get("rag_should_load", False))
 
         results = await asyncio.gather(
             self._load_conversation(user_id, n_turns, user_message),
             self._load_profile(user_id),
-            self._load_rag(rag_query),
+            self._load_rag(rag_query) if rag_should_load else self._skip_rag_load(),
             self._load_recent_turns(user_id, n_turns),
             self._load_personal_history_context(user_id),
             self._load_semantic_memory_hits(user_id, user_message),
@@ -249,6 +257,14 @@ class MemoryRetrievalAgent:
             "salvaged_hits_count": int(trace_payload.get("salvaged_hits_count", 0) or 0),
             "score_policy_mode": str(trace_payload.get("score_policy_mode", "standard_threshold") or "standard_threshold"),
             "score_policy_reasons": [str(item) for item in reasons_value],
+            "retrieval_plan_applied": bool(retrieval_runtime.get("retrieval_plan_applied", False)),
+            "retrieval_plan_mode": str(retrieval_runtime.get("retrieval_plan_mode", "off") or "off"),
+            "planned_composed_query": str(retrieval_runtime.get("planned_composed_query", "") or ""),
+            "executed_rag_query": str(retrieval_runtime.get("executed_rag_query", "") or ""),
+            "legacy_rag_query": str(retrieval_runtime.get("legacy_rag_query", "") or ""),
+            "query_before_rag_proof": bool(retrieval_runtime.get("query_before_rag_proof", False)),
+            "rag_skipped_reason": str(retrieval_runtime.get("rag_skipped_reason", "") or ""),
+            "retrieval_gap_reason": str(retrieval_runtime.get("retrieval_gap_reason", "") or ""),
         }
         policy_decisions, knowledge_policy_trace = apply_knowledge_policy_v1(filtered_hits)
         knowledge_rag_hits = [
@@ -275,6 +291,23 @@ class MemoryRetrievalAgent:
             context_turns=n_turns,
             knowledge_policy_trace=knowledge_policy_trace,
             rag_retrieval_trace=rag_retrieval_trace,
+            hybrid_retrieval_trace={
+                "version": HYBRID_RETRIEVAL_PLANNER_VERSION,
+                "retrieval_plan_applied": bool(retrieval_runtime.get("retrieval_plan_applied", False)),
+                "retrieval_plan_mode": str(retrieval_runtime.get("retrieval_plan_mode", "off") or "off"),
+                "retrieval_action": str(retrieval_runtime.get("retrieval_action", "trace_only") or "trace_only"),
+                "planned_composed_query": str(retrieval_runtime.get("planned_composed_query", "") or ""),
+                "executed_rag_query": str(retrieval_runtime.get("executed_rag_query", "") or ""),
+                "legacy_rag_query": str(retrieval_runtime.get("legacy_rag_query", "") or ""),
+                "query_before_rag_proof": bool(retrieval_runtime.get("query_before_rag_proof", False)),
+                "rag_skipped_reason": str(retrieval_runtime.get("rag_skipped_reason", "") or ""),
+                "retrieval_gap_reason": str(retrieval_runtime.get("retrieval_gap_reason", "") or ""),
+                "plan": (
+                    dict(retrieval_runtime.get("plan", {}))
+                    if isinstance(retrieval_runtime.get("plan"), dict)
+                    else {}
+                ),
+            },
         )
 
     async def update(
@@ -350,6 +383,97 @@ class MemoryRetrievalAgent:
         # Защитная дедупликация: каждый смысловой кусок должен попасть в query один раз.
         parts = list(dict.fromkeys(p.strip() for p in parts if p.strip()))
         return " ".join(parts)[:RAG_QUERY_MAX_LEN]
+
+    @staticmethod
+    def _resolve_retrieval_runtime(
+        *,
+        retrieval_plan: dict[str, Any] | None,
+        legacy_rag_query: str,
+    ) -> dict[str, Any]:
+        plan_wrapper = dict(retrieval_plan or {})
+        plan = dict(plan_wrapper.get("plan", {})) if isinstance(plan_wrapper.get("plan"), dict) else {}
+        mode = str(plan_wrapper.get("mode", "off") or "off")
+        valid = bool(plan_wrapper.get("valid", False))
+        action = str(plan.get("retrieval_action", "trace_only") or "trace_only")
+        planned_query = str(plan.get("composed_query", "") or "").strip()[:RAG_QUERY_MAX_LEN]
+        fallback_used = bool(plan_wrapper.get("fallback_used", False))
+
+        executed_rag_query = legacy_rag_query
+        rag_should_load = bool(legacy_rag_query.strip())
+        rag_skipped_reason = ""
+        retrieval_plan_applied = False
+        query_before_rag_proof = False
+        retrieval_gap_reason = str(plan.get("retrieval_gap_reason", "") or "")
+
+        if not plan_wrapper:
+            return {
+                "plan": {},
+                "retrieval_plan_applied": False,
+                "retrieval_plan_mode": "off",
+                "retrieval_action": "legacy_query",
+                "planned_composed_query": "",
+                "executed_rag_query": legacy_rag_query,
+                "legacy_rag_query": legacy_rag_query,
+                "query_before_rag_proof": False,
+                "rag_skipped_reason": "",
+                "retrieval_gap_reason": retrieval_gap_reason,
+                "rag_should_load": rag_should_load,
+                "fallback_used": False,
+            }
+
+        if action in {"suppress_rag", "use_current_context_only"}:
+            rag_should_load = False
+            executed_rag_query = ""
+            rag_skipped_reason = action
+            retrieval_plan_applied = mode == "apply" and valid
+            query_before_rag_proof = retrieval_plan_applied
+            if not retrieval_gap_reason:
+                retrieval_gap_reason = "planner_suppressed_rag"
+            return {
+                "plan": plan,
+                "retrieval_plan_applied": retrieval_plan_applied,
+                "retrieval_plan_mode": mode,
+                "retrieval_action": action,
+                "planned_composed_query": planned_query,
+                "executed_rag_query": executed_rag_query,
+                "legacy_rag_query": legacy_rag_query,
+                "query_before_rag_proof": query_before_rag_proof,
+                "rag_skipped_reason": rag_skipped_reason,
+                "retrieval_gap_reason": retrieval_gap_reason,
+                "rag_should_load": rag_should_load,
+                "fallback_used": fallback_used,
+            }
+
+        if mode == "apply" and valid and action in {"query_kb", "query_memory", "query_kb_and_memory"} and planned_query:
+            executed_rag_query = planned_query
+            rag_should_load = True
+            retrieval_plan_applied = True
+            query_before_rag_proof = executed_rag_query == planned_query
+        elif mode == "shadow":
+            executed_rag_query = legacy_rag_query
+            rag_should_load = bool(legacy_rag_query.strip())
+        elif action == "trace_only":
+            executed_rag_query = legacy_rag_query
+            rag_should_load = bool(legacy_rag_query.strip())
+            if fallback_used and not retrieval_gap_reason:
+                retrieval_gap_reason = "legacy_fallback_used"
+        elif not valid and not retrieval_gap_reason:
+            retrieval_gap_reason = "legacy_fallback_used"
+
+        return {
+            "plan": plan,
+            "retrieval_plan_applied": retrieval_plan_applied,
+            "retrieval_plan_mode": mode,
+            "retrieval_action": action,
+            "planned_composed_query": planned_query,
+            "executed_rag_query": executed_rag_query,
+            "legacy_rag_query": legacy_rag_query,
+            "query_before_rag_proof": query_before_rag_proof,
+            "rag_skipped_reason": rag_skipped_reason,
+            "retrieval_gap_reason": retrieval_gap_reason,
+            "rag_should_load": rag_should_load,
+            "fallback_used": fallback_used,
+        }
 
     @staticmethod
     async def _load_conversation(user_id: str, n_turns: int, user_message: str = "") -> str:
@@ -520,6 +644,13 @@ class MemoryRetrievalAgent:
         except Exception as exc:
             logger.warning("[MRA] semantic memory hits load error: %s", exc)
             return []
+
+    @staticmethod
+    async def _skip_rag_load() -> tuple[list[SemanticHit], dict[str, Any]]:
+        return [], {
+            "retrieval_source_attempted": "skipped",
+            "retrieval_source_used": "skipped",
+        }
 
     @staticmethod
     async def _load_rag(query: str) -> tuple[list[SemanticHit], dict[str, Any]]:

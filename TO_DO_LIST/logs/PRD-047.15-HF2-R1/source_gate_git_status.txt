@@ -1,0 +1,81 @@
+git status --short
+ M bot_psychologist/api/admin_routes.py
+ M bot_psychologist/api/debug_routes.py
+ M bot_psychologist/api/models.py
+ M bot_psychologist/bot_agent/feature_flags.py
+ M bot_psychologist/bot_agent/multiagent/agents/memory_retrieval.py
+ M bot_psychologist/bot_agent/multiagent/contextual_retrieval_query_composer.py
+ M bot_psychologist/bot_agent/multiagent/contracts/memory_bundle.py
+ M bot_psychologist/bot_agent/multiagent/contracts/writer_contract.py
+ M bot_psychologist/bot_agent/multiagent/orchestrator.py
+ M bot_psychologist/bot_agent/multiagent/writer_context_package.py
+ M bot_psychologist/docs/ARCHITECTURE_CURRENT.md
+ M bot_psychologist/docs/DIAGNOSTIC_CENTER_BOUNDARY.md
+ M bot_psychologist/docs/FINAL_ANSWER_ACCEPTANCE_GATE.md
+ M bot_psychologist/docs/NO_STUB_DIALOGUE_POLICY.md
+ M bot_psychologist/docs/PROJECT_STATUS_CURRENT.md
+ M bot_psychologist/docs/README.md
+ M bot_psychologist/docs/REAL_LIVE_ACCEPTANCE_PROTOCOL.md
+ M bot_psychologist/docs/RUNTIME_PROFILES_AND_PRESETS.md
+ M bot_psychologist/docs/UNIFIED_DIALOGUE_POLICY_V2.md
+ M bot_psychologist/docs/WEB_CHAT_MARKDOWN_RENDERING.md
+ M bot_psychologist/docs/active_line.md
+ M bot_psychologist/docs/api.md
+ M bot_psychologist/docs/architecture.md
+ M bot_psychologist/docs/architecture_identity_and_conversations.md
+ M bot_psychologist/docs/archive/legacy_migration/AUDIT_MULTIAGENT_MIGRATION_READINESS_2026-05-01.md
+ M bot_psychologist/docs/archive/legacy_migration/MULTIAGENT_LAUNCH_CHECKLIST.md
+ M bot_psychologist/docs/archive/legacy_migration/legacy_physical_purge_audit_prd041.md
+ M bot_psychologist/docs/archive/legacy_migration/migration_legacy_to_multiagent.md
+ M bot_psychologist/docs/archive/legacy_migration/post_purge_remaining_review_modules_prd042.md
+ M bot_psychologist/docs/archive/legacy_migration/post_purge_stabilization_audit_prd042.md
+ M bot_psychologist/docs/archive/neo_runtime_v101.md
+ M bot_psychologist/docs/archive/release_checklist_v101.md
+ M bot_psychologist/docs/bot_agent.md
+ M bot_psychologist/docs/configuration.md
+ M bot_psychologist/docs/data_flow.md
+ M bot_psychologist/docs/deployment.md
+ M bot_psychologist/docs/diagnostic_center_admin_control.md
+ M bot_psychologist/docs/guided_live_user_testing.md
+ D bot_psychologist/docs/knowledge_graph.md
+ M bot_psychologist/docs/local_dev_runbook.md
+ M bot_psychologist/docs/migration_legacy_to_multiagent.md
+ M bot_psychologist/docs/multiagent_architecture.md
+ M bot_psychologist/docs/multiagent_contracts.md
+ M bot_psychologist/docs/overview.md
+ M bot_psychologist/docs/philosophy_kernel.md
+ M bot_psychologist/docs/registration.md
+ M bot_psychologist/docs/repository_hygiene_audit_prd043.md
+ M bot_psychologist/docs/repository_hygiene_review_prd043.md
+ M bot_psychologist/docs/response_planner.md
+ M bot_psychologist/docs/roadmap.md
+ M bot_psychologist/docs/safety_system.md
+ M bot_psychologist/docs/sag_v2.md
+ M bot_psychologist/docs/telegram_integration_strategy.md
+ M bot_psychologist/docs/testing.md
+ M bot_psychologist/docs/testing_matrix.md
+ M bot_psychologist/docs/thread_lifecycle.md
+ M bot_psychologist/docs/trace_runtime.md
+ M bot_psychologist/docs/web_admin_runtime_controls.md
+ M bot_psychologist/docs/web_ui.md
+ M bot_psychologist/docs/writer_freedom_contract.md
+ M bot_psychologist/tests/multiagent/test_memory_retrieval.py
+ M bot_psychologist/tests/test_admin_runtime_contract.py
+ M bot_psychologist/tests/test_multiagent_trace.py
+ M bot_psychologist/tests/test_writer_contract_contextual_retrieval_v1.py
+?? TO_DO_LIST/PRD-047.15-HF2-R1_Hybrid_Retrieval_Planner_Anti_Overengineering_RU.md
+?? TO_DO_LIST/PRD-047.15-HF2-R1_TASK_LIST.md
+?? TO_DO_LIST/context/
+?? TO_DO_LIST/logs/PRD-047.15-HF2-R1/
+?? bot_psychologist/bot_agent/multiagent/contracts/hybrid_retrieval_planner_contract.py
+?? bot_psychologist/bot_agent/multiagent/hybrid_retrieval_planner.py
+?? bot_psychologist/scripts/run_prd_047_15_hf2_r1_hybrid_retrieval_planner.py
+?? bot_psychologist/tests/test_hybrid_retrieval_admin_runtime_contract.py
+?? bot_psychologist/tests/test_hybrid_retrieval_anti_overengineering.py
+?? bot_psychologist/tests/test_hybrid_retrieval_planner_v1.py
+
+git rev-parse HEAD
+f2fefd6ede64150ebb81afd6b9db286fb6036ed2
+
+git branch --show-current
+main

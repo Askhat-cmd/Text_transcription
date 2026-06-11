@@ -115,8 +115,9 @@ def test_orchestrator_returns_multiagent_timings(monkeypatch) -> None:
     async def fake_update_thread(**_kwargs):
         payload = SimpleNamespace(
             thread_id="thread-test",
-            phase="exploring",
-            response_mode="presence",
+            user_id="u-test",
+            phase="explore",
+            response_mode="reflect",
             response_goal="support",
             relation_to_thread="continue",
             continuity_score=0.77,
@@ -133,6 +134,7 @@ def test_orchestrator_returns_multiagent_timings(monkeypatch) -> None:
         )
         payload.to_dict = lambda: {
             "thread_id": payload.thread_id,
+            "user_id": payload.user_id,
             "phase": payload.phase,
             "response_mode": payload.response_mode,
             "response_goal": payload.response_goal,
@@ -336,6 +338,25 @@ def test_multiagent_trace_endpoint_returns_200() -> None:
             ],
             "conversation_context": "User: hi\nAssistant: hello",
             "rag_query": "hi hello",
+            "hybrid_retrieval_planner_version": "hybrid_retrieval_planner_v1_r1",
+            "hybrid_retrieval_planner_mode": "shadow",
+            "hybrid_retrieval_plan": {
+                "retrieval_action": "query_kb",
+                "composed_query": "planned hi",
+                "needed_chunk_types": ["concept"],
+                "writer_can_ignore_rag": True,
+            },
+            "hybrid_retrieval_plan_valid": True,
+            "hybrid_retrieval_plan_error": None,
+            "hybrid_retrieval_universal_gate": "clear_kb_ask",
+            "hybrid_retrieval_llm_called": False,
+            "hybrid_retrieval_llm_reason": "universal_gate_resolved",
+            "hybrid_retrieval_fallback_used": False,
+            "planned_composed_query": "planned hi",
+            "executed_rag_query": "hi hello",
+            "legacy_rag_query": "hi hello",
+            "query_before_rag_proof": False,
+            "retrieval_gap_reason": "",
             "user_profile": {"patterns": ["p"], "values": ["v"], "progress_notes": ["n"]},
             "has_relevant_knowledge": True,
             "response_mode": "presence",
@@ -395,6 +416,10 @@ def test_multiagent_trace_endpoint_returns_200() -> None:
     assert payload["response_planner"]["next_move"] == "deepen_mechanism"
     assert payload["response_planner_error"] is None
     assert payload["memory_context"]["rag_query"] == "hi hello"
+    assert payload["hybrid_retrieval_planner_version"] == "hybrid_retrieval_planner_v1_r1"
+    assert payload["hybrid_retrieval_planner_mode"] == "shadow"
+    assert payload["hybrid_retrieval_plan"]["retrieval_action"] == "query_kb"
+    assert payload["memory_context"]["hybrid_retrieval"]["planned_composed_query"] == "planned hi"
     assert "sd_level" not in payload
     assert "user_level" not in payload
     assert isinstance(payload["session_dashboard"]["total_turns"], int)

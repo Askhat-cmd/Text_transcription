@@ -1,30 +1,30 @@
-﻿# Deployment
+﻿# Deployment (Развёртывание)
 
-## Scope
-Deployment notes for the current multiagent runtime architecture.
+## Scope (Область)
+Заметки по развёртыванию для текущей multiagent runtime architecture.
 
-## Runtime baseline
+## Runtime baseline (Базовый runtime)
 - Active runtime: `multiagent_adapter`
-- Legacy cascade: removed in PRD-041
-- Post-purge stabilization: completed in PRD-042
+- Legacy cascade: удалён в PRD-041
+- Post-purge stabilization: завершена в PRD-042
 
-## Recommended production controls
-1. `APP_ENV=prod` guardrails and explicit config validation.
+## Recommended production controls (Рекомендуемые production controls)
+1. Guardrails `APP_ENV=prod` и явная config validation.
 2. Strict CORS allowlist.
-3. Centralized rate limiting (shared store such as Redis).
-4. Structured logs and trace-safe export policy.
+3. Centralized rate limiting (shared store, например Redis).
+4. Structured logs и trace-safe export policy.
 
-## Health and contract checks
+## Health и contract checks (Health и contract checks)
 - `GET /api/v1/health`
 - `GET /api/admin/runtime/effective`
-- Multiagent trace endpoint returns consistent runtime metadata.
+- Multiagent trace endpoint возвращает consistent runtime metadata.
 
-## Rollout checklist
-1. Apply environment configuration and secrets.
-2. Run API with process manager.
-3. Build and serve web UI artifacts.
-4. Run inventory + core backend regression tests before promoting.
+## Rollout checklist (Чеклист rollout)
+1. Применить environment configuration и secrets.
+2. Запустить API с process manager.
+3. Собрать и отдавать web UI artifacts.
+4. Запустить inventory + core backend regression tests перед promotion.
 
-## Out of scope for this doc
-- Re-enabling legacy cascade runtime.
-- Telegram channel production activation by default.
+## Out of scope for this doc (Вне scope этого документа)
+- Повторное включение legacy cascade runtime.
+- Production activation Telegram channel по умолчанию.

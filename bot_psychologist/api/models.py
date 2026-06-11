@@ -385,6 +385,7 @@ class SemanticHitTrace(BaseModel):
 class MemoryContextTrace(BaseModel):
     conversation_context: str = ""
     rag_query: str = ""
+    hybrid_retrieval: Optional[Dict[str, Any]] = None
     semantic_hits: List[SemanticHitTrace] = Field(default_factory=list)
     user_profile_patterns: List[str] = Field(default_factory=list)
     user_profile_values: List[str] = Field(default_factory=list)
@@ -467,6 +468,15 @@ class MultiAgentTraceResponse(BaseModel):
     planner_drift_summary: Optional[Dict[str, Any]] = None
     dialogue_pragmatics: Optional[Dict[str, Any]] = None
     retrieval_decision: Optional[Dict[str, Any]] = None
+    hybrid_retrieval_plan: Optional[Dict[str, Any]] = None
+    hybrid_retrieval_planner_version: Optional[str] = None
+    hybrid_retrieval_planner_mode: Optional[str] = None
+    hybrid_retrieval_plan_valid: Optional[bool] = None
+    hybrid_retrieval_plan_error: Optional[str] = None
+    hybrid_retrieval_universal_gate: Optional[str] = None
+    hybrid_retrieval_llm_called: Optional[bool] = None
+    hybrid_retrieval_llm_reason: Optional[str] = None
+    hybrid_retrieval_fallback_used: Optional[bool] = None
     live_turn_evidence: Optional[Dict[str, Any]] = None
 
 

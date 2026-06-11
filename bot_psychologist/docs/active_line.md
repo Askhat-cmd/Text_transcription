@@ -1,16 +1,16 @@
-# Active Line / Dialogue Continuity v1
+# Active Line / Dialogue Continuity v1 (Active Line / непрерывность диалога v1)
 
-## Scope
-`Active Line` is a deterministic continuity layer for multi-turn dialogue quality.
+## Scope (Область)
+`Active Line` — детерминированный continuity layer для качества multi-turn dialogue.
 
-Module:
+Модуль:
 - `bot_agent/multiagent/active_line.py`
 
-Version:
+Версия:
 - `active_line_v1`
 
-## State Contract
-Per turn state:
+## State Contract (Контракт состояния)
+Состояние на ход:
 - `active_line`
 - `user_intent`
 - `continuity_mode`
@@ -24,7 +24,7 @@ Per turn state:
 - `confidence`
 - `practice_suppression_active`
 
-## Deterministic Intents
+## Deterministic Intents (Детерминированные intent)
 - `understand_mechanism`
 - `ask_for_practice`
 - `ask_for_direct_step`
@@ -34,29 +34,29 @@ Per turn state:
 - `thanks_close`
 - `unknown`
 
-## Continuity Modes
+## Continuity Modes (Режимы continuity)
 - `start_new_line`
 - `continue_existing_line`
 - `repair_and_continue_line`
 - `close_gently`
 
-## Writer Integration
-- `WriterContract.active_line` carries the full state.
-- Writer prompt receives active-line fields as explicit constraints.
-- Writer compliance enforces:
-  - suppression of mechanical revoicing openings when disallowed
-  - suppression of unsolicited action/practice for mechanism-first turns
-  - repair response path after user correction
-  - clean close on `thanks_close`
+## Writer Integration (Интеграция с Writer)
+- `WriterContract.active_line` несёт полное состояние.
+- Writer prompt получает поля active-line как явные constraints.
+- Writer compliance обеспечивает:
+  - подавление механических revoicing openings, когда это запрещено
+  - подавление не запрошенных action/practice для mechanism-first turns
+  - repair response path после user correction
+  - чистое закрытие на `thanks_close`
 
-## Trace / Admin
+## Trace / Admin (Trace и admin)
 - Trace block: `debug.active_line`.
 - Admin runtime effective block: `active_line` (enabled/version/revoicing policy/practice suppression/calibration summary).
 
-## Evaluation
+## Evaluation (Оценка)
 - Dataset: `tests/evaluation/prd_047_3_active_line_cases.json` (10 cases).
-- Runner: `scripts/run_prd_047_3_active_line_cases.py` with `dry/direct/live`.
-- Artifacts:
+- Runner: `scripts/run_prd_047_3_active_line_cases.py` с режимами `dry/direct/live`.
+- Артефакты:
   - `TO_DO_LIST/logs/PRD-047.3/active_line_dry.json`
   - `TO_DO_LIST/logs/PRD-047.3/active_line_direct.json`
   - `TO_DO_LIST/logs/PRD-047.3/active_line_live.json`

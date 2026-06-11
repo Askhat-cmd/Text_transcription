@@ -1,0 +1,52 @@
+# PRD-047.15-HF2-R1 Hybrid Retrieval Planner Runner
+
+- generated_at_utc: `2026-06-11T05:39:47.306416+00:00`
+- mode: `live`
+- planner_mode: `apply`
+- total_cases: `6`
+- passed: `6`
+- warnings: `0`
+- failed: `0`
+- llm_calls_expected: `0`
+- llm_calls_actual: `0`
+- query_before_rag_passed: `True`
+- anti_overengineering_passed: `True`
+- api_trace_fields_present: `True`
+
+## Cases
+- HRP-001: `passed` - greeting suppresses rag
+  - retrieval_action: ok
+  - universal_gate: ok
+  - llm_called: ok
+  - query_before_rag_proof: ok
+  - trace_fields_present: ok
+- HRP-002: `passed` - thanks suppresses rag
+  - retrieval_action: ok
+  - universal_gate: ok
+  - llm_called: ok
+  - query_before_rag_proof: ok
+  - trace_fields_present: ok
+- HRP-003: `passed` - formatting request uses current context only
+  - retrieval_action: ok
+  - universal_gate: ok
+  - llm_called: ok
+  - query_before_rag_proof: ok
+  - trace_fields_present: ok
+- HRP-004: `passed` - summary request uses current context only
+  - retrieval_action: ok
+  - universal_gate: ok
+  - llm_called: ok
+  - query_before_rag_proof: ok
+  - trace_fields_present: ok
+- HRP-006: `passed` - clear kb ask
+  - retrieval_action: ok
+  - universal_gate: ok
+  - llm_called: ok
+  - query_before_rag_proof: ok
+  - trace_fields_present: ok
+- HRP-010: `passed` - safety signal requires safety and mechanism chunks
+  - retrieval_action: ok
+  - universal_gate: ok
+  - llm_called: ok
+  - query_before_rag_proof: ok
+  - trace_fields_present: ok

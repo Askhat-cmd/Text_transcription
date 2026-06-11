@@ -1,4 +1,4 @@
-# Runtime Profiles And Presets
+# Runtime Profiles And Presets (Runtime profiles и presets)
 
 - status: current
 - last_verified_prd: PRD-047.13-HF1
@@ -7,24 +7,24 @@
 - not_production_ready: true
 - related_artifacts: TO_DO_LIST/logs/PRD-047.13-HF1; TO_DO_LIST/reports/PRD-047.13-HF1_IMPLEMENTATION_REPORT.md
 
-## Active Now
-- `safe_guided` remains a conservative preset of the unified runtime.
-- `mvp_free_dialogue` remains supported as a developer-local alias.
-- `free_dialogue_default` is the resolved freer preset for MVP testing.
+## Active Now (Активно сейчас)
+- `safe_guided` остаётся conservative preset unified runtime.
+- `mvp_free_dialogue` по-прежнему поддерживается как developer-local alias.
+- `free_dialogue_default` — разрешённый freer preset для MVP testing.
 
-## Not Production Ready
-- No profile enables broad production rollout.
-- No profile bypasses minimal safety.
+## Not Production Ready (Не готово к production)
+- Ни один profile не включает broad production rollout.
+- Ни один profile не обходит minimal safety.
 
-## How To Test
-- Use Admin Runtime effective payload.
-- Verify there is no duplicate orchestrator, Writer, Planner, or API path for these profiles.
+## How To Test (Как тестировать)
+- Используйте Admin Runtime effective payload.
+- Убедитесь, что нет дублирующего orchestrator, Writer, Planner или API path для этих profiles.
 
-## PRD-047.13-HF1 cleanup closure note
-- This document was re-verified during cleanup closure; runtime behavior was not changed.
+## PRD-047.13-HF1 cleanup closure note (Заметка о закрытии cleanup PRD-047.13-HF1)
+- Документ повторно проверен при закрытии cleanup; runtime behavior не менялся.
 
-## PRD-047.13-HF1 Preset/Alias Closure
-- `safe_guided`: compatibility preset for conservative guided behavior.
-- `mvp_free_dialogue`: developer-local compatibility alias that resolves to the freer preset.
-- `free_dialogue_default`: preset value inside the unified policy surface.
-- These names must not be presented as separate bots, separate orchestrators, or separate API paths.
+## PRD-047.13-HF1 Preset/Alias Closure (Закрытие preset/alias PRD-047.13-HF1)
+- `safe_guided`: compatibility preset для conservative guided behavior.
+- `mvp_free_dialogue`: developer-local compatibility alias, разрешающийся в freer preset.
+- `free_dialogue_default`: значение preset внутри unified policy surface.
+- Эти имена не должны представляться как отдельные bots, отдельные orchestrators или отдельные API paths.

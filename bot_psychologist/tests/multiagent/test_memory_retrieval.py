@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import asyncio
 import inspect
@@ -25,7 +25,7 @@ def _thread(
     *,
     phase: str = "clarify",
     relation: str = "continue",
-    core_direction: str = "тревога перед встречей",
+    core_direction: str = "С‚СЂРµРІРѕРіР° РїРµСЂРµРґ РІСЃС‚СЂРµС‡РµР№",
     open_loops: list[str] | None = None,
 ) -> ThreadState:
     return ThreadState(
@@ -50,7 +50,7 @@ async def test_mr_01_bundle_fields(monkeypatch) -> None:
     monkeypatch.setattr(agent, "_load_conversation", AsyncMock(return_value="User: hi\n---"))
     monkeypatch.setattr(agent, "_load_profile", AsyncMock(return_value=UserProfile()))
     monkeypatch.setattr(agent, "_load_rag", AsyncMock(return_value=[_hit("1", 0.7)]))
-    bundle = await agent.assemble(user_message="привет", thread_state=_thread(), user_id="u1")
+    bundle = await agent.assemble(user_message="РїСЂРёРІРµС‚", thread_state=_thread(), user_id="u1")
     assert isinstance(bundle, MemoryBundle)
     assert isinstance(bundle.conversation_context, str)
     assert isinstance(bundle.user_profile, UserProfile)
@@ -116,25 +116,25 @@ def test_mr_08_n_turns_default_unknown_phase() -> None:
 
 
 def test_mr_09_rag_query_with_core() -> None:
-    thread = _thread(core_direction="тревога на работе", open_loops=[])
-    query = MemoryRetrievalAgent._build_rag_query("хочу разобраться", thread)
-    assert "тревога на работе" in query
+    thread = _thread(core_direction="С‚СЂРµРІРѕРіР° РЅР° СЂР°Р±РѕС‚Рµ", open_loops=[])
+    query = MemoryRetrievalAgent._build_rag_query("С…РѕС‡Сѓ СЂР°Р·РѕР±СЂР°С‚СЊСЃСЏ", thread)
+    assert "С‚СЂРµРІРѕРіР° РЅР° СЂР°Р±РѕС‚Рµ" in query
 
 
 def test_mr_10_rag_query_with_loop() -> None:
-    thread = _thread(open_loops=["почему я так реагирую"])
-    query = MemoryRetrievalAgent._build_rag_query("хочу разобраться", thread)
-    assert "почему я так реагирую" in query
+    thread = _thread(open_loops=["РїРѕС‡РµРјСѓ СЏ С‚Р°Рє СЂРµР°РіРёСЂСѓСЋ"])
+    query = MemoryRetrievalAgent._build_rag_query("С…РѕС‡Сѓ СЂР°Р·РѕР±СЂР°С‚СЊСЃСЏ", thread)
+    assert "РїРѕС‡РµРјСѓ СЏ С‚Р°Рє СЂРµР°РіРёСЂСѓСЋ" in query
 
 
 def test_mr_11_rag_query_short_core_ignored() -> None:
-    thread = _thread(core_direction="коротко", open_loops=[])
-    query = MemoryRetrievalAgent._build_rag_query("хочу разобраться", thread)
-    assert "коротко" not in query
+    thread = _thread(core_direction="tiny", open_loops=[])
+    query = MemoryRetrievalAgent._build_rag_query("need context", thread)
+    assert "tiny" not in query
 
 
 def test_mr_12_rag_query_max_len() -> None:
-    long_text = "а" * 1000
+    long_text = "Р°" * 1000
     query = MemoryRetrievalAgent._build_rag_query(long_text, _thread())
     assert len(query) <= 300
 
@@ -301,6 +301,99 @@ async def test_mr_25_context_turns_set(monkeypatch) -> None:
 
 
 @pytest.mark.asyncio
+async def test_mr_25a_apply_mode_uses_planned_query(monkeypatch) -> None:
+    agent = MemoryRetrievalAgent()
+    monkeypatch.setattr(agent, "_load_conversation", AsyncMock(return_value="ctx"))
+    monkeypatch.setattr(agent, "_load_profile", AsyncMock(return_value=UserProfile()))
+    captured: dict[str, str] = {}
+
+    async def _fake_load_rag(query: str):
+        captured["query"] = query
+        return [], {}
+
+    monkeypatch.setattr(agent, "_load_rag", _fake_load_rag)
+    bundle = await agent.assemble(
+        user_message="q",
+        thread_state=_thread(),
+        user_id="u1",
+        retrieval_plan={
+            "mode": "apply",
+            "valid": True,
+            "plan": {
+                "retrieval_action": "query_kb",
+                "composed_query": "planned query",
+                "writer_can_ignore_rag": True,
+            },
+        },
+    )
+
+    assert captured["query"] == "planned query"
+    assert bundle.hybrid_retrieval_trace["executed_rag_query"] == "planned query"
+    assert bundle.hybrid_retrieval_trace["query_before_rag_proof"] is True
+
+
+@pytest.mark.asyncio
+async def test_mr_25b_shadow_mode_keeps_legacy_query(monkeypatch) -> None:
+    agent = MemoryRetrievalAgent()
+    monkeypatch.setattr(agent, "_load_conversation", AsyncMock(return_value="ctx"))
+    monkeypatch.setattr(agent, "_load_profile", AsyncMock(return_value=UserProfile()))
+    captured: dict[str, str] = {}
+
+    async def _fake_load_rag(query: str):
+        captured["query"] = query
+        return [], {}
+
+    monkeypatch.setattr(agent, "_load_rag", _fake_load_rag)
+    bundle = await agent.assemble(
+        user_message="С…РѕС‡Сѓ СЂР°Р·РѕР±СЂР°С‚СЊСЃСЏ",
+        thread_state=_thread(core_direction="С‚СЂРµРІРѕРіР° РЅР° СЂР°Р±РѕС‚Рµ", open_loops=[]),
+        user_id="u1",
+        retrieval_plan={
+            "mode": "shadow",
+            "valid": True,
+            "plan": {
+                "retrieval_action": "query_kb",
+                "composed_query": "planned query",
+                "writer_can_ignore_rag": True,
+            },
+        },
+    )
+
+    assert captured["query"] != "planned query"
+    assert bundle.hybrid_retrieval_trace["planned_composed_query"] == "planned query"
+    assert bundle.hybrid_retrieval_trace["executed_rag_query"] == captured["query"]
+    assert bundle.hybrid_retrieval_trace["query_before_rag_proof"] is False
+
+
+@pytest.mark.asyncio
+async def test_mr_25c_suppress_rag_skips_external_retrieval(monkeypatch) -> None:
+    agent = MemoryRetrievalAgent()
+    monkeypatch.setattr(agent, "_load_conversation", AsyncMock(return_value="ctx"))
+    monkeypatch.setattr(agent, "_load_profile", AsyncMock(return_value=UserProfile()))
+    load_rag = AsyncMock(return_value=([], {}))
+    monkeypatch.setattr(agent, "_load_rag", load_rag)
+
+    bundle = await agent.assemble(
+        user_message="РїСЂРёРІРµС‚",
+        thread_state=_thread(),
+        user_id="u1",
+        retrieval_plan={
+            "mode": "apply",
+            "valid": True,
+            "plan": {
+                "retrieval_action": "suppress_rag",
+                "composed_query": "",
+                "writer_can_ignore_rag": True,
+            },
+        },
+    )
+
+    assert load_rag.await_count == 0
+    assert bundle.hybrid_retrieval_trace["rag_skipped_reason"] == "suppress_rag"
+    assert bundle.hybrid_retrieval_trace["executed_rag_query"] == ""
+
+
+@pytest.mark.asyncio
 async def test_mr_26_orchestrator_integration(monkeypatch) -> None:
     orch_module = importlib.import_module("bot_agent.multiagent.orchestrator")
 
@@ -332,8 +425,9 @@ async def test_mr_26_orchestrator_integration(monkeypatch) -> None:
     monkeypatch.setattr(orch_module.asyncio, "create_task", _consume_task)
 
     orchestrator = MultiAgentOrchestrator()
-    _ = await orchestrator.run(query="привет", user_id="u1")
+    _ = await orchestrator.run(query="РїСЂРёРІРµС‚", user_id="u1")
     assert assemble.await_count == 1
+    assert "retrieval_plan" in assemble.await_args.kwargs
 
 
 @pytest.mark.asyncio
@@ -378,7 +472,7 @@ async def test_mr_27_orchestrator_debug(monkeypatch) -> None:
     monkeypatch.setattr(orch_module.asyncio, "create_task", _consume_task)
 
     orchestrator = MultiAgentOrchestrator()
-    result = await orchestrator.run(query="привет", user_id="u1")
+    result = await orchestrator.run(query="РїСЂРёРІРµС‚", user_id="u1")
     assert result["debug"]["has_relevant_knowledge"] is True
     assert result["debug"]["context_turns"] == 6
     assert result["debug"]["semantic_hits_count"] == 1
@@ -438,12 +532,12 @@ async def test_mr_31_update_calls_add_turn(monkeypatch) -> None:
 
     await agent.update(
         user_id="u1",
-        user_message="вопрос",
-        assistant_response="ответ",
+        user_message="РІРѕРїСЂРѕСЃ",
+        assistant_response="РѕС‚РІРµС‚",
         thread_state=_thread(),
     )
 
-    assert captured == {"user_input": "вопрос", "bot_response": "ответ"}
+    assert captured == {"user_input": "РІРѕРїСЂРѕСЃ", "bot_response": "РѕС‚РІРµС‚"}
 
 
 @pytest.mark.asyncio
@@ -469,13 +563,13 @@ async def test_mr_32_update_with_metadata_if_supported(monkeypatch) -> None:
 
     await agent.update(
         user_id="u1",
-        user_message="вопрос",
-        assistant_response="ответ",
+        user_message="РІРѕРїСЂРѕСЃ",
+        assistant_response="РѕС‚РІРµС‚",
         thread_state=state,
     )
 
-    assert captured["user_input"] == "вопрос"
-    assert captured["bot_response"] == "ответ"
+    assert captured["user_input"] == "РІРѕРїСЂРѕСЃ"
+    assert captured["bot_response"] == "РѕС‚РІРµС‚"
     assert isinstance(captured["metadata"], dict)
     assert captured["metadata"]["phase"] == "integrate"
     assert captured["metadata"]["response_mode"] == state.response_mode
@@ -495,7 +589,8 @@ async def test_mr_33_update_error_non_blocking(monkeypatch) -> None:
 
     await agent.update(
         user_id="u1",
-        user_message="вопрос",
-        assistant_response="ответ",
+        user_message="РІРѕРїСЂРѕСЃ",
+        assistant_response="РѕС‚РІРµС‚",
         thread_state=_thread(),
     )
+

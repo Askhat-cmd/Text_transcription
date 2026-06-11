@@ -1,6 +1,6 @@
-# Тестирование
+# Testing (Тестирование)
 
-## Навигация
+## Navigation (Навигация)
 
 - [Назад к README](../README.md)
 - [Обзор проекта](./overview.md)
@@ -8,7 +8,7 @@
 
 ---
 
-## Описание и назначение
+## Description and Purpose (Описание и назначение)
 
 **Назначение документа**: Описать процесс тестирования всех Phase проекта Bot Psychologist.
 
@@ -22,7 +22,7 @@
 
 ---
 
-## Тестирование Phase 1-4
+## Phase 1-4 Testing (Тестирование Phase 1-4)
 
 ### Phase 1: Базовый QA
 
@@ -127,9 +127,9 @@ python tests/test_phase4.py
 
 ---
 
-## Тестирование API (Phase 5)
+## API Testing Phase 5 (Тестирование API, Phase 5)
 
-### Тестовый файл
+### Test File (Тестовый файл)
 
 **Файл**: `tests/test_api.py`
 
@@ -137,7 +137,7 @@ python tests/test_phase4.py
 - `requests` — HTTP клиент
 - `json` — работа с JSON
 
-### Примеры тестов
+### Test Examples (Примеры тестов)
 
 #### Basic QA Endpoint
 
@@ -228,7 +228,7 @@ data = response.json()
 assert data["status"] == "healthy"
 ```
 
-### Запуск тестов API
+### Running API Tests (Запуск тестов API)
 
 **Перед запуском**:
 1. Запустите API сервер: `uvicorn api.main:app --reload`
@@ -241,9 +241,9 @@ python tests/test_api.py
 
 ---
 
-## Тестирование Web UI (Phase 6)
+## Web UI Testing Phase 6 (Тестирование Web UI, Phase 6)
 
-### Unit тесты компонентов
+### Component Unit Tests (Unit-тесты компонентов)
 
 **Пример теста React компонента**:
 
@@ -283,9 +283,9 @@ test('user can ask question and get answer', async ({ page }) => {
 
 ---
 
-## нтеграционные тесты
+## Integration Tests (Интеграционные тесты)
 
-### Тест полного потока
+### Full Flow Test (Тест полного потока)
 
 ```python
 def test_full_flow():
@@ -330,9 +330,9 @@ def test_full_flow():
 
 ---
 
-## Тестирование компонентов Bot Agent
+## Bot Agent Component Testing (Тестирование компонентов Bot Agent)
 
-### Тест DataLoader
+### DataLoader Test (Тест DataLoader)
 
 ```python
 from bot_agent.data_loader import data_loader
@@ -343,7 +343,7 @@ def test_data_loader():
     assert len(data_loader.all_blocks) > 0
 ```
 
-### Тест Retriever
+### Retriever Test (Тест Retriever)
 
 ```python
 from bot_agent.retriever import get_retriever
@@ -356,7 +356,7 @@ def test_retriever():
     assert all(score >= 0.1 for _, score in results)
 ```
 
-### Тест GraphClient
+### GraphClient Test (Тест GraphClient)
 
 ```python
 from bot_agent.graph_client import graph_client
@@ -375,7 +375,7 @@ def test_graph_client():
     assert len(practices) > 0
 ```
 
-### Тест StateClassifier
+### StateClassifier Test (Тест StateClassifier)
 
 ```python
 from bot_agent.state_classifier import state_classifier
@@ -391,7 +391,7 @@ def test_state_classifier():
 
 ---
 
-## Навигация
+## Navigation (Навигация)
 
 - [Обзор проекта](./overview.md)
 - [Развёртывание](./deployment.md)

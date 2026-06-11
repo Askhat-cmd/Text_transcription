@@ -1,13 +1,13 @@
-﻿# Architecture
+﻿# Architecture (Архитектура)
 
-## Runtime truth
+## Runtime truth (Актуальное состояние runtime)
 
 - Active runtime: `multiagent_adapter`.
 - Runtime mode: `multiagent_only`.
-- Legacy cascade physically removed in PRD-041.
-- `answer_adaptive.py` is a compatibility shim only.
+- Legacy cascade физически удалён в PRD-041.
+- `answer_adaptive.py` — только compatibility shim.
 
-## System Diagram
+## System Diagram (Диаграмма системы)
 
 ```text
 Web UI (React/Vite)
@@ -20,20 +20,20 @@ Web UI (React/Vite)
     -> Admin runtime contract (`api/admin_routes.py`)
 ```
 
-## Core Components
+## Core Components (Основные компоненты)
 
 - `api/` — HTTP surface, identity/conversations, debug/admin endpoints.
-- `bot_agent/multiagent/` — active multiagent runtime implementation.
-- `bot_agent/answer_adaptive.py` — deprecated shim for compatibility imports.
-- `tests/` — regression, inventory, API, multiagent, streaming and admin contracts.
+- `bot_agent/multiagent/` — реализация active multiagent runtime.
+- `bot_agent/answer_adaptive.py` — deprecated shim для compatibility imports.
+- `tests/` — regression, inventory, API, multiagent, streaming и admin contracts.
 
-## Observability
+## Observability (наблюдаемость)
 
-- Inline trace in Web UI for dev-mode sessions.
+- Inline trace в Web UI для dev-mode sessions.
 - Debug endpoint: `/api/debug/session/{session_id}/multiagent-trace`.
 - Admin runtime contract endpoint: `/api/admin/runtime/effective`.
 
-## Notes
+## Notes (Заметки)
 
-- `MULTIAGENT_ENABLED` and `LEGACY_PIPELINE_ENABLED` are deprecated compatibility flags and do not switch runtime.
-- Telegram adapter remains a future integration layer, not an active production channel.
+- `MULTIAGENT_ENABLED` и `LEGACY_PIPELINE_ENABLED` — deprecated compatibility flags; они не переключают runtime.
+- Telegram adapter остаётся future integration layer, а не active production channel.

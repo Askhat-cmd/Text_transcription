@@ -1,6 +1,6 @@
-# Архитектура Identity и Conversations
+# Identity and Conversations Architecture (Архитектура Identity и Conversations)
 
-## Назначение
+## Purpose (Назначение)
 
 Документ фиксирует runtime-контракт после PRD-013, PRD-014 и PRD-016-v2:
 - identity-слой определяет устойчивого пользователя;
@@ -8,7 +8,7 @@
 - registration-слой добавляет управляемый доступ (register/login/session/linking);
 - chat-слой работает только с уже разрешенным контекстом.
 
-## Ключевые контексты
+## Key Contexts (Ключевые контексты)
 
 ### IdentityContext
 
@@ -36,7 +36,7 @@
 - `started_at` — время старта;
 - `is_new` — создан ли диалог в текущем запросе.
 
-## Поток обработки запроса
+## Request Processing Flow (Поток обработки запроса)
 
 1. HTTP-запрос попадает в `api/routes/*`.
 2. `get_identity_context()` резолвит identity через `api/identity/service.py`.
@@ -44,7 +44,7 @@
 4. Chat endpoint передает управление в runtime (single-agent или multiagent).
 5. После ответа обновляется состояние диалога (`last_message_at`, `status`).
 
-## Связь identity и registration
+## Identity and Registration Link (Связь identity и registration)
 
 `api/registration/service.py` интегрирован с identity-слоем:
 - при `register` создается пользовательский профиль с ролью и username;
@@ -62,7 +62,7 @@ users.id (user_id)
        └─ telegram link after confirm-link
 ```
 
-## Иерархия идентификаторов
+## Identifier Hierarchy (Иерархия идентификаторов)
 
 | Уровень | Поле | Назначение | Жизненный цикл |
 |---|---|---|---|
@@ -76,14 +76,14 @@ users.id (user_id)
 - `conversation_id` описывает бизнес-диалог;
 - одна сессия может иметь несколько диалогов.
 
-## Границы модулей
+## Module Boundaries (Границы модулей)
 
 Правило модульности:
 - runtime-агенты не пишут напрямую в identity/conversation таблицы;
 - доступ идет через `IdentityService` и `ConversationService`;
 - SQL-слой изолирован в `api/identity/repository.py` и `api/conversations/repository.py`.
 
-## Что изменилось в PRD-016-v2
+## PRD-016-v2 Changes (Что изменилось в PRD-016-v2)
 
 Было:
 - identity в основном опирался на `user_id` и fallback-анонимность;

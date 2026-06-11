@@ -788,6 +788,19 @@ class WriterContract:
                     True,
                 )
             ),
+            "hybrid_retrieval_plan": (
+                dict(writer_context_package.get("hybrid_retrieval_plan", {}))
+                if isinstance(writer_context_package.get("hybrid_retrieval_plan"), dict)
+                else {}
+            ),
+            "hybrid_retrieval_planner_mode": str(
+                writer_context_package.get("hybrid_retrieval_planner_mode", "shadow") or "shadow"
+            ),
+            "retrieval_context": (
+                dict(writer_context_package.get("retrieval_context", {}))
+                if isinstance(writer_context_package.get("retrieval_context"), dict)
+                else {}
+            ),
             "retrieval_decision_version": str(
                 retrieval_decision.get("retrieval_decision_version", "contextual_retrieval_gating_v1")
                 or "contextual_retrieval_gating_v1"

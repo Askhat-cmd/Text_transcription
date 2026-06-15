@@ -16,8 +16,26 @@
     "Bot_data_base/knowledge_governance/mechanism_metadata.py",
     "Bot_data_base/tools/run_mechanism_metadata_audit.py",
     "Bot_data_base/tests/test_mechanism_metadata.py",
-    "Bot_data_base/tests/test_run_mechanism_metadata_audit.py"
+    "Bot_data_base/tests/test_mechanism_metadata_anti_heuristic.py",
+    "Bot_data_base/tests/test_run_mechanism_metadata_audit.py",
+    "TO_DO_LIST/PRD-047.16_TASK_LIST.md",
+    "TO_DO_LIST/logs/PRD-047.16/*",
+    "TO_DO_LIST/reports/PRD-047.16_IMPLEMENTATION_REPORT.md",
+    "TO_DO_LIST/reports/PRD-047.16_NEXT_PRD_RECOMMENDATION.md",
+    "docs/DECISIONS.md",
+    "docs/PRD_INDEX.md",
+    "docs/PROJECT_STATE.md",
+    "docs/ROADMAP.md"
   ],
-  "commands_run": [],
+  "commands_run": [
+    "python -m pytest Bot_data_base/tests/test_mechanism_metadata.py Bot_data_base/tests/test_run_mechanism_metadata_audit.py -q",
+    "python Bot_data_base/tools/run_mechanism_metadata_audit.py --mode fixture --limit 20",
+    "python Bot_data_base/tools/run_mechanism_metadata_audit.py --mode dry-run --limit 50",
+    "python -m pytest Bot_data_base/tests/test_mechanism_metadata.py Bot_data_base/tests/test_run_mechanism_metadata_audit.py Bot_data_base/tests/test_mechanism_metadata_anti_heuristic.py Bot_data_base/tests/test_governance_adapter.py Bot_data_base/tests/test_json_export_governance.py Bot_data_base/tests/test_query_governance_schema.py bot_psychologist/tests/test_hybrid_retrieval_anti_overengineering.py bot_psychologist/tests/test_botdb_retrieval_path_smoke.py -q",
+    "python Bot_data_base/tools/validate_prd_artifact_encoding.py --prd PRD-047.16 --logs-dir TO_DO_LIST/logs/PRD-047.16 --reports-dir TO_DO_LIST/reports --out-dir TO_DO_LIST/logs/PRD-047.16",
+    "GET http://127.0.0.1:8003/api/status",
+    "GET http://127.0.0.1:8003/api/registry",
+    "POST http://127.0.0.1:8003/api/query"
+  ],
   "status": "passed"
 }

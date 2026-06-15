@@ -1,0 +1,27 @@
+{
+  "schema_version": "anti_heuristic_compliance_report_v1",
+  "status": "passed",
+  "forbidden_patterns_checked": [
+    "if \"мама\" in user_message",
+    "if \"стыд\" in user_message",
+    "if \"контроль\" in user_message",
+    "if \"паника\" in user_message",
+    "depth_level = 3 if"
+  ],
+  "files": [
+    {
+      "path": "Bot_data_base/knowledge_governance/mechanism_metadata.py",
+      "forbidden_pattern_hits": [],
+      "status": "passed"
+    },
+    {
+      "path": "Bot_data_base/tools/run_mechanism_metadata_audit.py",
+      "forbidden_pattern_hits": [],
+      "status": "passed"
+    }
+  ],
+  "notes": [
+    "mechanism_hints are stored as metadata only",
+    "no bot_psychologist runtime module was changed by this audit runner"
+  ]
+}

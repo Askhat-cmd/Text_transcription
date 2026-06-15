@@ -1,0 +1,64 @@
+{
+  "metadata_schema_version": "mechanism_aware_v1",
+  "required_fields": [
+    "metadata_schema_version",
+    "chunk_id",
+    "source_id",
+    "source_type",
+    "chunk_type",
+    "title",
+    "core_thesis",
+    "allowed_use",
+    "visibility",
+    "quote_policy",
+    "depth_level"
+  ],
+  "quality_warning_fields": [
+    "mechanism_hints",
+    "use_when",
+    "avoid_when",
+    "contraindications",
+    "writer_instruction",
+    "source_trace"
+  ],
+  "controlled_vocabulary": {
+    "chunk_type": [
+      "anti_pattern",
+      "case_example",
+      "concept",
+      "diagnostic_lens",
+      "dialogue_move",
+      "mechanism",
+      "practice",
+      "safety",
+      "source_fragment",
+      "style_voice"
+    ],
+    "allowed_use": [
+      "diagnostic_hint",
+      "direct_to_writer",
+      "internal_lens",
+      "internal_only",
+      "not_for_direct_quote",
+      "practice_suggestion",
+      "retrieval_seed"
+    ],
+    "visibility": [
+      "internal_only",
+      "source_only",
+      "writer_allowed"
+    ],
+    "quote_policy": [
+      "can_quote_short",
+      "do_not_use",
+      "internal_only",
+      "paraphrase_only"
+    ],
+    "intensity": [
+      "high",
+      "low",
+      "medium",
+      "unknown"
+    ]
+  }
+}

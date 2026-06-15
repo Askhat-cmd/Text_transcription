@@ -1,0 +1,21 @@
+{
+  "schema_version": "mechanism_metadata_chunk_type_distribution_v1",
+  "total_chunks_checked": 54,
+  "by_chunk_type": {
+    "case_example": 2,
+    "concept": 5,
+    "diagnostic_lens": 10,
+    "mechanism": 5,
+    "practice": 8,
+    "safety": 2,
+    "source_fragment": 22
+  },
+  "by_allowed_use": {
+    "diagnostic_hint": 18,
+    "direct_to_writer": 22,
+    "internal_lens": 17,
+    "not_for_direct_quote": 54,
+    "practice_suggestion": 8,
+    "retrieval_seed": 42
+  }
+}

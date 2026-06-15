@@ -1,6 +1,8 @@
 # Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
+PRD-047.16 completed mechanism-aware knowledge base preparation / chunk metadata foundation with accepted `passed` implementation status and read-only audit evidence. Added `MechanismAwareChunkMetadata v1` in the existing `Bot_data_base/knowledge_governance` layer, a backward-compatible adapter from legacy governed blocks, and a dry-run audit runner over fixture plus real local BotDB blocks. The new metadata is explicitly semantic guidance only: Writer remains the sole author of user-facing text, runtime answer behavior is unchanged, and no new metadata was activated in the live Writer path. Chroma was not reindexed, DB schema was not mutated, and no new runtime path or LLM enrichment agent was added. Real-sample audit checked `54` chunks (`50` real + `4` fixture) and passed structurally while surfacing quality warnings for incomplete mechanism/practice metadata. Next recommended work is `PRD-047.17 - Offline Summary/Lens/Use-When Enrichment over Mechanism Metadata v1`.
+
 PRD-047.15-HF2-R1 completed Hybrid Retrieval Planner / Query-Before-RAG with accepted `passed` status. Added `hybrid_retrieval_planner_v1_r1` as a metadata-only planner in the existing multiagent runtime: deterministic universal gates cover simple greeting/thanks/summary/formatting/reject/support cases, optional strict-JSON LLM planning is reserved for complex low-confidence cases, and approved retrieval metadata now reaches `MemoryRetrievalAgent` before RAG execution. Trace/debug/API now expose planned vs executed query, query-before-RAG proof, planner validity/fallback, planner mode, needed chunk types, and mechanism hints while Writer remains the sole final answer author. Direct acceptance passed `16/16`; live acceptance passed `6/6` after restarting the live backend on `:8001` with `HYBRID_RETRIEVAL_PLANNER_MODE=apply`; anti-overengineering, encoding, and no-mutation gates passed; no DB/KB/frontend mutation or new runtime path was added. User-owned documentation updates under `bot_psychologist/docs/**` and `TO_DO_LIST/context/**` were included in the main push as requested. Next recommended work is `Backend ↔ Web Admin ↔ Web Trace Sync`, with `PRD-047.16` deferred behind that visibility follow-up.
 
 PRD-047.15-HF1 completed Contextual Retrieval Composer Live Calibration / Owner Trace Review with warning status and no runtime mutation. HF1 generated a 40-case replay library, composer trace schema, replay trace review, owner review sheet, live trace inventory, LLM/hybrid decision brief, runtime-scope proof, encoding gate, acceptance artifact, and tests. Automated blocker gates passed (`literal_short_reply_query_count=0`, `summary_external_kb_leak_count=0`, `no_stub_violations_count=0`, tests passed), while mixed/low-confidence cases produced evidence for future hybrid assistance. Owner scores are intentionally pending; Writer remains final answer author, no LLM calls or new runtime path were added. Next recommended PRD is `PRD-047.15-HF1.1 - Owner Trace Review Completion / Calibration Decisions v1`, with `PRD-047.15-HF2 - Hybrid LLM-Assisted Query Composer Experiment v1` as the evidence-backed follow-up if owner review confirms the automated findings.
@@ -75,7 +77,7 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 - Historical artifact encoding noise may be misread as current runtime corruption without normalization report.
 
 ## Next Planned PRD
-`PRD-047.15-HF1 - Contextual Retrieval Composer Live Calibration / Owner Trace Review v1`
+`PRD-047.17 - Offline Summary/Lens/Use-When Enrichment over Mechanism Metadata v1`
 
 ## HF2-R2 Runtime Visibility State
 Hybrid Retrieval Planner visibility is now synchronized across backend admin runtime, Web Admin Runtime, multiagent trace, and compact trace summary.
@@ -95,7 +97,7 @@ Knowledge Graph runtime flag remains backend-legacy/optional but is shown as com
 5. Keep full historical details in `TO_DO_LIST`, keep docs operational and compact.
 
 ## Last Updated
-2026-06-11
+2026-06-15
 - Date: 2026-06-05
 - Source cycle: PRD-047.12
 - Source cycle: PRD-047.11-HF3

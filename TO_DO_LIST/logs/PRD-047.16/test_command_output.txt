@@ -1,0 +1,32 @@
+PRD-047.16 command log
+
+1. python -m pytest Bot_data_base/tests/test_mechanism_metadata.py Bot_data_base/tests/test_run_mechanism_metadata_audit.py -q
+   result: 11 passed
+
+2. python Bot_data_base/tools/run_mechanism_metadata_audit.py --mode fixture --limit 20
+   result: passed
+   audit_status: warning
+   notes: fixture-only mode; no real block input requested
+
+3. python Bot_data_base/tools/run_mechanism_metadata_audit.py --mode dry-run --limit 50
+   result: passed
+   audit_status: passed
+   checked_real_blocks: 50
+   checked_fixture_blocks: 4
+
+4. python -m pytest Bot_data_base/tests/test_mechanism_metadata.py Bot_data_base/tests/test_run_mechanism_metadata_audit.py Bot_data_base/tests/test_mechanism_metadata_anti_heuristic.py Bot_data_base/tests/test_governance_adapter.py Bot_data_base/tests/test_json_export_governance.py Bot_data_base/tests/test_query_governance_schema.py bot_psychologist/tests/test_hybrid_retrieval_anti_overengineering.py bot_psychologist/tests/test_botdb_retrieval_path_smoke.py -q
+   result: 21 passed, 6 warnings
+   warnings: existing datetime.utcnow deprecation warnings in legacy modules
+
+5. GET http://127.0.0.1:8003/api/status
+   result: 200 OK
+   summary: service reachable; returned jobs payload
+
+6. GET http://127.0.0.1:8003/api/registry
+   result: 200 OK
+   summary: one focus source present, registry reachable
+
+7. POST http://127.0.0.1:8003/api/query
+   payload: {"query":"что такое тревога","top_k":3}
+   result: 200 OK
+   summary: read-only retrieval path reachable; chunks returned; no mutation performed

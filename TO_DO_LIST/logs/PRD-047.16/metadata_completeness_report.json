@@ -1,0 +1,18 @@
+{
+  "schema_version": "mechanism_metadata_completeness_v1",
+  "chunks_checked": 54,
+  "field_presence": {
+    "core_thesis_present_ratio": 1.0,
+    "mechanism_hints_present_ratio": 0.4815,
+    "use_when_present_ratio": 1.0,
+    "avoid_when_present_ratio": 1.0,
+    "contraindications_present_ratio": 0.0,
+    "source_trace_present_ratio": 1.0
+  },
+  "missing_counts": {
+    "missing_allowed_use_count": 0,
+    "missing_core_thesis_count": 0,
+    "missing_mechanism_hints_count": 28,
+    "missing_source_trace_count": 0
+  }
+}

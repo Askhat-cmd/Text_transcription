@@ -1,0 +1,23 @@
+{
+  "prd_id": "PRD-047.16",
+  "runtime_user_facing_changed": false,
+  "writer_prompt_changed": false,
+  "state_analyzer_changed": false,
+  "thread_manager_changed": false,
+  "hybrid_retrieval_planner_runtime_changed": false,
+  "chroma_reindexed": false,
+  "db_schema_destructive_change": false,
+  "embeddings_changed": false,
+  "new_runtime_path_created": false,
+  "provider_llm_calls_used_for_enrichment": false,
+  "raw_content_full_in_reports": false,
+  "secrets_or_env_committed": false,
+  "files_changed_summary": [
+    "Bot_data_base/knowledge_governance/mechanism_metadata.py",
+    "Bot_data_base/tools/run_mechanism_metadata_audit.py",
+    "Bot_data_base/tests/test_mechanism_metadata.py",
+    "Bot_data_base/tests/test_run_mechanism_metadata_audit.py"
+  ],
+  "commands_run": [],
+  "status": "passed"
+}

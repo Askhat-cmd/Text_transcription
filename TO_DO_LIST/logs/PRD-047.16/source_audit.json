@@ -1,0 +1,103 @@
+{
+  "prd_id": "PRD-047.16",
+  "generated_from_manual_audit": true,
+  "git": {
+    "status_before_changes": [
+      "?? TO_DO_LIST/PRD-047.16_Mechanism_Aware_KB_Preparation_Chunk_Metadata_v1_RU.md"
+    ],
+    "recent_prd_commits_confirmed": [
+      "cb7762e PRD-047.15-HF2-R2 ignore local admin screenshots",
+      "09bc32e PRD-047.15-HF2-R2 post-push metadata sync",
+      "3480666 PRD-047.15-HF2-R2 hybrid retrieval visibility sync"
+    ],
+    "prd_047_16_preexisting_runtime_implementation_found": false
+  },
+  "kb_inventory": {
+    "real_processed_blocks_path": "Bot_data_base/data/processed/all_blocks_merged.json",
+    "real_processed_blocks_present": true,
+    "real_processed_blocks_count_hint": 247,
+    "registry_path": "Bot_data_base/data/registry.json",
+    "registry_present": true,
+    "chroma_present": true,
+    "chroma_root": "Bot_data_base/data/chroma_db",
+    "focus_source_export_present": true,
+    "focus_source_export_path": "Bot_data_base/data/processed/books/123__кузница_духа_blocks.json",
+    "raw_focus_source_present": true,
+    "raw_focus_source_path": "Bot_data_base/data/uploads/books/КУЗНИЦА ДУХА v.2.md"
+  },
+  "current_schema_and_governance_modules": {
+    "bot_runtime_governance_contracts": [
+      "bot_psychologist/bot_agent/knowledge_governance/contracts.py",
+      "bot_psychologist/bot_agent/knowledge_governance/validators.py",
+      "bot_psychologist/bot_agent/knowledge_governance/chunker.py",
+      "bot_psychologist/bot_agent/knowledge_governance/export.py"
+    ],
+    "botdb_governance_contracts": [
+      "Bot_data_base/governance/governance_adapter.py",
+      "Bot_data_base/governance/chunking_quality.py",
+      "Bot_data_base/models/universal_block.py",
+      "Bot_data_base/storage/json_export.py",
+      "Bot_data_base/knowledge_governance/enrichment_contracts.py",
+      "Bot_data_base/knowledge_governance/enrichment_validators.py"
+    ],
+    "retrieval_and_runtime_touchpoints": [
+      "Bot_data_base/api/retrieval_policy.py",
+      "bot_psychologist/bot_agent/multiagent/hybrid_retrieval_planner.py",
+      "bot_psychologist/bot_agent/multiagent/contextual_retrieval_query_composer.py",
+      "bot_psychologist/bot_agent/chroma_loader.py"
+    ]
+  },
+  "current_live_metadata_shape": {
+    "stable_legacy_fields_detected": [
+      "governance.schema_version",
+      "governance.chunk_type",
+      "governance.allowed_use",
+      "governance.safety_flags",
+      "governance.lens_family",
+      "governance.practice_metadata",
+      "governance.governance_notes",
+      "governance.source_trace",
+      "chunking_quality.*"
+    ],
+    "cannot_break_without_runtime_followup": [
+      "metadata.governance.chunk_type",
+      "metadata.governance.allowed_use",
+      "metadata.governance.safety_flags",
+      "metadata.governance.source_trace",
+      "metadata.chunking_quality",
+      "top-level bot JSON block shape used by DataLoader"
+    ],
+    "gaps_against_prd_047_16": [
+      "no dedicated mechanism_aware_v1 schema",
+      "no compatibility adapter to normalized mechanism-aware contract",
+      "no dry-run metadata audit artifacts for real sample blocks",
+      "no controlled vocabulary for concept/mechanism/diagnostic_lens/dialogue_move/etc",
+      "no explicit visibility or quote_policy contract"
+    ]
+  },
+  "tests_already_present": {
+    "botdb_governance_tests": [
+      "Bot_data_base/tests/test_governance_adapter.py",
+      "Bot_data_base/tests/test_json_export_governance.py",
+      "Bot_data_base/tests/test_kb_quality_audit_metrics.py",
+      "Bot_data_base/tests/test_query_governance_schema.py"
+    ],
+    "runtime_retrieval_tests": [
+      "bot_psychologist/tests/test_hybrid_retrieval_anti_overengineering.py",
+      "bot_psychologist/tests/test_hybrid_retrieval_planner_v1.py",
+      "bot_psychologist/tests/test_contextual_retrieval_query_composer_v1.py",
+      "bot_psychologist/tests/test_botdb_retrieval_path_smoke.py"
+    ]
+  },
+  "docs_gate": {
+    "project_state_present": true,
+    "roadmap_present": true,
+    "prd_index_present": true,
+    "decisions_present": true,
+    "current_stage_needs_update_from_prd_047_15_hf2_r1": true
+  },
+  "implementation_direction": {
+    "selected_home_for_new_schema": "Bot_data_base/knowledge_governance/mechanism_metadata.py",
+    "reason": "Existing BotDB ingestion/governance modules already own offline chunk metadata and are the lowest-risk place for a new read-only normalization contract without mutating live multiagent runtime."
+  }
+}

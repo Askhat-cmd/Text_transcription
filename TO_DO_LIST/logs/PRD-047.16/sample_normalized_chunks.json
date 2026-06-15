@@ -1,0 +1,462 @@
+[
+  {
+    "chunk_id": "fixture-concept-001",
+    "source_id": "fixture_manual",
+    "title": "Факт и интерпретация",
+    "core_thesis": "Разделяет событие и смысл, который человек к нему добавляет.",
+    "chunk_type": "concept",
+    "mechanism_hints": [
+      "shame_as_wrong_visibility"
+    ],
+    "allowed_use": [
+      "direct_to_writer",
+      "not_for_direct_quote",
+      "retrieval_seed"
+    ],
+    "visibility": "writer_allowed",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 1,
+    "intensity": "unknown",
+    "quality_flags": [],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "fixture-mechanism-001",
+    "source_id": "fixture_manual",
+    "title": "Контроль как попытка вернуть безопасность",
+    "core_thesis": "Контроль помогает не чувствовать уязвимость, но сужает жизнь.",
+    "chunk_type": "diagnostic_lens",
+    "mechanism_hints": [
+      "control_as_safety"
+    ],
+    "allowed_use": [
+      "diagnostic_hint",
+      "not_for_direct_quote",
+      "internal_lens"
+    ],
+    "visibility": "writer_allowed",
+    "quote_policy": "internal_only",
+    "depth_level": 2,
+    "intensity": "unknown",
+    "quality_flags": [],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "fixture-practice-001",
+    "source_id": "fixture_manual",
+    "title": "Три медленных выдоха",
+    "core_thesis": "Короткая практика для снижения перегрузки.",
+    "chunk_type": "practice",
+    "mechanism_hints": [],
+    "allowed_use": [
+      "direct_to_writer",
+      "practice_suggestion",
+      "not_for_direct_quote",
+      "retrieval_seed"
+    ],
+    "visibility": "writer_allowed",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 1,
+    "intensity": "low",
+    "quality_flags": [
+      "practice_missing_avoid_when",
+      "missing_mechanism_hints"
+    ],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "fixture-safety-001",
+    "source_id": "fixture_manual",
+    "title": "Паника и безопасность",
+    "core_thesis": "Сначала стабилизация, потом смысл.",
+    "chunk_type": "safety",
+    "mechanism_hints": [
+      "panic_loss_of_control"
+    ],
+    "allowed_use": [
+      "direct_to_writer",
+      "diagnostic_hint",
+      "not_for_direct_quote"
+    ],
+    "visibility": "writer_allowed",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 0,
+    "intensity": "high",
+    "quality_flags": [],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "d60e5a31-835c-4ce9-b14b-40b1706b6353",
+    "source_id": "123__кузница_духа",
+    "title": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+    "core_thesis": "***",
+    "chunk_type": "mechanism",
+    "mechanism_hints": [],
+    "allowed_use": [
+      "direct_to_writer",
+      "diagnostic_hint",
+      "not_for_direct_quote",
+      "internal_lens",
+      "retrieval_seed"
+    ],
+    "visibility": "writer_allowed",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 2,
+    "intensity": "unknown",
+    "quality_flags": [
+      "legacy_too_short",
+      "missing_summary",
+      "missing_mechanism_hints"
+    ],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+    "source_id": "123__кузница_духа",
+    "title": "Вводная часть",
+    "core_thesis": "Ты открыл эту книгу не случайно.",
+    "chunk_type": "source_fragment",
+    "mechanism_hints": [],
+    "allowed_use": [
+      "not_for_direct_quote",
+      "retrieval_seed"
+    ],
+    "visibility": "source_only",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 0,
+    "intensity": "unknown",
+    "quality_flags": [
+      "missing_summary"
+    ],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+    "source_id": "123__кузница_духа",
+    "title": "Операционная система страдания",
+    "core_thesis": "Представь, что твой мозг — это компьютер.",
+    "chunk_type": "mechanism",
+    "mechanism_hints": [
+      "shame_as_wrong_visibility",
+      "self_criticism_as_control"
+    ],
+    "allowed_use": [
+      "direct_to_writer",
+      "diagnostic_hint",
+      "not_for_direct_quote",
+      "internal_lens",
+      "retrieval_seed"
+    ],
+    "visibility": "writer_allowed",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 2,
+    "intensity": "unknown",
+    "quality_flags": [
+      "missing_summary"
+    ],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "7910da47-485f-45c6-b774-0772d5aaddec",
+    "source_id": "123__кузница_духа",
+    "title": "Как это работает на уровне мозга",
+    "core_thesis": "Давай без эзотерики.",
+    "chunk_type": "source_fragment",
+    "mechanism_hints": [
+      "self_criticism_as_control",
+      "parental_gaze"
+    ],
+    "allowed_use": [
+      "not_for_direct_quote",
+      "retrieval_seed"
+    ],
+    "visibility": "source_only",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 0,
+    "intensity": "unknown",
+    "quality_flags": [
+      "missing_summary"
+    ],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "39f6eafa-7403-4450-80b8-9b94097035b2",
+    "source_id": "123__кузница_духа",
+    "title": "Два этажа одного мозга",
+    "core_thesis": "Здесь важно одно различение — оно многое проясняет.",
+    "chunk_type": "diagnostic_lens",
+    "mechanism_hints": [],
+    "allowed_use": [
+      "diagnostic_hint",
+      "not_for_direct_quote",
+      "internal_lens"
+    ],
+    "visibility": "writer_allowed",
+    "quote_policy": "internal_only",
+    "depth_level": 2,
+    "intensity": "unknown",
+    "quality_flags": [
+      "missing_summary",
+      "missing_mechanism_hints"
+    ],
+    "legacy_metadata_keys": [
+      "legacy_lens_family"
+    ]
+  },
+  {
+    "chunk_id": "d527d369-beb2-4113-b370-cb2738e76b55",
+    "source_id": "123__кузница_духа",
+    "title": "Почему программа так устойчива",
+    "core_thesis": "Три причины, по которым программа «несовершенное Я» держится так крепко: **1.",
+    "chunk_type": "diagnostic_lens",
+    "mechanism_hints": [
+      "shame_as_wrong_visibility"
+    ],
+    "allowed_use": [
+      "diagnostic_hint",
+      "not_for_direct_quote",
+      "internal_lens"
+    ],
+    "visibility": "writer_allowed",
+    "quote_policy": "internal_only",
+    "depth_level": 2,
+    "intensity": "unknown",
+    "quality_flags": [
+      "missing_summary"
+    ],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "6db17c5b-638d-452e-8a9c-8384c9ed78a4",
+    "source_id": "123__кузница_духа",
+    "title": "2. Пять драйверов выживания",
+    "core_thesis": "Программа «несовершенное Я» — не монолит.",
+    "chunk_type": "diagnostic_lens",
+    "mechanism_hints": [],
+    "allowed_use": [
+      "diagnostic_hint",
+      "not_for_direct_quote",
+      "internal_lens"
+    ],
+    "visibility": "writer_allowed",
+    "quote_policy": "internal_only",
+    "depth_level": 2,
+    "intensity": "unknown",
+    "quality_flags": [
+      "legacy_too_short",
+      "missing_summary",
+      "missing_mechanism_hints"
+    ],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "ebf047f2-c678-40a1-8747-b98dfae1a2ea",
+    "source_id": "123__кузница_духа",
+    "title": "Драйвер 1: «Будь сильным»",
+    "core_thesis": "**Базовая установка:** «Показывать слабость = опасно» Ребёнок плачет.",
+    "chunk_type": "source_fragment",
+    "mechanism_hints": [
+      "parental_gaze"
+    ],
+    "allowed_use": [
+      "not_for_direct_quote",
+      "retrieval_seed"
+    ],
+    "visibility": "source_only",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 0,
+    "intensity": "unknown",
+    "quality_flags": [
+      "missing_summary"
+    ],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "6d0c2432-96ca-4293-beec-9bf337955a7a",
+    "source_id": "123__кузница_духа",
+    "title": "Драйвер 2: «Будь лучшим»",
+    "core_thesis": "**Базовая установка:** «Любовь нужно заслужить достижениями» Родители хвалят только за успехи.",
+    "chunk_type": "source_fragment",
+    "mechanism_hints": [
+      "parental_gaze"
+    ],
+    "allowed_use": [
+      "not_for_direct_quote",
+      "retrieval_seed"
+    ],
+    "visibility": "source_only",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 0,
+    "intensity": "unknown",
+    "quality_flags": [
+      "missing_summary"
+    ],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "1243381f-27fe-4f5e-95bb-605b8ba64c1a",
+    "source_id": "123__кузница_духа",
+    "title": "Драйвер 3: «Радуй других»",
+    "core_thesis": "**Базовая установка:** «Мои потребности неважны.",
+    "chunk_type": "source_fragment",
+    "mechanism_hints": [
+      "parental_gaze"
+    ],
+    "allowed_use": [
+      "not_for_direct_quote",
+      "retrieval_seed"
+    ],
+    "visibility": "source_only",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 0,
+    "intensity": "unknown",
+    "quality_flags": [
+      "missing_summary"
+    ],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "6990807e-5d14-4f39-a3db-0f8c687d97d0",
+    "source_id": "123__кузница_духа",
+    "title": "Драйвер 4: «Старайся сильнее»",
+    "core_thesis": "**Базовая установка:** «Результат не важен.",
+    "chunk_type": "source_fragment",
+    "mechanism_hints": [
+      "self_criticism_as_control",
+      "parental_gaze"
+    ],
+    "allowed_use": [
+      "not_for_direct_quote",
+      "retrieval_seed"
+    ],
+    "visibility": "source_only",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 0,
+    "intensity": "unknown",
+    "quality_flags": [
+      "missing_summary"
+    ],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "f648d244-df01-4d43-a130-bea5dada3ccf",
+    "source_id": "123__кузница_духа",
+    "title": "Драйвер 5: «Спеши»",
+    "core_thesis": "**Базовая установка:** «Времени всегда мало.",
+    "chunk_type": "source_fragment",
+    "mechanism_hints": [],
+    "allowed_use": [
+      "not_for_direct_quote",
+      "retrieval_seed"
+    ],
+    "visibility": "source_only",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 0,
+    "intensity": "unknown",
+    "quality_flags": [
+      "missing_summary"
+    ],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "a49057e9-03da-46dd-9a30-b8de69fbb9da",
+    "source_id": "123__кузница_духа",
+    "title": "3. Как программа берёт управление",
+    "core_thesis": "Самое тонкое в программе «несовершенное Я» — она работает **автоматически**.",
+    "chunk_type": "diagnostic_lens",
+    "mechanism_hints": [],
+    "allowed_use": [
+      "diagnostic_hint",
+      "not_for_direct_quote",
+      "internal_lens"
+    ],
+    "visibility": "writer_allowed",
+    "quote_policy": "internal_only",
+    "depth_level": 2,
+    "intensity": "unknown",
+    "quality_flags": [
+      "legacy_too_short",
+      "missing_summary",
+      "missing_mechanism_hints"
+    ],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "f68050f9-d789-4d8b-b5b1-d6302ddfb88e",
+    "source_id": "123__кузница_духа",
+    "title": "Триггер → Программа → Реакция",
+    "core_thesis": "**Шаг 1: Триггер** Что-то случается — начальник делает замечание, партнёр не отвечает, кто-то посмотрел не так.",
+    "chunk_type": "practice",
+    "mechanism_hints": [
+      "self_criticism_as_control"
+    ],
+    "allowed_use": [
+      "direct_to_writer",
+      "diagnostic_hint",
+      "practice_suggestion",
+      "not_for_direct_quote",
+      "retrieval_seed"
+    ],
+    "visibility": "writer_allowed",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 1,
+    "intensity": "medium",
+    "quality_flags": [
+      "missing_summary",
+      "practice_missing_avoid_when",
+      "practice_direct_to_writer_without_preconditions"
+    ],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "ade2de91-35a4-40bf-b3d5-adf26babf891",
+    "source_id": "123__кузница_духа",
+    "title": "Почему сила воли здесь не работает",
+    "core_thesis": "Многие думают: «Ок, я понял механизм — теперь буду контролировать реакции».",
+    "chunk_type": "mechanism",
+    "mechanism_hints": [
+      "control_as_safety"
+    ],
+    "allowed_use": [
+      "direct_to_writer",
+      "diagnostic_hint",
+      "not_for_direct_quote",
+      "internal_lens",
+      "retrieval_seed"
+    ],
+    "visibility": "writer_allowed",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 2,
+    "intensity": "unknown",
+    "quality_flags": [
+      "missing_summary"
+    ],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "5808a31f-2872-4e48-826c-b318bf0d60b0",
+    "source_id": "123__кузница_духа",
+    "title": "4. Откуда это берётся: три волны",
+    "core_thesis": "Программа не возникает в один момент.",
+    "chunk_type": "mechanism",
+    "mechanism_hints": [
+      "self_criticism_as_control",
+      "parental_gaze"
+    ],
+    "allowed_use": [
+      "direct_to_writer",
+      "diagnostic_hint",
+      "not_for_direct_quote",
+      "internal_lens",
+      "retrieval_seed"
+    ],
+    "visibility": "writer_allowed",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 2,
+    "intensity": "unknown",
+    "quality_flags": [
+      "missing_summary"
+    ],
+    "legacy_metadata_keys": []
+  }
+]

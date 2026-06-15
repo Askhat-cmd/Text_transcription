@@ -1,5 +1,23 @@
 # Architecture Decisions
 
+## ADR-077 - Mechanism-aware chunk metadata is semantic guidance, not deterministic routing
+
+Status: accepted
+
+Date: 2026-06-15
+
+Context: after `PRD-047.15-HF2-R2`, Hybrid Retrieval Planner visibility was in place, but retrieval quality was still limited by legacy BotDB metadata that could not express mechanism depth, visibility, quote policy, contraindications, or writer-facing boundaries in a stable audit-ready contract.
+
+Decision:
+- add `MechanismAwareChunkMetadata v1` in the existing `Bot_data_base/knowledge_governance` layer instead of creating a parallel runtime subsystem;
+- normalize legacy governed blocks into the new schema through a backward-compatible adapter and preserve unknown fields in `legacy_metadata` / `extra_metadata`;
+- treat metadata as semantic guidance for retrieval/planner/context assembly audits only;
+- forbid using mechanism markers, user markers, or depth labels as deterministic runtime routing rules;
+- keep Writer as the only author of user-facing text;
+- keep the PRD read-only: no DB mutation, no Chroma reindex, no Writer-path activation, and no new LLM enrichment agent.
+
+Consequences: the codebase now has a stable offline metadata foundation and audit vocabulary for later enrichment/evaluation PRDs, while live runtime authority and retrieval execution remain unchanged.
+
 ## ADR-076 - Hybrid Retrieval Planner owns metadata-only query-before-RAG, not Writer authority
 
 Status: accepted

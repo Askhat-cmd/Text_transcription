@@ -4,7 +4,7 @@
   "source_prd": "PRD-047.18",
   "source_candidate_prd": "PRD-047.17",
   "batch_id": "batch_1",
-  "created_at": "2026-06-16T09:19:44.601217+00:00",
+  "created_at": "2026-06-16T09:24:33.293519+00:00",
   "decision_count": 16,
   "fixture_only": false,
   "human_final_approval": false,
@@ -30,7 +30,7 @@
       "review_status": "accepted_with_edits",
       "reviewer_role": "offline_curator_batch_1",
       "reviewer_id": "offline_curator_batch_1",
-      "reviewed_at": "2026-06-16T09:19:44.592217+00:00",
+      "reviewed_at": "2026-06-16T09:24:33.285517+00:00",
       "safe_to_apply_to_live_metadata": false,
       "review_notes": "PRD-047.20 curated batch 1 item for mechanism_control_as_safety; evaluation-only and not human-final-approved.",
       "field_decisions": {
@@ -191,7 +191,7 @@
       "review_status": "accepted_with_edits",
       "reviewer_role": "offline_curator_batch_1",
       "reviewer_id": "offline_curator_batch_1",
-      "reviewed_at": "2026-06-16T09:19:44.593215+00:00",
+      "reviewed_at": "2026-06-16T09:24:33.286519+00:00",
       "safe_to_apply_to_live_metadata": false,
       "review_notes": "PRD-047.20 curated batch 1 item for mechanism_shame_visibility; evaluation-only and not human-final-approved.",
       "field_decisions": {
@@ -346,7 +346,7 @@
       "review_status": "accepted_with_edits",
       "reviewer_role": "offline_curator_batch_1",
       "reviewer_id": "offline_curator_batch_1",
-      "reviewed_at": "2026-06-16T09:19:44.593215+00:00",
+      "reviewed_at": "2026-06-16T09:24:33.286519+00:00",
       "safe_to_apply_to_live_metadata": false,
       "review_notes": "PRD-047.20 curated batch 1 item for mechanism_self_criticism_parental_gaze; evaluation-only and not human-final-approved.",
       "field_decisions": {
@@ -500,7 +500,7 @@
       "review_status": "accepted_with_edits",
       "reviewer_role": "offline_curator_batch_1",
       "reviewer_id": "offline_curator_batch_1",
-      "reviewed_at": "2026-06-16T09:19:44.594215+00:00",
+      "reviewed_at": "2026-06-16T09:24:33.287516+00:00",
       "safe_to_apply_to_live_metadata": false,
       "review_notes": "PRD-047.20 curated batch 1 item for mechanism_avoidance_as_protection; evaluation-only and not human-final-approved.",
       "field_decisions": {
@@ -655,7 +655,7 @@
       "review_status": "accepted_with_edits",
       "reviewer_role": "offline_curator_batch_1",
       "reviewer_id": "offline_curator_batch_1",
-      "reviewed_at": "2026-06-16T09:19:44.594215+00:00",
+      "reviewed_at": "2026-06-16T09:24:33.287516+00:00",
       "safe_to_apply_to_live_metadata": false,
       "review_notes": "PRD-047.20 curated batch 1 item for diagnostic_control_as_safety; evaluation-only and not human-final-approved.",
       "field_decisions": {
@@ -808,7 +808,7 @@
       "review_status": "accepted_with_edits",
       "reviewer_role": "offline_curator_batch_1",
       "reviewer_id": "offline_curator_batch_1",
-      "reviewed_at": "2026-06-16T09:19:44.595214+00:00",
+      "reviewed_at": "2026-06-16T09:24:33.288517+00:00",
       "safe_to_apply_to_live_metadata": false,
       "review_notes": "PRD-047.20 curated batch 1 item for diagnostic_shame_visibility; evaluation-only and not human-final-approved.",
       "field_decisions": {
@@ -959,7 +959,7 @@
       "review_status": "accepted_with_edits",
       "reviewer_role": "offline_curator_batch_1",
       "reviewer_id": "offline_curator_batch_1",
-      "reviewed_at": "2026-06-16T09:19:44.595214+00:00",
+      "reviewed_at": "2026-06-16T09:24:33.289516+00:00",
       "safe_to_apply_to_live_metadata": false,
       "review_notes": "PRD-047.20 curated batch 1 item for diagnostic_self_criticism_parental_gaze; evaluation-only and not human-final-approved.",
       "field_decisions": {
@@ -1113,7 +1113,7 @@
       "review_status": "accepted_with_edits",
       "reviewer_role": "offline_curator_batch_1",
       "reviewer_id": "offline_curator_batch_1",
-      "reviewed_at": "2026-06-16T09:19:44.596214+00:00",
+      "reviewed_at": "2026-06-16T09:24:33.289516+00:00",
       "safe_to_apply_to_live_metadata": false,
       "review_notes": "PRD-047.20 curated batch 1 item for diagnostic_survival_drivers; evaluation-only and not human-final-approved.",
       "field_decisions": {
@@ -1259,7 +1259,7 @@
       "review_status": "accepted_with_edits",
       "reviewer_role": "offline_curator_batch_1",
       "reviewer_id": "offline_curator_batch_1",
-      "reviewed_at": "2026-06-16T09:19:44.597216+00:00",
+      "reviewed_at": "2026-06-16T09:24:33.290515+00:00",
       "safe_to_apply_to_live_metadata": false,
       "review_notes": "PRD-047.20 curated batch 1 item for practice_stop_frame; evaluation-only and not human-final-approved.",
       "field_decisions": {
@@ -1412,7 +1412,7 @@
       "review_status": "accepted_with_edits",
       "reviewer_role": "offline_curator_batch_1",
       "reviewer_id": "offline_curator_batch_1",
-      "reviewed_at": "2026-06-16T09:19:44.597216+00:00",
+      "reviewed_at": "2026-06-16T09:24:33.290515+00:00",
       "safe_to_apply_to_live_metadata": false,
       "review_notes": "PRD-047.20 curated batch 1 item for practice_fact_vs_interpretation; evaluation-only and not human-final-approved.",
       "field_decisions": {
@@ -1565,7 +1565,7 @@
       "review_status": "accepted_with_edits",
       "reviewer_role": "offline_curator_batch_1",
       "reviewer_id": "offline_curator_batch_1",
-      "reviewed_at": "2026-06-16T09:19:44.598214+00:00",
+      "reviewed_at": "2026-06-16T09:24:33.291528+00:00",
       "safe_to_apply_to_live_metadata": false,
       "review_notes": "PRD-047.20 curated batch 1 item for practice_reality_threat_check; evaluation-only and not human-final-approved.",
       "field_decisions": {
@@ -1720,7 +1720,7 @@
       "review_status": "accepted_with_edits",
       "reviewer_role": "offline_curator_batch_1",
       "reviewer_id": "offline_curator_batch_1",
-      "reviewed_at": "2026-06-16T09:19:44.598214+00:00",
+      "reviewed_at": "2026-06-16T09:24:33.291528+00:00",
       "safe_to_apply_to_live_metadata": false,
       "review_notes": "PRD-047.20 curated batch 1 item for practice_letter_to_program; evaluation-only and not human-final-approved.",
       "field_decisions": {
@@ -1872,7 +1872,7 @@
       "review_status": "needs_source_context",
       "reviewer_role": "offline_curator_batch_1",
       "reviewer_id": "offline_curator_batch_1",
-      "reviewed_at": "2026-06-16T09:19:44.599213+00:00",
+      "reviewed_at": "2026-06-16T09:24:33.292519+00:00",
       "safe_to_apply_to_live_metadata": false,
       "review_notes": "Requires more source context before any accepted metadata field can be trusted.",
       "field_decisions": {
@@ -2001,7 +2001,7 @@
       "review_status": "deferred",
       "reviewer_role": "offline_curator_batch_1",
       "reviewer_id": "offline_curator_batch_1",
-      "reviewed_at": "2026-06-16T09:19:44.599213+00:00",
+      "reviewed_at": "2026-06-16T09:24:33.292519+00:00",
       "safe_to_apply_to_live_metadata": false,
       "review_notes": "Deferred from accepted overlay; useful as review evidence only.",
       "field_decisions": {
@@ -2130,7 +2130,7 @@
       "review_status": "rejected",
       "reviewer_role": "offline_curator_batch_1",
       "reviewer_id": "offline_curator_batch_1",
-      "reviewed_at": "2026-06-16T09:19:44.600219+00:00",
+      "reviewed_at": "2026-06-16T09:24:33.293519+00:00",
       "safe_to_apply_to_live_metadata": false,
       "review_notes": "Kept outside accepted overlay to avoid source-fragment leakage into writer-facing metadata.",
       "field_decisions": {
@@ -2256,7 +2256,7 @@
       "review_status": "needs_source_context",
       "reviewer_role": "offline_curator_batch_1",
       "reviewer_id": "offline_curator_batch_1",
-      "reviewed_at": "2026-06-16T09:19:44.601217+00:00",
+      "reviewed_at": "2026-06-16T09:24:33.293519+00:00",
       "safe_to_apply_to_live_metadata": false,
       "review_notes": "Requires more source context before any accepted metadata field can be trusted.",
       "field_decisions": {

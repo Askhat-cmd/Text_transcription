@@ -2,7 +2,7 @@
   "schema_version": "mechanism_metadata_curated_batch_retrieval_eval_results_v1",
   "prd_id": "PRD-047.20",
   "batch_id": "batch_1",
-  "created_at": "2026-06-16T09:19:50.302717+00:00",
+  "created_at": "2026-06-16T09:24:38.700936+00:00",
   "status": "passed",
   "baseline_available": true,
   "baseline_warning": "",

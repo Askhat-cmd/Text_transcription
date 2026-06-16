@@ -1,24 +1,11 @@
 {
   "schema_version": "prd_047_20_source_gate_report_v1",
   "prd_id": "PRD-047.20",
-  "created_at": "2026-06-16T09:19:44.488653+00:00",
+  "created_at": "2026-06-16T09:24:33.190761+00:00",
   "status": "passed",
-  "git_status_short": [
-    "M docs/PRD_INDEX.md",
-    " M docs/PROJECT_STATE.md",
-    " M docs/ROADMAP.md",
-    "?? Bot_data_base/knowledge_governance/curated_batch_eval.py",
-    "?? Bot_data_base/tests/test_curated_batch_eval.py",
-    "?? Bot_data_base/tests/test_curated_batch_no_runtime_activation.py",
-    "?? Bot_data_base/tests/test_run_curated_batch_retrieval_eval.py",
-    "?? Bot_data_base/tools/run_curated_batch_retrieval_eval.py",
-    "?? TO_DO_LIST/PRD-047.20_Curated_Review_Batch_1_and_Retrieval_Evaluation_over_Accepted_Overlay_v1_RU.md",
-    "?? TO_DO_LIST/PRD-047.20_TASK_LIST.md",
-    "?? TO_DO_LIST/logs/PRD-047.20/",
-    "?? TO_DO_LIST/reports/PRD-047.20_IMPLEMENTATION_REPORT.md",
-    "?? TO_DO_LIST/reports/PRD-047.20_NEXT_PRD_RECOMMENDATION.md"
-  ],
+  "git_status_short": [],
   "recent_commits": [
+    "dde1c77 PRD-047.20 curated review batch retrieval eval",
     "6f7cc0e PRD-047.19-HF1 post-push metadata sync",
     "b347a03 PRD-047.19-HF1 evidence integrity repair",
     "11987c8 PRD-047.19 post-push metadata sync",
@@ -37,8 +24,7 @@
     "625a088 PRD-047.15-HF2-R1 hybrid retrieval planner",
     "f2fefd6 PRD-047.15-HF1 final metadata hash sync",
     "22ea6e1 PRD-047.15-HF1 post-push metadata sync",
-    "7041444 PRD-047.15-HF1 composer live calibration evidence",
-    "455aa24 PRD-047.15 final metadata hash sync"
+    "7041444 PRD-047.15-HF1 composer live calibration evidence"
   ],
   "required_commit_presence": {
     "dfb814d": true,

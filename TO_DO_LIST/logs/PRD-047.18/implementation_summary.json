@@ -8,5 +8,7 @@
   "fixture_overlay_item_count": 2,
   "fixture_overlay_field_count": 5,
   "live_apply_allowed": false,
+  "implementation_commit": "dfb814d",
+  "push_status": "pushed_to_origin_main",
   "created_at": "2026-06-16T04:50:17.416944+00:00"
 }

@@ -1,6 +1,8 @@
 # Roadmap
 
 ## Done
+- PRD-047.20: completed the first real curated batch over the PRD-047.18 review queue. Added offline batch-1 selection (`16` real candidates), evaluation-only decisions pack (`12` accepted overlay items / `139` accepted fields), accepted-overlay preview, PRD-047.19-based dry-run apply/preflight wrapper with honest blockers (`human_final_approval_missing`, `evaluation_only_overlay`), retrieval eval dataset/results, anti-runtime-activation proof, read-only BotDB smoke, and no-mutation/encoding artifacts. No runtime/Writer/Admin/Web/registry/processed-block/Chroma mutation was introduced.
+
 - PRD-047.19: completed curated overlay dry-run apply preflight over the PRD-047.18 fixture overlay. Added read-only overlay intake validation, future `FIELD_APPLY_MAP`, dry-run diff preview under `overlay_only_no_write`, apply preflight report with honest `passed_with_expected_blockers` outcome, negative overlay fixtures, anti-runtime-activation/no-mutation proof, and read-only BotDB smoke. No live metadata apply, Chroma reindex, Writer/runtime mutation, or new UI/runtime authority was introduced.
 
 - PRD-047.18: completed manual review / curated candidate acceptance workflow over the PRD-047.17 enrichment set. Added `mechanism_metadata_review_decision_v1`, review queue over all `80` candidates, all-pending decision template, decision validator, fixture-only curated overlay preview, curation status report, anti-runtime-activation/no-mutation proof, read-only BotDB smoke, and encoding artifacts. No live metadata apply, Chroma reindex, Writer/runtime mutation, or new UI/runtime authority was introduced.
@@ -67,6 +69,7 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
+- PRD-047.20 closed the first real evaluation-only accepted overlay batch and proved offline retrieval usefulness without live apply. The next step can expose overlay-aware retrieval in trace-only form, still without runtime authority mutation.
 - PRD-047.19 closed dry-run apply planning and proved the current overlay is still fixture-only; the next step must produce real human-reviewed accepted overlay decisions before any apply/reindex planning can move past expected blockers.
 - PRD-047.18 closed the manual-review acceptance workflow and proved fixture-only curated overlay generation without live apply; the next work can move to dry-run apply planning or later accepted-overlay preflight, still outside runtime mutation.
 - PRD-047.17 closed offline enrichment candidate generation and produced the manual-review inventory needed for the next acceptance workflow PRD; no runtime activation or KB mutation is pending from this cycle.
@@ -81,8 +84,8 @@
 - No active PRD-047.12 blocker remains; unified dialogue policy v2 is accepted on the current developer-local runtime baseline.
 
 ## Next
-1. Start `PRD-047.20 - Real Human Curated Overlay Batch 1 / Accepted Decisions Pack v1`.
-2. Keep any live metadata apply, runtime activation, or Chroma reindex in a separate explicit governance PRD after a real non-fixture overlay passes preflight.
+1. Start `PRD-047.21 - Overlay-Aware Retrieval Shadow Integration / Trace-Only v1`.
+2. Keep any live metadata apply, runtime activation, or Chroma reindex in a separate explicit governance PRD after a human-final-approved non-evaluation overlay passes preflight.
 
 ## Later
 - Operational hardening for governed limited runtime.

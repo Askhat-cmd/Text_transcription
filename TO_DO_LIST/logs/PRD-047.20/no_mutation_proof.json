@@ -1,0 +1,17 @@
+{
+  "schema_version": "prd_047_20_no_mutation_proof_v1",
+  "prd_id": "PRD-047.20",
+  "status": "passed",
+  "live_metadata_applied": false,
+  "human_final_approval_written": false,
+  "evaluation_only_overlay_only": true,
+  "processed_blocks_overwritten": false,
+  "registry_mutated": false,
+  "chroma_reindexed": false,
+  "writer_runtime_changed": false,
+  "writer_prompt_changed": false,
+  "bot_runtime_changed": false,
+  "admin_surface_changed": false,
+  "web_ui_changed": false,
+  "retrieval_runtime_shadow_integrated": false
+}

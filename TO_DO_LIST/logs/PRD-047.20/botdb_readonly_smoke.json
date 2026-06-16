@@ -1,0 +1,30 @@
+{
+  "schema_version": "prd_047_20_botdb_readonly_smoke_v1",
+  "prd_id": "PRD-047.20",
+  "base_url": "http://127.0.0.1:8003",
+  "status": "passed",
+  "checks": [
+    {
+      "method": "GET",
+      "path": "/api/status",
+      "ok": true,
+      "status_code": 200,
+      "error": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/registry",
+      "ok": true,
+      "status_code": 200,
+      "error": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/query/",
+      "ok": true,
+      "status_code": 200,
+      "error": ""
+    }
+  ],
+  "warnings": []
+}

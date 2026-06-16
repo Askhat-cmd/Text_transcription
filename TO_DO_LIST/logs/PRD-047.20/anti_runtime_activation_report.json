@@ -1,0 +1,10 @@
+{
+  "schema_version": "prd_047_20_anti_runtime_activation_v1",
+  "prd_id": "PRD-047.20",
+  "status": "passed",
+  "runtime_token_hits": [],
+  "notes": [
+    "PRD-047.20 stays offline and evaluation-only.",
+    "No curated batch tokens are allowed in active runtime roots."
+  ]
+}

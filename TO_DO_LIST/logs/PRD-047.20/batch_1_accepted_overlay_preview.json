@@ -1,0 +1,602 @@
+{
+  "schema_version": "mechanism_metadata_curated_overlay_preview_v1",
+  "prd_id": "PRD-047.20",
+  "source_prd": "PRD-047.18",
+  "source_candidate_file": "TO_DO_LIST/logs/PRD-047.17/enrichment_candidates_deterministic.json",
+  "decisions_file": "TO_DO_LIST/logs/PRD-047.20/batch_1_decisions_pack.json",
+  "created_at": "2026-06-16T09:19:44.614216+00:00",
+  "fixture_only": false,
+  "live_apply_allowed": false,
+  "safe_to_apply_to_live_metadata": false,
+  "chroma_reindex_required_before_runtime_use": true,
+  "items": [
+    {
+      "candidate_id": "121bdc40-8633-469e-9837-ea9949f73de3",
+      "chunk_type": "practice",
+      "risk_level": "medium",
+      "review_status": "accepted_with_edits",
+      "reviewer_role": "offline_curator_batch_1",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "121bdc40-8633-469e-9837-ea9949f73de3",
+        "heading_path": [
+          "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "5. *Ещё два медленных дыхания.* И возвращайся к тому, что делал.",
+          "Практика 7: Письмо программе"
+        ],
+        "content_preview": "**Цель:** установить осознанный контакт с программой — не как с врагом, а как с частью себя, которая когда-то помогала выжить. **Время:** 20–30 минут. Один раз — как завершение работы с главой. Это последняя практика к первой главе. И, пожалуй, самая необычная. Возьми лист бумаги — именно бумагу,..."
+      },
+      "accepted_fields": {
+        "summary_candidate": "Практика из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+        "core_thesis_candidate": "**Цель:** установить осознанный контакт с программой — не как с врагом, а как с частью себя, которая когда-то помогала выжить.",
+        "use_when_candidates": [
+          "Когда пользователь явно просит практику или следующий шаг.",
+          "Когда у пользователя есть хотя бы минимальный ресурс на короткое действие."
+        ],
+        "avoid_when_candidates": [
+          "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+          "Не предлагать без явного запроса, если пользователь в острой дестабилизации или без ресурса.",
+          "Не давать несколько практик подряд вместо ответа на вопрос."
+        ],
+        "contraindications_candidates": [
+          "Острая дестабилизация, когда пользователю трудно удерживать внимание даже на коротком действии.",
+          "Состояние сильного истощения, где дополнительная практика может переживаться как давление."
+        ],
+        "risk_if_exposed_candidate": "Без проверки времени и ресурса практика может ощущаться как давление или ещё одна задача.",
+        "allowed_writer_use_candidate": "Только как один ограниченный next step после ответа и при явном timing fit.",
+        "recommended_moves_candidates": [
+          "offer_only_if_requested_or_timed",
+          "keep_one_practice_max"
+        ],
+        "forbidden_moves_candidates": [
+          "drop_deep_practice_without_timing",
+          "stack_multiple_practices"
+        ],
+        "depth_level_suggestion": 2,
+        "quote_policy_suggestion": "paraphrase_only"
+      }
+    },
+    {
+      "candidate_id": "3dfeca39-dbb2-4da0-b12f-15ef07fdad2b",
+      "chunk_type": "mechanism",
+      "risk_level": "medium",
+      "review_status": "accepted_with_edits",
+      "reviewer_role": "offline_curator_batch_1",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "3dfeca39-dbb2-4da0-b12f-15ef07fdad2b",
+        "heading_path": [
+          "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "Вопросы и ответы"
+        ],
+        "content_preview": "И ещё один момент: если ты ждёшь «результата» — спроси себя, что именно ты ждёшь. Часто за этим вопросом стоит драйвер «будь лучшим» — ему нужен конкретный финал, оценка, зачёт. Он тоже часть программы. *** **— У меня нет никаких воспоминаний о травматичном детстве. Всё было нормально. Откуда тог..."
+      },
+      "accepted_fields": {
+        "summary_candidate": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» объясняет механизм, через который человек пытается сохранить безопасность или контроль. И ещё один момент: если ты ждёшь «результата»...",
+        "core_thesis_candidate": "И ещё один момент: если ты ждёшь «результата» — спроси себя, что именно ты ждёшь.",
+        "mechanism_hints_candidates": [
+          "avoidance_as_protection",
+          "parental_gaze"
+        ],
+        "use_when_candidates": [
+          "Когда пользователь просит понять, почему с ним это происходит.",
+          "Когда повторяется один и тот же паттерн контроля, стыда, избегания или внутреннего давления.",
+          "Когда полезно мягко подсветить механизм avoidance_as_protection без категоричности."
+        ],
+        "avoid_when_candidates": [
+          "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+          "Не подавать как факт о личности пользователя или как скрытый диагноз.",
+          "Не использовать, если пользователь просит только короткую опору без анализа."
+        ],
+        "safe_user_translation_candidate": "Избегание здесь может быть не ленью, а способом защититься от перегрузки или боли.",
+        "risk_if_exposed_candidate": "Слишком прямое объяснение механизма может переживаться как разоблачение вместо поддержки.",
+        "allowed_writer_use_candidate": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя.",
+        "recommended_moves_candidates": [
+          "name_the_protective_function",
+          "translate_pattern_softly"
+        ],
+        "forbidden_moves_candidates": [
+          "diagnose_the_user",
+          "command_obedience"
+        ],
+        "depth_level_suggestion": 2,
+        "quote_policy_suggestion": "paraphrase_only"
+      }
+    },
+    {
+      "candidate_id": "468fb5d0-85f4-45c5-a7c3-5d593f51682e",
+      "chunk_type": "practice",
+      "risk_level": "medium",
+      "review_status": "accepted_with_edits",
+      "reviewer_role": "offline_curator_batch_1",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "468fb5d0-85f4-45c5-a7c3-5d593f51682e",
+        "heading_path": [
+          "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "5. Нижняя часть тела — есть контакт с опорой? Ты вообще чувствуешь, что сидишь?",
+          "Практика 3: Стоп-кадр"
+        ],
+        "content_preview": "**Цель:** поймать программу в действии — до того как реакция уже произошла. **Время:** в течение дня, по ситуации. 20–30 секунд. Когда замечаешь внутреннее напряжение — **буквально остановись**. Физически. Сделай паузу в том, что делаешь. Три шага:"
+      },
+      "accepted_fields": {
+        "summary_candidate": "Практика из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+        "core_thesis_candidate": "**Цель:** поймать программу в действии — до того как реакция уже произошла.",
+        "use_when_candidates": [
+          "Когда пользователь явно просит практику или следующий шаг.",
+          "Когда у пользователя есть хотя бы минимальный ресурс на короткое действие."
+        ],
+        "avoid_when_candidates": [
+          "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+          "Не предлагать без явного запроса, если пользователь в острой дестабилизации или без ресурса.",
+          "Не давать несколько практик подряд вместо ответа на вопрос."
+        ],
+        "contraindications_candidates": [
+          "Острая дестабилизация, когда пользователю трудно удерживать внимание даже на коротком действии.",
+          "Состояние сильного истощения, где дополнительная практика может переживаться как давление."
+        ],
+        "risk_if_exposed_candidate": "Без проверки времени и ресурса практика может ощущаться как давление или ещё одна задача.",
+        "allowed_writer_use_candidate": "Только как один ограниченный next step после ответа и при явном timing fit.",
+        "recommended_moves_candidates": [
+          "offer_only_if_requested_or_timed",
+          "keep_one_practice_max"
+        ],
+        "forbidden_moves_candidates": [
+          "drop_deep_practice_without_timing",
+          "stack_multiple_practices"
+        ],
+        "depth_level_suggestion": 2,
+        "quote_policy_suggestion": "paraphrase_only"
+      }
+    },
+    {
+      "candidate_id": "47928bce-3306-4351-862e-290b3edeea59",
+      "chunk_type": "diagnostic_lens",
+      "risk_level": "medium",
+      "review_status": "accepted_with_edits",
+      "reviewer_role": "offline_curator_batch_1",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "47928bce-3306-4351-862e-290b3edeea59",
+        "heading_path": [
+          "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "5. Зачем программе нужно страдание",
+          "Страдание = контроль"
+        ],
+        "content_preview": "Последнее. Страдание даёт иллюзию контроля. Если ты страдаешь — ты что-то делаешь. Работаешь над собой. Стараешься. Есть процесс, есть движение. А если ты просто **примешь** себя таким, какой ты есть — тогда что? Тогда надо жить. А жизнь непредсказуема. Её нельзя полностью контролировать. Она мож..."
+      },
+      "accepted_fields": {
+        "summary_candidate": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» описывает повторяющийся внутренний паттерн, который полезно переводить в мягкую гипотезу, а не в диагноз. Последнее.",
+        "core_thesis_candidate": "Последнее.",
+        "mechanism_hints_candidates": [
+          "control_as_safety"
+        ],
+        "use_when_candidates": [
+          "Когда пользователь просит понять, почему с ним это происходит.",
+          "Когда повторяется один и тот же паттерн контроля, стыда, избегания или внутреннего давления.",
+          "Когда полезно мягко подсветить механизм control_as_safety без категоричности."
+        ],
+        "avoid_when_candidates": [
+          "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+          "Не подавать как факт о личности пользователя или как скрытый диагноз.",
+          "Не использовать, если пользователь просит только короткую опору без анализа."
+        ],
+        "safe_user_translation_candidate": "Иногда контроль становится способом не чувствовать угрозу и вернуть себе ощущение опоры.",
+        "risk_if_exposed_candidate": "В сыром виде может прозвучать как диагноз, обвинение или навешивание роли.",
+        "allowed_writer_use_candidate": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя.",
+        "recommended_moves_candidates": [
+          "keep_as_internal_lens",
+          "translate_without_diagnosis"
+        ],
+        "forbidden_moves_candidates": [
+          "expose_raw_lens",
+          "present_as_fact_about_user"
+        ],
+        "depth_level_suggestion": 2,
+        "quote_policy_suggestion": "internal_only"
+      }
+    },
+    {
+      "candidate_id": "4ea6de6c-5dd9-4914-9fa6-75ecb70a2457",
+      "chunk_type": "practice",
+      "risk_level": "medium",
+      "review_status": "accepted_with_edits",
+      "reviewer_role": "offline_curator_batch_1",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "4ea6de6c-5dd9-4914-9fa6-75ecb70a2457",
+        "heading_path": [
+          "ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя",
+          "Пример:",
+          "Практика 4: Три описания одного факта"
+        ],
+        "content_preview": "**Цель:** увидеть, что любой факт можно описать по-разному — и твоя версия не единственная. **Время:** 7 минут. Возьми один факт — что-то конкретное из своей жизни. Например: «я не получил повышение». Теперь напиши три разных описания этого факта:"
+      },
+      "accepted_fields": {
+        "summary_candidate": "Практика из раздела «ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+        "core_thesis_candidate": "**Цель:** увидеть, что любой факт можно описать по-разному — и твоя версия не единственная.",
+        "use_when_candidates": [
+          "Когда пользователь явно просит практику или следующий шаг.",
+          "Когда у пользователя есть хотя бы минимальный ресурс на короткое действие."
+        ],
+        "avoid_when_candidates": [
+          "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+          "Не предлагать без явного запроса, если пользователь в острой дестабилизации или без ресурса.",
+          "Не давать несколько практик подряд вместо ответа на вопрос."
+        ],
+        "contraindications_candidates": [
+          "Острая дестабилизация, когда пользователю трудно удерживать внимание даже на коротком действии.",
+          "Состояние сильного истощения, где дополнительная практика может переживаться как давление."
+        ],
+        "risk_if_exposed_candidate": "Без проверки времени и ресурса практика может ощущаться как давление или ещё одна задача.",
+        "allowed_writer_use_candidate": "Только как один ограниченный next step после ответа и при явном timing fit.",
+        "recommended_moves_candidates": [
+          "offer_only_if_requested_or_timed",
+          "keep_one_practice_max"
+        ],
+        "forbidden_moves_candidates": [
+          "drop_deep_practice_without_timing",
+          "stack_multiple_practices"
+        ],
+        "depth_level_suggestion": 2,
+        "quote_policy_suggestion": "paraphrase_only"
+      }
+    },
+    {
+      "candidate_id": "5808a31f-2872-4e48-826c-b318bf0d60b0",
+      "chunk_type": "mechanism",
+      "risk_level": "medium",
+      "review_status": "accepted_with_edits",
+      "reviewer_role": "offline_curator_batch_1",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "5808a31f-2872-4e48-826c-b318bf0d60b0",
+        "heading_path": [
+          "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "4. Откуда это берётся: три волны"
+        ],
+        "content_preview": "Программа не возникает в один момент. Она складывается постепенно. **От рождения до 2 лет — базовое ощущение мира** Ребёнок ещё не думает словами. Он просто чувствует и запоминает телом: *мир безопасен или нет*. Если рядом был стабильный, предсказуемый взрослый — записывается: «меня любят просто..."
+      },
+      "accepted_fields": {
+        "summary_candidate": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» объясняет механизм, через который человек пытается сохранить безопасность или контроль. Программа не возникает в один момент.",
+        "core_thesis_candidate": "Программа не возникает в один момент.",
+        "mechanism_hints_candidates": [
+          "self_criticism_as_control",
+          "parental_gaze"
+        ],
+        "use_when_candidates": [
+          "Когда пользователь просит понять, почему с ним это происходит.",
+          "Когда повторяется один и тот же паттерн контроля, стыда, избегания или внутреннего давления.",
+          "Когда полезно мягко подсветить механизм self_criticism_as_control без категоричности."
+        ],
+        "avoid_when_candidates": [
+          "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+          "Не подавать как факт о личности пользователя или как скрытый диагноз.",
+          "Не использовать, если пользователь просит только короткую опору без анализа."
+        ],
+        "safe_user_translation_candidate": "Самокритика здесь может быть способом держать себя под контролем и не столкнуться с более уязвимыми чувствами.",
+        "risk_if_exposed_candidate": "Слишком прямое объяснение механизма может переживаться как разоблачение вместо поддержки.",
+        "allowed_writer_use_candidate": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя.",
+        "recommended_moves_candidates": [
+          "name_the_protective_function",
+          "translate_pattern_softly"
+        ],
+        "forbidden_moves_candidates": [
+          "diagnose_the_user",
+          "command_obedience"
+        ],
+        "depth_level_suggestion": 2,
+        "quote_policy_suggestion": "paraphrase_only"
+      }
+    },
+    {
+      "candidate_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+      "chunk_type": "mechanism",
+      "risk_level": "medium",
+      "review_status": "accepted_with_edits",
+      "reviewer_role": "offline_curator_batch_1",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+        "heading_path": [
+          "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "1. Что такое программа «несовершенное Я»",
+          "Операционная система страдания"
+        ],
+        "content_preview": "Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается операционная система. Но это не Windows и не macOS. Это **OS «Я недостаточен»**. Эта операционная система запускает один базовый алгоритм: **«Со мной что-то не так. Я должен это исправить..."
+      },
+      "accepted_fields": {
+        "summary_candidate": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» объясняет механизм, через который человек пытается сохранить безопасность или контроль. Представь, что твой мозг — это компьютер.",
+        "core_thesis_candidate": "Представь, что твой мозг — это компьютер.",
+        "mechanism_hints_candidates": [
+          "shame_as_wrong_visibility",
+          "self_criticism_as_control"
+        ],
+        "use_when_candidates": [
+          "Когда пользователь просит понять, почему с ним это происходит.",
+          "Когда повторяется один и тот же паттерн контроля, стыда, избегания или внутреннего давления.",
+          "Когда полезно мягко подсветить механизм shame_as_wrong_visibility без категоричности."
+        ],
+        "avoid_when_candidates": [
+          "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+          "Не подавать как факт о личности пользователя или как скрытый диагноз.",
+          "Не использовать, если пользователь просит только короткую опору без анализа."
+        ],
+        "safe_user_translation_candidate": "Похоже, здесь есть страх быть увиденным как неправильный или недостаточный.",
+        "risk_if_exposed_candidate": "Слишком прямое объяснение механизма может переживаться как разоблачение вместо поддержки.",
+        "allowed_writer_use_candidate": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя.",
+        "recommended_moves_candidates": [
+          "name_the_protective_function",
+          "translate_pattern_softly"
+        ],
+        "forbidden_moves_candidates": [
+          "diagnose_the_user",
+          "command_obedience"
+        ],
+        "depth_level_suggestion": 2,
+        "quote_policy_suggestion": "paraphrase_only"
+      }
+    },
+    {
+      "candidate_id": "6db17c5b-638d-452e-8a9c-8384c9ed78a4",
+      "chunk_type": "diagnostic_lens",
+      "risk_level": "medium",
+      "review_status": "accepted_with_edits",
+      "reviewer_role": "offline_curator_batch_1",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "6db17c5b-638d-452e-8a9c-8384c9ed78a4",
+        "heading_path": [
+          "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "2. Пять драйверов выживания"
+        ],
+        "content_preview": "Программа «несовершенное Я» — не монолит. Она говорит разными голосами. У каждого человека один-два из них звучат особенно громко. Посмотри на каждый — ты узнаешь свой. ***"
+      },
+      "accepted_fields": {
+        "summary_candidate": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» описывает повторяющийся внутренний паттерн, который полезно переводить в мягкую гипотезу, а не в диагноз. Программа «несовершенное Я»...",
+        "core_thesis_candidate": "Программа «несовершенное Я» — не монолит.",
+        "use_when_candidates": [
+          "Когда пользователь просит понять, почему с ним это происходит.",
+          "Когда повторяется один и тот же паттерн контроля, стыда, избегания или внутреннего давления."
+        ],
+        "avoid_when_candidates": [
+          "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+          "Не подавать как факт о личности пользователя или как скрытый диагноз.",
+          "Не использовать, если пользователь просит только короткую опору без анализа."
+        ],
+        "safe_user_translation_candidate": "Это лучше переводить как мягкую гипотезу о способе защиты, а не как утверждение о том, кто человек.",
+        "risk_if_exposed_candidate": "В сыром виде может прозвучать как диагноз, обвинение или навешивание роли.",
+        "allowed_writer_use_candidate": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя.",
+        "recommended_moves_candidates": [
+          "keep_as_internal_lens",
+          "translate_without_diagnosis"
+        ],
+        "forbidden_moves_candidates": [
+          "expose_raw_lens",
+          "present_as_fact_about_user"
+        ],
+        "depth_level_suggestion": 2,
+        "quote_policy_suggestion": "internal_only"
+      }
+    },
+    {
+      "candidate_id": "7b61940d-f6ff-46f8-9514-797efaf0ad00",
+      "chunk_type": "diagnostic_lens",
+      "risk_level": "medium",
+      "review_status": "accepted_with_edits",
+      "reviewer_role": "offline_curator_batch_1",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "7b61940d-f6ff-46f8-9514-797efaf0ad00",
+        "heading_path": [
+          "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "Вопросы и ответы"
+        ],
+        "content_preview": "*Это реальные вопросы участников сессий. Они возникают почти у всех. Если ты читаешь и узнаёшь свой вопрос — значит, ты в правильном месте.* *** **— Я всё понял про программу. Но как её убрать? Должен же быть какой-то метод.** — Смотри, «убрать» — это уже программа говорит. Она же работает через..."
+      },
+      "accepted_fields": {
+        "summary_candidate": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» описывает повторяющийся внутренний паттерн, который полезно переводить в мягкую гипотезу, а не в диагноз. *Это реальные вопросы участн...",
+        "core_thesis_candidate": "*Это реальные вопросы участников сессий.",
+        "mechanism_hints_candidates": [
+          "self_criticism_as_control",
+          "parental_gaze"
+        ],
+        "use_when_candidates": [
+          "Когда пользователь просит понять, почему с ним это происходит.",
+          "Когда повторяется один и тот же паттерн контроля, стыда, избегания или внутреннего давления.",
+          "Когда полезно мягко подсветить механизм self_criticism_as_control без категоричности."
+        ],
+        "avoid_when_candidates": [
+          "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+          "Не подавать как факт о личности пользователя или как скрытый диагноз.",
+          "Не использовать, если пользователь просит только короткую опору без анализа."
+        ],
+        "safe_user_translation_candidate": "Самокритика здесь может быть способом держать себя под контролем и не столкнуться с более уязвимыми чувствами.",
+        "risk_if_exposed_candidate": "В сыром виде может прозвучать как диагноз, обвинение или навешивание роли.",
+        "allowed_writer_use_candidate": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя.",
+        "recommended_moves_candidates": [
+          "keep_as_internal_lens",
+          "translate_without_diagnosis"
+        ],
+        "forbidden_moves_candidates": [
+          "expose_raw_lens",
+          "present_as_fact_about_user"
+        ],
+        "depth_level_suggestion": 2,
+        "quote_policy_suggestion": "internal_only"
+      }
+    },
+    {
+      "candidate_id": "88a9ca94-e506-423b-8685-e462b9beaa48",
+      "chunk_type": "practice",
+      "risk_level": "medium",
+      "review_status": "accepted_with_edits",
+      "reviewer_role": "offline_curator_batch_1",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "88a9ca94-e506-423b-8685-e462b9beaa48",
+        "heading_path": [
+          "ГЛАВА 6. Инстинкты: древние хозяева современного человека",
+          "Важно: нет правильного или неправильного инстинкта. Каждый имеет свои дары и свои слепые пятна.",
+          "Практика 4: Проверка реальной угрозы"
+        ],
+        "content_preview": "**Цель:** создать паузу между инстинктивной реакцией и действием. **Время:** 2–3 минуты в моменте. Когда инстинкт включился — и ты это заметил — задай три вопроса:"
+      },
+      "accepted_fields": {
+        "summary_candidate": "Практика из раздела «ГЛАВА 6. Инстинкты: древние хозяева современного человека» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+        "core_thesis_candidate": "**Цель:** создать паузу между инстинктивной реакцией и действием.",
+        "use_when_candidates": [
+          "Когда пользователь явно просит практику или следующий шаг.",
+          "Когда у пользователя есть хотя бы минимальный ресурс на короткое действие."
+        ],
+        "avoid_when_candidates": [
+          "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+          "Не предлагать без явного запроса, если пользователь в острой дестабилизации или без ресурса.",
+          "Не давать несколько практик подряд вместо ответа на вопрос.",
+          "Не открывать глубинную интерпретацию раньше, чем появилась опора и согласие пользователя."
+        ],
+        "contraindications_candidates": [
+          "Острая дестабилизация, когда пользователю трудно удерживать внимание даже на коротком действии.",
+          "Состояние сильного истощения, где дополнительная практика может переживаться как давление."
+        ],
+        "risk_if_exposed_candidate": "Без проверки времени и ресурса практика может ощущаться как давление или ещё одна задача.",
+        "allowed_writer_use_candidate": "Только как один ограниченный next step после ответа и при явном timing fit.",
+        "recommended_moves_candidates": [
+          "offer_only_if_requested_or_timed",
+          "keep_one_practice_max"
+        ],
+        "forbidden_moves_candidates": [
+          "drop_deep_practice_without_timing",
+          "stack_multiple_practices"
+        ],
+        "depth_level_suggestion": 2,
+        "quote_policy_suggestion": "paraphrase_only"
+      }
+    },
+    {
+      "candidate_id": "a15d79f8-0ac0-42fc-9bc3-6985a529fb07",
+      "chunk_type": "mechanism",
+      "risk_level": "medium",
+      "review_status": "accepted_with_edits",
+      "reviewer_role": "offline_curator_batch_1",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "a15d79f8-0ac0-42fc-9bc3-6985a529fb07",
+        "heading_path": [
+          "ГЛАВА 7. Страх: союзник, которого ты превратил во врага",
+          "3. Страх как тюрьма: когда сигнал становится стеной"
+        ],
+        "content_preview": "Страх становится тюрьмой не сам по себе — а через один конкретный механизм: **избегание**. Когда человек избегает ситуации, которая вызывает страх — нервная система запоминает: «избегание сработало, угроза прошла». Это подкрепляет избегание как стратегию. В следующий раз порог избегания снижается..."
+      },
+      "accepted_fields": {
+        "summary_candidate": "Фрагмент из раздела «ГЛАВА 7. Страх: союзник, которого ты превратил во врага» объясняет механизм, через который человек пытается сохранить безопасность или контроль. Страх становится тюрьмой не сам по себе — а через о...",
+        "core_thesis_candidate": "Страх становится тюрьмой не сам по себе — а через один конкретный механизм: **избегание**.",
+        "mechanism_hints_candidates": [
+          "control_as_safety",
+          "avoidance_as_protection",
+          "self_criticism_as_control"
+        ],
+        "use_when_candidates": [
+          "Когда пользователь просит понять, почему с ним это происходит.",
+          "Когда повторяется один и тот же паттерн контроля, стыда, избегания или внутреннего давления.",
+          "Когда полезно мягко подсветить механизм control_as_safety без категоричности."
+        ],
+        "avoid_when_candidates": [
+          "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+          "Не подавать как факт о личности пользователя или как скрытый диагноз.",
+          "Не использовать, если пользователь просит только короткую опору без анализа.",
+          "Не открывать глубинную интерпретацию раньше, чем появилась опора и согласие пользователя."
+        ],
+        "safe_user_translation_candidate": "Иногда контроль становится способом не чувствовать угрозу и вернуть себе ощущение опоры.",
+        "risk_if_exposed_candidate": "Слишком прямое объяснение механизма может переживаться как разоблачение вместо поддержки.",
+        "allowed_writer_use_candidate": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя.",
+        "recommended_moves_candidates": [
+          "name_the_protective_function",
+          "translate_pattern_softly"
+        ],
+        "forbidden_moves_candidates": [
+          "diagnose_the_user",
+          "command_obedience"
+        ],
+        "depth_level_suggestion": 2,
+        "quote_policy_suggestion": "paraphrase_only"
+      }
+    },
+    {
+      "candidate_id": "d527d369-beb2-4113-b370-cb2738e76b55",
+      "chunk_type": "diagnostic_lens",
+      "risk_level": "medium",
+      "review_status": "accepted_with_edits",
+      "reviewer_role": "offline_curator_batch_1",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "d527d369-beb2-4113-b370-cb2738e76b55",
+        "heading_path": [
+          "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "1. Что такое программа «несовершенное Я»",
+          "Почему программа так устойчива"
+        ],
+        "content_preview": "Три причины, по которым программа «несовершенное Я» держится так крепко: **1. Нейропластичность в критический период** Мозг ребёнка — пластилин. Всё, что записалось в возрасте от 2 до 6 лет, записалось **на уровне базовой архитектуры**. Это не файл, который можно удалить. Это фундамент, на которо..."
+      },
+      "accepted_fields": {
+        "summary_candidate": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» описывает повторяющийся внутренний паттерн, который полезно переводить в мягкую гипотезу, а не в диагноз. Три причины, по которым прог...",
+        "core_thesis_candidate": "Три причины, по которым программа «несовершенное Я» держится так крепко: **1.",
+        "mechanism_hints_candidates": [
+          "shame_as_wrong_visibility"
+        ],
+        "use_when_candidates": [
+          "Когда пользователь просит понять, почему с ним это происходит.",
+          "Когда повторяется один и тот же паттерн контроля, стыда, избегания или внутреннего давления.",
+          "Когда полезно мягко подсветить механизм shame_as_wrong_visibility без категоричности."
+        ],
+        "avoid_when_candidates": [
+          "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+          "Не подавать как факт о личности пользователя или как скрытый диагноз.",
+          "Не использовать, если пользователь просит только короткую опору без анализа."
+        ],
+        "safe_user_translation_candidate": "Похоже, здесь есть страх быть увиденным как неправильный или недостаточный.",
+        "risk_if_exposed_candidate": "В сыром виде может прозвучать как диагноз, обвинение или навешивание роли.",
+        "allowed_writer_use_candidate": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя.",
+        "recommended_moves_candidates": [
+          "keep_as_internal_lens",
+          "translate_without_diagnosis"
+        ],
+        "forbidden_moves_candidates": [
+          "expose_raw_lens",
+          "present_as_fact_about_user"
+        ],
+        "depth_level_suggestion": 2,
+        "quote_policy_suggestion": "internal_only"
+      }
+    }
+  ],
+  "summary": {
+    "accepted_item_count": 12,
+    "accepted_field_count": 139,
+    "by_chunk_type": {
+      "diagnostic_lens": 4,
+      "mechanism": 4,
+      "practice": 4
+    },
+    "by_risk_level": {
+      "medium": 12
+    }
+  },
+  "source_candidate_prd": "PRD-047.17",
+  "batch_id": "batch_1",
+  "human_final_approval": false,
+  "evaluation_only": true,
+  "allowed_for_retrieval_eval": true
+}

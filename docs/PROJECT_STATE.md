@@ -1,6 +1,8 @@
 # Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
+PRD-047.20 completed the first real curated overlay batch and offline retrieval evaluation without changing runtime behavior. Added batch-1 selection over `16` real PRD-047.18 queue candidates, an evaluation-only decisions pack (`12` accepted overlay items, `139` accepted fields), accepted-overlay preview, PRD-047.19-based dry-run apply/preflight wrapper, and retrieval shadow evaluation over `18` curated cases. The overlay remains explicitly non-live: `human_final_approval=false`, `evaluation_only=true`, `live_apply_allowed=false`, `ready_for_live_apply=false`, while `ready_for_eval_over_real_overlay=true` is now supported for offline evidence. Read-only BotDB smoke passed on `:8003`; retrieval eval passed with `overlay_shadow_hit_rate=0.7778`, `combined_expected_help_rate=0.7778`, `unsafe_overlay_hit_count=0`, and `practice_without_safety_count=0`. No Writer/runtime/Admin/Web/registry/processed-block/Chroma mutation was performed. Next recommended work is `PRD-047.21 - Overlay-Aware Retrieval Shadow Integration / Trace-Only v1`.
+
 PRD-047.19-HF1 repaired acceptance evidence integrity for PRD-047.19 without changing functionality. The hotfix reran the PRD-047.18, PRD-047.17, and PRD-047.19 regression subsets with repository-local `--basetemp` and local `TEMP/TMP`, eliminating the false `C:\Users\video\AppData\Local\Temp\pytest-of-video` `PermissionError` failures from the original command log. HF1 also regenerated `test_command_output.txt` as clean UTF-8, restored `replacement_char_warning_count=0`, added explicit source-gate / rerun-summary / no-mutation evidence, and left Writer, runtime, live metadata, Chroma, processed blocks, and registry untouched. Next recommended work remains `PRD-047.20 - Real Human Curated Overlay Batch 1 / Accepted Decisions Pack v1`.
 
 PRD-047.19 completed curated candidate dry-run apply preflight with accepted `passed_with_expected_blockers` status. Added `mechanism_metadata_overlay_intake_report_v1`, `mechanism_metadata_dry_run_apply_plan_v1`, `mechanism_metadata_apply_preflight_v1`, future field-apply mapping, negative overlay fixtures, anti-runtime-activation proof, read-only BotDB smoke, and no-mutation/encoding artifacts over the PRD-047.18 fixture overlay. The project can now explain candidate/block consistency, future metadata targets, and diff previews under `overlay_only_no_write`, but it still honestly reports `ready_for_live_apply=false` and `ready_for_eval_over_real_overlay=false` because the current overlay is fixture-only and contains no real human-reviewed accepted decisions. No processed blocks, live metadata, Chroma, retrieval, Writer prompt, or runtime behavior were changed. Next recommended work is `PRD-047.20 - Real Human Curated Overlay Batch 1 / Accepted Decisions Pack v1`.
@@ -85,7 +87,7 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 - Historical artifact encoding noise may be misread as current runtime corruption without normalization report.
 
 ## Next Planned PRD
-`PRD-047.20 - Real Human Curated Overlay Batch 1 / Accepted Decisions Pack v1`
+`PRD-047.21 - Overlay-Aware Retrieval Shadow Integration / Trace-Only v1`
 
 ## HF2-R2 Runtime Visibility State
 Hybrid Retrieval Planner visibility is now synchronized across backend admin runtime, Web Admin Runtime, multiagent trace, and compact trace summary.
@@ -143,4 +145,3 @@ PRD-046.1.36 Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1.
 
 ## Diagnostic Center Track Status
 Diagnostic Center Track Status: CLOSED FOR CURRENT PHASE
-

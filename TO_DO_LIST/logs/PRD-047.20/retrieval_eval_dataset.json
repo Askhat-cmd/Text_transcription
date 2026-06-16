@@ -1,0 +1,306 @@
+{
+  "schema_version": "mechanism_metadata_curated_batch_retrieval_eval_dataset_v1",
+  "prd_id": "PRD-047.20",
+  "batch_id": "batch_1",
+  "created_at": "2026-06-16T09:19:44.760175+00:00",
+  "case_count": 18,
+  "cases": [
+    {
+      "id": "B1-001",
+      "query": "Когда человек все держит под контролем, потому что иначе страшно, как это понять?",
+      "theme": "control_as_safety",
+      "expected_candidate_ids": [
+        "a15d79f8-0ac0-42fc-9bc3-6985a529fb07",
+        "47928bce-3306-4351-862e-290b3edeea59"
+      ],
+      "expected_focus_tags": [
+        "control_as_safety"
+      ],
+      "expected_chunk_types": [
+        "mechanism",
+        "diagnostic_lens"
+      ]
+    },
+    {
+      "id": "B1-002",
+      "query": "Паника и страх потерять контроль: какой здесь безопасный смысл, а не просто слабость?",
+      "theme": "control_as_safety_panic",
+      "expected_candidate_ids": [
+        "47928bce-3306-4351-862e-290b3edeea59",
+        "a15d79f8-0ac0-42fc-9bc3-6985a529fb07"
+      ],
+      "expected_focus_tags": [
+        "control_as_safety"
+      ],
+      "expected_chunk_types": [
+        "diagnostic_lens",
+        "mechanism"
+      ]
+    },
+    {
+      "id": "B1-003",
+      "query": "Почему так стыдно быть увиденным и показаться неправильным?",
+      "theme": "shame_visibility",
+      "expected_candidate_ids": [
+        "d527d369-beb2-4113-b370-cb2738e76b55",
+        "5be3f5b0-a073-4c15-8ed6-429ad22c029b"
+      ],
+      "expected_focus_tags": [
+        "shame_as_wrong_visibility"
+      ],
+      "expected_chunk_types": [
+        "diagnostic_lens",
+        "mechanism"
+      ]
+    },
+    {
+      "id": "B1-004",
+      "query": "Самокритика будто держит меня в узде. Это про контроль?",
+      "theme": "self_criticism_as_control",
+      "expected_candidate_ids": [
+        "5808a31f-2872-4e48-826c-b318bf0d60b0",
+        "7b61940d-f6ff-46f8-9514-797efaf0ad00",
+        "a15d79f8-0ac0-42fc-9bc3-6985a529fb07"
+      ],
+      "expected_focus_tags": [
+        "self_criticism_as_control"
+      ],
+      "expected_chunk_types": [
+        "mechanism",
+        "diagnostic_lens"
+      ]
+    },
+    {
+      "id": "B1-005",
+      "query": "Объясни механизм избегания как защиты, а не как лени.",
+      "theme": "avoidance_as_protection",
+      "expected_candidate_ids": [
+        "3dfeca39-dbb2-4da0-b12f-15ef07fdad2b",
+        "a15d79f8-0ac0-42fc-9bc3-6985a529fb07"
+      ],
+      "expected_focus_tags": [
+        "avoidance_as_protection"
+      ],
+      "expected_chunk_types": [
+        "mechanism"
+      ]
+    },
+    {
+      "id": "B1-006",
+      "query": "Я все время вижу не факты, а свои истории. Есть короткая практика?",
+      "theme": "fact_vs_interpretation",
+      "expected_candidate_ids": [
+        "4ea6de6c-5dd9-4914-9fa6-75ecb70a2457"
+      ],
+      "expected_focus_tags": [
+        "fact_vs_interpretation"
+      ],
+      "expected_chunk_types": [
+        "practice"
+      ]
+    },
+    {
+      "id": "B1-007",
+      "query": "Нужен один бережный шаг, чтобы остановиться и заметить реакцию.",
+      "theme": "short_step_stop_frame",
+      "expected_candidate_ids": [
+        "468fb5d0-85f4-45c5-a7c3-5d593f51682e"
+      ],
+      "expected_focus_tags": [
+        "practice_timing",
+        "short_step"
+      ],
+      "expected_chunk_types": [
+        "practice"
+      ]
+    },
+    {
+      "id": "B1-008",
+      "query": "Как проверить, реальная ли это угроза, а не только тревога?",
+      "theme": "threat_check",
+      "expected_candidate_ids": [
+        "88a9ca94-e506-423b-8685-e462b9beaa48"
+      ],
+      "expected_focus_tags": [
+        "reality_check",
+        "threat_assessment"
+      ],
+      "expected_chunk_types": [
+        "practice"
+      ]
+    },
+    {
+      "id": "B1-009",
+      "query": "Как разговаривать с этой внутренней программой несовершенного я?",
+      "theme": "imperfect_self_program",
+      "expected_candidate_ids": [
+        "121bdc40-8633-469e-9837-ea9949f73de3",
+        "5808a31f-2872-4e48-826c-b318bf0d60b0"
+      ],
+      "expected_focus_tags": [
+        "imperfect_self_program",
+        "inner_program_contact"
+      ],
+      "expected_chunk_types": [
+        "practice",
+        "mechanism"
+      ]
+    },
+    {
+      "id": "B1-010",
+      "query": "Объясни нормально, без диагнозов, почему программа так устойчива.",
+      "theme": "diagnostic_translation",
+      "expected_candidate_ids": [
+        "d527d369-beb2-4113-b370-cb2738e76b55",
+        "6db17c5b-638d-452e-8a9c-8384c9ed78a4"
+      ],
+      "expected_focus_tags": [
+        "shame_as_wrong_visibility",
+        "survival_drivers"
+      ],
+      "expected_chunk_types": [
+        "diagnostic_lens"
+      ]
+    },
+    {
+      "id": "B1-011",
+      "query": "Какие здесь вообще есть несколько практических направлений, если я хочу это замечать?",
+      "theme": "practice_overview",
+      "expected_candidate_ids": [
+        "468fb5d0-85f4-45c5-a7c3-5d593f51682e",
+        "4ea6de6c-5dd9-4914-9fa6-75ecb70a2457",
+        "88a9ca94-e506-423b-8685-e462b9beaa48",
+        "121bdc40-8633-469e-9837-ea9949f73de3"
+      ],
+      "expected_focus_tags": [
+        "practice_timing",
+        "fact_vs_interpretation",
+        "reality_check",
+        "imperfect_self_program"
+      ],
+      "expected_chunk_types": [
+        "practice"
+      ],
+      "expected_min_practice_hits": 2
+    },
+    {
+      "id": "B1-012",
+      "query": "Нужен короткий ответ для состояния, где ресурса почти нет.",
+      "theme": "low_resource_answer",
+      "expected_candidate_ids": [
+        "47928bce-3306-4351-862e-290b3edeea59",
+        "6db17c5b-638d-452e-8a9c-8384c9ed78a4"
+      ],
+      "expected_focus_tags": [
+        "control_as_safety",
+        "survival_drivers"
+      ],
+      "expected_chunk_types": [
+        "diagnostic_lens",
+        "mechanism"
+      ],
+      "avoid_chunk_types": [
+        "source_fragment"
+      ]
+    },
+    {
+      "id": "B1-013",
+      "query": "Что такое пять драйверов выживания простым языком?",
+      "theme": "survival_drivers",
+      "expected_candidate_ids": [
+        "6db17c5b-638d-452e-8a9c-8384c9ed78a4"
+      ],
+      "expected_focus_tags": [
+        "survival_drivers"
+      ],
+      "expected_chunk_types": [
+        "diagnostic_lens"
+      ]
+    },
+    {
+      "id": "B1-014",
+      "query": "Это похоже на родительский взгляд внутри меня?",
+      "theme": "parental_gaze",
+      "expected_candidate_ids": [
+        "5808a31f-2872-4e48-826c-b318bf0d60b0",
+        "7b61940d-f6ff-46f8-9514-797efaf0ad00",
+        "3dfeca39-dbb2-4da0-b12f-15ef07fdad2b"
+      ],
+      "expected_focus_tags": [
+        "parental_gaze"
+      ],
+      "expected_chunk_types": [
+        "mechanism",
+        "diagnostic_lens"
+      ]
+    },
+    {
+      "id": "B1-015",
+      "query": "Мне хочется прямую цитату из книги про это.",
+      "theme": "source_fragment_guard",
+      "expected_candidate_ids": [
+        "5be3f5b0-a073-4c15-8ed6-429ad22c029b"
+      ],
+      "expected_focus_tags": [
+        "shame_as_wrong_visibility"
+      ],
+      "expected_chunk_types": [
+        "mechanism"
+      ],
+      "avoid_chunk_types": [
+        "source_fragment"
+      ]
+    },
+    {
+      "id": "B1-016",
+      "query": "Стоит ли сразу давать глубокую практику, если человек в перегрузе?",
+      "theme": "practice_guardrails",
+      "expected_candidate_ids": [
+        "468fb5d0-85f4-45c5-a7c3-5d593f51682e",
+        "121bdc40-8633-469e-9837-ea9949f73de3"
+      ],
+      "expected_focus_tags": [
+        "practice_timing",
+        "inner_program_contact"
+      ],
+      "expected_chunk_types": [
+        "practice"
+      ],
+      "avoid_chunk_types": [
+        "source_fragment"
+      ]
+    },
+    {
+      "id": "B1-017",
+      "query": "Хочу различать факт и интерпретацию в конфликте.",
+      "theme": "fact_vs_interpretation_conflict",
+      "expected_candidate_ids": [
+        "4ea6de6c-5dd9-4914-9fa6-75ecb70a2457"
+      ],
+      "expected_focus_tags": [
+        "fact_vs_interpretation",
+        "conflict_repair"
+      ],
+      "expected_chunk_types": [
+        "practice"
+      ]
+    },
+    {
+      "id": "B1-018",
+      "query": "Если избегание защищает, с чего начать без перегруза?",
+      "theme": "avoidance_low_resource",
+      "expected_candidate_ids": [
+        "3dfeca39-dbb2-4da0-b12f-15ef07fdad2b",
+        "468fb5d0-85f4-45c5-a7c3-5d593f51682e"
+      ],
+      "expected_focus_tags": [
+        "avoidance_as_protection",
+        "short_step"
+      ],
+      "expected_chunk_types": [
+        "mechanism",
+        "practice"
+      ]
+    }
+  ]
+}

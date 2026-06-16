@@ -1,0 +1,2376 @@
+{
+  "schema_version": "mechanism_metadata_review_decision_v1",
+  "prd_id": "PRD-047.20",
+  "source_prd": "PRD-047.18",
+  "source_candidate_prd": "PRD-047.17",
+  "batch_id": "batch_1",
+  "created_at": "2026-06-16T09:19:44.601217+00:00",
+  "decision_count": 16,
+  "fixture_only": false,
+  "human_final_approval": false,
+  "evaluation_only": true,
+  "live_apply_allowed": false,
+  "reviewer_role": "offline_curator_batch_1",
+  "reviewer_id": "offline_curator_batch_1",
+  "high_risk_practice_accepted_fields": 0,
+  "decisions": [
+    {
+      "schema_version": "mechanism_metadata_review_decision_v1",
+      "candidate_id": "a15d79f8-0ac0-42fc-9bc3-6985a529fb07",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "a15d79f8-0ac0-42fc-9bc3-6985a529fb07",
+        "heading_path": [
+          "ГЛАВА 7. Страх: союзник, которого ты превратил во врага",
+          "3. Страх как тюрьма: когда сигнал становится стеной"
+        ],
+        "content_preview": "Страх становится тюрьмой не сам по себе — а через один конкретный механизм: **избегание**. Когда человек избегает ситуации, которая вызывает страх — нервная система запоминает: «избегание сработало, угроза прошла». Это подкрепляет избегание как стратегию. В следующий раз порог избегания снижается..."
+      },
+      "review_status": "accepted_with_edits",
+      "reviewer_role": "offline_curator_batch_1",
+      "reviewer_id": "offline_curator_batch_1",
+      "reviewed_at": "2026-06-16T09:19:44.592217+00:00",
+      "safe_to_apply_to_live_metadata": false,
+      "review_notes": "PRD-047.20 curated batch 1 item for mechanism_control_as_safety; evaluation-only and not human-final-approved.",
+      "field_decisions": {
+        "summary_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Фрагмент из раздела «ГЛАВА 7. Страх: союзник, которого ты превратил во врага» объясняет механизм, через который человек пытается сохранить безопасность или контроль. Страх становится тюрьмой не сам по себе — а через о...",
+          "reason": "Curated for mechanism_control_as_safety as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Фрагмент из раздела «ГЛАВА 7. Страх: союзник, которого ты превратил во врага» объясняет механизм, через который человек пытается сохранить безопасность или контроль. Страх стано..."
+        },
+        "core_thesis_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Страх становится тюрьмой не сам по себе — а через один конкретный механизм: **избегание**.",
+          "reason": "Curated for mechanism_control_as_safety as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Страх становится тюрьмой не сам по себе — а через один конкретный механизм: **избегание**."
+        },
+        "mechanism_hints_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "control_as_safety",
+            "avoidance_as_protection",
+            "self_criticism_as_control"
+          ],
+          "reason": "Mechanism hints retained for shadow retrieval and writer metadata only.",
+          "candidate_value_preview": [
+            "control_as_safety",
+            "avoidance_as_protection",
+            "self_criticism_as_control"
+          ]
+        },
+        "use_when_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Когда пользователь просит понять, почему с ним это происходит.",
+            "Когда повторяется один и тот же паттерн контроля, стыда, избегания или внутреннего давления.",
+            "Когда полезно мягко подсветить механизм control_as_safety без категоричности."
+          ],
+          "reason": "Curated for mechanism_control_as_safety as evaluation-only overlay metadata.",
+          "candidate_value_preview": [
+            "Когда пользователь просит понять, почему с ним это происходит.",
+            "Когда повторяется один и тот же паттерн контроля, стыда, избегания или внутреннего давления.",
+            "Когда полезно мягко подсветить механизм control_as_safety без категоричности."
+          ]
+        },
+        "avoid_when_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не подавать как факт о личности пользователя или как скрытый диагноз.",
+            "Не использовать, если пользователь просит только короткую опору без анализа.",
+            "Не открывать глубинную интерпретацию раньше, чем появилась опора и согласие пользователя."
+          ],
+          "reason": "Curated for mechanism_control_as_safety as evaluation-only overlay metadata.",
+          "candidate_value_preview": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не подавать как факт о личности пользователя или как скрытый диагноз.",
+            "Не использовать, если пользователь просит только короткую опору без анализа.",
+            "Не открывать глубинную интерпретацию раньше, чем появилась опора и согласие пользователя."
+          ]
+        },
+        "contraindications_candidates": {
+          "decision": "defer",
+          "value": [],
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": []
+        },
+        "safe_user_translation_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Иногда контроль становится способом не чувствовать угрозу и вернуть себе ощущение опоры.",
+          "reason": "Safe translation retained for user-readable framing without diagnosis language.",
+          "candidate_value_preview": "Иногда контроль становится способом не чувствовать угрозу и вернуть себе ощущение опоры."
+        },
+        "risk_if_exposed_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Слишком прямое объяснение механизма может переживаться как разоблачение вместо поддержки.",
+          "reason": "Risk framing retained for writer caution and offline eval only.",
+          "candidate_value_preview": "Слишком прямое объяснение механизма может переживаться как разоблачение вместо поддержки."
+        },
+        "allowed_writer_use_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя.",
+          "reason": "Curated for mechanism_control_as_safety as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя."
+        },
+        "recommended_moves_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "name_the_protective_function",
+            "translate_pattern_softly"
+          ],
+          "reason": "Recommended moves retained as metadata-only writer constraints.",
+          "candidate_value_preview": [
+            "name_the_protective_function",
+            "translate_pattern_softly"
+          ]
+        },
+        "forbidden_moves_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "diagnose_the_user",
+            "command_obedience"
+          ],
+          "reason": "Forbidden moves retained as metadata-only writer constraints.",
+          "candidate_value_preview": [
+            "diagnose_the_user",
+            "command_obedience"
+          ]
+        },
+        "depth_level_suggestion": {
+          "decision": "accept",
+          "value": 2,
+          "reason": "Curated for mechanism_control_as_safety as evaluation-only overlay metadata.",
+          "candidate_value_preview": 2
+        },
+        "quote_policy_suggestion": {
+          "decision": "accept",
+          "value": "paraphrase_only",
+          "reason": "Curated for mechanism_control_as_safety as evaluation-only overlay metadata.",
+          "candidate_value_preview": "paraphrase_only"
+        },
+        "chunk_type_review_suggestion": {
+          "decision": "defer",
+          "value": "",
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": null
+        }
+      },
+      "human_final_approval": false,
+      "evaluation_only": true,
+      "live_apply_allowed": false,
+      "selection_role": "mechanism_control_as_safety",
+      "focus_tags": [
+        "control_as_safety",
+        "avoidance_as_protection",
+        "self_criticism_as_control"
+      ],
+      "focus_keywords_ru": [
+        "контроль",
+        "безопасность",
+        "избегание",
+        "защита",
+        "самокритика"
+      ]
+    },
+    {
+      "schema_version": "mechanism_metadata_review_decision_v1",
+      "candidate_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+        "heading_path": [
+          "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "1. Что такое программа «несовершенное Я»",
+          "Операционная система страдания"
+        ],
+        "content_preview": "Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается операционная система. Но это не Windows и не macOS. Это **OS «Я недостаточен»**. Эта операционная система запускает один базовый алгоритм: **«Со мной что-то не так. Я должен это исправить..."
+      },
+      "review_status": "accepted_with_edits",
+      "reviewer_role": "offline_curator_batch_1",
+      "reviewer_id": "offline_curator_batch_1",
+      "reviewed_at": "2026-06-16T09:19:44.593215+00:00",
+      "safe_to_apply_to_live_metadata": false,
+      "review_notes": "PRD-047.20 curated batch 1 item for mechanism_shame_visibility; evaluation-only and not human-final-approved.",
+      "field_decisions": {
+        "summary_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» объясняет механизм, через который человек пытается сохранить безопасность или контроль. Представь, что твой мозг — это компьютер.",
+          "reason": "Curated for mechanism_shame_visibility as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» объясняет механизм, через который человек пытается сохранить безопасность или контроль. Предст..."
+        },
+        "core_thesis_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Представь, что твой мозг — это компьютер.",
+          "reason": "Curated for mechanism_shame_visibility as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Представь, что твой мозг — это компьютер."
+        },
+        "mechanism_hints_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "shame_as_wrong_visibility",
+            "self_criticism_as_control"
+          ],
+          "reason": "Mechanism hints retained for shadow retrieval and writer metadata only.",
+          "candidate_value_preview": [
+            "shame_as_wrong_visibility",
+            "self_criticism_as_control"
+          ]
+        },
+        "use_when_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Когда пользователь просит понять, почему с ним это происходит.",
+            "Когда повторяется один и тот же паттерн контроля, стыда, избегания или внутреннего давления.",
+            "Когда полезно мягко подсветить механизм shame_as_wrong_visibility без категоричности."
+          ],
+          "reason": "Curated for mechanism_shame_visibility as evaluation-only overlay metadata.",
+          "candidate_value_preview": [
+            "Когда пользователь просит понять, почему с ним это происходит.",
+            "Когда повторяется один и тот же паттерн контроля, стыда, избегания или внутреннего давления.",
+            "Когда полезно мягко подсветить механизм shame_as_wrong_visibility без категоричности."
+          ]
+        },
+        "avoid_when_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не подавать как факт о личности пользователя или как скрытый диагноз.",
+            "Не использовать, если пользователь просит только короткую опору без анализа."
+          ],
+          "reason": "Curated for mechanism_shame_visibility as evaluation-only overlay metadata.",
+          "candidate_value_preview": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не подавать как факт о личности пользователя или как скрытый диагноз.",
+            "Не использовать, если пользователь просит только короткую опору без анализа."
+          ]
+        },
+        "contraindications_candidates": {
+          "decision": "defer",
+          "value": [],
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": []
+        },
+        "safe_user_translation_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Похоже, здесь есть страх быть увиденным как неправильный или недостаточный.",
+          "reason": "Safe translation retained for user-readable framing without diagnosis language.",
+          "candidate_value_preview": "Похоже, здесь есть страх быть увиденным как неправильный или недостаточный."
+        },
+        "risk_if_exposed_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Слишком прямое объяснение механизма может переживаться как разоблачение вместо поддержки.",
+          "reason": "Risk framing retained for writer caution and offline eval only.",
+          "candidate_value_preview": "Слишком прямое объяснение механизма может переживаться как разоблачение вместо поддержки."
+        },
+        "allowed_writer_use_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя.",
+          "reason": "Curated for mechanism_shame_visibility as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя."
+        },
+        "recommended_moves_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "name_the_protective_function",
+            "translate_pattern_softly"
+          ],
+          "reason": "Recommended moves retained as metadata-only writer constraints.",
+          "candidate_value_preview": [
+            "name_the_protective_function",
+            "translate_pattern_softly"
+          ]
+        },
+        "forbidden_moves_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "diagnose_the_user",
+            "command_obedience"
+          ],
+          "reason": "Forbidden moves retained as metadata-only writer constraints.",
+          "candidate_value_preview": [
+            "diagnose_the_user",
+            "command_obedience"
+          ]
+        },
+        "depth_level_suggestion": {
+          "decision": "accept",
+          "value": 2,
+          "reason": "Curated for mechanism_shame_visibility as evaluation-only overlay metadata.",
+          "candidate_value_preview": 2
+        },
+        "quote_policy_suggestion": {
+          "decision": "accept",
+          "value": "paraphrase_only",
+          "reason": "Curated for mechanism_shame_visibility as evaluation-only overlay metadata.",
+          "candidate_value_preview": "paraphrase_only"
+        },
+        "chunk_type_review_suggestion": {
+          "decision": "defer",
+          "value": "",
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": null
+        }
+      },
+      "human_final_approval": false,
+      "evaluation_only": true,
+      "live_apply_allowed": false,
+      "selection_role": "mechanism_shame_visibility",
+      "focus_tags": [
+        "shame_as_wrong_visibility",
+        "self_criticism_as_control"
+      ],
+      "focus_keywords_ru": [
+        "стыд",
+        "видимость",
+        "ошибка",
+        "неправильный",
+        "самокритика"
+      ]
+    },
+    {
+      "schema_version": "mechanism_metadata_review_decision_v1",
+      "candidate_id": "5808a31f-2872-4e48-826c-b318bf0d60b0",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "5808a31f-2872-4e48-826c-b318bf0d60b0",
+        "heading_path": [
+          "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "4. Откуда это берётся: три волны"
+        ],
+        "content_preview": "Программа не возникает в один момент. Она складывается постепенно. **От рождения до 2 лет — базовое ощущение мира** Ребёнок ещё не думает словами. Он просто чувствует и запоминает телом: *мир безопасен или нет*. Если рядом был стабильный, предсказуемый взрослый — записывается: «меня любят просто..."
+      },
+      "review_status": "accepted_with_edits",
+      "reviewer_role": "offline_curator_batch_1",
+      "reviewer_id": "offline_curator_batch_1",
+      "reviewed_at": "2026-06-16T09:19:44.593215+00:00",
+      "safe_to_apply_to_live_metadata": false,
+      "review_notes": "PRD-047.20 curated batch 1 item for mechanism_self_criticism_parental_gaze; evaluation-only and not human-final-approved.",
+      "field_decisions": {
+        "summary_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» объясняет механизм, через который человек пытается сохранить безопасность или контроль. Программа не возникает в один момент.",
+          "reason": "Curated for mechanism_self_criticism_parental_gaze as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» объясняет механизм, через который человек пытается сохранить безопасность или контроль. Програ..."
+        },
+        "core_thesis_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Программа не возникает в один момент.",
+          "reason": "Curated for mechanism_self_criticism_parental_gaze as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Программа не возникает в один момент."
+        },
+        "mechanism_hints_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "self_criticism_as_control",
+            "parental_gaze"
+          ],
+          "reason": "Mechanism hints retained for shadow retrieval and writer metadata only.",
+          "candidate_value_preview": [
+            "self_criticism_as_control",
+            "parental_gaze"
+          ]
+        },
+        "use_when_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Когда пользователь просит понять, почему с ним это происходит.",
+            "Когда повторяется один и тот же паттерн контроля, стыда, избегания или внутреннего давления.",
+            "Когда полезно мягко подсветить механизм self_criticism_as_control без категоричности."
+          ],
+          "reason": "Curated for mechanism_self_criticism_parental_gaze as evaluation-only overlay metadata.",
+          "candidate_value_preview": [
+            "Когда пользователь просит понять, почему с ним это происходит.",
+            "Когда повторяется один и тот же паттерн контроля, стыда, избегания или внутреннего давления.",
+            "Когда полезно мягко подсветить механизм self_criticism_as_control без категоричности."
+          ]
+        },
+        "avoid_when_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не подавать как факт о личности пользователя или как скрытый диагноз.",
+            "Не использовать, если пользователь просит только короткую опору без анализа."
+          ],
+          "reason": "Curated for mechanism_self_criticism_parental_gaze as evaluation-only overlay metadata.",
+          "candidate_value_preview": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не подавать как факт о личности пользователя или как скрытый диагноз.",
+            "Не использовать, если пользователь просит только короткую опору без анализа."
+          ]
+        },
+        "contraindications_candidates": {
+          "decision": "defer",
+          "value": [],
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": []
+        },
+        "safe_user_translation_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Самокритика здесь может быть способом держать себя под контролем и не столкнуться с более уязвимыми чувствами.",
+          "reason": "Safe translation retained for user-readable framing without diagnosis language.",
+          "candidate_value_preview": "Самокритика здесь может быть способом держать себя под контролем и не столкнуться с более уязвимыми чувствами."
+        },
+        "risk_if_exposed_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Слишком прямое объяснение механизма может переживаться как разоблачение вместо поддержки.",
+          "reason": "Risk framing retained for writer caution and offline eval only.",
+          "candidate_value_preview": "Слишком прямое объяснение механизма может переживаться как разоблачение вместо поддержки."
+        },
+        "allowed_writer_use_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя.",
+          "reason": "Curated for mechanism_self_criticism_parental_gaze as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя."
+        },
+        "recommended_moves_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "name_the_protective_function",
+            "translate_pattern_softly"
+          ],
+          "reason": "Recommended moves retained as metadata-only writer constraints.",
+          "candidate_value_preview": [
+            "name_the_protective_function",
+            "translate_pattern_softly"
+          ]
+        },
+        "forbidden_moves_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "diagnose_the_user",
+            "command_obedience"
+          ],
+          "reason": "Forbidden moves retained as metadata-only writer constraints.",
+          "candidate_value_preview": [
+            "diagnose_the_user",
+            "command_obedience"
+          ]
+        },
+        "depth_level_suggestion": {
+          "decision": "accept",
+          "value": 2,
+          "reason": "Curated for mechanism_self_criticism_parental_gaze as evaluation-only overlay metadata.",
+          "candidate_value_preview": 2
+        },
+        "quote_policy_suggestion": {
+          "decision": "accept",
+          "value": "paraphrase_only",
+          "reason": "Curated for mechanism_self_criticism_parental_gaze as evaluation-only overlay metadata.",
+          "candidate_value_preview": "paraphrase_only"
+        },
+        "chunk_type_review_suggestion": {
+          "decision": "defer",
+          "value": "",
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": null
+        }
+      },
+      "human_final_approval": false,
+      "evaluation_only": true,
+      "live_apply_allowed": false,
+      "selection_role": "mechanism_self_criticism_parental_gaze",
+      "focus_tags": [
+        "self_criticism_as_control",
+        "parental_gaze"
+      ],
+      "focus_keywords_ru": [
+        "самокритика",
+        "внутренний взгляд",
+        "родительский взгляд",
+        "контроль"
+      ]
+    },
+    {
+      "schema_version": "mechanism_metadata_review_decision_v1",
+      "candidate_id": "3dfeca39-dbb2-4da0-b12f-15ef07fdad2b",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "3dfeca39-dbb2-4da0-b12f-15ef07fdad2b",
+        "heading_path": [
+          "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "Вопросы и ответы"
+        ],
+        "content_preview": "И ещё один момент: если ты ждёшь «результата» — спроси себя, что именно ты ждёшь. Часто за этим вопросом стоит драйвер «будь лучшим» — ему нужен конкретный финал, оценка, зачёт. Он тоже часть программы. *** **— У меня нет никаких воспоминаний о травматичном детстве. Всё было нормально. Откуда тог..."
+      },
+      "review_status": "accepted_with_edits",
+      "reviewer_role": "offline_curator_batch_1",
+      "reviewer_id": "offline_curator_batch_1",
+      "reviewed_at": "2026-06-16T09:19:44.594215+00:00",
+      "safe_to_apply_to_live_metadata": false,
+      "review_notes": "PRD-047.20 curated batch 1 item for mechanism_avoidance_as_protection; evaluation-only and not human-final-approved.",
+      "field_decisions": {
+        "summary_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» объясняет механизм, через который человек пытается сохранить безопасность или контроль. И ещё один момент: если ты ждёшь «результата»...",
+          "reason": "Curated for mechanism_avoidance_as_protection as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» объясняет механизм, через который человек пытается сохранить безопасность или контроль. И ещё..."
+        },
+        "core_thesis_candidate": {
+          "decision": "accept_with_edit",
+          "value": "И ещё один момент: если ты ждёшь «результата» — спроси себя, что именно ты ждёшь.",
+          "reason": "Curated for mechanism_avoidance_as_protection as evaluation-only overlay metadata.",
+          "candidate_value_preview": "И ещё один момент: если ты ждёшь «результата» — спроси себя, что именно ты ждёшь."
+        },
+        "mechanism_hints_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "avoidance_as_protection",
+            "parental_gaze"
+          ],
+          "reason": "Mechanism hints retained for shadow retrieval and writer metadata only.",
+          "candidate_value_preview": [
+            "avoidance_as_protection",
+            "parental_gaze"
+          ]
+        },
+        "use_when_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Когда пользователь просит понять, почему с ним это происходит.",
+            "Когда повторяется один и тот же паттерн контроля, стыда, избегания или внутреннего давления.",
+            "Когда полезно мягко подсветить механизм avoidance_as_protection без категоричности."
+          ],
+          "reason": "Curated for mechanism_avoidance_as_protection as evaluation-only overlay metadata.",
+          "candidate_value_preview": [
+            "Когда пользователь просит понять, почему с ним это происходит.",
+            "Когда повторяется один и тот же паттерн контроля, стыда, избегания или внутреннего давления.",
+            "Когда полезно мягко подсветить механизм avoidance_as_protection без категоричности."
+          ]
+        },
+        "avoid_when_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не подавать как факт о личности пользователя или как скрытый диагноз.",
+            "Не использовать, если пользователь просит только короткую опору без анализа."
+          ],
+          "reason": "Curated for mechanism_avoidance_as_protection as evaluation-only overlay metadata.",
+          "candidate_value_preview": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не подавать как факт о личности пользователя или как скрытый диагноз.",
+            "Не использовать, если пользователь просит только короткую опору без анализа."
+          ]
+        },
+        "contraindications_candidates": {
+          "decision": "defer",
+          "value": [],
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": []
+        },
+        "safe_user_translation_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Избегание здесь может быть не ленью, а способом защититься от перегрузки или боли.",
+          "reason": "Safe translation retained for user-readable framing without diagnosis language.",
+          "candidate_value_preview": "Избегание здесь может быть не ленью, а способом защититься от перегрузки или боли."
+        },
+        "risk_if_exposed_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Слишком прямое объяснение механизма может переживаться как разоблачение вместо поддержки.",
+          "reason": "Risk framing retained for writer caution and offline eval only.",
+          "candidate_value_preview": "Слишком прямое объяснение механизма может переживаться как разоблачение вместо поддержки."
+        },
+        "allowed_writer_use_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя.",
+          "reason": "Curated for mechanism_avoidance_as_protection as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя."
+        },
+        "recommended_moves_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "name_the_protective_function",
+            "translate_pattern_softly"
+          ],
+          "reason": "Recommended moves retained as metadata-only writer constraints.",
+          "candidate_value_preview": [
+            "name_the_protective_function",
+            "translate_pattern_softly"
+          ]
+        },
+        "forbidden_moves_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "diagnose_the_user",
+            "command_obedience"
+          ],
+          "reason": "Forbidden moves retained as metadata-only writer constraints.",
+          "candidate_value_preview": [
+            "diagnose_the_user",
+            "command_obedience"
+          ]
+        },
+        "depth_level_suggestion": {
+          "decision": "accept",
+          "value": 2,
+          "reason": "Curated for mechanism_avoidance_as_protection as evaluation-only overlay metadata.",
+          "candidate_value_preview": 2
+        },
+        "quote_policy_suggestion": {
+          "decision": "accept",
+          "value": "paraphrase_only",
+          "reason": "Curated for mechanism_avoidance_as_protection as evaluation-only overlay metadata.",
+          "candidate_value_preview": "paraphrase_only"
+        },
+        "chunk_type_review_suggestion": {
+          "decision": "defer",
+          "value": "",
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": null
+        }
+      },
+      "human_final_approval": false,
+      "evaluation_only": true,
+      "live_apply_allowed": false,
+      "selection_role": "mechanism_avoidance_as_protection",
+      "focus_tags": [
+        "avoidance_as_protection",
+        "parental_gaze"
+      ],
+      "focus_keywords_ru": [
+        "избегание",
+        "защита",
+        "перегрузка",
+        "стыд"
+      ]
+    },
+    {
+      "schema_version": "mechanism_metadata_review_decision_v1",
+      "candidate_id": "47928bce-3306-4351-862e-290b3edeea59",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "47928bce-3306-4351-862e-290b3edeea59",
+        "heading_path": [
+          "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "5. Зачем программе нужно страдание",
+          "Страдание = контроль"
+        ],
+        "content_preview": "Последнее. Страдание даёт иллюзию контроля. Если ты страдаешь — ты что-то делаешь. Работаешь над собой. Стараешься. Есть процесс, есть движение. А если ты просто **примешь** себя таким, какой ты есть — тогда что? Тогда надо жить. А жизнь непредсказуема. Её нельзя полностью контролировать. Она мож..."
+      },
+      "review_status": "accepted_with_edits",
+      "reviewer_role": "offline_curator_batch_1",
+      "reviewer_id": "offline_curator_batch_1",
+      "reviewed_at": "2026-06-16T09:19:44.594215+00:00",
+      "safe_to_apply_to_live_metadata": false,
+      "review_notes": "PRD-047.20 curated batch 1 item for diagnostic_control_as_safety; evaluation-only and not human-final-approved.",
+      "field_decisions": {
+        "summary_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» описывает повторяющийся внутренний паттерн, который полезно переводить в мягкую гипотезу, а не в диагноз. Последнее.",
+          "reason": "Curated for diagnostic_control_as_safety as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» описывает повторяющийся внутренний паттерн, который полезно переводить в мягкую гипотезу, а не..."
+        },
+        "core_thesis_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Последнее.",
+          "reason": "Curated for diagnostic_control_as_safety as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Последнее."
+        },
+        "mechanism_hints_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "control_as_safety"
+          ],
+          "reason": "Mechanism hints retained for shadow retrieval and writer metadata only.",
+          "candidate_value_preview": [
+            "control_as_safety"
+          ]
+        },
+        "use_when_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Когда пользователь просит понять, почему с ним это происходит.",
+            "Когда повторяется один и тот же паттерн контроля, стыда, избегания или внутреннего давления.",
+            "Когда полезно мягко подсветить механизм control_as_safety без категоричности."
+          ],
+          "reason": "Curated for diagnostic_control_as_safety as evaluation-only overlay metadata.",
+          "candidate_value_preview": [
+            "Когда пользователь просит понять, почему с ним это происходит.",
+            "Когда повторяется один и тот же паттерн контроля, стыда, избегания или внутреннего давления.",
+            "Когда полезно мягко подсветить механизм control_as_safety без категоричности."
+          ]
+        },
+        "avoid_when_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не подавать как факт о личности пользователя или как скрытый диагноз.",
+            "Не использовать, если пользователь просит только короткую опору без анализа."
+          ],
+          "reason": "Curated for diagnostic_control_as_safety as evaluation-only overlay metadata.",
+          "candidate_value_preview": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не подавать как факт о личности пользователя или как скрытый диагноз.",
+            "Не использовать, если пользователь просит только короткую опору без анализа."
+          ]
+        },
+        "contraindications_candidates": {
+          "decision": "defer",
+          "value": [],
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": []
+        },
+        "safe_user_translation_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Иногда контроль становится способом не чувствовать угрозу и вернуть себе ощущение опоры.",
+          "reason": "Safe translation retained for user-readable framing without diagnosis language.",
+          "candidate_value_preview": "Иногда контроль становится способом не чувствовать угрозу и вернуть себе ощущение опоры."
+        },
+        "risk_if_exposed_candidate": {
+          "decision": "accept_with_edit",
+          "value": "В сыром виде может прозвучать как диагноз, обвинение или навешивание роли.",
+          "reason": "Risk framing retained for writer caution and offline eval only.",
+          "candidate_value_preview": "В сыром виде может прозвучать как диагноз, обвинение или навешивание роли."
+        },
+        "allowed_writer_use_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя.",
+          "reason": "Curated for diagnostic_control_as_safety as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя."
+        },
+        "recommended_moves_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "keep_as_internal_lens",
+            "translate_without_diagnosis"
+          ],
+          "reason": "Recommended moves retained as metadata-only writer constraints.",
+          "candidate_value_preview": [
+            "keep_as_internal_lens",
+            "translate_without_diagnosis"
+          ]
+        },
+        "forbidden_moves_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "expose_raw_lens",
+            "present_as_fact_about_user"
+          ],
+          "reason": "Forbidden moves retained as metadata-only writer constraints.",
+          "candidate_value_preview": [
+            "expose_raw_lens",
+            "present_as_fact_about_user"
+          ]
+        },
+        "depth_level_suggestion": {
+          "decision": "accept",
+          "value": 2,
+          "reason": "Curated for diagnostic_control_as_safety as evaluation-only overlay metadata.",
+          "candidate_value_preview": 2
+        },
+        "quote_policy_suggestion": {
+          "decision": "accept",
+          "value": "internal_only",
+          "reason": "Curated for diagnostic_control_as_safety as evaluation-only overlay metadata.",
+          "candidate_value_preview": "internal_only"
+        },
+        "chunk_type_review_suggestion": {
+          "decision": "defer",
+          "value": "",
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": null
+        }
+      },
+      "human_final_approval": false,
+      "evaluation_only": true,
+      "live_apply_allowed": false,
+      "selection_role": "diagnostic_control_as_safety",
+      "focus_tags": [
+        "control_as_safety"
+      ],
+      "focus_keywords_ru": [
+        "контроль",
+        "страх",
+        "угроза",
+        "опора",
+        "паника"
+      ]
+    },
+    {
+      "schema_version": "mechanism_metadata_review_decision_v1",
+      "candidate_id": "d527d369-beb2-4113-b370-cb2738e76b55",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "d527d369-beb2-4113-b370-cb2738e76b55",
+        "heading_path": [
+          "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "1. Что такое программа «несовершенное Я»",
+          "Почему программа так устойчива"
+        ],
+        "content_preview": "Три причины, по которым программа «несовершенное Я» держится так крепко: **1. Нейропластичность в критический период** Мозг ребёнка — пластилин. Всё, что записалось в возрасте от 2 до 6 лет, записалось **на уровне базовой архитектуры**. Это не файл, который можно удалить. Это фундамент, на которо..."
+      },
+      "review_status": "accepted_with_edits",
+      "reviewer_role": "offline_curator_batch_1",
+      "reviewer_id": "offline_curator_batch_1",
+      "reviewed_at": "2026-06-16T09:19:44.595214+00:00",
+      "safe_to_apply_to_live_metadata": false,
+      "review_notes": "PRD-047.20 curated batch 1 item for diagnostic_shame_visibility; evaluation-only and not human-final-approved.",
+      "field_decisions": {
+        "summary_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» описывает повторяющийся внутренний паттерн, который полезно переводить в мягкую гипотезу, а не в диагноз. Три причины, по которым прог...",
+          "reason": "Curated for diagnostic_shame_visibility as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» описывает повторяющийся внутренний паттерн, который полезно переводить в мягкую гипотезу, а не..."
+        },
+        "core_thesis_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Три причины, по которым программа «несовершенное Я» держится так крепко: **1.",
+          "reason": "Curated for diagnostic_shame_visibility as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Три причины, по которым программа «несовершенное Я» держится так крепко: **1."
+        },
+        "mechanism_hints_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "shame_as_wrong_visibility"
+          ],
+          "reason": "Mechanism hints retained for shadow retrieval and writer metadata only.",
+          "candidate_value_preview": [
+            "shame_as_wrong_visibility"
+          ]
+        },
+        "use_when_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Когда пользователь просит понять, почему с ним это происходит.",
+            "Когда повторяется один и тот же паттерн контроля, стыда, избегания или внутреннего давления.",
+            "Когда полезно мягко подсветить механизм shame_as_wrong_visibility без категоричности."
+          ],
+          "reason": "Curated for diagnostic_shame_visibility as evaluation-only overlay metadata.",
+          "candidate_value_preview": [
+            "Когда пользователь просит понять, почему с ним это происходит.",
+            "Когда повторяется один и тот же паттерн контроля, стыда, избегания или внутреннего давления.",
+            "Когда полезно мягко подсветить механизм shame_as_wrong_visibility без категоричности."
+          ]
+        },
+        "avoid_when_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не подавать как факт о личности пользователя или как скрытый диагноз.",
+            "Не использовать, если пользователь просит только короткую опору без анализа."
+          ],
+          "reason": "Curated for diagnostic_shame_visibility as evaluation-only overlay metadata.",
+          "candidate_value_preview": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не подавать как факт о личности пользователя или как скрытый диагноз.",
+            "Не использовать, если пользователь просит только короткую опору без анализа."
+          ]
+        },
+        "contraindications_candidates": {
+          "decision": "defer",
+          "value": [],
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": []
+        },
+        "safe_user_translation_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Похоже, здесь есть страх быть увиденным как неправильный или недостаточный.",
+          "reason": "Safe translation retained for user-readable framing without diagnosis language.",
+          "candidate_value_preview": "Похоже, здесь есть страх быть увиденным как неправильный или недостаточный."
+        },
+        "risk_if_exposed_candidate": {
+          "decision": "accept_with_edit",
+          "value": "В сыром виде может прозвучать как диагноз, обвинение или навешивание роли.",
+          "reason": "Risk framing retained for writer caution and offline eval only.",
+          "candidate_value_preview": "В сыром виде может прозвучать как диагноз, обвинение или навешивание роли."
+        },
+        "allowed_writer_use_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя.",
+          "reason": "Curated for diagnostic_shame_visibility as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя."
+        },
+        "recommended_moves_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "keep_as_internal_lens",
+            "translate_without_diagnosis"
+          ],
+          "reason": "Recommended moves retained as metadata-only writer constraints.",
+          "candidate_value_preview": [
+            "keep_as_internal_lens",
+            "translate_without_diagnosis"
+          ]
+        },
+        "forbidden_moves_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "expose_raw_lens",
+            "present_as_fact_about_user"
+          ],
+          "reason": "Forbidden moves retained as metadata-only writer constraints.",
+          "candidate_value_preview": [
+            "expose_raw_lens",
+            "present_as_fact_about_user"
+          ]
+        },
+        "depth_level_suggestion": {
+          "decision": "accept",
+          "value": 2,
+          "reason": "Curated for diagnostic_shame_visibility as evaluation-only overlay metadata.",
+          "candidate_value_preview": 2
+        },
+        "quote_policy_suggestion": {
+          "decision": "accept",
+          "value": "internal_only",
+          "reason": "Curated for diagnostic_shame_visibility as evaluation-only overlay metadata.",
+          "candidate_value_preview": "internal_only"
+        },
+        "chunk_type_review_suggestion": {
+          "decision": "defer",
+          "value": "",
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": null
+        }
+      },
+      "human_final_approval": false,
+      "evaluation_only": true,
+      "live_apply_allowed": false,
+      "selection_role": "diagnostic_shame_visibility",
+      "focus_tags": [
+        "shame_as_wrong_visibility"
+      ],
+      "focus_keywords_ru": [
+        "стыд",
+        "быть увиденным",
+        "неправильный",
+        "видимость"
+      ]
+    },
+    {
+      "schema_version": "mechanism_metadata_review_decision_v1",
+      "candidate_id": "7b61940d-f6ff-46f8-9514-797efaf0ad00",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "7b61940d-f6ff-46f8-9514-797efaf0ad00",
+        "heading_path": [
+          "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "Вопросы и ответы"
+        ],
+        "content_preview": "*Это реальные вопросы участников сессий. Они возникают почти у всех. Если ты читаешь и узнаёшь свой вопрос — значит, ты в правильном месте.* *** **— Я всё понял про программу. Но как её убрать? Должен же быть какой-то метод.** — Смотри, «убрать» — это уже программа говорит. Она же работает через..."
+      },
+      "review_status": "accepted_with_edits",
+      "reviewer_role": "offline_curator_batch_1",
+      "reviewer_id": "offline_curator_batch_1",
+      "reviewed_at": "2026-06-16T09:19:44.595214+00:00",
+      "safe_to_apply_to_live_metadata": false,
+      "review_notes": "PRD-047.20 curated batch 1 item for diagnostic_self_criticism_parental_gaze; evaluation-only and not human-final-approved.",
+      "field_decisions": {
+        "summary_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» описывает повторяющийся внутренний паттерн, который полезно переводить в мягкую гипотезу, а не в диагноз. *Это реальные вопросы участн...",
+          "reason": "Curated for diagnostic_self_criticism_parental_gaze as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» описывает повторяющийся внутренний паттерн, который полезно переводить в мягкую гипотезу, а не..."
+        },
+        "core_thesis_candidate": {
+          "decision": "accept_with_edit",
+          "value": "*Это реальные вопросы участников сессий.",
+          "reason": "Curated for diagnostic_self_criticism_parental_gaze as evaluation-only overlay metadata.",
+          "candidate_value_preview": "*Это реальные вопросы участников сессий."
+        },
+        "mechanism_hints_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "self_criticism_as_control",
+            "parental_gaze"
+          ],
+          "reason": "Mechanism hints retained for shadow retrieval and writer metadata only.",
+          "candidate_value_preview": [
+            "self_criticism_as_control",
+            "parental_gaze"
+          ]
+        },
+        "use_when_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Когда пользователь просит понять, почему с ним это происходит.",
+            "Когда повторяется один и тот же паттерн контроля, стыда, избегания или внутреннего давления.",
+            "Когда полезно мягко подсветить механизм self_criticism_as_control без категоричности."
+          ],
+          "reason": "Curated for diagnostic_self_criticism_parental_gaze as evaluation-only overlay metadata.",
+          "candidate_value_preview": [
+            "Когда пользователь просит понять, почему с ним это происходит.",
+            "Когда повторяется один и тот же паттерн контроля, стыда, избегания или внутреннего давления.",
+            "Когда полезно мягко подсветить механизм self_criticism_as_control без категоричности."
+          ]
+        },
+        "avoid_when_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не подавать как факт о личности пользователя или как скрытый диагноз.",
+            "Не использовать, если пользователь просит только короткую опору без анализа."
+          ],
+          "reason": "Curated for diagnostic_self_criticism_parental_gaze as evaluation-only overlay metadata.",
+          "candidate_value_preview": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не подавать как факт о личности пользователя или как скрытый диагноз.",
+            "Не использовать, если пользователь просит только короткую опору без анализа."
+          ]
+        },
+        "contraindications_candidates": {
+          "decision": "defer",
+          "value": [],
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": []
+        },
+        "safe_user_translation_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Самокритика здесь может быть способом держать себя под контролем и не столкнуться с более уязвимыми чувствами.",
+          "reason": "Safe translation retained for user-readable framing without diagnosis language.",
+          "candidate_value_preview": "Самокритика здесь может быть способом держать себя под контролем и не столкнуться с более уязвимыми чувствами."
+        },
+        "risk_if_exposed_candidate": {
+          "decision": "accept_with_edit",
+          "value": "В сыром виде может прозвучать как диагноз, обвинение или навешивание роли.",
+          "reason": "Risk framing retained for writer caution and offline eval only.",
+          "candidate_value_preview": "В сыром виде может прозвучать как диагноз, обвинение или навешивание роли."
+        },
+        "allowed_writer_use_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя.",
+          "reason": "Curated for diagnostic_self_criticism_parental_gaze as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя."
+        },
+        "recommended_moves_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "keep_as_internal_lens",
+            "translate_without_diagnosis"
+          ],
+          "reason": "Recommended moves retained as metadata-only writer constraints.",
+          "candidate_value_preview": [
+            "keep_as_internal_lens",
+            "translate_without_diagnosis"
+          ]
+        },
+        "forbidden_moves_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "expose_raw_lens",
+            "present_as_fact_about_user"
+          ],
+          "reason": "Forbidden moves retained as metadata-only writer constraints.",
+          "candidate_value_preview": [
+            "expose_raw_lens",
+            "present_as_fact_about_user"
+          ]
+        },
+        "depth_level_suggestion": {
+          "decision": "accept",
+          "value": 2,
+          "reason": "Curated for diagnostic_self_criticism_parental_gaze as evaluation-only overlay metadata.",
+          "candidate_value_preview": 2
+        },
+        "quote_policy_suggestion": {
+          "decision": "accept",
+          "value": "internal_only",
+          "reason": "Curated for diagnostic_self_criticism_parental_gaze as evaluation-only overlay metadata.",
+          "candidate_value_preview": "internal_only"
+        },
+        "chunk_type_review_suggestion": {
+          "decision": "defer",
+          "value": "",
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": null
+        }
+      },
+      "human_final_approval": false,
+      "evaluation_only": true,
+      "live_apply_allowed": false,
+      "selection_role": "diagnostic_self_criticism_parental_gaze",
+      "focus_tags": [
+        "self_criticism_as_control",
+        "parental_gaze"
+      ],
+      "focus_keywords_ru": [
+        "самокритика",
+        "внутренний голос",
+        "родительский взгляд",
+        "оценка"
+      ]
+    },
+    {
+      "schema_version": "mechanism_metadata_review_decision_v1",
+      "candidate_id": "6db17c5b-638d-452e-8a9c-8384c9ed78a4",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "6db17c5b-638d-452e-8a9c-8384c9ed78a4",
+        "heading_path": [
+          "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "2. Пять драйверов выживания"
+        ],
+        "content_preview": "Программа «несовершенное Я» — не монолит. Она говорит разными голосами. У каждого человека один-два из них звучат особенно громко. Посмотри на каждый — ты узнаешь свой. ***"
+      },
+      "review_status": "accepted_with_edits",
+      "reviewer_role": "offline_curator_batch_1",
+      "reviewer_id": "offline_curator_batch_1",
+      "reviewed_at": "2026-06-16T09:19:44.596214+00:00",
+      "safe_to_apply_to_live_metadata": false,
+      "review_notes": "PRD-047.20 curated batch 1 item for diagnostic_survival_drivers; evaluation-only and not human-final-approved.",
+      "field_decisions": {
+        "summary_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» описывает повторяющийся внутренний паттерн, который полезно переводить в мягкую гипотезу, а не в диагноз. Программа «несовершенное Я»...",
+          "reason": "Curated for diagnostic_survival_drivers as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» описывает повторяющийся внутренний паттерн, который полезно переводить в мягкую гипотезу, а не..."
+        },
+        "core_thesis_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Программа «несовершенное Я» — не монолит.",
+          "reason": "Curated for diagnostic_survival_drivers as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Программа «несовершенное Я» — не монолит."
+        },
+        "mechanism_hints_candidates": {
+          "decision": "defer",
+          "value": [],
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": []
+        },
+        "use_when_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Когда пользователь просит понять, почему с ним это происходит.",
+            "Когда повторяется один и тот же паттерн контроля, стыда, избегания или внутреннего давления."
+          ],
+          "reason": "Curated for diagnostic_survival_drivers as evaluation-only overlay metadata.",
+          "candidate_value_preview": [
+            "Когда пользователь просит понять, почему с ним это происходит.",
+            "Когда повторяется один и тот же паттерн контроля, стыда, избегания или внутреннего давления."
+          ]
+        },
+        "avoid_when_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не подавать как факт о личности пользователя или как скрытый диагноз.",
+            "Не использовать, если пользователь просит только короткую опору без анализа."
+          ],
+          "reason": "Curated for diagnostic_survival_drivers as evaluation-only overlay metadata.",
+          "candidate_value_preview": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не подавать как факт о личности пользователя или как скрытый диагноз.",
+            "Не использовать, если пользователь просит только короткую опору без анализа."
+          ]
+        },
+        "contraindications_candidates": {
+          "decision": "defer",
+          "value": [],
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": []
+        },
+        "safe_user_translation_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Это лучше переводить как мягкую гипотезу о способе защиты, а не как утверждение о том, кто человек.",
+          "reason": "Safe translation retained for user-readable framing without diagnosis language.",
+          "candidate_value_preview": "Это лучше переводить как мягкую гипотезу о способе защиты, а не как утверждение о том, кто человек."
+        },
+        "risk_if_exposed_candidate": {
+          "decision": "accept_with_edit",
+          "value": "В сыром виде может прозвучать как диагноз, обвинение или навешивание роли.",
+          "reason": "Risk framing retained for writer caution and offline eval only.",
+          "candidate_value_preview": "В сыром виде может прозвучать как диагноз, обвинение или навешивание роли."
+        },
+        "allowed_writer_use_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя.",
+          "reason": "Curated for diagnostic_survival_drivers as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя."
+        },
+        "recommended_moves_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "keep_as_internal_lens",
+            "translate_without_diagnosis"
+          ],
+          "reason": "Recommended moves retained as metadata-only writer constraints.",
+          "candidate_value_preview": [
+            "keep_as_internal_lens",
+            "translate_without_diagnosis"
+          ]
+        },
+        "forbidden_moves_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "expose_raw_lens",
+            "present_as_fact_about_user"
+          ],
+          "reason": "Forbidden moves retained as metadata-only writer constraints.",
+          "candidate_value_preview": [
+            "expose_raw_lens",
+            "present_as_fact_about_user"
+          ]
+        },
+        "depth_level_suggestion": {
+          "decision": "accept",
+          "value": 2,
+          "reason": "Curated for diagnostic_survival_drivers as evaluation-only overlay metadata.",
+          "candidate_value_preview": 2
+        },
+        "quote_policy_suggestion": {
+          "decision": "accept",
+          "value": "internal_only",
+          "reason": "Curated for diagnostic_survival_drivers as evaluation-only overlay metadata.",
+          "candidate_value_preview": "internal_only"
+        },
+        "chunk_type_review_suggestion": {
+          "decision": "defer",
+          "value": "",
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": null
+        }
+      },
+      "human_final_approval": false,
+      "evaluation_only": true,
+      "live_apply_allowed": false,
+      "selection_role": "diagnostic_survival_drivers",
+      "focus_tags": [
+        "survival_drivers"
+      ],
+      "focus_keywords_ru": [
+        "драйверы",
+        "выживание",
+        "реакции",
+        "автопилот"
+      ]
+    },
+    {
+      "schema_version": "mechanism_metadata_review_decision_v1",
+      "candidate_id": "468fb5d0-85f4-45c5-a7c3-5d593f51682e",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "468fb5d0-85f4-45c5-a7c3-5d593f51682e",
+        "heading_path": [
+          "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "5. Нижняя часть тела — есть контакт с опорой? Ты вообще чувствуешь, что сидишь?",
+          "Практика 3: Стоп-кадр"
+        ],
+        "content_preview": "**Цель:** поймать программу в действии — до того как реакция уже произошла. **Время:** в течение дня, по ситуации. 20–30 секунд. Когда замечаешь внутреннее напряжение — **буквально остановись**. Физически. Сделай паузу в том, что делаешь. Три шага:"
+      },
+      "review_status": "accepted_with_edits",
+      "reviewer_role": "offline_curator_batch_1",
+      "reviewer_id": "offline_curator_batch_1",
+      "reviewed_at": "2026-06-16T09:19:44.597216+00:00",
+      "safe_to_apply_to_live_metadata": false,
+      "review_notes": "PRD-047.20 curated batch 1 item for practice_stop_frame; evaluation-only and not human-final-approved.",
+      "field_decisions": {
+        "summary_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Практика из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+          "reason": "Curated for practice_stop_frame as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Практика из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе."
+        },
+        "core_thesis_candidate": {
+          "decision": "accept_with_edit",
+          "value": "**Цель:** поймать программу в действии — до того как реакция уже произошла.",
+          "reason": "Curated for practice_stop_frame as evaluation-only overlay metadata.",
+          "candidate_value_preview": "**Цель:** поймать программу в действии — до того как реакция уже произошла."
+        },
+        "mechanism_hints_candidates": {
+          "decision": "defer",
+          "value": [],
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": []
+        },
+        "use_when_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Когда пользователь явно просит практику или следующий шаг.",
+            "Когда у пользователя есть хотя бы минимальный ресурс на короткое действие."
+          ],
+          "reason": "Curated for practice_stop_frame as evaluation-only overlay metadata.",
+          "candidate_value_preview": [
+            "Когда пользователь явно просит практику или следующий шаг.",
+            "Когда у пользователя есть хотя бы минимальный ресурс на короткое действие."
+          ]
+        },
+        "avoid_when_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не предлагать без явного запроса, если пользователь в острой дестабилизации или без ресурса.",
+            "Не давать несколько практик подряд вместо ответа на вопрос."
+          ],
+          "reason": "Curated for practice_stop_frame as evaluation-only overlay metadata.",
+          "candidate_value_preview": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не предлагать без явного запроса, если пользователь в острой дестабилизации или без ресурса.",
+            "Не давать несколько практик подряд вместо ответа на вопрос."
+          ]
+        },
+        "contraindications_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Острая дестабилизация, когда пользователю трудно удерживать внимание даже на коротком действии.",
+            "Состояние сильного истощения, где дополнительная практика может переживаться как давление."
+          ],
+          "reason": "Practice stays evaluation-only and must keep explicit contraindications.",
+          "candidate_value_preview": [
+            "Острая дестабилизация, когда пользователю трудно удерживать внимание даже на коротком действии.",
+            "Состояние сильного истощения, где дополнительная практика может переживаться как давление."
+          ]
+        },
+        "safe_user_translation_candidate": {
+          "decision": "defer",
+          "value": "",
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": ""
+        },
+        "risk_if_exposed_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Без проверки времени и ресурса практика может ощущаться как давление или ещё одна задача.",
+          "reason": "Risk framing retained for writer caution and offline eval only.",
+          "candidate_value_preview": "Без проверки времени и ресурса практика может ощущаться как давление или ещё одна задача."
+        },
+        "allowed_writer_use_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Только как один ограниченный next step после ответа и при явном timing fit.",
+          "reason": "Curated for practice_stop_frame as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Только как один ограниченный next step после ответа и при явном timing fit."
+        },
+        "recommended_moves_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "offer_only_if_requested_or_timed",
+            "keep_one_practice_max"
+          ],
+          "reason": "Recommended moves retained as metadata-only writer constraints.",
+          "candidate_value_preview": [
+            "offer_only_if_requested_or_timed",
+            "keep_one_practice_max"
+          ]
+        },
+        "forbidden_moves_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "drop_deep_practice_without_timing",
+            "stack_multiple_practices"
+          ],
+          "reason": "Forbidden moves retained as metadata-only writer constraints.",
+          "candidate_value_preview": [
+            "drop_deep_practice_without_timing",
+            "stack_multiple_practices"
+          ]
+        },
+        "depth_level_suggestion": {
+          "decision": "accept",
+          "value": 2,
+          "reason": "Curated for practice_stop_frame as evaluation-only overlay metadata.",
+          "candidate_value_preview": 2
+        },
+        "quote_policy_suggestion": {
+          "decision": "accept",
+          "value": "paraphrase_only",
+          "reason": "Curated for practice_stop_frame as evaluation-only overlay metadata.",
+          "candidate_value_preview": "paraphrase_only"
+        },
+        "chunk_type_review_suggestion": {
+          "decision": "defer",
+          "value": "",
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": null
+        }
+      },
+      "human_final_approval": false,
+      "evaluation_only": true,
+      "live_apply_allowed": false,
+      "selection_role": "practice_stop_frame",
+      "focus_tags": [
+        "practice_timing",
+        "short_step"
+      ],
+      "focus_keywords_ru": [
+        "стоп",
+        "кадр",
+        "заметить реакцию",
+        "один шаг"
+      ]
+    },
+    {
+      "schema_version": "mechanism_metadata_review_decision_v1",
+      "candidate_id": "4ea6de6c-5dd9-4914-9fa6-75ecb70a2457",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "4ea6de6c-5dd9-4914-9fa6-75ecb70a2457",
+        "heading_path": [
+          "ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя",
+          "Пример:",
+          "Практика 4: Три описания одного факта"
+        ],
+        "content_preview": "**Цель:** увидеть, что любой факт можно описать по-разному — и твоя версия не единственная. **Время:** 7 минут. Возьми один факт — что-то конкретное из своей жизни. Например: «я не получил повышение». Теперь напиши три разных описания этого факта:"
+      },
+      "review_status": "accepted_with_edits",
+      "reviewer_role": "offline_curator_batch_1",
+      "reviewer_id": "offline_curator_batch_1",
+      "reviewed_at": "2026-06-16T09:19:44.597216+00:00",
+      "safe_to_apply_to_live_metadata": false,
+      "review_notes": "PRD-047.20 curated batch 1 item for practice_fact_vs_interpretation; evaluation-only and not human-final-approved.",
+      "field_decisions": {
+        "summary_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Практика из раздела «ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+          "reason": "Curated for practice_fact_vs_interpretation as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Практика из раздела «ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе."
+        },
+        "core_thesis_candidate": {
+          "decision": "accept_with_edit",
+          "value": "**Цель:** увидеть, что любой факт можно описать по-разному — и твоя версия не единственная.",
+          "reason": "Curated for practice_fact_vs_interpretation as evaluation-only overlay metadata.",
+          "candidate_value_preview": "**Цель:** увидеть, что любой факт можно описать по-разному — и твоя версия не единственная."
+        },
+        "mechanism_hints_candidates": {
+          "decision": "defer",
+          "value": [],
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": []
+        },
+        "use_when_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Когда пользователь явно просит практику или следующий шаг.",
+            "Когда у пользователя есть хотя бы минимальный ресурс на короткое действие."
+          ],
+          "reason": "Curated for practice_fact_vs_interpretation as evaluation-only overlay metadata.",
+          "candidate_value_preview": [
+            "Когда пользователь явно просит практику или следующий шаг.",
+            "Когда у пользователя есть хотя бы минимальный ресурс на короткое действие."
+          ]
+        },
+        "avoid_when_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не предлагать без явного запроса, если пользователь в острой дестабилизации или без ресурса.",
+            "Не давать несколько практик подряд вместо ответа на вопрос."
+          ],
+          "reason": "Curated for practice_fact_vs_interpretation as evaluation-only overlay metadata.",
+          "candidate_value_preview": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не предлагать без явного запроса, если пользователь в острой дестабилизации или без ресурса.",
+            "Не давать несколько практик подряд вместо ответа на вопрос."
+          ]
+        },
+        "contraindications_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Острая дестабилизация, когда пользователю трудно удерживать внимание даже на коротком действии.",
+            "Состояние сильного истощения, где дополнительная практика может переживаться как давление."
+          ],
+          "reason": "Practice stays evaluation-only and must keep explicit contraindications.",
+          "candidate_value_preview": [
+            "Острая дестабилизация, когда пользователю трудно удерживать внимание даже на коротком действии.",
+            "Состояние сильного истощения, где дополнительная практика может переживаться как давление."
+          ]
+        },
+        "safe_user_translation_candidate": {
+          "decision": "defer",
+          "value": "",
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": ""
+        },
+        "risk_if_exposed_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Без проверки времени и ресурса практика может ощущаться как давление или ещё одна задача.",
+          "reason": "Risk framing retained for writer caution and offline eval only.",
+          "candidate_value_preview": "Без проверки времени и ресурса практика может ощущаться как давление или ещё одна задача."
+        },
+        "allowed_writer_use_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Только как один ограниченный next step после ответа и при явном timing fit.",
+          "reason": "Curated for practice_fact_vs_interpretation as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Только как один ограниченный next step после ответа и при явном timing fit."
+        },
+        "recommended_moves_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "offer_only_if_requested_or_timed",
+            "keep_one_practice_max"
+          ],
+          "reason": "Recommended moves retained as metadata-only writer constraints.",
+          "candidate_value_preview": [
+            "offer_only_if_requested_or_timed",
+            "keep_one_practice_max"
+          ]
+        },
+        "forbidden_moves_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "drop_deep_practice_without_timing",
+            "stack_multiple_practices"
+          ],
+          "reason": "Forbidden moves retained as metadata-only writer constraints.",
+          "candidate_value_preview": [
+            "drop_deep_practice_without_timing",
+            "stack_multiple_practices"
+          ]
+        },
+        "depth_level_suggestion": {
+          "decision": "accept",
+          "value": 2,
+          "reason": "Curated for practice_fact_vs_interpretation as evaluation-only overlay metadata.",
+          "candidate_value_preview": 2
+        },
+        "quote_policy_suggestion": {
+          "decision": "accept",
+          "value": "paraphrase_only",
+          "reason": "Curated for practice_fact_vs_interpretation as evaluation-only overlay metadata.",
+          "candidate_value_preview": "paraphrase_only"
+        },
+        "chunk_type_review_suggestion": {
+          "decision": "defer",
+          "value": "",
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": null
+        }
+      },
+      "human_final_approval": false,
+      "evaluation_only": true,
+      "live_apply_allowed": false,
+      "selection_role": "practice_fact_vs_interpretation",
+      "focus_tags": [
+        "fact_vs_interpretation",
+        "conflict_repair"
+      ],
+      "focus_keywords_ru": [
+        "факт",
+        "интерпретация",
+        "описание",
+        "история"
+      ]
+    },
+    {
+      "schema_version": "mechanism_metadata_review_decision_v1",
+      "candidate_id": "88a9ca94-e506-423b-8685-e462b9beaa48",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "88a9ca94-e506-423b-8685-e462b9beaa48",
+        "heading_path": [
+          "ГЛАВА 6. Инстинкты: древние хозяева современного человека",
+          "Важно: нет правильного или неправильного инстинкта. Каждый имеет свои дары и свои слепые пятна.",
+          "Практика 4: Проверка реальной угрозы"
+        ],
+        "content_preview": "**Цель:** создать паузу между инстинктивной реакцией и действием. **Время:** 2–3 минуты в моменте. Когда инстинкт включился — и ты это заметил — задай три вопроса:"
+      },
+      "review_status": "accepted_with_edits",
+      "reviewer_role": "offline_curator_batch_1",
+      "reviewer_id": "offline_curator_batch_1",
+      "reviewed_at": "2026-06-16T09:19:44.598214+00:00",
+      "safe_to_apply_to_live_metadata": false,
+      "review_notes": "PRD-047.20 curated batch 1 item for practice_reality_threat_check; evaluation-only and not human-final-approved.",
+      "field_decisions": {
+        "summary_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Практика из раздела «ГЛАВА 6. Инстинкты: древние хозяева современного человека» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+          "reason": "Curated for practice_reality_threat_check as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Практика из раздела «ГЛАВА 6. Инстинкты: древние хозяева современного человека» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе."
+        },
+        "core_thesis_candidate": {
+          "decision": "accept_with_edit",
+          "value": "**Цель:** создать паузу между инстинктивной реакцией и действием.",
+          "reason": "Curated for practice_reality_threat_check as evaluation-only overlay metadata.",
+          "candidate_value_preview": "**Цель:** создать паузу между инстинктивной реакцией и действием."
+        },
+        "mechanism_hints_candidates": {
+          "decision": "defer",
+          "value": [],
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": []
+        },
+        "use_when_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Когда пользователь явно просит практику или следующий шаг.",
+            "Когда у пользователя есть хотя бы минимальный ресурс на короткое действие."
+          ],
+          "reason": "Curated for practice_reality_threat_check as evaluation-only overlay metadata.",
+          "candidate_value_preview": [
+            "Когда пользователь явно просит практику или следующий шаг.",
+            "Когда у пользователя есть хотя бы минимальный ресурс на короткое действие."
+          ]
+        },
+        "avoid_when_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не предлагать без явного запроса, если пользователь в острой дестабилизации или без ресурса.",
+            "Не давать несколько практик подряд вместо ответа на вопрос.",
+            "Не открывать глубинную интерпретацию раньше, чем появилась опора и согласие пользователя."
+          ],
+          "reason": "Curated for practice_reality_threat_check as evaluation-only overlay metadata.",
+          "candidate_value_preview": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не предлагать без явного запроса, если пользователь в острой дестабилизации или без ресурса.",
+            "Не давать несколько практик подряд вместо ответа на вопрос.",
+            "Не открывать глубинную интерпретацию раньше, чем появилась опора и согласие пользователя."
+          ]
+        },
+        "contraindications_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Острая дестабилизация, когда пользователю трудно удерживать внимание даже на коротком действии.",
+            "Состояние сильного истощения, где дополнительная практика может переживаться как давление."
+          ],
+          "reason": "Practice stays evaluation-only and must keep explicit contraindications.",
+          "candidate_value_preview": [
+            "Острая дестабилизация, когда пользователю трудно удерживать внимание даже на коротком действии.",
+            "Состояние сильного истощения, где дополнительная практика может переживаться как давление."
+          ]
+        },
+        "safe_user_translation_candidate": {
+          "decision": "defer",
+          "value": "",
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": ""
+        },
+        "risk_if_exposed_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Без проверки времени и ресурса практика может ощущаться как давление или ещё одна задача.",
+          "reason": "Risk framing retained for writer caution and offline eval only.",
+          "candidate_value_preview": "Без проверки времени и ресурса практика может ощущаться как давление или ещё одна задача."
+        },
+        "allowed_writer_use_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Только как один ограниченный next step после ответа и при явном timing fit.",
+          "reason": "Curated for practice_reality_threat_check as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Только как один ограниченный next step после ответа и при явном timing fit."
+        },
+        "recommended_moves_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "offer_only_if_requested_or_timed",
+            "keep_one_practice_max"
+          ],
+          "reason": "Recommended moves retained as metadata-only writer constraints.",
+          "candidate_value_preview": [
+            "offer_only_if_requested_or_timed",
+            "keep_one_practice_max"
+          ]
+        },
+        "forbidden_moves_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "drop_deep_practice_without_timing",
+            "stack_multiple_practices"
+          ],
+          "reason": "Forbidden moves retained as metadata-only writer constraints.",
+          "candidate_value_preview": [
+            "drop_deep_practice_without_timing",
+            "stack_multiple_practices"
+          ]
+        },
+        "depth_level_suggestion": {
+          "decision": "accept",
+          "value": 2,
+          "reason": "Curated for practice_reality_threat_check as evaluation-only overlay metadata.",
+          "candidate_value_preview": 2
+        },
+        "quote_policy_suggestion": {
+          "decision": "accept",
+          "value": "paraphrase_only",
+          "reason": "Curated for practice_reality_threat_check as evaluation-only overlay metadata.",
+          "candidate_value_preview": "paraphrase_only"
+        },
+        "chunk_type_review_suggestion": {
+          "decision": "defer",
+          "value": "",
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": null
+        }
+      },
+      "human_final_approval": false,
+      "evaluation_only": true,
+      "live_apply_allowed": false,
+      "selection_role": "practice_reality_threat_check",
+      "focus_tags": [
+        "reality_check",
+        "threat_assessment"
+      ],
+      "focus_keywords_ru": [
+        "реальная угроза",
+        "тревога",
+        "проверка",
+        "безопасность"
+      ]
+    },
+    {
+      "schema_version": "mechanism_metadata_review_decision_v1",
+      "candidate_id": "121bdc40-8633-469e-9837-ea9949f73de3",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "121bdc40-8633-469e-9837-ea9949f73de3",
+        "heading_path": [
+          "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "5. *Ещё два медленных дыхания.* И возвращайся к тому, что делал.",
+          "Практика 7: Письмо программе"
+        ],
+        "content_preview": "**Цель:** установить осознанный контакт с программой — не как с врагом, а как с частью себя, которая когда-то помогала выжить. **Время:** 20–30 минут. Один раз — как завершение работы с главой. Это последняя практика к первой главе. И, пожалуй, самая необычная. Возьми лист бумаги — именно бумагу,..."
+      },
+      "review_status": "accepted_with_edits",
+      "reviewer_role": "offline_curator_batch_1",
+      "reviewer_id": "offline_curator_batch_1",
+      "reviewed_at": "2026-06-16T09:19:44.598214+00:00",
+      "safe_to_apply_to_live_metadata": false,
+      "review_notes": "PRD-047.20 curated batch 1 item for practice_letter_to_program; evaluation-only and not human-final-approved.",
+      "field_decisions": {
+        "summary_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Практика из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+          "reason": "Curated for practice_letter_to_program as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Практика из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе."
+        },
+        "core_thesis_candidate": {
+          "decision": "accept_with_edit",
+          "value": "**Цель:** установить осознанный контакт с программой — не как с врагом, а как с частью себя, которая когда-то помогала выжить.",
+          "reason": "Curated for practice_letter_to_program as evaluation-only overlay metadata.",
+          "candidate_value_preview": "**Цель:** установить осознанный контакт с программой — не как с врагом, а как с частью себя, которая когда-то помогала выжить."
+        },
+        "mechanism_hints_candidates": {
+          "decision": "defer",
+          "value": [],
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": []
+        },
+        "use_when_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Когда пользователь явно просит практику или следующий шаг.",
+            "Когда у пользователя есть хотя бы минимальный ресурс на короткое действие."
+          ],
+          "reason": "Curated for practice_letter_to_program as evaluation-only overlay metadata.",
+          "candidate_value_preview": [
+            "Когда пользователь явно просит практику или следующий шаг.",
+            "Когда у пользователя есть хотя бы минимальный ресурс на короткое действие."
+          ]
+        },
+        "avoid_when_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не предлагать без явного запроса, если пользователь в острой дестабилизации или без ресурса.",
+            "Не давать несколько практик подряд вместо ответа на вопрос."
+          ],
+          "reason": "Curated for practice_letter_to_program as evaluation-only overlay metadata.",
+          "candidate_value_preview": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не предлагать без явного запроса, если пользователь в острой дестабилизации или без ресурса.",
+            "Не давать несколько практик подряд вместо ответа на вопрос."
+          ]
+        },
+        "contraindications_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Острая дестабилизация, когда пользователю трудно удерживать внимание даже на коротком действии.",
+            "Состояние сильного истощения, где дополнительная практика может переживаться как давление."
+          ],
+          "reason": "Practice stays evaluation-only and must keep explicit contraindications.",
+          "candidate_value_preview": [
+            "Острая дестабилизация, когда пользователю трудно удерживать внимание даже на коротком действии.",
+            "Состояние сильного истощения, где дополнительная практика может переживаться как давление."
+          ]
+        },
+        "safe_user_translation_candidate": {
+          "decision": "defer",
+          "value": "",
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": ""
+        },
+        "risk_if_exposed_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Без проверки времени и ресурса практика может ощущаться как давление или ещё одна задача.",
+          "reason": "Risk framing retained for writer caution and offline eval only.",
+          "candidate_value_preview": "Без проверки времени и ресурса практика может ощущаться как давление или ещё одна задача."
+        },
+        "allowed_writer_use_candidate": {
+          "decision": "accept_with_edit",
+          "value": "Только как один ограниченный next step после ответа и при явном timing fit.",
+          "reason": "Curated for practice_letter_to_program as evaluation-only overlay metadata.",
+          "candidate_value_preview": "Только как один ограниченный next step после ответа и при явном timing fit."
+        },
+        "recommended_moves_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "offer_only_if_requested_or_timed",
+            "keep_one_practice_max"
+          ],
+          "reason": "Recommended moves retained as metadata-only writer constraints.",
+          "candidate_value_preview": [
+            "offer_only_if_requested_or_timed",
+            "keep_one_practice_max"
+          ]
+        },
+        "forbidden_moves_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "drop_deep_practice_without_timing",
+            "stack_multiple_practices"
+          ],
+          "reason": "Forbidden moves retained as metadata-only writer constraints.",
+          "candidate_value_preview": [
+            "drop_deep_practice_without_timing",
+            "stack_multiple_practices"
+          ]
+        },
+        "depth_level_suggestion": {
+          "decision": "accept",
+          "value": 2,
+          "reason": "Curated for practice_letter_to_program as evaluation-only overlay metadata.",
+          "candidate_value_preview": 2
+        },
+        "quote_policy_suggestion": {
+          "decision": "accept",
+          "value": "paraphrase_only",
+          "reason": "Curated for practice_letter_to_program as evaluation-only overlay metadata.",
+          "candidate_value_preview": "paraphrase_only"
+        },
+        "chunk_type_review_suggestion": {
+          "decision": "defer",
+          "value": "",
+          "reason": "Not needed for batch 1 accepted overlay preview.",
+          "candidate_value_preview": null
+        }
+      },
+      "human_final_approval": false,
+      "evaluation_only": true,
+      "live_apply_allowed": false,
+      "selection_role": "practice_letter_to_program",
+      "focus_tags": [
+        "imperfect_self_program",
+        "inner_program_contact"
+      ],
+      "focus_keywords_ru": [
+        "несовершенное я",
+        "программа",
+        "письмо программе",
+        "внутренний критик"
+      ]
+    },
+    {
+      "schema_version": "mechanism_metadata_review_decision_v1",
+      "candidate_id": "02967da0-f163-4b5d-a732-6630dfeb0957",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "02967da0-f163-4b5d-a732-6630dfeb0957",
+        "heading_path": [
+          "ГЛАВА 10. НейроСталкинг — жизнь из присутствия",
+          "Ментальный суверенитет: неуязвимость — не броня"
+        ],
+        "content_preview": "Это, пожалуй, самое часто неверно понимаемое понятие в НейроСталкинге. Услышав слово «неуязвимость», большинство людей представляют что-то вроде каменной стены. Человека, которого ничто не трогает. Который не реагирует, не чувствует, не открывается. Это не то. **Ментальный суверенитет — это не от..."
+      },
+      "review_status": "needs_source_context",
+      "reviewer_role": "offline_curator_batch_1",
+      "reviewer_id": "offline_curator_batch_1",
+      "reviewed_at": "2026-06-16T09:19:44.599213+00:00",
+      "safe_to_apply_to_live_metadata": false,
+      "review_notes": "Requires more source context before any accepted metadata field can be trusted.",
+      "field_decisions": {
+        "summary_candidate": {
+          "decision": "needs_source_context",
+          "value": "",
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": "Исходный фрагмент из раздела «ГЛАВА 10. НейроСталкинг — жизнь из присутствия» лучше использовать как опорный смысловой источник для derived candidate, а не как готовую реплику."
+        },
+        "core_thesis_candidate": {
+          "decision": "needs_source_context",
+          "value": "",
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": "Это, пожалуй, самое часто неверно понимаемое понятие в НейроСталкинге."
+        },
+        "mechanism_hints_candidates": {
+          "decision": "needs_source_context",
+          "value": [],
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": [
+            "control_as_safety"
+          ]
+        },
+        "use_when_candidates": {
+          "decision": "needs_source_context",
+          "value": [],
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": [
+            "Когда нужен исходный смысл для derived concept или mechanism candidate.",
+            "Когда важно сохранить provenance и не выдать фрагмент как прямую инструкцию."
+          ]
+        },
+        "avoid_when_candidates": {
+          "decision": "needs_source_context",
+          "value": [],
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не цитировать дословно и не выдавать фрагмент как готовый ответ.",
+            "Не открывать глубинную интерпретацию раньше, чем появилась опора и согласие пользователя."
+          ]
+        },
+        "contraindications_candidates": {
+          "decision": "needs_source_context",
+          "value": [],
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": []
+        },
+        "safe_user_translation_candidate": {
+          "decision": "needs_source_context",
+          "value": "",
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": "Иногда контроль становится способом не чувствовать угрозу и вернуть себе ощущение опоры."
+        },
+        "risk_if_exposed_candidate": {
+          "decision": "needs_source_context",
+          "value": "",
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": "Дословное вынесение фрагмента создаёт риск цитатного шума и ложной авторитетности."
+        },
+        "allowed_writer_use_candidate": {
+          "decision": "needs_source_context",
+          "value": "",
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": "Только как provenance seed для derived candidate, не как прямая реплика."
+        },
+        "recommended_moves_candidates": {
+          "decision": "needs_source_context",
+          "value": [],
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": []
+        },
+        "forbidden_moves_candidates": {
+          "decision": "needs_source_context",
+          "value": [],
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": []
+        },
+        "depth_level_suggestion": {
+          "decision": "needs_source_context",
+          "value": "",
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": 2
+        },
+        "quote_policy_suggestion": {
+          "decision": "needs_source_context",
+          "value": "",
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": "paraphrase_only"
+        },
+        "chunk_type_review_suggestion": {
+          "decision": "needs_source_context",
+          "value": "",
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": "mechanism"
+        }
+      },
+      "human_final_approval": false,
+      "evaluation_only": true,
+      "live_apply_allowed": false,
+      "selection_role": "source_fragment_control_seed",
+      "focus_tags": [
+        "control_as_safety",
+        "source_fragment"
+      ],
+      "focus_keywords_ru": [
+        "контроль",
+        "семя смысла",
+        "источник",
+        "не цитата"
+      ]
+    },
+    {
+      "schema_version": "mechanism_metadata_review_decision_v1",
+      "candidate_id": "0d62f141-572d-4386-b02d-d7f9a46fa27f",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "0d62f141-572d-4386-b02d-d7f9a46fa27f",
+        "heading_path": [
+          "ГЛАВА 7. Страх: союзник, которого ты превратил во врага",
+          "4. Лиссофобия: страх потерять себя"
+        ],
+        "content_preview": "Один из самых распространённых страхов, с которыми приходят на сессии Саламата — и один из наименее обсуждаемых публично. **Лиссофобия** — в широком смысле это страх сойти с ума, потерять контроль над собственным разумом. Но в практике работы с сознанием он принимает особую форму: **страх потерят..."
+      },
+      "review_status": "deferred",
+      "reviewer_role": "offline_curator_batch_1",
+      "reviewer_id": "offline_curator_batch_1",
+      "reviewed_at": "2026-06-16T09:19:44.599213+00:00",
+      "safe_to_apply_to_live_metadata": false,
+      "review_notes": "Deferred from accepted overlay; useful as review evidence only.",
+      "field_decisions": {
+        "summary_candidate": {
+          "decision": "defer",
+          "value": "",
+          "reason": "Deferred from accepted overlay; useful as review evidence only.",
+          "candidate_value_preview": "Исходный фрагмент из раздела «ГЛАВА 7. Страх: союзник, которого ты превратил во врага» лучше использовать как опорный смысловой источник для derived candidate, а не как готовую..."
+        },
+        "core_thesis_candidate": {
+          "decision": "defer",
+          "value": "",
+          "reason": "Deferred from accepted overlay; useful as review evidence only.",
+          "candidate_value_preview": "Один из самых распространённых страхов, с которыми приходят на сессии Саламата — и один из наименее обсуждаемых публично."
+        },
+        "mechanism_hints_candidates": {
+          "decision": "defer",
+          "value": [],
+          "reason": "Deferred from accepted overlay; useful as review evidence only.",
+          "candidate_value_preview": [
+            "control_as_safety"
+          ]
+        },
+        "use_when_candidates": {
+          "decision": "defer",
+          "value": [],
+          "reason": "Deferred from accepted overlay; useful as review evidence only.",
+          "candidate_value_preview": [
+            "Когда нужен исходный смысл для derived concept или mechanism candidate.",
+            "Когда важно сохранить provenance и не выдать фрагмент как прямую инструкцию."
+          ]
+        },
+        "avoid_when_candidates": {
+          "decision": "defer",
+          "value": [],
+          "reason": "Deferred from accepted overlay; useful as review evidence only.",
+          "candidate_value_preview": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не цитировать дословно и не выдавать фрагмент как готовый ответ.",
+            "Не открывать глубинную интерпретацию раньше, чем появилась опора и согласие пользователя."
+          ]
+        },
+        "contraindications_candidates": {
+          "decision": "defer",
+          "value": [],
+          "reason": "Deferred from accepted overlay; useful as review evidence only.",
+          "candidate_value_preview": []
+        },
+        "safe_user_translation_candidate": {
+          "decision": "defer",
+          "value": "",
+          "reason": "Deferred from accepted overlay; useful as review evidence only.",
+          "candidate_value_preview": "Иногда контроль становится способом не чувствовать угрозу и вернуть себе ощущение опоры."
+        },
+        "risk_if_exposed_candidate": {
+          "decision": "defer",
+          "value": "",
+          "reason": "Deferred from accepted overlay; useful as review evidence only.",
+          "candidate_value_preview": "Дословное вынесение фрагмента создаёт риск цитатного шума и ложной авторитетности."
+        },
+        "allowed_writer_use_candidate": {
+          "decision": "defer",
+          "value": "",
+          "reason": "Deferred from accepted overlay; useful as review evidence only.",
+          "candidate_value_preview": "Только как provenance seed для derived candidate, не как прямая реплика."
+        },
+        "recommended_moves_candidates": {
+          "decision": "defer",
+          "value": [],
+          "reason": "Deferred from accepted overlay; useful as review evidence only.",
+          "candidate_value_preview": []
+        },
+        "forbidden_moves_candidates": {
+          "decision": "defer",
+          "value": [],
+          "reason": "Deferred from accepted overlay; useful as review evidence only.",
+          "candidate_value_preview": []
+        },
+        "depth_level_suggestion": {
+          "decision": "defer",
+          "value": "",
+          "reason": "Deferred from accepted overlay; useful as review evidence only.",
+          "candidate_value_preview": 2
+        },
+        "quote_policy_suggestion": {
+          "decision": "defer",
+          "value": "",
+          "reason": "Deferred from accepted overlay; useful as review evidence only.",
+          "candidate_value_preview": "paraphrase_only"
+        },
+        "chunk_type_review_suggestion": {
+          "decision": "defer",
+          "value": "",
+          "reason": "Deferred from accepted overlay; useful as review evidence only.",
+          "candidate_value_preview": "mechanism"
+        }
+      },
+      "human_final_approval": false,
+      "evaluation_only": true,
+      "live_apply_allowed": false,
+      "selection_role": "source_fragment_control_seed_alt",
+      "focus_tags": [
+        "control_as_safety",
+        "source_fragment"
+      ],
+      "focus_keywords_ru": [
+        "контроль",
+        "безопасность",
+        "источник",
+        "контекст"
+      ]
+    },
+    {
+      "schema_version": "mechanism_metadata_review_decision_v1",
+      "candidate_id": "295a3a28-389d-4cc5-9c15-e8bf4010eb3c",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "295a3a28-389d-4cc5-9c15-e8bf4010eb3c",
+        "heading_path": [
+          "ГЛАВА 5. Тени: то, что мы не видим в себе",
+          "4. Золотая тень: вытесненное хорошее"
+        ],
+        "content_preview": "Большинство людей думают о тени как о «тёмной стороне». Агрессия, зависть, похоть, жадность — всё это тень. Да, это так. Но Юнг описал ещё один, менее очевидный феномен: **золотую тень**. Это вытесненные **позитивные** качества. Не «плохое», а «хорошее, которое почему-то оказалось невозможным». Б..."
+      },
+      "review_status": "rejected",
+      "reviewer_role": "offline_curator_batch_1",
+      "reviewer_id": "offline_curator_batch_1",
+      "reviewed_at": "2026-06-16T09:19:44.600219+00:00",
+      "safe_to_apply_to_live_metadata": false,
+      "review_notes": "Kept outside accepted overlay to avoid source-fragment leakage into writer-facing metadata.",
+      "field_decisions": {
+        "summary_candidate": {
+          "decision": "reject",
+          "value": "",
+          "reason": "Kept outside accepted overlay to avoid source-fragment leakage into writer-facing metadata.",
+          "candidate_value_preview": "Исходный фрагмент из раздела «ГЛАВА 5. Тени: то, что мы не видим в себе» лучше использовать как опорный смысловой источник для derived candidate, а не как готовую реплику."
+        },
+        "core_thesis_candidate": {
+          "decision": "reject",
+          "value": "",
+          "reason": "Kept outside accepted overlay to avoid source-fragment leakage into writer-facing metadata.",
+          "candidate_value_preview": "Большинство людей думают о тени как о «тёмной стороне»."
+        },
+        "mechanism_hints_candidates": {
+          "decision": "reject",
+          "value": [],
+          "reason": "Kept outside accepted overlay to avoid source-fragment leakage into writer-facing metadata.",
+          "candidate_value_preview": []
+        },
+        "use_when_candidates": {
+          "decision": "reject",
+          "value": [],
+          "reason": "Kept outside accepted overlay to avoid source-fragment leakage into writer-facing metadata.",
+          "candidate_value_preview": [
+            "Когда нужен исходный смысл для derived concept или mechanism candidate.",
+            "Когда важно сохранить provenance и не выдать фрагмент как прямую инструкцию."
+          ]
+        },
+        "avoid_when_candidates": {
+          "decision": "reject",
+          "value": [],
+          "reason": "Kept outside accepted overlay to avoid source-fragment leakage into writer-facing metadata.",
+          "candidate_value_preview": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не цитировать дословно и не выдавать фрагмент как готовый ответ."
+          ]
+        },
+        "contraindications_candidates": {
+          "decision": "reject",
+          "value": [],
+          "reason": "Kept outside accepted overlay to avoid source-fragment leakage into writer-facing metadata.",
+          "candidate_value_preview": []
+        },
+        "safe_user_translation_candidate": {
+          "decision": "reject",
+          "value": "",
+          "reason": "Kept outside accepted overlay to avoid source-fragment leakage into writer-facing metadata.",
+          "candidate_value_preview": ""
+        },
+        "risk_if_exposed_candidate": {
+          "decision": "reject",
+          "value": "",
+          "reason": "Kept outside accepted overlay to avoid source-fragment leakage into writer-facing metadata.",
+          "candidate_value_preview": "Дословное вынесение фрагмента создаёт риск цитатного шума и ложной авторитетности."
+        },
+        "allowed_writer_use_candidate": {
+          "decision": "reject",
+          "value": "",
+          "reason": "Kept outside accepted overlay to avoid source-fragment leakage into writer-facing metadata.",
+          "candidate_value_preview": "Только как provenance seed для derived candidate, не как прямая реплика."
+        },
+        "recommended_moves_candidates": {
+          "decision": "reject",
+          "value": [],
+          "reason": "Kept outside accepted overlay to avoid source-fragment leakage into writer-facing metadata.",
+          "candidate_value_preview": []
+        },
+        "forbidden_moves_candidates": {
+          "decision": "reject",
+          "value": [],
+          "reason": "Kept outside accepted overlay to avoid source-fragment leakage into writer-facing metadata.",
+          "candidate_value_preview": []
+        },
+        "depth_level_suggestion": {
+          "decision": "reject",
+          "value": "",
+          "reason": "Kept outside accepted overlay to avoid source-fragment leakage into writer-facing metadata.",
+          "candidate_value_preview": 0
+        },
+        "quote_policy_suggestion": {
+          "decision": "reject",
+          "value": "",
+          "reason": "Kept outside accepted overlay to avoid source-fragment leakage into writer-facing metadata.",
+          "candidate_value_preview": "paraphrase_only"
+        },
+        "chunk_type_review_suggestion": {
+          "decision": "reject",
+          "value": "",
+          "reason": "Kept outside accepted overlay to avoid source-fragment leakage into writer-facing metadata.",
+          "candidate_value_preview": "concept"
+        }
+      },
+      "human_final_approval": false,
+      "evaluation_only": true,
+      "live_apply_allowed": false,
+      "selection_role": "source_fragment_shadow_material",
+      "focus_tags": [
+        "golden_shadow",
+        "source_fragment"
+      ],
+      "focus_keywords_ru": [
+        "тень",
+        "источник",
+        "не прямая цитата"
+      ]
+    },
+    {
+      "schema_version": "mechanism_metadata_review_decision_v1",
+      "candidate_id": "316c4af8-c441-4f1e-b606-ca23fce136c1",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "316c4af8-c441-4f1e-b606-ca23fce136c1",
+        "heading_path": [
+          "ГЛАВА 7. Страх: союзник, которого ты превратил во врага",
+          "Практикум к главе 7: семь практик работы со страхом",
+          "Практика 1: Карта страхов"
+        ],
+        "content_preview": "**Цель:** выйти из отношений со страхом через называние и классификацию. **Время:** 30–40 минут. Один раз как исследование. Возьми лист бумаги. Напиши все страхи, которые есть прямо сейчас. Не только большие и очевидные — и маленькие, фоновые, стыдные. Всё, что поднимается. Дай каждому страху кор..."
+      },
+      "review_status": "needs_source_context",
+      "reviewer_role": "offline_curator_batch_1",
+      "reviewer_id": "offline_curator_batch_1",
+      "reviewed_at": "2026-06-16T09:19:44.601217+00:00",
+      "safe_to_apply_to_live_metadata": false,
+      "review_notes": "Requires more source context before any accepted metadata field can be trusted.",
+      "field_decisions": {
+        "summary_candidate": {
+          "decision": "needs_source_context",
+          "value": "",
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": "Исходный фрагмент из раздела «ГЛАВА 7. Страх: союзник, которого ты превратил во врага» лучше использовать как опорный смысловой источник для derived candidate, а не как готовую..."
+        },
+        "core_thesis_candidate": {
+          "decision": "needs_source_context",
+          "value": "",
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": "**Цель:** выйти из отношений со страхом через называние и классификацию."
+        },
+        "mechanism_hints_candidates": {
+          "decision": "needs_source_context",
+          "value": [],
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": [
+            "shame_as_wrong_visibility"
+          ]
+        },
+        "use_when_candidates": {
+          "decision": "needs_source_context",
+          "value": [],
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": [
+            "Когда нужен исходный смысл для derived concept или mechanism candidate.",
+            "Когда важно сохранить provenance и не выдать фрагмент как прямую инструкцию."
+          ]
+        },
+        "avoid_when_candidates": {
+          "decision": "needs_source_context",
+          "value": [],
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не цитировать дословно и не выдавать фрагмент как готовый ответ.",
+            "Не открывать глубинную интерпретацию раньше, чем появилась опора и согласие пользователя."
+          ]
+        },
+        "contraindications_candidates": {
+          "decision": "needs_source_context",
+          "value": [],
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": []
+        },
+        "safe_user_translation_candidate": {
+          "decision": "needs_source_context",
+          "value": "",
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": "Похоже, здесь есть страх быть увиденным как неправильный или недостаточный."
+        },
+        "risk_if_exposed_candidate": {
+          "decision": "needs_source_context",
+          "value": "",
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": "Дословное вынесение фрагмента создаёт риск цитатного шума и ложной авторитетности."
+        },
+        "allowed_writer_use_candidate": {
+          "decision": "needs_source_context",
+          "value": "",
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": "Только как provenance seed для derived candidate, не как прямая реплика."
+        },
+        "recommended_moves_candidates": {
+          "decision": "needs_source_context",
+          "value": [],
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": []
+        },
+        "forbidden_moves_candidates": {
+          "decision": "needs_source_context",
+          "value": [],
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": []
+        },
+        "depth_level_suggestion": {
+          "decision": "needs_source_context",
+          "value": "",
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": 2
+        },
+        "quote_policy_suggestion": {
+          "decision": "needs_source_context",
+          "value": "",
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": "paraphrase_only"
+        },
+        "chunk_type_review_suggestion": {
+          "decision": "needs_source_context",
+          "value": "",
+          "reason": "Requires more source context before any accepted metadata field can be trusted.",
+          "candidate_value_preview": "mechanism"
+        }
+      },
+      "human_final_approval": false,
+      "evaluation_only": true,
+      "live_apply_allowed": false,
+      "selection_role": "source_fragment_shame_seed",
+      "focus_tags": [
+        "shame_as_wrong_visibility",
+        "source_fragment"
+      ],
+      "focus_keywords_ru": [
+        "стыд",
+        "видимость",
+        "источник",
+        "контекст"
+      ]
+    }
+  ],
+  "accepted_field_count": 139,
+  "accepted_item_count": 12,
+  "validation_status": "passed"
+}

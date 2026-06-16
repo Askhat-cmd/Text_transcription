@@ -1,0 +1,423 @@
+{
+  "schema_version": "mechanism_metadata_curated_batch_selection_v1",
+  "prd_id": "PRD-047.20",
+  "source_prd": "PRD-047.18",
+  "source_candidate_prd": "PRD-047.17",
+  "batch_id": "batch_1",
+  "created_at": "2026-06-16T09:19:44.589217+00:00",
+  "status": "passed",
+  "selection_count": 16,
+  "counts_by_group": {
+    "diagnostic_lens": 4,
+    "mechanism_or_concept": 4,
+    "practice": 4,
+    "source_fragment": 4
+  },
+  "selection_rules": {
+    "target_total_range": [
+      10,
+      20
+    ],
+    "selected_total": 16,
+    "mechanism_or_concept": 4,
+    "diagnostic_lens": 4,
+    "practice": 4,
+    "source_fragment": 4,
+    "high_risk_practice_accept_limit": 2
+  },
+  "missing_candidates": [],
+  "items": [
+    {
+      "candidate_id": "a15d79f8-0ac0-42fc-9bc3-6985a529fb07",
+      "chunk_type": "mechanism",
+      "risk_level": "medium",
+      "selection_role": "mechanism_control_as_safety",
+      "selection_group": "mechanism_or_concept",
+      "intended_review_status": "accepted_with_edits",
+      "focus_tags": [
+        "control_as_safety",
+        "avoidance_as_protection",
+        "self_criticism_as_control"
+      ],
+      "focus_keywords_ru": [
+        "контроль",
+        "безопасность",
+        "избегание",
+        "защита",
+        "самокритика"
+      ],
+      "heading_path": [
+        "ГЛАВА 7. Страх: союзник, которого ты превратил во врага",
+        "3. Страх как тюрьма: когда сигнал становится стеной"
+      ],
+      "content_preview": "Страх становится тюрьмой не сам по себе — а через один конкретный механизм: **избегание**. Когда человек избегает ситуации, которая вызывает страх — нервная система запоминает: «избегание сработало, угроза прошла». Эт...",
+      "rationale": "Core mechanism candidate for control-as-safety and avoidance framing."
+    },
+    {
+      "candidate_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+      "chunk_type": "mechanism",
+      "risk_level": "medium",
+      "selection_role": "mechanism_shame_visibility",
+      "selection_group": "mechanism_or_concept",
+      "intended_review_status": "accepted_with_edits",
+      "focus_tags": [
+        "shame_as_wrong_visibility",
+        "self_criticism_as_control"
+      ],
+      "focus_keywords_ru": [
+        "стыд",
+        "видимость",
+        "ошибка",
+        "неправильный",
+        "самокритика"
+      ],
+      "heading_path": [
+        "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+        "1. Что такое программа «несовершенное Я»",
+        "Операционная система страдания"
+      ],
+      "content_preview": "Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается операционная система. Но это не Windows и не macOS. Это **OS «Я недостаточен»**. Эта операционная система з...",
+      "rationale": "Mechanism explanation anchor for shame / wrong-visibility language."
+    },
+    {
+      "candidate_id": "5808a31f-2872-4e48-826c-b318bf0d60b0",
+      "chunk_type": "mechanism",
+      "risk_level": "medium",
+      "selection_role": "mechanism_self_criticism_parental_gaze",
+      "selection_group": "mechanism_or_concept",
+      "intended_review_status": "accepted_with_edits",
+      "focus_tags": [
+        "self_criticism_as_control",
+        "parental_gaze"
+      ],
+      "focus_keywords_ru": [
+        "самокритика",
+        "внутренний взгляд",
+        "родительский взгляд",
+        "контроль"
+      ],
+      "heading_path": [
+        "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+        "4. Откуда это берётся: три волны"
+      ],
+      "content_preview": "Программа не возникает в один момент. Она складывается постепенно. **От рождения до 2 лет — базовое ощущение мира** Ребёнок ещё не думает словами. Он просто чувствует и запоминает телом: *мир безопасен или нет*. Если...",
+      "rationale": "Mechanism explanation for internal critic / parental gaze patterns."
+    },
+    {
+      "candidate_id": "3dfeca39-dbb2-4da0-b12f-15ef07fdad2b",
+      "chunk_type": "mechanism",
+      "risk_level": "medium",
+      "selection_role": "mechanism_avoidance_as_protection",
+      "selection_group": "mechanism_or_concept",
+      "intended_review_status": "accepted_with_edits",
+      "focus_tags": [
+        "avoidance_as_protection",
+        "parental_gaze"
+      ],
+      "focus_keywords_ru": [
+        "избегание",
+        "защита",
+        "перегрузка",
+        "стыд"
+      ],
+      "heading_path": [
+        "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+        "Вопросы и ответы"
+      ],
+      "content_preview": "И ещё один момент: если ты ждёшь «результата» — спроси себя, что именно ты ждёшь. Часто за этим вопросом стоит драйвер «будь лучшим» — ему нужен конкретный финал, оценка, зачёт. Он тоже часть программы. *** **— У меня...",
+      "rationale": "Mechanism explanation for avoidance as protection instead of laziness."
+    },
+    {
+      "candidate_id": "47928bce-3306-4351-862e-290b3edeea59",
+      "chunk_type": "diagnostic_lens",
+      "risk_level": "medium",
+      "selection_role": "diagnostic_control_as_safety",
+      "selection_group": "diagnostic_lens",
+      "intended_review_status": "accepted_with_edits",
+      "focus_tags": [
+        "control_as_safety"
+      ],
+      "focus_keywords_ru": [
+        "контроль",
+        "страх",
+        "угроза",
+        "опора",
+        "паника"
+      ],
+      "heading_path": [
+        "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+        "5. Зачем программе нужно страдание",
+        "Страдание = контроль"
+      ],
+      "content_preview": "Последнее. Страдание даёт иллюзию контроля. Если ты страдаешь — ты что-то делаешь. Работаешь над собой. Стараешься. Есть процесс, есть движение. А если ты просто **примешь** себя таким, какой ты есть — тогда что? Тогд...",
+      "rationale": "Safe diagnostic translation for control as a protection strategy."
+    },
+    {
+      "candidate_id": "d527d369-beb2-4113-b370-cb2738e76b55",
+      "chunk_type": "diagnostic_lens",
+      "risk_level": "medium",
+      "selection_role": "diagnostic_shame_visibility",
+      "selection_group": "diagnostic_lens",
+      "intended_review_status": "accepted_with_edits",
+      "focus_tags": [
+        "shame_as_wrong_visibility"
+      ],
+      "focus_keywords_ru": [
+        "стыд",
+        "быть увиденным",
+        "неправильный",
+        "видимость"
+      ],
+      "heading_path": [
+        "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+        "1. Что такое программа «несовершенное Я»",
+        "Почему программа так устойчива"
+      ],
+      "content_preview": "Три причины, по которым программа «несовершенное Я» держится так крепко: **1. Нейропластичность в критический период** Мозг ребёнка — пластилин. Всё, что записалось в возрасте от 2 до 6 лет, записалось **на уровне баз...",
+      "rationale": "Safe diagnostic translation for shame / exposure language."
+    },
+    {
+      "candidate_id": "7b61940d-f6ff-46f8-9514-797efaf0ad00",
+      "chunk_type": "diagnostic_lens",
+      "risk_level": "medium",
+      "selection_role": "diagnostic_self_criticism_parental_gaze",
+      "selection_group": "diagnostic_lens",
+      "intended_review_status": "accepted_with_edits",
+      "focus_tags": [
+        "self_criticism_as_control",
+        "parental_gaze"
+      ],
+      "focus_keywords_ru": [
+        "самокритика",
+        "внутренний голос",
+        "родительский взгляд",
+        "оценка"
+      ],
+      "heading_path": [
+        "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+        "Вопросы и ответы"
+      ],
+      "content_preview": "*Это реальные вопросы участников сессий. Они возникают почти у всех. Если ты читаешь и узнаёшь свой вопрос — значит, ты в правильном месте.* *** **— Я всё понял про программу. Но как её убрать? Должен же быть какой-то...",
+      "rationale": "Diagnostic lens for internal critic and inherited evaluative gaze."
+    },
+    {
+      "candidate_id": "6db17c5b-638d-452e-8a9c-8384c9ed78a4",
+      "chunk_type": "diagnostic_lens",
+      "risk_level": "medium",
+      "selection_role": "diagnostic_survival_drivers",
+      "selection_group": "diagnostic_lens",
+      "intended_review_status": "accepted_with_edits",
+      "focus_tags": [
+        "survival_drivers"
+      ],
+      "focus_keywords_ru": [
+        "драйверы",
+        "выживание",
+        "реакции",
+        "автопилот"
+      ],
+      "heading_path": [
+        "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+        "2. Пять драйверов выживания"
+      ],
+      "content_preview": "Программа «несовершенное Я» — не монолит. Она говорит разными голосами. У каждого человека один-два из них звучат особенно громко. Посмотри на каждый — ты узнаешь свой. ***",
+      "rationale": "Diagnostic lens for survival drivers and stable autopilot framing."
+    },
+    {
+      "candidate_id": "468fb5d0-85f4-45c5-a7c3-5d593f51682e",
+      "chunk_type": "practice",
+      "risk_level": "medium",
+      "selection_role": "practice_stop_frame",
+      "selection_group": "practice",
+      "intended_review_status": "accepted_with_edits",
+      "focus_tags": [
+        "practice_timing",
+        "short_step"
+      ],
+      "focus_keywords_ru": [
+        "стоп",
+        "кадр",
+        "заметить реакцию",
+        "один шаг"
+      ],
+      "heading_path": [
+        "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+        "5. Нижняя часть тела — есть контакт с опорой? Ты вообще чувствуешь, что сидишь?",
+        "Практика 3: Стоп-кадр"
+      ],
+      "content_preview": "**Цель:** поймать программу в действии — до того как реакция уже произошла. **Время:** в течение дня, по ситуации. 20–30 секунд. Когда замечаешь внутреннее напряжение — **буквально остановись**. Физически. Сделай пауз...",
+      "rationale": "Short practice candidate with explicit guardrails for low-resource timing."
+    },
+    {
+      "candidate_id": "4ea6de6c-5dd9-4914-9fa6-75ecb70a2457",
+      "chunk_type": "practice",
+      "risk_level": "medium",
+      "selection_role": "practice_fact_vs_interpretation",
+      "selection_group": "practice",
+      "intended_review_status": "accepted_with_edits",
+      "focus_tags": [
+        "fact_vs_interpretation",
+        "conflict_repair"
+      ],
+      "focus_keywords_ru": [
+        "факт",
+        "интерпретация",
+        "описание",
+        "история"
+      ],
+      "heading_path": [
+        "ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя",
+        "Пример:",
+        "Практика 4: Три описания одного факта"
+      ],
+      "content_preview": "**Цель:** увидеть, что любой факт можно описать по-разному — и твоя версия не единственная. **Время:** 7 минут. Возьми один факт — что-то конкретное из своей жизни. Например: «я не получил повышение». Теперь напиши тр...",
+      "rationale": "Practice candidate for fact-vs-interpretation repair without overreach."
+    },
+    {
+      "candidate_id": "88a9ca94-e506-423b-8685-e462b9beaa48",
+      "chunk_type": "practice",
+      "risk_level": "medium",
+      "selection_role": "practice_reality_threat_check",
+      "selection_group": "practice",
+      "intended_review_status": "accepted_with_edits",
+      "focus_tags": [
+        "reality_check",
+        "threat_assessment"
+      ],
+      "focus_keywords_ru": [
+        "реальная угроза",
+        "тревога",
+        "проверка",
+        "безопасность"
+      ],
+      "heading_path": [
+        "ГЛАВА 6. Инстинкты: древние хозяева современного человека",
+        "Важно: нет правильного или неправильного инстинкта. Каждый имеет свои дары и свои слепые пятна.",
+        "Практика 4: Проверка реальной угрозы"
+      ],
+      "content_preview": "**Цель:** создать паузу между инстинктивной реакцией и действием. **Время:** 2–3 минуты в моменте. Когда инстинкт включился — и ты это заметил — задай три вопроса:",
+      "rationale": "Practice candidate for reality-threat checking with explicit contraindications."
+    },
+    {
+      "candidate_id": "121bdc40-8633-469e-9837-ea9949f73de3",
+      "chunk_type": "practice",
+      "risk_level": "medium",
+      "selection_role": "practice_letter_to_program",
+      "selection_group": "practice",
+      "intended_review_status": "accepted_with_edits",
+      "focus_tags": [
+        "imperfect_self_program",
+        "inner_program_contact"
+      ],
+      "focus_keywords_ru": [
+        "несовершенное я",
+        "программа",
+        "письмо программе",
+        "внутренний критик"
+      ],
+      "heading_path": [
+        "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+        "5. *Ещё два медленных дыхания.* И возвращайся к тому, что делал.",
+        "Практика 7: Письмо программе"
+      ],
+      "content_preview": "**Цель:** установить осознанный контакт с программой — не как с врагом, а как с частью себя, которая когда-то помогала выжить. **Время:** 20–30 минут. Один раз — как завершение работы с главой. Это последняя практика...",
+      "rationale": "Practice candidate for careful contact with the imperfect-self program."
+    },
+    {
+      "candidate_id": "02967da0-f163-4b5d-a732-6630dfeb0957",
+      "chunk_type": "source_fragment",
+      "risk_level": "medium",
+      "selection_role": "source_fragment_control_seed",
+      "selection_group": "source_fragment",
+      "intended_review_status": "needs_source_context",
+      "focus_tags": [
+        "control_as_safety",
+        "source_fragment"
+      ],
+      "focus_keywords_ru": [
+        "контроль",
+        "семя смысла",
+        "источник",
+        "не цитата"
+      ],
+      "heading_path": [
+        "ГЛАВА 10. НейроСталкинг — жизнь из присутствия",
+        "Ментальный суверенитет: неуязвимость — не броня"
+      ],
+      "content_preview": "Это, пожалуй, самое часто неверно понимаемое понятие в НейроСталкинге. Услышав слово «неуязвимость», большинство людей представляют что-то вроде каменной стены. Человека, которого ничто не трогает. Который не реагируе...",
+      "rationale": "Source fragment example that should stay provenance-only, not writer-facing."
+    },
+    {
+      "candidate_id": "0d62f141-572d-4386-b02d-d7f9a46fa27f",
+      "chunk_type": "source_fragment",
+      "risk_level": "medium",
+      "selection_role": "source_fragment_control_seed_alt",
+      "selection_group": "source_fragment",
+      "intended_review_status": "deferred",
+      "focus_tags": [
+        "control_as_safety",
+        "source_fragment"
+      ],
+      "focus_keywords_ru": [
+        "контроль",
+        "безопасность",
+        "источник",
+        "контекст"
+      ],
+      "heading_path": [
+        "ГЛАВА 7. Страх: союзник, которого ты превратил во врага",
+        "4. Лиссофобия: страх потерять себя"
+      ],
+      "content_preview": "Один из самых распространённых страхов, с которыми приходят на сессии Саламата — и один из наименее обсуждаемых публично. **Лиссофобия** — в широком смысле это страх сойти с ума, потерять контроль над собственным разу...",
+      "rationale": "Second source-fragment example kept out of accepted overlay for evaluation-only caution."
+    },
+    {
+      "candidate_id": "295a3a28-389d-4cc5-9c15-e8bf4010eb3c",
+      "chunk_type": "source_fragment",
+      "risk_level": "medium",
+      "selection_role": "source_fragment_shadow_material",
+      "selection_group": "source_fragment",
+      "intended_review_status": "rejected",
+      "focus_tags": [
+        "golden_shadow",
+        "source_fragment"
+      ],
+      "focus_keywords_ru": [
+        "тень",
+        "источник",
+        "не прямая цитата"
+      ],
+      "heading_path": [
+        "ГЛАВА 5. Тени: то, что мы не видим в себе",
+        "4. Золотая тень: вытесненное хорошее"
+      ],
+      "content_preview": "Большинство людей думают о тени как о «тёмной стороне». Агрессия, зависть, похоть, жадность — всё это тень. Да, это так. Но Юнг описал ещё один, менее очевидный феномен: **золотую тень**. Это вытесненные **позитивные*...",
+      "rationale": "Rejected example to prove source-fragment non-acceptance in batch 1."
+    },
+    {
+      "candidate_id": "316c4af8-c441-4f1e-b606-ca23fce136c1",
+      "chunk_type": "source_fragment",
+      "risk_level": "medium",
+      "selection_role": "source_fragment_shame_seed",
+      "selection_group": "source_fragment",
+      "intended_review_status": "needs_source_context",
+      "focus_tags": [
+        "shame_as_wrong_visibility",
+        "source_fragment"
+      ],
+      "focus_keywords_ru": [
+        "стыд",
+        "видимость",
+        "источник",
+        "контекст"
+      ],
+      "heading_path": [
+        "ГЛАВА 7. Страх: союзник, которого ты превратил во врага",
+        "Практикум к главе 7: семь практик работы со страхом",
+        "Практика 1: Карта страхов"
+      ],
+      "content_preview": "**Цель:** выйти из отношений со страхом через называние и классификацию. **Время:** 30–40 минут. Один раз как исследование. Возьми лист бумаги. Напиши все страхи, которые есть прямо сейчас. Не только большие и очевидн...",
+      "rationale": "Needs-source-context example for shame-related source fragment handling."
+    }
+  ]
+}

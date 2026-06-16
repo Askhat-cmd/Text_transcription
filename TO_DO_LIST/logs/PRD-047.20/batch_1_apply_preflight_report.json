@@ -1,0 +1,17 @@
+{
+  "schema_version": "mechanism_metadata_apply_preflight_v1",
+  "prd_id": "PRD-047.20",
+  "status": "passed_with_expected_blockers",
+  "ready_for_live_apply": false,
+  "ready_for_chroma_reindex": false,
+  "ready_for_runtime_visibility": false,
+  "ready_for_eval_over_real_overlay": true,
+  "expected_blockers": [
+    "evaluation_only_overlay",
+    "human_final_approval_missing"
+  ],
+  "unexpected_blockers": [],
+  "warnings": [],
+  "next_safe_step": "offline_retrieval_eval_over_accepted_overlay",
+  "batch_id": "batch_1"
+}

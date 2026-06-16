@@ -170,6 +170,11 @@ tests_v*_after.txt
 !TO_DO_LIST/
 !TO_DO_LIST/**
 TO_DO_LIST/context/СКРИНЫ ВЕБ АДМИНКИ/
+TO_DO_LIST/logs/PRD-047.19-HF1/tmp/
+TO_DO_LIST/logs/PRD-047.19-HF1/pytest_tmp/
+TO_DO_LIST/logs/PRD-047.19-HF1/hf1_runtime/
+TO_DO_LIST/logs/PRD-047.19-HF1-clean/
+TO_DO_LIST/logs/PRD-047.19-HF1-clean2/
 
 # Local archive (keep locally, do not track on GitHub)
 АРХИВ_отработано/

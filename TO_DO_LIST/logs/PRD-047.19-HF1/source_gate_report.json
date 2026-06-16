@@ -1,0 +1,70 @@
+{
+  "schema_version": "prd_047_19_hf1_source_gate_report_v1",
+  "prd_id": "PRD-047.19-HF1",
+  "status": "passed",
+  "created_at": "2026-06-16T05:53:41.614029+00:00",
+  "git_status_short": [
+    " M .gitignore",
+    " M TO_DO_LIST/reports/PRD-047.19_IMPLEMENTATION_REPORT.md",
+    " M docs/PRD_INDEX.md",
+    " M docs/PROJECT_STATE.md",
+    "?? Bot_data_base/tools/run_prd_047_19_hf1_evidence_repair.py",
+    "?? TO_DO_LIST/PRD-047.19-HF1_Evidence_Integrity_Regression_Rerun_Artifact_Encoding_Repair_v1_RU.md",
+    "?? TO_DO_LIST/PRD-047.19-HF1_TASK_LIST.md",
+    "?? TO_DO_LIST/logs/PRD-047.19-HF1-clean2/",
+    "?? TO_DO_LIST/logs/PRD-047.19-HF1/",
+    "?? TO_DO_LIST/reports/PRD-047.19-HF1_IMPLEMENTATION_REPORT.md",
+    "?? TO_DO_LIST/reports/PRD-047.19-HF1_NEXT_PRD_RECOMMENDATION.md"
+  ],
+  "recent_commits": [
+    "11987c8 PRD-047.19 post-push metadata sync",
+    "9973ae2 PRD-047.19 curated overlay dry-run preflight",
+    "8ccfe96 PRD-047.18 post-push metadata sync",
+    "dfb814d PRD-047.18 manual review curated acceptance workflow",
+    "d1c33d9 PRD-047.17 final metadata hash sync",
+    "227f412 PRD-047.17 post-push metadata sync",
+    "7d49c86 PRD-047.17 offline enrichment candidate layer",
+    "1b1a674 PRD-047.16 post-push metadata sync",
+    "f159c63 PRD-047.16 mechanism metadata foundation",
+    "cb7762e PRD-047.15-HF2-R2 ignore local admin screenshots",
+    "09bc32e PRD-047.15-HF2-R2 post-push metadata sync",
+    "3480666 PRD-047.15-HF2-R2 hybrid retrieval visibility sync"
+  ],
+  "required_commit_presence": {
+    "9973ae2": true,
+    "11987c8": true
+  },
+  "required_files": [
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.19/test_command_output.txt",
+      "exists": true,
+      "sha256": "969f6a197de7581f8290de9e5cab3eedb5e37396b20faeb925ddf14b09bc23d6"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.19/encoding_hygiene_report.json",
+      "exists": true,
+      "sha256": "b863f80e5d2d821285b0e5c2fefa7e56e32d122732d510be043c4d1ac0189e6a"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.19/apply_preflight_report.json",
+      "exists": true,
+      "sha256": "ddb8c2f77f7451bdc65cc621c379bbb10c7e4f092529b29b72012e5e3337dec1"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-047.19_IMPLEMENTATION_REPORT.md",
+      "exists": true,
+      "sha256": "2b3c443d23dfcff6ce0cb19596693e362440ba752be5fc0a987e7f3cfdb2f248"
+    }
+  ],
+  "previous_apply_preflight_status": "passed_with_expected_blockers",
+  "previous_ready_for_live_apply": false,
+  "previous_ready_for_eval_over_real_overlay": false,
+  "previous_regression_exit_code_failed": true,
+  "previous_permission_error_detected": true,
+  "previous_replacement_chars_detected": true,
+  "previous_replacement_char_warning_count": 1,
+  "previous_replacement_char_warnings": [
+    "TO_DO_LIST/logs/PRD-047.19/test_command_output.txt:replacement_chars=128"
+  ],
+  "blockers": []
+}

@@ -1,0 +1,50 @@
+{
+  "schema_version": "prd_047_19_hf1_regression_rerun_summary_v1",
+  "prd_id": "PRD-047.19-HF1",
+  "created_at": "2026-06-16T05:54:09.388967+00:00",
+  "status": "passed",
+  "permission_error_detected": false,
+  "replacement_char_detected": false,
+  "test_command_output": "TO_DO_LIST/logs/PRD-047.19-HF1/test_command_output.txt",
+  "groups": [
+    {
+      "group_id": "prd_047_18_regression",
+      "label": "PRD-047.18 regression subset",
+      "command": "C:\\Python313\\python.exe -m pytest Bot_data_base/tests/test_mechanism_metadata_manual_review.py Bot_data_base/tests/test_run_mechanism_metadata_review.py Bot_data_base/tests/test_manual_review_no_runtime_activation.py -q --basetemp C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.19-HF1\\hf1_runtime\\pytest_tmp\\prd_047_18",
+      "executed_via": "inline_pytest_wrapper_with_cleanup_guard",
+      "exit_code": 0,
+      "expected_passed": 14,
+      "actual_passed": 14,
+      "basetemp": "TO_DO_LIST/logs/PRD-047.19-HF1/hf1_runtime/pytest_tmp/prd_047_18",
+      "permission_error_detected": false,
+      "replacement_char_detected": false,
+      "status": "passed"
+    },
+    {
+      "group_id": "prd_047_17_regression",
+      "label": "PRD-047.17 regression subset",
+      "command": "C:\\Python313\\python.exe -m pytest Bot_data_base/tests/test_mechanism_metadata_enrichment.py Bot_data_base/tests/test_run_mechanism_metadata_enrichment.py Bot_data_base/tests/test_mechanism_enrichment_anti_runtime_activation.py -q --basetemp C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.19-HF1\\hf1_runtime\\pytest_tmp\\prd_047_17",
+      "executed_via": "inline_pytest_wrapper_with_cleanup_guard",
+      "exit_code": 0,
+      "expected_passed": 11,
+      "actual_passed": 11,
+      "basetemp": "TO_DO_LIST/logs/PRD-047.19-HF1/hf1_runtime/pytest_tmp/prd_047_17",
+      "permission_error_detected": false,
+      "replacement_char_detected": false,
+      "status": "passed"
+    },
+    {
+      "group_id": "prd_047_19_tests",
+      "label": "PRD-047.19 tests",
+      "command": "C:\\Python313\\python.exe -m pytest Bot_data_base/tests/test_manual_review_apply_preflight.py Bot_data_base/tests/test_run_mechanism_metadata_apply_preflight.py Bot_data_base/tests/test_apply_preflight_no_runtime_activation.py -q --basetemp C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.19-HF1\\hf1_runtime\\pytest_tmp\\prd_047_19",
+      "executed_via": "inline_pytest_wrapper_with_cleanup_guard",
+      "exit_code": 0,
+      "expected_passed": 12,
+      "actual_passed": 12,
+      "basetemp": "TO_DO_LIST/logs/PRD-047.19-HF1/hf1_runtime/pytest_tmp/prd_047_19",
+      "permission_error_detected": false,
+      "replacement_char_detected": false,
+      "status": "passed"
+    }
+  ]
+}

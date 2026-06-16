@@ -1,0 +1,18 @@
+{
+  "schema_version": "prd_047_19_hf1_no_mutation_proof_v1",
+  "prd_id": "PRD-047.19-HF1",
+  "status": "passed",
+  "runtime_user_facing_changed": false,
+  "writer_prompt_changed": false,
+  "writer_contract_live_changed": false,
+  "hybrid_retrieval_planner_changed": false,
+  "memory_retrieval_changed": false,
+  "processed_blocks_overwritten": false,
+  "live_metadata_applied": false,
+  "registry_mutated": false,
+  "chroma_reindexed": false,
+  "embeddings_changed": false,
+  "provider_llm_calls_used": false,
+  "raw_provider_payload_committed": false,
+  "hotfix_scope": "evidence_integrity_only"
+}

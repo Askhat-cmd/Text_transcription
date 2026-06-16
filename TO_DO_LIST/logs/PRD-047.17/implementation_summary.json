@@ -24,5 +24,6 @@
     "10": true
   },
   "provider_llm_calls_used": false,
-  "main_implementation_commit": "7d49c86"
+  "main_implementation_commit": "7d49c86",
+  "metadata_sync_commit": "227f412"
 }

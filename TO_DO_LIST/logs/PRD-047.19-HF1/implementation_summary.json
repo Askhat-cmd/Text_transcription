@@ -3,6 +3,8 @@
   "prd_id": "PRD-047.19-HF1",
   "status": "passed",
   "created_at": "2026-06-16T05:54:09.855998+00:00",
+  "implementation_commit": "b347a03",
+  "push_status": "pushed_to_origin_main",
   "source_gate_report": "TO_DO_LIST/logs/PRD-047.19-HF1/source_gate_report.json",
   "regression_rerun_summary": "TO_DO_LIST/logs/PRD-047.19-HF1/regression_rerun_summary.json",
   "encoding_hygiene_report": "TO_DO_LIST/logs/PRD-047.19-HF1/encoding_hygiene_report.json",

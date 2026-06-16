@@ -1,0 +1,56 @@
+{
+  "schema_version": "mechanism_metadata_field_apply_map_v1",
+  "prd_id": "PRD-047.19",
+  "field_apply_map": {
+    "summary_candidate": "summary",
+    "core_thesis_candidate": "core_thesis",
+    "mechanism_hints_candidates": "mechanism_hints",
+    "use_when_candidates": "use_when",
+    "avoid_when_candidates": "avoid_when",
+    "contraindications_candidates": "contraindications",
+    "safe_user_translation_candidate": "safe_user_translation",
+    "risk_if_exposed_candidate": "risk_if_exposed",
+    "allowed_writer_use_candidate": "allowed_writer_use",
+    "recommended_moves_candidates": "recommended_moves",
+    "forbidden_moves_candidates": "forbidden_moves",
+    "depth_level_suggestion": "depth_level",
+    "quote_policy_suggestion": "quote_policy",
+    "chunk_type_review_suggestion": "chunk_type"
+  },
+  "field_expected_type": {
+    "summary_candidate": "str",
+    "core_thesis_candidate": "str",
+    "mechanism_hints_candidates": "list[str]",
+    "use_when_candidates": "list[str]",
+    "avoid_when_candidates": "list[str]",
+    "contraindications_candidates": "list[str]",
+    "safe_user_translation_candidate": "str",
+    "risk_if_exposed_candidate": "str",
+    "allowed_writer_use_candidate": "str",
+    "recommended_moves_candidates": "list[str]",
+    "forbidden_moves_candidates": "list[str]",
+    "depth_level_suggestion": "int_or_none",
+    "quote_policy_suggestion": "str_or_none",
+    "chunk_type_review_suggestion": "str_or_none"
+  },
+  "field_order": [
+    "summary_candidate",
+    "core_thesis_candidate",
+    "mechanism_hints_candidates",
+    "use_when_candidates",
+    "avoid_when_candidates",
+    "contraindications_candidates",
+    "safe_user_translation_candidate",
+    "risk_if_exposed_candidate",
+    "allowed_writer_use_candidate",
+    "recommended_moves_candidates",
+    "forbidden_moves_candidates",
+    "depth_level_suggestion",
+    "quote_policy_suggestion",
+    "chunk_type_review_suggestion"
+  ],
+  "notes": [
+    "Mapping is preview-only and does not authorize live metadata mutation.",
+    "Targets describe future overlay/apply semantics, not current runtime writes."
+  ]
+}

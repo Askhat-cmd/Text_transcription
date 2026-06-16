@@ -1,0 +1,150 @@
+$ python -m pytest Bot_data_base\tests\test_mechanism_metadata_manual_review.py Bot_data_base\tests\test_run_mechanism_metadata_review.py Bot_data_base\tests\test_manual_review_no_runtime_activation.py -q
+.........EEEE.                                                           [100%]
+=================================== ERRORS ====================================
+______ ERROR at setup of test_queue_mode_creates_queue_template_and_csv _______
+
+self = WindowsPath('C:/Users/video/AppData/Local/Temp/pytest-of-video')
+
+    def iterdir(self):
+        """Yield path objects of the directory contents.
+    
+        The children are yielded in arbitrary order, and the
+        special entries '.' and '..' are not included.
+        """
+        root_dir = str(self)
+>       with os.scandir(root_dir) as scandir_it:
+E       PermissionError: [WinError 5] �������� � �������: 'C:\\Users\\video\\AppData\\Local\\Temp\\pytest-of-video'
+
+C:\Python313\Lib\pathlib\_local.py:575: PermissionError
+__ ERROR at setup of test_fixture_and_preview_modes_produce_non_live_overlay __
+
+self = WindowsPath('C:/Users/video/AppData/Local/Temp/pytest-of-video')
+
+    def iterdir(self):
+        """Yield path objects of the directory contents.
+    
+        The children are yielded in arbitrary order, and the
+        special entries '.' and '..' are not included.
+        """
+        root_dir = str(self)
+>       with os.scandir(root_dir) as scandir_it:
+E       PermissionError: [WinError 5] �������� � �������: 'C:\\Users\\video\\AppData\\Local\\Temp\\pytest-of-video'
+
+C:\Python313\Lib\pathlib\_local.py:575: PermissionError
+_____ ERROR at setup of test_validate_mode_template_and_negative_fixture ______
+
+self = WindowsPath('C:/Users/video/AppData/Local/Temp/pytest-of-video')
+
+    def iterdir(self):
+        """Yield path objects of the directory contents.
+    
+        The children are yielded in arbitrary order, and the
+        special entries '.' and '..' are not included.
+        """
+        root_dir = str(self)
+>       with os.scandir(root_dir) as scandir_it:
+E       PermissionError: [WinError 5] �������� � �������: 'C:\\Users\\video\\AppData\\Local\\Temp\\pytest-of-video'
+
+C:\Python313\Lib\pathlib\_local.py:575: PermissionError
+_________ ERROR at setup of test_full_mode_creates_required_artifacts _________
+
+self = WindowsPath('C:/Users/video/AppData/Local/Temp/pytest-of-video')
+
+    def iterdir(self):
+        """Yield path objects of the directory contents.
+    
+        The children are yielded in arbitrary order, and the
+        special entries '.' and '..' are not included.
+        """
+        root_dir = str(self)
+>       with os.scandir(root_dir) as scandir_it:
+E       PermissionError: [WinError 5] �������� � �������: 'C:\\Users\\video\\AppData\\Local\\Temp\\pytest-of-video'
+
+C:\Python313\Lib\pathlib\_local.py:575: PermissionError
+=========================== short test summary info ===========================
+ERROR Bot_data_base/tests/test_run_mechanism_metadata_review.py::test_queue_mode_creates_queue_template_and_csv
+ERROR Bot_data_base/tests/test_run_mechanism_metadata_review.py::test_fixture_and_preview_modes_produce_non_live_overlay
+ERROR Bot_data_base/tests/test_run_mechanism_metadata_review.py::test_validate_mode_template_and_negative_fixture
+ERROR Bot_data_base/tests/test_run_mechanism_metadata_review.py::test_full_mode_creates_required_artifacts
+10 passed, 4 errors in 0.52s
+
+[exit_code] 1
+
+$ python -m pytest Bot_data_base\tests\test_mechanism_metadata_enrichment.py Bot_data_base\tests\test_run_mechanism_metadata_enrichment.py Bot_data_base\tests\test_mechanism_enrichment_anti_runtime_activation.py -q
+......EEEE.                                                              [100%]
+=================================== ERRORS ====================================
+___ ERROR at setup of test_deterministic_runner_creates_required_artifacts ____
+
+self = WindowsPath('C:/Users/video/AppData/Local/Temp/pytest-of-video')
+
+    def iterdir(self):
+        """Yield path objects of the directory contents.
+    
+        The children are yielded in arbitrary order, and the
+        special entries '.' and '..' are not included.
+        """
+        root_dir = str(self)
+>       with os.scandir(root_dir) as scandir_it:
+E       PermissionError: [WinError 5] �������� � �������: 'C:\\Users\\video\\AppData\\Local\\Temp\\pytest-of-video'
+
+C:\Python313\Lib\pathlib\_local.py:575: PermissionError
+_____________ ERROR at setup of test_runner_outputs_are_sanitized _____________
+
+self = WindowsPath('C:/Users/video/AppData/Local/Temp/pytest-of-video')
+
+    def iterdir(self):
+        """Yield path objects of the directory contents.
+    
+        The children are yielded in arbitrary order, and the
+        special entries '.' and '..' are not included.
+        """
+        root_dir = str(self)
+>       with os.scandir(root_dir) as scandir_it:
+E       PermissionError: [WinError 5] �������� � �������: 'C:\\Users\\video\\AppData\\Local\\Temp\\pytest-of-video'
+
+C:\Python313\Lib\pathlib\_local.py:575: PermissionError
+________ ERROR at setup of test_llm_mode_without_confirm_skips_safely _________
+
+self = WindowsPath('C:/Users/video/AppData/Local/Temp/pytest-of-video')
+
+    def iterdir(self):
+        """Yield path objects of the directory contents.
+    
+        The children are yielded in arbitrary order, and the
+        special entries '.' and '..' are not included.
+        """
+        root_dir = str(self)
+>       with os.scandir(root_dir) as scandir_it:
+E       PermissionError: [WinError 5] �������� � �������: 'C:\\Users\\video\\AppData\\Local\\Temp\\pytest-of-video'
+
+C:\Python313\Lib\pathlib\_local.py:575: PermissionError
+__ ERROR at setup of test_llm_mode_without_api_key_creates_skipped_artifact ___
+
+self = WindowsPath('C:/Users/video/AppData/Local/Temp/pytest-of-video')
+
+    def iterdir(self):
+        """Yield path objects of the directory contents.
+    
+        The children are yielded in arbitrary order, and the
+        special entries '.' and '..' are not included.
+        """
+        root_dir = str(self)
+>       with os.scandir(root_dir) as scandir_it:
+E       PermissionError: [WinError 5] �������� � �������: 'C:\\Users\\video\\AppData\\Local\\Temp\\pytest-of-video'
+
+C:\Python313\Lib\pathlib\_local.py:575: PermissionError
+=========================== short test summary info ===========================
+ERROR Bot_data_base/tests/test_run_mechanism_metadata_enrichment.py::test_deterministic_runner_creates_required_artifacts
+ERROR Bot_data_base/tests/test_run_mechanism_metadata_enrichment.py::test_runner_outputs_are_sanitized
+ERROR Bot_data_base/tests/test_run_mechanism_metadata_enrichment.py::test_llm_mode_without_confirm_skips_safely
+ERROR Bot_data_base/tests/test_run_mechanism_metadata_enrichment.py::test_llm_mode_without_api_key_creates_skipped_artifact
+7 passed, 4 errors in 0.46s
+
+[exit_code] 1
+
+$ python -m pytest Bot_data_base\tests\test_manual_review_apply_preflight.py Bot_data_base\tests\test_run_mechanism_metadata_apply_preflight.py Bot_data_base\tests\test_apply_preflight_no_runtime_activation.py -q
+............                                                             [100%]
+12 passed in 1.99s
+
+[exit_code] 0
+

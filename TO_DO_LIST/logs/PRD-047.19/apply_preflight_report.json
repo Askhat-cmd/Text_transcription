@@ -1,0 +1,18 @@
+{
+  "schema_version": "mechanism_metadata_apply_preflight_v1",
+  "prd_id": "PRD-047.19",
+  "status": "passed_with_expected_blockers",
+  "ready_for_live_apply": false,
+  "ready_for_chroma_reindex": false,
+  "ready_for_runtime_visibility": false,
+  "ready_for_eval_over_real_overlay": false,
+  "expected_blockers": [
+    "no_real_human_reviewed_decisions",
+    "overlay_fixture_only"
+  ],
+  "unexpected_blockers": [],
+  "warnings": [
+    "0dbf25dc-c955-49f9-b3b8-eab4e3bbeed2:separator_only_source_preview_fixture_warning"
+  ],
+  "next_safe_step": "human_curated_review_batch_1_or_eval_after_real_overlay"
+}

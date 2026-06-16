@@ -1,0 +1,19 @@
+{
+  "schema_version": "mechanism_metadata_overlay_intake_report_v1",
+  "prd_id": "PRD-047.19",
+  "source_overlay_prd": "PRD-047.18",
+  "overlay_file": "TO_DO_LIST/logs/PRD-047.18/curated_overlay_preview.json",
+  "overlay_schema_version": "mechanism_metadata_curated_overlay_preview_v1",
+  "fixture_only": true,
+  "live_apply_allowed": false,
+  "safe_to_apply_to_live_metadata": false,
+  "accepted_item_count": 2,
+  "accepted_field_count": 5,
+  "candidate_reference_count": 2,
+  "intake_status": "passed_fixture_only",
+  "real_apply_blockers": [
+    "no_real_human_reviewed_decisions",
+    "overlay_fixture_only"
+  ],
+  "warnings": []
+}

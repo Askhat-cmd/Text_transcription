@@ -1,5 +1,22 @@
 # Architecture Decisions
 
+## ADR-080 - Curated overlay preflight is read-only planning, not permission to apply metadata
+
+Status: accepted
+
+Date: 2026-06-16
+
+Context: `PRD-047.18` introduced curated overlay preview artifacts, but even accepted fields remained fixture-only review evidence. The next required step was to prove the project can map accepted fields onto future metadata targets and show diff previews without mutating processed blocks, live metadata, Chroma, retrieval, or Writer runtime.
+
+Decision:
+- add a read-only `mechanism_metadata_apply_preflight_v1` workflow over `mechanism_metadata_curated_overlay_preview_v1`;
+- validate overlay intake, candidate/block consistency, future field mapping, and diff preview under `overlay_only_no_write`;
+- treat `fixture_only=true` and lack of real human-reviewed decisions as expected blockers for live apply readiness;
+- keep `ready_for_live_apply=false`, `ready_for_chroma_reindex=false`, and `ready_for_runtime_visibility=false` for fixture overlays;
+- forbid using dry-run apply plans as runtime authority, live metadata writes, or implicit approval for future Chroma/apply PRDs.
+
+Consequences: the repository now has an explicit preflight layer that can explain what would change and why it still must not be applied. A later PRD needs real non-fixture human-accepted overlay before any apply/reindex planning can move beyond expected blockers.
+
 ## ADR-079 - Manual review decisions remain curated overlay previews, not live KB truth
 
 Status: accepted

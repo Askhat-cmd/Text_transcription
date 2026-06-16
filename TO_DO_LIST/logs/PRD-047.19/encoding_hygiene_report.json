@@ -1,0 +1,42 @@
+{
+  "schema_version": "artifact_encoding_hygiene_report_v1",
+  "prd": "PRD-047.19",
+  "checked_prd": "PRD-047.19",
+  "final_status": "passed",
+  "files_checked": 20,
+  "utf8_decode_error_count": 0,
+  "nul_byte_file_count": 0,
+  "nul_char_file_count": 0,
+  "replacement_char_warning_count": 1,
+  "mojibake_warning_count": 0,
+  "json_parse_error_count": 0,
+  "empty_text_artifact_count": 0,
+  "unexpected_debug_dir_count": 0,
+  "fixed_files": [],
+  "warnings": [
+    "TO_DO_LIST/logs/PRD-047.19/test_command_output.txt:replacement_chars=128"
+  ],
+  "blockers": [],
+  "checked_files": [
+    "TO_DO_LIST/logs/PRD-047.19/anti_runtime_activation_report.json",
+    "TO_DO_LIST/logs/PRD-047.19/apply_preflight_report.json",
+    "TO_DO_LIST/logs/PRD-047.19/apply_preflight_report.md",
+    "TO_DO_LIST/logs/PRD-047.19/artifact_encoding_hygiene_report.json",
+    "TO_DO_LIST/logs/PRD-047.19/botdb_readonly_smoke.json",
+    "TO_DO_LIST/logs/PRD-047.19/dry_run_apply_plan.json",
+    "TO_DO_LIST/logs/PRD-047.19/dry_run_apply_plan.md",
+    "TO_DO_LIST/logs/PRD-047.19/encoding_hygiene_report.json",
+    "TO_DO_LIST/logs/PRD-047.19/field_mapping_snapshot.json",
+    "TO_DO_LIST/logs/PRD-047.19/negative_overlay_missing_mapping.json",
+    "TO_DO_LIST/logs/PRD-047.19/negative_overlay_practice_without_contraindications.json",
+    "TO_DO_LIST/logs/PRD-047.19/negative_overlay_real_but_empty_source_preview.json",
+    "TO_DO_LIST/logs/PRD-047.19/no_mutation_proof.json",
+    "TO_DO_LIST/logs/PRD-047.19/overlay_intake_report.json",
+    "TO_DO_LIST/logs/PRD-047.19/overlay_intake_report.md",
+    "TO_DO_LIST/logs/PRD-047.19/source_gate_report.json",
+    "TO_DO_LIST/logs/PRD-047.19/source_gate_report.md",
+    "TO_DO_LIST/logs/PRD-047.19/test_command_output.txt",
+    "TO_DO_LIST/reports/PRD-047.19_IMPLEMENTATION_REPORT.md",
+    "TO_DO_LIST/reports/PRD-047.19_NEXT_PRD_RECOMMENDATION.md"
+  ]
+}

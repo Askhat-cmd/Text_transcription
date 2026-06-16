@@ -1,0 +1,115 @@
+{
+  "schema_version": "mechanism_metadata_dry_run_apply_plan_v1",
+  "prd_id": "PRD-047.19",
+  "source_overlay_file": "TO_DO_LIST/logs/PRD-047.18/curated_overlay_preview.json",
+  "created_at": "2026-06-16T05:18:06.911527+00:00",
+  "plan_mode": "fixture_preview",
+  "apply_allowed": false,
+  "live_metadata_mutation_allowed": false,
+  "chroma_reindex_allowed": false,
+  "items": [
+    {
+      "candidate_id": "03b71eb2-d88f-49fc-9459-0590d0f57a10",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "03b71eb2-d88f-49fc-9459-0590d0f57a10",
+        "heading_path": [
+          "ГЛАВА 5. Тени: то, что мы не видим в себе",
+          "Практикум к главе 5: семь практик работы с тенью",
+          "Практика 7: Письмо к тени"
+        ],
+        "content_preview": "**Цель:** завершить цикл — от обнаружения тени к первому контакту с ней. **Время:** 30–40 минут. Один раз как ритуал. Напиши письмо своей тени — как письмо человеку, которого давно не видел. Которого когда-то спрятал. Не потому что хотел — а потому что так было нужно тогда. В письме — три части:..."
+      },
+      "chunk_type": "practice",
+      "risk_level": "medium",
+      "accepted_fields": {
+        "avoid_when_candidates": [
+          "Не предлагать без явного запроса и если пользователь заметно перегружен.",
+          "Не давать как замену прямому ответу на вопрос пользователя."
+        ],
+        "contraindications_candidates": [
+          "Острая дестабилизация или телесная перегрузка, где практика усилит давление.",
+          "Сильное истощение, когда даже короткое задание воспринимается как дополнительный долг."
+        ],
+        "allowed_writer_use_candidate": "Только как один ограниченный next step после ответа и при явном timing fit."
+      },
+      "field_mapping": {
+        "avoid_when_candidates": "future_metadata.avoid_when",
+        "contraindications_candidates": "future_metadata.contraindications",
+        "allowed_writer_use_candidate": "future_metadata.allowed_writer_use"
+      },
+      "diff_preview": {
+        "current": {
+          "avoid_when": [
+            "Avoid treating this metadata as deterministic routing."
+          ],
+          "contraindications": [],
+          "allowed_writer_use": ""
+        },
+        "proposed": {
+          "avoid_when": [
+            "Не предлагать без явного запроса и если пользователь заметно перегружен.",
+            "Не давать как замену прямому ответу на вопрос пользователя."
+          ],
+          "contraindications": [
+            "Острая дестабилизация или телесная перегрузка, где практика усилит давление.",
+            "Сильное истощение, когда даже короткое задание воспринимается как дополнительный долг."
+          ],
+          "allowed_writer_use": "Только как один ограниченный next step после ответа и при явном timing fit."
+        },
+        "operation": "overlay_only_no_write"
+      },
+      "item_blockers": [],
+      "item_warnings": []
+    },
+    {
+      "candidate_id": "0dbf25dc-c955-49f9-b3b8-eab4e3bbeed2",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "0dbf25dc-c955-49f9-b3b8-eab4e3bbeed2",
+        "heading_path": [
+          "ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя",
+          "Практикум к главе 3"
+        ],
+        "content_preview": "***"
+      },
+      "chunk_type": "concept",
+      "risk_level": "low",
+      "accepted_fields": {
+        "summary_candidate": "Раздел «ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя» даёт материал для компактного объяснения смысла в контексте пользователя. ***",
+        "allowed_writer_use_candidate": "Компактная парафраза без прямого цитирования и без утверждений о пользователе как о факте."
+      },
+      "field_mapping": {
+        "summary_candidate": "future_metadata.summary",
+        "allowed_writer_use_candidate": "future_metadata.allowed_writer_use"
+      },
+      "diff_preview": {
+        "current": {
+          "summary": "",
+          "allowed_writer_use": ""
+        },
+        "proposed": {
+          "summary": "Раздел «ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя» даёт материал для компактного объяснения смысла в контексте пользователя. ***",
+          "allowed_writer_use": "Компактная парафраза без прямого цитирования и без утверждений о пользователе как о факте."
+        },
+        "operation": "overlay_only_no_write"
+      },
+      "item_blockers": [],
+      "item_warnings": [
+        "separator_only_source_preview_fixture_warning"
+      ]
+    }
+  ],
+  "summary": {
+    "item_count": 2,
+    "field_count": 5,
+    "blocked_item_count": 0,
+    "warning_item_count": 1,
+    "by_chunk_type": {
+      "concept": 1,
+      "practice": 1
+    }
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "schema_version": "prd_047_19_source_gate_report_v1",
+  "prd_id": "PRD-047.19",
+  "status": "passed",
+  "created_at": "2026-06-16T05:18:06.761045+00:00",
+  "git_status_short": [
+    "?? Bot_data_base/knowledge_governance/manual_review_preflight.py",
+    "?? Bot_data_base/tests/test_apply_preflight_no_runtime_activation.py",
+    "?? Bot_data_base/tests/test_manual_review_apply_preflight.py",
+    "?? Bot_data_base/tests/test_run_mechanism_metadata_apply_preflight.py",
+    "?? Bot_data_base/tools/run_mechanism_metadata_apply_preflight.py",
+    "?? TO_DO_LIST/PRD-047.19_Curated_Candidate_Dry_Run_Apply_Plan_Preflight_over_Accepted_Overlay_v1_RU.md",
+    "?? TO_DO_LIST/PRD-047.19_TASK_LIST.md",
+    "?? TO_DO_LIST/logs/PRD-047.19/"
+  ],
+  "recent_commits": [
+    "8ccfe96 PRD-047.18 post-push metadata sync",
+    "dfb814d PRD-047.18 manual review curated acceptance workflow",
+    "d1c33d9 PRD-047.17 final metadata hash sync",
+    "227f412 PRD-047.17 post-push metadata sync",
+    "7d49c86 PRD-047.17 offline enrichment candidate layer",
+    "1b1a674 PRD-047.16 post-push metadata sync",
+    "f159c63 PRD-047.16 mechanism metadata foundation",
+    "cb7762e PRD-047.15-HF2-R2 ignore local admin screenshots",
+    "09bc32e PRD-047.15-HF2-R2 post-push metadata sync",
+    "3480666 PRD-047.15-HF2-R2 hybrid retrieval visibility sync",
+    "8001ade PRD-047.15-HF2-R1 post-push metadata sync",
+    "625a088 PRD-047.15-HF2-R1 hybrid retrieval planner",
+    "f2fefd6 PRD-047.15-HF1 final metadata hash sync",
+    "22ea6e1 PRD-047.15-HF1 post-push metadata sync",
+    "7041444 PRD-047.15-HF1 composer live calibration evidence",
+    "455aa24 PRD-047.15 final metadata hash sync",
+    "98ec305 PRD-047.15 post-push metadata sync",
+    "0b7eae7 PRD-047.15 contextual retrieval query composer",
+    "9eef46b PRD-047.14-HF2 final metadata hash sync",
+    "6b388d5 PRD-047.14-HF2 post-push metadata sync"
+  ],
+  "required_commit_presence": {
+    "dfb814d": true,
+    "8ccfe96": true
+  },
+  "required_files": [
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.18/review_queue.json",
+      "exists": true,
+      "sha256": "dd08b1fc4914bfb8061941f84e680b53337a7fb926e353c582c177461ff7e818"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.18/review_decisions_template.json",
+      "exists": true,
+      "sha256": "4c2dc2498a881972b6cbb6509a4e4f75a66f9e2509e590777cf2902cec016a9b"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.18/review_decision_validation_report.json",
+      "exists": true,
+      "sha256": "1ab51d1f4dbeacba65876a01559da7a307b4c8d08ab45e5e5ff3b9f8353a0bfa"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.18/curated_overlay_preview.json",
+      "exists": true,
+      "sha256": "640e6ac294ed1ab49adf91e2a8750a45ce0dad12258d33895aaaee21fb792c5c"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.18/no_mutation_proof.json",
+      "exists": true,
+      "sha256": "7263882e1ef450dac2f3294c6b4c6874f39ccf25fc75fcbdeb400dac4f637e24"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-047.18_IMPLEMENTATION_REPORT.md",
+      "exists": true,
+      "sha256": "d07083f3ad74d4dcfac1e0fb1978b8158cad8f46e9e628e88cce1eab3ac05c73"
+    }
+  ],
+  "prd_047_18_summary": {
+    "status": "passed",
+    "queue_count": 80,
+    "candidate_count": 80,
+    "template_accepts_real_candidates": false,
+    "live_apply_allowed": false
+  },
+  "overlay": {
+    "overlay_file": "TO_DO_LIST/logs/PRD-047.18/curated_overlay_preview.json",
+    "fixture_only": true,
+    "live_apply_allowed": false,
+    "accepted_item_count": 2
+  },
+  "source": {
+    "source_id": "123__кузница_духа",
+    "source_doc": "Кузница Духа",
+    "registry_blocks_count": 247,
+    "filtered_blocks_count": 247
+  },
+  "blockers": []
+}

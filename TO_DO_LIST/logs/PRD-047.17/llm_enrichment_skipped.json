@@ -1,0 +1,11 @@
+{
+  "schema_version": "llm_enrichment_skipped_v1",
+  "prd_id": "PRD-047.17",
+  "mode": "llm_candidate",
+  "confirmed": false,
+  "reason": "llm_candidate_mode_not_requested",
+  "provider_llm_calls_used": false,
+  "raw_provider_payload_committed": false,
+  "created_at": "2026-06-16T04:13:36.600732+00:00",
+  "status": "skipped"
+}

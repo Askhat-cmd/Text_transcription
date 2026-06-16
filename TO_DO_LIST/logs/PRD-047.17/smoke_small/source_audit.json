@@ -1,0 +1,94 @@
+{
+  "schema_version": "prd_source_audit_v1",
+  "prd_id": "PRD-047.17",
+  "status": "passed",
+  "git": {
+    "status_short": [
+      "?? Bot_data_base/knowledge_governance/offline_enrichment.py",
+      "?? Bot_data_base/tests/test_mechanism_enrichment_anti_runtime_activation.py",
+      "?? Bot_data_base/tests/test_mechanism_metadata_enrichment.py",
+      "?? Bot_data_base/tests/test_run_mechanism_metadata_enrichment.py",
+      "?? Bot_data_base/tools/run_mechanism_metadata_enrichment.py",
+      "?? TO_DO_LIST/PRD-047.17_Offline_Summary_Lens_Use_When_Enrichment_over_Mechanism_Metadata_v1_RU.md",
+      "?? TO_DO_LIST/PRD-047.17_TASK_LIST.md",
+      "?? TO_DO_LIST/logs/PRD-047.17/"
+    ],
+    "recent_commits": [
+      "1b1a674 PRD-047.16 post-push metadata sync",
+      "f159c63 PRD-047.16 mechanism metadata foundation",
+      "cb7762e PRD-047.15-HF2-R2 ignore local admin screenshots",
+      "09bc32e PRD-047.15-HF2-R2 post-push metadata sync",
+      "3480666 PRD-047.15-HF2-R2 hybrid retrieval visibility sync",
+      "8001ade PRD-047.15-HF2-R1 post-push metadata sync",
+      "625a088 PRD-047.15-HF2-R1 hybrid retrieval planner",
+      "f2fefd6 PRD-047.15-HF1 final metadata hash sync",
+      "22ea6e1 PRD-047.15-HF1 post-push metadata sync",
+      "7041444 PRD-047.15-HF1 composer live calibration evidence",
+      "455aa24 PRD-047.15 final metadata hash sync",
+      "98ec305 PRD-047.15 post-push metadata sync",
+      "0b7eae7 PRD-047.15 contextual retrieval query composer",
+      "9eef46b PRD-047.14-HF2 final metadata hash sync",
+      "6b388d5 PRD-047.14-HF2 post-push metadata sync",
+      "8b51631 PRD-047.14-HF2 summary request routing repair",
+      "2695e0c PRD-047.14-HF1.2 metadata hash finalize",
+      "f82f9ce PRD-047.14-HF1.2 post-push metadata sync",
+      "2839a0d PRD-047.14-HF1.2 convert writer stubs to retry signals",
+      "258ea5a PRD-047.14-HF1.1 metadata hash finalize"
+    ],
+    "contains_prd_047_16_successor": true
+  },
+  "source_gate": {
+    "registry_entry_found": true,
+    "source_id": "123__кузница_духа",
+    "source_title": "Кузница Духа",
+    "files": {
+      "processed_json": {
+        "path": "Bot_data_base/data/processed/books/123__кузница_духа_blocks.json",
+        "exists": true,
+        "size_bytes": 1265309
+      },
+      "upload_path": {
+        "path": "Bot_data_base/data/uploads/books/КУЗНИЦА ДУХА v.2.md",
+        "exists": true,
+        "size_bytes": 474347
+      },
+      "merged_path": {
+        "path": "Bot_data_base/data/processed/all_blocks_merged.json",
+        "exists": true,
+        "size_bytes": 1265235
+      },
+      "registry_path": {
+        "path": "Bot_data_base/data/registry.json",
+        "exists": true,
+        "size_bytes": 777
+      }
+    }
+  },
+  "previous_prd_047_16_gaps_to_close": [
+    "missing_mechanism_hints_count=28/54",
+    "contraindications_present_ratio=0.0",
+    "practice metadata gaps remain",
+    "use_when / avoid_when still partly generic and not source-grounded"
+  ],
+  "out_of_scope_gaps": [
+    "no live Writer/runtime activation",
+    "no Chroma reindex",
+    "no DB mutation",
+    "no MemoryRetrievalAgent live behavior change"
+  ],
+  "fields_never_auto_applied_without_review": [
+    "mechanism_hints_candidates",
+    "use_when_candidates",
+    "avoid_when_candidates",
+    "contraindications_candidates",
+    "safe_user_translation_candidate",
+    "risk_if_exposed_candidate",
+    "allowed_writer_use_candidate"
+  ],
+  "existing_modules_reused": [
+    "Bot_data_base/knowledge_governance/enrichment_contracts.py",
+    "Bot_data_base/knowledge_governance/enrichment_validators.py",
+    "Bot_data_base/knowledge_governance/mechanism_metadata.py",
+    "Bot_data_base/tools/run_mechanism_metadata_audit.py"
+  ]
+}

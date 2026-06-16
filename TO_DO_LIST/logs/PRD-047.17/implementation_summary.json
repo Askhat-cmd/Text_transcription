@@ -1,0 +1,27 @@
+{
+  "prd_id": "PRD-047.17",
+  "status": "passed",
+  "source_id": "123__кузница_духа",
+  "selected_blocks": 80,
+  "candidate_count": 80,
+  "by_chunk_type": {
+    "case_example": 4,
+    "concept": 10,
+    "diagnostic_lens": 16,
+    "mechanism": 10,
+    "practice": 21,
+    "safety": 2,
+    "source_fragment": 16,
+    "style_voice": 1
+  },
+  "high_value_chapter_hits": {
+    "1": true,
+    "3": true,
+    "5": true,
+    "6": true,
+    "7": true,
+    "8": true,
+    "10": true
+  },
+  "provider_llm_calls_used": false
+}

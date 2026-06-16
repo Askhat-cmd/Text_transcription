@@ -1,0 +1,12 @@
+{
+  "schema_version": "anti_runtime_activation_report_v1",
+  "prd_id": "PRD-047.17",
+  "status": "passed",
+  "forbidden_pattern_hits": [],
+  "runtime_token_hits": [],
+  "notes": [
+    "Offline enrichment candidates are not wired into bot_psychologist runtime.",
+    "Mechanism hints remain metadata candidates only.",
+    "No Writer authority change or Chroma reindex was performed."
+  ]
+}

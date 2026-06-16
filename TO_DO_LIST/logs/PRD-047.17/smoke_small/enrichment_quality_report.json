@@ -1,0 +1,67 @@
+{
+  "schema_version": "mechanism_metadata_enrichment_quality_report_v1",
+  "prd_id": "PRD-047.17",
+  "source_id": "123__кузница_духа",
+  "source_doc": "Кузница Духа",
+  "mode": "deterministic",
+  "status": "passed",
+  "total_source_blocks": 247,
+  "selected_blocks": 20,
+  "candidate_count": 20,
+  "by_chunk_type": {
+    "diagnostic_lens": 6,
+    "mechanism": 2,
+    "practice": 6,
+    "source_fragment": 6
+  },
+  "by_risk_level": {
+    "high": 3,
+    "low": 2,
+    "medium": 15
+  },
+  "by_manual_review_reason": {
+    "diagnostic_lens_enrichment_priority": 6,
+    "diagnostic_lens_requires_safe_translation_review": 6,
+    "high_value_chapter_priority": 20,
+    "high_value_chapter_review": 20,
+    "legacy_too_short": 6,
+    "manual_review_required_by_prd": 20,
+    "missing_mechanism_hints": 14,
+    "missing_summary": 20,
+    "practice_candidate_needs_timing_review": 6,
+    "practice_current_metadata_missing_contraindications": 6,
+    "practice_direct_to_writer_without_preconditions": 6,
+    "practice_missing_avoid_when": 6,
+    "practice_missing_contraindications": 6,
+    "practice_missing_steps_short": 6,
+    "source_fragment_candidate_review": 6,
+    "source_fragment_requires_derived_candidate_review": 6
+  },
+  "validation_warning_counts": {
+    "practice_current_metadata_missing_contraindications": 6
+  },
+  "validation_blocked_counts": {},
+  "selected_chapter_numbers": {
+    "1": 6,
+    "10": 5,
+    "3": 1,
+    "5": 2,
+    "6": 1,
+    "7": 3,
+    "8": 2
+  },
+  "high_value_chapter_hits": {
+    "1": true,
+    "3": true,
+    "5": true,
+    "6": true,
+    "7": true,
+    "8": true,
+    "10": true
+  },
+  "notes": [
+    "Deterministic candidates are manual-review inputs only.",
+    "Candidates are not applied to live metadata, Writer, runtime, DB, or Chroma.",
+    "LLM candidate mode is deferred/skipped unless explicitly confirmed and safely configured."
+  ]
+}

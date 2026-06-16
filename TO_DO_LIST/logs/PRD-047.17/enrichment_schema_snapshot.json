@@ -1,0 +1,30 @@
+{
+  "schema_version": "mechanism_metadata_enrichment_candidate_v1",
+  "required_fields": [
+    "schema_version",
+    "source_ref",
+    "current_metadata_summary",
+    "candidate_fields",
+    "grounding",
+    "governance_review",
+    "generation",
+    "confidence",
+    "status"
+  ],
+  "source_ref_contract": {
+    "required": [
+      "source_id",
+      "source_doc",
+      "block_id",
+      "heading_path",
+      "content_preview"
+    ],
+    "content_preview_max_chars": 300
+  },
+  "invariants": {
+    "safe_to_apply_automatically": false,
+    "manual_review_required_default": true,
+    "content_full_forbidden": true,
+    "provider_payload_committed": false
+  }
+}

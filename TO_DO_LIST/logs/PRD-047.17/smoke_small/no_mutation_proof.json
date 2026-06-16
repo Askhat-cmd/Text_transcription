@@ -1,0 +1,22 @@
+{
+  "prd_id": "PRD-047.17",
+  "runtime_user_facing_changed": false,
+  "writer_prompt_changed": false,
+  "state_analyzer_changed": false,
+  "thread_manager_changed": false,
+  "hybrid_retrieval_planner_runtime_changed": false,
+  "memory_retrieval_live_behavior_changed": false,
+  "writer_contract_live_changed": false,
+  "chroma_reindexed": false,
+  "db_schema_destructive_change": false,
+  "processed_blocks_overwritten": false,
+  "embeddings_changed": false,
+  "new_runtime_path_created": false,
+  "enrichment_candidates_applied_to_live_metadata": false,
+  "provider_llm_calls_used": false,
+  "provider_llm_calls_used_if_any_are_offline_only": true,
+  "raw_provider_payload_committed": false,
+  "raw_content_full_in_reports": false,
+  "secrets_or_env_committed": false,
+  "status": "passed"
+}

@@ -1,0 +1,175 @@
+### COMMAND: python Bot_data_base/tools/run_mechanism_metadata_enrichment.py --mode deterministic --source kuznica --limit 80 --out-dir TO_DO_LIST/logs/PRD-047.17 --reports-dir TO_DO_LIST/reports
+{
+  "status": "passed",
+  "quality_status": "passed",
+  "source_id": "123__кузница_духа",
+  "selected_blocks": 80,
+  "candidate_count": 80,
+  "llm_skipped_reason": "llm_candidate_mode_not_requested"
+}
+EXIT_CODE=0
+
+### COMMAND: python Bot_data_base/tools/run_mechanism_metadata_enrichment.py --mode deterministic --source kuznica --limit 20 --out-dir TO_DO_LIST/logs/PRD-047.17/smoke_small --reports-dir TO_DO_LIST/reports
+{
+  "status": "passed",
+  "quality_status": "passed",
+  "source_id": "123__кузница_духа",
+  "selected_blocks": 20,
+  "candidate_count": 20,
+  "llm_skipped_reason": "llm_candidate_mode_not_requested"
+}
+EXIT_CODE=0
+
+### COMMAND: python -m pytest Bot_data_base/tests/test_mechanism_metadata.py Bot_data_base/tests/test_run_mechanism_metadata_audit.py Bot_data_base/tests/test_mechanism_metadata_anti_heuristic.py -q
+............                                                             [100%]
+12 passed in 0.12s
+EXIT_CODE=0
+
+### COMMAND: python -m pytest Bot_data_base/tests/test_mechanism_metadata_enrichment.py Bot_data_base/tests/test_run_mechanism_metadata_enrichment.py Bot_data_base/tests/test_mechanism_enrichment_anti_runtime_activation.py -q
+...........                                                              [100%]
+11 passed in 2.10s
+EXIT_CODE=0
+
+### COMMAND: python -m pytest Bot_data_base/tests/test_governance_adapter.py Bot_data_base/tests/test_json_export_governance.py Bot_data_base/tests/test_query_governance_schema.py bot_psychologist/tests/test_hybrid_retrieval_anti_overengineering.py bot_psychologist/tests/test_botdb_retrieval_path_smoke.py -q
+.........                                                                [100%]
+============================== warnings summary ===============================
+::test_apply_governance_adds_required_schema_fields
+::test_section_role_hint_safety_forces_chunk_type_safety
+::test_architecture_profile_marks_internal_only
+::test_practice_metadata_extracts_duration_steps_and_channel
+::test_json_export_preserves_governance_and_chunking_quality
+  c:\My_practice\Text_transcription\Bot_data_base\models\universal_block.py:50: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    created_at: str = field(default_factory=lambda: datetime.utcnow().isoformat())
+
+::test_json_export_preserves_governance_and_chunking_quality
+  c:\My_practice\Text_transcription\Bot_data_base\storage\json_export.py:31: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    "generated_at": datetime.utcnow().isoformat(),
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+9 passed, 6 warnings in 9.08s
+EXIT_CODE=0
+
+### COMMAND: GET http://127.0.0.1:8003/api/status
+{
+  "jobs": []
+}
+HTTP_STATUS=200
+
+### COMMAND: GET http://127.0.0.1:8003/api/registry
+{
+  "total": 1,
+  "sources": [
+    {
+      "source_id": "123__кузница_духа",
+      "source_type": "book",
+      "title": "Кузница Духа",
+      "author": "Саламат Сарсекенов",
+      "author_id": "123",
+      "language": "ru",
+      "status": "done",
+      "added_at": "2026-03-13T04:38:44.281566",
+      "processed_at": "2026-05-15T03:43:28.740276+00:00",
+      "blocks_count": 247,
+      "sd_distribution": {},
+      "file_paths": {
+        "json": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\books\\123__кузница_духа_blocks.json",
+        "chroma": true,
+        "upload": "data/uploads/books\\КУЗНИЦА ДУХА v.2.md"
+      },
+      "error_message": null,
+      "pipeline_version": "bot_data_base_v1.0+candidate_apply_PRD-046.0.8.1",
+      "is_focus_source": true,
+      "is_test_like": false,
+      "recommended_hygiene_action": "keep",
+      "hygiene_reason": [
+        "focus_source_protected"
+      ],
+      "delete_policy": {
+        "allowed": false,
+        "state": "protected",
+        "reason": "Основной источник базы",
+        "code": "focus_source_protected"
+      },
+      "delete_allowed": false
+    }
+  ],
+  "warnings": []
+}
+HTTP_STATUS=200
+
+### COMMAND: POST http://127.0.0.1:8003/api/query
+ERROR: HTTP Error 307: Temporary Redirect
+### COMMAND: POST http://127.0.0.1:8003/api/query/
+{
+  "chunks": [
+    {
+      "chunk_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+      "content": "Ты открыл эту книгу не случайно. Скорее всего, ты уже прошёл терапию, читал умные книжки, медитировал, делал практики. И всё равно что-то внутри скребёт. Какой-то фоновый шум, который не даёт покоя. Ощущение, что ты не дотягиваешь, не достаточен, не такой, каким должен быть.\n\nЗнакомо?\n\nДобро пожаловать в программу **«несовершенное Я»**.\n\nСразу важная точка, с которой всё начинается: с тобой всё в порядке. Это не фраза для утешения. Это буквально отправная точка для любого честного исследования. Программа — не ты. Она работает в тебе, но она не является тобой. Это разные вещи, и разница между ними — ключевая.\n\nВ этой главе мы разберём:\n\n- Что такое программа «несовершенное Я» и как она формируется\n- Какие драйверы выживания она включает — и почему нельзя просто «взять и расслабиться»\n- Как устроен механизм, который запускает её автоматически\n\nБудет прямо. Не для того чтобы надавить, а для того чтобы увидеть чётко. Поехали.\n\n***",
+      "score": 0.0029701972401428483,
+      "sd_level": 0,
+      "author_id": "123",
+      "author_name": "Саламат Сарсекенов",
+      "source_type": "book",
+      "youtube_url": null,
+      "start_time": null,
+      "end_time": null,
+      "block_title": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+      "keywords": [],
+      "governance": {}
+    },
+    {
+      "chunk_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+      "content": "Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается операционная система. Но это не Windows и не macOS. Это **OS «Я недостаточен»**.\n\nЭта операционная система запускает один базовый алгоритм: **«Со мной что-то не так. Я должен это исправить»**.\n\nЗвучит знакомо?\n\nПрограмма «несовершенное Я» — это **устойчивый паттерн восприятия себя**, при котором ты на глубинном уровне чувствуешь, что:\n\n- Ты недостаточно хорош\n- Тебя не примут таким, какой ты есть\n- Ты должен соответствовать, достигать, доказывать\n- Если ты остановишься — тебя отвергнут\n\nЭто не мысли. Это **фоновое состояние**, которое окрашивает всё твоё восприятие. Как фильтр на камере — ты смотришь на мир через него и не замечаешь самого фильтра. Видишь не реальность, а проекцию программы.\n\nПри этом важно зафиксировать сразу: **это не поломка и не патология**. Это операционная система выживания. Она была установлена с конкретной целью — помочь тебе вписаться в мир. Просто теперь ты её видишь. И это уже меняет отношения с ней.\n\n***",
+      "score": 0.002623768535979449,
+      "sd_level": 0,
+      "author_id": "123",
+      "author_name": "Саламат Сарсекенов",
+      "source_type": "book",
+      "youtube_url": null,
+      "start_time": null,
+      "end_time": null,
+      "block_title": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+      "keywords": [],
+      "governance": {}
+    },
+    {
+      "chunk_id": "d60e5a31-835c-4ce9-b14b-40b1706b6353",
+      "content": "***",
+      "score": 0.0,
+      "sd_level": 0,
+      "author_id": "123",
+      "author_name": "Саламат Сарсекенов",
+      "source_type": "book",
+      "youtube_url": null,
+      "start_time": null,
+      "end_time": null,
+      "block_title": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+      "keywords": [],
+      "governance": {}
+    }
+  ],
+  "total_found": 3,
+  "reranked": true,
+  "search_mode": "hybrid",
+  "sd_filter_applied": false,
+  "query_time_ms": 587,
+  "debug": {
+    "where_filter": {},
+    "candidates": 3,
+    "pre_filter_k": 20,
+    "raw_fetch_k": 20,
+    "legacy_sd_deprecated": true,
+    "sd_filter_applied": false,
+    "sd_level_ignored": false,
+    "botdb_query_route_fallback_used": true,
+    "retrieval_policy_trace": {
+      "policy_version": "retrieval_governance_safety_v1",
+      "safety_context": false,
+      "raw_hits_count": 3,
+      "internal_only_filtered_count": 0,
+      "returned_hits_count": 3,
+      "filter_reasons": []
+    }
+  }
+}
+HTTP_STATUS=200

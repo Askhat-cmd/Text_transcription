@@ -1,5 +1,22 @@
 # Architecture Decisions
 
+## ADR-078 - Offline enrichment candidates are manual-review inputs, not live KB truth
+
+Status: accepted
+
+Date: 2026-06-16
+
+Context: after `PRD-047.16`, the project had stable mechanism-aware metadata normalization, but real Kuznica chunks still lacked richer source-grounded summary/use-when/avoid-when/contraindication signals. The next step needed better offline candidate quality without changing Writer behavior, retrieval authority, or live KB truth.
+
+Decision:
+- add `mechanism_metadata_enrichment_candidate_v1` as an offline candidate contract on top of `MechanismAwareChunkMetadata v1`;
+- generate deterministic candidates, source profile, chapter coverage, and manual-review pack over the real Kuznica processed source;
+- keep every enrichment candidate as `candidate_only`, `manual_review_required=true`, and `safe_to_apply_automatically=false`;
+- forbid applying candidate fields to live metadata, WriterContract, runtime routing, or Chroma within this PRD;
+- allow an optional provider-backed `llm-candidate` interface only behind explicit confirmation, with sanitized artifacts and no raw provider payload committed.
+
+Consequences: the repository now has a richer offline review surface for metadata quality, while KB truth, Writer authority, retrieval runtime behavior, and production boundaries remain unchanged. The next step moves to curated acceptance workflow rather than direct activation.
+
 ## ADR-077 - Mechanism-aware chunk metadata is semantic guidance, not deterministic routing
 
 Status: accepted

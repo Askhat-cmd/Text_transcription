@@ -1,0 +1,73 @@
+{
+  "schema_version": "mechanism_metadata_enrichment_quality_report_v1",
+  "prd_id": "PRD-047.17",
+  "source_id": "123__кузница_духа",
+  "source_doc": "Кузница Духа",
+  "mode": "deterministic",
+  "status": "passed",
+  "total_source_blocks": 247,
+  "selected_blocks": 80,
+  "candidate_count": 80,
+  "by_chunk_type": {
+    "case_example": 4,
+    "concept": 10,
+    "diagnostic_lens": 16,
+    "mechanism": 10,
+    "practice": 21,
+    "safety": 2,
+    "source_fragment": 16,
+    "style_voice": 1
+  },
+  "by_risk_level": {
+    "high": 11,
+    "low": 19,
+    "medium": 50
+  },
+  "by_manual_review_reason": {
+    "diagnostic_lens_enrichment_priority": 16,
+    "diagnostic_lens_requires_safe_translation_review": 16,
+    "high_value_chapter_priority": 77,
+    "high_value_chapter_review": 77,
+    "legacy_too_short": 34,
+    "manual_review_required_by_prd": 80,
+    "missing_mechanism_hints": 36,
+    "missing_summary": 80,
+    "practice_candidate_needs_timing_review": 21,
+    "practice_current_metadata_missing_contraindications": 21,
+    "practice_direct_to_writer_without_preconditions": 21,
+    "practice_missing_avoid_when": 21,
+    "practice_missing_contraindications": 21,
+    "practice_missing_steps_short": 21,
+    "source_fragment_candidate_review": 16,
+    "source_fragment_requires_derived_candidate_review": 16
+  },
+  "validation_warning_counts": {
+    "practice_current_metadata_missing_contraindications": 21
+  },
+  "validation_blocked_counts": {},
+  "selected_chapter_numbers": {
+    "1": 22,
+    "10": 14,
+    "2": 1,
+    "3": 7,
+    "4": 2,
+    "5": 7,
+    "6": 8,
+    "7": 10,
+    "8": 9
+  },
+  "high_value_chapter_hits": {
+    "1": true,
+    "3": true,
+    "5": true,
+    "6": true,
+    "7": true,
+    "8": true,
+    "10": true
+  },
+  "notes": [
+    "Deterministic candidates are manual-review inputs only.",
+    "Candidates are not applied to live metadata, Writer, runtime, DB, or Chroma.",
+    "LLM candidate mode is deferred/skipped unless explicitly confirmed and safely configured."
+  ]
+}

@@ -1,0 +1,490 @@
+[
+  {
+    "chunk_id": "03b71eb2-d88f-49fc-9459-0590d0f57a10",
+    "source_id": "123__кузница_духа",
+    "title": "Практика 7: Письмо к тени",
+    "core_thesis": "**Цель:** завершить цикл — от обнаружения тени к первому контакту с ней.",
+    "chunk_type": "practice",
+    "mechanism_hints": [],
+    "allowed_use": [
+      "direct_to_writer",
+      "practice_suggestion",
+      "not_for_direct_quote",
+      "retrieval_seed"
+    ],
+    "visibility": "writer_allowed",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 1,
+    "intensity": "medium",
+    "quality_flags": [
+      "missing_summary",
+      "practice_missing_steps_short",
+      "practice_missing_avoid_when",
+      "practice_direct_to_writer_without_preconditions",
+      "missing_mechanism_hints"
+    ],
+    "legacy_metadata_keys": [
+      "legacy_lens_family"
+    ]
+  },
+  {
+    "chunk_id": "121bdc40-8633-469e-9837-ea9949f73de3",
+    "source_id": "123__кузница_духа",
+    "title": "Практика 7: Письмо программе",
+    "core_thesis": "**Цель:** установить осознанный контакт с программой — не как с врагом, а как с частью себя, которая когда-то помогала выжить.",
+    "chunk_type": "practice",
+    "mechanism_hints": [],
+    "allowed_use": [
+      "direct_to_writer",
+      "practice_suggestion",
+      "not_for_direct_quote",
+      "retrieval_seed"
+    ],
+    "visibility": "writer_allowed",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 1,
+    "intensity": "medium",
+    "quality_flags": [
+      "missing_summary",
+      "practice_missing_steps_short",
+      "practice_missing_avoid_when",
+      "practice_direct_to_writer_without_preconditions",
+      "missing_mechanism_hints"
+    ],
+    "legacy_metadata_keys": [
+      "legacy_lens_family"
+    ]
+  },
+  {
+    "chunk_id": "29b088ae-d536-4b4f-89a6-9f8e3a5da527",
+    "source_id": "123__кузница_духа",
+    "title": "Практика 2: Расшифровка страха в моменте",
+    "core_thesis": "**Цель:** научиться слышать страх как информацию, а не как команду.",
+    "chunk_type": "practice",
+    "mechanism_hints": [],
+    "allowed_use": [
+      "direct_to_writer",
+      "practice_suggestion",
+      "not_for_direct_quote",
+      "retrieval_seed"
+    ],
+    "visibility": "writer_allowed",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 1,
+    "intensity": "low",
+    "quality_flags": [
+      "legacy_too_short",
+      "missing_summary",
+      "practice_missing_steps_short",
+      "practice_missing_avoid_when",
+      "practice_direct_to_writer_without_preconditions",
+      "missing_mechanism_hints"
+    ],
+    "legacy_metadata_keys": [
+      "legacy_lens_family"
+    ]
+  },
+  {
+    "chunk_id": "2ce481d9-57df-45ee-aca3-543652eaa87f",
+    "source_id": "123__кузница_духа",
+    "title": "Практика 5: Тело в страхе",
+    "core_thesis": "**Цель:** снизить физическую интенсивность страха через телесную работу.",
+    "chunk_type": "practice",
+    "mechanism_hints": [],
+    "allowed_use": [
+      "direct_to_writer",
+      "practice_suggestion",
+      "not_for_direct_quote",
+      "retrieval_seed"
+    ],
+    "visibility": "writer_allowed",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 1,
+    "intensity": "medium",
+    "quality_flags": [
+      "legacy_too_short",
+      "missing_summary",
+      "practice_missing_steps_short",
+      "practice_missing_avoid_when",
+      "practice_direct_to_writer_without_preconditions",
+      "missing_mechanism_hints"
+    ],
+    "legacy_metadata_keys": [
+      "legacy_lens_family"
+    ]
+  },
+  {
+    "chunk_id": "345bff70-ae50-4f01-8848-05bdaf477a48",
+    "source_id": "123__кузница_духа",
+    "title": "Практика 2. «Я и моя реакция»",
+    "core_thesis": "**Цель:** Создание зазора между триггером и ответом **Время:** В реальном времени, при возникновении реакции Когда почувствуешь, что тебя что-то задело — злость, обида, тревога, р...",
+    "chunk_type": "practice",
+    "mechanism_hints": [],
+    "allowed_use": [
+      "direct_to_writer",
+      "practice_suggestion",
+      "not_for_direct_quote",
+      "retrieval_seed"
+    ],
+    "visibility": "writer_allowed",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 1,
+    "intensity": "low",
+    "quality_flags": [
+      "legacy_too_short",
+      "missing_summary",
+      "practice_missing_steps_short",
+      "practice_missing_avoid_when",
+      "practice_direct_to_writer_without_preconditions",
+      "missing_mechanism_hints"
+    ],
+    "legacy_metadata_keys": [
+      "legacy_lens_family"
+    ]
+  },
+  {
+    "chunk_id": "35e895ba-8149-4f37-bc05-33bd0e9752cc",
+    "source_id": "123__кузница_духа",
+    "title": "Практика 6: «Дайте смыслу прийти»",
+    "core_thesis": "**Цель:** тренировка аккомодации — позволить опыту изменить твою модель мира.",
+    "chunk_type": "practice",
+    "mechanism_hints": [],
+    "allowed_use": [
+      "direct_to_writer",
+      "practice_suggestion",
+      "not_for_direct_quote",
+      "retrieval_seed"
+    ],
+    "visibility": "writer_allowed",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 1,
+    "intensity": "medium",
+    "quality_flags": [
+      "legacy_too_short",
+      "missing_summary",
+      "practice_missing_steps_short",
+      "practice_missing_avoid_when",
+      "practice_direct_to_writer_without_preconditions",
+      "missing_mechanism_hints"
+    ],
+    "legacy_metadata_keys": [
+      "legacy_lens_family"
+    ]
+  },
+  {
+    "chunk_id": "15b76643-6a4a-473f-8f9a-754f608bdc97",
+    "source_id": "123__кузница_духа",
+    "title": "Практикум к главе 1: семь точек входа",
+    "core_thesis": "Теория без практики — это просто информация.",
+    "chunk_type": "diagnostic_lens",
+    "mechanism_hints": [],
+    "allowed_use": [
+      "diagnostic_hint",
+      "not_for_direct_quote",
+      "internal_lens"
+    ],
+    "visibility": "writer_allowed",
+    "quote_policy": "internal_only",
+    "depth_level": 2,
+    "intensity": "unknown",
+    "quality_flags": [
+      "missing_summary",
+      "missing_mechanism_hints"
+    ],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "2e021b62-6bee-4584-b1cf-c79bcb833153",
+    "source_id": "123__кузница_духа",
+    "title": "Вопросы и ответы",
+    "core_thesis": "С: Не перестанешь — и не нужно.",
+    "chunk_type": "diagnostic_lens",
+    "mechanism_hints": [],
+    "allowed_use": [
+      "diagnostic_hint",
+      "not_for_direct_quote",
+      "internal_lens"
+    ],
+    "visibility": "writer_allowed",
+    "quote_policy": "internal_only",
+    "depth_level": 2,
+    "intensity": "unknown",
+    "quality_flags": [
+      "missing_summary",
+      "missing_mechanism_hints"
+    ],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "39f6eafa-7403-4450-80b8-9b94097035b2",
+    "source_id": "123__кузница_духа",
+    "title": "Два этажа одного мозга",
+    "core_thesis": "Здесь важно одно различение — оно многое проясняет.",
+    "chunk_type": "diagnostic_lens",
+    "mechanism_hints": [],
+    "allowed_use": [
+      "diagnostic_hint",
+      "not_for_direct_quote",
+      "internal_lens"
+    ],
+    "visibility": "writer_allowed",
+    "quote_policy": "internal_only",
+    "depth_level": 2,
+    "intensity": "unknown",
+    "quality_flags": [
+      "missing_summary",
+      "missing_mechanism_hints"
+    ],
+    "legacy_metadata_keys": [
+      "legacy_lens_family"
+    ]
+  },
+  {
+    "chunk_id": "3bfba8e9-9449-442f-bfce-e39538192a1c",
+    "source_id": "123__кузница_духа",
+    "title": "3. Сделай три медленных выдоха — длиннее, чем вдох. Выдох активирует парасимпатическую систему и бу...",
+    "core_thesis": "Вот и всё.",
+    "chunk_type": "diagnostic_lens",
+    "mechanism_hints": [],
+    "allowed_use": [
+      "diagnostic_hint",
+      "not_for_direct_quote",
+      "internal_lens"
+    ],
+    "visibility": "writer_allowed",
+    "quote_policy": "internal_only",
+    "depth_level": 2,
+    "intensity": "unknown",
+    "quality_flags": [
+      "legacy_too_short",
+      "missing_summary",
+      "missing_mechanism_hints"
+    ],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "648f6960-e5cf-4558-a111-fcd668b2096a",
+    "source_id": "123__кузница_духа",
+    "title": "Безусловная любовь — не концепция и не чувство",
+    "core_thesis": "Когда слышишь «безусловная любовь» — первый импульс обычно: умиление, что-то про принятие, про добро.",
+    "chunk_type": "diagnostic_lens",
+    "mechanism_hints": [],
+    "allowed_use": [
+      "diagnostic_hint",
+      "not_for_direct_quote",
+      "internal_lens"
+    ],
+    "visibility": "writer_allowed",
+    "quote_policy": "internal_only",
+    "depth_level": 2,
+    "intensity": "unknown",
+    "quality_flags": [
+      "missing_summary",
+      "missing_mechanism_hints"
+    ],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "6db17c5b-638d-452e-8a9c-8384c9ed78a4",
+    "source_id": "123__кузница_духа",
+    "title": "2. Пять драйверов выживания",
+    "core_thesis": "Программа «несовершенное Я» — не монолит.",
+    "chunk_type": "diagnostic_lens",
+    "mechanism_hints": [],
+    "allowed_use": [
+      "diagnostic_hint",
+      "not_for_direct_quote",
+      "internal_lens"
+    ],
+    "visibility": "writer_allowed",
+    "quote_policy": "internal_only",
+    "depth_level": 2,
+    "intensity": "unknown",
+    "quality_flags": [
+      "legacy_too_short",
+      "missing_summary",
+      "missing_mechanism_hints"
+    ],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "00a10081-935a-4c17-a000-d91c7420ce7f",
+    "source_id": "123__кузница_духа",
+    "title": "Сексуальный инстинкт (инстинкт слияния)",
+    "core_thesis": "Важно сразу: это название вводит в заблуждение.",
+    "chunk_type": "source_fragment",
+    "mechanism_hints": [
+      "self_criticism_as_control"
+    ],
+    "allowed_use": [
+      "not_for_direct_quote",
+      "retrieval_seed"
+    ],
+    "visibility": "source_only",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 0,
+    "intensity": "unknown",
+    "quality_flags": [
+      "missing_summary"
+    ],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "02967da0-f163-4b5d-a732-6630dfeb0957",
+    "source_id": "123__кузница_духа",
+    "title": "Ментальный суверенитет: неуязвимость — не броня",
+    "core_thesis": "Это, пожалуй, самое часто неверно понимаемое понятие в НейроСталкинге.",
+    "chunk_type": "source_fragment",
+    "mechanism_hints": [
+      "control_as_safety"
+    ],
+    "allowed_use": [
+      "not_for_direct_quote",
+      "retrieval_seed"
+    ],
+    "visibility": "source_only",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 0,
+    "intensity": "unknown",
+    "quality_flags": [
+      "missing_summary"
+    ],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "029c5523-f014-40b4-86a8-66480ecd0304",
+    "source_id": "123__кузница_духа",
+    "title": "Интеграция: как жить из этого",
+    "core_thesis": "Здесь важно остановиться на практическом вопросе.",
+    "chunk_type": "source_fragment",
+    "mechanism_hints": [],
+    "allowed_use": [
+      "not_for_direct_quote",
+      "retrieval_seed"
+    ],
+    "visibility": "source_only",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 0,
+    "intensity": "unknown",
+    "quality_flags": [
+      "missing_summary"
+    ],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "0d62f141-572d-4386-b02d-d7f9a46fa27f",
+    "source_id": "123__кузница_духа",
+    "title": "4. Лиссофобия: страх потерять себя",
+    "core_thesis": "Один из самых распространённых страхов, с которыми приходят на сессии Саламата — и один из наименее обсуждаемых публично.",
+    "chunk_type": "source_fragment",
+    "mechanism_hints": [
+      "control_as_safety"
+    ],
+    "allowed_use": [
+      "not_for_direct_quote",
+      "retrieval_seed"
+    ],
+    "visibility": "source_only",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 0,
+    "intensity": "unknown",
+    "quality_flags": [
+      "missing_summary"
+    ],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "11a72efd-5a3c-413a-bd74-70356a407983",
+    "source_id": "123__кузница_духа",
+    "title": "Практика 1: Список раздражения",
+    "core_thesis": "**Цель:** найти входы в тень через реакции на других людей.",
+    "chunk_type": "source_fragment",
+    "mechanism_hints": [],
+    "allowed_use": [
+      "not_for_direct_quote",
+      "retrieval_seed"
+    ],
+    "visibility": "source_only",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 0,
+    "intensity": "unknown",
+    "quality_flags": [
+      "missing_summary"
+    ],
+    "legacy_metadata_keys": [
+      "legacy_lens_family"
+    ]
+  },
+  {
+    "chunk_id": "1243381f-27fe-4f5e-95bb-605b8ba64c1a",
+    "source_id": "123__кузница_духа",
+    "title": "Драйвер 3: «Радуй других»",
+    "core_thesis": "**Базовая установка:** «Мои потребности неважны.",
+    "chunk_type": "source_fragment",
+    "mechanism_hints": [
+      "parental_gaze"
+    ],
+    "allowed_use": [
+      "not_for_direct_quote",
+      "retrieval_seed"
+    ],
+    "visibility": "source_only",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 0,
+    "intensity": "unknown",
+    "quality_flags": [
+      "missing_summary"
+    ],
+    "legacy_metadata_keys": []
+  },
+  {
+    "chunk_id": "5943bece-db10-460a-bc21-7e23e6485925",
+    "source_id": "123__кузница_духа",
+    "title": "НеоСталкинг: когда личность перестаёт быть центром вселенной",
+    "core_thesis": "НейроСталкинг и НеоСталкинг — это два уровня одного процесса.",
+    "chunk_type": "mechanism",
+    "mechanism_hints": [],
+    "allowed_use": [
+      "direct_to_writer",
+      "diagnostic_hint",
+      "not_for_direct_quote",
+      "internal_lens",
+      "retrieval_seed"
+    ],
+    "visibility": "writer_allowed",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 2,
+    "intensity": "unknown",
+    "quality_flags": [
+      "missing_summary",
+      "missing_mechanism_hints"
+    ],
+    "legacy_metadata_keys": [
+      "legacy_lens_family"
+    ]
+  },
+  {
+    "chunk_id": "650e5ee6-4072-449e-9b93-bc2729e553db",
+    "source_id": "123__кузница_духа",
+    "title": "Механизм 1: Удаление (Deletion)",
+    "core_thesis": "Мозг **удаляет** часть информации — просто не замечает её.",
+    "chunk_type": "mechanism",
+    "mechanism_hints": [],
+    "allowed_use": [
+      "direct_to_writer",
+      "diagnostic_hint",
+      "not_for_direct_quote",
+      "internal_lens",
+      "retrieval_seed"
+    ],
+    "visibility": "writer_allowed",
+    "quote_policy": "paraphrase_only",
+    "depth_level": 2,
+    "intensity": "unknown",
+    "quality_flags": [
+      "missing_summary",
+      "missing_mechanism_hints"
+    ],
+    "legacy_metadata_keys": []
+  }
+]

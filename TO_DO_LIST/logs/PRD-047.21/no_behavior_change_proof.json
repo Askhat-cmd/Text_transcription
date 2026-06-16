@@ -1,0 +1,13 @@
+{
+  "schema_version": "prd_047_21_no_behavior_change_proof_v1",
+  "prd_id": "PRD-047.21",
+  "same_executed_retrieval_query_with_overlay_on_off": true,
+  "same_writer_contract_keys_with_overlay_on_off": true,
+  "overlay_not_in_writer_contract": true,
+  "overlay_not_in_prompt_canvas": true,
+  "overlay_not_in_final_answer": true,
+  "semantic_hits_not_modified_by_overlay": true,
+  "same_final_answer_with_overlay_on_off": true,
+  "overlay_enabled_trace_present": true,
+  "overlay_disabled_trace_present": true
+}

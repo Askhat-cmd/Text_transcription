@@ -186,6 +186,7 @@ export interface MultiAgentTraceData {
   constraints_for_writer?: string[];
   planner_model?: string | null;
   planner_max_tokens?: number | null;
+  overlay_shadow?: Record<string, unknown> | null;
   live_turn_evidence?: Record<string, unknown> | null;
 }
 

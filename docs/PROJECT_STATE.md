@@ -1,6 +1,8 @@
 # Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
+PRD-047.21 completed overlay-aware retrieval shadow integration as a strict trace-only runtime surface with accepted `passed` status. Added default-off `OVERLAY_SHADOW_TRACE_*` feature flags, isolated `overlay_shadow_trace.py`, orchestrator/debug/API wiring, Web Trace rendering, trace/sample/no-behavior/authority/no-mutation artifacts, targeted multiagent/API tests, PRD-047.20 regression coverage, and Web trace widget verification/build. Batch-1 accepted overlay remains explicitly non-live (`human_final_approval=false`, `live_apply_allowed=false`, `safe_to_apply_to_live_metadata=false`): overlay is visible only in trace/debug as sanitized shadow evidence, while WriterContract, Writer prompt, executed retrieval query, semantic hits, final answer logic, BotDB registry/processed blocks, and Chroma remain unchanged. API smoke is intentionally `warning`/skipped in the runner by default (`skipped_inprocess_app_smoke_default_off`) because contract coverage is already provided by dedicated API tests. Next recommended work is `PRD-047.22 - Overlay Shadow Allowlisted Live Evidence / Trace Review v1`.
+
 PRD-047.20 completed the first real curated overlay batch and offline retrieval evaluation without changing runtime behavior. Added batch-1 selection over `16` real PRD-047.18 queue candidates, an evaluation-only decisions pack (`12` accepted overlay items, `139` accepted fields), accepted-overlay preview, PRD-047.19-based dry-run apply/preflight wrapper, and retrieval shadow evaluation over `18` curated cases. The overlay remains explicitly non-live: `human_final_approval=false`, `evaluation_only=true`, `live_apply_allowed=false`, `ready_for_live_apply=false`, while `ready_for_eval_over_real_overlay=true` is now supported for offline evidence. Read-only BotDB smoke passed on `:8003`; retrieval eval passed with `overlay_shadow_hit_rate=0.7778`, `combined_expected_help_rate=0.7778`, `unsafe_overlay_hit_count=0`, and `practice_without_safety_count=0`. No Writer/runtime/Admin/Web/registry/processed-block/Chroma mutation was performed. Next recommended work is `PRD-047.21 - Overlay-Aware Retrieval Shadow Integration / Trace-Only v1`.
 
 PRD-047.19-HF1 repaired acceptance evidence integrity for PRD-047.19 without changing functionality. The hotfix reran the PRD-047.18, PRD-047.17, and PRD-047.19 regression subsets with repository-local `--basetemp` and local `TEMP/TMP`, eliminating the false `C:\Users\video\AppData\Local\Temp\pytest-of-video` `PermissionError` failures from the original command log. HF1 also regenerated `test_command_output.txt` as clean UTF-8, restored `replacement_char_warning_count=0`, added explicit source-gate / rerun-summary / no-mutation evidence, and left Writer, runtime, live metadata, Chroma, processed blocks, and registry untouched. Next recommended work remains `PRD-047.20 - Real Human Curated Overlay Batch 1 / Accepted Decisions Pack v1`.
@@ -87,7 +89,7 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 - Historical artifact encoding noise may be misread as current runtime corruption without normalization report.
 
 ## Next Planned PRD
-`PRD-047.21 - Overlay-Aware Retrieval Shadow Integration / Trace-Only v1`
+`PRD-047.22 - Overlay Shadow Allowlisted Live Evidence / Trace Review v1`
 
 ## HF2-R2 Runtime Visibility State
 Hybrid Retrieval Planner visibility is now synchronized across backend admin runtime, Web Admin Runtime, multiagent trace, and compact trace summary.

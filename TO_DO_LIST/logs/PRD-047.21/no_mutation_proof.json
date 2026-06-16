@@ -1,0 +1,20 @@
+{
+  "schema_version": "prd_047_21_no_mutation_proof_v1",
+  "prd_id": "PRD-047.21",
+  "status": "passed",
+  "live_metadata_applied": false,
+  "processed_blocks_overwritten": false,
+  "registry_mutated": false,
+  "chroma_reindexed": false,
+  "embeddings_changed": false,
+  "writer_prompt_changed": false,
+  "writer_contract_changed_for_overlay": false,
+  "executed_retrieval_changed_by_overlay": false,
+  "semantic_hits_changed_by_overlay": false,
+  "final_answer_changed_by_overlay": false,
+  "overlay_shadow_trace_only": true,
+  "feature_flag_default_enabled": false,
+  "web_admin_changed": false,
+  "raw_provider_payload_committed": false,
+  "raw_full_source_text_committed": false
+}

@@ -493,6 +493,7 @@ class MultiAgentTraceResponse(BaseModel):
     constraints_for_writer: List[str] = Field(default_factory=list)
     planner_model: Optional[str] = None
     planner_max_tokens: Optional[int] = None
+    overlay_shadow: Optional[Dict[str, Any]] = None
     live_turn_evidence: Optional[Dict[str, Any]] = None
 
 

@@ -1,0 +1,8 @@
+{
+  "overlay_trace_visible": true,
+  "overlay_writer_visible": false,
+  "overlay_retrieval_authority": false,
+  "overlay_context_assembly_authority": false,
+  "overlay_final_answer_authority": false,
+  "overlay_runtime_authority_summary": "trace_only"
+}

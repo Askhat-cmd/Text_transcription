@@ -1,0 +1,10 @@
+{
+  "schema_version": "prd_047_21_api_trace_smoke_v1",
+  "prd_id": "PRD-047.21",
+  "status": "warning",
+  "reason": "skipped_inprocess_app_smoke_default_off",
+  "overlay_shadow_present": false,
+  "used_for_writer": false,
+  "used_for_retrieval_execution": false,
+  "contract_coverage_provided_by": "tests/api/test_overlay_shadow_trace_api_debug.py"
+}

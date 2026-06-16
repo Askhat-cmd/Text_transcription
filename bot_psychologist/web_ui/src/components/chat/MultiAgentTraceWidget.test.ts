@@ -152,6 +152,32 @@ function createTrace(): MultiAgentTraceData {
     constraints_for_writer: ['no_theory'],
     planner_model: 'gpt-5-nano',
     planner_max_tokens: 320,
+    overlay_shadow: {
+      schema_version: 'overlay_shadow_trace_v1',
+      enabled: true,
+      status: 'ok',
+      mode: 'trace_only',
+      overlay_source_prd: 'PRD-047.20',
+      batch_id: 'batch_1',
+      overlay_item_count: 12,
+      used_for_writer: false,
+      used_for_retrieval_execution: false,
+      would_help: true,
+      match_count: 1,
+      warnings: ['non_live_overlay_source'],
+      safety_flags: ['trace_only'],
+      matched_candidates: [
+        {
+          candidate_id: 'cand-1',
+          chunk_type: 'mechanism',
+          score: 4.25,
+          matched_terms: ['контроль', 'страх'],
+          focus_tags: ['control_as_safety'],
+          safe_user_translation_preview: 'Избегание может быть попыткой защиты.',
+          allowed_writer_use_preview: 'Только как мягкая гипотеза.',
+        },
+      ],
+    },
   };
 }
 
@@ -312,6 +338,23 @@ describe('MultiAgentTraceWidget (rev2)', () => {
     expect(harness.container.textContent).toContain('gpt-5-nano');
     expect(harness.container.textContent).toContain('паника контроль механизм');
     expect(harness.container.textContent).toContain('panic_regulation');
+    harness.cleanup();
+  });
+
+  it('renders overlay shadow trace block', () => {
+    const harness = renderWidget(
+      React.createElement(MultiAgentTraceWidget, {
+        trace: createTrace(),
+        isExpanded: true,
+      })
+    );
+    expect(harness.container.textContent).toContain('Overlay Shadow');
+    clickButtonContains(harness.container, 'Overlay Shadow');
+    clickButtonContains(harness.container, 'Overlay summary');
+    clickButtonContains(harness.container, 'Matched candidates');
+    expect(harness.container.textContent).toContain('PRD-047.20');
+    expect(harness.container.textContent).toContain('control_as_safety');
+    expect(harness.container.textContent).toContain('non_live_overlay_source');
     harness.cleanup();
   });
 

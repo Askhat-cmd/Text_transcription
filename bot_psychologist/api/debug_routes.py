@@ -848,6 +848,11 @@ async def get_multiagent_trace(
         ],
         planner_model=str(planner_settings.get("model")) if planner_settings.get("model") is not None else None,
         planner_max_tokens=_safe_int(planner_settings.get("max_tokens")),
+        overlay_shadow=(
+            debug.get("overlay_shadow")
+            if isinstance(debug.get("overlay_shadow"), dict)
+            else None
+        ),
         live_turn_evidence=(
             debug.get("live_turn_evidence")
             if isinstance(debug.get("live_turn_evidence"), dict)

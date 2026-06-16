@@ -1,0 +1,580 @@
+{
+  "schema_version": "prd_047_21_overlay_shadow_trace_samples_v1",
+  "prd_id": "PRD-047.21",
+  "created_at": "2026-06-16T10:22:02.621789Z",
+  "sample_count": 5,
+  "samples": [
+    {
+      "id": "control_as_safety",
+      "query": "мне страшно потерять контроль над собой",
+      "disabled_trace": {
+        "schema_version": "overlay_shadow_trace_v1",
+        "enabled": false,
+        "mode": "trace_only",
+        "reason": "disabled_by_config",
+        "used_for_writer": false,
+        "used_for_retrieval_execution": false,
+        "used_for_final_answer": false
+      },
+      "enabled_trace": {
+        "schema_version": "overlay_shadow_trace_v1",
+        "enabled": true,
+        "status": "ok",
+        "mode": "trace_only",
+        "overlay_source_prd": "PRD-047.20",
+        "batch_id": "batch_1",
+        "overlay_item_count": 12,
+        "used_for_writer": false,
+        "used_for_retrieval_execution": false,
+        "used_for_final_answer": false,
+        "would_help": true,
+        "match_count": 5,
+        "matched_candidates": [
+          {
+            "candidate_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+            "chunk_type": "mechanism",
+            "risk_level": "medium",
+            "score": 3.5,
+            "matched_terms": [
+              "контроль",
+              "механизм",
+              "страх"
+            ],
+            "focus_tags": [
+              "shame_as_wrong_visibility",
+              "self_criticism_as_control"
+            ],
+            "safe_user_translation_preview": "Похоже, здесь есть страх быть увиденным как неправильный или недостаточный.",
+            "allowed_writer_use_preview": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя.",
+            "summary_preview": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» объясняет механизм, через который человек пытается сохранить безопасность или контроль. Представь, что твой мозг — это компьютер.",
+            "trace_only": true
+          },
+          {
+            "candidate_id": "a15d79f8-0ac0-42fc-9bc3-6985a529fb07",
+            "chunk_type": "mechanism",
+            "risk_level": "medium",
+            "score": 3.5,
+            "matched_terms": [
+              "контроль",
+              "механизм",
+              "страх"
+            ],
+            "focus_tags": [
+              "control_as_safety",
+              "avoidance_as_protection",
+              "self_criticism_as_control"
+            ],
+            "safe_user_translation_preview": "Иногда контроль становится способом не чувствовать угрозу и вернуть себе ощущение опоры.",
+            "allowed_writer_use_preview": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя.",
+            "summary_preview": "Фрагмент из раздела «ГЛАВА 7. Страх: союзник, которого ты превратил во врага» объясняет механизм, через который человек пытается сохранить безопасность или контроль. Страх становится тюрьмой не сам по себе — а через о...",
+            "trace_only": true
+          },
+          {
+            "candidate_id": "3dfeca39-dbb2-4da0-b12f-15ef07fdad2b",
+            "chunk_type": "mechanism",
+            "risk_level": "medium",
+            "score": 2.5,
+            "matched_terms": [
+              "контроль",
+              "механизм"
+            ],
+            "focus_tags": [
+              "avoidance_as_protection",
+              "parental_gaze"
+            ],
+            "safe_user_translation_preview": "Избегание здесь может быть не ленью, а способом защититься от перегрузки или боли.",
+            "allowed_writer_use_preview": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя.",
+            "summary_preview": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» объясняет механизм, через который человек пытается сохранить безопасность или контроль. И ещё один момент: если ты ждёшь «результата»...",
+            "trace_only": true
+          },
+          {
+            "candidate_id": "47928bce-3306-4351-862e-290b3edeea59",
+            "chunk_type": "diagnostic_lens",
+            "risk_level": "medium",
+            "score": 2.5,
+            "matched_terms": [
+              "контроль",
+              "механизм"
+            ],
+            "focus_tags": [
+              "control_as_safety"
+            ],
+            "safe_user_translation_preview": "Иногда контроль становится способом не чувствовать угрозу и вернуть себе ощущение опоры.",
+            "allowed_writer_use_preview": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя.",
+            "summary_preview": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» описывает повторяющийся внутренний паттерн, который полезно переводить в мягкую гипотезу, а не в диагноз. Последнее.",
+            "trace_only": true
+          },
+          {
+            "candidate_id": "5808a31f-2872-4e48-826c-b318bf0d60b0",
+            "chunk_type": "mechanism",
+            "risk_level": "medium",
+            "score": 2.5,
+            "matched_terms": [
+              "контроль",
+              "механизм"
+            ],
+            "focus_tags": [
+              "self_criticism_as_control",
+              "parental_gaze"
+            ],
+            "safe_user_translation_preview": "Самокритика здесь может быть способом держать себя под контролем и не столкнуться с более уязвимыми чувствами.",
+            "allowed_writer_use_preview": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя.",
+            "summary_preview": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» объясняет механизм, через который человек пытается сохранить безопасность или контроль. Программа не возникает в один момент.",
+            "trace_only": true
+          }
+        ],
+        "safety_flags": [
+          "trace_only",
+          "writer_hidden",
+          "retrieval_execution_unchanged"
+        ],
+        "warnings": [
+          "non_live_overlay_source",
+          "human_final_approval_pending"
+        ],
+        "blockers": []
+      },
+      "used_for_writer": false,
+      "used_for_retrieval_execution": false
+    },
+    {
+      "id": "shame_visibility",
+      "query": "мне стыдно когда меня замечают и оценивают",
+      "disabled_trace": {
+        "schema_version": "overlay_shadow_trace_v1",
+        "enabled": false,
+        "mode": "trace_only",
+        "reason": "disabled_by_config",
+        "used_for_writer": false,
+        "used_for_retrieval_execution": false,
+        "used_for_final_answer": false
+      },
+      "enabled_trace": {
+        "schema_version": "overlay_shadow_trace_v1",
+        "enabled": true,
+        "status": "ok",
+        "mode": "trace_only",
+        "overlay_source_prd": "PRD-047.20",
+        "batch_id": "batch_1",
+        "overlay_item_count": 12,
+        "used_for_writer": false,
+        "used_for_retrieval_execution": false,
+        "used_for_final_answer": false,
+        "would_help": true,
+        "match_count": 5,
+        "matched_candidates": [
+          {
+            "candidate_id": "121bdc40-8633-469e-9837-ea9949f73de3",
+            "chunk_type": "practice",
+            "risk_level": "medium",
+            "score": 1.0,
+            "matched_terms": [
+              "когда"
+            ],
+            "focus_tags": [
+              "offer_only_if_requested_or_timed",
+              "keep_one_practice_max"
+            ],
+            "safe_user_translation_preview": "Практика из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+            "allowed_writer_use_preview": "Только как один ограниченный next step после ответа и при явном timing fit.",
+            "summary_preview": "Практика из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+            "trace_only": true
+          },
+          {
+            "candidate_id": "3dfeca39-dbb2-4da0-b12f-15ef07fdad2b",
+            "chunk_type": "mechanism",
+            "risk_level": "medium",
+            "score": 1.0,
+            "matched_terms": [
+              "когда"
+            ],
+            "focus_tags": [
+              "avoidance_as_protection",
+              "parental_gaze"
+            ],
+            "safe_user_translation_preview": "Избегание здесь может быть не ленью, а способом защититься от перегрузки или боли.",
+            "allowed_writer_use_preview": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя.",
+            "summary_preview": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» объясняет механизм, через который человек пытается сохранить безопасность или контроль. И ещё один момент: если ты ждёшь «результата»...",
+            "trace_only": true
+          },
+          {
+            "candidate_id": "468fb5d0-85f4-45c5-a7c3-5d593f51682e",
+            "chunk_type": "practice",
+            "risk_level": "medium",
+            "score": 1.0,
+            "matched_terms": [
+              "когда"
+            ],
+            "focus_tags": [
+              "offer_only_if_requested_or_timed",
+              "keep_one_practice_max"
+            ],
+            "safe_user_translation_preview": "Практика из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+            "allowed_writer_use_preview": "Только как один ограниченный next step после ответа и при явном timing fit.",
+            "summary_preview": "Практика из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+            "trace_only": true
+          },
+          {
+            "candidate_id": "47928bce-3306-4351-862e-290b3edeea59",
+            "chunk_type": "diagnostic_lens",
+            "risk_level": "medium",
+            "score": 1.0,
+            "matched_terms": [
+              "когда"
+            ],
+            "focus_tags": [
+              "control_as_safety"
+            ],
+            "safe_user_translation_preview": "Иногда контроль становится способом не чувствовать угрозу и вернуть себе ощущение опоры.",
+            "allowed_writer_use_preview": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя.",
+            "summary_preview": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» описывает повторяющийся внутренний паттерн, который полезно переводить в мягкую гипотезу, а не в диагноз. Последнее.",
+            "trace_only": true
+          },
+          {
+            "candidate_id": "4ea6de6c-5dd9-4914-9fa6-75ecb70a2457",
+            "chunk_type": "practice",
+            "risk_level": "medium",
+            "score": 1.0,
+            "matched_terms": [
+              "когда"
+            ],
+            "focus_tags": [
+              "offer_only_if_requested_or_timed",
+              "keep_one_practice_max"
+            ],
+            "safe_user_translation_preview": "Практика из раздела «ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+            "allowed_writer_use_preview": "Только как один ограниченный next step после ответа и при явном timing fit.",
+            "summary_preview": "Практика из раздела «ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+            "trace_only": true
+          }
+        ],
+        "safety_flags": [
+          "trace_only",
+          "writer_hidden",
+          "retrieval_execution_unchanged"
+        ],
+        "warnings": [
+          "non_live_overlay_source",
+          "human_final_approval_pending"
+        ],
+        "blockers": []
+      },
+      "used_for_writer": false,
+      "used_for_retrieval_execution": false
+    },
+    {
+      "id": "fact_vs_interpretation",
+      "query": "как отделить факт от моей интерпретации",
+      "disabled_trace": {
+        "schema_version": "overlay_shadow_trace_v1",
+        "enabled": false,
+        "mode": "trace_only",
+        "reason": "disabled_by_config",
+        "used_for_writer": false,
+        "used_for_retrieval_execution": false,
+        "used_for_final_answer": false
+      },
+      "enabled_trace": {
+        "schema_version": "overlay_shadow_trace_v1",
+        "enabled": true,
+        "status": "ok",
+        "mode": "trace_only",
+        "overlay_source_prd": "PRD-047.20",
+        "batch_id": "batch_1",
+        "overlay_item_count": 12,
+        "used_for_writer": false,
+        "used_for_retrieval_execution": false,
+        "used_for_final_answer": false,
+        "would_help": true,
+        "match_count": 5,
+        "matched_candidates": [
+          {
+            "candidate_id": "4ea6de6c-5dd9-4914-9fa6-75ecb70a2457",
+            "chunk_type": "practice",
+            "risk_level": "medium",
+            "score": 3.25,
+            "matched_terms": [
+              "как",
+              "практика",
+              "факт"
+            ],
+            "focus_tags": [
+              "offer_only_if_requested_or_timed",
+              "keep_one_practice_max"
+            ],
+            "safe_user_translation_preview": "Практика из раздела «ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+            "allowed_writer_use_preview": "Только как один ограниченный next step после ответа и при явном timing fit.",
+            "summary_preview": "Практика из раздела «ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+            "trace_only": true
+          },
+          {
+            "candidate_id": "121bdc40-8633-469e-9837-ea9949f73de3",
+            "chunk_type": "practice",
+            "risk_level": "medium",
+            "score": 2.25,
+            "matched_terms": [
+              "как",
+              "практика"
+            ],
+            "focus_tags": [
+              "offer_only_if_requested_or_timed",
+              "keep_one_practice_max"
+            ],
+            "safe_user_translation_preview": "Практика из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+            "allowed_writer_use_preview": "Только как один ограниченный next step после ответа и при явном timing fit.",
+            "summary_preview": "Практика из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+            "trace_only": true
+          },
+          {
+            "candidate_id": "468fb5d0-85f4-45c5-a7c3-5d593f51682e",
+            "chunk_type": "practice",
+            "risk_level": "medium",
+            "score": 2.25,
+            "matched_terms": [
+              "как",
+              "практика"
+            ],
+            "focus_tags": [
+              "offer_only_if_requested_or_timed",
+              "keep_one_practice_max"
+            ],
+            "safe_user_translation_preview": "Практика из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+            "allowed_writer_use_preview": "Только как один ограниченный next step после ответа и при явном timing fit.",
+            "summary_preview": "Практика из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+            "trace_only": true
+          },
+          {
+            "candidate_id": "88a9ca94-e506-423b-8685-e462b9beaa48",
+            "chunk_type": "practice",
+            "risk_level": "medium",
+            "score": 2.25,
+            "matched_terms": [
+              "как",
+              "практика"
+            ],
+            "focus_tags": [
+              "offer_only_if_requested_or_timed",
+              "keep_one_practice_max"
+            ],
+            "safe_user_translation_preview": "Практика из раздела «ГЛАВА 6. Инстинкты: древние хозяева современного человека» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+            "allowed_writer_use_preview": "Только как один ограниченный next step после ответа и при явном timing fit.",
+            "summary_preview": "Практика из раздела «ГЛАВА 6. Инстинкты: древние хозяева современного человека» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+            "trace_only": true
+          },
+          {
+            "candidate_id": "3dfeca39-dbb2-4da0-b12f-15ef07fdad2b",
+            "chunk_type": "mechanism",
+            "risk_level": "medium",
+            "score": 1.0,
+            "matched_terms": [
+              "как"
+            ],
+            "focus_tags": [
+              "avoidance_as_protection",
+              "parental_gaze"
+            ],
+            "safe_user_translation_preview": "Избегание здесь может быть не ленью, а способом защититься от перегрузки или боли.",
+            "allowed_writer_use_preview": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя.",
+            "summary_preview": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» объясняет механизм, через который человек пытается сохранить безопасность или контроль. И ещё один момент: если ты ждёшь «результата»...",
+            "trace_only": true
+          }
+        ],
+        "safety_flags": [
+          "trace_only",
+          "writer_hidden",
+          "retrieval_execution_unchanged"
+        ],
+        "warnings": [
+          "non_live_overlay_source",
+          "human_final_approval_pending"
+        ],
+        "blockers": []
+      },
+      "used_for_writer": false,
+      "used_for_retrieval_execution": false
+    },
+    {
+      "id": "practice_timing",
+      "query": "дай один короткий шаг если у меня есть силы",
+      "disabled_trace": {
+        "schema_version": "overlay_shadow_trace_v1",
+        "enabled": false,
+        "mode": "trace_only",
+        "reason": "disabled_by_config",
+        "used_for_writer": false,
+        "used_for_retrieval_execution": false,
+        "used_for_final_answer": false
+      },
+      "enabled_trace": {
+        "schema_version": "overlay_shadow_trace_v1",
+        "enabled": true,
+        "status": "ok",
+        "mode": "trace_only",
+        "overlay_source_prd": "PRD-047.20",
+        "batch_id": "batch_1",
+        "overlay_item_count": 12,
+        "used_for_writer": false,
+        "used_for_retrieval_execution": false,
+        "used_for_final_answer": false,
+        "would_help": true,
+        "match_count": 5,
+        "matched_candidates": [
+          {
+            "candidate_id": "121bdc40-8633-469e-9837-ea9949f73de3",
+            "chunk_type": "practice",
+            "risk_level": "medium",
+            "score": 5.5,
+            "matched_terms": [
+              "есть",
+              "один",
+              "практика",
+              "ресурс",
+              "шаг"
+            ],
+            "focus_tags": [
+              "offer_only_if_requested_or_timed",
+              "keep_one_practice_max"
+            ],
+            "safe_user_translation_preview": "Практика из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+            "allowed_writer_use_preview": "Только как один ограниченный next step после ответа и при явном timing fit.",
+            "summary_preview": "Практика из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+            "trace_only": true
+          },
+          {
+            "candidate_id": "468fb5d0-85f4-45c5-a7c3-5d593f51682e",
+            "chunk_type": "practice",
+            "risk_level": "medium",
+            "score": 5.5,
+            "matched_terms": [
+              "есть",
+              "один",
+              "практика",
+              "ресурс",
+              "шаг"
+            ],
+            "focus_tags": [
+              "offer_only_if_requested_or_timed",
+              "keep_one_practice_max"
+            ],
+            "safe_user_translation_preview": "Практика из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+            "allowed_writer_use_preview": "Только как один ограниченный next step после ответа и при явном timing fit.",
+            "summary_preview": "Практика из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+            "trace_only": true
+          },
+          {
+            "candidate_id": "4ea6de6c-5dd9-4914-9fa6-75ecb70a2457",
+            "chunk_type": "practice",
+            "risk_level": "medium",
+            "score": 5.5,
+            "matched_terms": [
+              "есть",
+              "один",
+              "практика",
+              "ресурс",
+              "шаг"
+            ],
+            "focus_tags": [
+              "offer_only_if_requested_or_timed",
+              "keep_one_practice_max"
+            ],
+            "safe_user_translation_preview": "Практика из раздела «ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+            "allowed_writer_use_preview": "Только как один ограниченный next step после ответа и при явном timing fit.",
+            "summary_preview": "Практика из раздела «ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+            "trace_only": true
+          },
+          {
+            "candidate_id": "88a9ca94-e506-423b-8685-e462b9beaa48",
+            "chunk_type": "practice",
+            "risk_level": "medium",
+            "score": 5.5,
+            "matched_terms": [
+              "есть",
+              "один",
+              "практика",
+              "ресурс",
+              "шаг"
+            ],
+            "focus_tags": [
+              "offer_only_if_requested_or_timed",
+              "keep_one_practice_max"
+            ],
+            "safe_user_translation_preview": "Практика из раздела «ГЛАВА 6. Инстинкты: древние хозяева современного человека» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+            "allowed_writer_use_preview": "Только как один ограниченный next step после ответа и при явном timing fit.",
+            "summary_preview": "Практика из раздела «ГЛАВА 6. Инстинкты: древние хозяева современного человека» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе.",
+            "trace_only": true
+          },
+          {
+            "candidate_id": "3dfeca39-dbb2-4da0-b12f-15ef07fdad2b",
+            "chunk_type": "mechanism",
+            "risk_level": "medium",
+            "score": 2.0,
+            "matched_terms": [
+              "если",
+              "один"
+            ],
+            "focus_tags": [
+              "avoidance_as_protection",
+              "parental_gaze"
+            ],
+            "safe_user_translation_preview": "Избегание здесь может быть не ленью, а способом защититься от перегрузки или боли.",
+            "allowed_writer_use_preview": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя.",
+            "summary_preview": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» объясняет механизм, через который человек пытается сохранить безопасность или контроль. И ещё один момент: если ты ждёшь «результата»...",
+            "trace_only": true
+          }
+        ],
+        "safety_flags": [
+          "trace_only",
+          "writer_hidden",
+          "retrieval_execution_unchanged"
+        ],
+        "warnings": [
+          "non_live_overlay_source",
+          "human_final_approval_pending"
+        ],
+        "blockers": []
+      },
+      "used_for_writer": false,
+      "used_for_retrieval_execution": false
+    },
+    {
+      "id": "irrelevant",
+      "query": "какая сегодня погода в москве",
+      "disabled_trace": {
+        "schema_version": "overlay_shadow_trace_v1",
+        "enabled": false,
+        "mode": "trace_only",
+        "reason": "disabled_by_config",
+        "used_for_writer": false,
+        "used_for_retrieval_execution": false,
+        "used_for_final_answer": false
+      },
+      "enabled_trace": {
+        "schema_version": "overlay_shadow_trace_v1",
+        "enabled": true,
+        "status": "ok",
+        "mode": "trace_only",
+        "overlay_source_prd": "PRD-047.20",
+        "batch_id": "batch_1",
+        "overlay_item_count": 12,
+        "used_for_writer": false,
+        "used_for_retrieval_execution": false,
+        "used_for_final_answer": false,
+        "would_help": false,
+        "match_count": 0,
+        "matched_candidates": [],
+        "safety_flags": [
+          "trace_only",
+          "writer_hidden",
+          "retrieval_execution_unchanged"
+        ],
+        "warnings": [
+          "non_live_overlay_source",
+          "human_final_approval_pending"
+        ],
+        "blockers": []
+      },
+      "used_for_writer": false,
+      "used_for_retrieval_execution": false
+    }
+  ]
+}

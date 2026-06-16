@@ -1,0 +1,9 @@
+{
+  "enabled": false,
+  "mode": "trace_only",
+  "overlay_file": "TO_DO_LIST/logs/PRD-047.20/batch_1_accepted_overlay_preview.json",
+  "overlay_file_resolved": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.20\\batch_1_accepted_overlay_preview.json",
+  "max_matches": 5,
+  "min_score": 0.0,
+  "schema_version": "overlay_shadow_trace_v1"
+}

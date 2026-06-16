@@ -57,6 +57,10 @@ from .hybrid_retrieval_planner import (
 from .knowledge_policy import build_safe_knowledge_debug_detail_v1
 from .knowledge_answer_routing_guard import build_knowledge_answer_routing_guard
 from .live_turn_evidence import build_live_turn_evidence_v1
+from .overlay_shadow_trace import (
+    build_overlay_shadow_trace,
+    get_overlay_shadow_trace_settings,
+)
 from .planner_bridge_compliance_shadow import (
     build_planner_bridge_compliance_runtime_shadow_v1,
 )
@@ -329,6 +333,33 @@ class MultiAgentOrchestrator:
             dict(getattr(memory_bundle, "hybrid_retrieval_trace", {}) or {})
             if isinstance(getattr(memory_bundle, "hybrid_retrieval_trace", None), dict)
             else {}
+        )
+        overlay_shadow_settings = get_overlay_shadow_trace_settings()
+        overlay_shadow = build_overlay_shadow_trace(
+            user_message=query,
+            retrieval_query=(
+                str(hybrid_retrieval_trace.get("executed_rag_query", "") or "")
+                or str(getattr(memory_bundle, "rag_query", "") or "")
+            ),
+            state_snapshot={
+                "nervous_state": str(state_snapshot.nervous_state or ""),
+                "intent": str(state_snapshot.intent or ""),
+                "safety_active": bool(state_snapshot.safety_flag or updated_thread.safety_active),
+            },
+            thread_state={
+                "thread_id": str(updated_thread.thread_id or ""),
+                "phase": str(updated_thread.phase or ""),
+                "response_mode": str(updated_thread.response_mode or ""),
+                "active_frame": (
+                    dict(updated_thread.active_frame)
+                    if isinstance(updated_thread.active_frame, dict)
+                    else {}
+                ),
+            },
+            overlay_file=str(overlay_shadow_settings.get("overlay_file", "") or ""),
+            enabled=bool(overlay_shadow_settings.get("enabled", False)),
+            max_matches=int(overlay_shadow_settings.get("max_matches", 5) or 5),
+            min_score=float(overlay_shadow_settings.get("min_score", 0.0) or 0.0),
         )
         context_package = build_context_assembly_package_v1(
             user_message=query,
@@ -1103,6 +1134,7 @@ class MultiAgentOrchestrator:
                     else True
                 ),
                 "knowledge_policy_trace": dict(memory_bundle.knowledge_policy_trace or {}),
+                "overlay_shadow": dict(overlay_shadow),
                 "dialogue_pragmatics": dict(dialogue_pragmatics),
                 "fresh_chat_context_policy_version": FRESH_CHAT_CONTEXT_POLICY_VERSION,
                 "fresh_chat_context_policy": dict(fresh_chat_context_policy),

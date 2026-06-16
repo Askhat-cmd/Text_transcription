@@ -40,6 +40,7 @@ _DEFAULTS: Dict[str, bool] = {
     # PRD-046.1.6 controlled prompt-constraint pilot (default-off).
     "PROMPT_CONSTRAINT_PILOT_ENABLED": False,
     "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": True,
+    "OVERLAY_SHADOW_TRACE_ENABLED": False,
 }
 
 _STRING_DEFAULTS: Dict[str, str] = {
@@ -64,6 +65,10 @@ _STRING_DEFAULTS: Dict[str, str] = {
     "HYBRID_RETRIEVAL_PLANNER_MODE": "shadow",
     "HYBRID_RETRIEVAL_PLANNER_MODEL": "gpt-5-nano",
     "HYBRID_RETRIEVAL_PLANNER_MAX_TOKENS": "320",
+    "OVERLAY_SHADOW_TRACE_MODE": "trace_only",
+    "OVERLAY_SHADOW_OVERLAY_FILE": "TO_DO_LIST/logs/PRD-047.20/batch_1_accepted_overlay_preview.json",
+    "OVERLAY_SHADOW_MAX_MATCHES": "5",
+    "OVERLAY_SHADOW_MIN_SCORE": "0.0",
 }
 
 _DEPRECATED_RUNTIME_FLAGS: Dict[str, str] = {

@@ -1,5 +1,23 @@
 # Architecture Decisions
 
+## ADR-082 - Accepted overlay may be visible in runtime trace before gaining retrieval authority
+
+Status: accepted
+
+Date: 2026-06-16
+
+Context: `PRD-047.20` produced a useful accepted-overlay preview with strong offline retrieval evidence, but the project still lacked any runtime evidence showing where that overlay would help or stay noisy under real multiagent requests. Moving directly to retrieval authority or metadata apply would skip the required observability boundary.
+
+Decision:
+- allow accepted overlay artifacts to be loaded read-only by runtime only for sanitized shadow trace;
+- keep default flag off via `OVERLAY_SHADOW_TRACE_ENABLED=false` and `OVERLAY_SHADOW_TRACE_MODE=trace_only`;
+- expose overlay shadow only in debug/API/Web Trace surfaces;
+- keep Writer as the only author of final user-facing text;
+- forbid overlay influence on executed retrieval query, semantic hits, context assembly, WriterContract, Writer prompt, final answer logic, BotDB registry, processed blocks, and Chroma until a separate future PRD explicitly grants that authority;
+- require later allowlisted live evidence and separate governance gates before any broader runtime activation.
+
+Consequences: the repository now has a safe runtime observability layer for curated overlay evidence without changing retrieval execution or answer behavior. Trace visibility is explicitly not retrieval authority, not Writer authority, and not approval to apply overlay metadata live.
+
 ## ADR-080 - Curated overlay preflight is read-only planning, not permission to apply metadata
 
 Status: accepted

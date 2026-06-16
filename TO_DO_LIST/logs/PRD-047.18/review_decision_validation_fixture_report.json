@@ -1,0 +1,43 @@
+{
+  "schema_version": "mechanism_metadata_review_validation_report_v1",
+  "prd_id": "PRD-047.18",
+  "status": "passed",
+  "decision_count": 4,
+  "accepted_item_count": 2,
+  "accepted_field_count": 5,
+  "errors": [],
+  "warnings": [],
+  "decision_reports": [
+    {
+      "candidate_id": "0dbf25dc-c955-49f9-b3b8-eab4e3bbeed2",
+      "review_status": "accepted",
+      "accepted_fields": [
+        "summary_candidate",
+        "allowed_writer_use_candidate"
+      ],
+      "errors": []
+    },
+    {
+      "candidate_id": "15b76643-6a4a-473f-8f9a-754f608bdc97",
+      "review_status": "rejected",
+      "accepted_fields": [],
+      "errors": []
+    },
+    {
+      "candidate_id": "29b088ae-d536-4b4f-89a6-9f8e3a5da527",
+      "review_status": "deferred",
+      "accepted_fields": [],
+      "errors": []
+    },
+    {
+      "candidate_id": "03b71eb2-d88f-49fc-9459-0590d0f57a10",
+      "review_status": "accepted_with_edits",
+      "accepted_fields": [
+        "avoid_when_candidates",
+        "contraindications_candidates",
+        "allowed_writer_use_candidate"
+      ],
+      "errors": []
+    }
+  ]
+}

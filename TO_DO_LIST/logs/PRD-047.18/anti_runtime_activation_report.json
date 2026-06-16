@@ -1,0 +1,10 @@
+{
+  "schema_version": "mechanism_metadata_review_no_runtime_activation_v1",
+  "prd_id": "PRD-047.18",
+  "status": "passed",
+  "runtime_token_hits": [],
+  "notes": [
+    "PRD-047.18 creates offline review workflow only.",
+    "Curated overlay preview is not wired into live runtime files."
+  ]
+}

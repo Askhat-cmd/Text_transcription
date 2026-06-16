@@ -1,0 +1,20 @@
+{
+  "schema_version": "mechanism_metadata_curation_status_report_v1",
+  "prd_id": "PRD-047.18",
+  "source_prd": "PRD-047.17",
+  "created_at": "2026-06-16T04:50:16.094792+00:00",
+  "queue_count": 80,
+  "decision_count": 80,
+  "review_status_counts": {
+    "pending": 80
+  },
+  "accepted_item_count": 0,
+  "accepted_field_count": 0,
+  "validation_status": "passed_with_no_accepted_fields",
+  "fixture_only": false,
+  "live_apply_allowed": false,
+  "notes": [
+    "Accepted decisions remain curated overlay preview only.",
+    "No live metadata mutation or Chroma reindex is performed in PRD-047.18."
+  ]
+}

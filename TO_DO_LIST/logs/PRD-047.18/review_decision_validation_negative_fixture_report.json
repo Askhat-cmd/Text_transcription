@@ -1,0 +1,28 @@
+{
+  "schema_version": "mechanism_metadata_review_validation_report_v1",
+  "prd_id": "PRD-047.18",
+  "status": "failed",
+  "decision_count": 1,
+  "accepted_item_count": 1,
+  "accepted_field_count": 1,
+  "errors": [
+    "accepted_practice_requires_contraindications_decision",
+    "accepted_practice_requires_avoid_when_decision",
+    "high_risk_practice_missing_accepted_contraindications"
+  ],
+  "warnings": [],
+  "decision_reports": [
+    {
+      "candidate_id": "29b088ae-d536-4b4f-89a6-9f8e3a5da527",
+      "review_status": "accepted",
+      "accepted_fields": [
+        "allowed_writer_use_candidate"
+      ],
+      "errors": [
+        "accepted_practice_requires_contraindications_decision",
+        "accepted_practice_requires_avoid_when_decision",
+        "high_risk_practice_missing_accepted_contraindications"
+      ]
+    }
+  ]
+}

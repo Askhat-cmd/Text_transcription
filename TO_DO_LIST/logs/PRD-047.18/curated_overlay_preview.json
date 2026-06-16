@@ -1,0 +1,76 @@
+{
+  "schema_version": "mechanism_metadata_curated_overlay_preview_v1",
+  "prd_id": "PRD-047.18",
+  "source_prd": "PRD-047.17",
+  "source_candidate_file": "TO_DO_LIST/logs/PRD-047.17/enrichment_candidates_deterministic.json",
+  "decisions_file": "TO_DO_LIST/logs/PRD-047.18/review_decisions_fixture.json",
+  "created_at": "2026-06-16T04:50:16.221678+00:00",
+  "fixture_only": true,
+  "live_apply_allowed": false,
+  "safe_to_apply_to_live_metadata": false,
+  "chroma_reindex_required_before_runtime_use": true,
+  "items": [
+    {
+      "candidate_id": "03b71eb2-d88f-49fc-9459-0590d0f57a10",
+      "chunk_type": "practice",
+      "risk_level": "medium",
+      "review_status": "accepted_with_edits",
+      "reviewer_role": "fixture_only",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "03b71eb2-d88f-49fc-9459-0590d0f57a10",
+        "heading_path": [
+          "ГЛАВА 5. Тени: то, что мы не видим в себе",
+          "Практикум к главе 5: семь практик работы с тенью",
+          "Практика 7: Письмо к тени"
+        ],
+        "content_preview": "**Цель:** завершить цикл — от обнаружения тени к первому контакту с ней. **Время:** 30–40 минут. Один раз как ритуал. Напиши письмо своей тени — как письмо человеку, которого давно не видел. Которого когда-то спрятал. Не потому что хотел — а потому что так было нужно тогда. В письме — три части:..."
+      },
+      "accepted_fields": {
+        "avoid_when_candidates": [
+          "Не предлагать без явного запроса и если пользователь заметно перегружен.",
+          "Не давать как замену прямому ответу на вопрос пользователя."
+        ],
+        "contraindications_candidates": [
+          "Острая дестабилизация или телесная перегрузка, где практика усилит давление.",
+          "Сильное истощение, когда даже короткое задание воспринимается как дополнительный долг."
+        ],
+        "allowed_writer_use_candidate": "Только как один ограниченный next step после ответа и при явном timing fit."
+      }
+    },
+    {
+      "candidate_id": "0dbf25dc-c955-49f9-b3b8-eab4e3bbeed2",
+      "chunk_type": "concept",
+      "risk_level": "low",
+      "review_status": "accepted",
+      "reviewer_role": "fixture_only",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "0dbf25dc-c955-49f9-b3b8-eab4e3bbeed2",
+        "heading_path": [
+          "ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя",
+          "Практикум к главе 3"
+        ],
+        "content_preview": "***"
+      },
+      "accepted_fields": {
+        "summary_candidate": "Раздел «ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя» даёт материал для компактного объяснения смысла в контексте пользователя. ***",
+        "allowed_writer_use_candidate": "Компактная парафраза без прямого цитирования и без утверждений о пользователе как о факте."
+      }
+    }
+  ],
+  "summary": {
+    "accepted_item_count": 2,
+    "accepted_field_count": 5,
+    "by_chunk_type": {
+      "concept": 1,
+      "practice": 1
+    },
+    "by_risk_level": {
+      "low": 1,
+      "medium": 1
+    }
+  }
+}

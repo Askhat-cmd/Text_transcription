@@ -1,0 +1,19 @@
+{
+  "schema_version": "prd_047_18_no_mutation_proof_v1",
+  "prd_id": "PRD-047.18",
+  "status": "passed",
+  "writer_runtime_changed": false,
+  "writer_prompt_changed": false,
+  "hybrid_retrieval_planner_changed": false,
+  "memory_retrieval_changed": false,
+  "dialogue_policy_changed": false,
+  "live_metadata_applied": false,
+  "safe_to_apply_to_live_metadata": false,
+  "curated_overlay_preview_only": true,
+  "chroma_reindexed": false,
+  "processed_blocks_overwritten": false,
+  "registry_mutated": false,
+  "provider_llm_calls_used": false,
+  "raw_provider_payload_committed": false,
+  "raw_full_source_text_committed": false
+}

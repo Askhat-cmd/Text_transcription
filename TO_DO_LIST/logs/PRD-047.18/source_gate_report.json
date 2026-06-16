@@ -1,0 +1,87 @@
+{
+  "schema_version": "prd_047_18_source_gate_report_v1",
+  "prd_id": "PRD-047.18",
+  "status": "passed",
+  "created_at": "2026-06-16T04:50:15.997573+00:00",
+  "git_status_short": [
+    "?? Bot_data_base/knowledge_governance/manual_review.py",
+    "?? Bot_data_base/tests/test_manual_review_no_runtime_activation.py",
+    "?? Bot_data_base/tests/test_mechanism_metadata_manual_review.py",
+    "?? Bot_data_base/tests/test_run_mechanism_metadata_review.py",
+    "?? Bot_data_base/tools/run_mechanism_metadata_review.py",
+    "?? TO_DO_LIST/PRD-047.18_Manual_Review_Curated_Candidate_Acceptance_Workflow_v1_RU.md",
+    "?? TO_DO_LIST/PRD-047.18_TASK_LIST.md",
+    "?? TO_DO_LIST/logs/PRD-047.18/",
+    "?? TO_DO_LIST/reports/PRD-047.18_IMPLEMENTATION_REPORT.md",
+    "?? TO_DO_LIST/reports/PRD-047.18_NEXT_PRD_RECOMMENDATION.md"
+  ],
+  "recent_commits": [
+    "d1c33d9 PRD-047.17 final metadata hash sync",
+    "227f412 PRD-047.17 post-push metadata sync",
+    "7d49c86 PRD-047.17 offline enrichment candidate layer",
+    "1b1a674 PRD-047.16 post-push metadata sync",
+    "f159c63 PRD-047.16 mechanism metadata foundation",
+    "cb7762e PRD-047.15-HF2-R2 ignore local admin screenshots",
+    "09bc32e PRD-047.15-HF2-R2 post-push metadata sync",
+    "3480666 PRD-047.15-HF2-R2 hybrid retrieval visibility sync",
+    "8001ade PRD-047.15-HF2-R1 post-push metadata sync",
+    "625a088 PRD-047.15-HF2-R1 hybrid retrieval planner",
+    "f2fefd6 PRD-047.15-HF1 final metadata hash sync",
+    "22ea6e1 PRD-047.15-HF1 post-push metadata sync",
+    "7041444 PRD-047.15-HF1 composer live calibration evidence",
+    "455aa24 PRD-047.15 final metadata hash sync",
+    "98ec305 PRD-047.15 post-push metadata sync",
+    "0b7eae7 PRD-047.15 contextual retrieval query composer",
+    "9eef46b PRD-047.14-HF2 final metadata hash sync",
+    "6b388d5 PRD-047.14-HF2 post-push metadata sync",
+    "8b51631 PRD-047.14-HF2 summary request routing repair",
+    "2695e0c PRD-047.14-HF1.2 metadata hash finalize"
+  ],
+  "required_commit_presence": {
+    "7d49c86": true,
+    "227f412": true,
+    "d1c33d9": true
+  },
+  "required_files": [
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.17/enrichment_candidates_deterministic.json",
+      "exists": true,
+      "sha256": "b9c00bb11986ed26a4499b0517f910285e9bb91d2e5237f59492fd97b37784d6"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.17/manual_review_pack.json",
+      "exists": true,
+      "sha256": "9c241352cb955876efc3ed14ce7e27891924d23f755477d99025a973690babdc"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.17/enrichment_quality_report.json",
+      "exists": true,
+      "sha256": "f371aae080280e9744471d762cc387724a67b72a90ff0fcdd8a14ecc6c46e6fd"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.17/kuznica_source_profile.json",
+      "exists": true,
+      "sha256": "f34573021818c40596fcc1b8be2310b25d8b4377acc3c2bb23fe0027be983d80"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.17/no_mutation_proof.json",
+      "exists": true,
+      "sha256": "22ea22e835d1229e273e4e7caad7cfaf84f0323ab2922d43702a96dfe062861f"
+    }
+  ],
+  "prereq_no_mutation": {
+    "status": "passed",
+    "enrichment_candidates_applied_to_live_metadata": false,
+    "chroma_reindexed": false,
+    "provider_llm_calls_used": false,
+    "raw_content_full_in_reports": false
+  },
+  "source": {
+    "source_id": "123__кузница_духа",
+    "source_doc": "Кузница Духа",
+    "registry_blocks_count": 247,
+    "filtered_blocks_count": 247,
+    "processed_json_path": "Bot_data_base/data/processed/books/123__кузница_духа_blocks.json"
+  },
+  "blockers": []
+}

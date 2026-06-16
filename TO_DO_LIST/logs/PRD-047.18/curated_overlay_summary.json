@@ -1,0 +1,18 @@
+{
+  "schema_version": "mechanism_metadata_curated_overlay_summary_v1",
+  "prd_id": "PRD-047.18",
+  "source_prd": "PRD-047.17",
+  "fixture_only": true,
+  "live_apply_allowed": false,
+  "accepted_item_count": 2,
+  "accepted_field_count": 5,
+  "by_chunk_type": {
+    "concept": 1,
+    "practice": 1
+  },
+  "by_risk_level": {
+    "low": 1,
+    "medium": 1
+  },
+  "decisions_file": "TO_DO_LIST/logs/PRD-047.18/review_decisions_fixture.json"
+}

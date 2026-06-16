@@ -1,5 +1,22 @@
 # Architecture Decisions
 
+## ADR-079 - Manual review decisions remain curated overlay previews, not live KB truth
+
+Status: accepted
+
+Date: 2026-06-16
+
+Context: `PRD-047.17` produced 80 real-source enrichment candidates over Kuznica, but the project still needed an explicit human-review workflow before any candidate field could be considered for future KB apply or retrieval/runtime experiments.
+
+Decision:
+- add `mechanism_metadata_review_decision_v1` as a separate review contract over PRD-047.17 candidates;
+- generate review queue, pending decision template, validation report, fixture-only decisions, and `mechanism_metadata_curated_overlay_preview_v1`;
+- allow accepted fields to exist only inside curated overlay preview artifacts with `live_apply_allowed=false` and `safe_to_apply_to_live_metadata=false`;
+- require a separate explicit apply/reindex PRD before curated decisions can affect live metadata, Chroma, retrieval, or Writer-visible behavior;
+- keep PRD-047.18 offline-only: no Writer/runtime mutation, no Chroma reindex, no DB apply, and no new UI/runtime authority.
+
+Consequences: the repository now has a governed acceptance workflow for enrichment candidates, but accepted fields remain review evidence only. Live KB truth, retrieval authority, and Writer behavior are unchanged until a later apply/preflight PRD explicitly authorizes them.
+
 ## ADR-078 - Offline enrichment candidates are manual-review inputs, not live KB truth
 
 Status: accepted

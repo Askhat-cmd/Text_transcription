@@ -1,6 +1,8 @@
 # Roadmap
 
 ## Done
+- PRD-047.18: completed manual review / curated candidate acceptance workflow over the PRD-047.17 enrichment set. Added `mechanism_metadata_review_decision_v1`, review queue over all `80` candidates, all-pending decision template, decision validator, fixture-only curated overlay preview, curation status report, anti-runtime-activation/no-mutation proof, read-only BotDB smoke, and encoding artifacts. No live metadata apply, Chroma reindex, Writer/runtime mutation, or new UI/runtime authority was introduced.
+
 - PRD-047.17: completed offline summary/lens/use-when enrichment over real Kuznica mechanism metadata foundation. Added `mechanism_metadata_enrichment_candidate_v1`, deterministic offline candidate runner, Kuznica source profile + chapter coverage reports, manual-review pack for `80` candidates, anti-runtime-activation proof, read-only BotDB smoke, and encoding/no-mutation artifacts. No Writer/runtime/Chroma/DB mutation was introduced; candidates remain manual-review inputs only and LLM mode is deferred/skipped unless explicitly confirmed.
 
 - PRD-047.16: completed mechanism-aware knowledge base metadata foundation / dry-run audit. Added `MechanismAwareChunkMetadata v1`, compatibility normalization from legacy governed blocks, read-only fixture + real-sample audit runner, schema/completeness/anti-heuristic/no-mutation artifacts, and targeted regression coverage. No Writer/runtime/Chroma/DB mutation was introduced; the audit passed on `54` checked chunks with only data-quality warnings.
@@ -63,6 +65,7 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
+- PRD-047.18 closed the manual-review acceptance workflow and proved fixture-only curated overlay generation without live apply; the next work can move to dry-run apply planning or later accepted-overlay preflight, still outside runtime mutation.
 - PRD-047.17 closed offline enrichment candidate generation and produced the manual-review inventory needed for the next acceptance workflow PRD; no runtime activation or KB mutation is pending from this cycle.
 - PRD-047.16 closed metadata foundation and audit readiness; next work moves from schema/read-only preparation to selective offline enrichment or targeted hotfix only if later evidence demands it.
 - PRD-047.15-HF2-R2 closed Web Admin / Web Trace / compact trace visibility parity for the hybrid retrieval planner and cleaned bounded admin-surface legacy noise.
@@ -75,8 +78,8 @@
 - No active PRD-047.12 blocker remains; unified dialogue policy v2 is accepted on the current developer-local runtime baseline.
 
 ## Next
-1. Start `PRD-047.18 - Manual Review / Curated Candidate Acceptance Workflow v1`.
-2. Keep any runtime activation or Chroma reindex in a separate PRD after curated candidate acceptance is reviewed.
+1. Start `PRD-047.19 - Curated Candidate Dry-Run Apply Plan / Preflight over Accepted Overlay v1`.
+2. Keep any runtime activation, live metadata apply, or Chroma reindex in a separate explicit governance PRD after accepted-overlay preflight.
 
 ## Later
 - Operational hardening for governed limited runtime.

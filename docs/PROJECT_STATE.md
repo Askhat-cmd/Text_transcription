@@ -1,6 +1,8 @@
 # Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
+PRD-047.18 completed manual review / curated candidate acceptance workflow with accepted `passed` implementation status. Added `mechanism_metadata_review_decision_v1`, `mechanism_metadata_review_queue_v1`, `mechanism_metadata_curated_overlay_preview_v1`, offline decision validation, fixture-only curated overlay preview, and a dedicated review runner over the `80` real PRD-047.17 candidates. The workflow now produces a governed review queue, all-pending decision template, validation report, curated overlay preview, curation status report, anti-runtime-activation proof, read-only BotDB smoke, and no-mutation/encoding artifacts. Real candidates still remain preview-only: `live_apply_allowed=false`, `safe_to_apply_to_live_metadata=false`, no Writer/runtime behavior changed, Chroma was not reindexed, and DB/live metadata were not mutated. Next recommended work is `PRD-047.19 - Curated Candidate Dry-Run Apply Plan / Preflight over Accepted Overlay v1`.
+
 PRD-047.17 completed offline enrichment candidate generation over the real Kuznica source with accepted `passed` status. Added `mechanism_metadata_enrichment_candidate_v1`, a deterministic offline enrichment runner over `123__???????_????`, source-profile and chapter-coverage reports, manual-review pack, anti-runtime-activation proof, and encoding/no-mutation artifacts. The run selected `80` real blocks out of `247` and produced `80` manual-review candidates across `practice`, `diagnostic_lens`, `source_fragment`, `mechanism`, `concept`, `case_example`, `safety`, and `style_voice`. Candidates are explicitly not applied to live metadata, Writer/runtime behavior is unchanged, Chroma was not reindexed, DB was not mutated, and LLM-candidate mode remains deferred/skipped behind explicit confirmation and safe configuration. Next recommended work is `PRD-047.18 - Manual Review / Curated Candidate Acceptance Workflow v1`.
 
 PRD-047.16 completed mechanism-aware knowledge base preparation / chunk metadata foundation with accepted `passed` implementation status and read-only audit evidence. Added `MechanismAwareChunkMetadata v1` in the existing `Bot_data_base/knowledge_governance` layer, a backward-compatible adapter from legacy governed blocks, and a dry-run audit runner over fixture plus real local BotDB blocks. The new metadata is explicitly semantic guidance only: Writer remains the sole author of user-facing text, runtime answer behavior is unchanged, and no new metadata was activated in the live Writer path. Chroma was not reindexed, DB schema was not mutated, and no new runtime path or LLM enrichment agent was added. Real-sample audit checked `54` chunks (`50` real + `4` fixture) and passed structurally while surfacing quality warnings for incomplete mechanism/practice metadata. Next recommended work is `PRD-047.18 - Manual Review / Curated Candidate Acceptance Workflow v1`.
@@ -79,7 +81,7 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 - Historical artifact encoding noise may be misread as current runtime corruption without normalization report.
 
 ## Next Planned PRD
-`PRD-047.17 - Offline Summary/Lens/Use-When Enrichment over Mechanism Metadata v1`
+`PRD-047.19 - Curated Candidate Dry-Run Apply Plan / Preflight over Accepted Overlay v1`
 
 ## HF2-R2 Runtime Visibility State
 Hybrid Retrieval Planner visibility is now synchronized across backend admin runtime, Web Admin Runtime, multiagent trace, and compact trace summary.

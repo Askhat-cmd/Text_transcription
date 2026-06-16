@@ -1,0 +1,500 @@
+{
+  "schema_version": "mechanism_metadata_review_decision_v1",
+  "prd_id": "PRD-047.18",
+  "source_prd": "PRD-047.17",
+  "created_at": "2026-06-16T04:50:16.183539+00:00",
+  "decision_count": 4,
+  "accepted_field_count": 5,
+  "fixture_only": true,
+  "decisions": [
+    {
+      "schema_version": "mechanism_metadata_review_decision_v1",
+      "candidate_id": "0dbf25dc-c955-49f9-b3b8-eab4e3bbeed2",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "0dbf25dc-c955-49f9-b3b8-eab4e3bbeed2",
+        "heading_path": [
+          "ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя",
+          "Практикум к главе 3"
+        ],
+        "content_preview": "***"
+      },
+      "review_status": "accepted",
+      "reviewer_role": "fixture_only",
+      "reviewer_id": "fixture_accept_low_risk",
+      "reviewed_at": "2026-06-16T04:50:16.182836+00:00",
+      "safe_to_apply_to_live_metadata": false,
+      "review_notes": "",
+      "field_decisions": {
+        "summary_candidate": {
+          "decision": "accept",
+          "value": "Раздел «ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя» даёт материал для компактного объяснения смысла в контексте пользователя. ***",
+          "reason": "Low-risk concept summary accepted as compact derived lens.",
+          "candidate_value_preview": "Раздел «ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя» даёт материал для компактного объяснения смысла в контексте пользователя. ***"
+        },
+        "core_thesis_candidate": {
+          "decision": "pending",
+          "value": "",
+          "reason": "",
+          "candidate_value_preview": "***"
+        },
+        "mechanism_hints_candidates": {
+          "decision": "pending",
+          "value": [],
+          "reason": "",
+          "candidate_value_preview": []
+        },
+        "use_when_candidates": {
+          "decision": "pending",
+          "value": [],
+          "reason": "",
+          "candidate_value_preview": [
+            "Когда пользователь просит объяснение, обзор или язык для понимания своего состояния.",
+            "Когда нужен компактный смысловой ориентир без прямого цитирования источника."
+          ]
+        },
+        "avoid_when_candidates": {
+          "decision": "pending",
+          "value": [],
+          "reason": "",
+          "candidate_value_preview": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у."
+          ]
+        },
+        "contraindications_candidates": {
+          "decision": "pending",
+          "value": [],
+          "reason": "",
+          "candidate_value_preview": []
+        },
+        "safe_user_translation_candidate": {
+          "decision": "pending",
+          "value": "",
+          "reason": "",
+          "candidate_value_preview": ""
+        },
+        "risk_if_exposed_candidate": {
+          "decision": "pending",
+          "value": "",
+          "reason": "",
+          "candidate_value_preview": ""
+        },
+        "allowed_writer_use_candidate": {
+          "decision": "accept",
+          "value": "Компактная парафраза без прямого цитирования и без утверждений о пользователе как о факте.",
+          "reason": "Writer-use wording remains advisory and compact.",
+          "candidate_value_preview": "Компактная парафраза без прямого цитирования и без утверждений о пользователе как о факте."
+        },
+        "recommended_moves_candidates": {
+          "decision": "pending",
+          "value": [],
+          "reason": "",
+          "candidate_value_preview": [
+            "explain_compactly",
+            "ground_in_user_context"
+          ]
+        },
+        "forbidden_moves_candidates": {
+          "decision": "pending",
+          "value": [],
+          "reason": "",
+          "candidate_value_preview": []
+        },
+        "depth_level_suggestion": {
+          "decision": "pending",
+          "value": "",
+          "reason": "",
+          "candidate_value_preview": 1
+        },
+        "quote_policy_suggestion": {
+          "decision": "pending",
+          "value": "",
+          "reason": "",
+          "candidate_value_preview": "paraphrase_only"
+        },
+        "chunk_type_review_suggestion": {
+          "decision": "pending",
+          "value": "",
+          "reason": "",
+          "candidate_value_preview": null
+        }
+      }
+    },
+    {
+      "schema_version": "mechanism_metadata_review_decision_v1",
+      "candidate_id": "15b76643-6a4a-473f-8f9a-754f608bdc97",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "15b76643-6a4a-473f-8f9a-754f608bdc97",
+        "heading_path": [
+          "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "5. Зачем программе нужно страдание",
+          "Практикум к главе 1: семь точек входа"
+        ],
+        "content_preview": "Теория без практики — это просто информация. Ты можешь понять всё написанное выше, согласиться, кивнуть — и ничего не изменится. Потому что программа работает не на уровне понимания. Она работает на уровне **опыта**. То, что ниже — не упражнения для галочки. Это **приглашения к исследованию**. Ты..."
+      },
+      "review_status": "rejected",
+      "reviewer_role": "fixture_only",
+      "reviewer_id": "fixture_reject_lens",
+      "reviewed_at": "2026-06-16T04:50:16.183047+00:00",
+      "safe_to_apply_to_live_metadata": false,
+      "review_notes": "",
+      "field_decisions": {
+        "summary_candidate": {
+          "decision": "pending",
+          "value": "",
+          "reason": "",
+          "candidate_value_preview": "Фрагмент из раздела «ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот» описывает повторяющийся внутренний паттерн, который полезно переводить в мягкую гипотезу, а не..."
+        },
+        "core_thesis_candidate": {
+          "decision": "pending",
+          "value": "",
+          "reason": "",
+          "candidate_value_preview": "Теория без практики — это просто информация."
+        },
+        "mechanism_hints_candidates": {
+          "decision": "pending",
+          "value": [],
+          "reason": "",
+          "candidate_value_preview": []
+        },
+        "use_when_candidates": {
+          "decision": "pending",
+          "value": [],
+          "reason": "",
+          "candidate_value_preview": [
+            "Когда пользователь просит понять, почему с ним это происходит.",
+            "Когда повторяется один и тот же паттерн контроля, стыда, избегания или внутреннего давления."
+          ]
+        },
+        "avoid_when_candidates": {
+          "decision": "pending",
+          "value": [],
+          "reason": "",
+          "candidate_value_preview": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не подавать как факт о личности пользователя или как скрытый диагноз.",
+            "Не использовать, если пользователь просит только короткую опору без анализа."
+          ]
+        },
+        "contraindications_candidates": {
+          "decision": "pending",
+          "value": [],
+          "reason": "",
+          "candidate_value_preview": []
+        },
+        "safe_user_translation_candidate": {
+          "decision": "reject",
+          "value": "",
+          "reason": "Fixture rejects this translation as too strong for safe user phrasing.",
+          "candidate_value_preview": "Это лучше переводить как мягкую гипотезу о способе защиты, а не как утверждение о том, кто человек."
+        },
+        "risk_if_exposed_candidate": {
+          "decision": "pending",
+          "value": "",
+          "reason": "",
+          "candidate_value_preview": "В сыром виде может прозвучать как диагноз, обвинение или навешивание роли."
+        },
+        "allowed_writer_use_candidate": {
+          "decision": "pending",
+          "value": "",
+          "reason": "",
+          "candidate_value_preview": "Только мягкая парафраза как объяснительная гипотеза, связанная с контекстом пользователя."
+        },
+        "recommended_moves_candidates": {
+          "decision": "pending",
+          "value": [],
+          "reason": "",
+          "candidate_value_preview": [
+            "keep_as_internal_lens",
+            "translate_without_diagnosis"
+          ]
+        },
+        "forbidden_moves_candidates": {
+          "decision": "pending",
+          "value": [],
+          "reason": "",
+          "candidate_value_preview": [
+            "expose_raw_lens",
+            "present_as_fact_about_user"
+          ]
+        },
+        "depth_level_suggestion": {
+          "decision": "pending",
+          "value": "",
+          "reason": "",
+          "candidate_value_preview": 2
+        },
+        "quote_policy_suggestion": {
+          "decision": "pending",
+          "value": "",
+          "reason": "",
+          "candidate_value_preview": "internal_only"
+        },
+        "chunk_type_review_suggestion": {
+          "decision": "pending",
+          "value": "",
+          "reason": "",
+          "candidate_value_preview": null
+        }
+      }
+    },
+    {
+      "schema_version": "mechanism_metadata_review_decision_v1",
+      "candidate_id": "29b088ae-d536-4b4f-89a6-9f8e3a5da527",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "29b088ae-d536-4b4f-89a6-9f8e3a5da527",
+        "heading_path": [
+          "ГЛАВА 7. Страх: союзник, которого ты превратил во врага",
+          "3. **Что страх говорит тебе «нельзя» — что на самом деле «важно»?**",
+          "Практика 2: Расшифровка страха в моменте"
+        ],
+        "content_preview": "**Цель:** научиться слышать страх как информацию, а не как команду. **Время:** 3–5 минут. Использовать ситуативно — когда страх появился. Когда замечаешь страх — остановись. Не борись, не убегай. Задай четыре вопроса:"
+      },
+      "review_status": "deferred",
+      "reviewer_role": "fixture_only",
+      "reviewer_id": "fixture_defer_practice",
+      "reviewed_at": "2026-06-16T04:50:16.183311+00:00",
+      "safe_to_apply_to_live_metadata": false,
+      "review_notes": "",
+      "field_decisions": {
+        "summary_candidate": {
+          "decision": "defer",
+          "value": "",
+          "reason": "High-risk practice stays deferred until deeper human review of contraindications.",
+          "candidate_value_preview": "Практика из раздела «ГЛАВА 7. Страх: союзник, которого ты превратил во врага» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе."
+        },
+        "core_thesis_candidate": {
+          "decision": "pending",
+          "value": "",
+          "reason": "",
+          "candidate_value_preview": "**Цель:** научиться слышать страх как информацию, а не как команду."
+        },
+        "mechanism_hints_candidates": {
+          "decision": "pending",
+          "value": [],
+          "reason": "",
+          "candidate_value_preview": []
+        },
+        "use_when_candidates": {
+          "decision": "pending",
+          "value": [],
+          "reason": "",
+          "candidate_value_preview": [
+            "Когда пользователь явно просит практику или следующий шаг.",
+            "Когда у пользователя есть хотя бы минимальный ресурс на короткое действие.",
+            "Когда нужен мягкий способ вернуть опору телу без глубокого анализа."
+          ]
+        },
+        "avoid_when_candidates": {
+          "decision": "pending",
+          "value": [],
+          "reason": "",
+          "candidate_value_preview": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не предлагать без явного запроса, если пользователь в острой дестабилизации или без ресурса.",
+            "Не давать несколько практик подряд вместо ответа на вопрос.",
+            "Не открывать глубинную интерпретацию раньше, чем появилась опора и согласие пользователя."
+          ]
+        },
+        "contraindications_candidates": {
+          "decision": "pending",
+          "value": [],
+          "reason": "",
+          "candidate_value_preview": [
+            "Острая дестабилизация, когда пользователю трудно удерживать внимание даже на коротком действии.",
+            "Состояние сильного истощения, где дополнительная практика может переживаться как давление.",
+            "Если усиливается страх или телесная перегрузка, лучше сначала сузить шаг до grounding/refer-out."
+          ]
+        },
+        "safe_user_translation_candidate": {
+          "decision": "pending",
+          "value": "",
+          "reason": "",
+          "candidate_value_preview": ""
+        },
+        "risk_if_exposed_candidate": {
+          "decision": "pending",
+          "value": "",
+          "reason": "",
+          "candidate_value_preview": "Без проверки времени и ресурса практика может ощущаться как давление или ещё одна задача."
+        },
+        "allowed_writer_use_candidate": {
+          "decision": "pending",
+          "value": "",
+          "reason": "",
+          "candidate_value_preview": "Только как один ограниченный next step после ответа и при явном timing fit."
+        },
+        "recommended_moves_candidates": {
+          "decision": "pending",
+          "value": [],
+          "reason": "",
+          "candidate_value_preview": [
+            "offer_only_if_requested_or_timed",
+            "keep_one_practice_max"
+          ]
+        },
+        "forbidden_moves_candidates": {
+          "decision": "pending",
+          "value": [],
+          "reason": "",
+          "candidate_value_preview": [
+            "drop_deep_practice_without_timing",
+            "stack_multiple_practices"
+          ]
+        },
+        "depth_level_suggestion": {
+          "decision": "pending",
+          "value": "",
+          "reason": "",
+          "candidate_value_preview": 2
+        },
+        "quote_policy_suggestion": {
+          "decision": "pending",
+          "value": "",
+          "reason": "",
+          "candidate_value_preview": "paraphrase_only"
+        },
+        "chunk_type_review_suggestion": {
+          "decision": "pending",
+          "value": "",
+          "reason": "",
+          "candidate_value_preview": null
+        }
+      }
+    },
+    {
+      "schema_version": "mechanism_metadata_review_decision_v1",
+      "candidate_id": "03b71eb2-d88f-49fc-9459-0590d0f57a10",
+      "source_ref": {
+        "source_id": "123__кузница_духа",
+        "source_doc": "Кузница Духа",
+        "block_id": "03b71eb2-d88f-49fc-9459-0590d0f57a10",
+        "heading_path": [
+          "ГЛАВА 5. Тени: то, что мы не видим в себе",
+          "Практикум к главе 5: семь практик работы с тенью",
+          "Практика 7: Письмо к тени"
+        ],
+        "content_preview": "**Цель:** завершить цикл — от обнаружения тени к первому контакту с ней. **Время:** 30–40 минут. Один раз как ритуал. Напиши письмо своей тени — как письмо человеку, которого давно не видел. Которого когда-то спрятал. Не потому что хотел — а потому что так было нужно тогда. В письме — три части:..."
+      },
+      "review_status": "accepted_with_edits",
+      "reviewer_role": "fixture_only",
+      "reviewer_id": "fixture_accept_practice",
+      "reviewed_at": "2026-06-16T04:50:16.183532+00:00",
+      "safe_to_apply_to_live_metadata": false,
+      "review_notes": "",
+      "field_decisions": {
+        "summary_candidate": {
+          "decision": "pending",
+          "value": "",
+          "reason": "",
+          "candidate_value_preview": "Практика из раздела «ГЛАВА 5. Тени: то, что мы не видим в себе» подходит как бережный следующий шаг только при явном запросе и достаточном ресурсе."
+        },
+        "core_thesis_candidate": {
+          "decision": "pending",
+          "value": "",
+          "reason": "",
+          "candidate_value_preview": "**Цель:** завершить цикл — от обнаружения тени к первому контакту с ней."
+        },
+        "mechanism_hints_candidates": {
+          "decision": "pending",
+          "value": [],
+          "reason": "",
+          "candidate_value_preview": []
+        },
+        "use_when_candidates": {
+          "decision": "pending",
+          "value": [],
+          "reason": "",
+          "candidate_value_preview": [
+            "Когда пользователь явно просит практику или следующий шаг.",
+            "Когда у пользователя есть хотя бы минимальный ресурс на короткое действие."
+          ]
+        },
+        "avoid_when_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Не предлагать без явного запроса и если пользователь заметно перегружен.",
+            "Не давать как замену прямому ответу на вопрос пользователя."
+          ],
+          "reason": "Avoid-when was edited to be stricter and clearer.",
+          "candidate_value_preview": [
+            "Не использовать как deterministic runtime routing или как готовую реплику Writer'у.",
+            "Не предлагать без явного запроса, если пользователь в острой дестабилизации или без ресурса.",
+            "Не давать несколько практик подряд вместо ответа на вопрос."
+          ]
+        },
+        "contraindications_candidates": {
+          "decision": "accept_with_edit",
+          "value": [
+            "Острая дестабилизация или телесная перегрузка, где практика усилит давление.",
+            "Сильное истощение, когда даже короткое задание воспринимается как дополнительный долг."
+          ],
+          "reason": "Fixture adds explicit contraindications before any preview acceptance.",
+          "candidate_value_preview": [
+            "Острая дестабилизация, когда пользователю трудно удерживать внимание даже на коротком действии.",
+            "Состояние сильного истощения, где дополнительная практика может переживаться как давление."
+          ]
+        },
+        "safe_user_translation_candidate": {
+          "decision": "pending",
+          "value": "",
+          "reason": "",
+          "candidate_value_preview": ""
+        },
+        "risk_if_exposed_candidate": {
+          "decision": "pending",
+          "value": "",
+          "reason": "",
+          "candidate_value_preview": "Без проверки времени и ресурса практика может ощущаться как давление или ещё одна задача."
+        },
+        "allowed_writer_use_candidate": {
+          "decision": "accept",
+          "value": "Только как один ограниченный next step после ответа и при явном timing fit.",
+          "reason": "Allowed-writer-use stays constrained and timing-bound.",
+          "candidate_value_preview": "Только как один ограниченный next step после ответа и при явном timing fit."
+        },
+        "recommended_moves_candidates": {
+          "decision": "pending",
+          "value": [],
+          "reason": "",
+          "candidate_value_preview": [
+            "offer_only_if_requested_or_timed",
+            "keep_one_practice_max"
+          ]
+        },
+        "forbidden_moves_candidates": {
+          "decision": "pending",
+          "value": [],
+          "reason": "",
+          "candidate_value_preview": [
+            "drop_deep_practice_without_timing",
+            "stack_multiple_practices"
+          ]
+        },
+        "depth_level_suggestion": {
+          "decision": "pending",
+          "value": "",
+          "reason": "",
+          "candidate_value_preview": 2
+        },
+        "quote_policy_suggestion": {
+          "decision": "pending",
+          "value": "",
+          "reason": "",
+          "candidate_value_preview": "paraphrase_only"
+        },
+        "chunk_type_review_suggestion": {
+          "decision": "pending",
+          "value": "",
+          "reason": "",
+          "candidate_value_preview": null
+        }
+      }
+    }
+  ]
+}

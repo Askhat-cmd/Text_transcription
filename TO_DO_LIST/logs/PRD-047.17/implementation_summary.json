@@ -23,5 +23,6 @@
     "8": true,
     "10": true
   },
-  "provider_llm_calls_used": false
+  "provider_llm_calls_used": false,
+  "main_implementation_commit": "7d49c86"
 }

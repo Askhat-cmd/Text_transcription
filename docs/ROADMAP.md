@@ -1,6 +1,8 @@
 # Roadmap
 
 ## Done
+- PRD-047.22: completed structured Writer KB payload delivery as a bounded Writer-input improvement. Added default-off `WRITER_KB_PAYLOAD_*` config, isolated `writer_kb_payload.py`, sentence/paragraph-aware excerpting, safe legacy fallback, orchestrator/debug/API/Web Trace payload evidence, neurostalking regression coverage, bounded behavior/no-mutation artifacts, and docs sync without changing retrieval ranking, executed retrieval query, semantic-hit selection, BotDB registry, processed blocks, live metadata, or Chroma.
+
 - PRD-047.21: completed overlay-aware retrieval shadow integration as a strict trace-only runtime surface. Added default-off `OVERLAY_SHADOW_TRACE_*` config, isolated `overlay_shadow_trace.py`, orchestrator/debug/API integration, Web Trace visibility, trace-sample/no-behavior/authority/no-mutation artifacts, targeted multiagent/API tests, PRD-047.20 regression coverage, and Web widget test/build verification. Overlay remains non-live and non-authoritative: no WriterContract/prompt injection, no retrieval query mutation, no semantic-hit mutation, no final-answer influence, and no BotDB/Chroma mutation.
 
 - PRD-047.20: completed the first real curated batch over the PRD-047.18 review queue. Added offline batch-1 selection (`16` real candidates), evaluation-only decisions pack (`12` accepted overlay items / `139` accepted fields), accepted-overlay preview, PRD-047.19-based dry-run apply/preflight wrapper with honest blockers (`human_final_approval_missing`, `evaluation_only_overlay`), retrieval eval dataset/results, anti-runtime-activation proof, read-only BotDB smoke, and no-mutation/encoding artifacts. No runtime/Writer/Admin/Web/registry/processed-block/Chroma mutation was introduced.
@@ -71,6 +73,7 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
+- PRD-047.22 closed the Writer KB delivery bottleneck between selected retrieval hits and Writer prompt grounding. The next step can evaluate live allowlisted evidence now that Writer receives structured chunk cards instead of depending on blind snippet truncation.
 - PRD-047.21 closed trace-only overlay visibility in runtime/debug/API/Web Trace without granting runtime authority. The next step can collect allowlisted live evidence and owner review before any future planner or retrieval-authority PRD.
 - PRD-047.19 closed dry-run apply planning and proved the current overlay is still fixture-only; the next step must produce real human-reviewed accepted overlay decisions before any apply/reindex planning can move past expected blockers.
 - PRD-047.18 closed the manual-review acceptance workflow and proved fixture-only curated overlay generation without live apply; the next work can move to dry-run apply planning or later accepted-overlay preflight, still outside runtime mutation.
@@ -86,7 +89,7 @@
 - No active PRD-047.12 blocker remains; unified dialogue policy v2 is accepted on the current developer-local runtime baseline.
 
 ## Next
-1. Start `PRD-047.22 - Overlay Shadow Allowlisted Live Evidence / Trace Review v1`.
+1. Start `PRD-047.23 - Overlay + Writer KB Payload Live Evidence / Evaluation v1`.
 2. Keep any live metadata apply, retrieval-authority mutation, runtime activation, or Chroma reindex in a separate explicit governance PRD after allowlisted live evidence and human-final approval are both in place.
 
 ## Later

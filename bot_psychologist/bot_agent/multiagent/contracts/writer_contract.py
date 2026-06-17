@@ -278,6 +278,26 @@ class WriterContract:
             for item in semantic_source[:semantic_hits_max]
             if str(item or "").strip()
         ]
+        writer_kb_payload = (
+            dict(writer_context_package.get("writer_kb_payload", {}))
+            if isinstance(writer_context_package.get("writer_kb_payload"), dict)
+            else {}
+        )
+        writer_kb_payload_trace = (
+            dict(writer_context_package.get("writer_kb_payload_trace", {}))
+            if isinstance(writer_context_package.get("writer_kb_payload_trace"), dict)
+            else {}
+        )
+        writer_kb_payload_future_graduation_notes = (
+            dict(writer_context_package.get("writer_kb_payload_future_graduation_notes", {}))
+            if isinstance(writer_context_package.get("writer_kb_payload_future_graduation_notes"), dict)
+            else {}
+        )
+        writer_kb_payload_enabled = bool(writer_context_package.get("writer_kb_payload_enabled", False))
+        writer_kb_payload_failed = bool(writer_context_package.get("writer_kb_payload_failed", False))
+        writer_kb_payload_failure_reason = str(
+            writer_context_package.get("writer_kb_payload_failure_reason", "") or ""
+        )
         profile_for_writer = (
             dict(writer_context_package.get("profile_for_writer", {}))
             if isinstance(writer_context_package.get("profile_for_writer"), dict)
@@ -431,6 +451,16 @@ class WriterContract:
                 "max_hits": semantic_hits_max,
                 "max_chars_per_hit": semantic_hit_chars,
             },
+            "writer_kb_payload_enabled": writer_kb_payload_enabled,
+            "writer_kb_payload_failed": writer_kb_payload_failed,
+            "writer_kb_payload_failure_reason": writer_kb_payload_failure_reason,
+            "writer_kb_payload": writer_kb_payload,
+            "writer_kb_payload_trace": writer_kb_payload_trace,
+            "writer_kb_payload_trace_version": str(
+                writer_kb_payload_trace.get("schema_version", "writer_kb_payload_trace_v1")
+                or "writer_kb_payload_trace_v1"
+            ),
+            "writer_kb_payload_future_graduation_notes": writer_kb_payload_future_graduation_notes,
             "context_assembly_trace": context_assembly_trace,
             "context_package_summary": {
                 "present": self.context_package is not None,

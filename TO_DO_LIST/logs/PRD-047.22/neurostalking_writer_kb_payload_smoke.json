@@ -1,0 +1,42 @@
+{
+  "schema_version": "prd_047_22_neurostalking_writer_kb_payload_smoke_v1",
+  "prd_id": "PRD-047.22",
+  "query": "что такое Нейросталкинг?",
+  "status": "passed",
+  "knowledge_answer_concept": "нейросталкинг",
+  "rag_for_writer_count": 1,
+  "writer_kb_payload_chunk_count": 1,
+  "content_excerpt": "**Нейросталкинг** — это наблюдение за триггерами, автоматическими реакциями и повторяющимися внутренними паттернами.",
+  "content_truncated": true,
+  "truncation_strategy": "paragraph_then_sentence_boundary",
+  "truncated_mid_sentence": false,
+  "mid_sentence_cut_count": 0,
+  "future_graduation_notes": {
+    "schema_version": "writer_kb_payload_future_graduation_notes_v1",
+    "prd_id": "PRD-047.22",
+    "payload_version": "writer_kb_payload_v1",
+    "payload_source": "legacy_selected_hit",
+    "structured_payload_used": true,
+    "legacy_semantic_hits_used": false,
+    "legacy_fallback_reason": "",
+    "accepted_overlay_used": false,
+    "overlay_item_id": "",
+    "overlay_chunk_type": "concept",
+    "overlay_allowed_use": "direct_to_writer",
+    "overlay_quote_policy": "paraphrase_only",
+    "original_char_count": 228,
+    "sent_char_count": 116,
+    "content_truncated": true,
+    "truncation_strategy": "paragraph_then_sentence_boundary",
+    "truncation_reason": "excerpt_budget",
+    "chunk_type": "concept",
+    "allowed_use": [
+      "direct_to_writer"
+    ],
+    "quote_policy": "paraphrase_only",
+    "writer_instruction_present": true,
+    "writer_received_structured_payload": true,
+    "trace_mid_sentence_cut_count": 0
+  },
+  "regression_bad_suffix_present": false
+}

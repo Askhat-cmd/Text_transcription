@@ -1,0 +1,312 @@
+{
+  "schema_version": "prd_047_22_writer_kb_payload_samples_v1",
+  "prd_id": "PRD-047.22",
+  "generated_at": "2026-06-17T04:24:53.228903+00:00",
+  "samples": [
+    {
+      "sample_id": "known_concept_neurostalking",
+      "query": "что такое Нейросталкинг?",
+      "payload": {
+        "schema_version": "writer_kb_payload_v1",
+        "enabled": true,
+        "chunk_count": 1,
+        "total_sent_char_count": 116,
+        "chunks": [
+          {
+            "chunk_id": "kb-neuro-1",
+            "source_id": "123__kuznica_duha",
+            "source_doc": "Кузница Духа",
+            "chunk_type": "concept",
+            "core_thesis": "**Нейросталкинг** — это наблюдение за триггерами, автоматическими реакциями и повторяющимися внутренними паттернами.",
+            "content_excerpt": "**Нейросталкинг** — это наблюдение за триггерами, автоматическими реакциями и повторяющимися внутренними паттернами.",
+            "mechanism_hints": [],
+            "user_markers_examples": [],
+            "use_when": [],
+            "avoid_when": [],
+            "allowed_use": [
+              "direct_to_writer"
+            ],
+            "quote_policy": "paraphrase_only",
+            "writer_instruction": "Use as grounding. Paraphrase. Do not dump raw quote.",
+            "recommended_moves": [],
+            "forbidden_moves": [],
+            "original_char_count": 228,
+            "sent_char_count": 116,
+            "content_truncated": true,
+            "truncation_strategy": "paragraph_then_sentence_boundary",
+            "truncation_reason": "excerpt_budget",
+            "truncated_mid_sentence": false,
+            "overlay_metadata_used": false
+          }
+        ],
+        "warnings": [],
+        "blockers": []
+      },
+      "writer_kb_payload_trace": {
+        "schema_version": "writer_kb_payload_trace_v1",
+        "enabled": true,
+        "input_rag_for_writer_count": 1,
+        "payload_chunk_count": 1,
+        "total_original_char_count": 228,
+        "total_sent_char_count": 116,
+        "truncated_chunk_count": 1,
+        "mid_sentence_cut_count": 0,
+        "overlay_metadata_used_count": 0,
+        "warnings": [],
+        "blockers": []
+      },
+      "payload_chunk_count": 1,
+      "original_char_count": 228,
+      "sent_char_count": 116,
+      "content_truncated": true,
+      "truncation_strategy": "paragraph_then_sentence_boundary",
+      "truncated_mid_sentence": false,
+      "overlay_metadata_used": false,
+      "writer_prompt_preview": "version=writer_kb_payload_v1\nchunk_count=1\ntotal_sent_char_count=116\n\n[KB-1]\nchunk_id=kb-neuro-1\nsource_doc=Кузница Духа\nchunk_type=concept\nquote_policy=paraphrase_only\nallowed_use=direct_to_writer\ncore_thesis=**Нейросталкинг** — это наблюдение за триггерами, автоматическими реакциями и повторяющимися внутренними паттернами.\ncontent_excerpt:\n**Нейросталкинг** — это наблюдение за триггерами, автоматическими реакциями и повторяющимися внутренними паттернами.\nwriter_instruction=Use as grounding. Paraphrase. Do not dump raw quote.\ncontent_truncated=true\ntruncation_strategy=paragraph_then_sentence_boundary"
+    },
+    {
+      "sample_id": "mechanism_control_as_safety",
+      "query": "почему меня так тянет всё контролировать?",
+      "payload": {
+        "schema_version": "writer_kb_payload_v1",
+        "enabled": true,
+        "chunk_count": 1,
+        "total_sent_char_count": 125,
+        "chunks": [
+          {
+            "chunk_id": "kb-mech-1",
+            "source_id": "123__kuznica_duha",
+            "source_doc": "Кузница Духа",
+            "chunk_type": "mechanism",
+            "core_thesis": "Контроль как безопасность — это механизм, при котором человек цепляется за контроль не ради порядка, а ради снижения тревоги.",
+            "content_excerpt": "Контроль как безопасность — это механизм, при котором человек цепляется за контроль не ради порядка, а ради снижения тревоги.",
+            "mechanism_hints": [],
+            "user_markers_examples": [],
+            "use_when": [],
+            "avoid_when": [],
+            "allowed_use": [
+              "direct_to_writer"
+            ],
+            "quote_policy": "paraphrase_only",
+            "writer_instruction": "Use as grounding. Paraphrase. Do not dump raw quote.",
+            "recommended_moves": [],
+            "forbidden_moves": [],
+            "original_char_count": 209,
+            "sent_char_count": 125,
+            "content_truncated": true,
+            "truncation_strategy": "paragraph_then_sentence_boundary",
+            "truncation_reason": "excerpt_budget",
+            "truncated_mid_sentence": false,
+            "overlay_metadata_used": false
+          }
+        ],
+        "warnings": [],
+        "blockers": []
+      },
+      "writer_kb_payload_trace": {
+        "schema_version": "writer_kb_payload_trace_v1",
+        "enabled": true,
+        "input_rag_for_writer_count": 1,
+        "payload_chunk_count": 1,
+        "total_original_char_count": 209,
+        "total_sent_char_count": 125,
+        "truncated_chunk_count": 1,
+        "mid_sentence_cut_count": 0,
+        "overlay_metadata_used_count": 0,
+        "warnings": [],
+        "blockers": []
+      },
+      "payload_chunk_count": 1,
+      "original_char_count": 209,
+      "sent_char_count": 125,
+      "content_truncated": true,
+      "truncation_strategy": "paragraph_then_sentence_boundary",
+      "truncated_mid_sentence": false,
+      "overlay_metadata_used": false,
+      "writer_prompt_preview": "version=writer_kb_payload_v1\nchunk_count=1\ntotal_sent_char_count=125\n\n[KB-1]\nchunk_id=kb-mech-1\nsource_doc=Кузница Духа\nchunk_type=mechanism\nquote_policy=paraphrase_only\nallowed_use=direct_to_writer\ncore_thesis=Контроль как безопасность — это механизм, при котором человек цепляется за контроль не ради порядка, а ради снижения тревоги.\ncontent_excerpt:\nКонтроль как безопасность — это механизм, при котором человек цепляется за контроль не ради порядка, а ради снижения тревоги.\nwriter_instruction=Use as grounding. Paraphrase. Do not dump raw quote.\ncontent_truncated=true\ntruncation_strategy=paragraph_then_sentence_boundary"
+    },
+    {
+      "sample_id": "diagnostic_lens_shame_visibility",
+      "query": "почему мне стыдно когда меня видят?",
+      "payload": {
+        "schema_version": "writer_kb_payload_v1",
+        "enabled": true,
+        "chunk_count": 1,
+        "total_sent_char_count": 110,
+        "chunks": [
+          {
+            "chunk_id": "kb-lens-1",
+            "source_id": "123__kuznica_duha",
+            "source_doc": "Кузница Духа",
+            "chunk_type": "diagnostic_lens",
+            "core_thesis": "Линза стыда и видимости помогает замечать момент, когда человеку невыносимо быть увиденным в своей уязвимости.",
+            "content_excerpt": "Линза стыда и видимости помогает замечать момент, когда человеку невыносимо быть увиденным в своей уязвимости.",
+            "mechanism_hints": [],
+            "user_markers_examples": [],
+            "use_when": [],
+            "avoid_when": [],
+            "allowed_use": [
+              "direct_to_writer"
+            ],
+            "quote_policy": "paraphrase_only",
+            "writer_instruction": "Use as grounding. Paraphrase. Do not dump raw quote.",
+            "recommended_moves": [],
+            "forbidden_moves": [],
+            "original_char_count": 207,
+            "sent_char_count": 110,
+            "content_truncated": true,
+            "truncation_strategy": "paragraph_then_sentence_boundary",
+            "truncation_reason": "excerpt_budget",
+            "truncated_mid_sentence": false,
+            "overlay_metadata_used": false
+          }
+        ],
+        "warnings": [],
+        "blockers": []
+      },
+      "writer_kb_payload_trace": {
+        "schema_version": "writer_kb_payload_trace_v1",
+        "enabled": true,
+        "input_rag_for_writer_count": 1,
+        "payload_chunk_count": 1,
+        "total_original_char_count": 207,
+        "total_sent_char_count": 110,
+        "truncated_chunk_count": 1,
+        "mid_sentence_cut_count": 0,
+        "overlay_metadata_used_count": 0,
+        "warnings": [],
+        "blockers": []
+      },
+      "payload_chunk_count": 1,
+      "original_char_count": 207,
+      "sent_char_count": 110,
+      "content_truncated": true,
+      "truncation_strategy": "paragraph_then_sentence_boundary",
+      "truncated_mid_sentence": false,
+      "overlay_metadata_used": false,
+      "writer_prompt_preview": "version=writer_kb_payload_v1\nchunk_count=1\ntotal_sent_char_count=110\n\n[KB-1]\nchunk_id=kb-lens-1\nsource_doc=Кузница Духа\nchunk_type=diagnostic_lens\nquote_policy=paraphrase_only\nallowed_use=direct_to_writer\ncore_thesis=Линза стыда и видимости помогает замечать момент, когда человеку невыносимо быть увиденным в своей уязвимости.\ncontent_excerpt:\nЛинза стыда и видимости помогает замечать момент, когда человеку невыносимо быть увиденным в своей уязвимости.\nwriter_instruction=Use as grounding. Paraphrase. Do not dump raw quote.\ncontent_truncated=true\ntruncation_strategy=paragraph_then_sentence_boundary"
+    },
+    {
+      "sample_id": "practice_stop_frame",
+      "query": "какая практика поможет замедлиться перед реакцией?",
+      "payload": {
+        "schema_version": "writer_kb_payload_v1",
+        "enabled": true,
+        "chunk_count": 1,
+        "total_sent_char_count": 137,
+        "chunks": [
+          {
+            "chunk_id": "kb-practice-1",
+            "source_id": "123__kuznica_duha",
+            "source_doc": "Кузница Духа",
+            "chunk_type": "practice",
+            "core_thesis": "Практика стоп-кадр предлагает на несколько секунд остановить автоматическую реакцию и отдельно заметить три слоя: мысль, телесный импульс и желание немедленно защититься.",
+            "content_excerpt": "Практика стоп-кадр предлагает на несколько секунд остановить автоматическую реакцию и отдельно заметить три слоя: мысль, телесный импульс",
+            "mechanism_hints": [],
+            "user_markers_examples": [],
+            "use_when": [],
+            "avoid_when": [],
+            "allowed_use": [
+              "direct_to_writer"
+            ],
+            "quote_policy": "paraphrase_only",
+            "writer_instruction": "Use as grounding. Paraphrase. Do not dump raw quote.",
+            "recommended_moves": [],
+            "forbidden_moves": [],
+            "original_char_count": 295,
+            "sent_char_count": 137,
+            "content_truncated": true,
+            "truncation_strategy": "word_boundary",
+            "truncation_reason": "excerpt_budget",
+            "truncated_mid_sentence": true,
+            "overlay_metadata_used": false
+          }
+        ],
+        "warnings": [],
+        "blockers": []
+      },
+      "writer_kb_payload_trace": {
+        "schema_version": "writer_kb_payload_trace_v1",
+        "enabled": true,
+        "input_rag_for_writer_count": 1,
+        "payload_chunk_count": 1,
+        "total_original_char_count": 295,
+        "total_sent_char_count": 137,
+        "truncated_chunk_count": 1,
+        "mid_sentence_cut_count": 1,
+        "overlay_metadata_used_count": 0,
+        "warnings": [],
+        "blockers": []
+      },
+      "payload_chunk_count": 1,
+      "original_char_count": 295,
+      "sent_char_count": 137,
+      "content_truncated": true,
+      "truncation_strategy": "word_boundary",
+      "truncated_mid_sentence": true,
+      "overlay_metadata_used": false,
+      "writer_prompt_preview": "version=writer_kb_payload_v1\nchunk_count=1\ntotal_sent_char_count=137\n\n[KB-1]\nchunk_id=kb-practice-1\nsource_doc=Кузница Духа\nchunk_type=practice\nquote_policy=paraphrase_only\nallowed_use=direct_to_writer\ncore_thesis=Практика стоп-кадр предлагает на несколько секунд остановить автоматическую реакцию и отдельно заметить три слоя: мысль, телесный импульс и желание немедленно защититься.\ncontent_excerpt:\nПрактика стоп-кадр предлагает на несколько секунд остановить автоматическую реакцию и отдельно заметить три слоя: мысль, телесный импульс\nwriter_instruction=Use as grounding. Paraphrase. Do not dump raw quote.\ncontent_truncated=true\ntruncation_strategy=word_boundary"
+    },
+    {
+      "sample_id": "irrelevant_no_kb_case",
+      "query": "какая у тебя архитектура?",
+      "payload": {
+        "schema_version": "writer_kb_payload_v1",
+        "enabled": true,
+        "chunk_count": 1,
+        "total_sent_char_count": 75,
+        "chunks": [
+          {
+            "chunk_id": "kb-none-1",
+            "source_id": "misc_doc",
+            "source_doc": "Generic Bot Notes",
+            "chunk_type": "general_text",
+            "core_thesis": "Короткая справка по общему устройству бота без психологического содержания.",
+            "content_excerpt": "Короткая справка по общему устройству бота без психологического содержания.",
+            "mechanism_hints": [],
+            "user_markers_examples": [],
+            "use_when": [],
+            "avoid_when": [],
+            "allowed_use": [
+              "writer_support"
+            ],
+            "quote_policy": "paraphrase_only",
+            "writer_instruction": "Use as grounding. Paraphrase. Do not dump raw quote.",
+            "recommended_moves": [],
+            "forbidden_moves": [],
+            "original_char_count": 75,
+            "sent_char_count": 75,
+            "content_truncated": false,
+            "truncation_strategy": "none",
+            "truncation_reason": "none",
+            "truncated_mid_sentence": false,
+            "overlay_metadata_used": false
+          }
+        ],
+        "warnings": [],
+        "blockers": []
+      },
+      "writer_kb_payload_trace": {
+        "schema_version": "writer_kb_payload_trace_v1",
+        "enabled": true,
+        "input_rag_for_writer_count": 0,
+        "payload_chunk_count": 1,
+        "total_original_char_count": 75,
+        "total_sent_char_count": 75,
+        "truncated_chunk_count": 0,
+        "mid_sentence_cut_count": 0,
+        "overlay_metadata_used_count": 0,
+        "warnings": [],
+        "blockers": []
+      },
+      "payload_chunk_count": 1,
+      "original_char_count": 75,
+      "sent_char_count": 75,
+      "content_truncated": false,
+      "truncation_strategy": "none",
+      "truncated_mid_sentence": false,
+      "overlay_metadata_used": false,
+      "writer_prompt_preview": "version=writer_kb_payload_v1\nchunk_count=1\ntotal_sent_char_count=75\n\n[KB-1]\nchunk_id=kb-none-1\nsource_doc=Generic Bot Notes\nchunk_type=general_text\nquote_policy=paraphrase_only\nallowed_use=writer_support\ncore_thesis=Короткая справка по общему устройству бота без психологического содержания.\ncontent_excerpt:\nКороткая справка по общему устройству бота без психологического содержания.\nwriter_instruction=Use as grounding. Paraphrase. Do not dump raw quote.\ncontent_truncated=false\ntruncation_strategy=none"
+    }
+  ]
+}

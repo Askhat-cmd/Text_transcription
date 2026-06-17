@@ -261,8 +261,12 @@ older_context_omitted_chars={older_context_omitted_chars}
 Паттерны: {user_profile_patterns}
 Ценности: {user_profile_values}
 
-ЗНАНИЯ ИЗ БАЗЫ:
-{semantic_hits}
+WRITER KB PAYLOAD:
+enabled={writer_kb_payload_enabled}
+trace_version={writer_kb_payload_trace_version}
+fallback_used={writer_kb_payload_failed}
+payload:
+{writer_kb_payload_text}
 
 KNOWLEDGE ANSWER ROUTING:
 knowledge_answer_needed={knowledge_answer_needed}

@@ -178,6 +178,26 @@ function createTrace(): MultiAgentTraceData {
         },
       ],
     },
+    writer_kb_payload_trace: {
+      schema_version: 'writer_kb_payload_trace_v1',
+      enabled: true,
+      input_rag_for_writer_count: 1,
+      payload_chunk_count: 1,
+      total_original_char_count: 2480,
+      total_sent_char_count: 1260,
+      truncated_chunk_count: 1,
+      mid_sentence_cut_count: 0,
+      overlay_metadata_used_count: 0,
+      warnings: [],
+      blockers: [],
+    },
+    future_graduation_notes: {
+      schema_version: 'writer_kb_payload_future_graduation_notes_v1',
+      payload_source: 'legacy_selected_hit',
+      structured_payload_used: true,
+      legacy_semantic_hits_used: false,
+      truncation_strategy: 'paragraph_then_sentence_boundary',
+    },
   };
 }
 
@@ -355,6 +375,22 @@ describe('MultiAgentTraceWidget (rev2)', () => {
     expect(harness.container.textContent).toContain('PRD-047.20');
     expect(harness.container.textContent).toContain('control_as_safety');
     expect(harness.container.textContent).toContain('non_live_overlay_source');
+    harness.cleanup();
+  });
+
+  it('renders writer kb payload trace block', () => {
+    const harness = renderWidget(
+      React.createElement(MultiAgentTraceWidget, {
+        trace: createTrace(),
+        isExpanded: true,
+      })
+    );
+    expect(harness.container.textContent).toContain('Writer KB Payload');
+    clickButtonContains(harness.container, 'Writer KB Payload');
+    clickButtonContains(harness.container, 'Payload warnings');
+    clickButtonContains(harness.container, 'Future graduation notes');
+    expect(harness.container.textContent).toContain('writer_kb_payload_trace_v1');
+    expect(harness.container.textContent).toContain('paragraph_then_sentence_boundary');
     harness.cleanup();
   });
 

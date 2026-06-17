@@ -1,5 +1,24 @@
 # Architecture Decisions
 
+## ADR-083 - Writer receives structured KB payload instead of blind truncated snippets
+
+Status: accepted
+
+Date: 2026-06-17
+
+Context: PRD-047.21 proved overlay trace visibility, but live prompt evidence still showed a more basic delivery fault: retrieval could select the right chunk while Writer only received a flat blind semantic-hit snippet, often cut near the first few hundred characters and sometimes across unstable content boundaries.
+
+Decision:
+- keep retrieval selection authority exactly where it already is;
+- replace the enabled Writer-visible KB delivery path with `writer_kb_payload_v1`, an isolated structured payload over already-selected hits;
+- make excerpting sentence/paragraph-aware and trace every truncation decision through `writer_kb_payload_trace_v1`;
+- keep the path default-off behind `WRITER_KB_PAYLOAD_ENABLED=false` and preserve a safe legacy fallback when the payload is disabled or builder fails;
+- allow future overlay metadata enrichment only as optional same-hit enrichment and keep it disabled by default;
+- keep Writer as the only author of final user-facing text; payload metadata is grounding, not command;
+- forbid retrieval-ranking changes, executed-query mutation, live metadata apply, processed-block mutation, registry mutation, and Chroma reindex inside this PRD.
+
+Consequences: Writer can now receive selected knowledge as bounded structured cards instead of depending on blind flat truncation, while runtime authority boundaries remain unchanged. The next step can evaluate live allowlisted evidence with higher confidence that retrieval quality is not being hidden by a broken Writer-delivery layer.
+
 ## ADR-082 - Accepted overlay may be visible in runtime trace before gaining retrieval authority
 
 Status: accepted

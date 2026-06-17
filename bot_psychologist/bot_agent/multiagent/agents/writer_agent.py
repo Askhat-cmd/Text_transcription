@@ -30,6 +30,7 @@ from ..concrete_answer_fit import evaluate_concrete_answer_fit
 from ..stale_stub_detector import detect_stale_stub
 from ..prompt_constraint_section import format_prompt_constraint_section_v1
 from ..contracts.writer_contract import WriterContract
+from ..writer_kb_payload import format_writer_kb_payload_for_prompt
 from .agent_llm_client import create_agent_completion
 from .agent_llm_config import get_model_for_agent, get_temperature_for_agent
 from .writer_agent_prompts import (
@@ -245,6 +246,10 @@ class WriterAgent:
             "context_truncated": None,
             "preserved_recent_turns_count": None,
             "older_context_omitted_chars": None,
+            "writer_kb_payload_trace": {},
+            "writer_kb_payload_future_graduation_notes": {},
+            "writer_kb_payload_enabled": None,
+            "writer_kb_payload_failed": None,
             "human_like_answer_policy_enabled": None,
             "explicit_answer_need": None,
             "repair_user_dissatisfaction": None,
@@ -399,6 +404,13 @@ class WriterAgent:
         ctx.setdefault("writer_visible_practice_note", "")
         ctx.setdefault("practice_rewrite_applied", False)
         ctx.setdefault("legacy_advisory_sanitization", {})
+        ctx.setdefault("writer_kb_payload_enabled", False)
+        ctx.setdefault("writer_kb_payload_failed", False)
+        ctx.setdefault("writer_kb_payload_failure_reason", "")
+        ctx.setdefault("writer_kb_payload", {})
+        ctx.setdefault("writer_kb_payload_trace", {})
+        ctx.setdefault("writer_kb_payload_trace_version", "writer_kb_payload_trace_v1")
+        ctx.setdefault("writer_kb_payload_future_graduation_notes", {})
         knowledge_answer = (
             dict(ctx.get("knowledge_answer", {}))
             if isinstance(ctx.get("knowledge_answer"), dict)
@@ -551,6 +563,35 @@ class WriterAgent:
                 ]
             )
 
+        writer_kb_payload_text = format_writer_kb_payload_for_prompt(
+            payload=(
+                dict(ctx.get("writer_kb_payload", {}))
+                if isinstance(ctx.get("writer_kb_payload"), dict)
+                else {}
+            ),
+            legacy_hits=list(ctx.get("semantic_hits", []) or []),
+            fallback_reason=str(
+                ctx.get("writer_kb_payload_failure_reason", "")
+                or (
+                    "writer_kb_payload_disabled"
+                    if not bool(ctx.get("writer_kb_payload_enabled", False))
+                    else "writer_kb_payload_empty_or_failed"
+                )
+            ),
+        )
+        self.last_debug["writer_kb_payload_trace"] = (
+            dict(ctx.get("writer_kb_payload_trace", {}))
+            if isinstance(ctx.get("writer_kb_payload_trace"), dict)
+            else {}
+        )
+        self.last_debug["writer_kb_payload_future_graduation_notes"] = (
+            dict(ctx.get("writer_kb_payload_future_graduation_notes", {}))
+            if isinstance(ctx.get("writer_kb_payload_future_graduation_notes"), dict)
+            else {}
+        )
+        self.last_debug["writer_kb_payload_enabled"] = bool(ctx.get("writer_kb_payload_enabled", False))
+        self.last_debug["writer_kb_payload_failed"] = bool(ctx.get("writer_kb_payload_failed", False))
+
         user_prompt = WRITER_USER_TEMPLATE.format(
             user_message=ctx["user_message"],
             response_mode=ctx["response_mode"],
@@ -602,7 +643,13 @@ class WriterAgent:
             older_context_omitted_chars=int(context_meta.get("older_context_omitted_chars", 0) or 0),
             user_profile_patterns=", ".join(ctx["user_profile_patterns"]) or "нет",
             user_profile_values=", ".join(ctx["user_profile_values"]) or "нет",
-            semantic_hits=self._format_hits(ctx["semantic_hits"]),
+            writer_kb_payload_enabled=str(bool(ctx.get("writer_kb_payload_enabled", False))).lower(),
+            writer_kb_payload_trace_version=str(
+                ctx.get("writer_kb_payload_trace_version", "writer_kb_payload_trace_v1")
+                or "writer_kb_payload_trace_v1"
+            ),
+            writer_kb_payload_failed=str(bool(ctx.get("writer_kb_payload_failed", False))).lower(),
+            writer_kb_payload_text=writer_kb_payload_text,
             knowledge_answer_needed=str(bool(knowledge_answer.get("needed", False))).lower(),
             knowledge_answer_concept=str(knowledge_answer.get("concept", "") or "none"),
             knowledge_answer_kb_grounding=str(bool(knowledge_answer.get("kb_grounding_available", False))).lower(),

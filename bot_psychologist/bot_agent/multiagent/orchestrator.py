@@ -1297,6 +1297,18 @@ class MultiAgentOrchestrator:
                 "writer_api_mode": writer_debug.get("api_mode"),
                 "writer_error": writer_debug.get("error"),
                 "writer_fallback_used": bool(writer_debug.get("fallback_used", False)),
+                "writer_kb_payload_enabled": writer_debug.get("writer_kb_payload_enabled"),
+                "writer_kb_payload_failed": writer_debug.get("writer_kb_payload_failed"),
+                "writer_kb_payload_trace": (
+                    dict(writer_debug.get("writer_kb_payload_trace", {}))
+                    if isinstance(writer_debug.get("writer_kb_payload_trace"), dict)
+                    else {}
+                ),
+                "future_graduation_notes": (
+                    dict(writer_debug.get("writer_kb_payload_future_graduation_notes", {}))
+                    if isinstance(writer_debug.get("writer_kb_payload_future_graduation_notes"), dict)
+                    else {}
+                ),
                 "writer_human_like_answer_policy_enabled": writer_debug.get(
                     "human_like_answer_policy_enabled"
                 ),

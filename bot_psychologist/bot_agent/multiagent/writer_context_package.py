@@ -6,6 +6,12 @@ from typing import Any
 
 from .contracts.context_package import ContextAssemblyPackage
 from .contracts.memory_bundle import MemoryBundle
+from .writer_kb_payload import (
+    build_future_graduation_notes,
+    build_writer_kb_payload,
+    build_writer_kb_payload_trace,
+    get_writer_kb_payload_config,
+)
 
 
 WRITER_CONTEXT_PACKAGE_VERSION = "writer_context_package_v1"
@@ -151,6 +157,75 @@ def build_writer_context_package_v1(
         if isinstance(retrieval.get("hybrid_retrieval_plan"), dict)
         else {}
     )
+    payload_config = get_writer_kb_payload_config()
+    writer_kb_payload_failed = False
+    writer_kb_payload_failure_reason = ""
+    overlay_items = []
+    overlay_shadow = retrieval.get("overlay_shadow")
+    if isinstance(overlay_shadow, dict):
+        overlay_items = [
+            dict(item)
+            for item in list(overlay_shadow.get("matched_candidates", []) or [])
+            if isinstance(item, dict)
+        ]
+    try:
+        writer_kb_payload = build_writer_kb_payload(
+            semantic_hits=[
+                dict(item)
+                for item in list(memory_bundle.knowledge_rag_hits or [])
+                if isinstance(item, dict)
+            ]
+            or [
+                {
+                    "chunk_id": str(getattr(hit, "chunk_id", "") or ""),
+                    "source": str(getattr(hit, "source", "unknown") or "unknown"),
+                    "score": float(getattr(hit, "score", 0.0) or 0.0),
+                    "content": str(getattr(hit, "content", "") or ""),
+                    "governance": (
+                        dict(getattr(hit, "governance", {}) or {})
+                        if isinstance(getattr(hit, "governance", None), dict)
+                        else {}
+                    ),
+                    "chunking_quality": (
+                        dict(getattr(hit, "chunking_quality", {}) or {})
+                        if isinstance(getattr(hit, "chunking_quality", None), dict)
+                        else {}
+                    ),
+                }
+                for hit in list(memory_bundle.semantic_hits or [])
+            ],
+            rag_for_writer=rag_for_writer,
+            overlay_items=overlay_items,
+            config=payload_config,
+        )
+    except Exception as exc:  # pragma: no cover - safe fallback branch
+        writer_kb_payload_failed = True
+        writer_kb_payload_failure_reason = str(exc)
+        writer_kb_payload = {
+            "schema_version": "writer_kb_payload_v1",
+            "enabled": False,
+            "chunk_count": 0,
+            "total_sent_char_count": 0,
+            "chunks": [],
+            "warnings": ["writer_kb_payload_failed"],
+            "blockers": [],
+        }
+    writer_kb_payload_trace = build_writer_kb_payload_trace(
+        payload=writer_kb_payload,
+        input_rag_for_writer_count=len(rag_for_writer),
+    )
+    if writer_kb_payload_failed:
+        writer_kb_payload_trace["warnings"] = list(
+            dict.fromkeys(
+                list(writer_kb_payload_trace.get("warnings", []) or [])
+                + ["writer_kb_payload_failed"]
+            )
+        )
+    future_graduation_notes = build_future_graduation_notes(
+        payload=writer_kb_payload,
+        trace=writer_kb_payload_trace,
+        legacy_fallback_reason=writer_kb_payload_failure_reason,
+    )
 
     return {
         "version": WRITER_CONTEXT_PACKAGE_VERSION,
@@ -172,6 +247,12 @@ def build_writer_context_package_v1(
         "composed_retrieval_query": str(composer.get("composed_query", "") or ""),
         "retrieval_need": str(composer.get("retrieval_need", "") or ""),
         "writer_can_ignore_rag": bool(composer.get("writer_can_ignore_rag", True)),
+        "writer_kb_payload": writer_kb_payload,
+        "writer_kb_payload_trace": writer_kb_payload_trace,
+        "writer_kb_payload_future_graduation_notes": future_graduation_notes,
+        "writer_kb_payload_enabled": bool(payload_config.enabled),
+        "writer_kb_payload_failed": writer_kb_payload_failed,
+        "writer_kb_payload_failure_reason": writer_kb_payload_failure_reason,
         "retrieval_context": {
             "retrieval_action": str(
                 hybrid_plan.get("retrieval_action", retrieval.get("retrieval_action", "trace_only"))

@@ -1,0 +1,48 @@
+{
+  "schema_version": "writer_kb_payload_contract_snapshot_v1",
+  "prd_id": "PRD-047.22",
+  "feature_flags": {
+    "WRITER_KB_PAYLOAD_ENABLED": false,
+    "WRITER_KB_PAYLOAD_MAX_CHUNKS": 2,
+    "WRITER_KB_PAYLOAD_MAX_TOTAL_CHARS": 3600,
+    "WRITER_KB_PAYLOAD_EXCERPT_TARGET_CHARS": 1200,
+    "WRITER_KB_PAYLOAD_EXCERPT_MAX_CHARS": 1600,
+    "WRITER_KB_PAYLOAD_SENTENCE_BOUNDARY": true,
+    "WRITER_KB_PAYLOAD_USE_OVERLAY_METADATA": false
+  },
+  "payload_fields": [
+    "chunk_id",
+    "source_id",
+    "source_doc",
+    "chunk_type",
+    "core_thesis",
+    "content_excerpt",
+    "mechanism_hints",
+    "user_markers_examples",
+    "use_when",
+    "avoid_when",
+    "allowed_use",
+    "quote_policy",
+    "writer_instruction",
+    "recommended_moves",
+    "forbidden_moves",
+    "original_char_count",
+    "sent_char_count",
+    "content_truncated",
+    "truncation_strategy",
+    "truncation_reason",
+    "truncated_mid_sentence",
+    "overlay_metadata_used"
+  ],
+  "trace_fields": [
+    "input_rag_for_writer_count",
+    "payload_chunk_count",
+    "total_original_char_count",
+    "total_sent_char_count",
+    "truncated_chunk_count",
+    "mid_sentence_cut_count",
+    "overlay_metadata_used_count",
+    "warnings",
+    "blockers"
+  ]
+}

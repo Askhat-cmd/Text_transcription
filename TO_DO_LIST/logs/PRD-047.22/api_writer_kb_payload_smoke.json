@@ -1,0 +1,15 @@
+{
+  "schema_version": "prd_047_22_api_writer_kb_payload_smoke_v1",
+  "prd_id": "PRD-047.22",
+  "status": "warning",
+  "transport": "live_http_localhost_8001",
+  "reason": "trace_missing_or_payload_empty",
+  "query": "что такое Нейросталкинг?",
+  "request_status_code": 200,
+  "debug_status_code": 200,
+  "writer_kb_payload_trace": {},
+  "direct_answer_present": true,
+  "internal_payload_leak_in_answer": false,
+  "bad_suffix_present_in_answer": false,
+  "answer_char_count": 815
+}

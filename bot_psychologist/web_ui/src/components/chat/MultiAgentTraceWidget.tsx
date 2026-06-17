@@ -181,6 +181,12 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
   const overlayShadow = trace.overlay_shadow && typeof trace.overlay_shadow === 'object'
     ? (trace.overlay_shadow as Record<string, unknown>)
     : null;
+  const writerKbPayloadTrace = trace.writer_kb_payload_trace && typeof trace.writer_kb_payload_trace === 'object'
+    ? (trace.writer_kb_payload_trace as Record<string, unknown>)
+    : null;
+  const futureGraduationNotes = trace.future_graduation_notes && typeof trace.future_graduation_notes === 'object'
+    ? (trace.future_graduation_notes as Record<string, unknown>)
+    : null;
   const hybridSummaryAvailable = Boolean(
     trace.hybrid_retrieval_planner_version ||
       trace.hybrid_retrieval_plan ||
@@ -189,6 +195,7 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
       trace.executed_rag_query
   );
   const overlayShadowAvailable = Boolean(overlayShadow);
+  const writerKbPayloadAvailable = Boolean(writerKbPayloadTrace);
 
   const timeline = [
     { key: 'state', label: 'State', ms: Math.max(trace.agents.state_analyzer.latency_ms, 0), className: 'bg-blue-500' },
@@ -360,6 +367,43 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
               <div className="text-xs text-slate-500">Hybrid Retrieval: not available for this turn</div>
             )}
           </AccordionSection>
+
+          {writerKbPayloadAvailable && (
+            <AccordionSection
+              title={`Writer KB Payload | ${String(writerKbPayloadTrace?.enabled ? 'enabled' : 'disabled')} | chunks ${String(writerKbPayloadTrace?.payload_chunk_count ?? 0)}`}
+            >
+              <div className="space-y-2">
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <MetaItem label="TRACE VERSION" value={String(writerKbPayloadTrace?.schema_version || '—')} />
+                  <MetaItem label="INPUT RAG COUNT" value={String(writerKbPayloadTrace?.input_rag_for_writer_count ?? 0)} />
+                  <MetaItem label="PAYLOAD CHUNKS" value={String(writerKbPayloadTrace?.payload_chunk_count ?? 0)} highlight />
+                  <MetaItem label="TOTAL SENT CHARS" value={String(writerKbPayloadTrace?.total_sent_char_count ?? 0)} />
+                  <MetaItem label="TRUNCATED CHUNKS" value={String(writerKbPayloadTrace?.truncated_chunk_count ?? 0)} />
+                  <MetaItem label="MID-SENTENCE CUTS" value={String(writerKbPayloadTrace?.mid_sentence_cut_count ?? 0)} />
+                  <MetaItem label="OVERLAY USED" value={String(writerKbPayloadTrace?.overlay_metadata_used_count ?? 0)} />
+                </div>
+
+                <AccordionSection title="Payload warnings" nested>
+                  <div className="text-xs">
+                    {Array.isArray(writerKbPayloadTrace?.warnings)
+                      ? (writerKbPayloadTrace?.warnings as unknown[]).join(', ') || '—'
+                      : '—'}
+                  </div>
+                </AccordionSection>
+
+                {futureGraduationNotes && (
+                  <AccordionSection title="Future graduation notes" nested>
+                    <div className="space-y-1 text-xs">
+                      <div><span className="text-slate-500">payload_source:</span> {String(futureGraduationNotes.payload_source || '—')}</div>
+                      <div><span className="text-slate-500">legacy_semantic_hits_used:</span> {String(Boolean(futureGraduationNotes.legacy_semantic_hits_used))}</div>
+                      <div><span className="text-slate-500">structured_payload_used:</span> {String(Boolean(futureGraduationNotes.structured_payload_used))}</div>
+                      <div><span className="text-slate-500">truncation_strategy:</span> {String(futureGraduationNotes.truncation_strategy || '—')}</div>
+                    </div>
+                  </AccordionSection>
+                )}
+              </div>
+            </AccordionSection>
+          )}
 
           {overlayShadowAvailable && (
             <AccordionSection

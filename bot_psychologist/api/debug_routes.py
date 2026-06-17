@@ -853,6 +853,16 @@ async def get_multiagent_trace(
             if isinstance(debug.get("overlay_shadow"), dict)
             else None
         ),
+        writer_kb_payload_trace=(
+            debug.get("writer_kb_payload_trace")
+            if isinstance(debug.get("writer_kb_payload_trace"), dict)
+            else None
+        ),
+        future_graduation_notes=(
+            debug.get("future_graduation_notes")
+            if isinstance(debug.get("future_graduation_notes"), dict)
+            else None
+        ),
         live_turn_evidence=(
             debug.get("live_turn_evidence")
             if isinstance(debug.get("live_turn_evidence"), dict)

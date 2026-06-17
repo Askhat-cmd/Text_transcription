@@ -74,6 +74,7 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
+- PRD-047.23 closed the audit-first chain from source/chunk/store/query to Writer KB payload and Web Trace. The evidence points to retrieval query pollution/duplication as the next repair target, while source-chunk mutation and overlay-live graduation remain out of scope for now.
 - PRD-047.22 closed the Writer KB delivery bottleneck between selected retrieval hits and Writer prompt grounding. The next step can evaluate live allowlisted evidence now that Writer receives structured chunk cards instead of depending on blind snippet truncation.
 - PRD-047.21 closed trace-only overlay visibility in runtime/debug/API/Web Trace without granting runtime authority. The next step can collect allowlisted live evidence and owner review before any future planner or retrieval-authority PRD.
 - PRD-047.19 closed dry-run apply planning and proved the current overlay is still fixture-only; the next step must produce real human-reviewed accepted overlay decisions before any apply/reindex planning can move past expected blockers.
@@ -90,8 +91,9 @@
 - No active PRD-047.12 blocker remains; unified dialogue policy v2 is accepted on the current developer-local runtime baseline.
 
 ## Next
-1. Start `PRD-047.23 - Overlay + Writer KB Payload Live Evidence / Evaluation v1`.
-2. Keep any live metadata apply, retrieval-authority mutation, runtime activation, or Chroma reindex in a separate explicit governance PRD after allowlisted live evidence and human-final approval are both in place.
+1. Start `PRD-047.24 - Retrieval Query Assembly / Current-Turn Focus Repair v1`.
+2. Only return to `Overlay + Writer KB Payload Live Evidence / Evaluation` after current-turn query pollution/duplication is repaired and re-audited.
+3. Keep any live metadata apply, retrieval-authority mutation, runtime activation, or Chroma reindex in a separate explicit governance PRD after allowlisted live evidence and human-final approval are both in place.
 
 ## Later
 - Operational hardening for governed limited runtime.
@@ -121,6 +123,7 @@ PRD-046.1.36 Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1.
 - push_status: pushed_to_origin_main
 
 ## Done
+- PRD-047.23: completed read-only audit from Bot_data_base source/chunk/store/query path to Writer KB payload and Web Trace. Confirmed stored/source content is clean for the observed Neurostalking cut, classified C23-002/C23-003 as retrieval-focus pollution with expected-source miss, documented payload/UI counter mismatch as trace-schema debt, generated live/local artifacts, and recommended PRD-047.24 retrieval query assembly repair before overlay-live evaluation.
 - PRD-047.22-HF2: closed manual Web Chat runtime parity for Writer KB payload. Added single-source effective config resolution for WRITER_KB_PAYLOAD_ENABLED, local/dev/pilot/test default_local activation behind APP_ENV, admin/debug 
 untime_config_trace, explicit primary-vs-fallback payload path markers, compact Web Trace parity fields, pilot startup script/docs, streaming-path parity runner, prompt canvas proof, and no-mutation/encoding artifacts without changing retrieval ranking, executed query, Chroma, registry, processed blocks, or live metadata.
 - PRD-047.21: completed overlay-aware retrieval shadow integration as a strict trace-only runtime surface. Added default-off `OVERLAY_SHADOW_TRACE_*` config, isolated `overlay_shadow_trace.py`, orchestrator/debug/API integration, Web Trace visibility, trace-sample/no-behavior/authority/no-mutation artifacts, targeted multiagent/API tests, PRD-047.20 regression coverage, and Web widget test/build verification. Overlay remains non-live and non-authoritative: no WriterContract/prompt injection, no retrieval query mutation, no semantic-hit mutation, no final-answer influence, and no BotDB/Chroma mutation.

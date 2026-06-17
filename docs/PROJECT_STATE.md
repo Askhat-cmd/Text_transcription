@@ -94,7 +94,12 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 - Historical artifact encoding noise may be misread as current runtime corruption without normalization report.
 
 ## Next Planned PRD
-`PRD-047.23 - Overlay + Writer KB Payload Live Evidence / Evaluation v1`
+`PRD-047.24 - Retrieval Query Assembly / Current-Turn Focus Repair v1`
+
+## PRD-047.23 Audit State
+PRD-047.23 closed the evidence gap between Bot_data_base chunks, retrieval query assembly, Writer KB payload, and Web Trace preview.
+Stored/source evidence does not support a primary Bot_data_base chunk-boundary defect for the observed Neurostalking case; the suspicious `...изнутри чего т` cut is downstream from stored content and aligns with preview/full-content ambiguity in the uploaded trace.
+The dominant failure class is current-turn retrieval query pollution/duplication for the "Программа несовершенное Я" and "Пять драйверов" cases, with secondary trace-schema mismatch where Web Trace chunk counters can diverge from actual writer payload counters.
 
 ## HF2-R2 Runtime Visibility State
 Hybrid Retrieval Planner visibility is now synchronized across backend admin runtime, Web Admin Runtime, multiagent trace, and compact trace summary.
@@ -114,7 +119,7 @@ Knowledge Graph runtime flag remains backend-legacy/optional but is shown as com
 5. Keep full historical details in `TO_DO_LIST`, keep docs operational and compact.
 
 ## Last Updated
-2026-06-16
+2026-06-17
 - Date: 2026-06-05
 - Source cycle: PRD-047.12
 - Source cycle: PRD-047.11-HF3
@@ -149,6 +154,11 @@ PRD-046.1.36 Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1.
 - prd_id: PRD-047.15-HF2-R2
 - commit_hash: 3480666
 - push_status: pushed_to_origin_main
+
+## PRD-047.23 Delivery Metadata
+- prd_id: PRD-047.23
+- commit_hash: pending
+- push_status: pending
 
 ## Diagnostic Center Track Status
 Diagnostic Center Track Status: CLOSED FOR CURRENT PHASE

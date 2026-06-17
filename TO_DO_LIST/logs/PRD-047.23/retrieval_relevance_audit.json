@@ -1,0 +1,56 @@
+{
+  "schema_version": "prd_047_23_retrieval_relevance_v1",
+  "results": [
+    {
+      "case_id": "C23-001",
+      "expected_topic": "Что такое самореализация как она коррелируется с Нейросталкингом?",
+      "expected_source_available": true,
+      "selected_chunks": [
+        {
+          "chunk_id": "5943bece-db10-460a-bc21-7e23e6485925",
+          "title": "НеоСталкинг: когда личность перестаёт быть центром вселенной",
+          "chapter_title": "ГЛАВА 10. НейроСталкинг — жизнь из присутствия",
+          "label": "high_exact"
+        }
+      ],
+      "overall_label": "high_exact",
+      "likely_root_cause": "selection_acceptable"
+    },
+    {
+      "case_id": "C23-002",
+      "expected_topic": "а что такое \"Программа несовершенное Я\"?",
+      "expected_source_available": true,
+      "selected_chunks": [
+        {
+          "chunk_id": "5943bece-db10-460a-bc21-7e23e6485925",
+          "title": "НеоСталкинг: когда личность перестаёт быть центром вселенной",
+          "chapter_title": "ГЛАВА 10. НейроСталкинг — жизнь из присутствия",
+          "label": "medium_related"
+        }
+      ],
+      "overall_label": "missing_expected_source",
+      "likely_root_cause": "query_focus_pollution_or_neighbor_selection"
+    },
+    {
+      "case_id": "C23-003",
+      "expected_topic": "расскажи о Пяти драйверах выживания: Драйвер 1: «Будь сильным», Драйвер 2: «Будь лучшим», Драйвер 3: «Радуй других», Драйвер 4: «Старайся сильнее», Драйвер 5: «Спеши»",
+      "expected_source_available": true,
+      "selected_chunks": [
+        {
+          "chunk_id": "f68050f9-d789-4d8b-b5b1-d6302ddfb88e",
+          "title": "Триггер → Программа → Реакция",
+          "chapter_title": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "label": "low_neighbor"
+        },
+        {
+          "chunk_id": "cc979440-d02f-4bff-8920-59982597b4cc",
+          "title": "7. 5–10 минут тишины в конце. Просто посиди с тем, что увидел. Не нужно ничего решать.",
+          "chapter_title": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "label": "medium_related"
+        }
+      ],
+      "overall_label": "missing_expected_source",
+      "likely_root_cause": "query_focus_pollution_or_neighbor_selection"
+    }
+  ]
+}

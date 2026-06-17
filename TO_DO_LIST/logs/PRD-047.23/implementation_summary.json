@@ -1,0 +1,321 @@
+{
+  "schema_version": "prd_047_23_implementation_summary_v1",
+  "prd_id": "PRD-047.23",
+  "checked_at": "2026-06-17T10:24:25.971764+00:00",
+  "mode": "full",
+  "source_gates": {
+    "schema_version": "prd_047_23_source_gate_report_v1",
+    "prd_id": "PRD-047.23",
+    "checked_at": "2026-06-17T10:22:12.035495+00:00",
+    "required_paths": [
+      {
+        "path": "TO_DO_LIST/logs/PRD-047.22-HF2/manual_web_chat_parity_smoke.json",
+        "exists": true
+      },
+      {
+        "path": "TO_DO_LIST/logs/PRD-047.22-HF2/effective_runtime_config_snapshot.json",
+        "exists": true
+      },
+      {
+        "path": "TO_DO_LIST/reports/PRD-047.22-HF2_IMPLEMENTATION_REPORT.md",
+        "exists": true
+      }
+    ],
+    "local_trace_fixture": "TO_DO_LIST/context/Чат с ботом + раскрытый ТРЕЙС_2_.txt",
+    "local_trace_fixture_exists": true,
+    "primary_source_material": "TO_DO_LIST/source_materials/PRD-047.1/КУЗНИЦА ДУХА v.2.md",
+    "primary_source_material_exists": true,
+    "previous_commit_present": true,
+    "status": "passed"
+  },
+  "trace_case_count": 3,
+  "chunk_boundary_audit": {
+    "cut_classes": [
+      "none",
+      "runtime_payload_sentence_truncation",
+      "stored_preview_used_as_full_content"
+    ]
+  },
+  "query_audit": {
+    "focus_statuses": {
+      "C23-001": "clean",
+      "C23-002": "polluted",
+      "C23-003": "polluted"
+    }
+  },
+  "payload_audit": {
+    "schema_fix_cases": [
+      "C23-002",
+      "C23-003"
+    ]
+  },
+  "relevance_audit": {
+    "overall_labels": {
+      "C23-001": "high_exact",
+      "C23-002": "missing_expected_source",
+      "C23-003": "missing_expected_source"
+    }
+  },
+  "live_report": {
+    "schema_version": "prd_047_23_live_sample_report_v1",
+    "prd_id": "PRD-047.23",
+    "checked_at": "2026-06-17T10:24:25.858613+00:00",
+    "status": "passed",
+    "manage_backend": false,
+    "killed_listener_pids": [],
+    "warnings": [],
+    "cases": [
+      {
+        "case_id": "L23-001",
+        "query": "Что такое самореализация как она коррелируется с Нейросталкингом?",
+        "stream_status_code": 200,
+        "debug_status_code": 200,
+        "writer_kb_payload_trace": {
+          "schema_version": "writer_kb_payload_trace_v1",
+          "enabled": true,
+          "configured_enabled": true,
+          "configured_source": "default_local",
+          "status": "structured_payload_used",
+          "primary_path": "writer_kb_payload_v1",
+          "payload_version": "writer_kb_payload_v1",
+          "input_rag_for_writer_count": 1,
+          "payload_chunk_count": 1,
+          "total_original_char_count": 700,
+          "total_sent_char_count": 700,
+          "truncated_chunk_count": 0,
+          "mid_sentence_cut_count": 0,
+          "overlay_metadata_used_count": 0,
+          "payload_sent_to_writer_char_count": 700,
+          "payload_display_preview_char_count": 500,
+          "payload_display_is_preview": true,
+          "payload_full_text_sent_to_writer": true,
+          "payload_full_text_exposed_in_web_trace": false,
+          "fallback_reason": "",
+          "fallback_is_primary": false,
+          "warning": "",
+          "runtime_mode": "local",
+          "warnings": [],
+          "blockers": []
+        },
+        "internal_payload_leak_in_answer": false
+      },
+      {
+        "case_id": "L23-002",
+        "query": "а что такое \"Программа несовершенное Я\"?",
+        "stream_status_code": 200,
+        "debug_status_code": 200,
+        "writer_kb_payload_trace": {
+          "schema_version": "writer_kb_payload_trace_v1",
+          "enabled": true,
+          "configured_enabled": true,
+          "configured_source": "default_local",
+          "status": "structured_payload_used",
+          "primary_path": "writer_kb_payload_v1",
+          "payload_version": "writer_kb_payload_v1",
+          "input_rag_for_writer_count": 0,
+          "payload_chunk_count": 2,
+          "total_original_char_count": 2467,
+          "total_sent_char_count": 2467,
+          "truncated_chunk_count": 0,
+          "mid_sentence_cut_count": 0,
+          "overlay_metadata_used_count": 0,
+          "payload_sent_to_writer_char_count": 2467,
+          "payload_display_preview_char_count": 500,
+          "payload_display_is_preview": true,
+          "payload_full_text_sent_to_writer": true,
+          "payload_full_text_exposed_in_web_trace": false,
+          "fallback_reason": "",
+          "fallback_is_primary": false,
+          "warning": "",
+          "runtime_mode": "local",
+          "warnings": [],
+          "blockers": []
+        },
+        "internal_payload_leak_in_answer": false
+      },
+      {
+        "case_id": "L23-003",
+        "query": "расскажи о Пяти драйверах выживания: Драйвер 1: «Будь сильным», Драйвер 2: «Будь лучшим», Драйвер 3: «Радуй других», Драйвер 4: «Старайся сильнее», Драйвер 5: «Спеши»",
+        "stream_status_code": 200,
+        "debug_status_code": 200,
+        "writer_kb_payload_trace": {
+          "schema_version": "writer_kb_payload_trace_v1",
+          "enabled": true,
+          "configured_enabled": true,
+          "configured_source": "default_local",
+          "status": "structured_payload_used",
+          "primary_path": "writer_kb_payload_v1",
+          "payload_version": "writer_kb_payload_v1",
+          "input_rag_for_writer_count": 0,
+          "payload_chunk_count": 2,
+          "total_original_char_count": 1713,
+          "total_sent_char_count": 1713,
+          "truncated_chunk_count": 0,
+          "mid_sentence_cut_count": 0,
+          "overlay_metadata_used_count": 0,
+          "payload_sent_to_writer_char_count": 1713,
+          "payload_display_preview_char_count": 500,
+          "payload_display_is_preview": true,
+          "payload_full_text_sent_to_writer": true,
+          "payload_full_text_exposed_in_web_trace": false,
+          "fallback_reason": "",
+          "fallback_is_primary": false,
+          "warning": "",
+          "runtime_mode": "local",
+          "warnings": [],
+          "blockers": []
+        },
+        "internal_payload_leak_in_answer": false
+      },
+      {
+        "case_id": "L23-004",
+        "query": "Что такое Нейросталкинг?",
+        "stream_status_code": 200,
+        "debug_status_code": 200,
+        "writer_kb_payload_trace": {
+          "schema_version": "writer_kb_payload_trace_v1",
+          "enabled": true,
+          "configured_enabled": true,
+          "configured_source": "default_local",
+          "status": "structured_payload_used",
+          "primary_path": "writer_kb_payload_v1",
+          "payload_version": "writer_kb_payload_v1",
+          "input_rag_for_writer_count": 1,
+          "payload_chunk_count": 1,
+          "total_original_char_count": 700,
+          "total_sent_char_count": 700,
+          "truncated_chunk_count": 0,
+          "mid_sentence_cut_count": 0,
+          "overlay_metadata_used_count": 0,
+          "payload_sent_to_writer_char_count": 700,
+          "payload_display_preview_char_count": 500,
+          "payload_display_is_preview": true,
+          "payload_full_text_sent_to_writer": true,
+          "payload_full_text_exposed_in_web_trace": false,
+          "fallback_reason": "",
+          "fallback_is_primary": false,
+          "warning": "",
+          "runtime_mode": "local",
+          "warnings": [],
+          "blockers": []
+        },
+        "internal_payload_leak_in_answer": false
+      },
+      {
+        "case_id": "L23-005",
+        "query": "Чем Нейросталкинг отличается от НеоСталкинга?",
+        "stream_status_code": 200,
+        "debug_status_code": 200,
+        "writer_kb_payload_trace": {
+          "schema_version": "writer_kb_payload_trace_v1",
+          "enabled": true,
+          "configured_enabled": true,
+          "configured_source": "default_local",
+          "status": "structured_payload_used",
+          "primary_path": "writer_kb_payload_v1",
+          "payload_version": "writer_kb_payload_v1",
+          "input_rag_for_writer_count": 2,
+          "payload_chunk_count": 2,
+          "total_original_char_count": 1400,
+          "total_sent_char_count": 1400,
+          "truncated_chunk_count": 0,
+          "mid_sentence_cut_count": 0,
+          "overlay_metadata_used_count": 0,
+          "payload_sent_to_writer_char_count": 1400,
+          "payload_display_preview_char_count": 500,
+          "payload_display_is_preview": true,
+          "payload_full_text_sent_to_writer": true,
+          "payload_full_text_exposed_in_web_trace": false,
+          "fallback_reason": "",
+          "fallback_is_primary": false,
+          "warning": "",
+          "runtime_mode": "local",
+          "warnings": [],
+          "blockers": []
+        },
+        "internal_payload_leak_in_answer": false
+      }
+    ]
+  },
+  "encoding_hygiene": {
+    "schema_version": "artifact_encoding_hygiene_report_v1",
+    "prd": "PRD-047.23",
+    "checked_prd": "PRD-047.23",
+    "final_status": "passed",
+    "files_checked": 34,
+    "utf8_decode_error_count": 0,
+    "nul_byte_file_count": 0,
+    "nul_char_file_count": 0,
+    "replacement_char_warning_count": 0,
+    "mojibake_warning_count": 0,
+    "json_parse_error_count": 0,
+    "empty_text_artifact_count": 0,
+    "unexpected_debug_dir_count": 0,
+    "fixed_files": [],
+    "warnings": [],
+    "blockers": [],
+    "checked_files": [
+      "TO_DO_LIST/logs/PRD-047.23/artifact_encoding_hygiene_report.json",
+      "TO_DO_LIST/logs/PRD-047.23/chunk_boundary_audit.json",
+      "TO_DO_LIST/logs/PRD-047.23/chunk_boundary_audit.md",
+      "TO_DO_LIST/logs/PRD-047.23/chunking_code_map.json",
+      "TO_DO_LIST/logs/PRD-047.23/chunking_code_map.md",
+      "TO_DO_LIST/logs/PRD-047.23/encoding_hygiene_report.json",
+      "TO_DO_LIST/logs/PRD-047.23/implementation_summary.json",
+      "TO_DO_LIST/logs/PRD-047.23/live_sample_report.json",
+      "TO_DO_LIST/logs/PRD-047.23/live_turn_exports/L23-001.json",
+      "TO_DO_LIST/logs/PRD-047.23/live_turn_exports/L23-002.json",
+      "TO_DO_LIST/logs/PRD-047.23/live_turn_exports/L23-003.json",
+      "TO_DO_LIST/logs/PRD-047.23/live_turn_exports/L23-004.json",
+      "TO_DO_LIST/logs/PRD-047.23/live_turn_exports/L23-005.json",
+      "TO_DO_LIST/logs/PRD-047.23/no_mutation_proof.json",
+      "TO_DO_LIST/logs/PRD-047.23/prompt_canvases/L23-001.txt",
+      "TO_DO_LIST/logs/PRD-047.23/prompt_canvases/L23-002.txt",
+      "TO_DO_LIST/logs/PRD-047.23/prompt_canvases/L23-003.txt",
+      "TO_DO_LIST/logs/PRD-047.23/prompt_canvases/L23-004.txt",
+      "TO_DO_LIST/logs/PRD-047.23/prompt_canvases/L23-005.txt",
+      "TO_DO_LIST/logs/PRD-047.23/retrieval_query_assembly_audit.json",
+      "TO_DO_LIST/logs/PRD-047.23/retrieval_query_assembly_audit.md",
+      "TO_DO_LIST/logs/PRD-047.23/retrieval_relevance_audit.json",
+      "TO_DO_LIST/logs/PRD-047.23/retrieval_relevance_audit.md",
+      "TO_DO_LIST/logs/PRD-047.23/source_gate_report.json",
+      "TO_DO_LIST/logs/PRD-047.23/source_gate_report.md",
+      "TO_DO_LIST/logs/PRD-047.23/suspect_chunk_inventory.json",
+      "TO_DO_LIST/logs/PRD-047.23/suspect_chunk_inventory.md",
+      "TO_DO_LIST/logs/PRD-047.23/test_command_output.txt",
+      "TO_DO_LIST/logs/PRD-047.23/trace_case_matrix.json",
+      "TO_DO_LIST/logs/PRD-047.23/trace_case_matrix.md",
+      "TO_DO_LIST/logs/PRD-047.23/writer_payload_consistency_audit.json",
+      "TO_DO_LIST/logs/PRD-047.23/writer_payload_consistency_audit.md",
+      "TO_DO_LIST/reports/PRD-047.23_IMPLEMENTATION_REPORT.md",
+      "TO_DO_LIST/reports/PRD-047.23_NEXT_PRD_RECOMMENDATION.md"
+    ]
+  },
+  "no_mutation": {
+    "schema_version": "prd_047_23_no_mutation_proof_v1",
+    "prd_id": "PRD-047.23",
+    "status": "passed",
+    "bot_data_base_sources_modified": false,
+    "bot_data_base_blocks_modified": false,
+    "chroma_reindexed": false,
+    "embeddings_changed": false,
+    "retrieval_ranking_changed": false,
+    "retrieval_query_behavior_changed": false,
+    "writer_prompt_behavior_changed": false,
+    "writer_kb_payload_behavior_changed": false,
+    "web_trace_behavior_changed": false,
+    "audit_only": true,
+    "raw_private_logs_committed": false,
+    "raw_provider_payload_committed": false
+  },
+  "next_prd_recommendation": {
+    "path": "B",
+    "next_prd": "PRD-047.24 - Retrieval Query Assembly / Current-Turn Focus Repair v1",
+    "reason": "Current-turn query pollution/duplication is confirmed in observed cases."
+  },
+  "status": "passed",
+  "post_test_sync": {
+    "test_command_output_present": true,
+    "encoding_report_resynced_after_tests": true
+  }
+}

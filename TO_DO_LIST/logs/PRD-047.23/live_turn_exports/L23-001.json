@@ -1,0 +1,371 @@
+{
+  "session_id": "prd-047-23-l23-001",
+  "turn_index": 1,
+  "retrieval_action": "query_kb",
+  "planned_composed_query": "самореализация как она коррелируется нейросталкингом",
+  "executed_rag_query": "Что такое самореализация как она коррелируется с Нейросталкингом?",
+  "legacy_rag_query": "Что такое самореализация как она коррелируется с Нейросталкингом?",
+  "query_before_rag_proof": false,
+  "rag_skipped_reason": null,
+  "writer_can_ignore_rag": false,
+  "retrieval_decision": {
+    "version": "contextual_retrieval_gating_v1",
+    "retrieval_decision_version": "contextual_retrieval_gating_v1",
+    "retrieval_action": "query_kb",
+    "rag_candidates_count": 1,
+    "rag_included_count": 1,
+    "rag_included_reason": "knowledge question needs compact KB support",
+    "rag_suppressed_reason": "",
+    "writer_can_ignore_rag": false,
+    "rag_relevance_to_current_turn": "high",
+    "inherited_topic": "нейросталкинг",
+    "inherited_offer_type": "unknown",
+    "why_memory_only_still_included_rag": "",
+    "fresh_chat_context_policy": {
+      "version": "fresh_chat_context_policy_v1",
+      "is_new_chat": true,
+      "turn_index": 1,
+      "fresh_window_active": true,
+      "is_greeting_or_contact": false,
+      "explicit_continuation_requested": false,
+      "explicit_question_or_knowledge_need": true,
+      "cross_session_memory_allowed": true,
+      "cross_session_memory_reason": "explicit_question_or_knowledge_need",
+      "active_context_source": "current_chat_runtime_scope"
+    },
+    "rag_included_for_writer": [
+      {
+        "chunk_id": "5943bece-db10-460a-bc21-7e23e6485925",
+        "content": "НейроСталкинг и НеоСталкинг — это два уровня одного процесса.\n\n**НейроСталкинг** — это работа с первым этажом. Паттерны, триггеры, автоматические реакции, нейрофизиология страдания. Здесь ты исследуешь, как работает программа. Смотришь на неё снаружи. Учишься не запускаться.\n\n**НеоСталкинг** — это второй этаж. Или точнее — не этаж, а перспектива. Когда ты уже не просто наблюдаешь за программой, а замечаешь: кто это наблюдает? Что вообще является этим «я», которое смотрит?\n\nНа этом уровне личность — с её историей, её самооценкой, её нуждами быть правым или любимым — перестаёт быть организующим центром опыта. Она не исчезает. Она становится тем, за чем можно наблюдать, а не тем, изнутри чего т",
+        "source": "book",
+        "score": 0.1071131152849568
+      }
+    ],
+    "hybrid_retrieval_planner_version": "hybrid_retrieval_planner_v1_r1",
+    "hybrid_retrieval_planner_mode": "shadow",
+    "hybrid_retrieval_plan": {
+      "version": "hybrid_retrieval_planner_v1_r1",
+      "retrieval_needed": true,
+      "retrieval_action": "query_kb",
+      "composed_query": "самореализация как она коррелируется нейросталкингом",
+      "needed_chunk_types": [
+        "concept",
+        "source_fragment"
+      ],
+      "avoided_chunk_types": [],
+      "mechanism_hints": [],
+      "depth_level_hint": 1,
+      "safety_layer_required": false,
+      "allowed_use_filter_hint": [
+        "writer_support"
+      ],
+      "diagnostic_hints_used": false,
+      "writer_can_ignore_rag": false,
+      "retrieval_gap_reason": "",
+      "no_user_facing_text_created": true,
+      "fallback_if_invalid": "legacy_query",
+      "constraints_for_writer": [],
+      "confidence": 0.84
+    },
+    "hybrid_retrieval_plan_valid": true,
+    "hybrid_retrieval_plan_error": null,
+    "hybrid_retrieval_universal_gate": "clear_kb_ask",
+    "hybrid_retrieval_llm_called": false,
+    "hybrid_retrieval_llm_reason": "universal_gate_resolved",
+    "hybrid_retrieval_fallback_used": false,
+    "composer": {
+      "version": "contextual_retrieval_query_composer_v1",
+      "enabled": true,
+      "mode": "deterministic_v1",
+      "retrieval_need": "knowledge_context",
+      "retrieval_action": "query_kb",
+      "query_source": "current_user_message",
+      "composed_query": "самореализация она коррелируется нейросталкингом нейросталкинг",
+      "query_terms": [
+        "самореализация",
+        "она",
+        "коррелируется",
+        "нейросталкингом",
+        "нейросталкинг"
+      ],
+      "inherited_topic": "нейросталкинг",
+      "inherited_offer_type": "none",
+      "confidence": 0.88,
+      "writer_can_ignore_rag": false,
+      "include_for_writer_if_found": true,
+      "max_chunks_for_writer": 3,
+      "max_chars_per_chunk": 700,
+      "suppress_reason": "",
+      "reason": "knowledge question needs compact KB support",
+      "evidence": [
+        "knowledge_question",
+        "query_composed_from_current_message"
+      ],
+      "no_user_facing_text_created": true,
+      "pre_retrieval": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "knowledge_context",
+        "retrieval_action": "query_kb",
+        "query_source": "current_user_message",
+        "composed_query": "самореализация она коррелируется нейросталкингом",
+        "query_terms": [
+          "самореализация",
+          "она",
+          "коррелируется",
+          "нейросталкингом"
+        ],
+        "inherited_topic": "",
+        "inherited_offer_type": "",
+        "confidence": 0.88,
+        "writer_can_ignore_rag": false,
+        "include_for_writer_if_found": true,
+        "max_chunks_for_writer": 3,
+        "max_chars_per_chunk": 700,
+        "suppress_reason": "",
+        "reason": "knowledge question needs compact KB support",
+        "evidence": [
+          "knowledge_question",
+          "query_composed_from_current_message"
+        ],
+        "no_user_facing_text_created": true,
+        "hybrid_retrieval_plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": true,
+          "retrieval_action": "query_kb",
+          "composed_query": "самореализация как она коррелируется нейросталкингом",
+          "needed_chunk_types": [
+            "concept",
+            "source_fragment"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 1,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": false,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.84
+        },
+        "hybrid_retrieval_universal_gate": "clear_kb_ask"
+      },
+      "executed_rag_query": "Что такое самореализация как она коррелируется с Нейросталкингом?",
+      "hybrid_retrieval_plan": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "retrieval_needed": true,
+        "retrieval_action": "query_kb",
+        "composed_query": "самореализация как она коррелируется нейросталкингом",
+        "needed_chunk_types": [
+          "concept",
+          "source_fragment"
+        ],
+        "avoided_chunk_types": [],
+        "mechanism_hints": [],
+        "depth_level_hint": 1,
+        "safety_layer_required": false,
+        "allowed_use_filter_hint": [
+          "writer_support"
+        ],
+        "diagnostic_hints_used": false,
+        "writer_can_ignore_rag": false,
+        "retrieval_gap_reason": "",
+        "no_user_facing_text_created": true,
+        "fallback_if_invalid": "legacy_query",
+        "constraints_for_writer": [],
+        "confidence": 0.84
+      }
+    },
+    "contextual_retrieval_query_composer": {
+      "version": "contextual_retrieval_query_composer_v1",
+      "enabled": true,
+      "mode": "deterministic_v1",
+      "retrieval_need": "knowledge_context",
+      "retrieval_action": "query_kb",
+      "query_source": "current_user_message",
+      "composed_query": "самореализация она коррелируется нейросталкингом нейросталкинг",
+      "query_terms": [
+        "самореализация",
+        "она",
+        "коррелируется",
+        "нейросталкингом",
+        "нейросталкинг"
+      ],
+      "inherited_topic": "нейросталкинг",
+      "inherited_offer_type": "none",
+      "confidence": 0.88,
+      "writer_can_ignore_rag": false,
+      "include_for_writer_if_found": true,
+      "max_chunks_for_writer": 3,
+      "max_chars_per_chunk": 700,
+      "suppress_reason": "",
+      "reason": "knowledge question needs compact KB support",
+      "evidence": [
+        "knowledge_question",
+        "query_composed_from_current_message"
+      ],
+      "no_user_facing_text_created": true,
+      "pre_retrieval": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "knowledge_context",
+        "retrieval_action": "query_kb",
+        "query_source": "current_user_message",
+        "composed_query": "самореализация она коррелируется нейросталкингом",
+        "query_terms": [
+          "самореализация",
+          "она",
+          "коррелируется",
+          "нейросталкингом"
+        ],
+        "inherited_topic": "",
+        "inherited_offer_type": "",
+        "confidence": 0.88,
+        "writer_can_ignore_rag": false,
+        "include_for_writer_if_found": true,
+        "max_chunks_for_writer": 3,
+        "max_chars_per_chunk": 700,
+        "suppress_reason": "",
+        "reason": "knowledge question needs compact KB support",
+        "evidence": [
+          "knowledge_question",
+          "query_composed_from_current_message"
+        ],
+        "no_user_facing_text_created": true,
+        "hybrid_retrieval_plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": true,
+          "retrieval_action": "query_kb",
+          "composed_query": "самореализация как она коррелируется нейросталкингом",
+          "needed_chunk_types": [
+            "concept",
+            "source_fragment"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 1,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": false,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.84
+        },
+        "hybrid_retrieval_universal_gate": "clear_kb_ask"
+      },
+      "executed_rag_query": "Что такое самореализация как она коррелируется с Нейросталкингом?",
+      "hybrid_retrieval_plan": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "retrieval_needed": true,
+        "retrieval_action": "query_kb",
+        "composed_query": "самореализация как она коррелируется нейросталкингом",
+        "needed_chunk_types": [
+          "concept",
+          "source_fragment"
+        ],
+        "avoided_chunk_types": [],
+        "mechanism_hints": [],
+        "depth_level_hint": 1,
+        "safety_layer_required": false,
+        "allowed_use_filter_hint": [
+          "writer_support"
+        ],
+        "diagnostic_hints_used": false,
+        "writer_can_ignore_rag": false,
+        "retrieval_gap_reason": "",
+        "no_user_facing_text_created": true,
+        "fallback_if_invalid": "legacy_query",
+        "constraints_for_writer": [],
+        "confidence": 0.84
+      }
+    },
+    "contextual_retrieval_query_composer_version": "contextual_retrieval_query_composer_v1",
+    "retrieval_query_source": "current_user_message",
+    "composed_retrieval_query": "самореализация она коррелируется нейросталкингом нейросталкинг",
+    "retrieval_need": "knowledge_context",
+    "planned_composed_query": "самореализация как она коррелируется нейросталкингом",
+    "executed_rag_query": "Что такое самореализация как она коррелируется с Нейросталкингом?",
+    "legacy_rag_query": "Что такое самореализация как она коррелируется с Нейросталкингом?",
+    "query_before_rag_proof": false,
+    "retrieval_gap_reason": "",
+    "needed_chunk_types": [
+      "concept",
+      "source_fragment"
+    ],
+    "mechanism_hints": []
+  },
+  "writer_kb_payload_trace": {
+    "schema_version": "writer_kb_payload_trace_v1",
+    "enabled": true,
+    "configured_enabled": true,
+    "configured_source": "default_local",
+    "status": "structured_payload_used",
+    "primary_path": "writer_kb_payload_v1",
+    "payload_version": "writer_kb_payload_v1",
+    "input_rag_for_writer_count": 1,
+    "payload_chunk_count": 1,
+    "total_original_char_count": 700,
+    "total_sent_char_count": 700,
+    "truncated_chunk_count": 0,
+    "mid_sentence_cut_count": 0,
+    "overlay_metadata_used_count": 0,
+    "payload_sent_to_writer_char_count": 700,
+    "payload_display_preview_char_count": 500,
+    "payload_display_is_preview": true,
+    "payload_full_text_sent_to_writer": true,
+    "payload_full_text_exposed_in_web_trace": false,
+    "fallback_reason": "",
+    "fallback_is_primary": false,
+    "warning": "",
+    "runtime_mode": "local",
+    "warnings": [],
+    "blockers": []
+  },
+  "runtime_config_trace": {
+    "schema_version": "runtime_config_trace_v1",
+    "app_env": "local",
+    "backend_pid": 13600,
+    "backend_start_time": "2026-06-17T09:30:44.716831+00:00",
+    "writer_kb_payload_enabled": true,
+    "writer_kb_payload_enabled_source": "default_local",
+    "writer_kb_payload_raw_value": null,
+    "writer_kb_payload_default_value": true,
+    "overlay_shadow_trace_enabled": false,
+    "overlay_shadow_trace_enabled_source": "default",
+    "debug_trace_enabled": true,
+    "debug_trace_enabled_source": "env"
+  },
+  "overlay_shadow": {
+    "schema_version": "overlay_shadow_trace_v1",
+    "enabled": false,
+    "mode": "trace_only",
+    "reason": "disabled_by_config",
+    "used_for_writer": false,
+    "used_for_retrieval_execution": false,
+    "used_for_final_answer": false
+  },
+  "memory_context_summary": {
+    "semantic_hits_count": 1,
+    "recent_turns_count": 0
+  },
+  "internal_payload_leak_in_answer": false,
+  "answer_preview": "Кратко — самореализация и нейросталкинг связаны как цель и инструмент. Самореализация — это процесс раскрытия и выражения своих способностей, ценностей и уникального смысла жизни; нейросталкинг — внутренняя практика наблюдения за автоматическими паттернами (триггерами, реакциями, нейрофизиологией страдания). Ниже — развёрнуто и структурно.\n\n1) Что такое самореализация (определение и простыми словами)\n- Определение: самореализация — это стремление и процесс реализовать свои потенциалы, жить в соответствии со своими глубинными ценностями, творчески выражать свои сильные стороны и находить смысл ",
+  "answer_chars": 3203,
+  "case_id": "L23-001",
+  "query": "Что такое самореализация как она коррелируется с Нейросталкингом?",
+  "stream_status_code": 200,
+  "debug_status_code": 200,
+  "llm_status_code": 404
+}

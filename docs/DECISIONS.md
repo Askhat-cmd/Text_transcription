@@ -1227,3 +1227,22 @@ Consequences:
 - hybrid retrieval decisions are visible end-to-end without changing runtime behavior;
 - Runtime tab becomes more trustworthy as an effective-state surface instead of a mixed editable legacy surface;
 - future work can focus on retrieval quality and chunk metadata instead of more admin UI duplication.
+
+## ADR-078 - Retrieval query assembly must be repaired before overlay-live evaluation resumes
+
+Status: accepted
+
+Date: 2026-06-17
+
+Context: PRD-047.23 audited the full chain from Bot_data_base source/chunk/store/query through writer payload and Web Trace using the uploaded local trace plus live/local reproduction. The first suspicious Neurostalking cut did not prove a primary stored-chunk defect. The strongest repeated failure instead came from current-turn retrieval query pollution/duplication on follow-up knowledge questions, while payload/UI counter mismatches remained secondary observability debt.
+
+Decision:
+- prioritize retrieval query assembly repair before any new overlay-live evidence/evaluation PRD;
+- treat the observed `...изнутри чего т` case as a downstream preview/full-content ambiguity until a separate repair PRD proves otherwise;
+- keep Bot_data_base source/chunk/Chroma untouched in this phase because the audit did not justify chunker mutation or reindex;
+- keep payload-trace schema cleanup as secondary work after retrieval focus is repaired, unless a future blocker shows the trace mismatch itself changes user-path behavior.
+
+Consequences:
+- the next PRD should target current-turn focus, previous-topic contamination, duplicate fragment collapse, and executed/planned query cleanliness;
+- overlay-live evaluation is deferred because it would otherwise validate polluted retrieval behavior instead of stable runtime behavior;
+- chunking repair remains explicitly unapproved until a future PRD produces direct stored-boundary evidence.

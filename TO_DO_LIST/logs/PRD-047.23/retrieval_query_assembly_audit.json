@@ -1,0 +1,50 @@
+{
+  "schema_version": "prd_047_23_retrieval_query_audit_v1",
+  "results": [
+    {
+      "case_id": "C23-001",
+      "raw_user_query": "Что такое самореализация как она коррелируется с Нейросталкингом?",
+      "previous_user_query": "",
+      "planned_query": "",
+      "executed_query": "Что такое самореализация как она коррелируется с Нейросталкингом?",
+      "legacy_query": null,
+      "query_before_rag_proof": null,
+      "query_contains_previous_question": false,
+      "query_duplicate_fragment_count": 0,
+      "query_truncated_mid_word": false,
+      "planned_executed_mismatch": false,
+      "current_query_underweighted": false,
+      "retrieval_focus_status": "clean"
+    },
+    {
+      "case_id": "C23-002",
+      "raw_user_query": "а что такое \"Программа несовершенное Я\"?",
+      "previous_user_query": "Что такое самореализация как она коррелируется с Нейросталкингом?",
+      "planned_query": "программа несовершенное",
+      "executed_query": "а что такое \"Программа несовершенное Я\"? Что такое самореализация как она коррелируется с Нейросталкингом?",
+      "legacy_query": "а что такое \"Программа несовершенное Я\"? Что такое самореализация как она коррелируется с Нейросталкингом?",
+      "query_before_rag_proof": false,
+      "query_contains_previous_question": true,
+      "query_duplicate_fragment_count": 0,
+      "query_truncated_mid_word": false,
+      "planned_executed_mismatch": true,
+      "current_query_underweighted": true,
+      "retrieval_focus_status": "polluted"
+    },
+    {
+      "case_id": "C23-003",
+      "raw_user_query": "расскажи о Пяти драйверах выживания: Драйвер 1: «Будь сильным», Драйвер 2: «Будь лучшим», Драйвер 3: «Радуй других», Драйвер 4: «Старайся сильнее», Драйвер 5: «Спеши»",
+      "previous_user_query": "а что такое \"Программа несовершенное Я\"?",
+      "planned_query": "",
+      "executed_query": "расскажи о Пяти драйверах выживания: Драйвер 1: «Будь сильным», Драйвер 2: «Будь лучшим», Драйвер 3: «Радуй других», Драйвер 4: «Старайся сильнее», Драйвер 5: «Спеши» расскажи о Пяти драйверах выживания: Драйвер 1: «Будь сильным», Драйвер 2: «Будь лучшим», Драйвер 3: «Радуй других», Драйвер 4: «Стар",
+      "legacy_query": null,
+      "query_before_rag_proof": null,
+      "query_contains_previous_question": false,
+      "query_duplicate_fragment_count": 1,
+      "query_truncated_mid_word": true,
+      "planned_executed_mismatch": false,
+      "current_query_underweighted": true,
+      "retrieval_focus_status": "polluted"
+    }
+  ]
+}

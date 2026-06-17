@@ -1,0 +1,25 @@
+{
+  "schema_version": "prd_047_23_source_gate_report_v1",
+  "prd_id": "PRD-047.23",
+  "checked_at": "2026-06-17T10:22:12.035495+00:00",
+  "required_paths": [
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.22-HF2/manual_web_chat_parity_smoke.json",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.22-HF2/effective_runtime_config_snapshot.json",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-047.22-HF2_IMPLEMENTATION_REPORT.md",
+      "exists": true
+    }
+  ],
+  "local_trace_fixture": "TO_DO_LIST/context/Чат с ботом + раскрытый ТРЕЙС_2_.txt",
+  "local_trace_fixture_exists": true,
+  "primary_source_material": "TO_DO_LIST/source_materials/PRD-047.1/КУЗНИЦА ДУХА v.2.md",
+  "primary_source_material_exists": true,
+  "previous_commit_present": true,
+  "status": "passed"
+}

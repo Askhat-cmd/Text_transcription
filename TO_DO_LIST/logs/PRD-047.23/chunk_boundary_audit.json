@@ -1,0 +1,81 @@
+{
+  "schema_version": "prd_047_23_chunk_boundary_audit_v1",
+  "results": [
+    {
+      "case_id": "C23-001",
+      "chunk_id": "5943bece-db10-460a-bc21-7e23e6485925",
+      "stored_block_found": true,
+      "stored_block_title": "НеоСталкинг: когда личность перестаёт быть центром вселенной",
+      "stored_text_char_count": 1883,
+      "content_excerpt_char_count": 700,
+      "total_sent_char_count": 700,
+      "content_truncated": false,
+      "truncation_strategy": "none",
+      "ends_mid_word": true,
+      "cut_class": "stored_preview_used_as_full_content",
+      "source_context": {
+        "matched": true,
+        "has_more_after_excerpt": true,
+        "tail_preview": " ## Нейрофизиология присутствия: что происходит в мозге Здесь важно понять: присутствие — это не психологическая установка. Это физиологическое состояние. Исследователь Ричард Дэвидсон из Висконсинско"
+      },
+      "explanation": "Stored block is longer than trace excerpt and source contains the longer form."
+    },
+    {
+      "case_id": "C23-002",
+      "chunk_id": "5943bece-db10-460a-bc21-7e23e6485925",
+      "stored_block_found": true,
+      "stored_block_title": "НеоСталкинг: когда личность перестаёт быть центром вселенной",
+      "stored_text_char_count": 1883,
+      "content_excerpt_char_count": 1575,
+      "total_sent_char_count": 1575,
+      "content_truncated": true,
+      "truncation_strategy": "sentence_boundary",
+      "ends_mid_word": false,
+      "cut_class": "runtime_payload_sentence_truncation",
+      "source_context": {
+        "matched": true,
+        "has_more_after_excerpt": true,
+        "tail_preview": " ## Нейрофизиология присутствия: что происходит в мозге Здесь важно понять: присутствие — это не психологическая установка. Это физиологическое состояние. Исследователь Ричард Дэвидсон из Висконсинско"
+      },
+      "explanation": "Runtime trace marks sentence-boundary truncation."
+    },
+    {
+      "case_id": "C23-003",
+      "chunk_id": "f68050f9-d789-4d8b-b5b1-d6302ddfb88e",
+      "stored_block_found": true,
+      "stored_block_title": "Триггер → Программа → Реакция",
+      "stored_text_char_count": 1244,
+      "content_excerpt_char_count": 1233,
+      "total_sent_char_count": 1713,
+      "content_truncated": false,
+      "truncation_strategy": "none",
+      "ends_mid_word": false,
+      "cut_class": "none",
+      "source_context": {
+        "matched": true,
+        "has_more_after_excerpt": true,
+        "tail_preview": " ### Почему сила воли здесь не работает Многие думают: «Ок, я понял механизм — теперь буду контролировать реакции». Проблема: **сила воли работает через верхний этаж. Программа — через нижний**. Это р"
+      },
+      "explanation": "Stored/source boundary still needs manual follow-up."
+    },
+    {
+      "case_id": "C23-003",
+      "chunk_id": "cc979440-d02f-4bff-8920-59982597b4cc",
+      "stored_block_found": true,
+      "stored_block_title": "7. 5–10 минут тишины в конце. Просто посиди с тем, что увидел. Не нужно ничего решать.",
+      "stored_text_char_count": 482,
+      "content_excerpt_char_count": 480,
+      "total_sent_char_count": 1713,
+      "content_truncated": false,
+      "truncation_strategy": "none",
+      "ends_mid_word": false,
+      "cut_class": "none",
+      "source_context": {
+        "matched": true,
+        "has_more_after_excerpt": true,
+        "tail_preview": " ### Практика 2: Карта тела **Цель:** научиться читать телесный сигнал раньше, чем он стал мыслью. **Время:** 10 минут утром или в любое спокойное время. Сядь удобно. Закрой глаза. Начни сверху вниз —"
+      },
+      "explanation": "Stored/source boundary still needs manual follow-up."
+    }
+  ]
+}

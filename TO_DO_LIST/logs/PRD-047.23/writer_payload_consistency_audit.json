@@ -1,0 +1,53 @@
+{
+  "schema_version": "prd_047_23_writer_payload_consistency_v1",
+  "results": [
+    {
+      "case_id": "C23-001",
+      "rag_candidates_for_trace_count": 1,
+      "rag_for_writer_count": 1,
+      "rag_candidates_count": 1,
+      "rag_included_count": 1,
+      "writer_chunks_display_count": 1,
+      "payload_chunk_count": 1,
+      "rag_for_writer_vs_payload_mismatch": false,
+      "rag_included_vs_payload_mismatch": false,
+      "ui_chunks_vs_prompt_payload_mismatch": false,
+      "fallback_flag_consistent": true,
+      "payload_enabled_consistent": true,
+      "trace_needs_schema_fix": false,
+      "explanation": "counts aligned"
+    },
+    {
+      "case_id": "C23-002",
+      "rag_candidates_for_trace_count": 1,
+      "rag_for_writer_count": 0,
+      "rag_candidates_count": 1,
+      "rag_included_count": 0,
+      "writer_chunks_display_count": 1,
+      "payload_chunk_count": 1,
+      "rag_for_writer_vs_payload_mismatch": true,
+      "rag_included_vs_payload_mismatch": true,
+      "ui_chunks_vs_prompt_payload_mismatch": false,
+      "fallback_flag_consistent": true,
+      "payload_enabled_consistent": true,
+      "trace_needs_schema_fix": true,
+      "explanation": "payload can still be built from semantic_hits fallback while rag_for_writer_count remains zero"
+    },
+    {
+      "case_id": "C23-003",
+      "rag_candidates_for_trace_count": 3,
+      "rag_for_writer_count": 0,
+      "rag_candidates_count": 3,
+      "rag_included_count": 0,
+      "writer_chunks_display_count": 3,
+      "payload_chunk_count": 2,
+      "rag_for_writer_vs_payload_mismatch": true,
+      "rag_included_vs_payload_mismatch": true,
+      "ui_chunks_vs_prompt_payload_mismatch": true,
+      "fallback_flag_consistent": true,
+      "payload_enabled_consistent": true,
+      "trace_needs_schema_fix": true,
+      "explanation": "web trace 'Чанки в Writer' count is sourced from semantic_hits, not guaranteed payload chunk_count"
+    }
+  ]
+}

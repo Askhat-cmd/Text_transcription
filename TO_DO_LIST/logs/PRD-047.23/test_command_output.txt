@@ -1,0 +1,19 @@
+﻿$ c:\My_practice\Text_transcription\bot_psychologist\.venv\Scripts\python.exe -m pytest tests/test_prd_047_23_chunk_boundary_audit.py -q
+
+...........                                                              [100%]
+11 passed in 0.44s
+
+
+$ c:\My_practice\Text_transcription\bot_psychologist\.venv\Scripts\python.exe -m pytest tests/api/test_writer_kb_payload_live_http_path.py tests/api/test_writer_kb_payload_manual_web_chat_parity.py -q
+
+...                                                                      [100%]
+============================== warnings summary ===============================
+tests/api/test_writer_kb_payload_live_http_path.py::test_live_like_http_path_produces_writer_kb_payload_trace
+tests/api/test_writer_kb_payload_manual_web_chat_parity.py::test_manual_web_chat_stream_path_uses_writer_kb_payload_v1_by_default_local
+  C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\thread_manager.py:413: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+3 passed, 2 warnings in 55.81s
+
+

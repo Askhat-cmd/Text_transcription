@@ -1,0 +1,17 @@
+{
+  "schema_version": "prd_047_23_no_mutation_proof_v1",
+  "prd_id": "PRD-047.23",
+  "status": "passed",
+  "bot_data_base_sources_modified": false,
+  "bot_data_base_blocks_modified": false,
+  "chroma_reindexed": false,
+  "embeddings_changed": false,
+  "retrieval_ranking_changed": false,
+  "retrieval_query_behavior_changed": false,
+  "writer_prompt_behavior_changed": false,
+  "writer_kb_payload_behavior_changed": false,
+  "web_trace_behavior_changed": false,
+  "audit_only": true,
+  "raw_private_logs_committed": false,
+  "raw_provider_payload_committed": false
+}

@@ -1,362 +1,388 @@
-{
-  "schema_version": "prd_047_22_hf2_implementation_summary_v1",
-  "prd_id": "PRD-047.22-HF2",
-  "status": "passed_with_warning",
-  "checked_at": "2026-06-17T09:09:07.312023+00:00",
-  "source_gates": {
-    "schema_version": "prd_047_22_hf2_source_gate_report_v1",
-    "prd_id": "PRD-047.22-HF2",
-    "checked_at": "2026-06-17T09:06:38.114376+00:00",
-    "required_paths": [
-      {
-        "path": "bot_psychologist/bot_agent/multiagent/writer_kb_payload.py",
-        "exists": true
-      },
-      {
-        "path": "bot_psychologist/tests/api/test_writer_kb_payload_live_http_path.py",
-        "exists": true
-      },
-      {
-        "path": "TO_DO_LIST/logs/PRD-047.22-HF1/api_writer_kb_payload_smoke_fixed.json",
-        "exists": true
-      },
-      {
-        "path": "TO_DO_LIST/logs/PRD-047.22-HF1/root_cause_report.json",
-        "exists": true
-      },
-      {
-        "path": "TO_DO_LIST/reports/PRD-047.22-HF1_IMPLEMENTATION_REPORT.md",
-        "exists": true
-      }
-    ],
-    "baseline_commits": {
-      "66dcb02": "66dcb025bf1429f09bfb8d0986ca9bf5181bb4b8",
-      "b41e4f5": "b41e4f5b4ce8657ff60134c303668f298daedca4",
-      "e3a51a6": "e3a51a6243f413d9adfbfb5b158938b5f7576b99"
-    },
-    "status": "passed"
-  },
-  "manual_web_chat_parity": {
-    "schema_version": "prd_047_22_hf2_manual_web_chat_parity_smoke_v1",
-    "prd_id": "PRD-047.22-HF2",
-    "status": "passed",
-    "transport": "web_chat_streaming_path",
-    "runtime_effective_status_code": 200,
-    "runtime_config_trace": {
-      "schema_version": "runtime_config_trace_v1",
-      "app_env": "local",
-      "backend_pid": 27392,
-      "backend_start_time": "2026-06-17T09:06:38.933073+00:00",
-      "writer_kb_payload_enabled": true,
-      "writer_kb_payload_enabled_source": "default_local",
-      "writer_kb_payload_raw_value": null,
-      "writer_kb_payload_default_value": true,
-      "overlay_shadow_trace_enabled": false,
-      "overlay_shadow_trace_enabled_source": "default",
-      "debug_trace_enabled": true,
-      "debug_trace_enabled_source": "env"
-    },
-    "writer_kb_payload_trace": {
-      "schema_version": "writer_kb_payload_trace_v1",
-      "enabled": true,
-      "configured_enabled": true,
-      "configured_source": "default_local",
-      "status": "structured_payload_used",
-      "primary_path": "writer_kb_payload_v1",
-      "payload_version": "writer_kb_payload_v1",
-      "input_rag_for_writer_count": 1,
-      "payload_chunk_count": 1,
-      "total_original_char_count": 700,
-      "total_sent_char_count": 700,
-      "truncated_chunk_count": 0,
-      "mid_sentence_cut_count": 0,
-      "overlay_metadata_used_count": 0,
-      "payload_sent_to_writer_char_count": 700,
-      "payload_display_preview_char_count": 500,
-      "payload_display_is_preview": true,
-      "payload_full_text_sent_to_writer": true,
-      "payload_full_text_exposed_in_web_trace": false,
-      "fallback_reason": "",
-      "fallback_is_primary": false,
-      "warning": "",
-      "runtime_mode": "local",
-      "warnings": [],
-      "blockers": []
-    },
-    "cases": [
-      {
-        "query": "что такое Нейросталкинг?",
-        "session_id": "prd-047-22-hf2-1",
-        "stream_status_code": 200,
-        "debug_status_code": 200,
-        "llm_status_code": 404,
-        "writer_kb_payload_trace": {
-          "schema_version": "writer_kb_payload_trace_v1",
-          "enabled": true,
-          "configured_enabled": true,
-          "configured_source": "default_local",
-          "status": "structured_payload_used",
-          "primary_path": "writer_kb_payload_v1",
-          "payload_version": "writer_kb_payload_v1",
-          "input_rag_for_writer_count": 1,
-          "payload_chunk_count": 1,
-          "total_original_char_count": 700,
-          "total_sent_char_count": 700,
-          "truncated_chunk_count": 0,
-          "mid_sentence_cut_count": 0,
-          "overlay_metadata_used_count": 0,
-          "payload_sent_to_writer_char_count": 700,
-          "payload_display_preview_char_count": 500,
-          "payload_display_is_preview": true,
-          "payload_full_text_sent_to_writer": true,
-          "payload_full_text_exposed_in_web_trace": false,
-          "fallback_reason": "",
-          "fallback_is_primary": false,
-          "warning": "",
-          "runtime_mode": "local",
-          "warnings": [],
-          "blockers": []
-        },
-        "runtime_config_trace": {
-          "schema_version": "runtime_config_trace_v1",
-          "app_env": "local",
-          "backend_pid": 27392,
-          "backend_start_time": "2026-06-17T09:06:38.933073+00:00",
-          "writer_kb_payload_enabled": true,
-          "writer_kb_payload_enabled_source": "default_local",
-          "writer_kb_payload_raw_value": null,
-          "writer_kb_payload_default_value": true,
-          "overlay_shadow_trace_enabled": false,
-          "overlay_shadow_trace_enabled_source": "default",
-          "debug_trace_enabled": true,
-          "debug_trace_enabled_source": "env"
-        },
-        "internal_payload_leak_in_answer": false,
-        "acceptance_passed": true
-      },
-      {
-        "query": "объясни программу несовершенное Я простыми словами",
-        "session_id": "prd-047-22-hf2-2",
-        "stream_status_code": 200,
-        "debug_status_code": 200,
-        "llm_status_code": 404,
-        "writer_kb_payload_trace": {
-          "schema_version": "writer_kb_payload_trace_v1",
-          "enabled": true,
-          "configured_enabled": true,
-          "configured_source": "default_local",
-          "status": "structured_payload_used",
-          "primary_path": "writer_kb_payload_v1",
-          "payload_version": "writer_kb_payload_v1",
-          "input_rag_for_writer_count": 2,
-          "payload_chunk_count": 2,
-          "total_original_char_count": 1400,
-          "total_sent_char_count": 1400,
-          "truncated_chunk_count": 0,
-          "mid_sentence_cut_count": 0,
-          "overlay_metadata_used_count": 0,
-          "payload_sent_to_writer_char_count": 1400,
-          "payload_display_preview_char_count": 500,
-          "payload_display_is_preview": true,
-          "payload_full_text_sent_to_writer": true,
-          "payload_full_text_exposed_in_web_trace": false,
-          "fallback_reason": "",
-          "fallback_is_primary": false,
-          "warning": "",
-          "runtime_mode": "local",
-          "warnings": [],
-          "blockers": []
-        },
-        "runtime_config_trace": {
-          "schema_version": "runtime_config_trace_v1",
-          "app_env": "local",
-          "backend_pid": 27392,
-          "backend_start_time": "2026-06-17T09:06:38.933073+00:00",
-          "writer_kb_payload_enabled": true,
-          "writer_kb_payload_enabled_source": "default_local",
-          "writer_kb_payload_raw_value": null,
-          "writer_kb_payload_default_value": true,
-          "overlay_shadow_trace_enabled": false,
-          "overlay_shadow_trace_enabled_source": "default",
-          "debug_trace_enabled": true,
-          "debug_trace_enabled_source": "env"
-        },
-        "internal_payload_leak_in_answer": false,
-        "acceptance_passed": true
-      },
-      {
-        "query": "как отличить факт от интерпретации?",
-        "session_id": "prd-047-22-hf2-3",
-        "stream_status_code": 200,
-        "debug_status_code": 200,
-        "llm_status_code": 404,
-        "writer_kb_payload_trace": {
-          "schema_version": "writer_kb_payload_trace_v1",
-          "enabled": true,
-          "configured_enabled": true,
-          "configured_source": "default_local",
-          "status": "structured_payload_used",
-          "primary_path": "writer_kb_payload_v1",
-          "payload_version": "writer_kb_payload_v1",
-          "input_rag_for_writer_count": 0,
-          "payload_chunk_count": 2,
-          "total_original_char_count": 3197,
-          "total_sent_char_count": 3057,
-          "truncated_chunk_count": 1,
-          "mid_sentence_cut_count": 0,
-          "overlay_metadata_used_count": 0,
-          "payload_sent_to_writer_char_count": 3057,
-          "payload_display_preview_char_count": 500,
-          "payload_display_is_preview": true,
-          "payload_full_text_sent_to_writer": true,
-          "payload_full_text_exposed_in_web_trace": false,
-          "fallback_reason": "",
-          "fallback_is_primary": false,
-          "warning": "",
-          "runtime_mode": "local",
-          "warnings": [],
-          "blockers": []
-        },
-        "runtime_config_trace": {
-          "schema_version": "runtime_config_trace_v1",
-          "app_env": "local",
-          "backend_pid": 27392,
-          "backend_start_time": "2026-06-17T09:06:38.933073+00:00",
-          "writer_kb_payload_enabled": true,
-          "writer_kb_payload_enabled_source": "default_local",
-          "writer_kb_payload_raw_value": null,
-          "writer_kb_payload_default_value": true,
-          "overlay_shadow_trace_enabled": false,
-          "overlay_shadow_trace_enabled_source": "default",
-          "debug_trace_enabled": true,
-          "debug_trace_enabled_source": "env"
-        },
-        "internal_payload_leak_in_answer": false,
-        "acceptance_passed": true
-      }
-    ],
-    "warning": "browser_trace_snapshot_not_captured"
-  },
-  "tests": {
-    "status": "passed",
-    "commands": [
-      {
-        "command": [
-          "C:\\My_practice\\Text_transcription\\bot_psychologist\\.venv\\Scripts\\python.exe",
-          "-m",
-          "pytest",
-          "tests/api/test_writer_kb_payload_live_http_path.py",
-          "tests/api/test_writer_kb_payload_effective_config.py",
-          "tests/api/test_writer_kb_payload_manual_web_chat_parity.py",
-          "tests/api/test_writer_kb_payload_trace_api_debug.py",
-          "-q",
-          "--basetemp=C:\\My_practice\\Text_transcription\\.pytest_tmp_prd_047_22_hf2"
-        ],
-        "returncode": 0
-      },
-      {
-        "command": [
-          "npm.cmd",
-          "test",
-          "--",
-          "src/components/chat/MultiAgentTraceWidget.test.ts"
-        ],
-        "returncode": 0
-      },
-      {
-        "command": [
-          "npm.cmd",
-          "run",
-          "build"
-        ],
-        "returncode": 0
-      }
-    ]
-  },
-  "encoding_hygiene": {
-    "schema_version": "artifact_encoding_hygiene_report_v1",
-    "prd": "PRD-047.22-HF2",
-    "checked_prd": "PRD-047.22-HF2",
-    "final_status": "passed",
-    "files_checked": 9,
-    "utf8_decode_error_count": 0,
-    "nul_byte_file_count": 0,
-    "nul_char_file_count": 0,
-    "replacement_char_warning_count": 0,
-    "mojibake_warning_count": 0,
-    "json_parse_error_count": 0,
-    "empty_text_artifact_count": 0,
-    "unexpected_debug_dir_count": 0,
-    "fixed_files": [],
-    "warnings": [],
-    "blockers": [],
-    "checked_files": [
-      "TO_DO_LIST/logs/PRD-047.22-HF2/effective_runtime_config_snapshot.json",
-      "TO_DO_LIST/logs/PRD-047.22-HF2/managed_backend_stdout.log",
-      "TO_DO_LIST/logs/PRD-047.22-HF2/manual_web_chat_parity_smoke.json",
-      "TO_DO_LIST/logs/PRD-047.22-HF2/manual_web_chat_parity_smoke.md",
-      "TO_DO_LIST/logs/PRD-047.22-HF2/no_mutation_proof.json",
-      "TO_DO_LIST/logs/PRD-047.22-HF2/prompt_canvases/manual_web_chat_neurostalking_prompt_canvas.txt",
-      "TO_DO_LIST/logs/PRD-047.22-HF2/source_gate_report.json",
-      "TO_DO_LIST/logs/PRD-047.22-HF2/source_gate_report.md",
-      "TO_DO_LIST/logs/PRD-047.22-HF2/test_command_output.txt"
-    ]
-  },
-  "no_mutation": {
-    "schema_version": "prd_047_22_hf2_no_mutation_proof_v1",
-    "prd_id": "PRD-047.22-HF2",
-    "status": "passed",
-    "live_metadata_applied": false,
-    "processed_blocks_overwritten": false,
-    "registry_mutated": false,
-    "chroma_reindexed": false,
-    "embeddings_changed": false,
-    "retrieval_ranking_changed": false,
-    "retrieval_query_changed": false,
-    "overlay_authority_added": false,
-    "writer_kb_payload_canonical_for_manual_web_chat": true,
-    "legacy_fallback_retained_only_as_emergency_fallback": true,
-    "broad_rollout_declared": false,
-    "production_default_changed_without_gate": false
-  },
-  "managed_backend": {
-    "killed_listener_pids": [],
-    "pid": 26616
-  },
-  "effective_runtime_config_snapshot": {
-    "writer_kb_payload": {
-      "enabled": true,
-      "enabled_source": "default_local",
-      "raw_value": null,
-      "default_value": true,
-      "runtime_mode": "local",
-      "primary_path": "writer_kb_payload_v1",
-      "legacy_fallback_role": "emergency_only",
-      "fallback_warning_required": true,
-      "manual_web_chat_canonical": true,
-      "broad_rollout_allowed": false,
-      "production_default_requires_explicit_gate": true
-    },
-    "trace": {
-      "available": true,
-      "developer_trace_supported": true,
-      "developer_trace_enabled": true,
-      "developer_trace_mode_available": true,
-      "runtime_config_trace": {
-        "schema_version": "runtime_config_trace_v1",
-        "app_env": "local",
-        "backend_pid": 27392,
-        "backend_start_time": "2026-06-17T09:06:38.933073+00:00",
-        "writer_kb_payload_enabled": true,
-        "writer_kb_payload_enabled_source": "default_local",
-        "writer_kb_payload_raw_value": null,
-        "writer_kb_payload_default_value": true,
-        "overlay_shadow_trace_enabled": false,
-        "overlay_shadow_trace_enabled_source": "default",
-        "debug_trace_enabled": true,
-        "debug_trace_enabled_source": "env"
-      }
-    }
-  },
-  "primary_prompt_canvas_present": true
+﻿{
+    "schema_version":  "prd_047_22_hf2_implementation_summary_v1",
+    "prd_id":  "PRD-047.22-HF2",
+    "status":  "passed_with_warning",
+    "checked_at":  "2026-06-17T09:09:07.312023+00:00",
+    "source_gates":  {
+                         "schema_version":  "prd_047_22_hf2_source_gate_report_v1",
+                         "prd_id":  "PRD-047.22-HF2",
+                         "checked_at":  "2026-06-17T09:06:38.114376+00:00",
+                         "required_paths":  [
+                                                {
+                                                    "path":  "bot_psychologist/bot_agent/multiagent/writer_kb_payload.py",
+                                                    "exists":  true
+                                                },
+                                                {
+                                                    "path":  "bot_psychologist/tests/api/test_writer_kb_payload_live_http_path.py",
+                                                    "exists":  true
+                                                },
+                                                {
+                                                    "path":  "TO_DO_LIST/logs/PRD-047.22-HF1/api_writer_kb_payload_smoke_fixed.json",
+                                                    "exists":  true
+                                                },
+                                                {
+                                                    "path":  "TO_DO_LIST/logs/PRD-047.22-HF1/root_cause_report.json",
+                                                    "exists":  true
+                                                },
+                                                {
+                                                    "path":  "TO_DO_LIST/reports/PRD-047.22-HF1_IMPLEMENTATION_REPORT.md",
+                                                    "exists":  true
+                                                }
+                                            ],
+                         "baseline_commits":  {
+                                                  "66dcb02":  "66dcb025bf1429f09bfb8d0986ca9bf5181bb4b8",
+                                                  "b41e4f5":  "b41e4f5b4ce8657ff60134c303668f298daedca4",
+                                                  "e3a51a6":  "e3a51a6243f413d9adfbfb5b158938b5f7576b99"
+                                              },
+                         "status":  "passed"
+                     },
+    "manual_web_chat_parity":  {
+                                   "schema_version":  "prd_047_22_hf2_manual_web_chat_parity_smoke_v1",
+                                   "prd_id":  "PRD-047.22-HF2",
+                                   "status":  "passed",
+                                   "transport":  "web_chat_streaming_path",
+                                   "runtime_effective_status_code":  200,
+                                   "runtime_config_trace":  {
+                                                                "schema_version":  "runtime_config_trace_v1",
+                                                                "app_env":  "local",
+                                                                "backend_pid":  27392,
+                                                                "backend_start_time":  "2026-06-17T09:06:38.933073+00:00",
+                                                                "writer_kb_payload_enabled":  true,
+                                                                "writer_kb_payload_enabled_source":  "default_local",
+                                                                "writer_kb_payload_raw_value":  null,
+                                                                "writer_kb_payload_default_value":  true,
+                                                                "overlay_shadow_trace_enabled":  false,
+                                                                "overlay_shadow_trace_enabled_source":  "default",
+                                                                "debug_trace_enabled":  true,
+                                                                "debug_trace_enabled_source":  "env"
+                                                            },
+                                   "writer_kb_payload_trace":  {
+                                                                   "schema_version":  "writer_kb_payload_trace_v1",
+                                                                   "enabled":  true,
+                                                                   "configured_enabled":  true,
+                                                                   "configured_source":  "default_local",
+                                                                   "status":  "structured_payload_used",
+                                                                   "primary_path":  "writer_kb_payload_v1",
+                                                                   "payload_version":  "writer_kb_payload_v1",
+                                                                   "input_rag_for_writer_count":  1,
+                                                                   "payload_chunk_count":  1,
+                                                                   "total_original_char_count":  700,
+                                                                   "total_sent_char_count":  700,
+                                                                   "truncated_chunk_count":  0,
+                                                                   "mid_sentence_cut_count":  0,
+                                                                   "overlay_metadata_used_count":  0,
+                                                                   "payload_sent_to_writer_char_count":  700,
+                                                                   "payload_display_preview_char_count":  500,
+                                                                   "payload_display_is_preview":  true,
+                                                                   "payload_full_text_sent_to_writer":  true,
+                                                                   "payload_full_text_exposed_in_web_trace":  false,
+                                                                   "fallback_reason":  "",
+                                                                   "fallback_is_primary":  false,
+                                                                   "warning":  "",
+                                                                   "runtime_mode":  "local",
+                                                                   "warnings":  [
+
+                                                                                ],
+                                                                   "blockers":  [
+
+                                                                                ]
+                                                               },
+                                   "cases":  [
+                                                 {
+                                                     "query":  "С‡С‚Рѕ С‚Р°РєРѕРµ РќРµР№СЂРѕСЃС‚Р°Р»РєРёРЅРі?",
+                                                     "session_id":  "prd-047-22-hf2-1",
+                                                     "stream_status_code":  200,
+                                                     "debug_status_code":  200,
+                                                     "llm_status_code":  404,
+                                                     "writer_kb_payload_trace":  {
+                                                                                     "schema_version":  "writer_kb_payload_trace_v1",
+                                                                                     "enabled":  true,
+                                                                                     "configured_enabled":  true,
+                                                                                     "configured_source":  "default_local",
+                                                                                     "status":  "structured_payload_used",
+                                                                                     "primary_path":  "writer_kb_payload_v1",
+                                                                                     "payload_version":  "writer_kb_payload_v1",
+                                                                                     "input_rag_for_writer_count":  1,
+                                                                                     "payload_chunk_count":  1,
+                                                                                     "total_original_char_count":  700,
+                                                                                     "total_sent_char_count":  700,
+                                                                                     "truncated_chunk_count":  0,
+                                                                                     "mid_sentence_cut_count":  0,
+                                                                                     "overlay_metadata_used_count":  0,
+                                                                                     "payload_sent_to_writer_char_count":  700,
+                                                                                     "payload_display_preview_char_count":  500,
+                                                                                     "payload_display_is_preview":  true,
+                                                                                     "payload_full_text_sent_to_writer":  true,
+                                                                                     "payload_full_text_exposed_in_web_trace":  false,
+                                                                                     "fallback_reason":  "",
+                                                                                     "fallback_is_primary":  false,
+                                                                                     "warning":  "",
+                                                                                     "runtime_mode":  "local",
+                                                                                     "warnings":  [
+
+                                                                                                  ],
+                                                                                     "blockers":  [
+
+                                                                                                  ]
+                                                                                 },
+                                                     "runtime_config_trace":  {
+                                                                                  "schema_version":  "runtime_config_trace_v1",
+                                                                                  "app_env":  "local",
+                                                                                  "backend_pid":  27392,
+                                                                                  "backend_start_time":  "2026-06-17T09:06:38.933073+00:00",
+                                                                                  "writer_kb_payload_enabled":  true,
+                                                                                  "writer_kb_payload_enabled_source":  "default_local",
+                                                                                  "writer_kb_payload_raw_value":  null,
+                                                                                  "writer_kb_payload_default_value":  true,
+                                                                                  "overlay_shadow_trace_enabled":  false,
+                                                                                  "overlay_shadow_trace_enabled_source":  "default",
+                                                                                  "debug_trace_enabled":  true,
+                                                                                  "debug_trace_enabled_source":  "env"
+                                                                              },
+                                                     "internal_payload_leak_in_answer":  false,
+                                                     "acceptance_passed":  true
+                                                 },
+                                                 {
+                                                     "query":  "РѕР±СЉСЏСЃРЅРё РїСЂРѕРіСЂР°РјРјСѓ РЅРµСЃРѕРІРµСЂС€РµРЅРЅРѕРµ РЇ РїСЂРѕСЃС‚С‹РјРё СЃР»РѕРІР°РјРё",
+                                                     "session_id":  "prd-047-22-hf2-2",
+                                                     "stream_status_code":  200,
+                                                     "debug_status_code":  200,
+                                                     "llm_status_code":  404,
+                                                     "writer_kb_payload_trace":  {
+                                                                                     "schema_version":  "writer_kb_payload_trace_v1",
+                                                                                     "enabled":  true,
+                                                                                     "configured_enabled":  true,
+                                                                                     "configured_source":  "default_local",
+                                                                                     "status":  "structured_payload_used",
+                                                                                     "primary_path":  "writer_kb_payload_v1",
+                                                                                     "payload_version":  "writer_kb_payload_v1",
+                                                                                     "input_rag_for_writer_count":  2,
+                                                                                     "payload_chunk_count":  2,
+                                                                                     "total_original_char_count":  1400,
+                                                                                     "total_sent_char_count":  1400,
+                                                                                     "truncated_chunk_count":  0,
+                                                                                     "mid_sentence_cut_count":  0,
+                                                                                     "overlay_metadata_used_count":  0,
+                                                                                     "payload_sent_to_writer_char_count":  1400,
+                                                                                     "payload_display_preview_char_count":  500,
+                                                                                     "payload_display_is_preview":  true,
+                                                                                     "payload_full_text_sent_to_writer":  true,
+                                                                                     "payload_full_text_exposed_in_web_trace":  false,
+                                                                                     "fallback_reason":  "",
+                                                                                     "fallback_is_primary":  false,
+                                                                                     "warning":  "",
+                                                                                     "runtime_mode":  "local",
+                                                                                     "warnings":  [
+
+                                                                                                  ],
+                                                                                     "blockers":  [
+
+                                                                                                  ]
+                                                                                 },
+                                                     "runtime_config_trace":  {
+                                                                                  "schema_version":  "runtime_config_trace_v1",
+                                                                                  "app_env":  "local",
+                                                                                  "backend_pid":  27392,
+                                                                                  "backend_start_time":  "2026-06-17T09:06:38.933073+00:00",
+                                                                                  "writer_kb_payload_enabled":  true,
+                                                                                  "writer_kb_payload_enabled_source":  "default_local",
+                                                                                  "writer_kb_payload_raw_value":  null,
+                                                                                  "writer_kb_payload_default_value":  true,
+                                                                                  "overlay_shadow_trace_enabled":  false,
+                                                                                  "overlay_shadow_trace_enabled_source":  "default",
+                                                                                  "debug_trace_enabled":  true,
+                                                                                  "debug_trace_enabled_source":  "env"
+                                                                              },
+                                                     "internal_payload_leak_in_answer":  false,
+                                                     "acceptance_passed":  true
+                                                 },
+                                                 {
+                                                     "query":  "РєР°Рє РѕС‚Р»РёС‡РёС‚СЊ С„Р°РєС‚ РѕС‚ РёРЅС‚РµСЂРїСЂРµС‚Р°С†РёРё?",
+                                                     "session_id":  "prd-047-22-hf2-3",
+                                                     "stream_status_code":  200,
+                                                     "debug_status_code":  200,
+                                                     "llm_status_code":  404,
+                                                     "writer_kb_payload_trace":  {
+                                                                                     "schema_version":  "writer_kb_payload_trace_v1",
+                                                                                     "enabled":  true,
+                                                                                     "configured_enabled":  true,
+                                                                                     "configured_source":  "default_local",
+                                                                                     "status":  "structured_payload_used",
+                                                                                     "primary_path":  "writer_kb_payload_v1",
+                                                                                     "payload_version":  "writer_kb_payload_v1",
+                                                                                     "input_rag_for_writer_count":  0,
+                                                                                     "payload_chunk_count":  2,
+                                                                                     "total_original_char_count":  3197,
+                                                                                     "total_sent_char_count":  3057,
+                                                                                     "truncated_chunk_count":  1,
+                                                                                     "mid_sentence_cut_count":  0,
+                                                                                     "overlay_metadata_used_count":  0,
+                                                                                     "payload_sent_to_writer_char_count":  3057,
+                                                                                     "payload_display_preview_char_count":  500,
+                                                                                     "payload_display_is_preview":  true,
+                                                                                     "payload_full_text_sent_to_writer":  true,
+                                                                                     "payload_full_text_exposed_in_web_trace":  false,
+                                                                                     "fallback_reason":  "",
+                                                                                     "fallback_is_primary":  false,
+                                                                                     "warning":  "",
+                                                                                     "runtime_mode":  "local",
+                                                                                     "warnings":  [
+
+                                                                                                  ],
+                                                                                     "blockers":  [
+
+                                                                                                  ]
+                                                                                 },
+                                                     "runtime_config_trace":  {
+                                                                                  "schema_version":  "runtime_config_trace_v1",
+                                                                                  "app_env":  "local",
+                                                                                  "backend_pid":  27392,
+                                                                                  "backend_start_time":  "2026-06-17T09:06:38.933073+00:00",
+                                                                                  "writer_kb_payload_enabled":  true,
+                                                                                  "writer_kb_payload_enabled_source":  "default_local",
+                                                                                  "writer_kb_payload_raw_value":  null,
+                                                                                  "writer_kb_payload_default_value":  true,
+                                                                                  "overlay_shadow_trace_enabled":  false,
+                                                                                  "overlay_shadow_trace_enabled_source":  "default",
+                                                                                  "debug_trace_enabled":  true,
+                                                                                  "debug_trace_enabled_source":  "env"
+                                                                              },
+                                                     "internal_payload_leak_in_answer":  false,
+                                                     "acceptance_passed":  true
+                                                 }
+                                             ],
+                                   "warning":  "browser_trace_snapshot_not_captured"
+                               },
+    "tests":  {
+                  "status":  "passed",
+                  "commands":  [
+                                   {
+                                       "command":  [
+                                                       "C:\\My_practice\\Text_transcription\\bot_psychologist\\.venv\\Scripts\\python.exe",
+                                                       "-m",
+                                                       "pytest",
+                                                       "tests/api/test_writer_kb_payload_live_http_path.py",
+                                                       "tests/api/test_writer_kb_payload_effective_config.py",
+                                                       "tests/api/test_writer_kb_payload_manual_web_chat_parity.py",
+                                                       "tests/api/test_writer_kb_payload_trace_api_debug.py",
+                                                       "-q",
+                                                       "--basetemp=C:\\My_practice\\Text_transcription\\.pytest_tmp_prd_047_22_hf2"
+                                                   ],
+                                       "returncode":  0
+                                   },
+                                   {
+                                       "command":  [
+                                                       "npm.cmd",
+                                                       "test",
+                                                       "--",
+                                                       "src/components/chat/MultiAgentTraceWidget.test.ts"
+                                                   ],
+                                       "returncode":  0
+                                   },
+                                   {
+                                       "command":  [
+                                                       "npm.cmd",
+                                                       "run",
+                                                       "build"
+                                                   ],
+                                       "returncode":  0
+                                   }
+                               ]
+              },
+    "encoding_hygiene":  {
+                             "schema_version":  "artifact_encoding_hygiene_report_v1",
+                             "prd":  "PRD-047.22-HF2",
+                             "checked_prd":  "PRD-047.22-HF2",
+                             "final_status":  "passed",
+                             "files_checked":  9,
+                             "utf8_decode_error_count":  0,
+                             "nul_byte_file_count":  0,
+                             "nul_char_file_count":  0,
+                             "replacement_char_warning_count":  0,
+                             "mojibake_warning_count":  0,
+                             "json_parse_error_count":  0,
+                             "empty_text_artifact_count":  0,
+                             "unexpected_debug_dir_count":  0,
+                             "fixed_files":  [
+
+                                             ],
+                             "warnings":  [
+
+                                          ],
+                             "blockers":  [
+
+                                          ],
+                             "checked_files":  [
+                                                   "TO_DO_LIST/logs/PRD-047.22-HF2/effective_runtime_config_snapshot.json",
+                                                   "TO_DO_LIST/logs/PRD-047.22-HF2/managed_backend_stdout.log",
+                                                   "TO_DO_LIST/logs/PRD-047.22-HF2/manual_web_chat_parity_smoke.json",
+                                                   "TO_DO_LIST/logs/PRD-047.22-HF2/manual_web_chat_parity_smoke.md",
+                                                   "TO_DO_LIST/logs/PRD-047.22-HF2/no_mutation_proof.json",
+                                                   "TO_DO_LIST/logs/PRD-047.22-HF2/prompt_canvases/manual_web_chat_neurostalking_prompt_canvas.txt",
+                                                   "TO_DO_LIST/logs/PRD-047.22-HF2/source_gate_report.json",
+                                                   "TO_DO_LIST/logs/PRD-047.22-HF2/source_gate_report.md",
+                                                   "TO_DO_LIST/logs/PRD-047.22-HF2/test_command_output.txt"
+                                               ]
+                         },
+    "no_mutation":  {
+                        "schema_version":  "prd_047_22_hf2_no_mutation_proof_v1",
+                        "prd_id":  "PRD-047.22-HF2",
+                        "status":  "passed",
+                        "live_metadata_applied":  false,
+                        "processed_blocks_overwritten":  false,
+                        "registry_mutated":  false,
+                        "chroma_reindexed":  false,
+                        "embeddings_changed":  false,
+                        "retrieval_ranking_changed":  false,
+                        "retrieval_query_changed":  false,
+                        "overlay_authority_added":  false,
+                        "writer_kb_payload_canonical_for_manual_web_chat":  true,
+                        "legacy_fallback_retained_only_as_emergency_fallback":  true,
+                        "broad_rollout_declared":  false,
+                        "production_default_changed_without_gate":  false
+                    },
+    "managed_backend":  {
+                            "killed_listener_pids":  [
+
+                                                     ],
+                            "pid":  26616
+                        },
+    "effective_runtime_config_snapshot":  {
+                                              "writer_kb_payload":  {
+                                                                        "enabled":  true,
+                                                                        "enabled_source":  "default_local",
+                                                                        "raw_value":  null,
+                                                                        "default_value":  true,
+                                                                        "runtime_mode":  "local",
+                                                                        "primary_path":  "writer_kb_payload_v1",
+                                                                        "legacy_fallback_role":  "emergency_only",
+                                                                        "fallback_warning_required":  true,
+                                                                        "manual_web_chat_canonical":  true,
+                                                                        "broad_rollout_allowed":  false,
+                                                                        "production_default_requires_explicit_gate":  true
+                                                                    },
+                                              "trace":  {
+                                                            "available":  true,
+                                                            "developer_trace_supported":  true,
+                                                            "developer_trace_enabled":  true,
+                                                            "developer_trace_mode_available":  true,
+                                                            "runtime_config_trace":  {
+                                                                                         "schema_version":  "runtime_config_trace_v1",
+                                                                                         "app_env":  "local",
+                                                                                         "backend_pid":  27392,
+                                                                                         "backend_start_time":  "2026-06-17T09:06:38.933073+00:00",
+                                                                                         "writer_kb_payload_enabled":  true,
+                                                                                         "writer_kb_payload_enabled_source":  "default_local",
+                                                                                         "writer_kb_payload_raw_value":  null,
+                                                                                         "writer_kb_payload_default_value":  true,
+                                                                                         "overlay_shadow_trace_enabled":  false,
+                                                                                         "overlay_shadow_trace_enabled_source":  "default",
+                                                                                         "debug_trace_enabled":  true,
+                                                                                         "debug_trace_enabled_source":  "env"
+                                                                                     }
+                                                        }
+                                          },
+    "primary_prompt_canvas_present":  true,
+    "implementation_commit":  "37dd9a2"
 }
+

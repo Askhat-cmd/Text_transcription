@@ -181,6 +181,9 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
   const overlayShadow = trace.overlay_shadow && typeof trace.overlay_shadow === 'object'
     ? (trace.overlay_shadow as Record<string, unknown>)
     : null;
+  const runtimeConfigTrace = trace.runtime_config_trace && typeof trace.runtime_config_trace === 'object'
+    ? (trace.runtime_config_trace as Record<string, unknown>)
+    : null;
   const writerKbPayloadTrace = trace.writer_kb_payload_trace && typeof trace.writer_kb_payload_trace === 'object'
     ? (trace.writer_kb_payload_trace as Record<string, unknown>)
     : null;
@@ -370,18 +373,49 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
 
           {writerKbPayloadAvailable && (
             <AccordionSection
-              title={`Writer KB Payload | ${String(writerKbPayloadTrace?.enabled ? 'enabled' : 'disabled')} | chunks ${String(writerKbPayloadTrace?.payload_chunk_count ?? 0)}`}
+              title={`Writer KB Payload | ${String(writerKbPayloadTrace?.primary_path || (writerKbPayloadTrace?.enabled ? 'enabled' : 'disabled'))} | chunks ${String(writerKbPayloadTrace?.payload_chunk_count ?? 0)}`}
             >
               <div className="space-y-2">
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   <MetaItem label="TRACE VERSION" value={String(writerKbPayloadTrace?.schema_version || '—')} />
+                  <MetaItem label="PRIMARY PATH" value={String(writerKbPayloadTrace?.primary_path || '—')} highlight />
+                  <MetaItem label="STATUS" value={String(writerKbPayloadTrace?.status || '—')} />
                   <MetaItem label="INPUT RAG COUNT" value={String(writerKbPayloadTrace?.input_rag_for_writer_count ?? 0)} />
                   <MetaItem label="PAYLOAD CHUNKS" value={String(writerKbPayloadTrace?.payload_chunk_count ?? 0)} highlight />
                   <MetaItem label="TOTAL SENT CHARS" value={String(writerKbPayloadTrace?.total_sent_char_count ?? 0)} />
+                  <MetaItem label="SENT TO WRITER" value={String(writerKbPayloadTrace?.payload_sent_to_writer_char_count ?? 0)} />
+                  <MetaItem label="TRACE PREVIEW CHARS" value={String(writerKbPayloadTrace?.payload_display_preview_char_count ?? 0)} />
+                  <MetaItem label="DISPLAY IS PREVIEW" value={String(Boolean(writerKbPayloadTrace?.payload_display_is_preview))} />
                   <MetaItem label="TRUNCATED CHUNKS" value={String(writerKbPayloadTrace?.truncated_chunk_count ?? 0)} />
                   <MetaItem label="MID-SENTENCE CUTS" value={String(writerKbPayloadTrace?.mid_sentence_cut_count ?? 0)} />
                   <MetaItem label="OVERLAY USED" value={String(writerKbPayloadTrace?.overlay_metadata_used_count ?? 0)} />
+                  <MetaItem label="FALLBACK PRIMARY" value={String(Boolean(writerKbPayloadTrace?.fallback_is_primary))} />
                 </div>
+
+                {runtimeConfigTrace && (
+                  <AccordionSection title="Effective runtime config" nested>
+                    <div className="space-y-1 text-xs">
+                      <div><span className="text-slate-500">app_env:</span> {String(runtimeConfigTrace.app_env || '—')}</div>
+                      <div><span className="text-slate-500">backend_pid:</span> {String(runtimeConfigTrace.backend_pid || '—')}</div>
+                      <div><span className="text-slate-500">backend_start_time:</span> {String(runtimeConfigTrace.backend_start_time || '—')}</div>
+                      <div><span className="text-slate-500">writer_kb_payload_enabled:</span> {String(Boolean(runtimeConfigTrace.writer_kb_payload_enabled))}</div>
+                      <div><span className="text-slate-500">writer_kb_payload_enabled_source:</span> {String(runtimeConfigTrace.writer_kb_payload_enabled_source || '—')}</div>
+                      <div><span className="text-slate-500">overlay_shadow_trace_enabled:</span> {String(Boolean(runtimeConfigTrace.overlay_shadow_trace_enabled))}</div>
+                      <div><span className="text-slate-500">debug_trace_enabled:</span> {String(Boolean(runtimeConfigTrace.debug_trace_enabled))}</div>
+                    </div>
+                  </AccordionSection>
+                )}
+
+                <AccordionSection title="Payload path" nested>
+                  <div className="space-y-1 text-xs">
+                    <div><span className="text-slate-500">payload_version:</span> {String(writerKbPayloadTrace?.payload_version || '—')}</div>
+                    <div><span className="text-slate-500">fallback_reason:</span> {String(writerKbPayloadTrace?.fallback_reason || '—')}</div>
+                    <div><span className="text-slate-500">warning:</span> {String(writerKbPayloadTrace?.warning || '—')}</div>
+                    <div><span className="text-slate-500">configured_source:</span> {String(writerKbPayloadTrace?.configured_source || '—')}</div>
+                    <div><span className="text-slate-500">full_text_sent_to_writer:</span> {String(Boolean(writerKbPayloadTrace?.payload_full_text_sent_to_writer))}</div>
+                    <div><span className="text-slate-500">full_text_exposed_in_web_trace:</span> {String(Boolean(writerKbPayloadTrace?.payload_full_text_exposed_in_web_trace))}</div>
+                  </div>
+                </AccordionSection>
 
                 <AccordionSection title="Payload warnings" nested>
                   <div className="text-xs">

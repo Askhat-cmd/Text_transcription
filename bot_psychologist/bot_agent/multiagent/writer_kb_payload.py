@@ -6,7 +6,7 @@ from dataclasses import dataclass
 import re
 from typing import Any
 
-from ..feature_flags import feature_flags
+from ..feature_flags import FeatureFlags, feature_flags
 
 
 WRITER_KB_PAYLOAD_VERSION = "writer_kb_payload_v1"
@@ -382,18 +382,49 @@ def build_writer_kb_payload_trace(
     *,
     payload: dict[str, Any],
     input_rag_for_writer_count: int,
+    configured_enabled: bool | None = None,
+    configured_source: str = "",
+    fallback_reason: str = "",
+    display_preview_char_cap: int = 500,
 ) -> dict[str, Any]:
     chunks = [dict(item) for item in list(payload.get("chunks", []) or []) if isinstance(item, dict)]
+    total_sent_char_count = sum(int(item.get("sent_char_count", 0) or 0) for item in chunks)
+    effective_enabled = bool(payload.get("enabled", False))
+    has_structured_payload = effective_enabled and bool(chunks)
+    primary_path = WRITER_KB_PAYLOAD_VERSION if has_structured_payload else "legacy_semantic_hits_fallback_v1"
+    fallback_is_primary = not has_structured_payload
+    normalized_fallback_reason = str(fallback_reason or "").strip()
+    if fallback_is_primary and not normalized_fallback_reason:
+        normalized_fallback_reason = "disabled_by_config" if configured_enabled is False else "no_eligible_chunks"
+    preview_char_count = min(total_sent_char_count, max(0, int(display_preview_char_cap or 0)))
     return {
         "schema_version": WRITER_KB_PAYLOAD_TRACE_VERSION,
-        "enabled": bool(payload.get("enabled", False)),
+        "enabled": effective_enabled,
+        "configured_enabled": bool(configured_enabled) if configured_enabled is not None else effective_enabled,
+        "configured_source": str(configured_source or ""),
+        "status": "structured_payload_used" if has_structured_payload else "fallback_used",
+        "primary_path": primary_path,
+        "payload_version": primary_path,
         "input_rag_for_writer_count": int(input_rag_for_writer_count or 0),
         "payload_chunk_count": len(chunks),
         "total_original_char_count": sum(int(item.get("original_char_count", 0) or 0) for item in chunks),
-        "total_sent_char_count": sum(int(item.get("sent_char_count", 0) or 0) for item in chunks),
+        "total_sent_char_count": total_sent_char_count,
         "truncated_chunk_count": sum(1 for item in chunks if bool(item.get("content_truncated"))),
         "mid_sentence_cut_count": sum(1 for item in chunks if bool(item.get("truncated_mid_sentence"))),
         "overlay_metadata_used_count": sum(1 for item in chunks if bool(item.get("overlay_metadata_used"))),
+        "payload_sent_to_writer_char_count": total_sent_char_count,
+        "payload_display_preview_char_count": preview_char_count,
+        "payload_display_is_preview": True,
+        "payload_full_text_sent_to_writer": has_structured_payload,
+        "payload_full_text_exposed_in_web_trace": False,
+        "fallback_reason": normalized_fallback_reason,
+        "fallback_is_primary": fallback_is_primary,
+        "warning": (
+            "legacy semantic hits fallback used instead of writer_kb_payload_v1"
+            if fallback_is_primary
+            else ""
+        ),
+        "runtime_mode": FeatureFlags.app_env(),
         "warnings": list(payload.get("warnings", []) or []),
         "blockers": list(payload.get("blockers", []) or []),
     }

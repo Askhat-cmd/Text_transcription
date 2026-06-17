@@ -1,6 +1,7 @@
-# Roadmap
+﻿# Roadmap
 
 ## Done
+- PRD-047.22-HF2: closed manual Web Chat runtime parity for Writer KB payload. Added single-source effective config resolution for `WRITER_KB_PAYLOAD_ENABLED`, local/dev/pilot/test `default_local` activation behind `APP_ENV`, admin/debug `runtime_config_trace`, explicit primary-vs-fallback payload path markers, compact Web Trace parity fields, pilot startup script/docs, streaming-path parity runner, prompt canvas proof, and no-mutation/encoding artifacts without changing retrieval ranking, executed query, Chroma, registry, processed blocks, or live metadata.
 - PRD-047.22: completed structured Writer KB payload delivery as a bounded Writer-input improvement. Added default-off `WRITER_KB_PAYLOAD_*` config, isolated `writer_kb_payload.py`, sentence/paragraph-aware excerpting, safe legacy fallback, orchestrator/debug/API/Web Trace payload evidence, neurostalking regression coverage, bounded behavior/no-mutation artifacts, and docs sync without changing retrieval ranking, executed retrieval query, semantic-hit selection, BotDB registry, processed blocks, live metadata, or Chroma.
 
 - PRD-047.21: completed overlay-aware retrieval shadow integration as a strict trace-only runtime surface. Added default-off `OVERLAY_SHADOW_TRACE_*` config, isolated `overlay_shadow_trace.py`, orchestrator/debug/API integration, Web Trace visibility, trace-sample/no-behavior/authority/no-mutation artifacts, targeted multiagent/API tests, PRD-047.20 regression coverage, and Web widget test/build verification. Overlay remains non-live and non-authoritative: no WriterContract/prompt injection, no retrieval query mutation, no semantic-hit mutation, no final-answer influence, and no BotDB/Chroma mutation.
@@ -120,9 +121,12 @@ PRD-046.1.36 Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1.
 - push_status: pushed_to_origin_main
 
 ## Done
+- PRD-047.22-HF2: closed manual Web Chat runtime parity for Writer KB payload. Added single-source effective config resolution for WRITER_KB_PAYLOAD_ENABLED, local/dev/pilot/test default_local activation behind APP_ENV, admin/debug 
+untime_config_trace, explicit primary-vs-fallback payload path markers, compact Web Trace parity fields, pilot startup script/docs, streaming-path parity runner, prompt canvas proof, and no-mutation/encoding artifacts without changing retrieval ranking, executed query, Chroma, registry, processed blocks, or live metadata.
 - PRD-047.21: completed overlay-aware retrieval shadow integration as a strict trace-only runtime surface. Added default-off `OVERLAY_SHADOW_TRACE_*` config, isolated `overlay_shadow_trace.py`, orchestrator/debug/API integration, Web Trace visibility, trace-sample/no-behavior/authority/no-mutation artifacts, targeted multiagent/API tests, PRD-047.20 regression coverage, and Web widget test/build verification. Overlay remains non-live and non-authoritative: no WriterContract/prompt injection, no retrieval query mutation, no semantic-hit mutation, no final-answer influence, and no BotDB/Chroma mutation.
 
 - PRD-047.14-HF1.2: completed targeted hardcoded reply removal / Writer retry conversion with warning status. High-confidence Writer semantic repair/knowledge/direct-answer static returns were converted to `no_stub_repair_signal_v1` and existing final-answer gate retry/quarantine flow (`writer_agent_stub_blockers=31->0`, `new_user_facing_stub_created=false`, encoding/runtime-scope/tests passed); out-of-scope/advisory/safety-minimal and summary-routing candidates remain documented.
 
 - PRD-046.1.36: creator-live pilot acceptance completed with source/runtime/admin/creator-pilot/rollback/normal-user/safety gates.
+
 

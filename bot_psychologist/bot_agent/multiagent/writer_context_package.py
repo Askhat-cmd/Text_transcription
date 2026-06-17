@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from ..feature_flags import feature_flags
 from .contracts.context_package import ContextAssemblyPackage
 from .contracts.memory_bundle import MemoryBundle
 from .writer_kb_payload import (
@@ -158,6 +159,7 @@ def build_writer_context_package_v1(
         else {}
     )
     payload_config = get_writer_kb_payload_config()
+    payload_resolution = feature_flags.resolve_bool("WRITER_KB_PAYLOAD_ENABLED")
     writer_kb_payload_failed = False
     writer_kb_payload_failure_reason = ""
     overlay_items = []
@@ -210,9 +212,20 @@ def build_writer_context_package_v1(
             "warnings": ["writer_kb_payload_failed"],
             "blockers": [],
         }
+    fallback_reason = ""
+    if not bool(payload_resolution.get("effective_value", False)):
+        fallback_reason = "disabled_by_config"
+    elif writer_kb_payload_failed:
+        fallback_reason = "builder_failure"
+    elif int(writer_kb_payload.get("chunk_count", 0) or 0) <= 0:
+        fallback_reason = "no_eligible_chunks"
+
     writer_kb_payload_trace = build_writer_kb_payload_trace(
         payload=writer_kb_payload,
         input_rag_for_writer_count=len(rag_for_writer),
+        configured_enabled=bool(payload_resolution.get("effective_value", False)),
+        configured_source=str(payload_resolution.get("source", "") or ""),
+        fallback_reason=fallback_reason,
     )
     if writer_kb_payload_failed:
         writer_kb_payload_trace["warnings"] = list(
@@ -224,7 +237,7 @@ def build_writer_context_package_v1(
     future_graduation_notes = build_future_graduation_notes(
         payload=writer_kb_payload,
         trace=writer_kb_payload_trace,
-        legacy_fallback_reason=writer_kb_payload_failure_reason,
+        legacy_fallback_reason=fallback_reason or writer_kb_payload_failure_reason,
     )
 
     return {
@@ -250,9 +263,9 @@ def build_writer_context_package_v1(
         "writer_kb_payload": writer_kb_payload,
         "writer_kb_payload_trace": writer_kb_payload_trace,
         "writer_kb_payload_future_graduation_notes": future_graduation_notes,
-        "writer_kb_payload_enabled": bool(payload_config.enabled),
+        "writer_kb_payload_enabled": bool(payload_resolution.get("effective_value", False)),
         "writer_kb_payload_failed": writer_kb_payload_failed,
-        "writer_kb_payload_failure_reason": writer_kb_payload_failure_reason,
+        "writer_kb_payload_failure_reason": fallback_reason or writer_kb_payload_failure_reason,
         "retrieval_context": {
             "retrieval_action": str(
                 hybrid_plan.get("retrieval_action", retrieval.get("retrieval_action", "trace_only"))

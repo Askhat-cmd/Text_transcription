@@ -853,6 +853,11 @@ async def get_multiagent_trace(
             if isinstance(debug.get("overlay_shadow"), dict)
             else None
         ),
+        runtime_config_trace=(
+            debug.get("runtime_config_trace")
+            if isinstance(debug.get("runtime_config_trace"), dict)
+            else None
+        ),
         writer_kb_payload_trace=(
             debug.get("writer_kb_payload_trace")
             if isinstance(debug.get("writer_kb_payload_trace"), dict)

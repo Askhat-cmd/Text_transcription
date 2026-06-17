@@ -178,16 +178,39 @@ function createTrace(): MultiAgentTraceData {
         },
       ],
     },
+    runtime_config_trace: {
+      schema_version: 'runtime_config_trace_v1',
+      app_env: 'local',
+      backend_pid: 4242,
+      backend_start_time: '2026-06-17T10:00:00+00:00',
+      writer_kb_payload_enabled: true,
+      writer_kb_payload_enabled_source: 'default_local',
+      overlay_shadow_trace_enabled: false,
+      debug_trace_enabled: true,
+    },
     writer_kb_payload_trace: {
       schema_version: 'writer_kb_payload_trace_v1',
       enabled: true,
+      configured_enabled: true,
+      configured_source: 'default_local',
+      status: 'structured_payload_used',
+      primary_path: 'writer_kb_payload_v1',
+      payload_version: 'writer_kb_payload_v1',
       input_rag_for_writer_count: 1,
       payload_chunk_count: 1,
       total_original_char_count: 2480,
       total_sent_char_count: 1260,
+      payload_sent_to_writer_char_count: 1260,
+      payload_display_preview_char_count: 500,
+      payload_display_is_preview: true,
+      payload_full_text_sent_to_writer: true,
+      payload_full_text_exposed_in_web_trace: false,
       truncated_chunk_count: 1,
       mid_sentence_cut_count: 0,
       overlay_metadata_used_count: 0,
+      fallback_reason: '',
+      fallback_is_primary: false,
+      warning: '',
       warnings: [],
       blockers: [],
     },
@@ -260,6 +283,22 @@ describe('MultiAgentTraceWidget (rev2)', () => {
     clickButtonContains(harness.container, 'Полотно LLM');
     clickButtonContains(harness.container, 'System prompt');
     expect(harness.container.textContent).toContain('SYSTEM PROMPT MOCK');
+    harness.cleanup();
+  });
+
+  it('renders writer kb payload runtime parity fields', () => {
+    const harness = renderWidget(
+      React.createElement(MultiAgentTraceWidget, {
+        trace: createTrace(),
+        isExpanded: true,
+      })
+    );
+    clickButtonContains(harness.container, 'Writer KB Payload');
+    clickButtonContains(harness.container, 'Effective runtime config');
+    expect(harness.container.textContent).toContain('writer_kb_payload_v1');
+    expect(harness.container.textContent).toContain('default_local');
+    expect(harness.container.textContent).toContain('4242');
+    expect(harness.container.textContent).toContain('500');
     harness.cleanup();
   });
 

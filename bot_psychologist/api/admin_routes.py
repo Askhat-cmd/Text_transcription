@@ -670,6 +670,8 @@ def _load_prd_047_7_guided_live_testing_status() -> dict[str, Any]:
 def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str, Any]:
     status_payload = _status_snapshot()
     flags_snapshot = _filter_operational_flags(feature_flags.snapshot())
+    runtime_config_trace = feature_flags.runtime_config_trace()
+    writer_kb_payload_resolution = feature_flags.resolve_bool("WRITER_KB_PAYLOAD_ENABLED")
     env_flags = _env_flags_snapshot()
     runtime_warnings = _deprecated_runtime_warnings(env_flags)
     validation = validate_runtime_config(config)
@@ -743,6 +745,20 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
             "developer_trace_supported": True,
             "developer_trace_enabled": True,
             "developer_trace_mode_available": True,
+            "runtime_config_trace": runtime_config_trace,
+        },
+        "writer_kb_payload": {
+            "enabled": bool(writer_kb_payload_resolution.get("effective_value", False)),
+            "enabled_source": str(writer_kb_payload_resolution.get("source", "") or ""),
+            "raw_value": writer_kb_payload_resolution.get("raw_value"),
+            "default_value": bool(writer_kb_payload_resolution.get("default_value", False)),
+            "runtime_mode": str(writer_kb_payload_resolution.get("runtime_mode", "unknown") or "unknown"),
+            "primary_path": "writer_kb_payload_v1",
+            "legacy_fallback_role": "emergency_only",
+            "fallback_warning_required": True,
+            "manual_web_chat_canonical": True,
+            "broad_rollout_allowed": False,
+            "production_default_requires_explicit_gate": True,
         },
         "philosophy_kernel": {
             "enabled": True,

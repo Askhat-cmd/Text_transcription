@@ -3,13 +3,15 @@
 from __future__ import annotations
 
 import os
+from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict
+from typing import Any, Dict
 
 from dotenv import load_dotenv
 
 _PROJECT_ROOT = Path(__file__).resolve().parents[1]
 load_dotenv(_PROJECT_ROOT / ".env")
+_PROCESS_START_TIME_UTC = datetime.now(timezone.utc).isoformat()
 
 
 _DEFAULTS: Dict[str, bool] = {
@@ -83,6 +85,9 @@ _DEPRECATED_RUNTIME_FLAGS: Dict[str, str] = {
     "LEGACY_PIPELINE_ENABLED": "legacy_runtime_disabled_after_PRD_036",
 }
 
+_LOCAL_RUNTIME_MODES = {"local", "dev", "pilot", "test"}
+_PRODUCTION_RUNTIME_MODES = {"production", "prod", "staging"}
+
 
 def _as_bool(value: str | None, default: bool) -> bool:
     if value is None:
@@ -94,10 +99,87 @@ class FeatureFlags:
     """Env-backed feature flags (read on each access)."""
 
     @staticmethod
+    def app_env() -> str:
+        raw = str(os.getenv("APP_ENV", "") or "").strip().lower()
+        if raw in _LOCAL_RUNTIME_MODES:
+            return raw
+        if raw in _PRODUCTION_RUNTIME_MODES:
+            return "production" if raw in {"production", "prod"} else "staging"
+        return "unknown"
+
+    @staticmethod
+    def resolve_bool(name: str) -> Dict[str, Any]:
+        if name not in _DEFAULTS:
+            return {
+                "key": name,
+                "effective_value": False,
+                "source": "unknown_flag",
+                "raw_value": None,
+                "default_value": False,
+                "runtime_mode": FeatureFlags.app_env(),
+            }
+
+        runtime_mode = FeatureFlags.app_env()
+        default_value = _DEFAULTS[name]
+        default_source = "default"
+        if name == "WRITER_KB_PAYLOAD_ENABLED":
+            default_value = runtime_mode in _LOCAL_RUNTIME_MODES
+            default_source = "default_local" if default_value else "default_safe_off"
+
+        raw_value = os.getenv(name)
+        if raw_value is not None:
+            effective_value = _as_bool(raw_value, default_value)
+            source = "env"
+        else:
+            effective_value = default_value
+            source = default_source
+
+        return {
+            "key": name,
+            "effective_value": bool(effective_value),
+            "source": source,
+            "raw_value": raw_value,
+            "default_value": bool(default_value),
+            "runtime_mode": runtime_mode,
+        }
+
+    @staticmethod
+    def resolve_free_bool(name: str, default: bool) -> Dict[str, Any]:
+        raw_value = os.getenv(name)
+        return {
+            "key": name,
+            "effective_value": _as_bool(raw_value, default),
+            "source": "env" if raw_value is not None else "default",
+            "raw_value": raw_value,
+            "default_value": bool(default),
+            "runtime_mode": FeatureFlags.app_env(),
+        }
+
+    @staticmethod
+    def runtime_config_trace() -> Dict[str, Any]:
+        writer_payload = FeatureFlags.resolve_bool("WRITER_KB_PAYLOAD_ENABLED")
+        overlay_shadow = FeatureFlags.resolve_bool("OVERLAY_SHADOW_TRACE_ENABLED")
+        debug_trace = FeatureFlags.resolve_free_bool("DEBUG_TRACE_ENABLED", True)
+        return {
+            "schema_version": "runtime_config_trace_v1",
+            "app_env": FeatureFlags.app_env(),
+            "backend_pid": os.getpid(),
+            "backend_start_time": _PROCESS_START_TIME_UTC,
+            "writer_kb_payload_enabled": writer_payload["effective_value"],
+            "writer_kb_payload_enabled_source": writer_payload["source"],
+            "writer_kb_payload_raw_value": writer_payload["raw_value"],
+            "writer_kb_payload_default_value": writer_payload["default_value"],
+            "overlay_shadow_trace_enabled": overlay_shadow["effective_value"],
+            "overlay_shadow_trace_enabled_source": overlay_shadow["source"],
+            "debug_trace_enabled": debug_trace["effective_value"],
+            "debug_trace_enabled_source": debug_trace["source"],
+        }
+
+    @staticmethod
     def enabled(name: str) -> bool:
         if name not in _DEFAULTS:
             return False
-        return _as_bool(os.getenv(name), _DEFAULTS[name])
+        return bool(FeatureFlags.resolve_bool(name)["effective_value"])
 
     @staticmethod
     def is_enabled(name: str) -> bool:

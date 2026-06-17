@@ -9,6 +9,7 @@ import time
 from datetime import datetime, timezone
 
 from bot_agent.config import config
+from bot_agent.feature_flags import feature_flags
 from .agents.memory_retrieval import memory_retrieval_agent
 from .agents.state_analyzer import state_analyzer_agent
 from .agents.thread_manager import THREAD_DIAGNOSTICS_VERSION, thread_manager_agent
@@ -1297,6 +1298,7 @@ class MultiAgentOrchestrator:
                 "writer_api_mode": writer_debug.get("api_mode"),
                 "writer_error": writer_debug.get("error"),
                 "writer_fallback_used": bool(writer_debug.get("fallback_used", False)),
+                "runtime_config_trace": feature_flags.runtime_config_trace(),
                 "writer_kb_payload_enabled": writer_debug.get("writer_kb_payload_enabled"),
                 "writer_kb_payload_failed": writer_debug.get("writer_kb_payload_failed"),
                 "writer_kb_payload_trace": (

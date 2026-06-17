@@ -29,7 +29,8 @@ def test_build_ascii_json_body_roundtrips_russian_query() -> None:
 
 
 def test_live_like_http_path_produces_writer_kb_payload_trace(monkeypatch) -> None:
-    monkeypatch.setenv("WRITER_KB_PAYLOAD_ENABLED", "true")
+    monkeypatch.setenv("APP_ENV", "local")
+    monkeypatch.delenv("WRITER_KB_PAYLOAD_ENABLED", raising=False)
     with TestClient(app, base_url="http://localhost") as client:
         session_id = "test-writer-kb-live-http-path"
         response = client.post(
@@ -53,7 +54,13 @@ def test_live_like_http_path_produces_writer_kb_payload_trace(monkeypatch) -> No
         )
         assert debug_response.status_code == 200
         debug_payload = debug_response.json()
+        runtime_trace = dict(debug_payload.get("runtime_config_trace") or {})
         trace = dict(debug_payload.get("writer_kb_payload_trace") or {})
+        assert runtime_trace["writer_kb_payload_enabled"] is True
+        assert runtime_trace["writer_kb_payload_enabled_source"] == "default_local"
         assert trace["enabled"] is True
+        assert trace["primary_path"] == "writer_kb_payload_v1"
+        assert trace["status"] == "structured_payload_used"
         assert int(trace["payload_chunk_count"]) >= 1
         assert int(trace["mid_sentence_cut_count"]) == 0
+        assert trace["fallback_is_primary"] is False

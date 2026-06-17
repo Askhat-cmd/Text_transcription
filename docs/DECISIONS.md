@@ -6,18 +6,20 @@ Status: accepted
 
 Date: 2026-06-17
 
-Context: PRD-047.21 proved overlay trace visibility, but live prompt evidence still showed a more basic delivery fault: retrieval could select the right chunk while Writer only received a flat blind semantic-hit snippet, often cut near the first few hundred characters and sometimes across unstable content boundaries.
+Context: PRD-047.21 and PRD-047.22 proved the structured Writer KB payload path itself, but PRD-047.22-HF1/HF2 exposed a parity problem: managed smoke could show `writer_kb_payload_v1` while ordinary pilot/manual Web Chat startup could still drift into legacy semantic-hit fallback because effective runtime config was not visible as a single source of truth.
 
 Decision:
 - keep retrieval selection authority exactly where it already is;
 - replace the enabled Writer-visible KB delivery path with `writer_kb_payload_v1`, an isolated structured payload over already-selected hits;
 - make excerpting sentence/paragraph-aware and trace every truncation decision through `writer_kb_payload_trace_v1`;
-- keep the path default-off behind `WRITER_KB_PAYLOAD_ENABLED=false` and preserve a safe legacy fallback when the payload is disabled or builder fails;
+- treat `writer_kb_payload_v1` as the canonical primary path for pilot/manual Web Chat and expose effective config source through runtime/admin/debug trace;
+- resolve `WRITER_KB_PAYLOAD_ENABLED` from one effective-config source, with `APP_ENV in {local, dev, pilot, test}` enabling `default_local` and production-style runtimes staying gated unless explicitly enabled;
+- preserve legacy semantic hits only as emergency fallback, with explicit `fallback_reason`, `fallback_is_primary`, and warning visibility in trace whenever fallback becomes primary;
 - allow future overlay metadata enrichment only as optional same-hit enrichment and keep it disabled by default;
 - keep Writer as the only author of final user-facing text; payload metadata is grounding, not command;
 - forbid retrieval-ranking changes, executed-query mutation, live metadata apply, processed-block mutation, registry mutation, and Chroma reindex inside this PRD.
 
-Consequences: Writer can now receive selected knowledge as bounded structured cards instead of depending on blind flat truncation, while runtime authority boundaries remain unchanged. The next step can evaluate live allowlisted evidence with higher confidence that retrieval quality is not being hidden by a broken Writer-delivery layer.
+Consequences: Writer now receives selected knowledge through one canonical structured path in pilot/manual Web Chat as well as managed smoke, and the repository can prove whether a turn used the primary payload path or an emergency fallback. Runtime authority boundaries remain unchanged: retrieval, Chroma, registry, processed blocks, and live metadata are untouched. The next step can evaluate live overlay + payload evidence only after this parity truth is present.
 
 ## ADR-082 - Accepted overlay may be visible in runtime trace before gaining retrieval authority
 

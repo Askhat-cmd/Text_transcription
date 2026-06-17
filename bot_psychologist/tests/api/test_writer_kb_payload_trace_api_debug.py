@@ -60,15 +60,25 @@ def test_multiagent_trace_endpoint_includes_writer_kb_payload_trace() -> None:
             "writer_kb_payload_trace": {
                 "schema_version": "writer_kb_payload_trace_v1",
                 "enabled": True,
+                "primary_path": "writer_kb_payload_v1",
                 "input_rag_for_writer_count": 1,
                 "payload_chunk_count": 1,
                 "total_original_char_count": 2480,
                 "total_sent_char_count": 1260,
+                "payload_sent_to_writer_char_count": 1260,
+                "payload_display_preview_char_count": 500,
+                "payload_display_is_preview": True,
                 "truncated_chunk_count": 1,
                 "mid_sentence_cut_count": 0,
                 "overlay_metadata_used_count": 0,
                 "warnings": [],
                 "blockers": [],
+            },
+            "runtime_config_trace": {
+                "schema_version": "runtime_config_trace_v1",
+                "app_env": "local",
+                "writer_kb_payload_enabled": True,
+                "writer_kb_payload_enabled_source": "default_local",
             },
             "future_graduation_notes": {
                 "schema_version": "writer_kb_payload_future_graduation_notes_v1",
@@ -82,5 +92,7 @@ def test_multiagent_trace_endpoint_includes_writer_kb_payload_trace() -> None:
 
     assert response.status_code == 200
     payload = response.json()
+    assert payload["runtime_config_trace"]["writer_kb_payload_enabled"] is True
     assert payload["writer_kb_payload_trace"]["payload_chunk_count"] == 1
+    assert payload["writer_kb_payload_trace"]["primary_path"] == "writer_kb_payload_v1"
     assert payload["future_graduation_notes"]["payload_source"] == "legacy_selected_hit"

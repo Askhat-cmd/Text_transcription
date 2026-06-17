@@ -1,0 +1,11 @@
+{
+  "schema_version": "prd_047_22_hf1_live_vs_deterministic_payload_parity_v1",
+  "prd_id": "PRD-047.22-HF1",
+  "same_query": "что такое Нейросталкинг?",
+  "deterministic_payload_chunk_count": 1,
+  "live_payload_chunk_count": 1,
+  "deterministic_mid_sentence_cut_count": 0,
+  "live_mid_sentence_cut_count": 0,
+  "live_trace_present": true,
+  "parity_status": "passed"
+}

@@ -1,0 +1,12 @@
+{
+  "schema_version": "writer_kb_payload_bounded_behavior_change_report_v1",
+  "prd_id": "PRD-047.22-HF1",
+  "retrieval_query_changed": false,
+  "semantic_hit_selection_changed": false,
+  "writer_prompt_changed_only_in_kb_payload_section": true,
+  "writer_receives_structured_kb_payload": true,
+  "final_answer_authority_changed": false,
+  "chroma_or_metadata_changed": false,
+  "fallback_available_when_disabled": true,
+  "live_api_payload_trace_present": true
+}

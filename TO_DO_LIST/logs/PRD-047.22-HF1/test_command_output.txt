@@ -1,0 +1,63 @@
+$ C:\Python313\python.exe -m pytest tests/multiagent/test_writer_kb_payload.py tests/multiagent/test_writer_kb_payload_prompt_integration.py tests/multiagent/test_writer_kb_payload_no_blind_truncation.py tests/api/test_writer_kb_payload_trace_api_debug.py tests/api/test_writer_kb_payload_live_http_path.py --basetemp C:\My_practice\Text_transcription\.tmp_prd_047_22_hf1_pytest -q
+returncode=0
+
+STDOUT:
+...............                                                          [100%]
+============================== warnings summary ===============================
+tests/multiagent/test_writer_kb_payload_prompt_integration.py::test_writer_prompt_contains_structured_payload_when_enabled
+tests/multiagent/test_writer_kb_payload_prompt_integration.py::test_disabled_flag_keeps_legacy_fallback_available
+tests/multiagent/test_writer_kb_payload_prompt_integration.py::test_builder_failure_falls_back_safely
+  c:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_writer_kb_payload_prompt_integration.py:63: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    created_at=datetime.utcnow(),
+
+tests/multiagent/test_writer_kb_payload_prompt_integration.py::test_writer_prompt_contains_structured_payload_when_enabled
+tests/multiagent/test_writer_kb_payload_prompt_integration.py::test_disabled_flag_keeps_legacy_fallback_available
+tests/multiagent/test_writer_kb_payload_prompt_integration.py::test_builder_failure_falls_back_safely
+  c:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_writer_kb_payload_prompt_integration.py:64: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    updated_at=datetime.utcnow(),
+
+tests/api/test_writer_kb_payload_trace_api_debug.py::test_multiagent_trace_endpoint_includes_writer_kb_payload_trace
+  C:\Users\video\AppData\Roaming\Python\Python313\site-packages\sklearn\base.py:380: InconsistentVersionWarning: Trying to unpickle estimator TfidfTransformer from version 1.8.0 when using version 1.6.1. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+  https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+    warnings.warn(
+
+tests/api/test_writer_kb_payload_trace_api_debug.py::test_multiagent_trace_endpoint_includes_writer_kb_payload_trace
+  C:\Users\video\AppData\Roaming\Python\Python313\site-packages\sklearn\base.py:380: InconsistentVersionWarning: Trying to unpickle estimator TfidfVectorizer from version 1.8.0 when using version 1.6.1. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+  https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+    warnings.warn(
+
+tests/api/test_writer_kb_payload_live_http_path.py::test_live_like_http_path_produces_writer_kb_payload_trace
+  C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\thread_manager.py:413: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+15 passed, 9 warnings in 27.94s
+
+STDERR:
+
+
+$ C:\Python313\python.exe -m pytest tests/multiagent/test_overlay_shadow_trace.py tests/multiagent/test_overlay_shadow_trace_no_writer_leak.py tests/api/test_overlay_shadow_trace_api_debug.py --basetemp C:\My_practice\Text_transcription\.tmp_prd_047_22_hf1_pytest -q
+returncode=0
+
+STDOUT:
+.....                                                                    [100%]
+============================== warnings summary ===============================
+tests/multiagent/test_overlay_shadow_trace_no_writer_leak.py::test_overlay_shadow_trace_does_not_leak_into_writer_or_change_behavior
+tests/multiagent/test_overlay_shadow_trace_no_writer_leak.py::test_overlay_shadow_trace_does_not_leak_into_writer_or_change_behavior
+  c:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_overlay_shadow_trace_no_writer_leak.py:50: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+tests/api/test_overlay_shadow_trace_api_debug.py::test_multiagent_trace_endpoint_includes_overlay_shadow_when_present
+  C:\Users\video\AppData\Roaming\Python\Python313\site-packages\sklearn\base.py:380: InconsistentVersionWarning: Trying to unpickle estimator TfidfTransformer from version 1.8.0 when using version 1.6.1. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+  https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+    warnings.warn(
+
+tests/api/test_overlay_shadow_trace_api_debug.py::test_multiagent_trace_endpoint_includes_overlay_shadow_when_present
+  C:\Users\video\AppData\Roaming\Python\Python313\site-packages\sklearn\base.py:380: InconsistentVersionWarning: Trying to unpickle estimator TfidfVectorizer from version 1.8.0 when using version 1.6.1. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+  https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+5 passed, 4 warnings in 15.58s
+
+STDERR:

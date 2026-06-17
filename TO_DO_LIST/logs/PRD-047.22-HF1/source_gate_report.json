@@ -1,0 +1,37 @@
+{
+  "schema_version": "prd_047_22_hf1_source_gate_report_v1",
+  "prd_id": "PRD-047.22-HF1",
+  "created_at": "2026-06-17T04:56:27.942781+00:00",
+  "previous_commit_chain": [
+    "66dcb02",
+    "d4fbbb0",
+    "e24a2eb"
+  ],
+  "previous_api_smoke_status": "warning",
+  "previous_payload_chunk_count": 0,
+  "previous_writer_kb_payload_trace_empty": true,
+  "required_files": [
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.22/api_writer_kb_payload_smoke.json",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.22/neurostalking_writer_kb_payload_smoke.json",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.22/bounded_behavior_change_report.json",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.22/no_mutation_proof.json",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-047.22_IMPLEMENTATION_REPORT.md",
+      "exists": true
+    }
+  ],
+  "status": "passed",
+  "blockers": []
+}

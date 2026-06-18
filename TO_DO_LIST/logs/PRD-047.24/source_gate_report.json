@@ -1,0 +1,37 @@
+{
+  "schema_version": "prd_047_24_source_gate_report_v1",
+  "prd_id": "PRD-047.24",
+  "checked_at": "2026-06-18T04:43:11.901875+00:00",
+  "required_paths": [
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.23/retrieval_query_assembly_audit.json",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.23/retrieval_relevance_audit.json",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.23/writer_payload_consistency_audit.json",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.23/chunk_boundary_audit.json",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.23/live_sample_report.json",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-047.23_IMPLEMENTATION_REPORT.md",
+      "exists": true
+    }
+  ],
+  "commit_presence": {
+    "4f70dc4": "4f70dc4a7e5c9884845924ca21083eff15923fd1",
+    "f51e26c": "f51e26c2d41a6bfcf4870667fab009dd02522740",
+    "d7baffe": "d7baffeffc11bc3ceff6d96d2ffa3c8b23859d7c"
+  },
+  "status": "passed"
+}

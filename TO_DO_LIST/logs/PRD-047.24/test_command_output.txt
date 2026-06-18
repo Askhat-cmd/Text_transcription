@@ -1,0 +1,115 @@
+﻿# PRD-047.24 test command output
+
+
+## pytest retrieval query builder
+
+$ C:\My_practice\Text_transcription\bot_psychologist\.venv\Scripts\python.exe -m pytest bot_psychologist\tests\test_retrieval_query_builder_current_turn_focus.py -q
+
+..........                                                               [100%]
+10 passed in 0.30s
+
+## pytest memory retrieval
+
+$ C:\My_practice\Text_transcription\bot_psychologist\.venv\Scripts\python.exe -m pytest bot_psychologist\tests\multiagent\test_memory_retrieval.py -q
+
+....................................                                     [100%]
+============================== warnings summary ===============================
+tests/multiagent/test_memory_retrieval.py: 31 warnings
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_memory_retrieval.py:38: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    created_at=datetime.utcnow(),
+
+tests/multiagent/test_memory_retrieval.py: 31 warnings
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_memory_retrieval.py:39: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    updated_at=datetime.utcnow(),
+
+tests/multiagent/test_memory_retrieval.py::test_mr_01_bundle_fields
+tests/multiagent/test_memory_retrieval.py::test_mr_01_bundle_fields
+tests/multiagent/test_memory_retrieval.py::test_mr_01_bundle_fields
+tests/multiagent/test_memory_retrieval.py::test_mr_01_bundle_fields
+tests/multiagent/test_memory_retrieval.py::test_mr_01_bundle_fields
+tests/multiagent/test_memory_retrieval.py::test_mr_01_bundle_fields
+tests/multiagent/test_memory_retrieval.py::test_mr_01_bundle_fields
+tests/multiagent/test_memory_retrieval.py::test_mr_01_bundle_fields
+  C:\My_practice\Text_transcription\bot_psychologist\bot_agent\storage\session_manager.py:399: DeprecationWarning: numpy.core.numeric is deprecated and has been renamed to numpy._core.numeric. The numpy._core namespace contains private NumPy internals and its use is discouraged, as NumPy internals can change without warning in any release. In practice, most real-world usage of numpy.core is to access functionality in the public NumPy API. If that is the case, use the public NumPy API. If not, you are using NumPy internals. If you would still like to access an internal attribute, use numpy._core.numeric._frombuffer.
+    "embedding": pickle.loads(item["embedding"]),
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+36 passed, 70 warnings in 27.10s
+
+## pytest api trace debug
+
+$ C:\My_practice\Text_transcription\bot_psychologist\.venv\Scripts\python.exe -m pytest bot_psychologist\tests\api\test_writer_kb_payload_trace_api_debug.py -q
+
+.                                                                        [100%]
+1 passed in 19.04s
+
+## pytest api live http
+
+$ C:\My_practice\Text_transcription\bot_psychologist\.venv\Scripts\python.exe -m pytest bot_psychologist\tests\api\test_writer_kb_payload_live_http_path.py -q
+
+..                                                                       [100%]
+============================== warnings summary ===============================
+tests/api/test_writer_kb_payload_live_http_path.py::test_live_like_http_path_produces_writer_kb_payload_trace
+  C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\thread_manager.py:413: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2 passed, 1 warning in 32.63s
+
+## pytest api manual parity
+
+$ C:\My_practice\Text_transcription\bot_psychologist\.venv\Scripts\python.exe -m pytest bot_psychologist\tests\api\test_writer_kb_payload_manual_web_chat_parity.py -q
+
+.                                                                        [100%]
+============================== warnings summary ===============================
+tests/api/test_writer_kb_payload_manual_web_chat_parity.py::test_manual_web_chat_stream_path_uses_writer_kb_payload_v1_by_default_local
+  C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\thread_manager.py:413: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+1 passed, 1 warning in 34.14s
+
+## vitest MultiAgentTraceWidget
+
+$ npm test -- MultiAgentTraceWidget.test.ts
+
+
+> bot-psychologist-web-ui@1.0.0 test
+> vitest run MultiAgentTraceWidget.test.ts
+
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mC:/My_practice/Text_transcription/bot_psychologist/web_ui[39m
+
+ [32m✓[39m src/components/chat/MultiAgentTraceWidget.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 308[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m12 passed[39m[22m[90m (12)[39m
+[2m   Start at [22m 09:47:43
+[2m   Duration [22m 2.28s[2m (transform 137ms, setup 0ms, collect 240ms, tests 308ms, environment 1.10s, prepare 312ms)[22m
+
+
+## web build
+
+$ npm run build
+
+
+> bot-psychologist-web-ui@1.0.0 build
+> tsc -b && vite build
+
+[36mvite v6.4.1 [32mbuilding for production...[36m[39m
+transforming...
+[32m✓[39m 1257 modules transformed.
+[33m[plugin vite:reporter] 
+(!) C:/My_practice/Text_transcription/bot_psychologist/web_ui/src/services/adminConfig.service.ts is dynamically imported by C:/My_practice/Text_transcription/bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx, C:/My_practice/Text_transcription/bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx but also statically imported by C:/My_practice/Text_transcription/bot_psychologist/web_ui/src/components/admin/AdminOverviewTab.tsx, C:/My_practice/Text_transcription/bot_psychologist/web_ui/src/hooks/useAdminConfig.ts, C:/My_practice/Text_transcription/bot_psychologist/web_ui/src/hooks/useAgentLLMConfig.ts, C:/My_practice/Text_transcription/bot_psychologist/web_ui/src/hooks/useAgentPrompts.ts, C:/My_practice/Text_transcription/bot_psychologist/web_ui/src/hooks/useAgentStatus.ts, C:/My_practice/Text_transcription/bot_psychologist/web_ui/src/hooks/useOrchestrator.ts, C:/My_practice/Text_transcription/bot_psychologist/web_ui/src/hooks/useThreads.ts, dynamic import will not move module into another chunk.
+[39m
+rendering chunks...
+computing gzip size...
+[2mdist/[22m[32mindex.html                 [39m[1m[2m  0.49 kB[22m[1m[22m[2m │ gzip:   0.31 kB[22m
+[2mdist/[22m[35massets/index-DwwjWvgm.css  [39m[1m[2m101.59 kB[22m[1m[22m[2m │ gzip:  15.60 kB[22m
+[2mdist/[22m[36massets/index-BVx2AcNW.js   [39m[1m[33m674.78 kB[39m[22m[2m │ gzip: 194.94 kB[22m
+[33m
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[39m
+[32m✓ built in 6.59s[39m

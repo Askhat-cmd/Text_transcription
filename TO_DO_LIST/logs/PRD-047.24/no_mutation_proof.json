@@ -1,0 +1,16 @@
+{
+  "schema_version": "prd_047_24_no_mutation_proof_v1",
+  "prd_id": "PRD-047.24",
+  "status": "passed",
+  "bot_data_base_sources_modified": false,
+  "bot_data_base_blocks_modified": false,
+  "chroma_reindexed": false,
+  "embeddings_changed": false,
+  "chunking_algorithm_changed": false,
+  "retrieval_query_assembly_changed": true,
+  "retrieval_ranking_algorithm_changed": false,
+  "writer_prompt_changed": false,
+  "writer_final_authority_changed": false,
+  "overlay_authority_added": false,
+  "legacy_query_builder_primary": false
+}

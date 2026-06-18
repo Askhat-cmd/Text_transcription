@@ -1,0 +1,24 @@
+[
+  {
+    "case_id": "Q24-002",
+    "previous_case_id": "C23-002",
+    "before_executed_query": "",
+    "before_legacy_query": "",
+    "before_polluted": false,
+    "after_executed_query": "Программа несовершенное Я программа несовершенное",
+    "after_previous_user_query_included": false,
+    "after_duplicate_fragment_count": 0,
+    "after_query_truncated_mid_word": false
+  },
+  {
+    "case_id": "Q24-003",
+    "previous_case_id": "C23-003",
+    "before_executed_query": "",
+    "before_legacy_query": "",
+    "before_polluted": false,
+    "after_executed_query": "Будь сильным Будь лучшим Радуй других Старайся сильнее Спеши пять драйверов выживания будь сильным лучшим радуй других старайся сильнее",
+    "after_previous_user_query_included": false,
+    "after_duplicate_fragment_count": 1,
+    "after_query_truncated_mid_word": false
+  }
+]

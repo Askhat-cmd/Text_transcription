@@ -1,6 +1,7 @@
 ﻿# Roadmap
 
 ## Done
+- PRD-047.24: repaired retrieval query assembly around current-turn focus. Added `retrieval_query_builder.py`, local-default `RETRIEVAL_CURRENT_TURN_FOCUS_ENABLED`, current-turn-first canonical query assembly, compact contextualization only for genuine elliptical follow-ups, duplicate-fragment collapse, safe no-mid-word truncation, `retrieval_query_build_trace` through runtime/debug/API/Web Trace, live query repair runner/artifacts, targeted regressions, and no-mutation/encoding proof. Acceptance passed with bounded warning because the five-driver case improved to `medium_related` top-k evidence instead of a stronger exact top-1 style match.
 - PRD-047.22-HF2: closed manual Web Chat runtime parity for Writer KB payload. Added single-source effective config resolution for `WRITER_KB_PAYLOAD_ENABLED`, local/dev/pilot/test `default_local` activation behind `APP_ENV`, admin/debug `runtime_config_trace`, explicit primary-vs-fallback payload path markers, compact Web Trace parity fields, pilot startup script/docs, streaming-path parity runner, prompt canvas proof, and no-mutation/encoding artifacts without changing retrieval ranking, executed query, Chroma, registry, processed blocks, or live metadata.
 - PRD-047.22: completed structured Writer KB payload delivery as a bounded Writer-input improvement. Added default-off `WRITER_KB_PAYLOAD_*` config, isolated `writer_kb_payload.py`, sentence/paragraph-aware excerpting, safe legacy fallback, orchestrator/debug/API/Web Trace payload evidence, neurostalking regression coverage, bounded behavior/no-mutation artifacts, and docs sync without changing retrieval ranking, executed retrieval query, semantic-hit selection, BotDB registry, processed blocks, live metadata, or Chroma.
 
@@ -74,7 +75,7 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
-- PRD-047.23 closed the audit-first chain from source/chunk/store/query to Writer KB payload and Web Trace. The evidence points to retrieval query pollution/duplication as the next repair target, while source-chunk mutation and overlay-live graduation remain out of scope for now.
+- PRD-047.24 closed the retrieval query pollution/duplication repair cycle and proved current-turn-focused execution in live trace without Chroma/Bot_data_base mutation. Overlay-live evaluation remains next, while any broader retrieval-ranking or metadata-authority change stays out of scope for now.
 - PRD-047.22 closed the Writer KB delivery bottleneck between selected retrieval hits and Writer prompt grounding. The next step can evaluate live allowlisted evidence now that Writer receives structured chunk cards instead of depending on blind snippet truncation.
 - PRD-047.21 closed trace-only overlay visibility in runtime/debug/API/Web Trace without granting runtime authority. The next step can collect allowlisted live evidence and owner review before any future planner or retrieval-authority PRD.
 - PRD-047.19 closed dry-run apply planning and proved the current overlay is still fixture-only; the next step must produce real human-reviewed accepted overlay decisions before any apply/reindex planning can move past expected blockers.
@@ -91,9 +92,9 @@
 - No active PRD-047.12 blocker remains; unified dialogue policy v2 is accepted on the current developer-local runtime baseline.
 
 ## Next
-1. Start `PRD-047.24 - Retrieval Query Assembly / Current-Turn Focus Repair v1`.
-2. Only return to `Overlay + Writer KB Payload Live Evidence / Evaluation` after current-turn query pollution/duplication is repaired and re-audited.
-3. Keep any live metadata apply, retrieval-authority mutation, runtime activation, or Chroma reindex in a separate explicit governance PRD after allowlisted live evidence and human-final approval are both in place.
+1. Start `PRD-047.25 - Overlay + Writer KB Payload Live Evidence / Evaluation v1`.
+2. Keep any retrieval-ranking rewrite, live metadata apply, runtime activation, or Chroma reindex in a separate explicit governance PRD after allowlisted live evidence and human-final approval are both in place.
+3. Treat any remaining retrieval trace-schema cleanup as a bounded follow-up only if it blocks truthful live evidence.
 
 ## Later
 - Operational hardening for governed limited runtime.

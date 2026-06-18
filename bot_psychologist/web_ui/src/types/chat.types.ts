@@ -188,6 +188,7 @@ export interface MultiAgentTraceData {
   planner_max_tokens?: number | null;
   overlay_shadow?: Record<string, unknown> | null;
   runtime_config_trace?: Record<string, unknown> | null;
+  retrieval_query_build_trace?: Record<string, unknown> | null;
   writer_kb_payload_trace?: Record<string, unknown> | null;
   future_graduation_notes?: Record<string, unknown> | null;
   live_turn_evidence?: Record<string, unknown> | null;

@@ -80,6 +80,13 @@ def test_multiagent_trace_endpoint_includes_writer_kb_payload_trace() -> None:
                 "writer_kb_payload_enabled": True,
                 "writer_kb_payload_enabled_source": "default_local",
             },
+            "retrieval_query_build_trace": {
+                "schema_version": "retrieval_query_build_trace_v1",
+                "enabled": True,
+                "primary_path": "current_turn_focus_v1",
+                "executed_query": "что такое нейросталкинг",
+                "current_turn_focus_status": "clean",
+            },
             "future_graduation_notes": {
                 "schema_version": "writer_kb_payload_future_graduation_notes_v1",
                 "payload_source": "legacy_selected_hit",
@@ -93,6 +100,7 @@ def test_multiagent_trace_endpoint_includes_writer_kb_payload_trace() -> None:
     assert response.status_code == 200
     payload = response.json()
     assert payload["runtime_config_trace"]["writer_kb_payload_enabled"] is True
+    assert payload["retrieval_query_build_trace"]["primary_path"] == "current_turn_focus_v1"
     assert payload["writer_kb_payload_trace"]["payload_chunk_count"] == 1
     assert payload["writer_kb_payload_trace"]["primary_path"] == "writer_kb_payload_v1"
     assert payload["future_graduation_notes"]["payload_source"] == "legacy_selected_hit"

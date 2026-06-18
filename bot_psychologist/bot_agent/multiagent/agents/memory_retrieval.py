@@ -7,11 +7,16 @@ import inspect
 import logging
 from typing import Any
 
+from ...feature_flags import feature_flags
 from ..contracts.memory_bundle import MemoryBundle, SemanticHit, UserProfile
 from ..contracts.hybrid_retrieval_planner_contract import HYBRID_RETRIEVAL_PLANNER_VERSION
 from ..contracts.thread_state import ThreadState
 from ..knowledge_policy import apply_knowledge_policy_v1
 from ..knowledge_answer_routing_guard import select_lexical_override_hits
+from ..retrieval_query_builder import (
+    CURRENT_TURN_QUERY_BUILDER_PATH,
+    build_retrieval_query,
+)
 from .memory_retrieval_config import (
     CONVERSATION_TURNS_BY_PHASE,
     CONVERSATION_TURNS_DEFAULT,
@@ -165,12 +170,27 @@ class MemoryRetrievalAgent:
         thread_state: ThreadState,
         user_id: str,
         retrieval_plan: dict[str, Any] | None = None,
+        previous_user_message: str | None = None,
+        last_assistant_offer_summary: str | None = None,
+        dialogue_act: dict[str, Any] | None = None,
+        inherited_topic: str | None = None,
     ) -> MemoryBundle:
         n_turns = self._resolve_n_turns(thread_state)
         legacy_rag_query = self._build_rag_query(user_message, thread_state)
+        retrieval_query_build_trace = self._build_retrieval_query_runtime(
+            user_message=user_message,
+            previous_user_message=previous_user_message,
+            thread_state=thread_state,
+            retrieval_plan=retrieval_plan,
+            dialogue_act=dialogue_act,
+            inherited_topic=inherited_topic,
+            last_assistant_offer_summary=last_assistant_offer_summary,
+            legacy_rag_query=legacy_rag_query,
+        )
         retrieval_runtime = self._resolve_retrieval_runtime(
             retrieval_plan=retrieval_plan,
             legacy_rag_query=legacy_rag_query,
+            retrieval_query_build_trace=retrieval_query_build_trace,
         )
         rag_query = str(retrieval_runtime.get("executed_rag_query", "") or "")
         rag_should_load = bool(retrieval_runtime.get("rag_should_load", False))
@@ -265,6 +285,11 @@ class MemoryRetrievalAgent:
             "query_before_rag_proof": bool(retrieval_runtime.get("query_before_rag_proof", False)),
             "rag_skipped_reason": str(retrieval_runtime.get("rag_skipped_reason", "") or ""),
             "retrieval_gap_reason": str(retrieval_runtime.get("retrieval_gap_reason", "") or ""),
+            "retrieval_query_build_trace": (
+                dict(retrieval_runtime.get("retrieval_query_build_trace", {}))
+                if isinstance(retrieval_runtime.get("retrieval_query_build_trace"), dict)
+                else {}
+            ),
         }
         policy_decisions, knowledge_policy_trace = apply_knowledge_policy_v1(filtered_hits)
         knowledge_rag_hits = [
@@ -302,6 +327,11 @@ class MemoryRetrievalAgent:
                 "query_before_rag_proof": bool(retrieval_runtime.get("query_before_rag_proof", False)),
                 "rag_skipped_reason": str(retrieval_runtime.get("rag_skipped_reason", "") or ""),
                 "retrieval_gap_reason": str(retrieval_runtime.get("retrieval_gap_reason", "") or ""),
+                "retrieval_query_build_trace": (
+                    dict(retrieval_runtime.get("retrieval_query_build_trace", {}))
+                    if isinstance(retrieval_runtime.get("retrieval_query_build_trace"), dict)
+                    else {}
+                ),
                 "plan": (
                     dict(retrieval_runtime.get("plan", {}))
                     if isinstance(retrieval_runtime.get("plan"), dict)
@@ -389,6 +419,7 @@ class MemoryRetrievalAgent:
         *,
         retrieval_plan: dict[str, Any] | None,
         legacy_rag_query: str,
+        retrieval_query_build_trace: dict[str, Any],
     ) -> dict[str, Any]:
         plan_wrapper = dict(retrieval_plan or {})
         plan = dict(plan_wrapper.get("plan", {})) if isinstance(plan_wrapper.get("plan"), dict) else {}
@@ -397,12 +428,16 @@ class MemoryRetrievalAgent:
         action = str(plan.get("retrieval_action", "trace_only") or "trace_only")
         planned_query = str(plan.get("composed_query", "") or "").strip()[:RAG_QUERY_MAX_LEN]
         fallback_used = bool(plan_wrapper.get("fallback_used", False))
+        build_trace = dict(retrieval_query_build_trace or {})
+        canonical_query = str(build_trace.get("executed_query", "") or "").strip()
 
-        executed_rag_query = legacy_rag_query
-        rag_should_load = bool(legacy_rag_query.strip())
+        executed_rag_query = canonical_query or legacy_rag_query
+        rag_should_load = bool(executed_rag_query.strip())
         rag_skipped_reason = ""
         retrieval_plan_applied = False
-        query_before_rag_proof = False
+        query_before_rag_proof = bool(
+            canonical_query and canonical_query == planned_query and bool(build_trace.get("planner_query_used", False))
+        )
         retrieval_gap_reason = str(plan.get("retrieval_gap_reason", "") or "")
 
         if not plan_wrapper:
@@ -410,15 +445,16 @@ class MemoryRetrievalAgent:
                 "plan": {},
                 "retrieval_plan_applied": False,
                 "retrieval_plan_mode": "off",
-                "retrieval_action": "legacy_query",
+                "retrieval_action": "current_turn_focus",
                 "planned_composed_query": "",
-                "executed_rag_query": legacy_rag_query,
+                "executed_rag_query": executed_rag_query,
                 "legacy_rag_query": legacy_rag_query,
-                "query_before_rag_proof": False,
+                "query_before_rag_proof": query_before_rag_proof,
                 "rag_skipped_reason": "",
                 "retrieval_gap_reason": retrieval_gap_reason,
                 "rag_should_load": rag_should_load,
                 "fallback_used": False,
+                "retrieval_query_build_trace": build_trace,
             }
 
         if action in {"suppress_rag", "use_current_context_only"}:
@@ -442,19 +478,19 @@ class MemoryRetrievalAgent:
                 "retrieval_gap_reason": retrieval_gap_reason,
                 "rag_should_load": rag_should_load,
                 "fallback_used": fallback_used,
+                "retrieval_query_build_trace": build_trace,
             }
 
-        if mode == "apply" and valid and action in {"query_kb", "query_memory", "query_kb_and_memory"} and planned_query:
-            executed_rag_query = planned_query
+        if mode == "apply" and valid and action in {"query_kb", "query_memory", "query_kb_and_memory"} and executed_rag_query:
             rag_should_load = True
             retrieval_plan_applied = True
             query_before_rag_proof = executed_rag_query == planned_query
         elif mode == "shadow":
-            executed_rag_query = legacy_rag_query
-            rag_should_load = bool(legacy_rag_query.strip())
+            executed_rag_query = canonical_query or legacy_rag_query
+            rag_should_load = bool(executed_rag_query.strip())
         elif action == "trace_only":
-            executed_rag_query = legacy_rag_query
-            rag_should_load = bool(legacy_rag_query.strip())
+            executed_rag_query = canonical_query or legacy_rag_query
+            rag_should_load = bool(executed_rag_query.strip())
             if fallback_used and not retrieval_gap_reason:
                 retrieval_gap_reason = "legacy_fallback_used"
         elif not valid and not retrieval_gap_reason:
@@ -473,7 +509,72 @@ class MemoryRetrievalAgent:
             "retrieval_gap_reason": retrieval_gap_reason,
             "rag_should_load": rag_should_load,
             "fallback_used": fallback_used,
+            "retrieval_query_build_trace": build_trace,
         }
+
+    @staticmethod
+    def _build_retrieval_query_runtime(
+        *,
+        user_message: str,
+        previous_user_message: str | None,
+        thread_state: ThreadState,
+        retrieval_plan: dict[str, Any] | None,
+        dialogue_act: dict[str, Any] | None,
+        inherited_topic: str | None,
+        last_assistant_offer_summary: str | None,
+        legacy_rag_query: str,
+    ) -> dict[str, Any]:
+        if not feature_flags.enabled("RETRIEVAL_CURRENT_TURN_FOCUS_ENABLED"):
+            return {
+                "schema_version": "retrieval_query_build_trace_v1",
+                "enabled": False,
+                "primary_path": "legacy_query_builder",
+                "raw_user_query": str(user_message or "").strip(),
+                "previous_user_query": str(previous_user_message or "").strip(),
+                "canonical_query": legacy_rag_query,
+                "executed_query": legacy_rag_query,
+                "planned_query": "",
+                "planner_query_used": False,
+                "previous_user_query_included": False,
+                "previous_user_query_inclusion_reason": "legacy_builder_disabled_current_turn_focus",
+                "inherited_topic_used": False,
+                "inherited_topic_reason": "none",
+                "inherited_topic": "",
+                "dialogue_act_hint": str(dict(dialogue_act or {}).get("dialogue_act", "") or ""),
+                "dedupe_applied": False,
+                "duplicate_fragment_count": 0,
+                "truncation_applied": False,
+                "truncation_strategy": "none",
+                "query_truncated_mid_word": False,
+                "current_turn_focus_status": "fallback",
+                "fallback_used": True,
+                "fallback_reason": "feature_flag_disabled",
+                "legacy_query_builder_fallback": True,
+                "query_builder_primary_path": "legacy_query_builder",
+            }
+
+        planner_query = ""
+        if isinstance(retrieval_plan, dict) and isinstance(retrieval_plan.get("plan"), dict):
+            planner_query = str(dict(retrieval_plan.get("plan", {})).get("composed_query", "") or "")
+
+        return build_retrieval_query(
+            user_message=user_message,
+            previous_user_message=previous_user_message,
+            thread_state={
+                "core_direction": str(thread_state.core_direction or ""),
+                "active_concept": str(
+                    dict(thread_state.active_frame).get("active_concept", "")
+                    if isinstance(thread_state.active_frame, dict)
+                    else ""
+                ),
+            },
+            dialogue_act=dialogue_act,
+            planner_query=planner_query,
+            inherited_topic=inherited_topic,
+            last_assistant_offer_summary=last_assistant_offer_summary,
+            max_chars=RAG_QUERY_MAX_LEN,
+            mode=CURRENT_TURN_QUERY_BUILDER_PATH,
+        )
 
     @staticmethod
     async def _load_conversation(user_id: str, n_turns: int, user_message: str = "") -> str:

@@ -321,6 +321,13 @@ class MultiAgentOrchestrator:
             thread_state=retrieval_thread,
             user_id=user_id,
             retrieval_plan=hybrid_retrieval_plan,
+            last_assistant_offer_summary=str(pre_retrieval_last_offer.get("offer_text_summary", "") or ""),
+            dialogue_act={},
+            inherited_topic=str(
+                dict(updated_thread.active_frame).get("active_concept", "")
+                if isinstance(updated_thread.active_frame, dict)
+                else ""
+            ),
         )
         t_memory = int((time.perf_counter() - t0) * 1000)
         self._record_agent_metric(
@@ -660,6 +667,11 @@ class MultiAgentOrchestrator:
         )
         retrieval_decision["query_before_rag_proof"] = bool(
             hybrid_retrieval_trace.get("query_before_rag_proof", False)
+        )
+        retrieval_decision["retrieval_query_build_trace"] = (
+            dict(hybrid_retrieval_trace.get("retrieval_query_build_trace", {}))
+            if isinstance(hybrid_retrieval_trace.get("retrieval_query_build_trace"), dict)
+            else {}
         )
         retrieval_decision["retrieval_gap_reason"] = str(
             hybrid_retrieval_trace.get("retrieval_gap_reason", "")
@@ -1114,6 +1126,11 @@ class MultiAgentOrchestrator:
                 ),
                 "query_before_rag_proof": bool(
                     hybrid_retrieval_trace.get("query_before_rag_proof", False)
+                ),
+                "retrieval_query_build_trace": (
+                    dict(hybrid_retrieval_trace.get("retrieval_query_build_trace", {}))
+                    if isinstance(hybrid_retrieval_trace.get("retrieval_query_build_trace"), dict)
+                    else {}
                 ),
                 "needed_chunk_types": list(
                     dict(hybrid_retrieval_plan.get("plan", {})).get("needed_chunk_types", [])

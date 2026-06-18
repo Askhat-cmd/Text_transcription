@@ -44,6 +44,7 @@ _DEFAULTS: Dict[str, bool] = {
     "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": True,
     "OVERLAY_SHADOW_TRACE_ENABLED": False,
     "WRITER_KB_PAYLOAD_ENABLED": False,
+    "RETRIEVAL_CURRENT_TURN_FOCUS_ENABLED": False,
 }
 
 _STRING_DEFAULTS: Dict[str, str] = {
@@ -122,7 +123,7 @@ class FeatureFlags:
         runtime_mode = FeatureFlags.app_env()
         default_value = _DEFAULTS[name]
         default_source = "default"
-        if name == "WRITER_KB_PAYLOAD_ENABLED":
+        if name in {"WRITER_KB_PAYLOAD_ENABLED", "RETRIEVAL_CURRENT_TURN_FOCUS_ENABLED"}:
             default_value = runtime_mode in _LOCAL_RUNTIME_MODES
             default_source = "default_local" if default_value else "default_safe_off"
 
@@ -159,6 +160,7 @@ class FeatureFlags:
     def runtime_config_trace() -> Dict[str, Any]:
         writer_payload = FeatureFlags.resolve_bool("WRITER_KB_PAYLOAD_ENABLED")
         overlay_shadow = FeatureFlags.resolve_bool("OVERLAY_SHADOW_TRACE_ENABLED")
+        retrieval_current_turn = FeatureFlags.resolve_bool("RETRIEVAL_CURRENT_TURN_FOCUS_ENABLED")
         debug_trace = FeatureFlags.resolve_free_bool("DEBUG_TRACE_ENABLED", True)
         return {
             "schema_version": "runtime_config_trace_v1",
@@ -171,6 +173,8 @@ class FeatureFlags:
             "writer_kb_payload_default_value": writer_payload["default_value"],
             "overlay_shadow_trace_enabled": overlay_shadow["effective_value"],
             "overlay_shadow_trace_enabled_source": overlay_shadow["source"],
+            "retrieval_current_turn_focus_enabled": retrieval_current_turn["effective_value"],
+            "retrieval_current_turn_focus_enabled_source": retrieval_current_turn["source"],
             "debug_trace_enabled": debug_trace["effective_value"],
             "debug_trace_enabled_source": debug_trace["source"],
         }

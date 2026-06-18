@@ -184,6 +184,9 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
   const runtimeConfigTrace = trace.runtime_config_trace && typeof trace.runtime_config_trace === 'object'
     ? (trace.runtime_config_trace as Record<string, unknown>)
     : null;
+  const retrievalQueryBuildTrace = trace.retrieval_query_build_trace && typeof trace.retrieval_query_build_trace === 'object'
+    ? (trace.retrieval_query_build_trace as Record<string, unknown>)
+    : null;
   const writerKbPayloadTrace = trace.writer_kb_payload_trace && typeof trace.writer_kb_payload_trace === 'object'
     ? (trace.writer_kb_payload_trace as Record<string, unknown>)
     : null;
@@ -198,6 +201,7 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
       trace.executed_rag_query
   );
   const overlayShadowAvailable = Boolean(overlayShadow);
+  const retrievalQueryBuildAvailable = Boolean(retrievalQueryBuildTrace);
   const writerKbPayloadAvailable = Boolean(writerKbPayloadTrace);
 
   const timeline = [
@@ -370,6 +374,46 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
               <div className="text-xs text-slate-500">Hybrid Retrieval: not available for this turn</div>
             )}
           </AccordionSection>
+
+          {retrievalQueryBuildAvailable && (
+            <AccordionSection
+              title={`Retrieval Query Build | ${String(retrievalQueryBuildTrace?.primary_path || 'unknown')} | ${String(retrievalQueryBuildTrace?.current_turn_focus_status || 'n/a')}`}
+            >
+              <div className="space-y-2">
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <MetaItem label="ENABLED" value={String(Boolean(retrievalQueryBuildTrace?.enabled))} />
+                  <MetaItem label="PRIMARY PATH" value={String(retrievalQueryBuildTrace?.primary_path || '—')} highlight />
+                  <MetaItem label="PLANNER QUERY USED" value={String(Boolean(retrievalQueryBuildTrace?.planner_query_used))} />
+                  <MetaItem label="STATUS" value={String(retrievalQueryBuildTrace?.current_turn_focus_status || '—')} />
+                  <MetaItem label="DEDUPE APPLIED" value={String(Boolean(retrievalQueryBuildTrace?.dedupe_applied))} />
+                  <MetaItem label="DUPLICATE COUNT" value={String(retrievalQueryBuildTrace?.duplicate_fragment_count ?? 0)} />
+                  <MetaItem label="TRUNCATION" value={String(Boolean(retrievalQueryBuildTrace?.truncation_applied))} />
+                  <MetaItem label="MID-WORD CUT" value={String(Boolean(retrievalQueryBuildTrace?.query_truncated_mid_word))} />
+                </div>
+
+                <AccordionSection title="Query details" nested>
+                  <div className="space-y-1 text-xs">
+                    <div><span className="text-slate-500">raw_user_query:</span> {String(retrievalQueryBuildTrace?.raw_user_query || '—')}</div>
+                    <div><span className="text-slate-500">planned_query:</span> {String(retrievalQueryBuildTrace?.planned_query || '—')}</div>
+                    <div><span className="text-slate-500">canonical_query:</span> {String(retrievalQueryBuildTrace?.canonical_query || '—')}</div>
+                    <div><span className="text-slate-500">executed_query:</span> {String(retrievalQueryBuildTrace?.executed_query || '—')}</div>
+                    <div><span className="text-slate-500">truncation_strategy:</span> {String(retrievalQueryBuildTrace?.truncation_strategy || '—')}</div>
+                    <div><span className="text-slate-500">fallback_reason:</span> {String(retrievalQueryBuildTrace?.fallback_reason || '—')}</div>
+                  </div>
+                </AccordionSection>
+
+                <AccordionSection title="Context reasons" nested>
+                  <div className="space-y-1 text-xs">
+                    <div><span className="text-slate-500">previous_user_query_included:</span> {String(Boolean(retrievalQueryBuildTrace?.previous_user_query_included))}</div>
+                    <div><span className="text-slate-500">previous_user_query_inclusion_reason:</span> {String(retrievalQueryBuildTrace?.previous_user_query_inclusion_reason || '—')}</div>
+                    <div><span className="text-slate-500">inherited_topic_used:</span> {String(Boolean(retrievalQueryBuildTrace?.inherited_topic_used))}</div>
+                    <div><span className="text-slate-500">inherited_topic_reason:</span> {String(retrievalQueryBuildTrace?.inherited_topic_reason || '—')}</div>
+                    <div><span className="text-slate-500">inherited_topic:</span> {String(retrievalQueryBuildTrace?.inherited_topic || '—')}</div>
+                  </div>
+                </AccordionSection>
+              </div>
+            </AccordionSection>
+          )}
 
           {writerKbPayloadAvailable && (
             <AccordionSection

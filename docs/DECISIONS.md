@@ -1,5 +1,25 @@
 # Architecture Decisions
 
+## ADR-084 - Retrieval query assembly is current-turn-focused by default on local developer runtimes
+
+Status: accepted
+
+Date: 2026-06-18
+
+Context: PRD-047.23 proved that the dominant retrieval defect was no longer source/chunk corruption but query assembly pollution: standalone knowledge questions could inherit the previous user topic, long explicit asks could duplicate themselves, and truncated legacy queries could end mid-word, pulling RAG away from the correct sections even when the expected source already existed.
+
+Decision:
+- add isolated deterministic `retrieval_query_builder.py` with `current_turn_focus_v1` query assembly;
+- enable `RETRIEVAL_CURRENT_TURN_FOCUS_ENABLED` by default for `APP_ENV in {local, dev, pilot, test}` while keeping production-style runtimes conservative unless explicitly enabled;
+- treat the current user question as the primary retrieval authority for standalone knowledge asks;
+- forbid naive concatenation of the previous user question into the retrieval query by default;
+- allow only compact contextualization for genuine elliptical follow-ups, using inherited topic or last assistant offer summary with explicit trace reasons;
+- collapse duplicate fragments, avoid mid-word truncation, and preserve a warning-only legacy fallback path;
+- expose `retrieval_query_build_trace_v1` through runtime/debug/API/Web Trace;
+- keep retrieval ranking, Writer authority, Bot_data_base content, processed chunks, registry, live metadata, and Chroma unchanged within this PRD.
+
+Consequences: retrieval execution now has an explicit current-turn-focused assembly layer that can prove why the final query was used. The repository can separate query-assembly defects from source-content defects, while any future work on overlay live evidence, retrieval ranking, or trace-schema cleanup stays in separate PRDs.
+
 ## ADR-083 - Writer receives structured KB payload instead of blind truncated snippets
 
 Status: accepted

@@ -1,0 +1,21 @@
+[
+  {
+    "case_id": "Q24-002",
+    "overall_label": "high_exact",
+    "expected_needles_found": [
+      "несовершенное я",
+      "программа"
+    ],
+    "wrong_needles_found": [],
+    "semantic_hits_count": 3
+  },
+  {
+    "case_id": "Q24-003",
+    "overall_label": "medium_related",
+    "expected_needles_found": [
+      "будь сильным"
+    ],
+    "wrong_needles_found": [],
+    "semantic_hits_count": 3
+  }
+]

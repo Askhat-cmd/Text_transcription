@@ -188,6 +188,28 @@ function createTrace(): MultiAgentTraceData {
       overlay_shadow_trace_enabled: false,
       debug_trace_enabled: true,
     },
+    retrieval_query_build_trace: {
+      schema_version: 'retrieval_query_build_trace_v1',
+      enabled: true,
+      primary_path: 'current_turn_focus_v1',
+      raw_user_query: 'а что такое программа несовершенное я?',
+      planned_query: 'программа несовершенное',
+      canonical_query: 'программа несовершенное я',
+      executed_query: 'программа несовершенное я',
+      current_turn_focus_status: 'clean',
+      planner_query_used: true,
+      previous_user_query_included: false,
+      previous_user_query_inclusion_reason: 'standalone_current_knowledge_question',
+      inherited_topic_used: false,
+      inherited_topic_reason: 'none',
+      inherited_topic: '',
+      dedupe_applied: false,
+      duplicate_fragment_count: 0,
+      truncation_applied: false,
+      truncation_strategy: 'none',
+      query_truncated_mid_word: false,
+      fallback_reason: '',
+    },
     writer_kb_payload_trace: {
       schema_version: 'writer_kb_payload_trace_v1',
       enabled: true,
@@ -430,6 +452,22 @@ describe('MultiAgentTraceWidget (rev2)', () => {
     clickButtonContains(harness.container, 'Future graduation notes');
     expect(harness.container.textContent).toContain('writer_kb_payload_trace_v1');
     expect(harness.container.textContent).toContain('paragraph_then_sentence_boundary');
+    harness.cleanup();
+  });
+
+  it('renders retrieval query build trace block', () => {
+    const harness = renderWidget(
+      React.createElement(MultiAgentTraceWidget, {
+        trace: createTrace(),
+        isExpanded: true,
+      })
+    );
+    expect(harness.container.textContent).toContain('Retrieval Query Build');
+    clickButtonContains(harness.container, 'Retrieval Query Build');
+    clickButtonContains(harness.container, 'Query details');
+    clickButtonContains(harness.container, 'Context reasons');
+    expect(harness.container.textContent).toContain('current_turn_focus_v1');
+    expect(harness.container.textContent).toContain('standalone_current_knowledge_question');
     harness.cleanup();
   });
 

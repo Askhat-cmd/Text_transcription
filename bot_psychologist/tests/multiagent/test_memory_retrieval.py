@@ -302,6 +302,7 @@ async def test_mr_25_context_turns_set(monkeypatch) -> None:
 
 @pytest.mark.asyncio
 async def test_mr_25a_apply_mode_uses_planned_query(monkeypatch) -> None:
+    monkeypatch.setenv("APP_ENV", "local")
     agent = MemoryRetrievalAgent()
     monkeypatch.setattr(agent, "_load_conversation", AsyncMock(return_value="ctx"))
     monkeypatch.setattr(agent, "_load_profile", AsyncMock(return_value=UserProfile()))
@@ -334,6 +335,7 @@ async def test_mr_25a_apply_mode_uses_planned_query(monkeypatch) -> None:
 
 @pytest.mark.asyncio
 async def test_mr_25b_shadow_mode_keeps_legacy_query(monkeypatch) -> None:
+    monkeypatch.setenv("APP_ENV", "local")
     agent = MemoryRetrievalAgent()
     monkeypatch.setattr(agent, "_load_conversation", AsyncMock(return_value="ctx"))
     monkeypatch.setattr(agent, "_load_profile", AsyncMock(return_value=UserProfile()))
@@ -367,6 +369,7 @@ async def test_mr_25b_shadow_mode_keeps_legacy_query(monkeypatch) -> None:
 
 @pytest.mark.asyncio
 async def test_mr_25c_suppress_rag_skips_external_retrieval(monkeypatch) -> None:
+    monkeypatch.setenv("APP_ENV", "local")
     agent = MemoryRetrievalAgent()
     monkeypatch.setattr(agent, "_load_conversation", AsyncMock(return_value="ctx"))
     monkeypatch.setattr(agent, "_load_profile", AsyncMock(return_value=UserProfile()))

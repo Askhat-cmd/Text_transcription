@@ -276,6 +276,11 @@ def _compact_trace_payload(raw_trace: Dict[str, Any]) -> Dict[str, Any]:
             if trace.get("hybrid_retrieval_llm_called") is not None
             else retrieval_decision.get("hybrid_retrieval_llm_called")
         ),
+        "query_builder_primary_path": (
+            trace.get("retrieval_query_build_trace", {}).get("primary_path")
+            if isinstance(trace.get("retrieval_query_build_trace"), dict)
+            else None
+        ),
     }
     if any(value not in (None, "", [], {}) for value in hybrid_retrieval_summary.values()):
         trace["hybrid_retrieval_summary"] = hybrid_retrieval_summary
@@ -856,6 +861,11 @@ async def get_multiagent_trace(
         runtime_config_trace=(
             debug.get("runtime_config_trace")
             if isinstance(debug.get("runtime_config_trace"), dict)
+            else None
+        ),
+        retrieval_query_build_trace=(
+            debug.get("retrieval_query_build_trace")
+            if isinstance(debug.get("retrieval_query_build_trace"), dict)
             else None
         ),
         writer_kb_payload_trace=(

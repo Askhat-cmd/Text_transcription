@@ -161,6 +161,11 @@ PRD-046.1.36 Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1.
 - commit_hash: 4f70dc4
 - push_status: pushed_to_origin_main
 
+## PRD-047.24 Delivery Metadata
+- prd_id: PRD-047.24
+- commit_hash: 47693c2
+- push_status: pushed_to_origin_main
+
 ## Diagnostic Center Track Status
 Diagnostic Center Track Status: CLOSED FOR CURRENT PHASE
 

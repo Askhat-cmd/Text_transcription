@@ -1,6 +1,7 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
+PRD-047.25 collected live evidence for the cleaned retrieval baseline plus `overlay_shadow_trace` and `writer_kb_payload_v1`, and it is the new top-stage baseline with `passed_with_warning` status. The active local runtime remains singular (`multiagent_adapter`), `current_turn_focus_v1` stays primary for retrieval query assembly, and `writer_kb_payload_v1` stays canonical for KB delivery with `kb_payload_primary_rate=1.0`, `current_turn_focus_clean_rate=1.0`, `legacy_query_builder_primary_count=0`, `overlay_apply_detected_count=0`, and no internal payload leakage or raw KB dump in final answers. The bounded warning is now explicit and evidence-backed: overlay remains trace-only and non-authoritative, but live evidence shows `overlay_false_positive_count=6`, so the next recommended step is `PRD-047.26 - Overlay Shadow Noise Reduction / Evidence Repair v1`, not overlay graduation or authority expansion.
 PRD-047.24 closed the retrieval query assembly pollution/duplication class with accepted `passed_with_warning` status and is the current top-stage baseline. The runtime now uses `current_turn_focus_v1` query assembly by default for local/dev/pilot/test surfaces, blocks naive previous-question concatenation for standalone knowledge asks, permits compact inherited-topic context only for genuine elliptical follow-ups, collapses duplicate fragments, avoids mid-word truncation, and exposes `retrieval_query_build_trace_v1` in runtime/debug/API/Web Trace. Live repair evidence shows Q24-002 no longer carries the stale self-realization query, Q24-003 no longer duplicates/truncates mid-word, retrieval relevance is no longer `missing_expected_source`, Writer KB payload remains canonical with structured payload active, and no Bot_data_base/Chroma/source/chunk mutation was performed. The remaining warning is bounded: Q24-003 improved to `medium_related` top-k evidence rather than a stronger exact top-1 style match. Next recommended work is `PRD-047.25 - Overlay + Writer KB Payload Live Evidence / Evaluation v1`.
 PRD-047.22-HF2 closed the manual Web Chat runtime parity gap for Writer KB Payload and is the current top-stage baseline. The backend now resolves `WRITER_KB_PAYLOAD_ENABLED` from a single effective-config source with `APP_ENV=local` leading to `default_local`, exposes that source in admin runtime and debug trace, and proves over the real Web Chat streaming path that `writer_kb_payload_v1` is primary (`fallback_is_primary=false`, `payload_chunk_count>=1`, `mid_sentence_cut_count=0`) while keeping retrieval ranking/query, Writer authority, Chroma, registry, processed blocks, and live metadata unchanged. Browser screenshot capture remains an explicit warning-only gap; API/Web Chat parity, prompt-canvas proof, no-mutation proof, and encoding hygiene passed. Next recommended work is `PRD-047.23 - Overlay + Writer KB Payload Live Evidence / Evaluation v1`, now gated on PRD-047.22-HF2 parity truth.
 PRD-047.22-HF1 repaired the live API Writer KB payload evidence path and is the current top-stage baseline. The previous PRD-047.22 warning was traced to the smoke transport itself: ad-hoc PowerShell-piped inline Python corrupted Cyrillic query text before it reached the backend, and the smoke did not own/verify backend startup with `WRITER_KB_PAYLOAD_ENABLED=true`. HF1 adds a managed live runner and live-like API test that send ASCII-safe escaped JSON, verify/start backend locally with the payload flag enabled, and now produce live `writer_kb_payload_trace.enabled=true` with `payload_chunk_count=1` for `С‡С‚Рѕ С‚Р°РєРѕРµ РќРµР№СЂРѕСЃС‚Р°Р»РєРёРЅРі?`, while keeping retrieval ranking/query, Writer authority, Chroma, registry, processed blocks, and live metadata unchanged. Next recommended work returns to `PRD-047.23 - Overlay + Writer KB Payload Live Evidence / Evaluation v1`.
@@ -95,7 +96,7 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 - Historical artifact encoding noise may be misread as current runtime corruption without normalization report.
 
 ## Next Planned PRD
-`PRD-047.25 - Overlay + Writer KB Payload Live Evidence / Evaluation v1`
+`PRD-047.26 - Overlay Shadow Noise Reduction / Evidence Repair v1`
 
 ## PRD-047.23 Audit State
 PRD-047.23 closed the evidence gap between Bot_data_base chunks, retrieval query assembly, Writer KB payload, and Web Trace preview.
@@ -165,6 +166,11 @@ PRD-046.1.36 Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1.
 - prd_id: PRD-047.24
 - commit_hash: 47693c2
 - push_status: pushed_to_origin_main
+
+## PRD-047.25 Delivery Metadata
+- prd_id: PRD-047.25
+- commit_hash: pending
+- push_status: pending_push
 
 ## Diagnostic Center Track Status
 Diagnostic Center Track Status: CLOSED FOR CURRENT PHASE

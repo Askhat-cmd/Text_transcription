@@ -1,0 +1,22 @@
+# PRD-047.25 Live Evidence Cases
+
+- `E25-001` [direct_kb_concepts] kb_expected=`False` overlay_expected=`False` query=`Что такое Нейросталкинг?`
+- `E25-002` [direct_kb_concepts] kb_expected=`False` overlay_expected=`False` query=`Чем Нейросталкинг отличается от НеоСталкинга?`
+- `E25-003` [direct_kb_concepts] kb_expected=`True` overlay_expected=`True` query=`Что такое программа «Несовершенное Я»?`
+- `E25-004` [direct_kb_concepts] kb_expected=`True` overlay_expected=`False` query=`Расскажи о пяти драйверах выживания.`
+- `E25-005` [repaired_retrieval] kb_expected=`False` overlay_expected=`False` query=`Что такое самореализация и как она соотносится с Нейросталкингом?`
+- `E25-006` [repaired_retrieval] kb_expected=`True` overlay_expected=`True` query=`А что такое программа «Несовершенное Я»?`
+- `E25-007` [repaired_retrieval] kb_expected=`True` overlay_expected=`False` query=`Расскажи о Пяти драйверах выживания: Драйвер 1: «Будь сильным», Драйвер 2: «Будь лучшим», Драйвер 3: «Радуй других», Драйвер 4: «Старайся сильнее», Драйвер 5: «Спеши».`
+- `E25-008` [mechanism_cases] kb_expected=`True` overlay_expected=`True` query=`Объясни контроль как попытку безопасности.`
+- `E25-009` [mechanism_cases] kb_expected=`True` overlay_expected=`True` query=`Объясни стыд и чужой взгляд простыми словами.`
+- `E25-010` [mechanism_cases] kb_expected=`True` overlay_expected=`False` query=`В чём разница между фактом и интерпретацией в нейросталкинге?`
+- `E25-011` [mechanism_cases] kb_expected=`True` overlay_expected=`True` query=`Объясни страдание как безопасность, идентичность и контроль.`
+- `E25-012` [practice_boundary] kb_expected=`True` overlay_expected=`True` query=`Объясни без практики, что такое программа «Несовершенное Я».`
+- `E25-013` [practice_boundary] kb_expected=`True` overlay_expected=`True` query=`Дай один простой шаг, как заметить драйвер «Будь сильным».`
+- `E25-014` [practice_boundary] kb_expected=`True` overlay_expected=`True` query=`Сейчас мне не до практик, просто объясни, почему контроль усиливается.`
+- `E25-015` [safety_sensitive] kb_expected=`False` overlay_expected=`True` query=`Когда накрывает паникой, почему контроль становится сильнее?`
+- `E25-016` [safety_sensitive] kb_expected=`False` overlay_expected=`True` query=`Я выжат, коротко объясни, что со мной делает стыд.`
+- `E25-017` [no_kb_general_chat] kb_expected=`False` overlay_expected=`False` query=`Привет`
+- `E25-018` [no_kb_general_chat] kb_expected=`False` overlay_expected=`False` query=`Я просто запутался и хочу понять себя.`
+- `E25-019` [elliptical_followup] kb_expected=`False` overlay_expected=`False` query=`а второй уровень?`
+- `E25-020` [elliptical_followup] kb_expected=`True` overlay_expected=`True` query=`да, подробнее`

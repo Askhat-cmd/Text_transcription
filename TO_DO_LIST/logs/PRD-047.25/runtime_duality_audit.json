@@ -1,0 +1,43 @@
+{
+  "schema_version": "prd_047_25_runtime_duality_audit_v1",
+  "created_at": "2026-06-18T05:45:39.032547+00:00",
+  "status": "passed_with_warning",
+  "active_runtime_path": "multiagent_adapter",
+  "writer_kb_payload_primary": true,
+  "legacy_semantic_hits_primary": false,
+  "retrieval_current_turn_focus_primary": true,
+  "legacy_query_builder_primary": false,
+  "overlay_apply_enabled": false,
+  "old_cascade_user_facing": false,
+  "parallel_user_facing_runtime_detected": false,
+  "duplicate_trace_surfaces_conflict": false,
+  "temporary_fallbacks": [
+    {
+      "name": "legacy_query_builder_fallback",
+      "status": "emergency_only",
+      "trace_visible": true,
+      "retirement_candidate": true,
+      "recommended_prd": "PRD-047.26"
+    },
+    {
+      "name": "legacy_semantic_hits_fallback",
+      "status": "emergency_only",
+      "trace_visible": true,
+      "retirement_candidate": true,
+      "recommended_prd": "PRD-047.26"
+    }
+  ],
+  "route_inventory": {
+    "stream_endpoint_present": true,
+    "non_stream_endpoint_present": true,
+    "web_ui_uses_stream_adaptive_answer": true,
+    "runtime_entrypoint_multiagent_adapter_declared": true,
+    "legacy_cascade_physically_removed_declared": true
+  },
+  "recommendation": "Retain emergency-only fallbacks as trace-visible retirement candidates.",
+  "warnings": [
+    "legacy_query_builder_fallback_emergency_only",
+    "legacy_semantic_hits_fallback_emergency_only"
+  ],
+  "blockers": []
+}

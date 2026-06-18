@@ -1,0 +1,52 @@
+{
+  "schema_version": "prd_047_25_source_gate_report_v1",
+  "prd_id": "PRD-047.25",
+  "created_at": "2026-06-18T05:38:34.321242+00:00",
+  "required_paths": [
+    {
+      "path": "TO_DO_LIST/reports/PRD-047.24_IMPLEMENTATION_REPORT.md",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-047.24_NEXT_PRD_RECOMMENDATION.md",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.24/live_query_repair_smoke.json",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.24/retrieval_relevance_after_repair.json",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.24/answer_focus_smoke.json",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.24/no_mutation_proof.json",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.24/test_command_output.txt",
+      "exists": true
+    }
+  ],
+  "commit_presence": {
+    "47693c2": "47693c223ff482aded085ebb89bd32e639897a07",
+    "c4fa911": "c4fa911475b392534771e0a81f150d399cab921f",
+    "c61f566": "c61f5661ab711f97f602d0bf58677f16c7f17a0c"
+  },
+  "required_source_facts": {
+    "q24_002_stale_previous_topic_removed": true,
+    "q24_003_duplicate_removed": true,
+    "q24_003_mid_word_removed": true,
+    "q24_002_relevance": "high_exact",
+    "q24_003_relevance": "medium_related",
+    "answer_focus_status": "passed",
+    "no_mutation_status": "passed",
+    "legacy_query_builder_primary": false
+  },
+  "status": "passed",
+  "blockers": []
+}

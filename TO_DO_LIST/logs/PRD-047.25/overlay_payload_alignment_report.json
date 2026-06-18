@@ -1,0 +1,151 @@
+{
+  "schema_version": "prd_047_25_overlay_payload_alignment_report_v1",
+  "created_at": "2026-06-18T05:45:39.034549+00:00",
+  "classification_count": 20,
+  "false_positive_count": 6,
+  "missing_where_expected_count": 2,
+  "useful_count": 15,
+  "recommendation": "overlay_currently_more_noise_than_help",
+  "classifications": [
+    {
+      "case_id": "E25-001",
+      "classification": "overlay_noise_possible",
+      "overlay_expected": false,
+      "overlay_would_help": true,
+      "payload_present": true
+    },
+    {
+      "case_id": "E25-002",
+      "classification": "overlay_would_help=false + kb_payload_present",
+      "overlay_expected": false,
+      "overlay_would_help": false,
+      "payload_present": true
+    },
+    {
+      "case_id": "E25-003",
+      "classification": "overlay_would_help=true + kb_payload_present=true",
+      "overlay_expected": true,
+      "overlay_would_help": true,
+      "payload_present": true
+    },
+    {
+      "case_id": "E25-004",
+      "classification": "overlay_noise_possible",
+      "overlay_expected": false,
+      "overlay_would_help": true,
+      "payload_present": true
+    },
+    {
+      "case_id": "E25-005",
+      "classification": "overlay_noise_possible",
+      "overlay_expected": false,
+      "overlay_would_help": true,
+      "payload_present": true
+    },
+    {
+      "case_id": "E25-006",
+      "classification": "overlay_would_help=true + kb_payload_present=true",
+      "overlay_expected": true,
+      "overlay_would_help": true,
+      "payload_present": true
+    },
+    {
+      "case_id": "E25-007",
+      "classification": "overlay_noise_possible",
+      "overlay_expected": false,
+      "overlay_would_help": true,
+      "payload_present": true
+    },
+    {
+      "case_id": "E25-008",
+      "classification": "overlay_would_help=true + kb_payload_present=true",
+      "overlay_expected": true,
+      "overlay_would_help": true,
+      "payload_present": true
+    },
+    {
+      "case_id": "E25-009",
+      "classification": "overlay_missing_where_expected",
+      "overlay_expected": true,
+      "overlay_would_help": false,
+      "payload_present": true
+    },
+    {
+      "case_id": "E25-010",
+      "classification": "overlay_noise_possible",
+      "overlay_expected": false,
+      "overlay_would_help": true,
+      "payload_present": true
+    },
+    {
+      "case_id": "E25-011",
+      "classification": "overlay_would_help=true + kb_payload_present=true",
+      "overlay_expected": true,
+      "overlay_would_help": true,
+      "payload_present": true
+    },
+    {
+      "case_id": "E25-012",
+      "classification": "overlay_would_help=true + kb_payload_present=true",
+      "overlay_expected": true,
+      "overlay_would_help": true,
+      "payload_present": true
+    },
+    {
+      "case_id": "E25-013",
+      "classification": "overlay_would_help=true + kb_payload_present=true",
+      "overlay_expected": true,
+      "overlay_would_help": true,
+      "payload_present": true
+    },
+    {
+      "case_id": "E25-014",
+      "classification": "overlay_would_help=true + kb_payload_present=true",
+      "overlay_expected": true,
+      "overlay_would_help": true,
+      "payload_present": true
+    },
+    {
+      "case_id": "E25-015",
+      "classification": "overlay_would_help=true + kb_payload_present=true",
+      "overlay_expected": true,
+      "overlay_would_help": true,
+      "payload_present": true
+    },
+    {
+      "case_id": "E25-016",
+      "classification": "overlay_would_help=true + kb_payload_present=true",
+      "overlay_expected": true,
+      "overlay_would_help": true,
+      "payload_present": true
+    },
+    {
+      "case_id": "E25-017",
+      "classification": "overlay_would_help=false + kb_payload_absent",
+      "overlay_expected": false,
+      "overlay_would_help": false,
+      "payload_present": false
+    },
+    {
+      "case_id": "E25-018",
+      "classification": "overlay_noise_possible",
+      "overlay_expected": false,
+      "overlay_would_help": true,
+      "payload_present": true
+    },
+    {
+      "case_id": "E25-019",
+      "classification": "overlay_would_help=false + kb_payload_present",
+      "overlay_expected": false,
+      "overlay_would_help": false,
+      "payload_present": true
+    },
+    {
+      "case_id": "E25-020",
+      "classification": "overlay_missing_where_expected",
+      "overlay_expected": true,
+      "overlay_would_help": false,
+      "payload_present": true
+    }
+  ]
+}

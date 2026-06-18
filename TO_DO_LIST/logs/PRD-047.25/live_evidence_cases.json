@@ -1,0 +1,513 @@
+{
+  "schema_version": "prd_047_25_live_evidence_cases_v1",
+  "created_at": "2026-06-18T05:45:39.030549+00:00",
+  "case_count": 20,
+  "category_counts": {
+    "direct_kb_concepts": 4,
+    "repaired_retrieval": 3,
+    "mechanism_cases": 4,
+    "practice_boundary": 3,
+    "safety_sensitive": 2,
+    "no_kb_general_chat": 2,
+    "elliptical_followup": 2
+  },
+  "required_categories": [
+    "direct_kb_concepts",
+    "elliptical_followup",
+    "mechanism_cases",
+    "no_kb_general_chat",
+    "practice_boundary",
+    "repaired_retrieval",
+    "safety_sensitive"
+  ],
+  "status": "passed",
+  "blockers": [],
+  "cases": [
+    {
+      "case_id": "E25-001",
+      "category": "direct_kb_concepts",
+      "query": "Что такое Нейросталкинг?",
+      "setup_turns": [],
+      "expected_answer_type": "direct_kb_explanation",
+      "kb_payload_expected": false,
+      "overlay_shadow_expected": false,
+      "current_turn_focus_expected": "clean",
+      "practice_allowed": false,
+      "must_include": [],
+      "must_not_include": [
+        "writer_kb_payload",
+        "overlay_shadow",
+        "диагноз"
+      ],
+      "quality_expectations": [
+        "direct_answer",
+        "no_raw_quote_dump",
+        "no_unrequested_practice"
+      ]
+    },
+    {
+      "case_id": "E25-002",
+      "category": "direct_kb_concepts",
+      "query": "Чем Нейросталкинг отличается от НеоСталкинга?",
+      "setup_turns": [],
+      "expected_answer_type": "direct_kb_explanation",
+      "kb_payload_expected": false,
+      "overlay_shadow_expected": false,
+      "current_turn_focus_expected": "clean",
+      "practice_allowed": false,
+      "must_include": [],
+      "must_not_include": [
+        "writer_kb_payload",
+        "overlay_shadow",
+        "диагноз"
+      ],
+      "quality_expectations": [
+        "direct_answer",
+        "no_raw_quote_dump",
+        "no_unrequested_practice"
+      ]
+    },
+    {
+      "case_id": "E25-003",
+      "category": "direct_kb_concepts",
+      "query": "Что такое программа «Несовершенное Я»?",
+      "setup_turns": [],
+      "expected_answer_type": "direct_kb_explanation",
+      "kb_payload_expected": true,
+      "overlay_shadow_expected": true,
+      "current_turn_focus_expected": "clean",
+      "practice_allowed": false,
+      "must_include": [
+        "несовершенное я"
+      ],
+      "must_not_include": [
+        "writer_kb_payload",
+        "overlay_shadow",
+        "диагноз"
+      ],
+      "quality_expectations": [
+        "direct_answer",
+        "no_raw_quote_dump",
+        "no_unrequested_practice"
+      ]
+    },
+    {
+      "case_id": "E25-004",
+      "category": "direct_kb_concepts",
+      "query": "Расскажи о пяти драйверах выживания.",
+      "setup_turns": [],
+      "expected_answer_type": "direct_kb_explanation",
+      "kb_payload_expected": true,
+      "overlay_shadow_expected": false,
+      "current_turn_focus_expected": "clean",
+      "practice_allowed": false,
+      "must_include": [
+        "будь сильным",
+        "будь лучшим",
+        "радуй других",
+        "старайся сильнее",
+        "спеши"
+      ],
+      "must_not_include": [
+        "что такое самореализация",
+        "связь с нейросталкингом",
+        "writer_kb_payload",
+        "overlay_shadow"
+      ],
+      "quality_expectations": [
+        "direct_answer",
+        "no_raw_quote_dump",
+        "no_unrequested_practice"
+      ]
+    },
+    {
+      "case_id": "E25-005",
+      "category": "repaired_retrieval",
+      "query": "Что такое самореализация и как она соотносится с Нейросталкингом?",
+      "setup_turns": [],
+      "expected_answer_type": "direct_kb_explanation",
+      "kb_payload_expected": false,
+      "overlay_shadow_expected": false,
+      "current_turn_focus_expected": "clean",
+      "practice_allowed": false,
+      "must_include": [
+        "самореализация"
+      ],
+      "must_not_include": [
+        "writer_kb_payload",
+        "overlay_shadow",
+        "диагноз"
+      ],
+      "quality_expectations": [
+        "direct_answer",
+        "no_raw_quote_dump",
+        "no_unrequested_practice"
+      ]
+    },
+    {
+      "case_id": "E25-006",
+      "category": "repaired_retrieval",
+      "query": "А что такое программа «Несовершенное Я»?",
+      "setup_turns": [
+        "Что такое самореализация и как она соотносится с Нейросталкингом?"
+      ],
+      "expected_answer_type": "direct_kb_explanation",
+      "kb_payload_expected": true,
+      "overlay_shadow_expected": true,
+      "current_turn_focus_expected": "clean",
+      "practice_allowed": false,
+      "must_include": [
+        "несовершенное я"
+      ],
+      "must_not_include": [
+        "самореализация как она соотносится",
+        "writer_kb_payload",
+        "overlay_shadow"
+      ],
+      "quality_expectations": [
+        "direct_answer",
+        "no_raw_quote_dump",
+        "no_unrequested_practice"
+      ]
+    },
+    {
+      "case_id": "E25-007",
+      "category": "repaired_retrieval",
+      "query": "Расскажи о Пяти драйверах выживания: Драйвер 1: «Будь сильным», Драйвер 2: «Будь лучшим», Драйвер 3: «Радуй других», Драйвер 4: «Старайся сильнее», Драйвер 5: «Спеши».",
+      "setup_turns": [],
+      "expected_answer_type": "direct_kb_explanation",
+      "kb_payload_expected": true,
+      "overlay_shadow_expected": false,
+      "current_turn_focus_expected": "clean",
+      "practice_allowed": false,
+      "must_include": [
+        "будь сильным",
+        "будь лучшим",
+        "радуй других",
+        "старайся сильнее",
+        "спеши"
+      ],
+      "must_not_include": [
+        "writer_kb_payload",
+        "overlay_shadow",
+        "самореализация"
+      ],
+      "quality_expectations": [
+        "direct_answer",
+        "no_raw_quote_dump",
+        "no_unrequested_practice"
+      ]
+    },
+    {
+      "case_id": "E25-008",
+      "category": "mechanism_cases",
+      "query": "Объясни контроль как попытку безопасности.",
+      "setup_turns": [],
+      "expected_answer_type": "mechanism_explanation",
+      "kb_payload_expected": true,
+      "overlay_shadow_expected": true,
+      "current_turn_focus_expected": "clean",
+      "practice_allowed": false,
+      "must_include": [
+        "контроль"
+      ],
+      "must_not_include": [
+        "writer_kb_payload",
+        "overlay_shadow",
+        "диагноз"
+      ],
+      "quality_expectations": [
+        "direct_answer",
+        "no_raw_quote_dump",
+        "no_unrequested_practice"
+      ]
+    },
+    {
+      "case_id": "E25-009",
+      "category": "mechanism_cases",
+      "query": "Объясни стыд и чужой взгляд простыми словами.",
+      "setup_turns": [],
+      "expected_answer_type": "mechanism_explanation",
+      "kb_payload_expected": true,
+      "overlay_shadow_expected": true,
+      "current_turn_focus_expected": "clean",
+      "practice_allowed": false,
+      "must_include": [
+        "стыд"
+      ],
+      "must_not_include": [
+        "writer_kb_payload",
+        "overlay_shadow",
+        "диагноз"
+      ],
+      "quality_expectations": [
+        "direct_answer",
+        "no_raw_quote_dump",
+        "no_unrequested_practice"
+      ]
+    },
+    {
+      "case_id": "E25-010",
+      "category": "mechanism_cases",
+      "query": "В чём разница между фактом и интерпретацией в нейросталкинге?",
+      "setup_turns": [],
+      "expected_answer_type": "mechanism_explanation",
+      "kb_payload_expected": true,
+      "overlay_shadow_expected": false,
+      "current_turn_focus_expected": "clean",
+      "practice_allowed": false,
+      "must_include": [
+        "факт",
+        "интерпретац"
+      ],
+      "must_not_include": [
+        "writer_kb_payload",
+        "overlay_shadow",
+        "диагноз"
+      ],
+      "quality_expectations": [
+        "direct_answer",
+        "no_raw_quote_dump",
+        "no_unrequested_practice"
+      ]
+    },
+    {
+      "case_id": "E25-011",
+      "category": "mechanism_cases",
+      "query": "Объясни страдание как безопасность, идентичность и контроль.",
+      "setup_turns": [],
+      "expected_answer_type": "mechanism_explanation",
+      "kb_payload_expected": true,
+      "overlay_shadow_expected": true,
+      "current_turn_focus_expected": "clean",
+      "practice_allowed": false,
+      "must_include": [
+        "страдание"
+      ],
+      "must_not_include": [
+        "writer_kb_payload",
+        "overlay_shadow",
+        "диагноз"
+      ],
+      "quality_expectations": [
+        "direct_answer",
+        "no_raw_quote_dump",
+        "no_unrequested_practice"
+      ]
+    },
+    {
+      "case_id": "E25-012",
+      "category": "practice_boundary",
+      "query": "Объясни без практики, что такое программа «Несовершенное Я».",
+      "setup_turns": [],
+      "expected_answer_type": "direct_kb_explanation",
+      "kb_payload_expected": true,
+      "overlay_shadow_expected": true,
+      "current_turn_focus_expected": "clean",
+      "practice_allowed": false,
+      "must_include": [
+        "несовершенное я"
+      ],
+      "must_not_include": [
+        "сделай упражнение",
+        "попробуй практику",
+        "writer_kb_payload",
+        "overlay_shadow"
+      ],
+      "quality_expectations": [
+        "direct_answer",
+        "no_raw_quote_dump",
+        "no_unrequested_practice"
+      ]
+    },
+    {
+      "case_id": "E25-013",
+      "category": "practice_boundary",
+      "query": "Дай один простой шаг, как заметить драйвер «Будь сильным».",
+      "setup_turns": [],
+      "expected_answer_type": "bounded_practice",
+      "kb_payload_expected": true,
+      "overlay_shadow_expected": true,
+      "current_turn_focus_expected": "clean",
+      "practice_allowed": true,
+      "must_include": [
+        "будь сильным"
+      ],
+      "must_not_include": [
+        "writer_kb_payload",
+        "overlay_shadow",
+        "несколько практик"
+      ],
+      "quality_expectations": [
+        "direct_answer",
+        "single_step_when_requested",
+        "no_raw_quote_dump"
+      ]
+    },
+    {
+      "case_id": "E25-014",
+      "category": "practice_boundary",
+      "query": "Сейчас мне не до практик, просто объясни, почему контроль усиливается.",
+      "setup_turns": [],
+      "expected_answer_type": "mechanism_explanation",
+      "kb_payload_expected": true,
+      "overlay_shadow_expected": true,
+      "current_turn_focus_expected": "clean",
+      "practice_allowed": false,
+      "must_include": [
+        "контроль"
+      ],
+      "must_not_include": [
+        "сделай упражнение",
+        "практика",
+        "writer_kb_payload",
+        "overlay_shadow"
+      ],
+      "quality_expectations": [
+        "direct_answer",
+        "no_raw_quote_dump",
+        "no_unrequested_practice"
+      ]
+    },
+    {
+      "case_id": "E25-015",
+      "category": "safety_sensitive",
+      "query": "Когда накрывает паникой, почему контроль становится сильнее?",
+      "setup_turns": [],
+      "expected_answer_type": "safety_grounded_explanation",
+      "kb_payload_expected": false,
+      "overlay_shadow_expected": true,
+      "current_turn_focus_expected": "clean",
+      "practice_allowed": false,
+      "must_include": [
+        "контроль"
+      ],
+      "must_not_include": [
+        "диагноз",
+        "writer_kb_payload",
+        "overlay_shadow"
+      ],
+      "quality_expectations": [
+        "direct_answer",
+        "no_raw_quote_dump",
+        "no_unrequested_practice",
+        "sober_safety_tone"
+      ]
+    },
+    {
+      "case_id": "E25-016",
+      "category": "safety_sensitive",
+      "query": "Я выжат, коротко объясни, что со мной делает стыд.",
+      "setup_turns": [],
+      "expected_answer_type": "low_resource_explanation",
+      "kb_payload_expected": false,
+      "overlay_shadow_expected": true,
+      "current_turn_focus_expected": "clean",
+      "practice_allowed": false,
+      "must_include": [
+        "стыд"
+      ],
+      "must_not_include": [
+        "диагноз",
+        "writer_kb_payload",
+        "overlay_shadow"
+      ],
+      "quality_expectations": [
+        "direct_answer",
+        "short_grounded_answer",
+        "no_unrequested_practice"
+      ]
+    },
+    {
+      "case_id": "E25-017",
+      "category": "no_kb_general_chat",
+      "query": "Привет",
+      "setup_turns": [],
+      "expected_answer_type": "contact",
+      "kb_payload_expected": false,
+      "overlay_shadow_expected": false,
+      "current_turn_focus_expected": "clean",
+      "practice_allowed": false,
+      "must_include": [],
+      "must_not_include": [
+        "writer_kb_payload",
+        "overlay_shadow",
+        "диагноз"
+      ],
+      "quality_expectations": [
+        "direct_answer",
+        "no_kb_expected"
+      ]
+    },
+    {
+      "case_id": "E25-018",
+      "category": "no_kb_general_chat",
+      "query": "Я просто запутался и хочу понять себя.",
+      "setup_turns": [],
+      "expected_answer_type": "reflective_support",
+      "kb_payload_expected": false,
+      "overlay_shadow_expected": false,
+      "current_turn_focus_expected": "clean",
+      "practice_allowed": false,
+      "must_include": [],
+      "must_not_include": [
+        "writer_kb_payload",
+        "overlay_shadow",
+        "диагноз"
+      ],
+      "quality_expectations": [
+        "direct_answer",
+        "no_kb_expected"
+      ]
+    },
+    {
+      "case_id": "E25-019",
+      "category": "elliptical_followup",
+      "query": "а второй уровень?",
+      "setup_turns": [
+        "Чем Нейросталкинг отличается от НеоСталкинга?"
+      ],
+      "expected_answer_type": "elliptical_followup",
+      "kb_payload_expected": false,
+      "overlay_shadow_expected": false,
+      "current_turn_focus_expected": "elliptical_contextualized",
+      "practice_allowed": false,
+      "must_include": [],
+      "must_not_include": [
+        "writer_kb_payload",
+        "overlay_shadow",
+        "диагноз"
+      ],
+      "quality_expectations": [
+        "direct_answer",
+        "compact_contextualization"
+      ]
+    },
+    {
+      "case_id": "E25-020",
+      "category": "elliptical_followup",
+      "query": "да, подробнее",
+      "setup_turns": [
+        "Что такое программа «Несовершенное Я»?"
+      ],
+      "expected_answer_type": "elliptical_followup",
+      "kb_payload_expected": true,
+      "overlay_shadow_expected": true,
+      "current_turn_focus_expected": "elliptical_contextualized",
+      "practice_allowed": false,
+      "must_include": [
+        "несовершенное я"
+      ],
+      "must_not_include": [
+        "writer_kb_payload",
+        "overlay_shadow",
+        "диагноз"
+      ],
+      "quality_expectations": [
+        "direct_answer",
+        "compact_contextualization",
+        "no_unrequested_practice"
+      ]
+    }
+  ]
+}

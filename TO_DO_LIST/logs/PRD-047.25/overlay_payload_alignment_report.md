@@ -1,0 +1,25 @@
+# PRD-047.25 Overlay Payload Alignment Report
+
+- recommendation: `overlay_currently_more_noise_than_help`
+- false_positive_count: `6`
+- missing_where_expected_count: `2`
+- `E25-001`: `overlay_noise_possible`
+- `E25-002`: `overlay_would_help=false + kb_payload_present`
+- `E25-003`: `overlay_would_help=true + kb_payload_present=true`
+- `E25-004`: `overlay_noise_possible`
+- `E25-005`: `overlay_noise_possible`
+- `E25-006`: `overlay_would_help=true + kb_payload_present=true`
+- `E25-007`: `overlay_noise_possible`
+- `E25-008`: `overlay_would_help=true + kb_payload_present=true`
+- `E25-009`: `overlay_missing_where_expected`
+- `E25-010`: `overlay_noise_possible`
+- `E25-011`: `overlay_would_help=true + kb_payload_present=true`
+- `E25-012`: `overlay_would_help=true + kb_payload_present=true`
+- `E25-013`: `overlay_would_help=true + kb_payload_present=true`
+- `E25-014`: `overlay_would_help=true + kb_payload_present=true`
+- `E25-015`: `overlay_would_help=true + kb_payload_present=true`
+- `E25-016`: `overlay_would_help=true + kb_payload_present=true`
+- `E25-017`: `overlay_would_help=false + kb_payload_absent`
+- `E25-018`: `overlay_noise_possible`
+- `E25-019`: `overlay_would_help=false + kb_payload_present`
+- `E25-020`: `overlay_missing_where_expected`

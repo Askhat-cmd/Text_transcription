@@ -1,0 +1,51 @@
+$ c:\My_practice\Text_transcription\bot_psychologist\.venv\Scripts\python.exe -m pytest c:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_25_overlay_payload_live_evidence.py -q
+....                                                                     [100%]
+4 passed in 0.05s
+[exit_code]=0
+
+$ c:\My_practice\Text_transcription\bot_psychologist\.venv\Scripts\python.exe -m pytest c:\My_practice\Text_transcription\bot_psychologist\tests\test_retrieval_query_builder_current_turn_focus.py -q
+..........                                                               [100%]
+10 passed in 0.34s
+[exit_code]=0
+
+$ c:\My_practice\Text_transcription\bot_psychologist\.venv\Scripts\python.exe -m pytest c:\My_practice\Text_transcription\bot_psychologist\tests\api\test_writer_kb_payload_live_http_path.py -q
+..                                                                       [100%]
+============================== warnings summary ===============================
+tests/api/test_writer_kb_payload_live_http_path.py::test_live_like_http_path_produces_writer_kb_payload_trace
+  C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\thread_manager.py:413: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2 passed, 1 warning in 57.09s
+[exit_code]=0
+
+$ c:\My_practice\Text_transcription\bot_psychologist\.venv\Scripts\python.exe -m pytest c:\My_practice\Text_transcription\bot_psychologist\tests\api\test_writer_kb_payload_manual_web_chat_parity.py -q
+.                                                                        [100%]
+============================== warnings summary ===============================
+tests/api/test_writer_kb_payload_manual_web_chat_parity.py::test_manual_web_chat_stream_path_uses_writer_kb_payload_v1_by_default_local
+  C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\thread_manager.py:413: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+1 passed, 1 warning in 32.61s
+[exit_code]=0
+
+$ c:\My_practice\Text_transcription\bot_psychologist\.venv\Scripts\python.exe -m pytest c:\My_practice\Text_transcription\bot_psychologist\tests\api\test_overlay_shadow_trace_api_debug.py -q
+.                                                                        [100%]
+1 passed in 19.46s
+[exit_code]=0
+
+$ runner_summary
+{
+  "schema_version": "prd_047_25_implementation_summary_v1",
+  "prd_id": "PRD-047.25",
+  "generated_at": "2026-06-18T05:45:39.297197+00:00",
+  "source_gate_status": "passed",
+  "runtime_effective_status": 200,
+  "runtime_duality_status": "passed_with_warning",
+  "live_results_status": "passed_with_warning",
+  "retrieval_query_health_status": "passed",
+  "no_mutation_status": "passed",
+  "encoding_status": "passed",
+  "overall_recommendation": "PRD-047.26 - Overlay Shadow Noise Reduction / Evidence Repair v1"
+}

@@ -67,6 +67,21 @@ _USER_ANCHOR_LABELS = (
     ("ощущение, что время упущено", ("упущ", "время")),
     ("узел убеждений", ("убежден", "убеждён", "узел")),
 )
+_PRACTICE_REQUEST_MARKERS = ("практик", "упражн", "микропракти", "шаг")
+_ONE_PRACTICE_MARKERS = ("одну", "один", "коротк", "микро")
+_PRACTICE_ACTION_MARKERS = ("сделай", "заметь", "отметь", "поймай", "назови", "сформулируй", "остановись", "выдох")
+_SUPPORT_TEXTBOOK_MARKERS = (
+    "симпатоадренал",
+    "префронтал",
+    "автономн",
+    "адреналин",
+    "нижние этажи",
+    "верхний этаж",
+    "лимбическ",
+    "миндалевид",
+    "лобные доли",
+)
+_SUPPORT_RELATIONAL_MARKERS = ("это не значит", "в такие моменты", "когда телу кажется", "мозг пытается", "тело пытается")
 
 
 def _normalize(value: Any) -> str:
@@ -75,6 +90,18 @@ def _normalize(value: Any) -> str:
 
 def _contains_any(text: str, items: tuple[str, ...]) -> bool:
     return any(item in text for item in items)
+
+
+def _list_item_count(text: str) -> int:
+    return len(re.findall(r"(?m)^\s*(?:[-*•]|\d+[.)])\s+", str(text or "")))
+
+
+def _is_explicit_one_practice_request(normalized_user: str) -> bool:
+    return _contains_any(normalized_user, _PRACTICE_REQUEST_MARKERS) and _contains_any(normalized_user, _ONE_PRACTICE_MARKERS)
+
+
+def _looks_like_panic_control_support_question(normalized_user: str) -> bool:
+    return "паник" in normalized_user and "контрол" in normalized_user and "почему" in normalized_user
 
 
 def extract_context_anchor(user_message: str) -> str:
@@ -132,7 +159,42 @@ def evaluate_concrete_answer_fit(
     anchor_used = bool(context_anchor and _normalize(context_anchor) in normalized_answer) or len(anchor_hits) >= 2
     structured_answer = bool(re.search(r"(^|\n)\s*(?:[-*•]|\d+[.)])\s+", answer_text))
     answer_long_enough = len(str(answer_text or "").strip()) >= 180
-    needs_repair = bool(concrete_need and (formulaic or not anchor_used))
+    explicit_one_practice_request = _is_explicit_one_practice_request(normalized_user)
+    practice_anchor_hit = any(marker in normalized_answer for marker in ("будь сильным", "сильн", "драйвер", "напряж"))
+    practice_step_present = _contains_any(normalized_answer, _PRACTICE_ACTION_MARKERS)
+    practice_has_question = "?" in str(answer_text or "")
+    practice_too_theoretical = len(str(answer_text or "").strip()) > 900
+    practice_multistep = _list_item_count(answer_text) > 1
+    practice_request_not_fulfilled = bool(
+        explicit_one_practice_request
+        and (not practice_step_present or practice_has_question or practice_multistep or not practice_anchor_hit or practice_too_theoretical)
+    )
+
+    support_question = _looks_like_panic_control_support_question(normalized_user)
+    support_anchor_count = sum(
+        1 for marker in ("паник", "контрол", "тел", "угроз", "безопас") if marker in normalized_answer
+    )
+    support_has_why = any(marker in normalized_answer for marker in ("потому что", "поэтому", "из-за"))
+    support_textbook = (
+        _contains_any(normalized_answer, _SUPPORT_TEXTBOOK_MARKERS)
+        or (_list_item_count(answer_text) >= 3 and len(str(answer_text or "").strip()) > 900)
+    )
+    support_inline_numbered_lecture = all(marker in str(answer_text or "") for marker in ("1.", "2.", "3."))
+    support_relational = _contains_any(normalized_answer, _SUPPORT_RELATIONAL_MARKERS)
+    support_answer_too_textbook = bool(
+        support_question
+        and (
+            not support_has_why
+            or support_anchor_count < 3
+            or ((support_textbook or support_inline_numbered_lecture) and len(str(answer_text or "").strip()) > 180 and not support_relational)
+        )
+    )
+
+    needs_repair = bool(
+        (concrete_need and (formulaic or not anchor_used))
+        or practice_request_not_fulfilled
+        or support_answer_too_textbook
+    )
     fit_status = "pass"
     if concrete_need and not answer_long_enough and not structured_answer:
         fit_status = "warning"
@@ -148,6 +210,10 @@ def evaluate_concrete_answer_fit(
         "answer_mentions_context_anchor": anchor_used,
         "structured_answer": structured_answer,
         "answer_long_enough": answer_long_enough,
+        "explicit_one_practice_request": explicit_one_practice_request,
+        "practice_request_not_fulfilled": practice_request_not_fulfilled,
+        "panic_control_support_question": support_question,
+        "support_answer_too_textbook": support_answer_too_textbook,
         "fit_status": fit_status,
         "needs_repair": needs_repair,
     }

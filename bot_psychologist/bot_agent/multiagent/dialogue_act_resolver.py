@@ -121,6 +121,14 @@ _SUMMARY_NEGATIVE_MARKERS = (
     "summarize this document",
 )
 _PRACTICE_MARKERS = ("практик", "упражн", "шаг", "что делать", "что сделать")
+_ONE_PRACTICE_MARKERS = (
+    "одну короткую практику",
+    "одну практику",
+    "одну короткую микропрактику",
+    "одну микропрактику",
+    "короткую практику",
+    "микропрактик",
+)
 _CLARIFICATION_MARKERS = ("что именно", "в каком смысле", "уточни", "clarify")
 _TOPIC_SHIFT_MARKERS = ("другая тема", "другой вопрос", "сменим тему", "новая тема")
 _META_FEEDBACK_MARKERS = ("бот", "система", "ответил как бот", "не как человек")
@@ -155,6 +163,14 @@ _CONCRETE_SITUATION_MARKERS = (
 _CONTACT_OPEN_MARKERS = ("давай знакомиться", "приятно познакомиться", "будем знакомы")
 _CONTINUATION_MARKERS = ("продолжай", "давай дальше", "можешь продолжить", "расскажи дальше")
 _SMALLTALK_MARKERS = ("как дела", "что нового", "как ты")
+_DIRECT_KNOWLEDGE_OPENERS = (
+    "расскажи о",
+    "расскажи про",
+    "объясни",
+    "что такое",
+    "что значит",
+    "какие",
+)
 
 
 def _normalize(text: str) -> str:
@@ -168,6 +184,25 @@ def _extract_words(text: str) -> list[str]:
 def _contains_any(text: str, markers: tuple[str, ...]) -> bool:
     lowered = _normalize(text)
     return any(marker in lowered for marker in markers)
+
+
+def _is_explicit_one_practice_request(lowered: str) -> bool:
+    if not lowered:
+        return False
+    if _contains_any(lowered, _ONE_PRACTICE_MARKERS):
+        return True
+    return (
+        ("одну" in lowered or "один" in lowered or "коротк" in lowered or "микро" in lowered)
+        and _contains_any(lowered, _PRACTICE_MARKERS)
+    )
+
+
+def _is_explicit_direct_knowledge_request(lowered: str) -> bool:
+    if not lowered:
+        return False
+    if _contains_any(lowered, _DIRECT_KNOWLEDGE_OPENERS):
+        return True
+    return _contains_any(lowered, _KNOWLEDGE_MARKERS) and "?" not in lowered
 
 
 def detect_summary_request_route_v1(user_message: str) -> dict[str, Any]:
@@ -385,12 +420,44 @@ def build_dialogue_act_resolution_v1(
             "not_exact_match_rule": True,
         }
 
+    if _is_explicit_one_practice_request(lowered):
+        evidence = ["explicit_one_practice_request"]
+        if "драйвер" in lowered:
+            evidence.append("driver_anchor_present")
+        return {
+            "version": DIALOGUE_ACT_RESOLVER_VERSION,
+            "dialogue_act": "practice_request",
+            "confidence": 0.95,
+            "evidence": evidence,
+            "reason": "explicit_bounded_practice_request",
+            "source": "practice_request_override",
+            "not_exact_match_rule": True,
+        }
+
+    if _is_explicit_direct_knowledge_request(lowered):
+        evidence = ["explicit_direct_knowledge_request"]
+        if "без встречного вопроса" in lowered:
+            evidence.append("no_counter_question_requested")
+        if _contains_any(lowered, _STYLE_MARKERS):
+            evidence.append("style_preference_markers")
+        return {
+            "version": DIALOGUE_ACT_RESOLVER_VERSION,
+            "dialogue_act": "knowledge_question",
+            "confidence": 0.93,
+            "evidence": evidence,
+            "reason": "explicit_answer_first_knowledge_request",
+            "source": "explicit_direct_question_override",
+            "not_exact_match_rule": True,
+        }
+
     if _contains_any(lowered, _PRACTICE_MARKERS) and "?" in lowered:
         return {
             "version": DIALOGUE_ACT_RESOLVER_VERSION,
             "dialogue_act": "practice_request",
             "confidence": 0.81,
             "evidence": ["practice_request_markers"],
+            "reason": "question_form_practice_request",
+            "source": "existing_policy",
             "not_exact_match_rule": True,
         }
 
@@ -404,6 +471,16 @@ def build_dialogue_act_resolution_v1(
         }
 
     if "?" in lowered:
+        if _contains_any(lowered, _CONCRETE_SITUATION_MARKERS) and any(marker in lowered for marker in ("паник", "контрол")):
+            return {
+                "version": DIALOGUE_ACT_RESOLVER_VERSION,
+                "dialogue_act": "concrete_situation_question",
+                "confidence": 0.91,
+                "evidence": ["situation_markers", "panic_control_support_question", "question_mark"],
+                "reason": "panic_control_support_question",
+                "source": "explicit_direct_question_override",
+                "not_exact_match_rule": True,
+            }
         if _contains_any(lowered, _CONCRETE_SITUATION_MARKERS) and not _contains_any(lowered, _KNOWLEDGE_MARKERS):
             return {
                 "version": DIALOGUE_ACT_RESOLVER_VERSION,
@@ -421,6 +498,8 @@ def build_dialogue_act_resolution_v1(
                 "dialogue_act": "knowledge_question",
                 "confidence": 0.86,
                 "evidence": evidence,
+                "reason": "question_form_knowledge_request",
+                "source": "existing_policy",
                 "not_exact_match_rule": True,
             }
         if _contains_any(lowered, _CONCRETE_SITUATION_MARKERS):
@@ -436,6 +515,8 @@ def build_dialogue_act_resolution_v1(
             "dialogue_act": "direct_question",
             "confidence": 0.80,
             "evidence": ["question_mark"],
+            "reason": "generic_question_mark_route",
+            "source": "fallback",
             "not_exact_match_rule": True,
         }
 

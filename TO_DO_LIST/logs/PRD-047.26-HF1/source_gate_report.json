@@ -1,0 +1,90 @@
+{
+  "schema_version": "prd_047_26_hf1_source_gate_report_v1",
+  "prd_id": "PRD-047.26-HF1",
+  "created_at": "2026-06-18T11:18:23.813304+00:00",
+  "git_head": "8b4f8329b8b7bcc67a4ff6004b845ea2bb72b2bc",
+  "required_base_head": "8b4f8329b8b7bcc67a4ff6004b845ea2bb72b2bc",
+  "head_equals_origin_main": true,
+  "head_descends_from_required_base": true,
+  "required_paths": [
+    {
+      "path": "TO_DO_LIST/reports/PRD-047.26_IMPLEMENTATION_REPORT.md",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-047.26_NEXT_PRD_RECOMMENDATION.md",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.26/live_quality_triage_report.json",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.26/live_quality_triage_report.md",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.26/live_quality_results.json",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.26/no_mutation_proof.json",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.26/live_turn_exports/Q26-002.json",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.26/live_turn_exports/Q26-004.json",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.26/live_turn_exports/Q26-007.json",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.26/live_turn_exports/Q26-011.json",
+      "exists": true
+    }
+  ],
+  "baseline_triage_status": "passed_with_warning",
+  "baseline_db_track_readiness": "not_ready",
+  "baseline_counters": {
+    "direct_answer_success_rate": 0.8333,
+    "overlay_false_positive_count": 8,
+    "dialogue_act_error_count": 3,
+    "answer_obligation_error_count": 3,
+    "writer_style_regression_count": 2,
+    "evaluator_false_pass_count": 2,
+    "retrieval_query_error_count": 0,
+    "kb_payload_error_count": 0,
+    "trace_missing_evidence_count": 0,
+    "overlay_apply_detected_count": 0
+  },
+  "target_cases": {
+    "Q26-002": {
+      "dialogue_act": "unknown",
+      "answer_obligation": "continue_thread",
+      "note": "five drivers direct answer drifted into continue_thread/reflect"
+    },
+    "Q26-004": {
+      "dialogue_act": "unknown",
+      "answer_obligation": "continue_thread",
+      "note": "explicit answer-first knowledge request still drifted into continue_thread"
+    },
+    "Q26-007": {
+      "dialogue_act": "unknown",
+      "answer_obligation": "continue_thread",
+      "note": "explicit one-practice request was not given a bounded practice obligation"
+    },
+    "Q26-011": {
+      "dialogue_act": "support_style_misroute",
+      "answer_obligation": "soft_support_or_generic_reflect",
+      "note": "panic/control why-question could pass with a textbook answer and no direct why-resolution"
+    }
+  },
+  "status": "passed",
+  "warnings": [],
+  "blockers": []
+}

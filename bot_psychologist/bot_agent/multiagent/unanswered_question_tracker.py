@@ -84,6 +84,7 @@ def update_unanswered_question_state_after_answer_v1(
         "answer_direct_question",
         "answer_knowledge_question",
         "answer_concrete_situation",
+        "provide_one_bounded_practice",
         "repair_and_answer_last_question",
         "acknowledge_style_preference_then_answer",
         "answer_last_offer",

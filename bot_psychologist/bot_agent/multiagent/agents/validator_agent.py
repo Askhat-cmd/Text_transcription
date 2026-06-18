@@ -154,6 +154,7 @@ class ValidatorAgent:
             "answer_direct_question",
             "answer_knowledge_question",
             "answer_concrete_situation",
+            "provide_one_bounded_practice",
             "repair_and_answer_last_question",
             "answer_last_offer",
         }:

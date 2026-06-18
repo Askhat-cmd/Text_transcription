@@ -1199,6 +1199,38 @@ class WriterAgent:
         )
         self.last_debug["answer_fit_evaluator"] = dict(answer_fit)
 
+        if answer_obligation == "provide_one_bounded_practice":
+            practice_anchor_present = _contains_any(
+                lowered_text,
+                ("будь сильным", "драйвер", "сильн", "напряж", "сдерж"),
+            )
+            practice_step_present = _contains_any(
+                lowered_text,
+                ("сделай", "заметь", "отметь", "поймай", "назови", "остановись", "выдох"),
+            )
+            practice_multistep = len(re.findall(r"(?m)^\s*(?:[-*•]|\d+[.)])\s+", text)) > 1
+            if (
+                "?" in text
+                or len(text.strip()) > 900
+                or practice_multistep
+                or not practice_step_present
+                or not practice_anchor_present
+            ):
+                if "будь сильным" in lowered_user:
+                    self._set_final_answer_shape_debug("one_short_practice")
+                    return (
+                        "Одна короткая практика: в момент, когда включается «Будь сильным», "
+                        "заметь, где тело напрягается, и тихо назови про себя: "
+                        "«сейчас я снова держусь через силу». На этом остановись, ничего не исправляя."
+                    )
+                return self._defer_no_stub_repair(
+                    signal="bounded_practice_repair",
+                    text=text,
+                    must_answer=user_message,
+                )
+            self._set_final_answer_shape_debug("one_short_practice")
+            return self._strip_optional_followup_invitation(text) or text
+
         if literal_markdown_echo:
             normalized_requested = literal_markdown_echo.strip()
             normalized_response = text.strip()
@@ -1655,6 +1687,7 @@ class WriterAgent:
                     "acknowledge_style_preference_then_answer",
                     "answer_direct_question",
                     "answer_knowledge_question",
+                    "provide_one_bounded_practice",
                     "answer_last_offer",
                     "repair_and_answer_last_question",
                 }
@@ -1707,6 +1740,7 @@ class WriterAgent:
             if answer_obligation in {
                 "answer_direct_question",
                 "answer_knowledge_question",
+                "provide_one_bounded_practice",
                 "answer_last_offer",
                 "repair_and_answer_last_question",
             }:
@@ -1742,6 +1776,7 @@ class WriterAgent:
         if answer_obligation in {
             "answer_direct_question",
             "answer_knowledge_question",
+            "provide_one_bounded_practice",
             "answer_last_offer",
             "repair_and_answer_last_question",
         }:

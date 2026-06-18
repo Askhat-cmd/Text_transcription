@@ -1,0 +1,39 @@
+{
+  "prd_id": "PRD-047.26-HF1",
+  "schema_version": "no_mutation_proof_v1",
+  "runtime_behavior_changed": true,
+  "runtime_behavior_change_scope": [
+    "dialogue_act_resolution",
+    "answer_obligation_resolution",
+    "final_answer_acceptance_gate_quality_checks"
+  ],
+  "writer_prompt_changed": false,
+  "state_analyzer_prompt_changed": false,
+  "thread_manager_logic_rewritten": false,
+  "retrieval_ranking_changed": false,
+  "executed_retrieval_query_algorithm_changed": false,
+  "overlay_apply_enabled": false,
+  "db_schema_changed": false,
+  "chroma_reindexed": false,
+  "processed_blocks_mutated": false,
+  "botdb_registry_mutated": false,
+  "new_runtime_path_added": false,
+  "new_llm_agent_added": false,
+  "allowed_changes": [
+    "targeted_dialogue_act_obligation_repair",
+    "targeted_acceptance_gate_quality_checks",
+    "tests",
+    "docs_metadata_sync",
+    "TO_DO_LIST_artifacts"
+  ],
+  "evidence": {
+    "overlay_apply_detected_count": 0,
+    "internal_leak_count": 0,
+    "raw_kb_dump_count": 0,
+    "unsafe_practice_count": 0,
+    "diagnostic_overclaim_count": 0,
+    "retrieval_query_error_count": 0,
+    "kb_payload_error_count": 0
+  },
+  "status": "passed"
+}

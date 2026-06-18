@@ -154,17 +154,30 @@ def build_answer_obligation_resolver_v1(
         }
 
     if act == "knowledge_question":
-        obligation = "answer_knowledge_question"
-        if tone != "neutral" or length_preference != "adaptive":
-            obligation = "acknowledge_style_preference_then_answer"
         return {
             "version": ANSWER_OBLIGATION_RESOLVER_VERSION,
-            "answer_obligation": obligation,
+            "answer_obligation": "answer_knowledge_question",
             "answer_shape": "structured_explanation",
             "question_policy": "optional_none",
             "depth": depth if depth != "short" else "medium",
+            "reason": "knowledge_question_requires_direct_answer",
+            "confidence": "high",
             "style_overrides": style_overrides,
             "source": ["dialogue_act=knowledge_question", f"profile_preset={profile_preset}"],
+        }
+
+    if act == "practice_request":
+        return {
+            "version": ANSWER_OBLIGATION_RESOLVER_VERSION,
+            "answer_obligation": "provide_one_bounded_practice",
+            "answer_shape": "one_short_practice",
+            "question_policy": "none",
+            "practice_policy": "allowed_explicit_request",
+            "depth": "short",
+            "reason": "explicit_practice_request_requires_single_bounded_practice",
+            "confidence": "high",
+            "style_overrides": style_overrides,
+            "source": ["dialogue_act=practice_request", "explicit_user_request=practice", f"profile_preset={profile_preset}"],
         }
 
     if act == "concrete_situation_question":
@@ -174,20 +187,21 @@ def build_answer_obligation_resolver_v1(
             "answer_shape": "contextual_explanation",
             "question_policy": "optional_none",
             "depth": depth if depth != "short" else "medium",
+            "reason": "concrete_situation_requires_contextual_answer",
+            "confidence": "high",
             "style_overrides": style_overrides,
             "source": ["dialogue_act=concrete_situation_question", f"profile_preset={profile_preset}"],
         }
 
     if act == "direct_question":
-        obligation = "answer_direct_question"
-        if tone != "neutral" or length_preference != "adaptive":
-            obligation = "acknowledge_style_preference_then_answer"
         return {
             "version": ANSWER_OBLIGATION_RESOLVER_VERSION,
-            "answer_obligation": obligation,
+            "answer_obligation": "answer_direct_question",
             "answer_shape": "direct_answer",
             "question_policy": "optional_none",
             "depth": depth,
+            "reason": "direct_question_requires_direct_answer",
+            "confidence": "high",
             "style_overrides": style_overrides,
             "source": ["dialogue_act=direct_question", f"profile_preset={profile_preset}"],
         }

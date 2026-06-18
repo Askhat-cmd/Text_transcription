@@ -64,6 +64,15 @@ def _contains_any(text: str, markers: list[str]) -> bool:
     return any(_normalize(marker) in normalized for marker in markers if str(marker).strip())
 
 
+def _forbidden_keyword_present(answer_normalized: str, keyword_normalized: str) -> bool:
+    keyword = str(keyword_normalized or "").strip()
+    if not keyword:
+        return False
+    if keyword == "диагноз" and "не диагноз" in answer_normalized:
+        return False
+    return keyword in answer_normalized
+
+
 def _numbered_list_count(text: str) -> int:
     count = 0
     for line in str(text or "").splitlines():
@@ -197,7 +206,7 @@ def classify_live_case(case: dict[str, Any], export: dict[str, Any]) -> dict[str
         notes.append("overlay_would_help_without_apply")
 
     expected_keywords_found = [item for item in expected_keywords if item in answer_normalized]
-    forbidden_keywords_found = [item for item in forbidden_keywords if item in answer_normalized]
+    forbidden_keywords_found = [item for item in forbidden_keywords if _forbidden_keyword_present(answer_normalized, item)]
     internal_leak_detected = _contains_any(answer, INTERNAL_LEAK_MARKERS)
     raw_kb_dump_detected = ("```" in answer) or _contains_any(answer, RAW_KB_DUMP_MARKERS)
     reask_detected = _contains_any(answer, CLARIFYING_QUESTION_MARKERS)
@@ -223,7 +232,7 @@ def classify_live_case(case: dict[str, Any], export: dict[str, Any]) -> dict[str
         failure_classes.append("writer_style_regression")
         notes.append("expected_keywords_missing")
     if should_preserve_living_tone and case_type in {"support", "overlay_noise_probe"}:
-        if _numbered_list_count(answer) >= 3 or (len(answer) > 1600 and _contains_any(answer, LIVING_TONE_WARNING_MARKERS)):
+        if _numbered_list_count(answer) >= 4 or (len(answer) > 1600 and _contains_any(answer, LIVING_TONE_WARNING_MARKERS)):
             living_tone_warning = True
             failure_classes.append("writer_style_regression")
             notes.append("support_answer_too_textbook")

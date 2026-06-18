@@ -209,6 +209,35 @@ def _answer_has_markdown(final_answer: str) -> bool:
     )
 
 
+def _count_list_items(text: str) -> int:
+    return len(re.findall(r"(?m)^\s*(?:[-*•]|\d+[.)])\s+\S", str(text or "")))
+
+
+def _is_explicit_one_practice_request(text: str) -> bool:
+    lowered = _normalize(text)
+    return (
+        any(marker in lowered for marker in ("практик", "упражн", "микропракти", "шаг"))
+        and any(marker in lowered for marker in ("одну", "один", "коротк", "микро"))
+    )
+
+
+def _looks_like_practice_step(text: str) -> bool:
+    lowered = _normalize(text)
+    return any(marker in lowered for marker in ("сделай", "заметь", "отметь", "поймай", "назови", "остановись", "выдох"))
+
+
+def _practice_request_anchor_hits(user_message: str, final_answer: str) -> list[str]:
+    lowered_user = _normalize(user_message)
+    lowered_answer = _normalize(final_answer)
+    anchors = ("будь сильным", "сильн", "драйвер", "напряж", "сдерж")
+    return [anchor for anchor in anchors if anchor in lowered_user and anchor in lowered_answer]
+
+
+def _is_panic_control_support_question(text: str) -> bool:
+    lowered = _normalize(text)
+    return "паник" in lowered and "контрол" in lowered and "почему" in lowered
+
+
 def build_final_answer_acceptance_gate_v1(
     *,
     user_message: str,
@@ -287,6 +316,43 @@ def build_final_answer_acceptance_gate_v1(
         )
         if question_overlap < 0.10 and not has_specific_concept and len(answer) < 700:
             failed_checks.append("answer_does_not_address_direct_question")
+
+    if _is_explicit_one_practice_request(user):
+        practice_anchor_hits = _practice_request_anchor_hits(user, answer)
+        if (
+            not _looks_like_practice_step(answer)
+            or _count_list_items(answer) > 1
+            or "?" in answer
+            or len(answer) > 900
+            or not practice_anchor_hits
+        ):
+            failed_checks.append("explicit_one_practice_request_not_fulfilled")
+
+    lowered_answer = _normalize(answer)
+    support_like_question = _is_panic_control_support_question(user) or (
+        dialogue_act == "concrete_situation_question"
+        and "почему" in _normalize(must_answer or user)
+        and any(marker in lowered_answer for marker in ("паник", "контрол"))
+    )
+    if support_like_question:
+        support_anchor_count = sum(
+            1 for marker in ("паник", "контрол", "тел", "угроз", "безопас") if marker in lowered_answer
+        )
+        support_has_why = any(marker in lowered_answer for marker in ("потому что", "поэтому", "из-за"))
+        support_textbook = any(
+            marker in lowered_answer for marker in ("симпатоадренал", "префронтал", "автономн", "адреналин", "нижние этажи", "верхний этаж")
+        )
+        inline_numbered_lecture = all(marker in answer for marker in ("1.", "2.", "3."))
+        if (
+            not support_has_why
+            or support_anchor_count < 3
+            or ((support_textbook or inline_numbered_lecture) and (_count_list_items(answer) >= 2 or len(answer) > 180))
+        ):
+            failed_checks.append("support_direct_question_answer_too_textbook")
+        elif "answer_too_generic_for_concrete_situation" in failed_checks:
+            failed_checks = [
+                check for check in failed_checks if check != "answer_too_generic_for_concrete_situation"
+            ]
 
     previous_text = previous_assistant_message or str(last_offer.get("offer_text_summary", "") or "")
     previous_stale = detect_stale_stub(previous_text)

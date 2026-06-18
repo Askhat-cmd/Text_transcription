@@ -336,14 +336,16 @@
         "legacy_query_builder_must_be_false": true,
         "current_turn_focus_expected": true
       },
-      "expected_dialogue_acts": [
-        "knowledge_question",
-        "direct_question"
-      ],
-      "expected_answer_obligations": [
-        "answer_direct_question",
-        "answer_knowledge_question"
-      ],
+        "expected_dialogue_acts": [
+          "practice_request",
+          "knowledge_question",
+          "direct_question"
+        ],
+        "expected_answer_obligations": [
+          "provide_one_bounded_practice",
+          "answer_direct_question",
+          "answer_knowledge_question"
+        ],
       "allowed_response_modes": [
         "practice",
         "reflect",

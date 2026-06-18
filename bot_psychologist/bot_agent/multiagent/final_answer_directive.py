@@ -256,7 +256,10 @@ def build_final_answer_directive_v1(
     if complexity != "normal":
         style_bits.append(complexity)
     style = ", ".join(style_bits) if obligation_resolution else fallback_style
-    practice_policy = str(planner.get("practice_policy", "forbidden") or "forbidden")
+    practice_policy = str(
+        obligation_resolution.get("practice_policy", planner.get("practice_policy", "forbidden"))
+        or planner.get("practice_policy", "forbidden")
+    )
     rag_policy = fallback_rag_policy
     if retrieval.get("retrieval_action") in {"include_relevant_rag", "knowledge_grounding", "contextual_grounding"}:
         rag_policy = "context_package_only"
@@ -265,6 +268,9 @@ def build_final_answer_directive_v1(
         answer_shape = "structured_explanation"
     if answer_obligation == "compare_two_concepts_directly":
         answer_shape = "definition_then_difference_then_example"
+    if answer_obligation == "provide_one_bounded_practice":
+        question_policy = "none"
+        practice_policy = "allowed_explicit_request"
 
     style_state_summary = dict(policy.get("dialogue_style_state", {})) if isinstance(policy.get("dialogue_style_state"), dict) else {}
     last_offer_summary = dict(policy.get("last_assistant_offer", {})) if isinstance(policy.get("last_assistant_offer"), dict) else {}

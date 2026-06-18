@@ -1,0 +1,22 @@
+# PRD-047.26-HF1 Test Command Output
+
+All commands were run from `c:\My_practice\Text_transcription\bot_psychologist` unless noted otherwise.
+
+1. `python -m pytest tests/test_prd_047_26_hf1_dialogue_act_obligation.py tests/test_prd_047_26_hf1_acceptance_gate.py tests/test_prd_047_26_live_quality_cases_schema.py tests/test_prd_047_26_triage_report_schema.py tests/multiagent/test_writer_agent.py -q`
+- result: `39 passed`
+
+2. `python -m pytest tests/test_retrieval_query_builder_current_turn_focus.py tests/api/test_writer_kb_payload_live_http_path.py tests/api/test_overlay_shadow_trace_api_debug.py -q`
+- result: `13 passed, 1 warning`
+
+3. `python -m bot_psychologist.tools.prd_047_26_live_quality_triage --mode dry-run --out-dir c:\My_practice\Text_transcription\TO_DO_LIST\logs\PRD-047.26-HF1 --reports-dir c:\My_practice\Text_transcription\TO_DO_LIST\logs\PRD-047.26-HF1\generated_reports`
+- result: `passed`
+
+4. `python -m bot_psychologist.tools.prd_047_26_live_quality_triage --mode live --out-dir c:\My_practice\Text_transcription\TO_DO_LIST\logs\PRD-047.26-HF1 --reports-dir c:\My_practice\Text_transcription\TO_DO_LIST\logs\PRD-047.26-HF1\generated_reports`
+- result: `passed_with_warning`
+- key counters: `direct_answer_success_rate=1.0`, `dialogue_act_error_count=0`, `answer_obligation_error_count=0`, `evaluator_false_pass_count=0`, `db_track_readiness=ready_with_warning`
+
+5. Earlier targeted subsets during repair iteration:
+- HF1 route/obligation/gate subset: `14 passed`
+- acceptance-related regression subset: `18 passed`
+
+Note: an exploratory run of `tests/multiagent/test_validator_agent.py` surfaced unrelated baseline failures outside PRD-047.26-HF1 scope; it was not used as an acceptance gate for this PRD because the required targeted and regression subsets above were already green.

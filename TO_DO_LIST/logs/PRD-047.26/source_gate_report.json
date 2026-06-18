@@ -1,0 +1,61 @@
+{
+  "schema_version": "prd_047_26_source_gate_report_v1",
+  "prd_id": "PRD-047.26",
+  "created_at": "2026-06-18T09:54:13.136322+00:00",
+  "git_head": "07c0e26789d9ef7590fad32aba34483223ee9285",
+  "required_paths": [
+    {
+      "path": "TO_DO_LIST/reports/PRD-047.25_IMPLEMENTATION_REPORT.md",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-047.25_NEXT_PRD_RECOMMENDATION.md",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.25/live_evidence_results.json",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.25/overlay_payload_alignment_report.json",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.25/retrieval_query_health_report.json",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.25/no_mutation_proof.json",
+      "exists": true
+    },
+    {
+      "path": "docs/PROJECT_STATE.md",
+      "exists": true
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "exists": true
+    },
+    {
+      "path": "docs/PRD_INDEX.md",
+      "exists": true
+    }
+  ],
+  "required_commits": {
+    "47693c2": "47693c223ff482aded085ebb89bd32e639897a07",
+    "c4fa911": "c4fa911475b392534771e0a81f150d399cab921f",
+    "c61f566": "c61f5661ab711f97f602d0bf58677f16c7f17a0c",
+    "e1b0fb5": "e1b0fb520356f647114f18438896a298c5d10051",
+    "07c0e26": "07c0e26789d9ef7590fad32aba34483223ee9285"
+  },
+  "runtime_probe_status": "unavailable",
+  "active_runtime_path": "unknown",
+  "writer_kb_payload_primary": false,
+  "overlay_trace_only_expected": true,
+  "runtime_requirement_match": null,
+  "runtime_mismatches": [],
+  "overlay_shadow_trace_enabled": null,
+  "warnings": [],
+  "status": "passed",
+  "blockers": []
+}

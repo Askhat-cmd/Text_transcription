@@ -1,0 +1,30 @@
+{
+  "prd_id": "PRD-047.26",
+  "runtime_behavior_changed": false,
+  "writer_prompt_changed": false,
+  "state_analyzer_prompt_changed": false,
+  "thread_manager_logic_changed": false,
+  "retrieval_ranking_changed": false,
+  "executed_retrieval_query_algorithm_changed": false,
+  "overlay_apply_enabled": false,
+  "db_schema_changed": false,
+  "chroma_reindexed": false,
+  "processed_blocks_mutated": false,
+  "botdb_registry_mutated": false,
+  "new_runtime_path_added": false,
+  "new_llm_agent_added": false,
+  "allowed_changes": [
+    "read_only_triage_runner",
+    "eval_cases",
+    "report_generator",
+    "tests",
+    "docs_metadata_sync",
+    "TO_DO_LIST_artifacts"
+  ],
+  "evidence": [
+    "bot_psychologist/eval/prd_047_26_live_quality_cases.json",
+    "bot_psychologist/eval/prd_047_26_schema.py",
+    "bot_psychologist/tools/prd_047_26_live_quality_triage.py",
+    "bot_psychologist/tools/prd_047_26_triage_report.py"
+  ]
+}

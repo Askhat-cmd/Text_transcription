@@ -1,0 +1,609 @@
+{
+  "schema_version": "prd_047_26_live_quality_cases_v1",
+  "prd_id": "PRD-047.26",
+  "cases": [
+    {
+      "case_id": "Q26-001",
+      "title": "Known concept: imperfect self direct answer",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Что такое программа «Несовершенное Я»?"
+        }
+      ],
+      "case_type": "direct_kb_answer",
+      "expected_answer_shape": {
+        "should_answer_directly": true,
+        "should_not_reask_definition": true,
+        "should_not_open_new_topic": true,
+        "should_not_dump_raw_kb": true,
+        "should_preserve_living_tone": true
+      },
+      "expected_trace_signals": {
+        "writer_kb_payload_expected": true,
+        "overlay_apply_must_be_false": true,
+        "legacy_query_builder_must_be_false": true,
+        "current_turn_focus_expected": true
+      },
+      "expected_dialogue_acts": [
+        "knowledge_question",
+        "direct_question"
+      ],
+      "expected_answer_obligations": [
+        "answer_knowledge_question",
+        "answer_direct_question"
+      ],
+      "allowed_response_modes": [
+        "reflect",
+        "explore"
+      ],
+      "expected_keywords": [
+        "несовершенное",
+        "программа"
+      ],
+      "forbidden_keywords": [
+        "writer_kb_payload",
+        "overlay_shadow",
+        "диагноз"
+      ],
+      "failure_class_candidates": [
+        "dialogue_act_error",
+        "answer_obligation_error",
+        "kb_payload_error",
+        "writer_style_regression",
+        "evaluator_false_pass"
+      ]
+    },
+    {
+      "case_id": "Q26-002",
+      "title": "Known concept: five drivers direct answer",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Расскажи о пяти драйверах выживания."
+        }
+      ],
+      "case_type": "direct_kb_answer",
+      "expected_answer_shape": {
+        "should_answer_directly": true,
+        "should_not_reask_definition": true,
+        "should_not_open_new_topic": true,
+        "should_not_dump_raw_kb": true,
+        "should_preserve_living_tone": true
+      },
+      "expected_trace_signals": {
+        "writer_kb_payload_expected": true,
+        "overlay_apply_must_be_false": true,
+        "legacy_query_builder_must_be_false": true,
+        "current_turn_focus_expected": true
+      },
+      "expected_dialogue_acts": [
+        "knowledge_question",
+        "direct_question"
+      ],
+      "expected_answer_obligations": [
+        "answer_knowledge_question",
+        "answer_direct_question"
+      ],
+      "allowed_response_modes": [
+        "reflect",
+        "explore"
+      ],
+      "expected_keywords": [
+        "будь сильным",
+        "будь лучшим"
+      ],
+      "forbidden_keywords": [
+        "самореализация",
+        "writer_kb_payload",
+        "overlay_shadow"
+      ],
+      "failure_class_candidates": [
+        "retrieval_query_error",
+        "kb_payload_error",
+        "writer_style_regression",
+        "evaluator_false_pass"
+      ]
+    },
+    {
+      "case_id": "Q26-003",
+      "title": "Known concept: neurostalking direct answer",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Что такое Нейросталкинг?"
+        }
+      ],
+      "case_type": "direct_kb_answer",
+      "expected_answer_shape": {
+        "should_answer_directly": true,
+        "should_not_reask_definition": true,
+        "should_not_open_new_topic": true,
+        "should_not_dump_raw_kb": true,
+        "should_preserve_living_tone": true
+      },
+      "expected_trace_signals": {
+        "writer_kb_payload_expected": false,
+        "overlay_apply_must_be_false": true,
+        "legacy_query_builder_must_be_false": true,
+        "current_turn_focus_expected": true
+      },
+      "expected_dialogue_acts": [
+        "knowledge_question",
+        "direct_question"
+      ],
+      "expected_answer_obligations": [
+        "answer_knowledge_question",
+        "answer_direct_question"
+      ],
+      "allowed_response_modes": [
+        "reflect",
+        "explore"
+      ],
+      "expected_keywords": [
+        "нейросталкинг"
+      ],
+      "forbidden_keywords": [
+        "writer_kb_payload",
+        "overlay_shadow"
+      ],
+      "failure_class_candidates": [
+        "dialogue_act_error",
+        "answer_obligation_error",
+        "writer_style_regression"
+      ]
+    },
+    {
+      "case_id": "Q26-004",
+      "title": "Answer-first direct term without clarification drift",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Объясни коротко, что значит «контроль как безопасность», без встречного вопроса."
+        }
+      ],
+      "case_type": "direct_kb_answer",
+      "expected_answer_shape": {
+        "should_answer_directly": true,
+        "should_not_reask_definition": true,
+        "should_not_open_new_topic": true,
+        "should_not_dump_raw_kb": true,
+        "should_preserve_living_tone": true
+      },
+      "expected_trace_signals": {
+        "writer_kb_payload_expected": true,
+        "overlay_apply_must_be_false": true,
+        "legacy_query_builder_must_be_false": true,
+        "current_turn_focus_expected": true
+      },
+      "expected_dialogue_acts": [
+        "knowledge_question",
+        "direct_question"
+      ],
+      "expected_answer_obligations": [
+        "answer_knowledge_question",
+        "answer_direct_question"
+      ],
+      "allowed_response_modes": [
+        "reflect",
+        "explore"
+      ],
+      "expected_keywords": [
+        "контроль"
+      ],
+      "forbidden_keywords": [
+        "что ты имеешь в виду",
+        "writer_kb_payload",
+        "overlay_shadow"
+      ],
+      "failure_class_candidates": [
+        "dialogue_act_error",
+        "answer_obligation_error",
+        "response_mode_error",
+        "writer_style_regression",
+        "evaluator_false_pass"
+      ]
+    },
+    {
+      "case_id": "Q26-005",
+      "title": "Elliptical follow-up after two-level explanation",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Чем Нейросталкинг отличается от НеоСталкинга?"
+        },
+        {
+          "role": "user",
+          "content": "а подробнее про второй?"
+        }
+      ],
+      "case_type": "elliptical_followup",
+      "expected_answer_shape": {
+        "should_answer_directly": true,
+        "should_not_reask_definition": true,
+        "should_not_open_new_topic": true,
+        "should_not_dump_raw_kb": true,
+        "should_preserve_living_tone": true
+      },
+      "expected_trace_signals": {
+        "writer_kb_payload_expected": false,
+        "overlay_apply_must_be_false": true,
+        "legacy_query_builder_must_be_false": true,
+        "current_turn_focus_expected": true
+      },
+      "expected_dialogue_acts": [
+        "continuation_request",
+        "confirmation_to_last_offer",
+        "knowledge_question"
+      ],
+      "expected_answer_obligations": [
+        "continue_thread",
+        "answer_last_offer",
+        "answer_knowledge_question"
+      ],
+      "allowed_response_modes": [
+        "reflect",
+        "explore"
+      ],
+      "expected_keywords": [
+        "неосталкинг",
+        "втор"
+      ],
+      "forbidden_keywords": [
+        "writer_kb_payload",
+        "overlay_shadow",
+        "что такое самореализация"
+      ],
+      "failure_class_candidates": [
+        "dialogue_act_error",
+        "answer_obligation_error",
+        "retrieval_query_error",
+        "trace_missing_evidence"
+      ]
+    },
+    {
+      "case_id": "Q26-006",
+      "title": "Summary request must summarize conversation not KB",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Что такое программа «Несовершенное Я»?"
+        },
+        {
+          "role": "user",
+          "content": "А теперь суммируй наш разговор коротко."
+        }
+      ],
+      "case_type": "summary_request",
+      "expected_answer_shape": {
+        "should_answer_directly": true,
+        "should_not_reask_definition": true,
+        "should_not_open_new_topic": true,
+        "should_not_dump_raw_kb": true,
+        "should_preserve_living_tone": true
+      },
+      "expected_trace_signals": {
+        "writer_kb_payload_expected": false,
+        "overlay_apply_must_be_false": true,
+        "legacy_query_builder_must_be_false": true,
+        "current_turn_focus_expected": true
+      },
+      "expected_dialogue_acts": [
+        "summary_request"
+      ],
+      "expected_answer_obligations": [
+        "summarize_current_conversation"
+      ],
+      "allowed_response_modes": [
+        "reflect",
+        "explore"
+      ],
+      "expected_keywords": [
+        "разговор"
+      ],
+      "forbidden_keywords": [
+        "writer_kb_payload",
+        "overlay_shadow",
+        "новая практика"
+      ],
+      "failure_class_candidates": [
+        "dialogue_act_error",
+        "answer_obligation_error",
+        "writer_instruction_error",
+        "evaluator_false_pass"
+      ]
+    },
+    {
+      "case_id": "Q26-007",
+      "title": "Practice request should stay bounded",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Дай одну короткую практику, чтобы заметить драйвер «Будь сильным»."
+        }
+      ],
+      "case_type": "practice_request",
+      "expected_answer_shape": {
+        "should_answer_directly": true,
+        "should_not_reask_definition": true,
+        "should_not_open_new_topic": true,
+        "should_not_dump_raw_kb": true,
+        "should_preserve_living_tone": true
+      },
+      "expected_trace_signals": {
+        "writer_kb_payload_expected": true,
+        "overlay_apply_must_be_false": true,
+        "legacy_query_builder_must_be_false": true,
+        "current_turn_focus_expected": true
+      },
+      "expected_dialogue_acts": [
+        "knowledge_question",
+        "direct_question"
+      ],
+      "expected_answer_obligations": [
+        "answer_direct_question",
+        "answer_knowledge_question"
+      ],
+      "allowed_response_modes": [
+        "practice",
+        "reflect",
+        "explore"
+      ],
+      "expected_keywords": [
+        "будь сильным"
+      ],
+      "forbidden_keywords": [
+        "writer_kb_payload",
+        "overlay_shadow",
+        "несколько практик"
+      ],
+      "failure_class_candidates": [
+        "kb_payload_error",
+        "writer_instruction_error",
+        "writer_style_regression"
+      ]
+    },
+    {
+      "case_id": "Q26-008",
+      "title": "Support low-resource should not drag theory",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Я выжат и сейчас не хочу теорию. Просто ответь по-человечески."
+        }
+      ],
+      "case_type": "support",
+      "expected_answer_shape": {
+        "should_answer_directly": true,
+        "should_not_reask_definition": true,
+        "should_not_open_new_topic": true,
+        "should_not_dump_raw_kb": true,
+        "should_preserve_living_tone": true
+      },
+      "expected_trace_signals": {
+        "writer_kb_payload_expected": false,
+        "overlay_apply_must_be_false": true,
+        "legacy_query_builder_must_be_false": true,
+        "current_turn_focus_expected": true
+      },
+      "expected_dialogue_acts": [],
+      "expected_answer_obligations": [],
+      "allowed_response_modes": [
+        "reflect",
+        "validate",
+        "regulate"
+      ],
+      "expected_keywords": [],
+      "forbidden_keywords": [
+        "writer_kb_payload",
+        "overlay_shadow",
+        "определение",
+        "пять драйверов"
+      ],
+      "failure_class_candidates": [
+        "overlay_shadow_noise",
+        "writer_style_regression",
+        "response_mode_error",
+        "evaluator_false_pass"
+      ]
+    },
+    {
+      "case_id": "Q26-009",
+      "title": "Overlay noise probe on non-KB support",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Мне просто тяжело, и я не хочу сейчас разборов и теории."
+        }
+      ],
+      "case_type": "overlay_noise_probe",
+      "expected_answer_shape": {
+        "should_answer_directly": true,
+        "should_not_reask_definition": true,
+        "should_not_open_new_topic": true,
+        "should_not_dump_raw_kb": true,
+        "should_preserve_living_tone": true
+      },
+      "expected_trace_signals": {
+        "writer_kb_payload_expected": false,
+        "overlay_apply_must_be_false": true,
+        "legacy_query_builder_must_be_false": true,
+        "current_turn_focus_expected": true
+      },
+      "expected_dialogue_acts": [],
+      "expected_answer_obligations": [],
+      "allowed_response_modes": [
+        "reflect",
+        "validate",
+        "regulate"
+      ],
+      "expected_keywords": [],
+      "forbidden_keywords": [
+        "writer_kb_payload",
+        "overlay_shadow",
+        "несовершенное я",
+        "контроль как безопасность"
+      ],
+      "failure_class_candidates": [
+        "overlay_shadow_noise",
+        "writer_style_regression",
+        "trace_missing_evidence"
+      ]
+    },
+    {
+      "case_id": "Q26-010",
+      "title": "Knowledge question about practices overview",
+      "turns": [
+        {
+          "role": "user",
+          "content": "В нейросталкинге какие практики предлагаются, чтобы это видеть?"
+        }
+      ],
+      "case_type": "practice_request",
+      "expected_answer_shape": {
+        "should_answer_directly": true,
+        "should_not_reask_definition": true,
+        "should_not_open_new_topic": true,
+        "should_not_dump_raw_kb": true,
+        "should_preserve_living_tone": true
+      },
+      "expected_trace_signals": {
+        "writer_kb_payload_expected": true,
+        "overlay_apply_must_be_false": true,
+        "legacy_query_builder_must_be_false": true,
+        "current_turn_focus_expected": true
+      },
+      "expected_dialogue_acts": [
+        "knowledge_question",
+        "direct_question",
+        "practice_request"
+      ],
+      "expected_answer_obligations": [
+        "answer_knowledge_question",
+        "answer_direct_question",
+        "continue_thread"
+      ],
+      "allowed_response_modes": [
+        "reflect",
+        "explore",
+        "practice"
+      ],
+      "expected_keywords": [
+        "практик"
+      ],
+      "forbidden_keywords": [
+        "writer_kb_payload",
+        "overlay_shadow",
+        "один микрошаг"
+      ],
+      "failure_class_candidates": [
+        "answer_obligation_error",
+        "writer_instruction_error",
+        "writer_style_regression",
+        "evaluator_false_pass"
+      ]
+    },
+    {
+      "case_id": "Q26-011",
+      "title": "Support question about panic and control",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Когда накрывает паникой, почему контроль становится сильнее?"
+        }
+      ],
+      "case_type": "support",
+      "expected_answer_shape": {
+        "should_answer_directly": true,
+        "should_not_reask_definition": true,
+        "should_not_open_new_topic": true,
+        "should_not_dump_raw_kb": true,
+        "should_preserve_living_tone": true
+      },
+      "expected_trace_signals": {
+        "writer_kb_payload_expected": false,
+        "overlay_apply_must_be_false": true,
+        "legacy_query_builder_must_be_false": true,
+        "current_turn_focus_expected": true
+      },
+      "expected_dialogue_acts": [
+        "direct_question",
+        "knowledge_question",
+        "concrete_situation_question"
+      ],
+      "expected_answer_obligations": [
+        "answer_direct_question",
+        "answer_knowledge_question",
+        "answer_concrete_situation"
+      ],
+      "allowed_response_modes": [
+        "reflect",
+        "validate",
+        "regulate"
+      ],
+      "expected_keywords": [
+        "контроль"
+      ],
+      "forbidden_keywords": [
+        "диагноз",
+        "writer_kb_payload",
+        "overlay_shadow"
+      ],
+      "failure_class_candidates": [
+        "response_mode_error",
+        "writer_style_regression",
+        "overlay_shadow_noise",
+        "evaluator_false_pass"
+      ]
+    },
+    {
+      "case_id": "Q26-012",
+      "title": "Greeting / self-intro should stay light",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Привет! Я Олег. Можешь мне ответить на вопросы?"
+        }
+      ],
+      "case_type": "overlay_noise_probe",
+      "expected_answer_shape": {
+        "should_answer_directly": true,
+        "should_not_reask_definition": true,
+        "should_not_open_new_topic": true,
+        "should_not_dump_raw_kb": true,
+        "should_preserve_living_tone": true
+      },
+      "expected_trace_signals": {
+        "writer_kb_payload_expected": false,
+        "overlay_apply_must_be_false": true,
+        "legacy_query_builder_must_be_false": true,
+        "current_turn_focus_expected": true
+      },
+      "expected_dialogue_acts": [
+        "greeting",
+        "self_intro"
+      ],
+      "expected_answer_obligations": [
+        "acknowledge_self_intro",
+        "continue_thread"
+      ],
+      "allowed_response_modes": [
+        "reflect",
+        "explore"
+      ],
+      "expected_keywords": [
+        "олег"
+      ],
+      "forbidden_keywords": [
+        "writer_kb_payload",
+        "overlay_shadow",
+        "несовершенное я"
+      ],
+      "failure_class_candidates": [
+        "dialogue_act_error",
+        "overlay_shadow_noise",
+        "writer_style_regression"
+      ]
+    }
+  ]
+}

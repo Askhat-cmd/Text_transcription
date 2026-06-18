@@ -1,6 +1,7 @@
 ﻿# Roadmap
 
 ## Done
+- PRD-047.26: completed read-only live answer quality triage over the repaired retrieval baseline plus trace-only overlay shadow and canonical Writer KB payload. Proved `source_gate=passed`, `dry_run=passed`, `live_cases=12`, `overlay_apply_detected_count=0`, `internal_leak_count=0`, `raw_kb_dump_count=0`, `unsafe_practice_count=0`, `diagnostic_overclaim_count=0`, and `trace_missing_evidence_count=0`. Final status is `passed_with_warning`: evidence is trustworthy, but DB-track is still `not_ready` because live triage shows `direct_answer_success_rate=0.8333`, `overlay_false_positive_count=8`, `dialogue_act_error_count=3`, `answer_obligation_error_count=3`, `writer_style_regression_count=2`, and `evaluator_false_pass_count=2`. The next step shifts from generic overlay cleanup to `PRD-047.26-HF1 - Dialogue Act / Answer Obligation Repair v1`.
 - PRD-047.25: collected live evidence over the repaired retrieval baseline plus trace-only overlay shadow and canonical Writer KB payload. Proved `executed_case_count=20`, `kb_payload_primary_rate=1.0`, `current_turn_focus_clean_rate=1.0`, `legacy_query_builder_primary_count=0`, `overlay_apply_detected_count=0`, no internal payload/raw-KB leakage, and no Bot_data_base/Chroma/runtime-authority mutation. Final status is `passed_with_warning` because overlay false positives remain too high (`overlay_false_positive_count=6`), so the next step is overlay noise reduction rather than overlay graduation.
 - PRD-047.24: repaired retrieval query assembly around current-turn focus. Added `retrieval_query_builder.py`, local-default `RETRIEVAL_CURRENT_TURN_FOCUS_ENABLED`, current-turn-first canonical query assembly, compact contextualization only for genuine elliptical follow-ups, duplicate-fragment collapse, safe no-mid-word truncation, `retrieval_query_build_trace` through runtime/debug/API/Web Trace, live query repair runner/artifacts, targeted regressions, and no-mutation/encoding proof. Acceptance passed with bounded warning because the five-driver case improved to `medium_related` top-k evidence instead of a stronger exact top-1 style match.
 - PRD-047.22-HF2: closed manual Web Chat runtime parity for Writer KB payload. Added single-source effective config resolution for `WRITER_KB_PAYLOAD_ENABLED`, local/dev/pilot/test `default_local` activation behind `APP_ENV`, admin/debug `runtime_config_trace`, explicit primary-vs-fallback payload path markers, compact Web Trace parity fields, pilot startup script/docs, streaming-path parity runner, prompt canvas proof, and no-mutation/encoding artifacts without changing retrieval ranking, executed query, Chroma, registry, processed blocks, or live metadata.
@@ -76,6 +77,7 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
+- PRD-047.26 closed the evidence question before DB-track: the remaining live-quality issue is now split more sharply into routing/evaluator debt (`dialogue_act_error`, `answer_obligation_error`, `evaluator_false_pass`) plus persistent overlay false-positive noise. The next cycle should repair answer-obligation/routing first, not mutate DB metadata yet.
 - PRD-047.25 closed overlay + Writer KB payload live evidence collection on top of the PRD-047.24 retrieval repair baseline. The remaining live-quality issue is not retrieval pollution anymore but overlay noise: false positives are too frequent for graduation, while payload and current-turn focus remain stable. Any broader overlay authority, retrieval-ranking rewrite, live metadata apply, or Chroma reindex stays out of scope until that noise class is reduced.
 - PRD-047.22 closed the Writer KB delivery bottleneck between selected retrieval hits and Writer prompt grounding. The next step can evaluate live allowlisted evidence now that Writer receives structured chunk cards instead of depending on blind snippet truncation.
 - PRD-047.21 closed trace-only overlay visibility in runtime/debug/API/Web Trace without granting runtime authority. The next step can collect allowlisted live evidence and owner review before any future planner or retrieval-authority PRD.
@@ -93,9 +95,9 @@
 - No active PRD-047.12 blocker remains; unified dialogue policy v2 is accepted on the current developer-local runtime baseline.
 
 ## Next
-1. Start `PRD-047.26 - Overlay Shadow Noise Reduction / Evidence Repair v1`.
-2. Keep any overlay authority expansion, retrieval-ranking rewrite, live metadata apply, runtime activation, or Chroma reindex in a separate explicit governance PRD after overlay noise is reduced and human-final approval exists.
-3. Treat any remaining retrieval/writer trace-schema cleanup as a bounded follow-up only if it blocks truthful live evidence.
+1. Start `PRD-047.26-HF1 - Dialogue Act / Answer Obligation Repair v1`.
+2. Keep DB-track (`PRD-047.27 - Mechanism-Aware DB / Semantic Chunk Cards v2`) deferred until routing/evaluator evidence is repaired or explicitly re-triaged as safe.
+3. Keep any overlay authority expansion, retrieval-ranking rewrite, live metadata apply, runtime activation, or Chroma reindex in a separate explicit governance PRD after overlay noise is reduced and human-final approval exists.
 
 ## Later
 - Operational hardening for governed limited runtime.

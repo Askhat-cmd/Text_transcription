@@ -1,0 +1,43 @@
+﻿PRD-047.26 test command log
+Date: 2026-06-18
+Repo: c:\My_practice\Text_transcription
+
+1. Dry run
+Command:
+  python -m bot_psychologist.tools.prd_047_26_live_quality_triage --mode dry-run
+Result:
+  passed
+  case_count=12
+
+2. Schema tests
+Command:
+  bot_psychologist\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/test_prd_047_26_live_quality_cases_schema.py -q
+Result:
+  3 passed
+
+Command:
+  bot_psychologist\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/test_prd_047_26_triage_report_schema.py -q
+Result:
+  2 passed
+
+3. Regression subset
+Command:
+  bot_psychologist\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/test_retrieval_query_builder_current_turn_focus.py bot_psychologist/tests/api/test_writer_kb_payload_live_http_path.py bot_psychologist/tests/api/test_overlay_shadow_trace_api_debug.py -q
+Result:
+  13 passed, 1 warning
+  warning: thread_manager.py uses datetime.utcnow() (existing deprecation, not introduced by PRD-047.26)
+
+4. Live run
+Command:
+  bot_psychologist\.venv\Scripts\python.exe -m bot_psychologist.tools.prd_047_26_live_quality_triage --mode live
+Final result:
+  live_results_status=passed
+  triage_status=passed_with_warning
+  db_track_readiness=not_ready
+  no_mutation_status=passed
+  encoding_status=passed
+
+5. Notes
+- Initial plain `pytest` command was unavailable on PATH in the shell.
+- Project-local `.venv` runner was used for all pytest commands.
+- Live runner restarted backend in managed mode when runtime flags did not match PRD-047.26 evidence requirements.

@@ -1,0 +1,112 @@
+{
+  "schema_version": "prd_047_27_hf1_web_trace_visibility_report_v1",
+  "prd_id": "PRD-047.27-HF1",
+  "generated_at": "2026-06-19T08:34:45.622549+00:00",
+  "cases": [
+    {
+      "case_id": "case_01_imperfect_self",
+      "question": "Что такое программа Несовершенное Я?",
+      "session_id": "prd-047-27-hf1-01-case_01_imperfect_self",
+      "response_status_code": 200,
+      "debug_status_code": 200,
+      "semantic_cards_visible": true,
+      "selected_card_count": 1,
+      "selected_card_ids": [
+        "program_imperfect_self_v1"
+      ],
+      "selection_reason": "title/core_thesis/current_turn_overlap",
+      "suppressed_reason": "",
+      "writer_payload_enriched": true,
+      "payload_chunk_count": 1,
+      "semantic_card_origin_visible": true,
+      "answer_has_internal_leak": false,
+      "answer_preview": "Коротко — это устойчивый внутренний паттерн восприятия, который автоматически рассказывает вам: «со мной что‑то не так», «я недостаточно», «я ошибаюсь» — даже когда факты нейтральны или не связаны с этим чувством.\n\n1) Определение простыми словами\nПрограмма «Несовершенное Я» — не диагноз и не черта характера. Это автоматический способ интерпретации опыта: события и слова других людей фильтруются че"
+    },
+    {
+      "case_id": "case_02_survival_drivers",
+      "question": "Расскажи о пяти драйверах выживания.",
+      "session_id": "prd-047-27-hf1-02-case_02_survival_drivers",
+      "response_status_code": 200,
+      "debug_status_code": 200,
+      "semantic_cards_visible": true,
+      "selected_card_count": 1,
+      "selected_card_ids": [
+        "five_survival_drivers_v1"
+      ],
+      "selection_reason": "title/core_thesis/current_turn_overlap",
+      "suppressed_reason": "",
+      "writer_payload_enriched": true,
+      "payload_chunk_count": 1,
+      "semantic_card_origin_visible": true,
+      "answer_has_internal_leak": false,
+      "answer_preview": "Коротко—что это такое\nДрайверы выживания — это усвоенные внутренние «правила» или убеждения, которые подталкивают нас действовать так, чтобы снизить тревогу и сохранить ощущение безопасности, одобрения или контроля. Их полезность в том, что они дают быстрые ориентиры в неопределённости; риск в том, что они могут стать автоматическими шаблонами, которые мешают гибкому выбору.\n\nПять основных драйвер"
+    },
+    {
+      "case_id": "case_03_short_practice",
+      "question": "Дай одну короткую практику, чтобы заметить драйвер \"Будь сильным\".",
+      "session_id": "prd-047-27-hf1-03-case_03_short_practice",
+      "response_status_code": 200,
+      "debug_status_code": 200,
+      "semantic_cards_visible": true,
+      "selected_card_count": 3,
+      "selected_card_ids": [
+        "one_bounded_practice_not_self_improvement_whip_v1",
+        "be_strong_driver_v1",
+        "be_best_driver_v1"
+      ],
+      "selection_reason": "title/core_thesis/current_turn_overlap",
+      "suppressed_reason": "",
+      "writer_payload_enriched": true,
+      "payload_chunk_count": 2,
+      "semantic_card_origin_visible": true,
+      "answer_has_internal_leak": false,
+      "answer_preview": "Садись удобно, опусти взгляд. Сделай один медленный вдох и выдох — и мягко про себя скажи: «Здесь голос: “будь сильным”». Посмотри, где в теле это отзывается (грудь, челюсть, живот) — назови место и просто оставайся с этим ощущением ещё один вдох, без оценки и без решения действовать."
+    },
+    {
+      "case_id": "case_04_panic_control",
+      "question": "Когда накрывает паникой, почему контроль становится сильнее?",
+      "session_id": "prd-047-27-hf1-04-case_04_panic_control",
+      "response_status_code": 200,
+      "debug_status_code": 200,
+      "semantic_cards_visible": true,
+      "selected_card_count": 3,
+      "selected_card_ids": [
+        "panic_control_support_v1",
+        "control_as_safety_v1",
+        "try_harder_driver_v1"
+      ],
+      "selection_reason": "title/core_thesis/current_turn_overlap",
+      "suppressed_reason": "",
+      "writer_payload_enriched": true,
+      "payload_chunk_count": 2,
+      "semantic_card_origin_visible": true,
+      "answer_has_internal_leak": false,
+      "answer_preview": "Потому что контроль — это способ системы вернуть ощущение безопасности и предсказуемости, когда приходит паника.\n\nКоротко по шагам:\n1. Паника включает сигнал «угроза» в нервной системе — всё кажется неожиданным и небезопасным.  \n2. Когда мир становится непредсказуемым, мозг/эмоциональная система ищут то, что можно упорядочить или управлять — это снижает неопределённость. Контроль даёт ощущение «я "
+    },
+    {
+      "case_id": "case_05_no_theory",
+      "question": "Я выжат и не хочу теорию. Просто ответь по-человечески.",
+      "session_id": "prd-047-27-hf1-05-case_05_no_theory",
+      "response_status_code": 200,
+      "debug_status_code": 200,
+      "semantic_cards_visible": true,
+      "selected_card_count": 0,
+      "selected_card_ids": [],
+      "selection_reason": "",
+      "suppressed_reason": "user_requested_no_theory",
+      "writer_payload_enriched": false,
+      "payload_chunk_count": 0,
+      "semantic_card_origin_visible": false,
+      "answer_has_internal_leak": false,
+      "answer_preview": "Понял. Ты выжат — это тяжело и неприятно. Я рядом словом, без теорий.\n\nКоротко и по-человечески:\n- Это нормально — чувствовать опустошение, мозг и тело просто сигналят: хватит. Это не провал, а знак, что ресурс на нуле.\n- Часто в таком состоянии всё кажется резко громче и невыносимее — мысли сужаются, эмоции становятся острыми, а выборы кажутся невозможными. Это просто механизм выгорания, не приго"
+    }
+  ],
+  "aggregate": {
+    "executed_case_count": 5,
+    "semantic_cards_visible_count": 5,
+    "selected_cards_case_count": 4,
+    "semantic_card_origin_visible_count": 4,
+    "internal_leak_count": 0
+  },
+  "status": "passed"
+}

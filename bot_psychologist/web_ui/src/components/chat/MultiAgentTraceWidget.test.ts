@@ -233,8 +233,50 @@ function createTrace(): MultiAgentTraceData {
       fallback_reason: '',
       fallback_is_primary: false,
       warning: '',
+      chunk_summaries: [
+        {
+          chunk_id: 'semantic_card:program_imperfect_self_v1',
+          source_doc: 'semantic_cards_pilot_v1',
+          chunk_type: 'concept',
+          quote_policy: 'paraphrase_only',
+          allowed_use: ['direct_to_writer'],
+          payload_item_origin: 'semantic_card',
+          semantic_card_id: 'program_imperfect_self_v1',
+          semantic_card_pack_id: 'semantic_cards_pilot_v1',
+          writer_can_ignore: true,
+          applied_as_authority: false,
+        },
+      ],
       warnings: [],
       blockers: [],
+    },
+    semantic_cards_pilot: {
+      schema_version: 'semantic_cards_pilot_trace_v1',
+      enabled: true,
+      enabled_requested: true,
+      enabled_source: 'env',
+      runtime_mode: 'local',
+      pack_id: 'semantic_cards_pilot_v1',
+      loaded_card_count: 12,
+      adapter_enabled: true,
+      writer_payload_enabled: true,
+      authority: 'advisory_only',
+      selected_card_count: 1,
+      selected_card_ids: ['program_imperfect_self_v1'],
+      selection_reason: 'title/core_thesis/current_turn_overlap',
+      writer_can_ignore: true,
+      applied_as_authority: false,
+      suppressed_reason: '',
+      writer_payload_enriched: true,
+      status: 'selected',
+      error: '',
+      candidate_scores: [
+        {
+          card_id: 'program_imperfect_self_v1',
+          score: 4,
+          reasons: ['current_turn_overlap', 'topic_alias'],
+        },
+      ],
     },
     future_graduation_notes: {
       schema_version: 'writer_kb_payload_future_graduation_notes_v1',
@@ -449,9 +491,30 @@ describe('MultiAgentTraceWidget (rev2)', () => {
     expect(harness.container.textContent).toContain('Writer KB Payload');
     clickButtonContains(harness.container, 'Writer KB Payload');
     clickButtonContains(harness.container, 'Payload warnings');
+    clickButtonContains(harness.container, 'Payload chunks');
     clickButtonContains(harness.container, 'Future graduation notes');
     expect(harness.container.textContent).toContain('writer_kb_payload_trace_v1');
+    expect(harness.container.textContent).toContain('semantic_card:program_imperfect_self_v1');
+    expect(harness.container.textContent).toContain('payload_item_origin');
     expect(harness.container.textContent).toContain('paragraph_then_sentence_boundary');
+    harness.cleanup();
+  });
+
+  it('renders semantic cards pilot trace block', () => {
+    const harness = renderWidget(
+      React.createElement(MultiAgentTraceWidget, {
+        trace: createTrace(),
+        isExpanded: true,
+      })
+    );
+    expect(harness.container.textContent).toContain('Semantic Cards Pilot');
+    clickButtonContains(harness.container, 'Semantic Cards Pilot');
+    clickButtonContains(harness.container, 'Selection details');
+    clickButtonContains(harness.container, 'Selected card ids');
+    clickButtonContains(harness.container, 'Candidate scores');
+    expect(harness.container.textContent).toContain('semantic_cards_pilot_v1');
+    expect(harness.container.textContent).toContain('program_imperfect_self_v1');
+    expect(harness.container.textContent).toContain('advisory_only');
     harness.cleanup();
   });
 

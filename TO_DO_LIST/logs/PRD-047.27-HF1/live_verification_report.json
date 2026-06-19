@@ -1,0 +1,16 @@
+{
+  "schema_version": "prd_047_27_hf1_live_verification_report_v1",
+  "prd_id": "PRD-047.27-HF1",
+  "generated_at": "2026-06-19T08:34:45.861695+00:00",
+  "admin_runtime_status": "passed",
+  "web_trace_status": "passed",
+  "encoding_status": "passed",
+  "executed_case_count": 5,
+  "semantic_cards_visible_count": 5,
+  "selected_cards_case_count": 4,
+  "semantic_card_origin_visible_count": 4,
+  "internal_leak_count": 0,
+  "final_status": "passed",
+  "screenshots_captured": false,
+  "screenshots_note": "Browser automation unavailable in this run; JSON trace artifacts used as proof."
+}

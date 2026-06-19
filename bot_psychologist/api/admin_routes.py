@@ -45,6 +45,7 @@ from bot_agent.multiagent.philosophy_kernel import (
 )
 from bot_agent.multiagent.thread_storage import thread_storage
 from bot_agent.multiagent.writer_context_package import WRITER_CONTEXT_PACKAGE_VERSION
+from bot_agent.knowledge.semantic_card_payload_adapter import build_semantic_cards_runtime_status
 from bot_agent.diagnostic_center_control import (
     apply_diagnostic_center_control_update,
     build_diagnostic_center_effective_payload,
@@ -672,6 +673,7 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
     flags_snapshot = _filter_operational_flags(feature_flags.snapshot())
     runtime_config_trace = feature_flags.runtime_config_trace()
     writer_kb_payload_resolution = feature_flags.resolve_bool("WRITER_KB_PAYLOAD_ENABLED")
+    semantic_cards_runtime = build_semantic_cards_runtime_status()
     env_flags = _env_flags_snapshot()
     runtime_warnings = _deprecated_runtime_warnings(env_flags)
     validation = validate_runtime_config(config)
@@ -760,6 +762,7 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
             "broad_rollout_allowed": False,
             "production_default_requires_explicit_gate": True,
         },
+        "semantic_cards_pilot": semantic_cards_runtime,
         "philosophy_kernel": {
             "enabled": True,
             "version": KERNEL_V1.version,

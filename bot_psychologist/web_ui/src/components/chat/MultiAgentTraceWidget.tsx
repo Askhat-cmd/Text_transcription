@@ -24,7 +24,7 @@ interface AccordionSectionProps {
 }
 
 const formatMoney = (value?: number | null): string => {
-  if (typeof value !== 'number' || Number.isNaN(value)) return 'вЂ”';
+  if (typeof value !== 'number' || Number.isNaN(value)) return '—';
   return value.toFixed(6);
 };
 
@@ -56,7 +56,7 @@ const AccordionSection: React.FC<AccordionSectionProps> = ({
         className={`w-full text-left text-xs font-semibold flex items-center justify-between ${headerClass}`}
       >
         <span>{title}</span>
-        <span className="text-slate-500">{open ? 'в–ј' : 'в–¶'}</span>
+        <span className="text-slate-500">{open ? '▾' : '▸'}</span>
       </button>
       {open && <div className="mt-2">{children}</div>}
     </section>
@@ -76,7 +76,7 @@ const MetaItem: React.FC<{ label: string; value: React.ReactNode; highlight?: bo
 
 const ChunkCard: React.FC<{ hit: SemanticHitTrace }> = ({ hit }) => {
   const [open, setOpen] = useState(false);
-  const safePreview = hit.content_preview || hit.content_full || 'вЂ”';
+  const safePreview = hit.content_preview || hit.content_full || '—';
   return (
     <div className="border rounded p-2 mb-1">
       <button
@@ -86,7 +86,7 @@ const ChunkCard: React.FC<{ hit: SemanticHitTrace }> = ({ hit }) => {
       >
         <span>{hit.source || hit.chunk_id || 'chunk'}</span>
         <span className="text-slate-400">
-          score: {Number.isFinite(hit.score) ? hit.score.toFixed(3) : '0.000'} {open ? 'в–ј' : 'в–¶'}
+          score: {Number.isFinite(hit.score) ? hit.score.toFixed(3) : '0.000'} {open ? '▾' : '▸'}
         </span>
       </button>
       {open && <pre className="mt-1 text-xs whitespace-pre-wrap text-slate-600">{safePreview}</pre>}
@@ -97,9 +97,9 @@ const ChunkCard: React.FC<{ hit: SemanticHitTrace }> = ({ hit }) => {
 const DiffRow: React.FC<{ label: string; prev?: string | null; curr?: string | null }> = ({ label, prev, curr }) => (
   <div className="text-xs">
     <span className="text-slate-500">{label}:</span>{' '}
-    <span className="text-slate-400">{prev || 'вЂ”'}</span>
-    <span className="mx-1 text-slate-400">в†’</span>
-    <span className="text-slate-700 font-medium">{curr || 'вЂ”'}</span>
+    <span className="text-slate-400">{prev || '—'}</span>
+    <span className="mx-1 text-slate-400">→</span>
+    <span className="text-slate-700 font-medium">{curr || '—'}</span>
   </div>
 );
 
@@ -190,6 +190,9 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
   const writerKbPayloadTrace = trace.writer_kb_payload_trace && typeof trace.writer_kb_payload_trace === 'object'
     ? (trace.writer_kb_payload_trace as Record<string, unknown>)
     : null;
+  const semanticCardsTrace = trace.semantic_cards_pilot && typeof trace.semantic_cards_pilot === 'object'
+    ? (trace.semantic_cards_pilot as Record<string, unknown>)
+    : null;
   const futureGraduationNotes = trace.future_graduation_notes && typeof trace.future_graduation_notes === 'object'
     ? (trace.future_graduation_notes as Record<string, unknown>)
     : null;
@@ -203,6 +206,7 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
   const overlayShadowAvailable = Boolean(overlayShadow);
   const retrievalQueryBuildAvailable = Boolean(retrievalQueryBuildTrace);
   const writerKbPayloadAvailable = Boolean(writerKbPayloadTrace);
+  const semanticCardsAvailable = Boolean(semanticCardsTrace);
 
   const timeline = [
     { key: 'state', label: 'State', ms: Math.max(trace.agents.state_analyzer.latency_ms, 0), className: 'bg-blue-500' },
@@ -223,23 +227,23 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
   const copyAll = async (): Promise<void> => {
     const payload = [
       `session_id=${trace.session_id}`,
-      `turn_index=${trace.turn_index ?? 'вЂ”'}`,
+      `turn_index=${trace.turn_index ?? '—'}`,
       `pipeline_version=${trace.pipeline_version}`,
-      `model=${llm?.model || trace.agents.writer.model_used || 'вЂ”'}`,
+      `model=${llm?.model || trace.agents.writer.model_used || '—'}`,
       '',
       '=== SYSTEM PROMPT ===',
-      llm?.system_prompt || 'вЂ”',
+      llm?.system_prompt || '—',
       '',
       '=== USER PROMPT ===',
-      llm?.user_prompt || 'вЂ”',
+      llm?.user_prompt || '—',
       '',
       '=== LLM RESPONSE ===',
-      llm?.llm_response_raw || 'вЂ”',
+      llm?.llm_response_raw || '—',
     ].join('\n');
     try {
       await navigator.clipboard.writeText(payload);
     } catch {
-      // РћС€РёР±РєР° clipboard РЅРµ РєСЂРёС‚РёС‡РЅР° РґР»СЏ СЂРµРЅРґРµСЂР°.
+      // Clipboard failure is non-critical for trace rendering.
     }
   };
 
@@ -251,18 +255,18 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
         </div>
         <div className="flex items-center gap-2">
           <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${status.badgeClassName}`}>{status.label}</span>
-          <span className="text-xs text-slate-600">{expanded ? 'в–ј' : 'в–¶'}</span>
+          <span className="text-xs text-slate-600">{expanded ? '▾' : '▸'}</span>
         </div>
       </button>
 
       {expanded && (
         <div className="mt-3 space-y-2">
-          <AccordionSection title="РњСѓР»СЊС‚РёР°РіРµРЅС‚РЅС‹Р№ РїР°Р№РїР»Р°Р№РЅ">
+          <AccordionSection title="Мультиагентный пайплайн">
             <div className="space-y-2">
               <AccordionSection title={`State Analyzer | ${trace.agents.state_analyzer.latency_ms}ms`} nested>
                 <div className="text-xs space-y-1">
                   <div>nervous_state: {trace.agents.state_analyzer.nervous_state}</div>
-                  <div>intent: {trace.agents.state_analyzer.intent || 'вЂ”'}</div>
+                  <div>intent: {trace.agents.state_analyzer.intent || '—'}</div>
                   <div>confidence: {formatPercent(trace.agents.state_analyzer.confidence)}</div>
                   <div>safety_flag: {trace.agents.state_analyzer.safety_flag ? 'true' : 'false'}</div>
                 </div>
@@ -270,7 +274,7 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
 
               <AccordionSection title={`Thread Manager | ${trace.agents.thread_manager.latency_ms}ms`} nested>
                 <div className="text-xs space-y-1">
-                  <div>thread_id: {trace.agents.thread_manager.thread_id || 'вЂ”'}</div>
+                  <div>thread_id: {trace.agents.thread_manager.thread_id || '—'}</div>
                   <div>phase: {trace.agents.thread_manager.phase}</div>
                   <div>relation: {trace.agents.thread_manager.relation_to_thread}</div>
                   <div>continuity: {formatPercent(trace.agents.thread_manager.continuity_score)}</div>
@@ -285,22 +289,22 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
                   <div>context_turns: {trace.agents.memory_retrieval.context_turns}</div>
                   <div>semantic_hits: {trace.agents.memory_retrieval.semantic_hits_count}</div>
                   <div>has_relevant_knowledge: {trace.agents.memory_retrieval.has_relevant_knowledge ? 'true' : 'false'}</div>
-                  <div>rag_query: {memory?.rag_query || 'вЂ”'}</div>
+                  <div>rag_query: {memory?.rag_query || '—'}</div>
                 </div>
               </AccordionSection>
 
               <AccordionSection title={`Writer | ${trace.agents.writer.latency_ms}ms`} nested>
                 <div className="text-xs space-y-1">
-                  <div>response_mode: {trace.agents.writer.response_mode || 'вЂ”'}</div>
-                  <div>tokens_used: {trace.agents.writer.tokens_used ?? llm?.tokens_total ?? 'вЂ”'}</div>
-                  <div>model_used: {trace.agents.writer.model_used ?? llm?.model ?? 'вЂ”'}</div>
+                  <div>response_mode: {trace.agents.writer.response_mode || '—'}</div>
+                  <div>tokens_used: {trace.agents.writer.tokens_used ?? llm?.tokens_total ?? '—'}</div>
+                  <div>model_used: {trace.agents.writer.model_used ?? llm?.model ?? '—'}</div>
                 </div>
               </AccordionSection>
 
               <AccordionSection title={`Validator | ${trace.agents.validator.latency_ms}ms`} nested>
                 <div className="text-xs space-y-1">
                   <div>is_blocked: {trace.agents.validator.is_blocked ? 'true' : 'false'}</div>
-                  <div>block_reason: {trace.agents.validator.block_reason || 'вЂ”'}</div>
+                  <div>block_reason: {trace.agents.validator.block_reason || '—'}</div>
                   <div>quality_flags: {trace.agents.validator.quality_flags.length > 0 ? trace.agents.validator.quality_flags.join(', ') : 'none'}</div>
                 </div>
               </AccordionSection>
@@ -334,13 +338,13 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
             {hybridSummaryAvailable ? (
               <div className="space-y-2">
                 <div className="grid grid-cols-2 gap-2 text-xs">
-                  <MetaItem label="VERSION" value={trace.hybrid_retrieval_planner_version || hybrid?.planner_version || 'вЂ”'} />
-                  <MetaItem label="MODE" value={trace.hybrid_retrieval_planner_mode || hybrid?.planner_mode || 'вЂ”'} highlight />
-                  <MetaItem label="MODEL" value={trace.planner_model || hybrid?.planner_model || 'вЂ”'} />
-                  <MetaItem label="MAX TOKENS" value={trace.planner_max_tokens ?? hybrid?.planner_max_tokens ?? 'вЂ”'} />
-                  <MetaItem label="ACTION" value={trace.retrieval_action || hybrid?.retrieval_action || 'вЂ”'} highlight />
-                  <MetaItem label="UNIVERSAL GATE" value={trace.hybrid_retrieval_universal_gate || hybrid?.universal_gate || 'вЂ”'} />
-                  <MetaItem label="PLAN VALID" value={trace.hybrid_retrieval_plan_valid == null ? 'вЂ”' : String(Boolean(trace.hybrid_retrieval_plan_valid))} />
+                  <MetaItem label="VERSION" value={trace.hybrid_retrieval_planner_version || hybrid?.planner_version || '—'} />
+                  <MetaItem label="MODE" value={trace.hybrid_retrieval_planner_mode || hybrid?.planner_mode || '—'} highlight />
+                  <MetaItem label="MODEL" value={trace.planner_model || hybrid?.planner_model || '—'} />
+                  <MetaItem label="MAX TOKENS" value={trace.planner_max_tokens ?? hybrid?.planner_max_tokens ?? '—'} />
+                  <MetaItem label="ACTION" value={trace.retrieval_action || hybrid?.retrieval_action || '—'} highlight />
+                  <MetaItem label="UNIVERSAL GATE" value={trace.hybrid_retrieval_universal_gate || hybrid?.universal_gate || '—'} />
+                  <MetaItem label="PLAN VALID" value={trace.hybrid_retrieval_plan_valid == null ? '—' : String(Boolean(trace.hybrid_retrieval_plan_valid))} />
                   <MetaItem label="FALLBACK USED" value={trace.hybrid_retrieval_fallback_used == null ? String(Boolean(hybrid?.fallback_used)) : String(Boolean(trace.hybrid_retrieval_fallback_used))} />
                   <MetaItem label="LLM CALLED" value={trace.hybrid_retrieval_llm_called == null ? String(Boolean(hybrid?.llm_called)) : String(Boolean(trace.hybrid_retrieval_llm_called))} />
                   <MetaItem label="WRITER CAN IGNORE RAG" value={trace.writer_can_ignore_rag == null ? String(Boolean(hybrid?.writer_can_ignore_rag)) : String(Boolean(trace.writer_can_ignore_rag))} />
@@ -348,25 +352,25 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
 
                 <AccordionSection title="Queries" nested>
                   <div className="space-y-1 text-xs">
-                    <div><span className="text-slate-500">planned:</span> {trace.planned_composed_query || hybrid?.planned_composed_query || 'вЂ”'}</div>
-                    <div><span className="text-slate-500">executed:</span> {trace.executed_rag_query || hybrid?.executed_rag_query || 'вЂ”'}</div>
-                    <div><span className="text-slate-500">legacy:</span> {trace.legacy_rag_query || hybrid?.legacy_rag_query || 'вЂ”'}</div>
+                    <div><span className="text-slate-500">planned:</span> {trace.planned_composed_query || hybrid?.planned_composed_query || '—'}</div>
+                    <div><span className="text-slate-500">executed:</span> {trace.executed_rag_query || hybrid?.executed_rag_query || '—'}</div>
+                    <div><span className="text-slate-500">legacy:</span> {trace.legacy_rag_query || hybrid?.legacy_rag_query || '—'}</div>
                     <div><span className="text-slate-500">query_before_rag_proof:</span> {String(Boolean(trace.query_before_rag_proof ?? hybrid?.query_before_rag_proof))}</div>
-                    <div><span className="text-slate-500">rag_skipped_reason:</span> {trace.rag_skipped_reason || hybrid?.rag_skipped_reason || 'вЂ”'}</div>
-                    <div><span className="text-slate-500">plan_error:</span> {trace.hybrid_retrieval_plan_error || 'вЂ”'}</div>
-                    <div><span className="text-slate-500">llm_reason:</span> {trace.hybrid_retrieval_llm_reason || hybrid?.llm_reason || 'вЂ”'}</div>
+                    <div><span className="text-slate-500">rag_skipped_reason:</span> {trace.rag_skipped_reason || hybrid?.rag_skipped_reason || '—'}</div>
+                    <div><span className="text-slate-500">plan_error:</span> {trace.hybrid_retrieval_plan_error || '—'}</div>
+                    <div><span className="text-slate-500">llm_reason:</span> {trace.hybrid_retrieval_llm_reason || hybrid?.llm_reason || '—'}</div>
                   </div>
                 </AccordionSection>
 
                 <AccordionSection title="Planner metadata" nested>
                   <div className="space-y-1 text-xs">
-                    <div>needed_chunk_types: {(trace.needed_chunk_types || hybrid?.needed_chunk_types || []).join(', ') || 'вЂ”'}</div>
-                    <div>mechanism_hints: {(trace.mechanism_hints || hybrid?.mechanism_hints || []).join(', ') || 'вЂ”'}</div>
-                    <div>allowed_use_filter_hint: {(trace.allowed_use_filter_hint || hybrid?.allowed_use_filter_hint || []).join(', ') || 'вЂ”'}</div>
-                    <div>constraints_for_writer: {(trace.constraints_for_writer || hybrid?.constraints_for_writer || []).join(', ') || 'вЂ”'}</div>
-                    <div>depth_level_hint: {trace.depth_level_hint ?? hybrid?.depth_level_hint ?? 'вЂ”'}</div>
+                    <div>needed_chunk_types: {(trace.needed_chunk_types || hybrid?.needed_chunk_types || []).join(', ') || '—'}</div>
+                    <div>mechanism_hints: {(trace.mechanism_hints || hybrid?.mechanism_hints || []).join(', ') || '—'}</div>
+                    <div>allowed_use_filter_hint: {(trace.allowed_use_filter_hint || hybrid?.allowed_use_filter_hint || []).join(', ') || '—'}</div>
+                    <div>constraints_for_writer: {(trace.constraints_for_writer || hybrid?.constraints_for_writer || []).join(', ') || '—'}</div>
+                    <div>depth_level_hint: {trace.depth_level_hint ?? hybrid?.depth_level_hint ?? '—'}</div>
                     <div>safety_layer_required: {String(Boolean(trace.safety_layer_required ?? hybrid?.safety_layer_required))}</div>
-                    <div>retrieval_gap_reason: {trace.retrieval_gap_reason || hybrid?.retrieval_gap_reason || 'вЂ”'}</div>
+                    <div>retrieval_gap_reason: {trace.retrieval_gap_reason || hybrid?.retrieval_gap_reason || '—'}</div>
                   </div>
                 </AccordionSection>
               </div>
@@ -439,9 +443,9 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
                 {runtimeConfigTrace && (
                   <AccordionSection title="Effective runtime config" nested>
                     <div className="space-y-1 text-xs">
-                      <div><span className="text-slate-500">app_env:</span> {String(runtimeConfigTrace.app_env || '—')}</div>
-                      <div><span className="text-slate-500">backend_pid:</span> {String(runtimeConfigTrace.backend_pid || '—')}</div>
-                      <div><span className="text-slate-500">backend_start_time:</span> {String(runtimeConfigTrace.backend_start_time || '—')}</div>
+                    <div><span className="text-slate-500">app_env:</span> {String(runtimeConfigTrace.app_env || '—')}</div>
+                    <div><span className="text-slate-500">backend_pid:</span> {String(runtimeConfigTrace.backend_pid || '—')}</div>
+                    <div><span className="text-slate-500">backend_start_time:</span> {String(runtimeConfigTrace.backend_start_time || '—')}</div>
                       <div><span className="text-slate-500">writer_kb_payload_enabled:</span> {String(Boolean(runtimeConfigTrace.writer_kb_payload_enabled))}</div>
                       <div><span className="text-slate-500">writer_kb_payload_enabled_source:</span> {String(runtimeConfigTrace.writer_kb_payload_enabled_source || '—')}</div>
                       <div><span className="text-slate-500">overlay_shadow_trace_enabled:</span> {String(Boolean(runtimeConfigTrace.overlay_shadow_trace_enabled))}</div>
@@ -469,6 +473,34 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
                   </div>
                 </AccordionSection>
 
+                <AccordionSection title="Payload chunks" nested>
+                  {Array.isArray(writerKbPayloadTrace?.chunk_summaries) && (writerKbPayloadTrace?.chunk_summaries as unknown[]).length > 0 ? (
+                    <div className="space-y-2">
+                      {(writerKbPayloadTrace?.chunk_summaries as Array<Record<string, unknown>>).map((item, index) => (
+                        <div
+                          key={String(item.chunk_id || index)}
+                          className="rounded-lg border border-slate-200 bg-white p-2 text-xs space-y-1"
+                        >
+                          <div className="font-semibold text-slate-700">
+                            {String(item.chunk_id || '—')}
+                          </div>
+                          <div><span className="text-slate-500">source_doc:</span> {String(item.source_doc || '—')}</div>
+                          <div><span className="text-slate-500">chunk_type:</span> {String(item.chunk_type || '—')}</div>
+                          <div><span className="text-slate-500">quote_policy:</span> {String(item.quote_policy || '—')}</div>
+                          <div><span className="text-slate-500">allowed_use:</span> {Array.isArray(item.allowed_use) ? item.allowed_use.join(', ') || '—' : '—'}</div>
+                          <div><span className="text-slate-500">payload_item_origin:</span> {String(item.payload_item_origin || '—')}</div>
+                          <div><span className="text-slate-500">semantic_card_id:</span> {String(item.semantic_card_id || '—')}</div>
+                          <div><span className="text-slate-500">semantic_card_pack_id:</span> {String(item.semantic_card_pack_id || '—')}</div>
+                          <div><span className="text-slate-500">writer_can_ignore:</span> {String(Boolean(item.writer_can_ignore))}</div>
+                          <div><span className="text-slate-500">applied_as_authority:</span> {String(Boolean(item.applied_as_authority))}</div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-xs text-slate-500">No structured payload chunks for this turn</div>
+                  )}
+                </AccordionSection>
+
                 {futureGraduationNotes && (
                   <AccordionSection title="Future graduation notes" nested>
                     <div className="space-y-1 text-xs">
@@ -479,6 +511,61 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
                     </div>
                   </AccordionSection>
                 )}
+              </div>
+            </AccordionSection>
+          )}
+
+          {semanticCardsAvailable && (
+            <AccordionSection
+              title={`Semantic Cards Pilot | ${String(semanticCardsTrace?.enabled ? 'enabled' : 'disabled')} | cards ${String(semanticCardsTrace?.selected_card_count ?? 0)}`}
+            >
+              <div className="space-y-2">
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <MetaItem label="TRACE VERSION" value={String(semanticCardsTrace?.schema_version || '—')} />
+                  <MetaItem label="STATUS" value={String(semanticCardsTrace?.status || '—')} highlight />
+                  <MetaItem label="PACK ID" value={String(semanticCardsTrace?.pack_id || '—')} />
+                  <MetaItem label="LOADED CARDS" value={String(semanticCardsTrace?.loaded_card_count ?? 0)} />
+                  <MetaItem label="SELECTED COUNT" value={String(semanticCardsTrace?.selected_card_count ?? 0)} highlight />
+                  <MetaItem label="ENABLED SOURCE" value={String(semanticCardsTrace?.enabled_source || '—')} />
+                  <MetaItem label="ADAPTER ENABLED" value={String(Boolean(semanticCardsTrace?.adapter_enabled))} />
+                  <MetaItem label="WRITER PAYLOAD ENRICHED" value={String(Boolean(semanticCardsTrace?.writer_payload_enriched))} />
+                  <MetaItem label="WRITER CAN IGNORE" value={String(Boolean(semanticCardsTrace?.writer_can_ignore))} />
+                  <MetaItem label="APPLIED AS AUTHORITY" value={String(Boolean(semanticCardsTrace?.applied_as_authority))} />
+                </div>
+
+                <AccordionSection title="Selection details" nested>
+                  <div className="space-y-1 text-xs">
+                    <div><span className="text-slate-500">selection_reason:</span> {String(semanticCardsTrace?.selection_reason || '—')}</div>
+                    <div><span className="text-slate-500">suppressed_reason:</span> {String(semanticCardsTrace?.suppressed_reason || '—')}</div>
+                    <div><span className="text-slate-500">authority:</span> {String(semanticCardsTrace?.authority || '—')}</div>
+                    <div><span className="text-slate-500">runtime_mode:</span> {String(semanticCardsTrace?.runtime_mode || '—')}</div>
+                    <div><span className="text-slate-500">error:</span> {String(semanticCardsTrace?.error || '—')}</div>
+                  </div>
+                </AccordionSection>
+
+                <AccordionSection title="Selected card ids" nested>
+                  <div className="text-xs">
+                    {Array.isArray(semanticCardsTrace?.selected_card_ids)
+                      ? (semanticCardsTrace?.selected_card_ids as unknown[]).join(', ') || '—'
+                      : '—'}
+                  </div>
+                </AccordionSection>
+
+                <AccordionSection title="Candidate scores" nested>
+                  {Array.isArray(semanticCardsTrace?.candidate_scores) && (semanticCardsTrace?.candidate_scores as unknown[]).length > 0 ? (
+                    <div className="space-y-2">
+                      {(semanticCardsTrace?.candidate_scores as Array<Record<string, unknown>>).map((item, index) => (
+                        <div key={String(item.card_id || index)} className="rounded-lg border border-slate-200 bg-white p-2 text-xs space-y-1">
+                          <div className="font-semibold text-slate-700">{String(item.card_id || '—')}</div>
+                          <div><span className="text-slate-500">score:</span> {String(item.score ?? '0')}</div>
+                          <div><span className="text-slate-500">reasons:</span> {Array.isArray(item.reasons) ? item.reasons.join(', ') || '—' : '—'}</div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-xs text-slate-500">No candidate scores recorded for this turn</div>
+                  )}
+                </AccordionSection>
               </div>
             </AccordionSection>
           )}
@@ -546,12 +633,12 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
                   {(memory.semantic_hits || []).length > 0 ? (
                     memory.semantic_hits.map((hit) => <ChunkCard key={hit.chunk_id || `${hit.source}-${hit.score}`} hit={hit} />)
                   ) : (
-                    <div className="text-xs text-slate-500">РќРµС‚ СЂРµР»РµРІР°РЅС‚РЅС‹С… С‡Р°РЅРєРѕРІ</div>
+                    <div className="text-xs text-slate-500">Нет релевантных чанков</div>
                   )}
                 </AccordionSection>
 
                 <AccordionSection title="RAG query" nested>
-                  <code className="text-xs whitespace-pre-wrap">{memory.rag_query || 'вЂ”'}</code>
+                  <code className="text-xs whitespace-pre-wrap">{memory.rag_query || '—'}</code>
                 </AccordionSection>
 
                 <AccordionSection title="User Profile" nested>
@@ -621,7 +708,7 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
                   <DiffRow label="phase" prev={diff.phase_prev} curr={diff.phase_curr} />
                 )}
                 <div className="text-xs">
-                  relation: <b>{diff.relation_to_thread || 'вЂ”'}</b>
+                  relation: <b>{diff.relation_to_thread || '—'}</b>
                 </div>
                 <div className="text-xs">memory delta: {diff.memory_turns_delta >= 0 ? '+' : ''}{diff.memory_turns_delta} turns</div>
                 <div className="text-xs">semantic delta: {diff.semantic_hits_delta >= 0 ? '+' : ''}{diff.semantic_hits_delta} hits</div>
@@ -657,7 +744,7 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
                 {(dash.state_trajectory || []).map((state, index) => (
                   <span key={`${state}-${index}`}>
                     <StateBadge state={state} />
-                    {index < dash.state_trajectory.length - 1 && <span className="mx-1 text-slate-400">в†’</span>}
+                    {index < dash.state_trajectory.length - 1 && <span className="mx-1 text-slate-400">→</span>}
                   </span>
                 ))}
               </div>

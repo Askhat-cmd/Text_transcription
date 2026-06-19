@@ -79,6 +79,7 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
+- PRD-047.27-HF1 closed the owner-facing semantic-card visibility blocker. Admin Runtime now exposes pack/count/authority status, Web Trace shows selected/suppressed semantic-card state, Writer KB payload trace preserves semantic-card origin markers, and core trace mojibake is removed. The next step is owner live review, not broader DB-track mutation.
 - PRD-047.27 closed the first semantic-card pilot slice. The next work is no longer metadata plumbing; it is owner-facing live review of whether the advisory cards improve answer quality without pushing the tone into textbook mode.
 - PRD-047.26-HF1 closed the route/obligation/evaluator debt that PRD-047.26 exposed. The remaining live-quality issue is now narrower: persistent overlay false-positive noise without overlay apply or answer-authority expansion. The next cycle should reduce overlay noise first, not mutate DB metadata yet.
 - PRD-047.25 closed overlay + Writer KB payload live evidence collection on top of the PRD-047.24 retrieval repair baseline. The remaining live-quality issue is not retrieval pollution anymore but overlay noise: false positives are too frequent for graduation, while payload and current-turn focus remain stable. Any broader overlay authority, retrieval-ranking rewrite, live metadata apply, or Chroma reindex stays out of scope until that noise class is reduced.
@@ -100,7 +101,8 @@
 ## Next
 1. Start `PRD-047.28 - Live Interactive Pilot / Owner Dialogue Review v1`.
 2. Keep semantic cards advisory-only until owner review confirms that the pilot improves quality without recurring textbook drift.
-3. Keep any broader DB-track mutation, overlay authority expansion, retrieval-ranking rewrite, live metadata apply, runtime activation, or Chroma reindex in a separate explicit governance PRD.
+3. Use `PRD-047.27-HF2` only if owner review shows weak selection or textbook overreach despite HF1 visibility being fixed.
+4. Keep any broader DB-track mutation, overlay authority expansion, retrieval-ranking rewrite, live metadata apply, runtime activation, or Chroma reindex in a separate explicit governance PRD.
 
 ## Later
 - Operational hardening for governed limited runtime.

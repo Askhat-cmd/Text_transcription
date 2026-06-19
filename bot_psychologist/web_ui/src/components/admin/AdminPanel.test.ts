@@ -117,6 +117,28 @@ vi.mock('../../hooks/useAdminConfig', () => ({
       },
       philosophy_kernel: { enabled: true, version: 'kernel_v1', quote_policy: 'internal', practice_policy: 'gate_required', principles_count: 1, boundaries_count: 1, lenses: ['a'], selected_lenses_visible: true, prompt_budget: { max_kernel_chars: 1, max_combined_chars: 1 }, quality_calibration: { last_direct_passed: true, last_direct_cases_total: 1 } },
       writer_freedom_contract: { enabled: true, version: 'writer_contract_v1', freedom_level: 'mvp_free', mode_is_hint_not_cage: true, question_limit: 1, practice_requires_gate: true, writer_max_tokens: 2500, writer_target_tokens_default: 700, writer_target_tokens_expanded: 1500, writer_allow_long_answer: true },
+      semantic_cards_pilot: {
+        schema_version: 'semantic_cards_runtime_status_v1',
+        enabled: true,
+        enabled_requested: true,
+        enabled_source: 'env',
+        runtime_mode: 'local',
+        pack_id: 'semantic_cards_pilot_v1',
+        loaded_card_count: 12,
+        adapter_enabled: true,
+        writer_payload_enabled: true,
+        writer_payload_enabled_source: 'default_local',
+        selection_surface: 'per_turn_trace_only',
+        selected_cards_visible_in_turn_trace: true,
+        last_selected_count: null,
+        last_selected_ids: [],
+        authority: 'advisory_only',
+        writer_can_ignore: true,
+        applied_as_authority: false,
+        status: 'ready',
+        reason: '',
+        error: '',
+      },
       active_line: { enabled: true, version: 'active_line_v1', user_intent: 'runtime', continuity_mode: 'runtime', revoicing_policy: 'suppress', practice_suppression_active: true, last_quality_calibration: { last_direct_passed: true, last_direct_cases_total: 1 } },
       response_planner: { enabled: true, version: 'response_planner_v1', kind: 'deterministic', role: 'selector', advisory_mode: true, live_acceptance_requires_api_trace: true, last_quality_calibration: { last_direct_passed: true, last_direct_cases_total: 1 } },
       planner_drift_guard: { enabled: true, version: 'planner_drift_guard_v1', mode: 'observe_only', blocking_user_answers: false, window_size: 100, thresholds: { warning_violation_rate: 0.1, critical_rate: 0.03 }, mvp_expansion_exceptions: { answer_length_long_when_expansion_requested: true, numbered_list_when_expansion_requested: true, multi_block_answer_when_concept_explanation_full: true }, last_summary: { total: 1, warning_count: 0, critical_count: 0, threshold_status: 'ok' }, last_replay_status: { direct: 'passed', live: 'passed' } },
@@ -218,6 +240,8 @@ describe('AdminPanel HF2-R2 visibility', () => {
 
     clickByText(harness.container, 'Runtime');
     expect(harness.container.textContent).toContain('Hybrid Retrieval Planner');
+    expect(harness.container.textContent).toContain('Semantic Cards Pilot');
+    expect(harness.container.textContent).toContain('semantic_cards_pilot_v1');
     expect(harness.container.textContent).toContain('gpt-5-nano');
     expect(harness.container.textContent).not.toContain('ConfigGroup:runtime');
 

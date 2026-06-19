@@ -488,6 +488,31 @@ export const AdminPanel: React.FC = () => {
                           {String(Boolean(runtimeEffectiveData.dialogue_policy?.writer_first_prompt_assembly_enabled))}
                         </div>
                       </div>
+                      <div className="rounded border border-slate-200 p-3" data-testid="hf1-semantic-cards-runtime">
+                        <div className="font-medium">Semantic Cards Pilot</div>
+                        <div>enabled: {String(Boolean(runtimeEffectiveData.semantic_cards_pilot?.enabled))}</div>
+                        <div>enabled_requested: {String(Boolean(runtimeEffectiveData.semantic_cards_pilot?.enabled_requested))}</div>
+                        <div>enabled_source: {runtimeEffectiveData.semantic_cards_pilot?.enabled_source ?? 'n/a'}</div>
+                        <div>runtime_mode: {runtimeEffectiveData.semantic_cards_pilot?.runtime_mode ?? 'n/a'}</div>
+                        <div>pack_id: {runtimeEffectiveData.semantic_cards_pilot?.pack_id ?? 'n/a'}</div>
+                        <div>loaded_card_count: {runtimeEffectiveData.semantic_cards_pilot?.loaded_card_count ?? 0}</div>
+                        <div>adapter_enabled: {String(Boolean(runtimeEffectiveData.semantic_cards_pilot?.adapter_enabled))}</div>
+                        <div>writer_payload_enabled: {String(Boolean(runtimeEffectiveData.semantic_cards_pilot?.writer_payload_enabled))}</div>
+                        <div>writer_payload_enabled_source: {runtimeEffectiveData.semantic_cards_pilot?.writer_payload_enabled_source ?? 'n/a'}</div>
+                        <div>selection_surface: {runtimeEffectiveData.semantic_cards_pilot?.selection_surface ?? 'n/a'}</div>
+                        <div>selected_cards_visible_in_turn_trace: {String(Boolean(runtimeEffectiveData.semantic_cards_pilot?.selected_cards_visible_in_turn_trace))}</div>
+                        <div>last_selected_count: {runtimeEffectiveData.semantic_cards_pilot?.last_selected_count ?? 'n/a'}</div>
+                        <div>last_selected_ids: {(runtimeEffectiveData.semantic_cards_pilot?.last_selected_ids ?? []).join(', ') || 'n/a'}</div>
+                        <div>authority: {runtimeEffectiveData.semantic_cards_pilot?.authority ?? 'n/a'}</div>
+                        <div>writer_can_ignore: {String(Boolean(runtimeEffectiveData.semantic_cards_pilot?.writer_can_ignore))}</div>
+                        <div>applied_as_authority: {String(Boolean(runtimeEffectiveData.semantic_cards_pilot?.applied_as_authority))}</div>
+                        <div>status: {runtimeEffectiveData.semantic_cards_pilot?.status ?? 'n/a'}</div>
+                        <div>reason: {runtimeEffectiveData.semantic_cards_pilot?.reason ?? 'n/a'}</div>
+                        <div>error: {runtimeEffectiveData.semantic_cards_pilot?.error ?? 'n/a'}</div>
+                        <div className="mt-2 rounded border border-blue-200 bg-blue-50 px-2 py-1 text-xs text-blue-900">
+                          Semantic cards stay advisory-only. Per-turn selected card IDs are visible in chat trace, not applied as runtime authority.
+                        </div>
+                      </div>
                       <div className="rounded border border-slate-200 p-3" data-testid="hf2-memory-controls-runtime">
                         <div className="font-medium">Memory Controls</div>
                         <div>clear_profile.endpoint: {runtimeEffectiveData.dialogue_policy?.user_memory_profile_clear_control?.endpoint ?? 'n/a'}</div>

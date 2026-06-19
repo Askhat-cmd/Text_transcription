@@ -142,7 +142,11 @@ backups/
 # Python/test temp
 **/__pycache__/
 **/.pytest_cache/
+**/.pytest_tmp_prd_*/
 **/.tmp_pytest*/
+**/.tmp_pytest_prd_*/
+**/.tmp_prd_*/
+**/.tmp_migration*/
 **/pytest-of-*/
 **/.torchinductor_*/
 **/_tmp_memory_persistence/

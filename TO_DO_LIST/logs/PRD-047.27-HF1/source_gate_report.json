@@ -1,0 +1,15 @@
+{
+  "prd_id": "PRD-047.27-HF1",
+  "generated_at": "2026-06-19T08:33:04.306486+00:00",
+  "head": "faf9b0027a282ff110d4e8379e1a1ef42ce61a4d",
+  "origin_main": "faf9b0027a282ff110d4e8379e1a1ef42ce61a4d",
+  "head_matches_origin_main_before_hf1_push": true,
+  "required_sources": {
+    "prd_047_27_task_list": true,
+    "prd_047_27_implementation_report": true,
+    "prd_047_27_no_mutation_proof": true,
+    "semantic_cards_pack": true
+  },
+  "status": "passed",
+  "blockers": []
+}

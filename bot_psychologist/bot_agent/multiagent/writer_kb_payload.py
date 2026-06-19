@@ -337,6 +337,9 @@ def build_writer_kb_payload(
             "source_id": source_id,
             "source_doc": _extract_source_doc(item, overlay_item),
             "chunk_type": _extract_chunk_type(item, overlay_item),
+            "payload_item_origin": str(item.get("payload_item_origin") or ""),
+            "semantic_card_id": str(item.get("semantic_card_id") or ""),
+            "semantic_card_pack_id": str(item.get("semantic_card_pack_id") or ""),
             "core_thesis": str(item.get("core_thesis") or overlay_item.get("core_thesis") or _core_thesis(content)),
             "content_excerpt": excerpt["content_excerpt"],
             "mechanism_hints": _string_list(item.get("mechanism_hints")) or _string_list(overlay_item.get("mechanism_hints")),
@@ -397,6 +400,21 @@ def build_writer_kb_payload_trace(
     if fallback_is_primary and not normalized_fallback_reason:
         normalized_fallback_reason = "disabled_by_config" if configured_enabled is False else "no_eligible_chunks"
     preview_char_count = min(total_sent_char_count, max(0, int(display_preview_char_cap or 0)))
+    chunk_summaries = [
+        {
+            "chunk_id": str(item.get("chunk_id", "") or ""),
+            "source_doc": str(item.get("source_doc", "") or ""),
+            "chunk_type": str(item.get("chunk_type", "") or ""),
+            "quote_policy": str(item.get("quote_policy", "") or ""),
+            "allowed_use": _string_list(item.get("allowed_use")),
+            "payload_item_origin": str(item.get("payload_item_origin", "") or ""),
+            "semantic_card_id": str(item.get("semantic_card_id", "") or ""),
+            "semantic_card_pack_id": str(item.get("semantic_card_pack_id", "") or ""),
+            "writer_can_ignore": True,
+            "applied_as_authority": False,
+        }
+        for item in chunks[:8]
+    ]
     return {
         "schema_version": WRITER_KB_PAYLOAD_TRACE_VERSION,
         "enabled": effective_enabled,
@@ -417,6 +435,7 @@ def build_writer_kb_payload_trace(
         "payload_display_is_preview": True,
         "payload_full_text_sent_to_writer": has_structured_payload,
         "payload_full_text_exposed_in_web_trace": False,
+        "chunk_summaries": chunk_summaries,
         "fallback_reason": normalized_fallback_reason,
         "fallback_is_primary": fallback_is_primary,
         "warning": (

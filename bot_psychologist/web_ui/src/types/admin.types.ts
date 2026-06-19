@@ -194,6 +194,28 @@ export interface AdminRuntimeEffectiveResponse {
     writer_target_tokens_expanded?: number;
     writer_allow_long_answer?: boolean;
   };
+  semantic_cards_pilot?: {
+    schema_version?: string;
+    enabled?: boolean;
+    enabled_requested?: boolean;
+    enabled_source?: string;
+    runtime_mode?: string;
+    pack_id?: string | null;
+    loaded_card_count?: number;
+    adapter_enabled?: boolean;
+    writer_payload_enabled?: boolean;
+    writer_payload_enabled_source?: string;
+    selection_surface?: string;
+    selected_cards_visible_in_turn_trace?: boolean;
+    last_selected_count?: number | null;
+    last_selected_ids?: string[];
+    authority?: string;
+    writer_can_ignore?: boolean;
+    applied_as_authority?: boolean;
+    status?: string;
+    reason?: string;
+    error?: string;
+  };
   dialogue_profile?: {
     value?: string;
     allowed_values?: string[];

@@ -12,6 +12,8 @@ from .semantic_card_loader import load_semantic_cards
 
 
 SEMANTIC_CARDS_PILOT_TRACE_VERSION = "semantic_cards_pilot_trace_v1"
+SEMANTIC_CARDS_RUNTIME_STATUS_VERSION = "semantic_cards_runtime_status_v1"
+SEMANTIC_CARDS_PACK_ID = "semantic_cards_pilot_v1"
 _LOCAL_ENVS = {"local", "dev", "test"}
 _NO_THEORY_MARKERS = (
     "без теории",
@@ -49,9 +51,9 @@ def get_semantic_cards_pilot_config() -> SemanticCardsPilotConfig:
 def card_to_writer_payload_item(card: SemanticChunkCard) -> dict[str, Any]:
     return {
         "chunk_id": f"semantic_card:{card.card_id}",
-        "source": "semantic_cards_pilot_v1",
-        "source_id": "semantic_cards_pilot_v1",
-        "source_doc": str(card.source_ref.get("source_doc", "") or "semantic_cards_pilot_v1"),
+        "source": SEMANTIC_CARDS_PACK_ID,
+        "source_id": SEMANTIC_CARDS_PACK_ID,
+        "source_doc": str(card.source_ref.get("source_doc", "") or SEMANTIC_CARDS_PACK_ID),
         "chunk_type": card.chunk_type,
         "core_thesis": card.core_thesis,
         "content": card.core_thesis,
@@ -66,8 +68,53 @@ def card_to_writer_payload_item(card: SemanticChunkCard) -> dict[str, Any]:
         "recommended_moves": [],
         "forbidden_moves": list(card.avoid_when),
         "semantic_card_id": card.card_id,
+        "semantic_card_pack_id": SEMANTIC_CARDS_PACK_ID,
+        "payload_item_origin": "semantic_card",
         "writer_can_ignore": True,
+        "applied_as_authority": False,
     }
+
+
+def build_semantic_cards_runtime_status() -> dict[str, Any]:
+    cfg = get_semantic_cards_pilot_config()
+    writer_payload = feature_flags.resolve_bool("WRITER_KB_PAYLOAD_ENABLED")
+    payload: dict[str, Any] = {
+        "schema_version": SEMANTIC_CARDS_RUNTIME_STATUS_VERSION,
+        "enabled": bool(cfg.enabled),
+        "enabled_requested": bool(cfg.enabled_requested),
+        "enabled_source": cfg.source,
+        "runtime_mode": cfg.runtime_mode,
+        "pack_id": SEMANTIC_CARDS_PACK_ID,
+        "loaded_card_count": 0,
+        "adapter_enabled": True,
+        "writer_payload_enabled": bool(writer_payload.get("effective_value", False)),
+        "writer_payload_enabled_source": str(writer_payload.get("source", "") or ""),
+        "selection_surface": "per_turn_trace_only",
+        "selected_cards_visible_in_turn_trace": True,
+        "last_selected_count": None,
+        "last_selected_ids": [],
+        "authority": "advisory_only",
+        "writer_can_ignore": True,
+        "applied_as_authority": False,
+        "status": "ready",
+        "reason": "",
+        "error": "",
+    }
+    if not cfg.enabled:
+        payload["status"] = "disabled"
+        payload["reason"] = (
+            "unsupported_runtime_mode"
+            if cfg.enabled_requested and cfg.runtime_mode not in _LOCAL_ENVS
+            else "disabled_by_config"
+        )
+    try:
+        payload["loaded_card_count"] = len(load_semantic_cards())
+    except Exception as exc:
+        payload["loaded_card_count"] = 0
+        payload["status"] = "pack_not_loaded"
+        payload["reason"] = "pack_not_loaded"
+        payload["error"] = str(exc)
+    return payload
 
 
 def build_semantic_cards_pilot_selection(
@@ -86,33 +133,52 @@ def build_semantic_cards_pilot_selection(
         "enabled_requested": bool(cfg.enabled_requested),
         "enabled_source": cfg.source,
         "runtime_mode": cfg.runtime_mode,
+        "pack_id": SEMANTIC_CARDS_PACK_ID,
+        "loaded_card_count": 0,
+        "adapter_enabled": True,
+        "writer_payload_enabled": bool(feature_flags.resolve_bool("WRITER_KB_PAYLOAD_ENABLED").get("effective_value", False)),
+        "authority": "advisory_only",
         "selected_card_count": 0,
         "selected_card_ids": [],
         "selection_reason": "",
         "writer_can_ignore": True,
         "applied_as_authority": False,
         "suppressed_reason": "",
+        "writer_payload_enriched": False,
+        "status": "ready",
+        "error": "",
         "candidate_scores": [],
         "payload_items": [],
     }
     if not cfg.enabled:
+        trace["status"] = "disabled"
         trace["suppressed_reason"] = (
             "unsupported_runtime_mode"
             if cfg.enabled_requested and cfg.runtime_mode not in _LOCAL_ENVS
             else "disabled_by_config"
         )
         return trace
+    try:
+        loaded_cards = list(cards) if cards is not None else load_semantic_cards()
+    except Exception as exc:
+        trace["status"] = "pack_not_loaded"
+        trace["suppressed_reason"] = "pack_not_loaded"
+        trace["error"] = str(exc)
+        return trace
+    trace["loaded_card_count"] = len(loaded_cards)
     if not text:
+        trace["status"] = "suppressed"
         trace["suppressed_reason"] = "empty_user_message"
         return trace
     if _is_greeting_only(text):
+        trace["status"] = "suppressed"
         trace["suppressed_reason"] = "greeting_or_contact"
         return trace
     if _contains_any(text, _NO_THEORY_MARKERS):
+        trace["status"] = "suppressed"
         trace["suppressed_reason"] = "user_requested_no_theory"
         return trace
 
-    loaded_cards = list(cards) if cards is not None else load_semantic_cards()
     terms = set(_tokens(text))
     hints = set(_tokens(" ".join(_string_list(retrieval.get("mechanism_hints")))))
     scored: list[tuple[int, SemanticChunkCard, list[str]]] = []
@@ -155,6 +221,10 @@ def build_semantic_cards_pilot_selection(
         "title/core_thesis/current_turn_overlap" if selected else "no_relevant_card"
     )
     trace["payload_items"] = [card_to_writer_payload_item(card) for _score, card, _reasons in selected]
+    trace["writer_payload_enriched"] = bool(trace["payload_items"])
+    trace["status"] = "selected" if selected else "suppressed"
+    if not selected:
+        trace["suppressed_reason"] = "no_relevant_card"
     return trace
 
 
@@ -213,7 +283,10 @@ def _alias_score(text: str, card_id: str) -> int:
 
 __all__ = [
     "SEMANTIC_CARDS_PILOT_TRACE_VERSION",
+    "SEMANTIC_CARDS_RUNTIME_STATUS_VERSION",
+    "SEMANTIC_CARDS_PACK_ID",
     "SemanticCardsPilotConfig",
+    "build_semantic_cards_runtime_status",
     "build_semantic_cards_pilot_selection",
     "card_to_writer_payload_item",
     "get_semantic_cards_pilot_config",

@@ -183,6 +183,11 @@ function createTrace(): MultiAgentTraceData {
       app_env: 'local',
       backend_pid: 4242,
       backend_start_time: '2026-06-17T10:00:00+00:00',
+      semantic_cards_pilot_enabled: true,
+      semantic_cards_pilot_enabled_source: 'env',
+      semantic_cards_pilot_raw_value: 'true',
+      semantic_cards_pack_id: 'semantic_cards_pilot_v1',
+      semantic_cards_loaded_count: 12,
       writer_kb_payload_enabled: true,
       writer_kb_payload_enabled_source: 'default_local',
       overlay_shadow_trace_enabled: false,
@@ -362,6 +367,8 @@ describe('MultiAgentTraceWidget (rev2)', () => {
     expect(harness.container.textContent).toContain('writer_kb_payload_v1');
     expect(harness.container.textContent).toContain('default_local');
     expect(harness.container.textContent).toContain('4242');
+    expect(harness.container.textContent).toContain('semantic_cards_pilot_v1');
+    expect(harness.container.textContent).toContain('12');
     expect(harness.container.textContent).toContain('500');
     harness.cleanup();
   });

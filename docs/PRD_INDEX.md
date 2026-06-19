@@ -166,3 +166,4 @@ PRD-046.1.36 Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1.
 - push_status: pushed_to_origin_main
 
 
+| PRD-047.27-HF2 | Owner Web Chat Runtime Parity & Route Repair v1 | passed | pending_main_commit | unified owner/manual pilot startup with semantic-cards env parity, shared runtime identity trace enrichment, meta word-boundary repair, explicit no-practice/cause current-turn repair, and owner-like live proof on :8001 | TO_DO_LIST/reports/PRD-047.27-HF2_IMPLEMENTATION_REPORT.md |

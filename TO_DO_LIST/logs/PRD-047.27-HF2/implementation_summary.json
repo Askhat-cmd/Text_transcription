@@ -1,0 +1,11 @@
+{
+  "prd_id": "PRD-047.27-HF2",
+  "generated_at": "2026-06-19T10:24:03.068695+00:00",
+  "killed_existing_backend_pids": [],
+  "managed_backend_pid": 2008,
+  "owner_web_chat_parity_status": "passed",
+  "runtime_parity_status": "passed",
+  "route_repair_status": "passed",
+  "no_new_flags_status": "passed",
+  "no_mutation_status": "passed"
+}

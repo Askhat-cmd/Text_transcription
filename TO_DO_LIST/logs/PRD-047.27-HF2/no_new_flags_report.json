@@ -1,0 +1,13 @@
+{
+  "schema_version": "no_new_flags_report_v1",
+  "prd_id": "PRD-047.27-HF2",
+  "generated_at": "2026-06-19T10:24:03.066697+00:00",
+  "forbidden_flags": [
+    "OWNER_WEB_CHAT_SEMANTIC_CARDS_ENABLED",
+    "SEMANTIC_CARDS_WEB_TRACE_FORCE_ENABLE",
+    "SEMANTIC_CARDS_ADMIN_OVERRIDE",
+    "SEMANTIC_CARDS_RUNTIME_PARITY_MODE"
+  ],
+  "forbidden_hits": [],
+  "status": "passed"
+}

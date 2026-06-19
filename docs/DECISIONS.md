@@ -1284,3 +1284,23 @@ Consequences:
 - the next PRD should target current-turn focus, previous-topic contamination, duplicate fragment collapse, and executed/planned query cleanliness;
 - overlay-live evaluation is deferred because it would otherwise validate polluted retrieval behavior instead of stable runtime behavior;
 - chunking repair remains explicitly unapproved until a future PRD produces direct stored-boundary evidence.
+
+## ADR-079 - Owner Web Chat pilot parity must use the same startup truth as automated proof
+
+Status: accepted
+
+Date: 2026-06-19
+
+Context: PRD-047.27-HF1 proved semantic-card visibility in an automated runner, but owner Web Chat still showed disabled/cards 0 because the runner launched backend with SEMANTIC_CARDS_PILOT_ENABLED=true while the manual pilot startup path did not.
+
+Decision:
+- treat owner/manual Web Chat pilot startup and automated proof as the same runtime truth;
+- keep SEMANTIC_CARDS_PILOT_ENABLED as the only pilot flag for semantic cards;
+- do not add owner-only, admin-only, or web-trace-only semantic-card flags;
+- extend the shared runtime trace with semantic-card identity fields instead of creating a parallel status surface;
+- keep semantic cards advisory-only inside the existing writer_kb_payload_v1 path.
+
+Consequences:
+- Admin Runtime, Web Chat trace, and owner live proof now read the same pilot truth when local pilot startup is used;
+- future cleanup should consolidate pilot toggles instead of multiplying runtime branches;
+- semantic-card expansion is deferred until the unified runtime baseline is explicitly documented.

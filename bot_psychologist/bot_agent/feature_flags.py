@@ -12,6 +12,7 @@ from dotenv import load_dotenv
 _PROJECT_ROOT = Path(__file__).resolve().parents[1]
 load_dotenv(_PROJECT_ROOT / ".env")
 _PROCESS_START_TIME_UTC = datetime.now(timezone.utc).isoformat()
+_SEMANTIC_CARDS_PACK_ID = "semantic_cards_pilot_v1"
 
 
 _DEFAULTS: Dict[str, bool] = {
@@ -165,6 +166,13 @@ class FeatureFlags:
         retrieval_current_turn = FeatureFlags.resolve_bool("RETRIEVAL_CURRENT_TURN_FOCUS_ENABLED")
         semantic_cards_pilot = FeatureFlags.resolve_bool("SEMANTIC_CARDS_PILOT_ENABLED")
         debug_trace = FeatureFlags.resolve_free_bool("DEBUG_TRACE_ENABLED", True)
+        semantic_cards_loaded_count = 0
+        try:
+            from .knowledge.semantic_card_loader import load_semantic_cards
+
+            semantic_cards_loaded_count = len(load_semantic_cards())
+        except Exception:
+            semantic_cards_loaded_count = 0
         return {
             "schema_version": "runtime_config_trace_v1",
             "app_env": FeatureFlags.app_env(),
@@ -182,6 +190,8 @@ class FeatureFlags:
             "semantic_cards_pilot_enabled_source": semantic_cards_pilot["source"],
             "semantic_cards_pilot_raw_value": semantic_cards_pilot["raw_value"],
             "semantic_cards_pilot_default_value": semantic_cards_pilot["default_value"],
+            "semantic_cards_pack_id": _SEMANTIC_CARDS_PACK_ID,
+            "semantic_cards_loaded_count": int(semantic_cards_loaded_count),
             "debug_trace_enabled": debug_trace["effective_value"],
             "debug_trace_enabled_source": debug_trace["source"],
         }

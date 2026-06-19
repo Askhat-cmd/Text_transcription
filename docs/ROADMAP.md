@@ -142,3 +142,5 @@ untime_config_trace, explicit primary-vs-fallback payload path markers, compact 
 - PRD-046.1.36: creator-live pilot acceptance completed with source/runtime/admin/creator-pilot/rollback/normal-user/safety gates.
 
 
+
+- PRD-047.27-HF2 closed owner Web Chat parity for semantic cards by aligning canonical pilot/manual startup truth with the same runtime config resolver used by Admin and Web Trace. The next step is runtime baseline consolidation, not more pilot expansion.

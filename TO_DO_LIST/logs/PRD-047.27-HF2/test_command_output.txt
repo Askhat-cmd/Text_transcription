@@ -1,0 +1,17 @@
+﻿PRD-047.27-HF2 test commands
+
+1. pytest targeted + HF1 regressions + API parity subset
+   command: & 'C:\My_practice\Text_transcription\bot_psychologist\.venv\Scripts\python.exe' -m pytest bot_psychologist\tests\test_prd_047_27_hf2_route_repair.py bot_psychologist\tests\test_prd_047_27_hf2_runtime_parity.py bot_psychologist\tests\test_prd_047_27_hf2_no_new_flags.py bot_psychologist\tests\test_prd_047_27_hf1_semantic_cards_runtime_visibility.py bot_psychologist\tests\test_prd_047_27_hf1_semantic_cards_admin_contract.py bot_psychologist\tests\api\test_writer_kb_payload_manual_web_chat_parity.py bot_psychologist\tests\api\test_writer_kb_payload_live_http_path.py -q
+   result: 21 passed, 4 warnings
+
+2. vitest targeted UI subset
+   command: cd bot_psychologist\web_ui; npm test -- --run src/components/chat/MultiAgentTraceWidget.test.ts src/components/admin/AdminPanel.test.ts
+   result: 14 passed
+
+3. web build
+   command: cd bot_psychologist\web_ui; npm run build
+   result: passed
+
+4. owner-like live parity runner
+   command: & 'C:\My_practice\Text_transcription\bot_psychologist\.venv\Scripts\python.exe' 'C:\My_practice\Text_transcription\bot_psychologist\tools\run_prd_047_27_hf2_owner_web_chat_parity.py'
+   result: passed

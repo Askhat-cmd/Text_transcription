@@ -171,6 +171,42 @@ _DIRECT_KNOWLEDGE_OPENERS = (
     "что значит",
     "какие",
 )
+_META_WORD_PATTERNS = (
+    re.compile(r"\bбот(?:а|у|ом|е)?\b", re.IGNORECASE),
+    re.compile(r"\bсистем(?:а|ы|е|у|ой)\b", re.IGNORECASE),
+)
+_META_FEEDBACK_PHRASES = (
+    "ответил как бот",
+    "ответ бота",
+    "ответы бота",
+    "этот бот",
+    "ты как бот",
+    "не как человек",
+)
+_NO_PRACTICE_CAUSE_MARKERS = (
+    "не нужна практика",
+    "не нужны практики",
+    "не хочу практику",
+    "не хочу практики",
+    "не нужна практик",
+    "без практик",
+    "хочу понять причину",
+    "что с причиной",
+    "как быть с причиной",
+    "не последствия",
+    "не с ее последствиями",
+    "не с её последствиями",
+    "почему меня так злит",
+)
+_CAUSE_SITUATION_ANCHORS = (
+    "гнев",
+    "злит",
+    "ненавист",
+    "врет",
+    "врёт",
+    "лож",
+    "обман",
+)
 
 
 def _normalize(text: str) -> str:
@@ -203,6 +239,47 @@ def _is_explicit_direct_knowledge_request(lowered: str) -> bool:
     if _contains_any(lowered, _DIRECT_KNOWLEDGE_OPENERS):
         return True
     return _contains_any(lowered, _KNOWLEDGE_MARKERS) and "?" not in lowered
+
+
+def _is_offer_rejection_reply(lowered: str, words: list[str]) -> bool:
+    if not _contains_any(lowered, _REJECTION_MARKERS):
+        return False
+    if len(words) <= 6:
+        return True
+    if _contains_any(lowered, _CONCRETE_SITUATION_MARKERS):
+        return False
+    if _contains_any(lowered, _KNOWLEDGE_MARKERS):
+        return False
+    if "?" in lowered:
+        return False
+    return False
+
+
+def _contains_meta_feedback_reference(lowered: str) -> bool:
+    if not lowered:
+        return False
+    if any(phrase in lowered for phrase in _META_FEEDBACK_PHRASES):
+        return True
+    return any(pattern.search(lowered) for pattern in _META_WORD_PATTERNS)
+
+
+def _is_explicit_no_practice_cause_request(lowered: str) -> bool:
+    if not lowered:
+        return False
+    if not any(marker in lowered for marker in _NO_PRACTICE_CAUSE_MARKERS):
+        return False
+    return any(
+        marker in lowered
+        for marker in (
+            "причин",
+            "гнев",
+            "злит",
+            "ненавист",
+            "последств",
+            "как быть",
+            "почему",
+        )
+    )
 
 
 def detect_summary_request_route_v1(user_message: str) -> dict[str, Any]:
@@ -296,7 +373,7 @@ def build_dialogue_act_resolution_v1(
             "not_exact_match_rule": True,
         }
 
-    if _contains_any(lowered, _META_FEEDBACK_MARKERS):
+    if _contains_meta_feedback_reference(lowered):
         return {
             "version": DIALOGUE_ACT_RESOLVER_VERSION,
             "dialogue_act": "meta_system_feedback",
@@ -341,7 +418,7 @@ def build_dialogue_act_resolution_v1(
             "not_exact_match_rule": True,
         }
 
-    if bool(last_offer.get("is_open")) and _contains_any(lowered, _REJECTION_MARKERS):
+    if bool(last_offer.get("is_open")) and _is_offer_rejection_reply(lowered, words):
         return {
             "version": DIALOGUE_ACT_RESOLVER_VERSION,
             "dialogue_act": "rejection_of_last_offer",
@@ -431,6 +508,25 @@ def build_dialogue_act_resolution_v1(
             "evidence": evidence,
             "reason": "explicit_bounded_practice_request",
             "source": "practice_request_override",
+            "not_exact_match_rule": True,
+        }
+
+    if _is_explicit_no_practice_cause_request(lowered):
+        dialogue_act = (
+            "concrete_situation_question"
+            if any(marker in lowered for marker in _CAUSE_SITUATION_ANCHORS)
+            else "knowledge_question"
+        )
+        evidence = ["explicit_no_practice_cause_request", "current_turn_override"]
+        if any(marker in lowered for marker in _CAUSE_SITUATION_ANCHORS):
+            evidence.append("cause_situation_anchor_present")
+        return {
+            "version": DIALOGUE_ACT_RESOLVER_VERSION,
+            "dialogue_act": dialogue_act,
+            "confidence": 0.94,
+            "evidence": evidence,
+            "reason": "explicit_no_practice_cause_understanding_request",
+            "source": "explicit_current_turn_override",
             "not_exact_match_rule": True,
         }
 

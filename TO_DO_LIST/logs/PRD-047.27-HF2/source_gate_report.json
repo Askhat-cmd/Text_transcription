@@ -1,0 +1,15 @@
+{
+  "prd_id": "PRD-047.27-HF2",
+  "generated_at": "2026-06-19T10:21:50.376857+00:00",
+  "head": "3dbb9894b38bb603ffba6743c71f0623e5094bea",
+  "origin_main": "3dbb9894b38bb603ffba6743c71f0623e5094bea",
+  "head_equals_origin_main": true,
+  "hf1_base_descendant": true,
+  "required_prd_file_present": true,
+  "task_list_present_before_code": true,
+  "hf1_artifacts_present": true,
+  "owner_chat4_present": true,
+  "mismatch_evidence_considered": true,
+  "owner_web_chat_disabled_evidence_excerpt": "Semantic Cards Pilot | disabled | cards 0 / STATUS=disabled / ENABLED SOURCE=default / LOADED CARDS=0",
+  "status": "passed"
+}

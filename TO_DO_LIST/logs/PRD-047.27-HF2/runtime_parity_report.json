@@ -1,0 +1,16 @@
+{
+  "schema_version": "runtime_parity_report_v1",
+  "prd_id": "PRD-047.27-HF2",
+  "generated_at": "2026-06-19T10:24:03.064705+00:00",
+  "reference_runtime": {
+    "app_env": "local",
+    "semantic_cards_pilot_enabled": true,
+    "semantic_cards_pilot_enabled_source": "env",
+    "semantic_cards_pilot_raw_value": "true",
+    "semantic_cards_pack_id": "semantic_cards_pilot_v1",
+    "semantic_cards_loaded_count": 12
+  },
+  "case_count": 6,
+  "mismatches": [],
+  "status": "passed"
+}

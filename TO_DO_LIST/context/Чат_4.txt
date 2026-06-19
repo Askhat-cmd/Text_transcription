@@ -1,0 +1,3142 @@
+user_1772172411219_kamh0
+
+
+
+
+Привет, я Максим. Можешь мне отвечать на вопросы?
+
+14:06
+Привет, Максим — рад познакомиться. Да, могу отвечать на твои вопросы.
+
+Уточню один момент: хочешь, чтобы я отвечал на любые темы (личные, рабочие, общие знания), или есть конкретные рамки/предпочтения, которые мне учитывать?
+
+
+Pipeline NEO | multiagent_v1 | 9229ms
+OK
+▾
+
+Мультиагентный пайплайн
+▾
+
+State Analyzer | 5767ms
+▾
+nervous_state: window
+intent: explore
+confidence: 75%
+safety_flag: false
+
+Thread Manager | 0ms
+▾
+thread_id: tm_bd3d20d66b64
+phase: clarify
+relation: new_thread
+continuity: 100%
+NEW THREAD
+
+Memory Agent | 14ms
+▾
+context_turns: 5
+semantic_hits: 0
+has_relevant_knowledge: false
+rag_query: —
+
+Writer | 3448ms
+▾
+response_mode: reflect
+tokens_used: 2672
+model_used: gpt-5-mini
+
+Validator | 0ms
+▾
+is_blocked: false
+block_reason: —
+quality_flags: none
+Latency timeline
+State 62%
+Thread 0%
+Memory 0%
+Writer 37%
+Validator 0%
+
+Hybrid Retrieval | shadow | suppress_rag
+▾
+VERSION
+hybrid_retrieval_planner_v1_r1
+MODE
+shadow
+MODEL
+gpt-5-nano
+MAX TOKENS
+320
+ACTION
+suppress_rag
+UNIVERSAL GATE
+greeting
+PLAN VALID
+true
+FALLBACK USED
+false
+LLM CALLED
+false
+WRITER CAN IGNORE RAG
+true
+
+Queries
+▾
+planned: —
+executed: —
+legacy: Привет, я Максим. Можешь мне отвечать на вопросы?
+query_before_rag_proof: false
+rag_skipped_reason: —
+plan_error: —
+llm_reason: universal_gate_resolved
+
+Planner metadata
+▾
+needed_chunk_types: general_text
+mechanism_hints: —
+allowed_use_filter_hint: writer_support
+constraints_for_writer: —
+depth_level_hint: 0
+safety_layer_required: false
+retrieval_gap_reason: planner_suppressed_rag
+
+Retrieval Query Build | current_turn_focus_v1 | clean
+▾
+ENABLED
+true
+PRIMARY PATH
+current_turn_focus_v1
+PLANNER QUERY USED
+false
+STATUS
+clean
+DEDUPE APPLIED
+false
+DUPLICATE COUNT
+0
+TRUNCATION
+false
+MID-WORD CUT
+false
+
+Query details
+▾
+raw_user_query: Привет, я Максим. Можешь мне отвечать на вопросы?
+planned_query: —
+canonical_query: привет максим можешь отвечать на вопросы
+executed_query: привет максим можешь отвечать на вопросы
+truncation_strategy: none
+fallback_reason: —
+
+Context reasons
+▾
+previous_user_query_included: false
+previous_user_query_inclusion_reason: standalone_current_knowledge_question
+inherited_topic_used: false
+inherited_topic_reason: none
+inherited_topic: —
+
+Writer KB Payload | legacy_semantic_hits_fallback_v1 | chunks 0
+▾
+TRACE VERSION
+writer_kb_payload_trace_v1
+PRIMARY PATH
+legacy_semantic_hits_fallback_v1
+STATUS
+fallback_used
+INPUT RAG COUNT
+0
+PAYLOAD CHUNKS
+0
+TOTAL SENT CHARS
+0
+SENT TO WRITER
+0
+TRACE PREVIEW CHARS
+0
+DISPLAY IS PREVIEW
+true
+TRUNCATED CHUNKS
+0
+MID-SENTENCE CUTS
+0
+OVERLAY USED
+0
+FALLBACK PRIMARY
+true
+
+Effective runtime config
+▾
+app_env: local
+backend_pid: 22496
+backend_start_time: 2026-06-19T09:03:15.774420+00:00
+writer_kb_payload_enabled: true
+writer_kb_payload_enabled_source: default_local
+overlay_shadow_trace_enabled: false
+debug_trace_enabled: true
+
+Payload path
+▾
+payload_version: legacy_semantic_hits_fallback_v1
+fallback_reason: no_eligible_chunks
+warning: legacy semantic hits fallback used instead of writer_kb_payload_v1
+configured_source: default_local
+full_text_sent_to_writer: false
+full_text_exposed_in_web_trace: false
+
+Payload warnings
+▾
+—
+
+Payload chunks
+▾
+No structured payload chunks for this turn
+
+Future graduation notes
+▾
+payload_source: legacy_selected_hit
+legacy_semantic_hits_used: true
+structured_payload_used: false
+truncation_strategy: none
+
+Semantic Cards Pilot | disabled | cards 0
+▾
+TRACE VERSION
+semantic_cards_pilot_trace_v1
+STATUS
+disabled
+PACK ID
+semantic_cards_pilot_v1
+LOADED CARDS
+0
+SELECTED COUNT
+0
+ENABLED SOURCE
+default
+ADAPTER ENABLED
+true
+WRITER PAYLOAD ENRICHED
+false
+WRITER CAN IGNORE
+true
+APPLIED AS AUTHORITY
+false
+
+Selection details
+▾
+selection_reason: —
+suppressed_reason: disabled_by_config
+authority: advisory_only
+runtime_mode: local
+error: —
+
+Selected card ids
+▾
+—
+
+Candidate scores
+▾
+No candidate scores recorded for this turn
+
+Overlay Shadow | trace_only | disabled
+▾
+ENABLED
+false
+WOULD HELP
+false
+MODE
+trace_only
+MATCH COUNT
+0
+WRITER VISIBLE
+false
+RETRIEVAL AUTHORITY
+false
+
+Overlay summary
+▾
+source_prd: —
+batch_id: —
+overlay_item_count: —
+reason: disabled_by_config
+warnings: —
+safety_flags: —
+
+Matched candidates
+▾
+No overlay matches for this turn
+
+Контекст памяти | turns: 5 | hits: 0
+▾
+
+История ходов (5)
+▾
+—
+
+Чанки в Writer (0)
+▾
+Нет релевантных чанков
+
+RAG query
+▸
+
+User Profile
+▸
+
+Записано в память
+▸
+
+Полотно LLM | gpt-5-mini | tokens: 2672
+▾
+session: 92eb019b...
+turn: 1
+mode: reflect
+
+System prompt
+▸
+
+User prompt (полный контекст)
+▾
+
+СООБЩЕНИЕ ПОЛЬЗОВАТЕЛЯ:
+Привет, я Максим. Можешь мне отвечать на вопросы?
+
+РЕЖИМ ОТВЕТА: reflect
+ЦЕЛЬ: clarify key point
+ФАЗА РАЗГОВОРА: clarify
+СОСТОЯНИЕ НЕРВНОЙ СИСТЕМЫ: window
+OK-ПОЗИЦИЯ: I+W+
+ОТКРЫТОСТЬ: open
+SAFETY АКТИВЕН: False
+
+ОТКРЫТЫЕ ПЕТЛИ:
+Привет, я Максим. Можешь мне отвечать на вопросы?
+
+НЕЛЬЗЯ ВКЛЮЧАТЬ (must_avoid):
+нет
+
+UNIFIED DIALOGUE POLICY:
+version=unified_dialogue_policy_v2
+active_profile_alias=mvp_free_dialogue
+profile_preset=free_dialogue_default
+effective_writer_autonomy=high
+effective_safety_floor=minimal_baseline
+legacy_blocks_visible_to_writer=false
+legacy_blocks_source_signals_only=true
+hard_boundaries=safety, crisis_routing, no_diagnosis, no_medical_legal_financial_directives, no_spiritual_authority, no_raw_kb_quote_dumping, privacy_sanitized_trace_only
+soft_guidance=state, thread, planner, diagnostic_card, knowledge_context, style_preference, target_micro_shift
+
+DIALOGUE ACT RESOLUTION:
+dialogue_act=greeting
+confidence=0.85
+evidence=greeting_markers
+
+LAST ASSISTANT OFFER:
+is_open=false
+offer_type=none
+offer_summary=none
+
+UNANSWERED QUESTION STATE:
+answer_required=false
+answer_status=answered
+last_direct_user_question=none
+
+DIALOGUE STYLE STATE:
+tone=neutral
+length_preference=adaptive
+complexity_preference=normal
+avoid=none
+
+ANSWER OBLIGATION:
+answer_obligation=continue_thread
+answer_shape=simple_contact
+depth=short
+question_policy=optional_none
+source=dialogue_act=greeting, profile_preset=free_dialogue_default
+
+FINAL ANSWER DIRECTIVE (ЕДИНСТВЕННЫЙ УПРАВЛЯЮЩИЙ БЛОК):
+version=final_answer_directive_v1
+directive_json:
+{
+  "version": "final_answer_directive_v1",
+  "roles": {
+    "diagnostic_center": "advisory_context_only",
+    "planner": "advisory_context_only",
+    "active_line": "advisory_context_only",
+    "diagnostic_card": "advisory_context_only"
+  },
+  "answer_obligation": "continue_thread",
+  "must_answer": "Привет, я Максим. Можешь мне отвечать на вопросы?",
+  "answer_shape": "simple_contact",
+  "depth": "short",
+  "style": "neutral",
+  "question_policy": "optional_none",
+  "practice_instruction": "no_exercise_but_answer_normally",
+  "writer_autonomy": "high"
+}
+
+PROMPT ASSEMBLY (EFFECTIVE):
+writer_first_prompt_assembly_enabled=true
+legacy_blocks_visible_to_writer=false
+legacy_blocks_source_signals_only=true
+legacy_advisory_sanitized=true
+practice_rewrite_applied=true
+diagnostic_center_role=advisory_context_only
+planner_role=advisory_context_only
+active_line_role=advisory_context_only
+diagnostic_card_role=advisory_context_only
+
+ADVISORY CONTEXT SUMMARY:
+Пользователь продолжает текущую линию разговора; ответ лучше держать живым, спокойным и по сути.
+Текущий смысловой фокус: помочь увидеть механизм происходящего без ухода в практику.
+Полезно ответить на актуальную потребность: explore perspective carefully.
+Можно опереться на такой ход ответа: clarify_one_point.
+Один полезный смысловой сдвиг: показать один механизм, который продвигает понимание.
+Формат можно держать таким: mechanism_explanation.
+Если практика сейчас не запрошена или неуместна, не предлагай упражнение, технику или пошаговую практику. Вместо этого ответь нормально: объяснением, примером, отражением или продолжением мысли.
+
+PRACTICE NOTE:
+Если практика сейчас не запрошена или неуместна, не предлагай упражнение, технику или пошаговую практику. Вместо этого ответь нормально: объяснением, примером, отражением или продолжением мысли.
+
+FRESH CHAT CONTEXT POLICY:
+version=fresh_chat_context_policy_v1
+is_new_chat=true
+turn_index=1
+is_greeting_or_contact=true
+cross_session_memory_allowed=true
+cross_session_memory_reason=explicit_question_or_knowledge_need
+active_context_source=current_chat_runtime_scope
+
+WRITER CONTEXT PACKAGE:
+version=writer_context_package_v1
+recent_turns_for_writer_count=0
+profile_for_writer_present=true
+rag_candidates_for_trace_count=0
+rag_for_writer_count=0
+
+КОНТЕКСТ ПРЕДЫДУЩИХ ХОДОВ:
+нет
+context_budget_chars=0
+context_truncated=false
+preserved_recent_turns_count=0
+older_context_omitted_chars=0
+
+ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ:
+Паттерны: нет
+Ценности: нет
+
+WRITER KB PAYLOAD:
+enabled=true
+trace_version=writer_kb_payload_trace_v1
+fallback_used=false
+payload:
+version=legacy_semantic_hits_fallback_v1
+reason=no_eligible_chunks
+legacy_hits:
+нет релевантных знаний
+
+KNOWLEDGE ANSWER ROUTING:
+knowledge_answer_needed=false
+knowledge_answer_concept=none
+kb_grounding_available=false
+knowledge_answer_first=false
+do_not_ask_user_to_define_term_before_answering=false
+practice_allowed=false
+writer_instruction=follow_response_mode_with_normal_clarification_policy
+practice_ban_instruction=no_exercise_but_answer_normally
+known_concept_clarification_ban=false
+external_surveillance_frame_ban=false
+
+NEO PHILOSOPHY KERNEL:
+kernel_version=neo_philosophy_kernel_v1
+quote_policy=internal_lens_not_citation
+selected_lenses=none
+guidance=speak_from_lens_not_about_lens
+kernel_block:
+NEO PHILOSOPHY KERNEL:
+version=neo_philosophy_kernel_v1
+identity=NEO / Bot Psychologist
+policy=internal_lens_not_quote_source
+depth_mode=light
+core_principles:
+- С человеком в основе все в порядке.
+- Паттерн и автоматизм не равны личности.
+- Сначала увидеть механизм, потом менять действие.
+- Ответ возвращает авторство, а не подменяет его авторитетом бота.
+selected_lenses:
+- default: держи живой контакт, без перегруза и без клише.
+hard_boundaries:
+- no_diagnosis
+- no_spiritual_authority
+- no_medical_legal_financial_directives
+- no_unsolicited_practice
+- no_raw_kb_quote_dumping
+- privacy_sanitized_trace_only
+prompt_compactness={'philosophy_kernel_prompt_block_chars': 613, 'writer_freedom_contract_chars': 245, 'combined_chars': 858, 'selected_lenses_count': 0, 'principles_count': 4, 'boundaries_count': 6, 'budgets': {'max_kernel_chars': 1800, 'max_freedom_chars': 1000, 'max_combined_chars': 2600, 'max_selected_lenses': 3, 'max_principles_in_prompt': 4, 'max_boundaries_in_prompt': 8}, 'within_budget': True}
+
+WRITER FREEDOM CONTRACT:
+contract_block:
+version=writer_freedom_contract_v1
+freedom_level=guided
+mode_hint=reflect
+mode_is_hint_not_cage=true
+practice_requires_gate=true
+question_limit=1
+hard_boundaries=no_diagnosis,no_spiritual_authority,no_raw_kb_quote_dumping,no_unsolicited_practice
+
+DIALOGUE POLICY:
+dialogue_profile=mvp_free_dialogue
+expansion_requested=false
+repair_and_expand_requested=false
+active_concept=
+
+DIALOGUE PRAGMATICS:
+version=dialogue_pragmatics_v1
+is_short_utterance=true
+short_utterance_type=short_unknown
+is_contextual_followup=false
+previous_assistant_offer_type=unknown
+inherited_user_intent=continue_previous_offer
+should_answer_directly=false
+should_not_ask_confirmation_again=false
+repair_user_dissatisfaction=false
+reason=short_utterance_without_context
+
+CONTEXTUAL RETRIEVAL DECISION:
+version=contextual_retrieval_gating_v1
+retrieval_action=suppress_rag
+rag_candidates_count=0
+rag_included_count=0
+rag_included_reason=
+rag_suppressed_reason=contact_or_close_turn_no_kb_needed
+writer_can_ignore_rag=true
+rag_relevance_to_current_turn=low
+inherited_topic=
+inherited_offer_type=unknown
+
+HUMAN-LIKE ANSWER POLICY:
+human_like_enabled=true
+answer_style=human_chatgpt_like
+default_depth=medium_to_long
+question_is_optional=true
+do_not_force_question_at_end=true
+do_not_force_practice_frame=true
+flexible_length_allowed=true
+respect_user_requested_format=true
+repair_user_dissatisfaction=true
+direct_answer_repair_when_user_complains=true
+
+CONSTRAINT RESOLUTION:
+constraint_profile=mvp_free_dialogue
+constraint_planner_authority=advisory
+overruled_constraints=none
+overrule_reason=none
+
+mvp_free_dialogue_overrides:
+MVP FREE DIALOGUE OVERRIDES:
+- explicit_user_request_wins=true
+- old_max_sentence_constraints_softened=true
+- planner_advisory=true
+- overview_questions_allow_lists=false
+- target_answer_depth=medium
+- rich_user_request_detected=false
+- explicit_answer_need=false
+- direct_concrete_request=false
+- summary_request=false
+- sarcasm_or_negative_feedback=false
+
+ПЕРЕД ОТВЕТОМ ВНУТРИ СЕБЯ ВЫБЕРИ:
+- главный фокус пользователя;
+- нужную глубину;
+- один следующий ход.
+
+В ответе не показывай этот анализ.
+
+Напиши ответ. Только текст ответа, без кавычек и пояснений.
+
+LLM response | gpt-5-mini | 3448ms
+▸
+Скопировать всё полотно
+
+Токены и стоимость | 2672 токенов | $0.000939
+▸
+
+Session Dashboard
+▸
+14:06
+Что такое осознанность? и как она освещена в теме нейросталкинга?
+
+14:08
+Привет, Максим. Отвечу по сути и просто.
+
+Что такое осознанность (mindfulness)
+Определение: осознанность — это способность удерживать внимание на текущем моменте с доброжелательной, непредвзятой наблюдательной позицией: замечать мысли, чувства и телесные ощущения без автоматической реакции на них.
+По-человечески: это как включить фонарик внутри себя и светить на то, что происходит прямо сейчас — не судя и не убегая, а видя ясно.
+Пример: ты замечаешь раздражение на работе, фиксируешь его («я сейчас злюсь»), не начинаешь сразу спорить или заедать стресс, а позволяешь ощущению быть и наблюдаешь, как оно меняется.
+Как осознанность рассматривается в теме нейросталкинга (нейросталкинг здесь — внутреннее, не наружное, наблюдение за собственными нейро-паттернами)
+Основная идея нейросталкинга: систематическое, детальное внутреннее наблюдение за своими автоматическими реакциями, триггерами и паттернами — без обвинений, как бы «шпионя» за тем, что внутри запускается.
+Роль осознанности: это инструмент наблюдения. Осознанность даёт возможность вовремя заметить запуск автоматизма (триггер, мысль, телесную реакцию) до того, как он перерастёт в действие. В терминах нейросталкинга — она делает видимым то, что раньше «пряталось в тени» нервной системы.
+Что меняется в понимании поведения: вместо «я такой/такая» мы смотрим на механизм: что именно сработало, какая мысль/картина запустила эмоцию, какие телесные сигналы сопровождают реакцию. Это снижает отождествление и даёт основание для сознательной коррекции поведения.
+Конкретный пример в нейросталкинговой рамке
+Ситуация: при критике коллеги в тебе резко включается стыд и оборонительная агрессия.
+Нейросталкинг-подход с осознанностью: заметил сигнал (быстрое горло, мысль «я плохой»), пометил его вслух или про себя, увидел связку «критика → стыд → защита», и просто наблюдаешь эту последовательность вместо немедленной реакции. Это даёт пространство для выбора другой реакции.
+Практическое применение (кратко)
+Осознанность в нейросталкинге помогает: распознавать триггеры, уменьшать автоматические реакции, восстанавливать выборность в поведении и лучше понимать скрытые «теневые» содержания, которые управляют тобой в быту.
+Важный нюанс: нейросталкинг не заменяет терапию и не даёт готовых диагнозов — это способ внимательного, неоценочного наблюдения за собственными паттернами, который создаёт условие для их изменения.
+Если хочешь, могу привести ещё один конкретный пример из повседневной жизни или дать схему простого наблюдения по шагам. Что предпочитаешь.
+
+
+Pipeline NEO | multiagent_v1 | 34033ms
+WARN
+▾
+
+Мультиагентный пайплайн
+▾
+
+State Analyzer | 3559ms
+▾
+nervous_state: window
+intent: clarify
+confidence: 70%
+safety_flag: false
+
+Thread Manager | 0ms
+▾
+thread_id: tm_bd3d20d66b64
+phase: clarify
+relation: branch
+continuity: 0%
+
+Memory Agent | 8893ms
+▾
+context_turns: 6
+semantic_hits: 3
+has_relevant_knowledge: true
+rag_query: осознанность как она освещена теме нейросталкинга
+
+Writer | 21581ms
+▾
+response_mode: reflect
+tokens_used: 4307
+model_used: gpt-5-mini
+
+Validator | 0ms
+▾
+is_blocked: false
+block_reason: —
+quality_flags: too_long: 2557 chars
+Latency timeline
+State 10%
+Thread 0%
+Memory 26%
+Writer 63%
+Validator 0%
+
+Hybrid Retrieval | shadow | query_kb
+▾
+VERSION
+hybrid_retrieval_planner_v1_r1
+MODE
+shadow
+MODEL
+gpt-5-nano
+MAX TOKENS
+320
+ACTION
+query_kb
+UNIVERSAL GATE
+clear_kb_ask
+PLAN VALID
+true
+FALLBACK USED
+false
+LLM CALLED
+false
+WRITER CAN IGNORE RAG
+false
+
+Queries
+▾
+planned: осознанность как она освещена теме нейросталкинга
+executed: осознанность как она освещена теме нейросталкинга
+legacy: Что такое осознанность? и как она освещена в теме нейросталкинга? Привет, я Максим. Можешь мне отвечать на вопросы?
+query_before_rag_proof: true
+rag_skipped_reason: —
+plan_error: —
+llm_reason: universal_gate_resolved
+
+Planner metadata
+▾
+needed_chunk_types: concept, source_fragment
+mechanism_hints: —
+allowed_use_filter_hint: writer_support
+constraints_for_writer: —
+depth_level_hint: 1
+safety_layer_required: false
+retrieval_gap_reason: —
+
+Retrieval Query Build | current_turn_focus_v1 | clean
+▾
+ENABLED
+true
+PRIMARY PATH
+current_turn_focus_v1
+PLANNER QUERY USED
+true
+STATUS
+clean
+DEDUPE APPLIED
+false
+DUPLICATE COUNT
+0
+TRUNCATION
+false
+MID-WORD CUT
+false
+
+Query details
+▸
+
+Context reasons
+▸
+
+Writer KB Payload | writer_kb_payload_v1 | chunks 2
+▾
+TRACE VERSION
+writer_kb_payload_trace_v1
+PRIMARY PATH
+writer_kb_payload_v1
+STATUS
+structured_payload_used
+INPUT RAG COUNT
+2
+PAYLOAD CHUNKS
+2
+TOTAL SENT CHARS
+1399
+SENT TO WRITER
+1399
+TRACE PREVIEW CHARS
+500
+DISPLAY IS PREVIEW
+true
+TRUNCATED CHUNKS
+0
+MID-SENTENCE CUTS
+0
+OVERLAY USED
+0
+FALLBACK PRIMARY
+false
+
+Effective runtime config
+▾
+app_env: local
+backend_pid: 22496
+backend_start_time: 2026-06-19T09:03:15.774420+00:00
+writer_kb_payload_enabled: true
+writer_kb_payload_enabled_source: default_local
+overlay_shadow_trace_enabled: false
+debug_trace_enabled: true
+
+Payload path
+▾
+payload_version: writer_kb_payload_v1
+fallback_reason: —
+warning: —
+configured_source: default_local
+full_text_sent_to_writer: true
+full_text_exposed_in_web_trace: false
+
+Payload warnings
+▾
+—
+
+Payload chunks
+▾
+56c62ae3-7bce-4525-b460-a64f86441657
+source_doc: book
+chunk_type: general_text
+quote_policy: paraphrase_only
+allowed_use: direct_to_writer
+payload_item_origin: —
+semantic_card_id: —
+semantic_card_pack_id: —
+writer_can_ignore: true
+applied_as_authority: false
+28d35b6b-6b5c-4c5a-bb14-0b8a3f2b5d37
+source_doc: book
+chunk_type: general_text
+quote_policy: paraphrase_only
+allowed_use: direct_to_writer
+payload_item_origin: —
+semantic_card_id: —
+semantic_card_pack_id: —
+writer_can_ignore: true
+applied_as_authority: false
+
+Future graduation notes
+▸
+
+Semantic Cards Pilot | disabled | cards 0
+▾
+TRACE VERSION
+semantic_cards_pilot_trace_v1
+STATUS
+disabled
+PACK ID
+semantic_cards_pilot_v1
+LOADED CARDS
+0
+SELECTED COUNT
+0
+ENABLED SOURCE
+default
+ADAPTER ENABLED
+true
+WRITER PAYLOAD ENRICHED
+false
+WRITER CAN IGNORE
+true
+APPLIED AS AUTHORITY
+false
+
+Selection details
+▾
+selection_reason: —
+suppressed_reason: disabled_by_config
+authority: advisory_only
+runtime_mode: local
+error: —
+
+Selected card ids
+▾
+—
+
+Candidate scores
+▾
+No candidate scores recorded for this turn
+
+Overlay Shadow | trace_only | disabled
+▾
+ENABLED
+false
+WOULD HELP
+false
+MODE
+trace_only
+MATCH COUNT
+0
+WRITER VISIBLE
+false
+RETRIEVAL AUTHORITY
+false
+
+Overlay summary
+▾
+source_prd: —
+batch_id: —
+overlay_item_count: —
+reason: disabled_by_config
+warnings: —
+safety_flags: —
+
+Matched candidates
+▾
+No overlay matches for this turn
+
+Контекст памяти | turns: 6 | hits: 3
+▾
+
+История ходов (6)
+▾
+СТОРЯ ДАЛОГА (последние обороты):
+
+Обмен #1:
+  Пользователь: Привет, я Максим. Можешь мне отвечать на вопросы?
+  Бот: Привет, Максим — рад познакомиться. Да, могу отвечать на твои вопросы.
+
+Уточню один момент: хочешь, чтобы я отвечал на любые темы (личные, рабочие, общие знания), или есть конкретные рамки/предпочтени...
+---
+
+Чанки в Writer (3)
+▾
+
+book
+score: 0.094 ▾
+Юнг ввёл понятие тени в начале XX века. Но только в последние десятилетия нейронаука дала этому понятию конкретный…
+
+book
+score: 0.093 ▾
+Теперь самое важное для практики. Каждый уровень — это **замкнутая система смыслов**.…
+
+book
+score: 0.080 ▾
+**Мантра:** Есть правила — и им нужно следовать. Есть высший смысл. **Что важно:** дисциплина, ответственность,…
+
+RAG query
+▾
+осознанность как она освещена теме нейросталкинга
+
+User Profile
+▾
+Паттерны: —
+Ценности: —
+
+Записано в память
+▾
+user: Что такое осознанность? и как она освещена в теме нейросталкинга?
+assistant: Привет, Максим. Отвечу по сути и просто.
+
+1) Что такое осознанность (mindfulness)
+- Определение: осознанность — это способность удерживать внимание на текущем моменте с доброжелательной, непредвзятой 
+thread_id: tm_bd3d20d66b64 | phase: clarify
+
+Полотно LLM | gpt-5-mini | tokens: 4307
+▾
+session: 92eb019b...
+turn: 2
+mode: reflect
+
+System prompt
+▸
+
+User prompt (полный контекст)
+▾
+
+СООБЩЕНИЕ ПОЛЬЗОВАТЕЛЯ:
+Что такое осознанность? и как она освещена в теме нейросталкинга?
+
+РЕЖИМ ОТВЕТА: reflect
+ЦЕЛЬ: clarify key point
+ФАЗА РАЗГОВОРА: clarify
+СОСТОЯНИЕ НЕРВНОЙ СИСТЕМЫ: window
+OK-ПОЗИЦИЯ: I+W+
+ОТКРЫТОСТЬ: open
+SAFETY АКТИВЕН: False
+
+ОТКРЫТЫЕ ПЕТЛИ:
+Привет, я Максим. Можешь мне отвечать на вопросы?, Что такое осознанность? и как она освещена в теме нейросталкинга?
+
+НЕЛЬЗЯ ВКЛЮЧАТЬ (must_avoid):
+нет
+
+UNIFIED DIALOGUE POLICY:
+version=unified_dialogue_policy_v2
+active_profile_alias=mvp_free_dialogue
+profile_preset=free_dialogue_default
+effective_writer_autonomy=high
+effective_safety_floor=minimal_baseline
+legacy_blocks_visible_to_writer=false
+legacy_blocks_source_signals_only=true
+hard_boundaries=safety, crisis_routing, no_diagnosis, no_medical_legal_financial_directives, no_spiritual_authority, no_raw_kb_quote_dumping, privacy_sanitized_trace_only
+soft_guidance=state, thread, planner, diagnostic_card, knowledge_context, style_preference, target_micro_shift
+
+DIALOGUE ACT RESOLUTION:
+dialogue_act=knowledge_question
+confidence=0.93
+evidence=explicit_direct_knowledge_request
+
+LAST ASSISTANT OFFER:
+is_open=true
+offer_type=none
+offer_summary=Привет, Максим — рад познакомиться. Да, могу отвечать на твои вопросы. Уточню один момент: хочешь, чтобы я отвечал на любые темы (личные, рабочие, общие знания)...
+
+UNANSWERED QUESTION STATE:
+answer_required=true
+answer_status=pending
+last_direct_user_question=Что такое осознанность? и как она освещена в теме нейросталкинга?
+
+DIALOGUE STYLE STATE:
+tone=neutral
+length_preference=adaptive
+complexity_preference=normal
+avoid=none
+
+ANSWER OBLIGATION:
+answer_obligation=answer_knowledge_question
+answer_shape=structured_explanation
+depth=medium
+question_policy=optional_none
+source=dialogue_act=knowledge_question, profile_preset=free_dialogue_default
+
+FINAL ANSWER DIRECTIVE (ЕДИНСТВЕННЫЙ УПРАВЛЯЮЩИЙ БЛОК):
+version=final_answer_directive_v1
+directive_json:
+{
+  "version": "final_answer_directive_v1",
+  "roles": {
+    "diagnostic_center": "advisory_context_only",
+    "planner": "advisory_context_only",
+    "active_line": "advisory_context_only",
+    "diagnostic_card": "advisory_context_only"
+  },
+  "answer_obligation": "answer_knowledge_question",
+  "must_answer": "Что такое осознанность? и как она освещена в теме нейросталкинга?",
+  "answer_shape": "structured_explanation",
+  "depth": "medium",
+  "style": "neutral",
+  "question_policy": "optional_none",
+  "practice_instruction": "no_exercise_but_answer_normally",
+  "writer_autonomy": "high"
+}
+
+PROMPT ASSEMBLY (EFFECTIVE):
+writer_first_prompt_assembly_enabled=true
+legacy_blocks_visible_to_writer=false
+legacy_blocks_source_signals_only=true
+legacy_advisory_sanitized=true
+practice_rewrite_applied=true
+diagnostic_center_role=advisory_context_only
+planner_role=advisory_context_only
+active_line_role=advisory_context_only
+diagnostic_card_role=advisory_context_only
+
+ADVISORY CONTEXT SUMMARY:
+Пользователь продолжает текущую линию разговора; ответ лучше держать живым, спокойным и по сути.
+Текущий смысловой фокус: связать известный концепт с текущей линией разговора без перезапуска.
+Полезно ответить на актуальную потребность: gentle clarification.
+Можно опереться на такой ход ответа: clarify_one_point.
+Лучше отвечать прямо по известному понятию: нейросталкинг.
+Один полезный смысловой сдвиг: дать прямой смысл по известному концепту без встречных барьеров.
+Формат можно держать таким: compact_direct.
+Лучше продолжать уже начатую тему, а не начинать новую ветку.
+Если практика сейчас не запрошена или неуместна, не предлагай упражнение, технику или пошаговую практику. Вместо этого ответь нормально: объяснением, примером, отражением или продолжением мысли.
+
+PRACTICE NOTE:
+Если практика сейчас не запрошена или неуместна, не предлагай упражнение, технику или пошаговую практику. Вместо этого ответь нормально: объяснением, примером, отражением или продолжением мысли.
+
+FRESH CHAT CONTEXT POLICY:
+version=fresh_chat_context_policy_v1
+is_new_chat=false
+turn_index=2
+is_greeting_or_contact=false
+cross_session_memory_allowed=true
+cross_session_memory_reason=explicit_question_or_knowledge_need
+active_context_source=current_chat_runtime_scope
+
+WRITER CONTEXT PACKAGE:
+version=writer_context_package_v1
+recent_turns_for_writer_count=2
+profile_for_writer_present=true
+rag_candidates_for_trace_count=3
+rag_for_writer_count=2
+
+КОНТЕКСТ ПРЕДЫДУЩИХ ХОДОВ:
+RECENT FULL TURNS:
+USER#turn_1_user: Привет, я Максим. Можешь мне отвечать на вопросы?
+ASSISTANT#turn_1_assistant: Привет, Максим — рад познакомиться. Да, могу отвечать на твои вопросы.
+
+Уточню один момент: хочешь, чтобы я отвечал на любые темы (личные, рабочие, общие знания), или есть конкретные рамки/предпочтения, которые мне учитывать?
+context_budget_chars=7000
+context_truncated=false
+preserved_recent_turns_count=2
+older_context_omitted_chars=0
+
+ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ:
+Паттерны: нет
+Ценности: нет
+
+WRITER KB PAYLOAD:
+enabled=true
+trace_version=writer_kb_payload_trace_v1
+fallback_used=false
+payload:
+version=writer_kb_payload_v1
+chunk_count=2
+total_sent_char_count=1399
+
+[KB-1]
+chunk_id=56c62ae3-7bce-4525-b460-a64f86441657
+source_doc=book
+chunk_type=general_text
+quote_policy=paraphrase_only
+allowed_use=direct_to_writer
+core_thesis=Юнг ввёл понятие тени в начале XX века.
+content_excerpt:
+Юнг ввёл понятие тени в начале XX века. Но только в последние десятилетия нейронаука дала этому понятию конкретный механизм.
+
+**Тень** — это не «плохая часть» личности. Это совокупность психических содержаний, которые были **вытеснены из осознанного «я»** — потому что в какой-то момент жизни они оказались опасными, неприемлемыми, несовместимыми с выживанием в социальной среде.
+
+Ребёнок злится — и видит испуганное или отвергающее лицо родителя. Вывод нервной системы: злость опасна. Злость убирается с поверхности. Не исчезает — убирается.
+
+Ребёнок радуется, громко, телесно — и слышит «не шуми», «веди себя прилично». Вывод: открытая радость опасна. Радость прячется.
+
+Ребёнок хочет внимания — и
+writer_instruction=Use as grounding. Paraphrase. Do not dump raw quote.
+content_truncated=false
+truncation_strategy=none
+
+[KB-2]
+chunk_id=28d35b6b-6b5c-4c5a-bb14-0b8a3f2b5d37
+source_doc=book
+chunk_type=general_text
+quote_policy=paraphrase_only
+allowed_use=direct_to_writer
+core_thesis=Теперь самое важное для практики.
+content_excerpt:
+Теперь самое важное для практики.
+
+Каждый уровень — это **замкнутая система смыслов**. У каждого своя «очевидная правда», которая внутри уровня не ставится под вопрос. И именно поэтому люди с разных уровней не просто не соглашаются — они не слышат друг друга на фундаментальном уровне.
+
+Простой пример. Ты — на зелёном. Говоришь с оранжевым коллегой о важности баланса работа-жизнь. Для тебя это очевидно: человек важнее результата, выгорание — сигнал сломанной системы. Коллега слышит это и думает: «он просто недостаточно мотивирован». Потому что в оранжевой системе жертвовать собой ради достижения — это **доблесть**, а не проблема.
+
+Ты не ленивый. Он не жестокий. Вы просто разговариваете из раз
+writer_instruction=Use as grounding. Paraphrase. Do not dump raw quote.
+content_truncated=false
+truncation_strategy=none
+
+KNOWLEDGE ANSWER ROUTING:
+knowledge_answer_needed=true
+knowledge_answer_concept=нейросталкинг
+kb_grounding_available=true
+knowledge_answer_first=true
+do_not_ask_user_to_define_term_before_answering=true
+practice_allowed=false
+writer_instruction=knowledge_answer_first; answer from internal KB meaning first; do_not_ask_user_to_define_term_before_answering; do_not_switch_to_practice_before_answering; avoid_external_surveillance_interpretation_unless_user_explicitly_requests_it; internal_concept_fallback_grounding=нейросталкинг
+practice_ban_instruction=no_exercise_but_answer_normally
+known_concept_clarification_ban=true: do_not_ask_user_to_define_or_choose_known_concept_variant
+external_surveillance_frame_ban=true: avoid_external_surveillance_biofeedback_eeg_frame_for_internal_concept_answer
+
+NEO PHILOSOPHY KERNEL:
+kernel_version=neo_philosophy_kernel_v1
+quote_policy=internal_lens_not_citation
+selected_lenses=neurostalking
+guidance=speak_from_lens_not_about_lens
+kernel_block:
+NEO PHILOSOPHY KERNEL:
+version=neo_philosophy_kernel_v1
+identity=NEO / Bot Psychologist
+policy=internal_lens_not_quote_source
+depth_mode=guided
+core_principles:
+- С человеком в основе все в порядке.
+- Паттерн и автоматизм не равны личности.
+- Сначала увидеть механизм, потом менять действие.
+- Ответ возвращает авторство, а не подменяет его авторитетом бота.
+selected_lenses:
+- neurostalking: Объясняй нейросталкинг как внутреннее наблюдение за паттернами, триггерами и автоматическими реакциями, без внешнего surveillance frame.
+hard_boundaries:
+- no_diagnosis
+- no_spiritual_authority
+- no_medical_legal_financial_directives
+- no_unsolicited_practice
+- no_raw_kb_quote_dumping
+- privacy_sanitized_trace_only
+prompt_compactness={'philosophy_kernel_prompt_block_chars': 709, 'writer_freedom_contract_chars': 245, 'combined_chars': 954, 'selected_lenses_count': 1, 'principles_count': 4, 'boundaries_count': 6, 'budgets': {'max_kernel_chars': 1800, 'max_freedom_chars': 1000, 'max_combined_chars': 2600, 'max_selected_lenses': 3, 'max_principles_in_prompt': 4, 'max_boundaries_in_prompt': 8}, 'within_budget': True}
+
+WRITER FREEDOM CONTRACT:
+contract_block:
+version=writer_freedom_contract_v1
+freedom_level=guided
+mode_hint=reflect
+mode_is_hint_not_cage=true
+practice_requires_gate=true
+question_limit=1
+hard_boundaries=no_diagnosis,no_spiritual_authority,no_raw_kb_quote_dumping,no_unsolicited_practice
+
+DIALOGUE POLICY:
+dialogue_profile=mvp_free_dialogue
+expansion_requested=false
+repair_and_expand_requested=false
+active_concept=нейросталкинг
+
+DIALOGUE PRAGMATICS:
+version=dialogue_pragmatics_v1
+is_short_utterance=true
+short_utterance_type=short_unknown
+is_contextual_followup=false
+previous_assistant_offer_type=unknown_offer
+inherited_user_intent=continue_previous_offer
+should_answer_directly=false
+should_not_ask_confirmation_again=false
+repair_user_dissatisfaction=false
+reason=none
+
+CONTEXTUAL RETRIEVAL DECISION:
+version=contextual_retrieval_gating_v1
+retrieval_action=query_kb
+rag_candidates_count=3
+rag_included_count=2
+rag_included_reason=knowledge question needs compact KB support
+rag_suppressed_reason=
+writer_can_ignore_rag=false
+rag_relevance_to_current_turn=high
+inherited_topic=нейросталкинг
+inherited_offer_type=unknown_offer
+
+HUMAN-LIKE ANSWER POLICY:
+human_like_enabled=true
+answer_style=human_chatgpt_like
+default_depth=medium_to_long
+question_is_optional=true
+do_not_force_question_at_end=true
+do_not_force_practice_frame=true
+flexible_length_allowed=true
+respect_user_requested_format=true
+repair_user_dissatisfaction=true
+direct_answer_repair_when_user_complains=true
+
+CONSTRAINT RESOLUTION:
+constraint_profile=mvp_free_dialogue
+constraint_planner_authority=advisory
+overruled_constraints=max_sentences=5, do_not_over_explain, do_not_offer_list, do_not_expand_theory, offer_only_one_next_step, ask_at_most_one_question
+overrule_reason=explicit_user_request_or_human_like_policy
+
+mvp_free_dialogue_overrides:
+MVP FREE DIALOGUE OVERRIDES:
+- explicit_user_request_wins=true
+- old_max_sentence_constraints_softened=true
+- planner_advisory=true
+- overview_questions_allow_lists=false
+- target_answer_depth=long
+- rich_user_request_detected=false
+- explicit_answer_need=false
+- direct_concrete_request=false
+- summary_request=false
+- sarcasm_or_negative_feedback=false
+
+ПЕРЕД ОТВЕТОМ ВНУТРИ СЕБЯ ВЫБЕРИ:
+- главный фокус пользователя;
+- нужную глубину;
+- один следующий ход.
+
+В ответе не показывай этот анализ.
+
+Напиши ответ. Только текст ответа, без кавычек и пояснений.
+
+LLM response | gpt-5-mini | 21581ms
+▸
+Скопировать всё полотно
+
+Токены и стоимость | 4307 токенов | $0.002438
+▸
+
+Turn diff
+▸
+
+Аномалии [1]
+▸
+
+Session Dashboard
+▸
+14:08
+Давай на примере. Я разговариваю на работе с коллегой и вижу что он врет, но по должности он выше, и я не хочу его при всех уличать во лжи
+
+14:10
+Похоже, основной момент — ты видишь ложь, но не хочешь ставить человека выше тебя в неудобное положение при других. Правильно понимаю. Вот несколько уместных вариантов поведения, которые проясняют ситуацию и сохраняют отношения и лицо коллеги:
+
+Приватный разговор и уточняющие вопросы. Подойди лично: скажи, что хотел бы прояснить детали, и задавай фактоориентированные вопросы типа «Можешь пояснить, как это получилось. » или «Какие данные ты использовал. » Это даёт шанс человеку поправиться без публичного конфликта.
+
+Фокус на фактах, не на обвинениях. Вместо «ты врёшь» — «в моих записях/в отчёте указано иначе». Покажи конкретику и предложи сверить источники. Это переводит разговор в рабочую плоскость.
+
+Отложенное выяснение и сбор доказательств. Если напрямую сейчас неудобно, собери документы/переписку и вернись к вопросу позже письменно или на 1:1. Так ты защищаешь себя и избегашь публичного разгорания.
+
+Нейтральная корректировка в ответ на слушании при других. Если нужно не допустить дезинформации при всех, можно мягко уточнить: «Давайте сверим это с данными» или «Я могу быстро проверить и вернусь с подтверждением», не выставляя коллегу в позу «виноват».
+
+Когда ложь повторяется или это критично для работы — эскалация через официальные каналы. Сначала предупреди коллегу приватно; если нет реакции и риск высокий, передай факты руководству/HR с документами — но избегай эмоциональных обвинений.
+
+Что из этого ближе к твоей ситуации — хочешь, чтобы я помог составить фразу для приватного разговора или пример нейтрального уточняющего вопроса.
+
+
+Pipeline NEO | multiagent_v1 | 12663ms
+OK
+▾
+
+Мультиагентный пайплайн
+▾
+
+State Analyzer | 5161ms
+▾
+nervous_state: window
+intent: explore
+confidence: 75%
+safety_flag: false
+
+Thread Manager | 1ms
+▾
+thread_id: tm_371b980fe09a
+phase: clarify
+relation: new_thread
+continuity: 100%
+NEW THREAD
+
+Memory Agent | 110ms
+▾
+context_turns: 5
+semantic_hits: 0
+has_relevant_knowledge: false
+rag_query: —
+
+Writer | 7391ms
+▾
+response_mode: reflect
+tokens_used: 3444
+model_used: gpt-5-mini
+
+Validator | 0ms
+▾
+is_blocked: false
+block_reason: —
+quality_flags: too_long: 1574 chars
+Latency timeline
+State 41%
+Thread 0%
+Memory 1%
+Writer 58%
+Validator 0%
+
+Hybrid Retrieval | shadow | use_current_context_only
+▾
+VERSION
+hybrid_retrieval_planner_v1_r1
+MODE
+shadow
+MODEL
+gpt-5-nano
+MAX TOKENS
+320
+ACTION
+use_current_context_only
+UNIVERSAL GATE
+explicit_reject
+PLAN VALID
+true
+FALLBACK USED
+false
+LLM CALLED
+false
+WRITER CAN IGNORE RAG
+true
+
+Queries
+▾
+planned: —
+executed: —
+legacy: Давай на примере. Я разговариваю на работе с коллегой и вижу что он врет, но по должности он выше, и я не хочу его при всех уличать во лжи
+query_before_rag_proof: false
+rag_skipped_reason: —
+plan_error: —
+llm_reason: universal_gate_resolved
+
+Planner metadata
+▾
+needed_chunk_types: general_text
+mechanism_hints: —
+allowed_use_filter_hint: writer_support
+constraints_for_writer: —
+depth_level_hint: 0
+safety_layer_required: false
+retrieval_gap_reason: planner_suppressed_rag
+
+Retrieval Query Build | current_turn_focus_v1 | clean
+▾
+ENABLED
+true
+PRIMARY PATH
+current_turn_focus_v1
+PLANNER QUERY USED
+false
+STATUS
+clean
+DEDUPE APPLIED
+false
+DUPLICATE COUNT
+0
+TRUNCATION
+false
+MID-WORD CUT
+false
+
+Query details
+▾
+raw_user_query: Давай на примере. Я разговариваю на работе с коллегой и вижу что он врет, но по должности он выше, и я не хочу его при всех уличать во лжи
+planned_query: —
+canonical_query: давай на примере разговариваю работе коллегой вижу он врет по должности выше
+executed_query: давай на примере разговариваю работе коллегой вижу он врет по должности выше
+truncation_strategy: none
+fallback_reason: —
+
+Context reasons
+▾
+previous_user_query_included: false
+previous_user_query_inclusion_reason: standalone_current_knowledge_question
+inherited_topic_used: false
+inherited_topic_reason: none
+inherited_topic: —
+
+Writer KB Payload | legacy_semantic_hits_fallback_v1 | chunks 0
+▾
+TRACE VERSION
+writer_kb_payload_trace_v1
+PRIMARY PATH
+legacy_semantic_hits_fallback_v1
+STATUS
+fallback_used
+INPUT RAG COUNT
+0
+PAYLOAD CHUNKS
+0
+TOTAL SENT CHARS
+0
+SENT TO WRITER
+0
+TRACE PREVIEW CHARS
+0
+DISPLAY IS PREVIEW
+true
+TRUNCATED CHUNKS
+0
+MID-SENTENCE CUTS
+0
+OVERLAY USED
+0
+FALLBACK PRIMARY
+true
+
+Effective runtime config
+▾
+app_env: local
+backend_pid: 22496
+backend_start_time: 2026-06-19T09:03:15.774420+00:00
+writer_kb_payload_enabled: true
+writer_kb_payload_enabled_source: default_local
+overlay_shadow_trace_enabled: false
+debug_trace_enabled: true
+
+Payload path
+▾
+payload_version: legacy_semantic_hits_fallback_v1
+fallback_reason: no_eligible_chunks
+warning: legacy semantic hits fallback used instead of writer_kb_payload_v1
+configured_source: default_local
+full_text_sent_to_writer: false
+full_text_exposed_in_web_trace: false
+
+Payload warnings
+▾
+—
+
+Payload chunks
+▾
+No structured payload chunks for this turn
+
+Future graduation notes
+▾
+payload_source: legacy_selected_hit
+legacy_semantic_hits_used: true
+structured_payload_used: false
+truncation_strategy: none
+
+Semantic Cards Pilot | disabled | cards 0
+▾
+TRACE VERSION
+semantic_cards_pilot_trace_v1
+STATUS
+disabled
+PACK ID
+semantic_cards_pilot_v1
+LOADED CARDS
+0
+SELECTED COUNT
+0
+ENABLED SOURCE
+default
+ADAPTER ENABLED
+true
+WRITER PAYLOAD ENRICHED
+false
+WRITER CAN IGNORE
+true
+APPLIED AS AUTHORITY
+false
+
+Selection details
+▾
+selection_reason: —
+suppressed_reason: disabled_by_config
+authority: advisory_only
+runtime_mode: local
+error: —
+
+Selected card ids
+▾
+—
+
+Candidate scores
+▾
+No candidate scores recorded for this turn
+
+Overlay Shadow | trace_only | disabled
+▾
+ENABLED
+false
+WOULD HELP
+false
+MODE
+trace_only
+MATCH COUNT
+0
+WRITER VISIBLE
+false
+RETRIEVAL AUTHORITY
+false
+
+Overlay summary
+▾
+source_prd: —
+batch_id: —
+overlay_item_count: —
+reason: disabled_by_config
+warnings: —
+safety_flags: —
+
+Matched candidates
+▾
+No overlay matches for this turn
+
+Контекст памяти | turns: 5 | hits: 0
+▾
+
+История ходов (5)
+▾
+СТОРЯ ДАЛОГА (последние обороты):
+
+Обмен #1:
+  Пользователь: Привет, я Максим. Можешь мне отвечать на вопросы?
+  Бот: Привет, Максим — рад познакомиться. Да, могу отвечать на твои вопросы.
+
+Уточню один момент: хочешь, чтобы я отвечал на любые темы (личные, рабочие, общие знания), или есть конкретные рамки/предпочтени...
+
+Обмен #2:
+  Пользователь: Что такое осознанность? и как она освещена в теме нейросталкинга?
+  Бот: Привет, Максим. Отвечу по сути и просто.
+
+1) Что такое осознанность (mindfulness)
+- Определение: осознанность — это способность удерживать внимание на текущем моменте с доброжелательной, непредвзятой ...
+---
+
+Чанки в Writer (0)
+▾
+Нет релевантных чанков
+
+RAG query
+▾
+—
+
+User Profile
+▾
+Паттерны: —
+Ценности: —
+
+Записано в память
+▾
+user: Давай на примере. Я разговариваю на работе с коллегой и вижу что он врет, но по должности он выше, и я не хочу его при всех уличать во лжи
+assistant: Похоже, основной момент — ты видишь ложь, но не хочешь ставить человека выше тебя в неудобное положение при других. Правильно понимаю. Вот несколько уместных вариантов поведения, которые проясняют сит
+thread_id: tm_371b980fe09a | phase: clarify
+
+Полотно LLM | gpt-5-mini | tokens: 3444
+▾
+session: 92eb019b...
+turn: 3
+mode: reflect
+
+System prompt
+▸
+
+User prompt (полный контекст)
+▾
+
+СООБЩЕНИЕ ПОЛЬЗОВАТЕЛЯ:
+Давай на примере. Я разговариваю на работе с коллегой и вижу что он врет, но по должности он выше, и я не хочу его при всех уличать во лжи
+
+РЕЖИМ ОТВЕТА: reflect
+ЦЕЛЬ: clarify key point
+ФАЗА РАЗГОВОРА: clarify
+СОСТОЯНИЕ НЕРВНОЙ СИСТЕМЫ: window
+OK-ПОЗИЦИЯ: I+W+
+ОТКРЫТОСТЬ: open
+SAFETY АКТИВЕН: False
+
+ОТКРЫТЫЕ ПЕТЛИ:
+нет
+
+НЕЛЬЗЯ ВКЛЮЧАТЬ (must_avoid):
+нет
+
+UNIFIED DIALOGUE POLICY:
+version=unified_dialogue_policy_v2
+active_profile_alias=mvp_free_dialogue
+profile_preset=free_dialogue_default
+effective_writer_autonomy=high
+effective_safety_floor=minimal_baseline
+legacy_blocks_visible_to_writer=false
+legacy_blocks_source_signals_only=true
+hard_boundaries=safety, crisis_routing, no_diagnosis, no_medical_legal_financial_directives, no_spiritual_authority, no_raw_kb_quote_dumping, privacy_sanitized_trace_only
+soft_guidance=state, thread, planner, diagnostic_card, knowledge_context, style_preference, target_micro_shift
+
+DIALOGUE ACT RESOLUTION:
+dialogue_act=meta_system_feedback
+confidence=0.84
+evidence=meta_feedback_markers
+
+LAST ASSISTANT OFFER:
+is_open=true
+offer_type=explain_examples
+offer_summary=Привет, Максим. Отвечу по сути и просто. 1) Что такое осознанность (mindfulness) - Определение: осознанность — это способность удерживать внимание на текущем мо...
+
+UNANSWERED QUESTION STATE:
+answer_required=false
+answer_status=answered
+last_direct_user_question=Что такое осознанность? и как она освещена в теме нейросталкинга?
+
+DIALOGUE STYLE STATE:
+tone=neutral
+length_preference=adaptive
+complexity_preference=normal
+avoid=none
+
+ANSWER OBLIGATION:
+answer_obligation=continue_thread
+answer_shape=structured_explanation
+depth=medium
+question_policy=optional_none
+source=dialogue_act=fallback_unknown, profile_preset=free_dialogue_default
+
+FINAL ANSWER DIRECTIVE (ЕДИНСТВЕННЫЙ УПРАВЛЯЮЩИЙ БЛОК):
+version=final_answer_directive_v1
+directive_json:
+{
+  "version": "final_answer_directive_v1",
+  "roles": {
+    "diagnostic_center": "advisory_context_only",
+    "planner": "advisory_context_only",
+    "active_line": "advisory_context_only",
+    "diagnostic_card": "advisory_context_only"
+  },
+  "answer_obligation": "continue_thread",
+  "must_answer": "Что такое осознанность? и как она освещена в теме нейросталкинга?",
+  "answer_shape": "structured_explanation",
+  "depth": "medium",
+  "style": "neutral",
+  "question_policy": "optional_none",
+  "practice_instruction": "no_exercise_but_answer_normally",
+  "writer_autonomy": "high"
+}
+
+PROMPT ASSEMBLY (EFFECTIVE):
+writer_first_prompt_assembly_enabled=true
+legacy_blocks_visible_to_writer=false
+legacy_blocks_source_signals_only=true
+legacy_advisory_sanitized=true
+practice_rewrite_applied=true
+diagnostic_center_role=advisory_context_only
+planner_role=advisory_context_only
+active_line_role=advisory_context_only
+diagnostic_card_role=advisory_context_only
+
+ADVISORY CONTEXT SUMMARY:
+Пользователь продолжает текущую линию разговора; ответ лучше держать живым, спокойным и по сути.
+Текущий смысловой фокус: застревание на старте рабочей задачи: прогнозирование и контроль съедают ресурс до действия.
+Полезно ответить на актуальную потребность: explore perspective carefully.
+Можно опереться на такой ход ответа: clarify_one_point.
+Один полезный смысловой сдвиг: показать один механизм, который продвигает понимание.
+Формат можно держать таким: mechanism_explanation.
+Лучше продолжать уже начатую тему, а не начинать новую ветку.
+Если практика сейчас не запрошена или неуместна, не предлагай упражнение, технику или пошаговую практику. Вместо этого ответь нормально: объяснением, примером, отражением или продолжением мысли.
+
+PRACTICE NOTE:
+Если практика сейчас не запрошена или неуместна, не предлагай упражнение, технику или пошаговую практику. Вместо этого ответь нормально: объяснением, примером, отражением или продолжением мысли.
+
+FRESH CHAT CONTEXT POLICY:
+version=fresh_chat_context_policy_v1
+is_new_chat=false
+turn_index=3
+is_greeting_or_contact=false
+cross_session_memory_allowed=true
+cross_session_memory_reason=current_chat_runtime_scope
+active_context_source=current_chat_runtime_scope
+
+WRITER CONTEXT PACKAGE:
+version=writer_context_package_v1
+recent_turns_for_writer_count=4
+profile_for_writer_present=true
+rag_candidates_for_trace_count=0
+rag_for_writer_count=0
+
+КОНТЕКСТ ПРЕДЫДУЩИХ ХОДОВ:
+RECENT FULL TURNS:
+USER#turn_1_user: Привет, я Максим. Можешь мне отвечать на вопросы?
+ASSISTANT#turn_1_assistant: Привет, Максим — рад познакомиться. Да, могу отвечать на твои вопросы.
+
+Уточню один момент: хочешь, чтобы я отвечал на любые темы (личные, рабочие, общие знания), или есть конкретные рамки/предпочтения, которые мне учитывать?
+USER#turn_2_user: Что такое осознанность? и как она освещена в теме нейросталкинга?
+
+RECENT SUMMARIZED TURNS:
+ASSISTANT#turn_2_assistant: - Пример: ты замечаешь раздражение на работе, фиксируешь его («я сейчас злюсь»), не начинаешь сразу спорить или заедать стресс, а позволяешь ощущению быть и наблюдаешь, как оно меняется. Осознанность даёт возможность вовремя заметить запуск автоматизма (триггер, мысль, телесную реакцию) до того, как он перерастёт в действие. | quote: "я сейчас злюсь"
+context_budget_chars=7000
+context_truncated=false
+preserved_recent_turns_count=4
+older_context_omitted_chars=0
+
+ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ:
+Паттерны: нет
+Ценности: нет
+
+WRITER KB PAYLOAD:
+enabled=true
+trace_version=writer_kb_payload_trace_v1
+fallback_used=false
+payload:
+version=legacy_semantic_hits_fallback_v1
+reason=no_eligible_chunks
+legacy_hits:
+нет релевантных знаний
+
+KNOWLEDGE ANSWER ROUTING:
+knowledge_answer_needed=false
+knowledge_answer_concept=none
+kb_grounding_available=false
+knowledge_answer_first=false
+do_not_ask_user_to_define_term_before_answering=false
+practice_allowed=true
+writer_instruction=follow_response_mode_with_normal_clarification_policy
+practice_ban_instruction=false
+known_concept_clarification_ban=false
+external_surveillance_frame_ban=false
+
+NEO PHILOSOPHY KERNEL:
+kernel_version=neo_philosophy_kernel_v1
+quote_policy=internal_lens_not_citation
+selected_lenses=none
+guidance=speak_from_lens_not_about_lens
+kernel_block:
+NEO PHILOSOPHY KERNEL:
+version=neo_philosophy_kernel_v1
+identity=NEO / Bot Psychologist
+policy=internal_lens_not_quote_source
+depth_mode=guided
+core_principles:
+- С человеком в основе все в порядке.
+- Паттерн и автоматизм не равны личности.
+- Сначала увидеть механизм, потом менять действие.
+- Ответ возвращает авторство, а не подменяет его авторитетом бота.
+selected_lenses:
+- default: держи живой контакт, без перегруза и без клише.
+hard_boundaries:
+- no_diagnosis
+- no_spiritual_authority
+- no_medical_legal_financial_directives
+- no_unsolicited_practice
+- no_raw_kb_quote_dumping
+- privacy_sanitized_trace_only
+prompt_compactness={'philosophy_kernel_prompt_block_chars': 614, 'writer_freedom_contract_chars': 245, 'combined_chars': 859, 'selected_lenses_count': 0, 'principles_count': 4, 'boundaries_count': 6, 'budgets': {'max_kernel_chars': 1800, 'max_freedom_chars': 1000, 'max_combined_chars': 2600, 'max_selected_lenses': 3, 'max_principles_in_prompt': 4, 'max_boundaries_in_prompt': 8}, 'within_budget': True}
+
+WRITER FREEDOM CONTRACT:
+contract_block:
+version=writer_freedom_contract_v1
+freedom_level=guided
+mode_hint=reflect
+mode_is_hint_not_cage=true
+practice_requires_gate=true
+question_limit=1
+hard_boundaries=no_diagnosis,no_spiritual_authority,no_raw_kb_quote_dumping,no_unsolicited_practice
+
+DIALOGUE POLICY:
+dialogue_profile=mvp_free_dialogue
+expansion_requested=false
+repair_and_expand_requested=false
+active_concept=нейросталкинг
+
+DIALOGUE PRAGMATICS:
+version=dialogue_pragmatics_v1
+is_short_utterance=false
+short_utterance_type=not_short
+is_contextual_followup=false
+previous_assistant_offer_type=practice_observation
+inherited_user_intent=give_practice_observation
+should_answer_directly=false
+should_not_ask_confirmation_again=false
+repair_user_dissatisfaction=false
+reason=none
+
+CONTEXTUAL RETRIEVAL DECISION:
+version=contextual_retrieval_gating_v1
+retrieval_action=trace_only
+rag_candidates_count=0
+rag_included_count=0
+rag_included_reason=
+rag_suppressed_reason=no_clear_retrieval_need
+writer_can_ignore_rag=true
+rag_relevance_to_current_turn=medium
+inherited_topic=нейросталкинг
+inherited_offer_type=practice_observation
+
+HUMAN-LIKE ANSWER POLICY:
+human_like_enabled=true
+answer_style=human_chatgpt_like
+default_depth=medium_to_long
+question_is_optional=true
+do_not_force_question_at_end=true
+do_not_force_practice_frame=true
+flexible_length_allowed=true
+respect_user_requested_format=true
+repair_user_dissatisfaction=true
+direct_answer_repair_when_user_complains=true
+
+CONSTRAINT RESOLUTION:
+constraint_profile=mvp_free_dialogue
+constraint_planner_authority=advisory
+overruled_constraints=max_sentences=5, do_not_over_explain, do_not_offer_list, do_not_expand_theory, offer_only_one_next_step, ask_at_most_one_question
+overrule_reason=explicit_user_request_or_human_like_policy
+
+mvp_free_dialogue_overrides:
+MVP FREE DIALOGUE OVERRIDES:
+- explicit_user_request_wins=true
+- old_max_sentence_constraints_softened=true
+- planner_advisory=true
+- overview_questions_allow_lists=false
+- target_answer_depth=long
+- rich_user_request_detected=true
+- explicit_answer_need=false
+- direct_concrete_request=false
+- summary_request=false
+- sarcasm_or_negative_feedback=false
+
+ПЕРЕД ОТВЕТОМ ВНУТРИ СЕБЯ ВЫБЕРИ:
+- главный фокус пользователя;
+- нужную глубину;
+- один следующий ход.
+
+В ответе не показывай этот анализ.
+
+Напиши ответ. Только текст ответа, без кавычек и пояснений.
+
+LLM response | gpt-5-mini | 7391ms
+▸
+Скопировать всё полотно
+
+Токены и стоимость | 3444 токенов | $0.001767
+▸
+
+Turn diff
+▸
+
+Session Dashboard
+▸
+14:10
+а что делать с гневом, меня распирает от ненависти когда я вижу как кто то врет!
+
+14:17
+Понимаю — когда видишь ложь, хочется взорваться. Один реальный следующий шаг, который можно прямо сейчас попробовать:
+
+Микро-пауза «Назови — Вдыхни — Отложи». Как делать:
+Назови про себя коротко: «Я злюсь, меня распирает от ненависти» (1–2 слова — честно и без оправданий).
+Сделай 3 глубоких медленных вдоха через нос, считая до трёх на вдох и до трёх на выдох (фокус на теле).
+Отодвинь реакцию на 5 минут: мысленно скажи себе «сейчас не отвечаю, вернусь через 5 минут» и переключись на простую задачу (посчитать до 20, посмотреть в окно, записать факт).
+Пример фразы в голове и внешне (если нужно): про себя — «Я сейчас злюсь»; при общении — «Давай вернёмся к этому через несколько минут, мне нужно уточнить детали». Это даёт время снизить температуру эмоции и выбрать действие осознанно (приватный вопрос, факты, или промедление).
+
+Попробуй в следующей ситуации: заметил ложь — сделай микро-паузу и снова оценишь, не делая сразу уличающего заявления. Если хочешь, дам короткое тренировочное упражнение для отработки паузы.
+
+
+Pipeline NEO | multiagent_v1 | 16896ms
+WARN
+▾
+
+Мультиагентный пайплайн
+▾
+
+State Analyzer | 2864ms
+▾
+nervous_state: window
+intent: solution
+confidence: 75%
+safety_flag: false
+
+Thread Manager | 0ms
+▾
+thread_id: tm_0157174d0d72
+phase: clarify
+relation: new_thread
+continuity: 100%
+NEW THREAD
+
+Memory Agent | 3689ms
+▾
+context_turns: 5
+semantic_hits: 3
+has_relevant_knowledge: true
+rag_query: делать гневом меня распирает от ненависти когда вижу кто то врет
+
+Writer | 10343ms
+▾
+response_mode: practice
+tokens_used: 4637
+model_used: gpt-5-mini
+
+Validator | 0ms
+▾
+is_blocked: false
+block_reason: —
+quality_flags: none
+Latency timeline
+State 17%
+Thread 0%
+Memory 22%
+Writer 61%
+Validator 0%
+
+Hybrid Retrieval | shadow | trace_only
+▾
+VERSION
+hybrid_retrieval_planner_v1_r1
+MODE
+shadow
+MODEL
+gpt-5-nano
+MAX TOKENS
+320
+ACTION
+trace_only
+UNIVERSAL GATE
+complex_or_low_confidence
+PLAN VALID
+false
+FALLBACK USED
+true
+LLM CALLED
+true
+WRITER CAN IGNORE RAG
+true
+
+Queries
+▾
+planned: —
+executed: делать гневом меня распирает от ненависти когда вижу кто то врет
+legacy: а что делать с гневом, меня распирает от ненависти когда я вижу как кто то врет!
+query_before_rag_proof: false
+rag_skipped_reason: —
+plan_error: no_user_facing_text_created_must_be_true
+llm_reason: complex_or_low_confidence
+
+Planner metadata
+▾
+needed_chunk_types: general_text
+mechanism_hints: —
+allowed_use_filter_hint: writer_support
+constraints_for_writer: —
+depth_level_hint: 0
+safety_layer_required: false
+retrieval_gap_reason: legacy_fallback_used
+
+Retrieval Query Build | current_turn_focus_v1 | clean
+▾
+ENABLED
+true
+PRIMARY PATH
+current_turn_focus_v1
+PLANNER QUERY USED
+false
+STATUS
+clean
+DEDUPE APPLIED
+false
+DUPLICATE COUNT
+0
+TRUNCATION
+false
+MID-WORD CUT
+false
+
+Query details
+▸
+
+Context reasons
+▸
+
+Writer KB Payload | writer_kb_payload_v1 | chunks 2
+▾
+TRACE VERSION
+writer_kb_payload_trace_v1
+PRIMARY PATH
+writer_kb_payload_v1
+STATUS
+structured_payload_used
+INPUT RAG COUNT
+0
+PAYLOAD CHUNKS
+2
+TOTAL SENT CHARS
+2956
+SENT TO WRITER
+2956
+TRACE PREVIEW CHARS
+500
+DISPLAY IS PREVIEW
+true
+TRUNCATED CHUNKS
+2
+MID-SENTENCE CUTS
+0
+OVERLAY USED
+0
+FALLBACK PRIMARY
+false
+
+Effective runtime config
+▾
+app_env: local
+backend_pid: 22496
+backend_start_time: 2026-06-19T09:03:15.774420+00:00
+writer_kb_payload_enabled: true
+writer_kb_payload_enabled_source: default_local
+overlay_shadow_trace_enabled: false
+debug_trace_enabled: true
+
+Payload path
+▾
+payload_version: writer_kb_payload_v1
+fallback_reason: —
+warning: —
+configured_source: default_local
+full_text_sent_to_writer: true
+full_text_exposed_in_web_trace: false
+
+Payload warnings
+▾
+—
+
+Payload chunks
+▾
+3dfeca39-dbb2-4da0-b12f-15ef07fdad2b
+source_doc: book
+chunk_type: general_text
+quote_policy: paraphrase_only
+allowed_use: direct_to_writer
+payload_item_origin: —
+semantic_card_id: —
+semantic_card_pack_id: —
+writer_can_ignore: true
+applied_as_authority: false
+7b61940d-f6ff-46f8-9514-797efaf0ad00
+source_doc: book
+chunk_type: general_text
+quote_policy: paraphrase_only
+allowed_use: direct_to_writer
+payload_item_origin: —
+semantic_card_id: —
+semantic_card_pack_id: —
+writer_can_ignore: true
+applied_as_authority: false
+
+Future graduation notes
+▾
+payload_source: legacy_selected_hit
+legacy_semantic_hits_used: false
+structured_payload_used: true
+truncation_strategy: sentence_boundary
+
+Semantic Cards Pilot | disabled | cards 0
+▾
+TRACE VERSION
+semantic_cards_pilot_trace_v1
+STATUS
+disabled
+PACK ID
+semantic_cards_pilot_v1
+LOADED CARDS
+0
+SELECTED COUNT
+0
+ENABLED SOURCE
+default
+ADAPTER ENABLED
+true
+WRITER PAYLOAD ENRICHED
+false
+WRITER CAN IGNORE
+true
+APPLIED AS AUTHORITY
+false
+
+Selection details
+▾
+selection_reason: —
+suppressed_reason: disabled_by_config
+authority: advisory_only
+runtime_mode: local
+error: —
+
+Selected card ids
+▾
+—
+
+Candidate scores
+▾
+No candidate scores recorded for this turn
+
+Overlay Shadow | trace_only | disabled
+▾
+ENABLED
+false
+WOULD HELP
+false
+MODE
+trace_only
+MATCH COUNT
+0
+WRITER VISIBLE
+false
+RETRIEVAL AUTHORITY
+false
+
+Overlay summary
+▾
+source_prd: —
+batch_id: —
+overlay_item_count: —
+reason: disabled_by_config
+warnings: —
+safety_flags: —
+
+Matched candidates
+▾
+No overlay matches for this turn
+
+Контекст памяти | turns: 5 | hits: 3
+▾
+
+История ходов (5)
+▾
+РЕЛЕВАНТНЫЕ ПРОШЛЫЕ ОБМЕНЫ:
+
+[Сходство: 0.79] Обмен #1:
+  Пользователь: Привет, я Максим. Можешь мне отвечать на вопросы?
+  Бот: Привет, Максим — рад познакомиться. Да, могу отвечать на твои вопросы.
+
+Уточню один момент: хочешь, чтобы я отвечал на любые темы (личные, рабочие, общие знания), или есть конкретные рамки/предпочтени...
+
+[Сходство: 0.75] Обмен #2:
+  Пользователь: Что такое осознанность? и как она освещена в теме нейросталкинга?
+  Бот: Привет, Максим. Отвечу по сути и просто.
+
+1) Что такое осознанность (mindfulness)
+- Определение: осознанность — это способность удерживать внимание на текущем моменте с доброжелательной, непредвзятой ...
+---
+СТОРЯ ДАЛОГА (последние обороты):
+
+Обмен #1:
+  Пользователь: Привет, я Максим. Можешь мне отвечать на вопросы?
+  Бот: Привет, Максим — рад познакомиться. Да, могу отвечать на твои вопросы.
+
+Уточню один момент: хочешь, чтобы я отвечал на любые темы (личные, рабочие, общие знания), или есть конкретные рамки/предпочтени...
+
+Обмен #2:
+  Пользователь: Что такое осознанность? и как она освещена в теме нейросталкинга?
+  Бот: Привет, Максим. Отвечу по сути и просто.
+
+1) Что такое осознанность (mindfulness)
+- Определение: осознанность — это способность удерживать внимание на текущем моменте с доброжелательной, непредвзятой ...
+
+Обмен #3:
+  Пользователь: Давай на примере. Я разговариваю на работе с коллегой и вижу что он врет, но по должности он выше, и я не хочу его при всех уличать во лжи
+  Бот: Похоже, основной момент — ты видишь ложь, но не хочешь ставить человека выше тебя в неудобное положение при других. Правильно понимаю. Вот несколько уместных вариантов поведения, которые проясняют сит...
+---
+
+Чанки в Writer (3)
+▾
+
+book
+score: 0.104 ▾
+И ещё один момент: если ты ждёшь результата — спроси себя, что именно ты ждёшь.…
+
+book
+score: 0.101 ▾
+*Это реальные вопросы участников сессий. Они возникают почти у всех. Если ты читаешь и узнаёшь свой вопрос — значит,…
+
+book
+score: 0.095 ▾
+Работа с тенью движется линейно: я вижу это в себе — и это меняет мои реакции. Фокус — на конкретных паттернах.…
+
+RAG query
+▾
+делать гневом меня распирает от ненависти когда вижу кто то врет
+
+User Profile
+▾
+Паттерны: —
+Ценности: —
+
+Записано в память
+▾
+user: а что делать с гневом, меня распирает от ненависти когда я вижу как кто то врет!
+assistant: 
+thread_id: tm_0157174d0d72 | phase: clarify
+
+Полотно LLM | gpt-5-mini | tokens: 4637
+▾
+session: 92eb019b...
+turn: 4
+mode: practice
+
+System prompt
+▸
+
+User prompt (полный контекст)
+▾
+
+СООБЩЕНИЕ ПОЛЬЗОВАТЕЛЯ:
+а что делать с гневом, меня распирает от ненависти когда я вижу как кто то врет!
+
+РЕЖИМ ОТВЕТА: practice
+ЦЕЛЬ: provide one realistic next step
+ФАЗА РАЗГОВОРА: clarify
+СОСТОЯНИЕ НЕРВНОЙ СИСТЕМЫ: window
+OK-ПОЗИЦИЯ: I+W+
+ОТКРЫТОСТЬ: open
+SAFETY АКТИВЕН: False
+
+ОТКРЫТЫЕ ПЕТЛИ:
+нет
+
+НЕЛЬЗЯ ВКЛЮЧАТЬ (must_avoid):
+нет
+
+UNIFIED DIALOGUE POLICY:
+version=unified_dialogue_policy_v2
+active_profile_alias=mvp_free_dialogue
+profile_preset=free_dialogue_default
+effective_writer_autonomy=high
+effective_safety_floor=minimal_baseline
+legacy_blocks_visible_to_writer=false
+legacy_blocks_source_signals_only=true
+hard_boundaries=safety, crisis_routing, no_diagnosis, no_medical_legal_financial_directives, no_spiritual_authority, no_raw_kb_quote_dumping, privacy_sanitized_trace_only
+soft_guidance=state, thread, planner, diagnostic_card, knowledge_context, style_preference, target_micro_shift
+
+DIALOGUE ACT RESOLUTION:
+dialogue_act=concrete_situation_question
+confidence=0.77
+evidence=situation_markers
+
+LAST ASSISTANT OFFER:
+is_open=true
+offer_type=explain_examples
+offer_summary=Похоже, основной момент — ты видишь ложь, но не хочешь ставить человека выше тебя в неудобное положение при других. Правильно понимаю. Вот несколько уместных ва...
+
+UNANSWERED QUESTION STATE:
+answer_required=true
+answer_status=pending
+last_direct_user_question=а что делать с гневом, меня распирает от ненависти когда я вижу как кто то врет!
+
+DIALOGUE STYLE STATE:
+tone=neutral
+length_preference=adaptive
+complexity_preference=normal
+avoid=none
+
+ANSWER OBLIGATION:
+answer_obligation=answer_concrete_situation
+answer_shape=contextual_explanation
+depth=medium
+question_policy=optional_none
+source=dialogue_act=concrete_situation_question, profile_preset=free_dialogue_default
+
+FINAL ANSWER DIRECTIVE (ЕДИНСТВЕННЫЙ УПРАВЛЯЮЩИЙ БЛОК):
+version=final_answer_directive_v1
+directive_json:
+{
+  "version": "final_answer_directive_v1",
+  "roles": {
+    "diagnostic_center": "advisory_context_only",
+    "planner": "advisory_context_only",
+    "active_line": "advisory_context_only",
+    "diagnostic_card": "advisory_context_only"
+  },
+  "answer_obligation": "answer_concrete_situation",
+  "must_answer": "а что делать с гневом, меня распирает от ненависти когда я вижу как кто то врет!",
+  "answer_shape": "contextual_explanation",
+  "depth": "medium",
+  "style": "neutral",
+  "question_policy": "optional_none",
+  "practice_instruction": "practice_allowed_if_relevant",
+  "writer_autonomy": "high",
+  "acceptance_gate_feedback": {
+    "version": "final_answer_acceptance_gate_v1",
+    "failed_checks": [
+      "answer_too_generic_for_concrete_situation",
+      "no_stub_repair_signal"
+    ],
+    "instruction": "Rewrite the answer as a real user-facing reply. Address the user's current concrete question directly, reuse relevant user anchors, avoid stale generic mechanism phrases, and preserve requested markdown/list formatting when requested."
+  }
+}
+
+PROMPT ASSEMBLY (EFFECTIVE):
+writer_first_prompt_assembly_enabled=true
+legacy_blocks_visible_to_writer=false
+legacy_blocks_source_signals_only=true
+legacy_advisory_sanitized=true
+practice_rewrite_applied=false
+diagnostic_center_role=advisory_context_only
+planner_role=advisory_context_only
+active_line_role=advisory_context_only
+diagnostic_card_role=advisory_context_only
+
+ADVISORY CONTEXT SUMMARY:
+Пользователь продолжает текущую линию разговора; ответ лучше держать живым, спокойным и по сути.
+Текущий смысловой фокус: застревание на старте рабочей задачи: прогнозирование и контроль съедают ресурс до действия.
+Полезно ответить на актуальную потребность: one concrete next step.
+Можно опереться на такой ход ответа: offer_one_micro_step.
+Один полезный смысловой сдвиг: продолжить текущую смысловую линию одним точным ходом.
+Формат можно держать таким: compact_direct.
+Лучше продолжать уже начатую тему, а не начинать новую ветку.
+Если практика действительно помогает вопросу пользователя, её можно предлагать только уместно и без навязывания.
+
+PRACTICE NOTE:
+Если практика действительно помогает вопросу пользователя, её можно предлагать только уместно и без навязывания.
+
+FRESH CHAT CONTEXT POLICY:
+version=fresh_chat_context_policy_v1
+is_new_chat=false
+turn_index=4
+is_greeting_or_contact=false
+cross_session_memory_allowed=true
+cross_session_memory_reason=explicit_question_or_knowledge_need
+active_context_source=current_chat_runtime_scope
+
+WRITER CONTEXT PACKAGE:
+version=writer_context_package_v1
+recent_turns_for_writer_count=6
+profile_for_writer_present=true
+rag_candidates_for_trace_count=3
+rag_for_writer_count=0
+
+КОНТЕКСТ ПРЕДЫДУЩИХ ХОДОВ:
+RECENT FULL TURNS:
+USER#turn_1_user: Привет, я Максим. Можешь мне отвечать на вопросы?
+ASSISTANT#turn_1_assistant: Привет, Максим — рад познакомиться. Да, могу отвечать на твои вопросы.
+
+Уточню один момент: хочешь, чтобы я отвечал на любые темы (личные, рабочие, общие знания), или есть конкретные рамки/предпочтения, которые мне учитывать?
+USER#turn_2_user: Что такое осознанность? и как она освещена в теме нейросталкинга?
+USER#turn_3_user: Давай на примере. Я разговариваю на работе с коллегой и вижу что он врет, но по должности он выше, и я не хочу его при всех уличать во лжи
+
+RECENT SUMMARIZED TURNS:
+ASSISTANT#turn_2_assistant: - Пример: ты замечаешь раздражение на работе, фиксируешь его («я сейчас злюсь»), не начинаешь сразу спорить или заедать стресс, а позволяешь ощущению быть и наблюдаешь, как оно меняется. Осознанность даёт возможность вовремя заметить запуск автоматизма (триггер, мысль, телесную реакцию) до того, как он перерастёт в действие. | quote: "я сейчас злюсь"
+ASSISTANT#turn_3_assistant: Вот несколько уместных вариантов поведения, которые проясняют ситуацию и сохраняют отношения и лицо коллеги: 1) Приватный разговор и уточняющие вопросы. Подойди лично: скажи, что хотел бы прояснить детали, и задавай фактоориентированные вопросы типа «Можешь пояснить, как это получилось. Если напрямую сейчас неудобно, собери документы/переписку и вернись к во | quote: "Можешь пояснить, как это получилось."
+context_budget_chars=7000
+context_truncated=false
+preserved_recent_turns_count=6
+older_context_omitted_chars=0
+
+ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ:
+Паттерны: нет
+Ценности: нет
+
+WRITER KB PAYLOAD:
+enabled=true
+trace_version=writer_kb_payload_trace_v1
+fallback_used=false
+payload:
+version=writer_kb_payload_v1
+chunk_count=2
+total_sent_char_count=2956
+
+[KB-1]
+chunk_id=3dfeca39-dbb2-4da0-b12f-15ef07fdad2b
+source_doc=book
+chunk_type=general_text
+quote_policy=paraphrase_only
+allowed_use=direct_to_writer
+core_thesis=И ещё один момент: если ты ждёшь «результата» — спроси себя, что именно ты ждёшь.
+content_excerpt:
+И ещё один момент: если ты ждёшь «результата» — спроси себя, что именно ты ждёшь. Часто за этим вопросом стоит драйвер «будь лучшим» — ему нужен конкретный финал, оценка, зачёт. Он тоже часть программы. *** **— У меня нет никаких воспоминаний о травматичном детстве. Всё было нормально. Откуда тогда берётся эта программа?** — Это очень частый вопрос. И очень важный. «Нормальное детство» не значит «без программы». Программа формируется не только через очевидные травмы. Она формируется через **тысячи маленьких обычных моментов**. Родитель, который не заметил. Учитель, который сравнил. Ситуация, где твои чувства были «слишком много» или «не вовремя». Ни одна из этих ситуаций — не трагедия. Но их было много. И они складывались. «Нормальное детство» — это просто детство, в котором не было ничего из ряда вон выходящего. Но программа не требует из ряда вон выходящего. Ей достаточно повседневного. *** **— Я начал практиковать осознавание — и стало хуже. Вижу больше, и от этого хуже. Это нормально?** — Да. Это называется «эффект фонарика». Когда ты заходишь в тёмную комнату с фонариком — ты начинаешь видеть то, что там было всегда. Не потому что стало больше. А потому что раньше просто не смотрел. Стало «хуже» — значит, ты просто начал видеть то, что раньше не замечал. Это не ухудшение. Это **честность**. Через какое-то время к этому привыкаешь. Видеть — не то же самое, что страдать. Можно видеть и не тонуть. Это и есть НейроСталкинг — наблюдать то, что есть, без того чтобы быть этим захваченным. Если совсем тяжело — сбавь темп. Одна практика вместо трёх. Пять минут вместо двадцати.
+writer_instruction=Use as grounding. Paraphrase. Do not dump raw quote.
+content_truncated=true
+truncation_strategy=sentence_boundary
+
+[KB-2]
+chunk_id=7b61940d-f6ff-46f8-9514-797efaf0ad00
+source_doc=book
+chunk_type=general_text
+quote_policy=paraphrase_only
+allowed_use=direct_to_writer
+core_thesis=*Это реальные вопросы участников сессий.
+content_excerpt:
+*Это реальные вопросы участников сессий. Они возникают почти у всех. Если ты читаешь и узнаёшь свой вопрос — значит, ты в правильном месте.* *** **— Я всё понял про программу. Но как её убрать? Должен же быть какой-то метод.** — Смотри, «убрать» — это уже программа говорит. Она же работает через «надо исправить, надо стать лучше». Теперь объект исправления — она сама. Ловишь иронию? Программа не убирается. Она **теряет власть**. Это разные вещи. Когда ты видишь её в действии — она уже не ты целиком. Это уже изменение. Не «убрать», а — перестать быть ею автоматически. *** **— Я пробовал осознавать. Замечаю реакцию — и всё равно провожу её до конца. Что я делаю не так?** — Ничего не делаешь не так. Осознавание — это не выключатель. Это мышца. Сначала замечаешь постфактум — через час. Потом — через минуту. Потом — в процессе. Потом — в начале. Это путь. Не сбой. И ещё: то, что ты «всё равно провожу до конца» — это не провал. Это просто скорость нейронной дорожки. Дорожка старая, протоптанная годами. Новая — только формируется. Нужно время и повторение, не самокритика. *** **— Я понимаю, что программа сформировалась из-за родителей. Я на них злюсь. Что с этим делать?** — Злость — честная реакция. Не нужно её «отпускать» прямо сейчас или делать вид, что её нет. Но вот что важно: злость на родителей — это злость **программы на свои источники
+writer_instruction=Use as grounding. Paraphrase. Do not dump raw quote.
+content_truncated=true
+truncation_strategy=sentence_boundary
+
+KNOWLEDGE ANSWER ROUTING:
+knowledge_answer_needed=false
+knowledge_answer_concept=none
+kb_grounding_available=false
+knowledge_answer_first=false
+do_not_ask_user_to_define_term_before_answering=false
+practice_allowed=true
+writer_instruction=follow_response_mode_with_normal_clarification_policy
+practice_ban_instruction=false
+known_concept_clarification_ban=false
+external_surveillance_frame_ban=false
+
+NEO PHILOSOPHY KERNEL:
+kernel_version=neo_philosophy_kernel_v1
+quote_policy=internal_lens_not_citation
+selected_lenses=none
+guidance=speak_from_lens_not_about_lens
+kernel_block:
+NEO PHILOSOPHY KERNEL:
+version=neo_philosophy_kernel_v1
+identity=NEO / Bot Psychologist
+policy=internal_lens_not_quote_source
+depth_mode=guided
+core_principles:
+- С человеком в основе все в порядке.
+- Паттерн и автоматизм не равны личности.
+- Сначала увидеть механизм, потом менять действие.
+- Ответ возвращает авторство, а не подменяет его авторитетом бота.
+selected_lenses:
+- default: держи живой контакт, без перегруза и без клише.
+hard_boundaries:
+- no_diagnosis
+- no_spiritual_authority
+- no_medical_legal_financial_directives
+- no_unsolicited_practice
+- no_raw_kb_quote_dumping
+- privacy_sanitized_trace_only
+prompt_compactness={'philosophy_kernel_prompt_block_chars': 614, 'writer_freedom_contract_chars': 246, 'combined_chars': 860, 'selected_lenses_count': 0, 'principles_count': 4, 'boundaries_count': 6, 'budgets': {'max_kernel_chars': 1800, 'max_freedom_chars': 1000, 'max_combined_chars': 2600, 'max_selected_lenses': 3, 'max_principles_in_prompt': 4, 'max_boundaries_in_prompt': 8}, 'within_budget': True}
+
+WRITER FREEDOM CONTRACT:
+contract_block:
+version=writer_freedom_contract_v1
+freedom_level=guided
+mode_hint=practice
+mode_is_hint_not_cage=true
+practice_requires_gate=true
+question_limit=1
+hard_boundaries=no_diagnosis,no_spiritual_authority,no_raw_kb_quote_dumping,no_unsolicited_practice
+
+DIALOGUE POLICY:
+dialogue_profile=mvp_free_dialogue
+expansion_requested=false
+repair_and_expand_requested=false
+active_concept=нейросталкинг
+
+DIALOGUE PRAGMATICS:
+version=dialogue_pragmatics_v1
+is_short_utterance=false
+short_utterance_type=not_short
+is_contextual_followup=false
+previous_assistant_offer_type=unknown_offer
+inherited_user_intent=continue_previous_offer
+should_answer_directly=false
+should_not_ask_confirmation_again=false
+repair_user_dissatisfaction=false
+reason=none
+
+CONTEXTUAL RETRIEVAL DECISION:
+version=contextual_retrieval_gating_v1
+retrieval_action=trace_only
+rag_candidates_count=3
+rag_included_count=0
+rag_included_reason=
+rag_suppressed_reason=no_clear_retrieval_need
+writer_can_ignore_rag=true
+rag_relevance_to_current_turn=medium
+inherited_topic=нейросталкинг
+inherited_offer_type=unknown_offer
+
+HUMAN-LIKE ANSWER POLICY:
+human_like_enabled=true
+answer_style=human_chatgpt_like
+default_depth=medium_to_long
+question_is_optional=true
+do_not_force_question_at_end=true
+do_not_force_practice_frame=true
+flexible_length_allowed=true
+respect_user_requested_format=true
+repair_user_dissatisfaction=true
+direct_answer_repair_when_user_complains=true
+
+CONSTRAINT RESOLUTION:
+constraint_profile=mvp_free_dialogue
+constraint_planner_authority=advisory
+overruled_constraints=max_sentences=5, do_not_over_explain, do_not_offer_list, do_not_expand_theory, offer_only_one_next_step, ask_at_most_one_question
+overrule_reason=explicit_user_request_or_human_like_policy
+
+mvp_free_dialogue_overrides:
+MVP FREE DIALOGUE OVERRIDES:
+- explicit_user_request_wins=true
+- old_max_sentence_constraints_softened=true
+- planner_advisory=true
+- overview_questions_allow_lists=false
+- target_answer_depth=long
+- rich_user_request_detected=true
+- explicit_answer_need=false
+- direct_concrete_request=true
+- summary_request=false
+- sarcasm_or_negative_feedback=false
+
+ПЕРЕД ОТВЕТОМ ВНУТРИ СЕБЯ ВЫБЕРИ:
+- главный фокус пользователя;
+- нужную глубину;
+- один следующий ход.
+
+В ответе не показывай этот анализ.
+
+Напиши ответ. Только текст ответа, без кавычек и пояснений.
+
+LLM response | gpt-5-mini | 10343ms
+▸
+Скопировать всё полотно
+
+Токены и стоимость | 4637 токенов | $0.001936
+▸
+
+Turn diff
+▸
+
+Аномалии [1]
+▸
+
+Session Dashboard
+▸
+22.59s
+14:17
+мне не нужна практика, я просто хочу понять как быть с самой причиной гнева а не с ее последствиями!
+
+14:18
+Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут.
+
+
+Pipeline NEO | multiagent_v1 | 27780ms
+WARN
+▾
+
+Мультиагентный пайплайн
+▾
+
+State Analyzer | 2863ms
+▾
+nervous_state: window
+intent: explore
+confidence: 75%
+safety_flag: false
+
+Thread Manager | 0ms
+▾
+thread_id: tm_a29c7658bdd3
+phase: clarify
+relation: new_thread
+continuity: 100%
+NEW THREAD
+
+Memory Agent | 3182ms
+▾
+context_turns: 5
+semantic_hits: 3
+has_relevant_knowledge: true
+rag_query: не нужна практика просто хочу понять быть самой причиной гнева ее последствиями
+
+Writer | 21735ms
+▾
+response_mode: reflect
+tokens_used: 4865
+model_used: gpt-5-mini
+
+Validator | 0ms
+▾
+is_blocked: false
+block_reason: —
+quality_flags: none
+Latency timeline
+State 10%
+Thread 0%
+Memory 11%
+Writer 78%
+Validator 0%
+
+Hybrid Retrieval | shadow | trace_only
+▾
+VERSION
+hybrid_retrieval_planner_v1_r1
+MODE
+shadow
+MODEL
+gpt-5-nano
+MAX TOKENS
+320
+ACTION
+trace_only
+UNIVERSAL GATE
+complex_or_low_confidence
+PLAN VALID
+false
+FALLBACK USED
+true
+LLM CALLED
+true
+WRITER CAN IGNORE RAG
+true
+
+Queries
+▸
+
+Planner metadata
+▸
+
+Retrieval Query Build | current_turn_focus_v1 | clean
+▾
+ENABLED
+true
+PRIMARY PATH
+current_turn_focus_v1
+PLANNER QUERY USED
+false
+STATUS
+clean
+DEDUPE APPLIED
+false
+DUPLICATE COUNT
+0
+TRUNCATION
+false
+MID-WORD CUT
+false
+
+Query details
+▾
+raw_user_query: мне не нужна практика, я просто хочу понять как быть с самой причиной гнева а не с ее последствиями!
+planned_query: —
+canonical_query: не нужна практика просто хочу понять быть самой причиной гнева ее последствиями
+executed_query: не нужна практика просто хочу понять быть самой причиной гнева ее последствиями
+truncation_strategy: none
+fallback_reason: —
+
+Context reasons
+▾
+previous_user_query_included: false
+previous_user_query_inclusion_reason: standalone_current_knowledge_question
+inherited_topic_used: false
+inherited_topic_reason: none
+inherited_topic: —
+
+Writer KB Payload | writer_kb_payload_v1 | chunks 2
+▾
+TRACE VERSION
+writer_kb_payload_trace_v1
+PRIMARY PATH
+writer_kb_payload_v1
+STATUS
+structured_payload_used
+INPUT RAG COUNT
+0
+PAYLOAD CHUNKS
+2
+TOTAL SENT CHARS
+3048
+SENT TO WRITER
+3048
+TRACE PREVIEW CHARS
+500
+DISPLAY IS PREVIEW
+true
+TRUNCATED CHUNKS
+2
+MID-SENTENCE CUTS
+0
+OVERLAY USED
+0
+FALLBACK PRIMARY
+false
+
+Effective runtime config
+▾
+app_env: local
+backend_pid: 22496
+backend_start_time: 2026-06-19T09:03:15.774420+00:00
+writer_kb_payload_enabled: true
+writer_kb_payload_enabled_source: default_local
+overlay_shadow_trace_enabled: false
+debug_trace_enabled: true
+
+Payload path
+▾
+payload_version: writer_kb_payload_v1
+fallback_reason: —
+warning: —
+configured_source: default_local
+full_text_sent_to_writer: true
+full_text_exposed_in_web_trace: false
+
+Payload warnings
+▾
+—
+
+Payload chunks
+▾
+0d62f141-572d-4386-b02d-d7f9a46fa27f
+source_doc: book
+chunk_type: general_text
+quote_policy: paraphrase_only
+allowed_use: direct_to_writer
+payload_item_origin: —
+semantic_card_id: —
+semantic_card_pack_id: —
+writer_can_ignore: true
+applied_as_authority: false
+d078090d-a0aa-4cab-aa08-80802a341091
+source_doc: book
+chunk_type: general_text
+quote_policy: paraphrase_only
+allowed_use: direct_to_writer
+payload_item_origin: —
+semantic_card_id: —
+semantic_card_pack_id: —
+writer_can_ignore: true
+applied_as_authority: false
+
+Future graduation notes
+▾
+payload_source: legacy_selected_hit
+legacy_semantic_hits_used: false
+structured_payload_used: true
+truncation_strategy: sentence_boundary
+
+Semantic Cards Pilot | disabled | cards 0
+▾
+TRACE VERSION
+semantic_cards_pilot_trace_v1
+STATUS
+disabled
+PACK ID
+semantic_cards_pilot_v1
+LOADED CARDS
+0
+SELECTED COUNT
+0
+ENABLED SOURCE
+default
+ADAPTER ENABLED
+true
+WRITER PAYLOAD ENRICHED
+false
+WRITER CAN IGNORE
+true
+APPLIED AS AUTHORITY
+false
+
+Selection details
+▾
+selection_reason: —
+suppressed_reason: disabled_by_config
+authority: advisory_only
+runtime_mode: local
+error: —
+
+Selected card ids
+▾
+—
+
+Candidate scores
+▾
+No candidate scores recorded for this turn
+
+Overlay Shadow | trace_only | disabled
+▾
+ENABLED
+false
+WOULD HELP
+false
+MODE
+trace_only
+MATCH COUNT
+0
+WRITER VISIBLE
+false
+RETRIEVAL AUTHORITY
+false
+
+Overlay summary
+▸
+
+Matched candidates
+▸
+
+Контекст памяти | turns: 5 | hits: 3
+▾
+
+История ходов (5)
+▾
+РЕЛЕВАНТНЫЕ ПРОШЛЫЕ ОБМЕНЫ:
+
+[Сходство: 0.79] Обмен #1:
+  Пользователь: Привет, я Максим. Можешь мне отвечать на вопросы?
+  Бот: Привет, Максим — рад познакомиться. Да, могу отвечать на твои вопросы.
+
+Уточню один момент: хочешь, чтобы я отвечал на любые темы (личные, рабочие, общие знания), или есть конкретные рамки/предпочтени...
+
+[Сходство: 0.76] Обмен #2:
+  Пользователь: Что такое осознанность? и как она освещена в теме нейросталкинга?
+  Бот: Привет, Максим. Отвечу по сути и просто.
+
+1) Что такое осознанность (mindfulness)
+- Определение: осознанность — это способность удерживать внимание на текущем моменте с доброжелательной, непредвзятой ...
+---
+СТОРЯ ДАЛОГА (последние обороты):
+
+Обмен #1:
+  Пользователь: Привет, я Максим. Можешь мне отвечать на вопросы?
+  Бот: Привет, Максим — рад познакомиться. Да, могу отвечать на твои вопросы.
+
+Уточню один момент: хочешь, чтобы я отвечал на любые темы (личные, рабочие, общие знания), или есть конкретные рамки/предпочтени...
+
+Обмен #2:
+  Пользователь: Что такое осознанность? и как она освещена в теме нейросталкинга?
+  Бот: Привет, Максим. Отвечу по сути и просто.
+
+1) Что такое осознанность (mindfulness)
+- Определение: осознанность — это способность удерживать внимание на текущем моменте с доброжелательной, непредвзятой ...
+
+Обмен #3:
+  Пользователь: Давай на примере. Я разговариваю на работе с коллегой и вижу что он врет, но по должности он выше, и я не хочу его при всех уличать во лжи
+  Бот: Похоже, основной момент — ты видишь ложь, но не хочешь ставить человека выше тебя в неудобное положение при других. Правильно понимаю. Вот несколько уместных вариантов поведения, которые проясняют сит...
+---
+
+Чанки в Writer (3)
+▾
+
+book
+score: 0.108 ▾
+Один из самых распространённых страхов, с которыми приходят на сессии Саламата — и один из наименее обсуждаемых…
+
+book
+score: 0.105 ▾
+Здесь важно понять: присутствие — это не психологическая установка. Это физиологическое состояние.…
+
+book
+score: 0.103 ▾
+**В: Я понимаю всё, что описано в книге. Но в жизни это не работает. Что я делаю не так?** Ничего не делаешь не так.…
+
+RAG query
+▾
+не нужна практика просто хочу понять быть самой причиной гнева ее последствиями
+
+User Profile
+▾
+Паттерны: —
+Ценности: —
+
+Записано в память
+▾
+user: мне не нужна практика, я просто хочу понять как быть с самой причиной гнева а не с ее последствиями!
+assistant: 
+thread_id: tm_a29c7658bdd3 | phase: clarify
+
+Полотно LLM | gpt-5-mini | tokens: 4865
+▾
+session: 92eb019b...
+turn: 5
+mode: reflect
+
+System prompt
+▸
+
+User prompt (полный контекст)
+▾
+
+СООБЩЕНИЕ ПОЛЬЗОВАТЕЛЯ:
+мне не нужна практика, я просто хочу понять как быть с самой причиной гнева а не с ее последствиями!
+
+РЕЖИМ ОТВЕТА: reflect
+ЦЕЛЬ: clarify key point
+ФАЗА РАЗГОВОРА: clarify
+СОСТОЯНИЕ НЕРВНОЙ СИСТЕМЫ: window
+OK-ПОЗИЦИЯ: I+W+
+ОТКРЫТОСТЬ: open
+SAFETY АКТИВЕН: False
+
+ОТКРЫТЫЕ ПЕТЛИ:
+нет
+
+НЕЛЬЗЯ ВКЛЮЧАТЬ (must_avoid):
+нет
+
+UNIFIED DIALOGUE POLICY:
+version=unified_dialogue_policy_v2
+active_profile_alias=mvp_free_dialogue
+profile_preset=free_dialogue_default
+effective_writer_autonomy=high
+effective_safety_floor=minimal_baseline
+legacy_blocks_visible_to_writer=false
+legacy_blocks_source_signals_only=true
+hard_boundaries=safety, crisis_routing, no_diagnosis, no_medical_legal_financial_directives, no_spiritual_authority, no_raw_kb_quote_dumping, privacy_sanitized_trace_only
+soft_guidance=state, thread, planner, diagnostic_card, knowledge_context, style_preference, target_micro_shift
+
+DIALOGUE ACT RESOLUTION:
+dialogue_act=unknown
+confidence=0.4
+evidence=fallback_unknown
+
+LAST ASSISTANT OFFER:
+is_open=true
+offer_type=explain_examples
+offer_summary=Похоже, основной момент — ты видишь ложь, но не хочешь ставить человека выше тебя в неудобное положение при других. Правильно понимаю. Вот несколько уместных ва...
+
+UNANSWERED QUESTION STATE:
+answer_required=true
+answer_status=pending_quarantined_answer
+last_direct_user_question=а что делать с гневом, меня распирает от ненависти когда я вижу как кто то врет!
+
+DIALOGUE STYLE STATE:
+tone=neutral
+length_preference=adaptive
+complexity_preference=normal
+avoid=none
+
+ANSWER OBLIGATION:
+answer_obligation=continue_thread
+answer_shape=structured_explanation
+depth=medium
+question_policy=optional_none
+source=dialogue_act=fallback_unknown, profile_preset=free_dialogue_default
+
+FINAL ANSWER DIRECTIVE (ЕДИНСТВЕННЫЙ УПРАВЛЯЮЩИЙ БЛОК):
+version=final_answer_directive_v1
+directive_json:
+{
+  "version": "final_answer_directive_v1",
+  "roles": {
+    "diagnostic_center": "advisory_context_only",
+    "planner": "advisory_context_only",
+    "active_line": "advisory_context_only",
+    "diagnostic_card": "advisory_context_only"
+  },
+  "answer_obligation": "continue_thread",
+  "must_answer": "а что делать с гневом, меня распирает от ненависти когда я вижу как кто то врет!",
+  "answer_shape": "structured_explanation",
+  "depth": "medium",
+  "style": "neutral",
+  "question_policy": "optional_none",
+  "practice_instruction": "no_exercise_but_answer_normally",
+  "writer_autonomy": "high",
+  "acceptance_gate_feedback": {
+    "version": "final_answer_acceptance_gate_v1",
+    "failed_checks": [
+      "answer_does_not_address_direct_question"
+    ],
+    "instruction": "Rewrite the answer as a real user-facing reply. Address the user's current concrete question directly, reuse relevant user anchors, avoid stale generic mechanism phrases, and preserve requested markdown/list formatting when requested."
+  }
+}
+
+PROMPT ASSEMBLY (EFFECTIVE):
+writer_first_prompt_assembly_enabled=true
+legacy_blocks_visible_to_writer=false
+legacy_blocks_source_signals_only=true
+legacy_advisory_sanitized=true
+practice_rewrite_applied=true
+diagnostic_center_role=advisory_context_only
+planner_role=advisory_context_only
+active_line_role=advisory_context_only
+diagnostic_card_role=advisory_context_only
+
+ADVISORY CONTEXT SUMMARY:
+Пользователь продолжает текущую линию разговора; ответ лучше держать живым, спокойным и по сути.
+Текущий смысловой фокус: застревание на старте рабочей задачи: прогнозирование и контроль съедают ресурс до действия.
+Полезно ответить на актуальную потребность: explore perspective carefully.
+Можно опереться на такой ход ответа: clarify_one_point.
+Один полезный смысловой сдвиг: дать один исполнимый микро-шаг без списка.
+Формат можно держать таким: one_step.
+Лучше продолжать уже начатую тему, а не начинать новую ветку.
+Если практика сейчас не запрошена или неуместна, не предлагай упражнение, технику или пошаговую практику. Вместо этого ответь нормально: объяснением, примером, отражением или продолжением мысли.
+
+PRACTICE NOTE:
+Если практика сейчас не запрошена или неуместна, не предлагай упражнение, технику или пошаговую практику. Вместо этого ответь нормально: объяснением, примером, отражением или продолжением мысли.
+
+FRESH CHAT CONTEXT POLICY:
+version=fresh_chat_context_policy_v1
+is_new_chat=false
+turn_index=4
+is_greeting_or_contact=false
+cross_session_memory_allowed=true
+cross_session_memory_reason=explicit_question_or_knowledge_need
+active_context_source=current_chat_runtime_scope
+
+WRITER CONTEXT PACKAGE:
+version=writer_context_package_v1
+recent_turns_for_writer_count=6
+profile_for_writer_present=true
+rag_candidates_for_trace_count=3
+rag_for_writer_count=0
+
+КОНТЕКСТ ПРЕДЫДУЩИХ ХОДОВ:
+RECENT FULL TURNS:
+USER#turn_1_user: Привет, я Максим. Можешь мне отвечать на вопросы?
+ASSISTANT#turn_1_assistant: Привет, Максим — рад познакомиться. Да, могу отвечать на твои вопросы.
+
+Уточню один момент: хочешь, чтобы я отвечал на любые темы (личные, рабочие, общие знания), или есть конкретные рамки/предпочтения, которые мне учитывать?
+USER#turn_2_user: Что такое осознанность? и как она освещена в теме нейросталкинга?
+USER#turn_3_user: Давай на примере. Я разговариваю на работе с коллегой и вижу что он врет, но по должности он выше, и я не хочу его при всех уличать во лжи
+
+RECENT SUMMARIZED TURNS:
+ASSISTANT#turn_2_assistant: - Пример: ты замечаешь раздражение на работе, фиксируешь его («я сейчас злюсь»), не начинаешь сразу спорить или заедать стресс, а позволяешь ощущению быть и наблюдаешь, как оно меняется. Осознанность даёт возможность вовремя заметить запуск автоматизма (триггер, мысль, телесную реакцию) до того, как он перерастёт в действие. | quote: "я сейчас злюсь"
+ASSISTANT#turn_3_assistant: Вот несколько уместных вариантов поведения, которые проясняют ситуацию и сохраняют отношения и лицо коллеги: 1) Приватный разговор и уточняющие вопросы. Подойди лично: скажи, что хотел бы прояснить детали, и задавай фактоориентированные вопросы типа «Можешь пояснить, как это получилось. Если напрямую сейчас неудобно, собери документы/переписку и вернись к во | quote: "Можешь пояснить, как это получилось."
+context_budget_chars=7000
+context_truncated=false
+preserved_recent_turns_count=6
+older_context_omitted_chars=0
+
+ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ:
+Паттерны: нет
+Ценности: нет
+
+WRITER KB PAYLOAD:
+enabled=true
+trace_version=writer_kb_payload_trace_v1
+fallback_used=false
+payload:
+version=writer_kb_payload_v1
+chunk_count=2
+total_sent_char_count=3048
+
+[KB-1]
+chunk_id=0d62f141-572d-4386-b02d-d7f9a46fa27f
+source_doc=book
+chunk_type=general_text
+quote_policy=paraphrase_only
+allowed_use=direct_to_writer
+core_thesis=Один из самых распространённых страхов, с которыми приходят на сессии Саламата — и один из наименее обсуждаемых публично.
+content_excerpt:
+Один из самых распространённых страхов, с которыми приходят на сессии Саламата — и один из наименее обсуждаемых публично. **Лиссофобия** — в широком смысле это страх сойти с ума, потерять контроль над собственным разумом. Но в практике работы с сознанием он принимает особую форму: **страх потерять идентичность**. Это не клиническая фобия. Это специфический страх, который возникает именно у думающих, ищущих людей — тех, кто начал работать с собой, исследовать свои программы, ставить под вопрос привычные образы себя. Вот как он ощущается: ты начинаешь видеть, что многие твои убеждения — не твои. Что реакции — автоматические. Что образ «я» — это конструкт. И в какой-то момент появляется ощущение: «если убрать всё это — что останется? Останется ли вообще что-нибудь?» Это пугает. Иногда — очень сильно. И именно здесь многие останавливаются в работе с собой. Не потому что неинтересно. А потому что страшно раствориться, потерять почву, перестать быть «собой». Саламат называет этот страх одним из ключевых — и одним из самых показательных. Потому что он указывает прямо на источник проблемы: **человек идентифицировал себя с программой**. Он думает, что он и есть свои убеждения, реакции, роли. Поэтому исследование программы ощущается как угроза существованию. Но это не угроза. Это освобождение — которое выглядит как угроза, пока ты смотришь на него изнутри программы. > **Из сессии** > > **Камила, 29 лет:** Я несколько месяцев делала практики, работала с убеждениями — и в какой-то момент почувствовала что-то странное. Как будто я не знаю, кто я. Не знаю, что мне нравится, чего хочу.
+writer_instruction=Use as grounding. Paraphrase. Do not dump raw quote.
+content_truncated=true
+truncation_strategy=sentence_boundary
+
+[KB-2]
+chunk_id=d078090d-a0aa-4cab-aa08-80802a341091
+source_doc=book
+chunk_type=general_text
+quote_policy=paraphrase_only
+allowed_use=direct_to_writer
+core_thesis=Здесь важно понять: присутствие — это не психологическая установка.
+content_excerpt:
+Здесь важно понять: присутствие — это не психологическая установка. Это физиологическое состояние. Исследователь Ричард Дэвидсон из Висконсинского университета провёл серию экспериментов с опытными практиками медитации (от 10 000 до 50 000 часов практики) и обнаружил нечто неожиданное. В состоянии открытого присутствия — без фокусировки на объекте, просто «быть здесь» — у испытуемых активировалась гамма-частота (около 40 Гц) в фронтальных и теменных областях коры. Это не просто расслабление. Это высокоорганизованная нейронная активность — более сложная, чем в обычном бодрствовании.[^1] Что это означает на практике? Обычно наш мозг работает в режиме **Default Mode Network** (DMN) — сети пассивного режима. Это и есть «программа на холостом ходу»: воспоминания, тревога о будущем, сравнение себя с другими, внутренний монолог. Именно здесь живут большинство наших страданий — не в реальных событиях, а в нарративах о них. Когда человек находится в присутствии — реальном, не симулированном — DMN замолкает. Не потому что ты её подавил. А потому что внимание занято тем, что есть прямо сейчас. Нейрофизиологически это означает: фронтальная кора (которая интерпретирует и оценивает) снижает активность, а сенсомоторные области (которые регистрируют реальность) усиливают её. Ты буквально воспринимаешь больше — при меньшем количестве мыслей о воспринимаемом. Ещё один важный механизм — **интероцепция**, способность замечать сигналы тела изнутри.
+writer_instruction=Use as grounding. Paraphrase. Do not dump raw quote.
+content_truncated=true
+truncation_strategy=sentence_boundary
+
+KNOWLEDGE ANSWER ROUTING:
+knowledge_answer_needed=false
+knowledge_answer_concept=none
+kb_grounding_available=false
+knowledge_answer_first=false
+do_not_ask_user_to_define_term_before_answering=false
+practice_allowed=true
+writer_instruction=follow_response_mode_with_normal_clarification_policy
+practice_ban_instruction=false
+known_concept_clarification_ban=false
+external_surveillance_frame_ban=false
+
+NEO PHILOSOPHY KERNEL:
+kernel_version=neo_philosophy_kernel_v1
+quote_policy=internal_lens_not_citation
+selected_lenses=resource_first_contact
+guidance=speak_from_lens_not_about_lens
+kernel_block:
+none
+prompt_compactness={'philosophy_kernel_prompt_block_chars': 0, 'writer_freedom_contract_chars': 245, 'combined_chars': 245, 'selected_lenses_count': 1, 'principles_count': 4, 'boundaries_count': 6, 'budgets': {'max_kernel_chars': 1800, 'max_freedom_chars': 1000, 'max_combined_chars': 2600, 'max_selected_lenses': 3, 'max_principles_in_prompt': 4, 'max_boundaries_in_prompt': 8}, 'within_budget': True}
+
+WRITER FREEDOM CONTRACT:
+contract_block:
+version=writer_freedom_contract_v1
+freedom_level=guided
+mode_hint=reflect
+mode_is_hint_not_cage=true
+practice_requires_gate=true
+question_limit=1
+hard_boundaries=no_diagnosis,no_spiritual_authority,no_raw_kb_quote_dumping,no_unsolicited_practice
+
+DIALOGUE POLICY:
+dialogue_profile=mvp_free_dialogue
+expansion_requested=false
+repair_and_expand_requested=false
+active_concept=нейросталкинг
+
+DIALOGUE PRAGMATICS:
+version=dialogue_pragmatics_v1
+is_short_utterance=false
+short_utterance_type=not_short
+is_contextual_followup=false
+previous_assistant_offer_type=unknown_offer
+inherited_user_intent=continue_previous_offer
+should_answer_directly=false
+should_not_ask_confirmation_again=false
+repair_user_dissatisfaction=false
+reason=none
+
+CONTEXTUAL RETRIEVAL DECISION:
+version=contextual_retrieval_gating_v1
+retrieval_action=suppress_rag
+rag_candidates_count=3
+rag_included_count=0
+rag_included_reason=
+rag_suppressed_reason=direct_one_step_no_kb_needed
+writer_can_ignore_rag=true
+rag_relevance_to_current_turn=low
+inherited_topic=нейросталкинг
+inherited_offer_type=unknown_offer
+
+HUMAN-LIKE ANSWER POLICY:
+human_like_enabled=true
+answer_style=human_chatgpt_like
+default_depth=medium_to_long
+question_is_optional=true
+do_not_force_question_at_end=true
+do_not_force_practice_frame=true
+flexible_length_allowed=true
+respect_user_requested_format=true
+repair_user_dissatisfaction=true
+direct_answer_repair_when_user_complains=true
+
+CONSTRAINT RESOLUTION:
+constraint_profile=mvp_free_dialogue
+constraint_planner_authority=advisory
+overruled_constraints=none
+overrule_reason=none
+
+mvp_free_dialogue_overrides:
+MVP FREE DIALOGUE OVERRIDES:
+- explicit_user_request_wins=true
+- old_max_sentence_constraints_softened=true
+- planner_advisory=true
+- overview_questions_allow_lists=false
+- target_answer_depth=medium
+- rich_user_request_detected=false
+- explicit_answer_need=false
+- direct_concrete_request=false
+- summary_request=false
+- sarcasm_or_negative_feedback=false
+
+ПЕРЕД ОТВЕТОМ ВНУТРИ СЕБЯ ВЫБЕРИ:
+- главный фокус пользователя;
+- нужную глубину;
+- один следующий ход.
+
+В ответе не показывай этот анализ.
+
+Напиши ответ. Только текст ответа, без кавычек и пояснений.
+
+LLM response | gpt-5-mini | 21735ms
+▸
+Скопировать всё полотно
+
+Токены и стоимость | 4865 токенов | $0.002747
+▸
+
+Аномалии [1]
+▸
+
+Session Dashboard
+▸
+32.21s
+14:19

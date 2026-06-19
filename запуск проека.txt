@@ -52,6 +52,7 @@ cd C:\My_practice\Text_transcription\bot_psychologist
 .venv\Scripts\Activate.ps1
 $env:APP_ENV="local"
 $env:DEBUG_TRACE_ENABLED="true"
+$env:SEMANTIC_CARDS_PILOT_ENABLED="true"
 # WRITER_KB_PAYLOAD_ENABLED resolves to true by default in APP_ENV=local
 python -m uvicorn api.main:app --host 0.0.0.0 --port 8001
 

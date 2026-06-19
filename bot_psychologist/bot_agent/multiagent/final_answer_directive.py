@@ -33,6 +33,15 @@ _REPAIR_MARKERS = (
     "объясни нормально",
 )
 _THANKS_MARKERS = ("спасибо", "благодарю", "thanks", "thank you")
+_CURRENT_TURN_MUST_ANSWER_PATTERNS = (
+    re.compile(r"не\s+нужн\w*\s+практик\w*", re.IGNORECASE),
+    re.compile(r"не\s+хоч\w*\s+практик\w*", re.IGNORECASE),
+    re.compile(r"хоч\w*\s+понят\w*\s+причин\w*", re.IGNORECASE),
+    re.compile(r"не\s+последств\w*", re.IGNORECASE),
+    re.compile(r"почему\s+меня\s+так\s+злит", re.IGNORECASE),
+    re.compile(r"что\s+с\s+причин\w*", re.IGNORECASE),
+    re.compile(r"как\s+быть\s+с\s+причин\w*", re.IGNORECASE),
+)
 
 
 @dataclass
@@ -186,6 +195,13 @@ def _derive_obligation_fallback(
     return ("continuity", "continue_line_with_focus", user_message.strip(), "medium", "optional_none", "optional_if_relevant")
 
 
+def _must_answer_current_turn(user_message: str) -> bool:
+    text = str(user_message or "").strip()
+    if not text:
+        return False
+    return any(pattern.search(text) for pattern in _CURRENT_TURN_MUST_ANSWER_PATTERNS)
+
+
 def _suppressed_constraints(*, profile: str, safety_active: bool) -> list[str]:
     if profile != DIALOGUE_PROFILE_MVP_FREE or safety_active:
         return []
@@ -323,11 +339,12 @@ def build_final_answer_directive_v1(
             for item in list(policy.get("soft_guidance", unified_policy.get("soft_guidance", [])) or [])
             if str(item).strip()
         ]
-    must_answer_value = (
-        "summary of current conversation"
-        if summary_request
-        else str(unanswered_summary.get("last_direct_user_question", "") or str(user_message or "").strip())
-    )
+    if summary_request:
+        must_answer_value = "summary of current conversation"
+    elif _must_answer_current_turn(user_message):
+        must_answer_value = str(user_message or "").strip()
+    else:
+        must_answer_value = str(unanswered_summary.get("last_direct_user_question", "") or str(user_message or "").strip())
 
     return FinalAnswerDirective(
         version=FINAL_ANSWER_DIRECTIVE_VERSION,

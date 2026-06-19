@@ -1,0 +1,26 @@
+{
+  "prd_id": "PRD-047.27-HF2",
+  "db_schema_changed": false,
+  "chroma_reindexed": false,
+  "processed_blocks_mutated": false,
+  "botdb_registry_mutated": false,
+  "retrieval_ranking_changed_globally": false,
+  "writer_prompt_changed": false,
+  "state_analyzer_prompt_changed": false,
+  "thread_manager_rewritten": false,
+  "overlay_apply_enabled": false,
+  "new_runtime_path_added": false,
+  "new_llm_agent_added": false,
+  "new_feature_flags_added": false,
+  "allowed_changes": [
+    "effective_runtime_config_parity",
+    "semantic_cards_owner_web_chat_visibility",
+    "meta_marker_word_boundary_repair",
+    "no_practice_cause_route_repair",
+    "must_answer_current_turn_repair",
+    "tests",
+    "TO_DO_LIST_artifacts",
+    "docs_metadata_sync"
+  ],
+  "status": "passed"
+}

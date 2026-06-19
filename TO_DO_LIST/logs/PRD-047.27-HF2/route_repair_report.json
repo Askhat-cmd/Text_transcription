@@ -1,0 +1,12 @@
+{
+  "schema_version": "route_repair_report_v1",
+  "prd_id": "PRD-047.27-HF2",
+  "generated_at": "2026-06-19T10:24:03.064705+00:00",
+  "meta_false_positive_repaired": true,
+  "work_case_dialogue_act": "concrete_situation_question",
+  "work_case_answer_obligation": "answer_concrete_situation",
+  "no_practice_cause_dialogue_act": "concrete_situation_question",
+  "no_practice_cause_answer_obligation": "answer_concrete_situation",
+  "no_practice_cause_must_answer_current_turn": true,
+  "status": "passed"
+}

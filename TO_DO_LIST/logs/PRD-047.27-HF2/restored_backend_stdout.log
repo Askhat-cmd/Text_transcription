@@ -1,0 +1,28 @@
+15:31:29 | INFO     | root                                | ======================================================================
+15:31:29 | INFO     | root                                | Logging initialized
+15:31:29 | INFO     | root                                | Log directory: C:\My_practice\Text_transcription\bot_psychologist\logs
+15:31:29 | INFO     | root                                | App log: logs/app/bot.log
+15:31:29 | INFO     | root                                | Retrieval log: logs/retrieval/retrieval.log
+15:31:29 | INFO     | root                                | Error log: logs/error/error.log
+15:31:29 | INFO     | root                                | ======================================================================
+15:31:29 | INFO     | api.main                            | API server starting
+15:31:29 | INFO     | api.main                            | Version: 0.12.0
+15:31:29 | INFO     | api.main                            | Docs: http://localhost:8000/api/docs
+15:31:29 | INFO     | api.main                            | [STARTUP] runtime config validation: OK
+15:31:29 | INFO     | api.registration.bootstrap          | database bootstrap complete (tables=5, api_keys_seeded=3, admin_seeded=False)
+15:31:29 | INFO     | api.main                            | [WARMUP] starting warm preload
+15:31:29 | INFO     | api.main                            | [GRAPH][LEGACY] disabled (ENABLE_KNOWLEDGE_GRAPH=false); retrieval source is Bot_data_base API
+15:31:29 | INFO     | bot_agent.data_loader               | 📂 KNOWLEDGE_SOURCE=api
+15:31:29 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] loading embedding model: intfloat/multilingual-e5-base
+15:31:29 | INFO     | bot_agent.data_loader               | [API] Загрузка всех блоков из Bot_data_base через HTTP API...
+15:31:31 | INFO     | bot_agent.retriever                 | [RETRIEVAL] TF-IDF loaded from cache (hash match)
+15:31:32 | INFO     | bot_agent.data_loader               | [API] Найдено 1 источников в реестре
+15:31:34 | INFO     | bot_agent.data_loader               | ✅ API: 247 блоков из 1 источников загружено
+15:31:34 | INFO     | bot_agent.data_loader               | [DATA_LOADER] source=api blocks=247
+15:31:34 | INFO     | bot_agent.data_loader               | ✅ Загружено: 1 документов, 247 блоков [source=api]
+15:31:40 | WARNING  | huggingface_hub.utils._http         | Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+15:31:48 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding model loaded
+15:31:48 | INFO     | api.main                            | [WARMUP] completed
+15:32:01 | INFO     | api.main                            | -> GET /api/v1/health (key: dev-key-00...)
+15:32:01 | INFO     | api.main                            | <- GET /api/v1/health | status=200 | 0.005s
+INFO:     127.0.0.1:40953 - "GET /api/v1/health HTTP/1.1" 200 OK

@@ -221,5 +221,7 @@
     "final_status": "passed",
     "screenshots_captured": false,
     "screenshots_note": "Browser automation unavailable in this run; JSON trace artifacts used as proof."
-  }
+  },
+  "implementation_commit": "74cb113",
+  "push_status": "pushed_to_origin_main"
 }

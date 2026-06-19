@@ -1,0 +1,9 @@
+{
+  "prd_id": "PRD-047.27",
+  "status": "passed_with_warning",
+  "source_gate_status": "passed",
+  "tests_status": "passed",
+  "dry_run_status": "passed",
+  "live_status": "passed_with_warning",
+  "encoding_status": "passed"
+}

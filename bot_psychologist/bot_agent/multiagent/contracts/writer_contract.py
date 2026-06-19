@@ -94,6 +94,7 @@ class WriterContract:
             knowledge_answer_guard=self.knowledge_answer_guard,
         )
         writer_context_package = build_writer_context_package_v1(
+            user_message=self.user_message,
             memory_bundle=self.memory_bundle,
             context_package=self.context_package,
             retrieval_decision=self.retrieval_decision,
@@ -298,6 +299,11 @@ class WriterContract:
         writer_kb_payload_failure_reason = str(
             writer_context_package.get("writer_kb_payload_failure_reason", "") or ""
         )
+        semantic_cards_pilot = (
+            dict(writer_context_package.get("semantic_cards_pilot", {}))
+            if isinstance(writer_context_package.get("semantic_cards_pilot"), dict)
+            else {}
+        )
         profile_for_writer = (
             dict(writer_context_package.get("profile_for_writer", {}))
             if isinstance(writer_context_package.get("profile_for_writer"), dict)
@@ -461,6 +467,7 @@ class WriterContract:
                 or "writer_kb_payload_trace_v1"
             ),
             "writer_kb_payload_future_graduation_notes": writer_kb_payload_future_graduation_notes,
+            "semantic_cards_pilot": semantic_cards_pilot,
             "context_assembly_trace": context_assembly_trace,
             "context_package_summary": {
                 "present": self.context_package is not None,

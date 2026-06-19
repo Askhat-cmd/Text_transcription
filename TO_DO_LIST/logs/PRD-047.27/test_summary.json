@@ -1,0 +1,39 @@
+{
+  "schema_version": "prd_047_27_test_summary_v1",
+  "prd_id": "PRD-047.27",
+  "created_at": "2026-06-19T04:17:42.531844+00:00",
+  "status": "passed",
+  "commands": [
+    {
+      "command": [
+        "C:\\My_practice\\Text_transcription\\bot_psychologist\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "tests/test_prd_047_27_semantic_card_schema.py",
+        "tests/test_prd_047_27_semantic_card_loader.py",
+        "tests/test_prd_047_27_semantic_card_payload_adapter.py",
+        "tests/test_prd_047_27_semantic_card_pilot_selection.py",
+        "-q",
+        "--basetemp=C:\\My_practice\\Text_transcription\\bot_psychologist\\.pytest_tmp_prd_047_27_20260619T041649683958Z"
+      ],
+      "cwd": "bot_psychologist",
+      "returncode": 0
+    },
+    {
+      "command": [
+        "C:\\My_practice\\Text_transcription\\bot_psychologist\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "tests/test_retrieval_query_builder_current_turn_focus.py",
+        "tests/test_prd_047_26_hf1_dialogue_act_obligation.py",
+        "tests/test_prd_047_26_hf1_acceptance_gate.py",
+        "tests/api/test_writer_kb_payload_live_http_path.py",
+        "tests/api/test_overlay_shadow_trace_api_debug.py",
+        "-q",
+        "--basetemp=C:\\My_practice\\Text_transcription\\bot_psychologist\\.pytest_tmp_prd_047_27_20260619T041649683958Z"
+      ],
+      "cwd": "bot_psychologist",
+      "returncode": 0
+    }
+  ]
+}

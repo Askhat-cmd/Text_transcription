@@ -1,5 +1,23 @@
 # Architecture Decisions
 
+## ADR-085 - Semantic chunk cards are advisory local Writer grounding, not retrieval or KB authority
+
+Status: accepted
+
+Date: 2026-06-19
+
+Context: PRD-047.26-HF1 stabilized live dialogue quality enough to start a minimal DB-track pilot, but the repository still lacked a small, reviewable way to pass curated semantic guidance into Writer without mutating Bot_data_base, Chroma, retrieval ranking, or Writer authorship.
+
+Decision:
+- add a bounded local knowledge pack `semantic_cards_pilot_v1` with 10-20 curated cards only;
+- keep the pilot behind `SEMANTIC_CARDS_PILOT_ENABLED`, default `false`, and restrict effective enablement to `APP_ENV in {local, dev, test}`;
+- select at most 3 cards from the current turn using simple deterministic overlap and explicit suppression for greeting/contact or `no theory` turns;
+- feed selected cards only into the existing `writer_kb_payload_v1` enrichment path;
+- expose `semantic_cards_pilot_trace_v1` in runtime/debug/API as observability, not authority;
+- preserve `writer_can_ignore=true`, keep Writer as final answer author, and forbid DB schema mutation, Chroma reindex, retrieval-ranking rewrite, overlay apply, registry mutation, or new runtime paths in this PRD.
+
+Consequences: the repository now has a minimal semantic-card pilot surface that can be evaluated in live dialogue without changing retrieval authority or KB truth. Future work should focus on owner/live review of answer quality before any broader DB-track or semantic-card graduation PRD.
+
 ## ADR-084 - Retrieval query assembly is current-turn-focused by default on local developer runtimes
 
 Status: accepted

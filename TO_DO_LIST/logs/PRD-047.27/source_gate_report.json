@@ -1,0 +1,39 @@
+{
+  "schema_version": "prd_047_27_source_gate_report_v1",
+  "prd_id": "PRD-047.27",
+  "created_at": "2026-06-19T04:16:49.583500+00:00",
+  "git_head": "8a63e6c9083319f73596c1ffea48fcfedaedf49b",
+  "head_equals_origin_main": true,
+  "required_paths": [
+    {
+      "path": "TO_DO_LIST/reports/PRD-047.26-HF1_IMPLEMENTATION_REPORT.md",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.26-HF1/live_quality_triage_report.json",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.26-HF1/no_mutation_proof.json",
+      "exists": true
+    },
+    {
+      "path": "docs/PROJECT_STATE.md",
+      "exists": true
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "exists": true
+    },
+    {
+      "path": "docs/PRD_INDEX.md",
+      "exists": true
+    }
+  ],
+  "runtime_probe_status": "unavailable",
+  "runtime_requirement_match": null,
+  "runtime_mismatches": [],
+  "status": "passed",
+  "warnings": [],
+  "blockers": []
+}

@@ -1,0 +1,30 @@
+{
+  "schema_version": "semantic_cards_pilot_preview_v1",
+  "prd_id": "PRD-047.27",
+  "created_at": "2026-06-19T04:16:49.681958+00:00",
+  "card_count": 12,
+  "card_ids": [
+    "program_imperfect_self_v1",
+    "five_survival_drivers_v1",
+    "be_strong_driver_v1",
+    "be_best_driver_v1",
+    "please_others_driver_v1",
+    "try_harder_driver_v1",
+    "hurry_up_driver_v1",
+    "control_as_safety_v1",
+    "fact_vs_interpretation_v1",
+    "panic_control_support_v1",
+    "one_bounded_practice_not_self_improvement_whip_v1",
+    "neurostalking_basic_lens_v1"
+  ],
+  "chunk_type_counts": {
+    "concept": 2,
+    "mechanism": 7,
+    "diagnostic_lens": 2,
+    "practice": 1
+  },
+  "all_writer_can_ignore": true,
+  "practice_card_ids": [
+    "one_bounded_practice_not_self_improvement_whip_v1"
+  ]
+}

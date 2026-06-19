@@ -1,0 +1,16 @@
+{
+  "case_id": "SCP-007",
+  "query": "Привет! Я Олег. Можешь мне ответить на вопросы?",
+  "answer": "Привет, Олег — рад познакомиться. Могу отвечать на вопросы — задавай любой. Хотел бы сначала уточнить одно: о чём в основном хочешь спросить — про себя (эмоции, отношения), работу/карьеру, или что-то другое?",
+  "expected_cards": [],
+  "expected_card": false,
+  "selected_card_ids": [],
+  "selected_card_count": 0,
+  "suppressed_reason": "greeting_or_contact",
+  "writer_payload_chunk_count": 0,
+  "direct_answer_success": true,
+  "card_internal_leak": false,
+  "raw_source_dump": false,
+  "practice_overpush": false,
+  "answer_too_textbook": false
+}

@@ -5,6 +5,10 @@ from __future__ import annotations
 from typing import Any
 
 from ..feature_flags import feature_flags
+from ..knowledge.semantic_card_payload_adapter import (
+    build_semantic_cards_pilot_selection,
+    get_semantic_cards_pilot_config,
+)
 from .contracts.context_package import ContextAssemblyPackage
 from .contracts.memory_bundle import MemoryBundle
 from .writer_kb_payload import (
@@ -61,6 +65,7 @@ def _fallback_recent_turns(memory_bundle: MemoryBundle) -> list[dict[str, str]]:
 
 def build_writer_context_package_v1(
     *,
+    user_message: str = "",
     memory_bundle: MemoryBundle,
     context_package: ContextAssemblyPackage | None,
     retrieval_decision: dict[str, Any] | None,
@@ -158,6 +163,18 @@ def build_writer_context_package_v1(
         if isinstance(retrieval.get("hybrid_retrieval_plan"), dict)
         else {}
     )
+    semantic_cards_pilot = build_semantic_cards_pilot_selection(
+        user_message=user_message,
+        retrieval_decision=retrieval,
+        config=get_semantic_cards_pilot_config(),
+    )
+    semantic_card_payload_items = [
+        dict(item)
+        for item in list(semantic_cards_pilot.get("payload_items", []) or [])
+        if isinstance(item, dict)
+    ]
+    rag_for_writer_for_payload = list(rag_for_writer) + semantic_card_payload_items
+
     payload_config = get_writer_kb_payload_config()
     payload_resolution = feature_flags.resolve_bool("WRITER_KB_PAYLOAD_ENABLED")
     writer_kb_payload_failed = False
@@ -196,7 +213,7 @@ def build_writer_context_package_v1(
                 }
                 for hit in list(memory_bundle.semantic_hits or [])
             ],
-            rag_for_writer=rag_for_writer,
+            rag_for_writer=rag_for_writer_for_payload,
             overlay_items=overlay_items,
             config=payload_config,
         )
@@ -245,6 +262,12 @@ def build_writer_context_package_v1(
         "recent_turns_for_writer": recent_turns,
         "profile_for_writer": profile_for_writer,
         "rag_for_writer": rag_for_writer,
+        "semantic_cards_pilot": {
+            key: value
+            for key, value in dict(semantic_cards_pilot).items()
+            if key != "payload_items"
+        },
+        "semantic_card_payload_items": semantic_card_payload_items,
         "rag_candidates_for_trace": rag_candidates_for_trace,
         "rag_gate_decision": retrieval,
         "contextual_retrieval_query_composer": composer,

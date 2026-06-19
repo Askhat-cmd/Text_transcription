@@ -248,6 +248,7 @@ class WriterAgent:
             "older_context_omitted_chars": None,
             "writer_kb_payload_trace": {},
             "writer_kb_payload_future_graduation_notes": {},
+            "semantic_cards_pilot": {},
             "writer_kb_payload_enabled": None,
             "writer_kb_payload_failed": None,
             "human_like_answer_policy_enabled": None,
@@ -587,6 +588,11 @@ class WriterAgent:
         self.last_debug["writer_kb_payload_future_graduation_notes"] = (
             dict(ctx.get("writer_kb_payload_future_graduation_notes", {}))
             if isinstance(ctx.get("writer_kb_payload_future_graduation_notes"), dict)
+            else {}
+        )
+        self.last_debug["semantic_cards_pilot"] = (
+            dict(ctx.get("semantic_cards_pilot", {}))
+            if isinstance(ctx.get("semantic_cards_pilot"), dict)
             else {}
         )
         self.last_debug["writer_kb_payload_enabled"] = bool(ctx.get("writer_kb_payload_enabled", False))

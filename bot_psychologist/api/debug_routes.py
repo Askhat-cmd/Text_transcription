@@ -873,6 +873,11 @@ async def get_multiagent_trace(
             if isinstance(debug.get("writer_kb_payload_trace"), dict)
             else None
         ),
+        semantic_cards_pilot=(
+            debug.get("semantic_cards_pilot")
+            if isinstance(debug.get("semantic_cards_pilot"), dict)
+            else None
+        ),
         future_graduation_notes=(
             debug.get("future_graduation_notes")
             if isinstance(debug.get("future_graduation_notes"), dict)

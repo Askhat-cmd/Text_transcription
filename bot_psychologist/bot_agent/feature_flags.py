@@ -45,6 +45,7 @@ _DEFAULTS: Dict[str, bool] = {
     "OVERLAY_SHADOW_TRACE_ENABLED": False,
     "WRITER_KB_PAYLOAD_ENABLED": False,
     "RETRIEVAL_CURRENT_TURN_FOCUS_ENABLED": False,
+    "SEMANTIC_CARDS_PILOT_ENABLED": False,
 }
 
 _STRING_DEFAULTS: Dict[str, str] = {
@@ -79,6 +80,7 @@ _STRING_DEFAULTS: Dict[str, str] = {
     "WRITER_KB_PAYLOAD_EXCERPT_MAX_CHARS": "1600",
     "WRITER_KB_PAYLOAD_SENTENCE_BOUNDARY": "true",
     "WRITER_KB_PAYLOAD_USE_OVERLAY_METADATA": "false",
+    "SEMANTIC_CARDS_PILOT_MAX_CARDS": "3",
 }
 
 _DEPRECATED_RUNTIME_FLAGS: Dict[str, str] = {
@@ -161,6 +163,7 @@ class FeatureFlags:
         writer_payload = FeatureFlags.resolve_bool("WRITER_KB_PAYLOAD_ENABLED")
         overlay_shadow = FeatureFlags.resolve_bool("OVERLAY_SHADOW_TRACE_ENABLED")
         retrieval_current_turn = FeatureFlags.resolve_bool("RETRIEVAL_CURRENT_TURN_FOCUS_ENABLED")
+        semantic_cards_pilot = FeatureFlags.resolve_bool("SEMANTIC_CARDS_PILOT_ENABLED")
         debug_trace = FeatureFlags.resolve_free_bool("DEBUG_TRACE_ENABLED", True)
         return {
             "schema_version": "runtime_config_trace_v1",
@@ -175,6 +178,10 @@ class FeatureFlags:
             "overlay_shadow_trace_enabled_source": overlay_shadow["source"],
             "retrieval_current_turn_focus_enabled": retrieval_current_turn["effective_value"],
             "retrieval_current_turn_focus_enabled_source": retrieval_current_turn["source"],
+            "semantic_cards_pilot_enabled": semantic_cards_pilot["effective_value"],
+            "semantic_cards_pilot_enabled_source": semantic_cards_pilot["source"],
+            "semantic_cards_pilot_raw_value": semantic_cards_pilot["raw_value"],
+            "semantic_cards_pilot_default_value": semantic_cards_pilot["default_value"],
             "debug_trace_enabled": debug_trace["effective_value"],
             "debug_trace_enabled_source": debug_trace["source"],
         }

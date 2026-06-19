@@ -1,6 +1,7 @@
 ﻿# Roadmap
 
 ## Done
+- PRD-047.27: completed the minimal DB-track semantic chunk cards pilot as a local/dev/test-only advisory Writer-grounding layer. Added `semantic_cards_pilot_v1` pack (`12` cards), schema/loader/adapter modules, current-turn card selection, `writer_kb_payload_v1` enrichment, runtime/debug/API trace visibility, PRD runner/artifacts, and no-mutation/encoding proof without changing retrieval authority, Chroma, registry, processed blocks, or DB schema. Live evidence ended `passed_with_warning`: `selected_when_expected=5`, `suppressed_when_not_needed=2`, `direct_answer_success_rate=1.0`, with one bounded textbook-style warning on `SCP-005`.
 - PRD-047.26-HF1: repaired deterministic dialogue-act / answer-obligation routing for explicit answer-first knowledge asks, explicit one-practice asks, and panic/control why-questions; added bounded-practice and textbook-support acceptance checks, aligned PRD-047.26 eval expectations, reran dry/live triage, and moved the readiness outcome from `not_ready` to `ready_with_warning` while keeping overlay apply off and all DB/Chroma/runtime-authority boundaries unchanged.
 - PRD-047.26: completed read-only live answer quality triage over the repaired retrieval baseline plus trace-only overlay shadow and canonical Writer KB payload. Proved `source_gate=passed`, `dry_run=passed`, `live_cases=12`, `overlay_apply_detected_count=0`, `internal_leak_count=0`, `raw_kb_dump_count=0`, `unsafe_practice_count=0`, `diagnostic_overclaim_count=0`, and `trace_missing_evidence_count=0`. Final status is `passed_with_warning`: evidence is trustworthy, but DB-track is still `not_ready` because live triage shows `direct_answer_success_rate=0.8333`, `overlay_false_positive_count=8`, `dialogue_act_error_count=3`, `answer_obligation_error_count=3`, `writer_style_regression_count=2`, and `evaluator_false_pass_count=2`. The next step shifts from generic overlay cleanup to `PRD-047.26-HF1 - Dialogue Act / Answer Obligation Repair v1`.
 - PRD-047.25: collected live evidence over the repaired retrieval baseline plus trace-only overlay shadow and canonical Writer KB payload. Proved `executed_case_count=20`, `kb_payload_primary_rate=1.0`, `current_turn_focus_clean_rate=1.0`, `legacy_query_builder_primary_count=0`, `overlay_apply_detected_count=0`, no internal payload/raw-KB leakage, and no Bot_data_base/Chroma/runtime-authority mutation. Final status is `passed_with_warning` because overlay false positives remain too high (`overlay_false_positive_count=6`), so the next step is overlay noise reduction rather than overlay graduation.
@@ -78,6 +79,7 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
+- PRD-047.27 closed the first semantic-card pilot slice. The next work is no longer metadata plumbing; it is owner-facing live review of whether the advisory cards improve answer quality without pushing the tone into textbook mode.
 - PRD-047.26-HF1 closed the route/obligation/evaluator debt that PRD-047.26 exposed. The remaining live-quality issue is now narrower: persistent overlay false-positive noise without overlay apply or answer-authority expansion. The next cycle should reduce overlay noise first, not mutate DB metadata yet.
 - PRD-047.25 closed overlay + Writer KB payload live evidence collection on top of the PRD-047.24 retrieval repair baseline. The remaining live-quality issue is not retrieval pollution anymore but overlay noise: false positives are too frequent for graduation, while payload and current-turn focus remain stable. Any broader overlay authority, retrieval-ranking rewrite, live metadata apply, or Chroma reindex stays out of scope until that noise class is reduced.
 - PRD-047.22 closed the Writer KB delivery bottleneck between selected retrieval hits and Writer prompt grounding. The next step can evaluate live allowlisted evidence now that Writer receives structured chunk cards instead of depending on blind snippet truncation.
@@ -96,9 +98,9 @@
 - No active PRD-047.12 blocker remains; unified dialogue policy v2 is accepted on the current developer-local runtime baseline.
 
 ## Next
-1. Start `PRD-047.26-HF2 - Overlay Shadow Noise Reduction / Evidence Repair v1`.
-2. Keep DB-track (`PRD-047.27 - Mechanism-Aware DB / Semantic Chunk Cards v2`) deferred until overlay false-positive noise is reduced or explicitly re-triaged as acceptable.
-3. Keep any overlay authority expansion, retrieval-ranking rewrite, live metadata apply, runtime activation, or Chroma reindex in a separate explicit governance PRD after overlay noise is reduced and human-final approval exists.
+1. Start `PRD-047.28 - Live Interactive Pilot / Owner Dialogue Review v1`.
+2. Keep semantic cards advisory-only until owner review confirms that the pilot improves quality without recurring textbook drift.
+3. Keep any broader DB-track mutation, overlay authority expansion, retrieval-ranking rewrite, live metadata apply, runtime activation, or Chroma reindex in a separate explicit governance PRD.
 
 ## Later
 - Operational hardening for governed limited runtime.

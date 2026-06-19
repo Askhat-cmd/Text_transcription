@@ -1328,6 +1328,11 @@ class MultiAgentOrchestrator:
                     if isinstance(writer_debug.get("writer_kb_payload_future_graduation_notes"), dict)
                     else {}
                 ),
+                "semantic_cards_pilot": (
+                    dict(writer_debug.get("semantic_cards_pilot", {}))
+                    if isinstance(writer_debug.get("semantic_cards_pilot"), dict)
+                    else {}
+                ),
                 "writer_human_like_answer_policy_enabled": writer_debug.get(
                     "human_like_answer_policy_enabled"
                 ),

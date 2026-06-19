@@ -1,0 +1,16 @@
+$ C:\My_practice\Text_transcription\bot_psychologist\.venv\Scripts\python.exe -m pytest tests/test_prd_047_27_semantic_card_schema.py tests/test_prd_047_27_semantic_card_loader.py tests/test_prd_047_27_semantic_card_payload_adapter.py tests/test_prd_047_27_semantic_card_pilot_selection.py -q --basetemp=C:\My_practice\Text_transcription\bot_psychologist\.pytest_tmp_prd_047_27_20260619T041649683958Z
+.............                                                            [100%]
+13 passed in 0.32s
+
+
+
+$ C:\My_practice\Text_transcription\bot_psychologist\.venv\Scripts\python.exe -m pytest tests/test_retrieval_query_builder_current_turn_focus.py tests/test_prd_047_26_hf1_dialogue_act_obligation.py tests/test_prd_047_26_hf1_acceptance_gate.py tests/api/test_writer_kb_payload_live_http_path.py tests/api/test_overlay_shadow_trace_api_debug.py -q --basetemp=C:\My_practice\Text_transcription\bot_psychologist\.pytest_tmp_prd_047_27_20260619T041649683958Z
+.......................                                                  [100%]
+============================== warnings summary ===============================
+tests/api/test_writer_kb_payload_live_http_path.py::test_live_like_http_path_produces_writer_kb_payload_trace
+tests/api/test_writer_kb_payload_live_http_path.py::test_live_like_http_path_exposes_semantic_cards_pilot_when_selected
+  C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\thread_manager.py:413: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+23 passed, 2 warnings in 50.35s

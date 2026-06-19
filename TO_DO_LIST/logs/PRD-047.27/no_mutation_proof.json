@@ -1,0 +1,25 @@
+{
+  "prd_id": "PRD-047.27",
+  "db_schema_changed": false,
+  "chroma_reindexed": false,
+  "processed_blocks_mutated": false,
+  "botdb_registry_mutated": false,
+  "retrieval_ranking_changed_globally": false,
+  "writer_prompt_changed": false,
+  "state_analyzer_prompt_changed": false,
+  "thread_manager_rewritten": false,
+  "overlay_apply_enabled": false,
+  "new_runtime_path_added": false,
+  "new_llm_agent_added": false,
+  "feature_flag_default_off": true,
+  "pilot_pack_added": true,
+  "allowed_changes": [
+    "semantic_cards_pilot_pack",
+    "semantic_card_schema_loader_adapter",
+    "pilot_context_payload_enrichment_local_only",
+    "tests",
+    "TO_DO_LIST_artifacts",
+    "docs_metadata_sync"
+  ],
+  "status": "passed"
+}

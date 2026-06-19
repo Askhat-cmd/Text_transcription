@@ -1,0 +1,71 @@
+{
+  "schema_version": "prd_047_27_dry_run_report_v1",
+  "prd_id": "PRD-047.27",
+  "created_at": "2026-06-19T04:17:42.538842+00:00",
+  "case_count": 7,
+  "expected_card_selected_count": 5,
+  "semantic_card_suppressed_when_not_needed_count": 2,
+  "selections": [
+    {
+      "case_id": "SCP-001",
+      "expected_card": true,
+      "selected_card_ids": [
+        "program_imperfect_self_v1"
+      ],
+      "suppressed_reason": ""
+    },
+    {
+      "case_id": "SCP-002",
+      "expected_card": true,
+      "selected_card_ids": [
+        "five_survival_drivers_v1"
+      ],
+      "suppressed_reason": ""
+    },
+    {
+      "case_id": "SCP-003",
+      "expected_card": true,
+      "selected_card_ids": [
+        "one_bounded_practice_not_self_improvement_whip_v1",
+        "be_strong_driver_v1",
+        "be_best_driver_v1"
+      ],
+      "suppressed_reason": ""
+    },
+    {
+      "case_id": "SCP-004",
+      "expected_card": true,
+      "selected_card_ids": [
+        "control_as_safety_v1",
+        "panic_control_support_v1",
+        "program_imperfect_self_v1"
+      ],
+      "suppressed_reason": ""
+    },
+    {
+      "case_id": "SCP-005",
+      "expected_card": true,
+      "selected_card_ids": [
+        "panic_control_support_v1",
+        "control_as_safety_v1",
+        "try_harder_driver_v1"
+      ],
+      "suppressed_reason": ""
+    },
+    {
+      "case_id": "SCP-006",
+      "expected_card": false,
+      "selected_card_ids": [],
+      "suppressed_reason": "user_requested_no_theory"
+    },
+    {
+      "case_id": "SCP-007",
+      "expected_card": false,
+      "selected_card_ids": [],
+      "suppressed_reason": "greeting_or_contact"
+    }
+  ],
+  "status": "passed",
+  "warnings": [],
+  "blockers": []
+}

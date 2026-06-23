@@ -1,0 +1,35 @@
+{
+  "prd": "PRD-047.28",
+  "trace_noise_summary": {
+    "A_current": {
+      "case_count": 10,
+      "trace_step_count_total": 1400,
+      "trace_char_count_total": 1950728,
+      "internal_layers_mentioned": 0,
+      "warning_count": 0,
+      "conflicting_signals_count": 0,
+      "kb_usage_explained": false,
+      "disabled_heavy_layers_visible": true
+    },
+    "B_thin": {
+      "case_count": 10,
+      "trace_step_count_total": 50,
+      "trace_char_count_total": 10144,
+      "internal_layers_mentioned": 60,
+      "warning_count": 1,
+      "conflicting_signals_count": 0,
+      "kb_usage_explained": true,
+      "disabled_heavy_layers_visible": true
+    },
+    "C_thin_note": {
+      "case_count": 10,
+      "trace_step_count_total": 60,
+      "trace_char_count_total": 11834,
+      "internal_layers_mentioned": 60,
+      "warning_count": 1,
+      "conflicting_signals_count": 0,
+      "kb_usage_explained": true,
+      "disabled_heavy_layers_visible": true
+    }
+  }
+}

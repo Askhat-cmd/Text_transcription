@@ -1,6 +1,7 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
+PRD-047.28 completed as an isolated thin-spine live experiment with honest `BLOCKED` status and no production-runtime mutation. The experiment added a separate A/B/C runner (`A_current`, `B_thin`, `C_thin_note`), fixture set, thin context collector, short natural-language live-turn-note path, safety/leak checks, comparative reporting, and no-mutation evidence outside the canonical runtime. Live evidence is explicit: `case_count=10`, `row_count=30`, `average_direct_answer_score_A=1.8`, `average_direct_answer_score_B=1.7`, `average_direct_answer_score_C=1.6`. The main blocker is answer-quality, not infrastructure: thin variants still forced practice in `TS-003`, and constraint-respect weaknesses remain visible (`TS-005`, `TS-008`). The next recommended step is `PRD-047.29 - Current Pipeline Simplification Targets / Layer Noise Reduction v1`, not thin-spine apply.
 PRD-047.27 completed the minimal DB-track semantic chunk cards pilot as a bounded, advisory-only Writer grounding layer with `passed_with_warning` status. A local/dev/test-only `semantic_cards_pilot_v1` pack now feeds 1-3 compact semantic cards into the existing `writer_kb_payload_v1` path without changing retrieval authority, Chroma, registry, processed blocks, DB schema, or Writer authorship. Live pilot evidence is explicit: `semantic_card_selected_when_expected_count=5`, `semantic_card_suppressed_when_not_needed_count=2`, `direct_answer_success_rate=1.0`, `card_internal_leak_count=0`, `raw_source_dump_count=0`, `practice_overpush_count=0`. The only honest warning is one overly textbook answer (`SCP-005`), so the next recommended step is `PRD-047.28 - Live Interactive Pilot / Owner Dialogue Review v1`, not broader runtime authority or DB mutation.
 PRD-047.26-HF1 completed the targeted route/obligation/evaluator repair on top of the PRD-047.26 live triage baseline and is now the current top-stage evidence layer with `passed_with_warning` status. The runtime/evidence path stayed trustworthy: `source_gate=passed`, `dry_run=passed`, `live_cases=12/12`, `overlay_apply_detected_count=0`, `internal_leak_count=0`, `raw_kb_dump_count=0`, `unsafe_practice_count=0`, `diagnostic_overclaim_count=0`, and `trace_missing_evidence_count=0`. The repaired counters are explicit: `direct_answer_success_rate=1.0`, `overlay_false_positive_count=8`, `dialogue_act_error_count=0`, `answer_obligation_error_count=0`, `writer_style_regression_count=0`, `evaluator_false_pass_count=0`, so DB-track moved from `not_ready` to `ready_with_warning`. The remaining blocker class is no longer answer routing; it is overlay shadow noise only. The next recommended step is `PRD-047.26-HF2 - Overlay Shadow Noise Reduction / Evidence Repair v1`, and DB metadata expansion stays deferred until that warning is reduced.
 PRD-047.25 collected live evidence for the cleaned retrieval baseline plus `overlay_shadow_trace` and `writer_kb_payload_v1`, and it is the new top-stage baseline with `passed_with_warning` status. The active local runtime remains singular (`multiagent_adapter`), `current_turn_focus_v1` stays primary for retrieval query assembly, and `writer_kb_payload_v1` stays canonical for KB delivery with `kb_payload_primary_rate=1.0`, `current_turn_focus_clean_rate=1.0`, `legacy_query_builder_primary_count=0`, `overlay_apply_detected_count=0`, and no internal payload leakage or raw KB dump in final answers. The bounded warning is now explicit and evidence-backed: overlay remains trace-only and non-authoritative, but live evidence shows `overlay_false_positive_count=6`, so the next recommended step is `PRD-047.26 - Overlay Shadow Noise Reduction / Evidence Repair v1`, not overlay graduation or authority expansion.
@@ -98,7 +99,7 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 - Historical artifact encoding noise may be misread as current runtime corruption without normalization report.
 
 ## Next Planned PRD
-`PRD-047.28 - Live Interactive Pilot / Owner Dialogue Review v1`
+`PRD-047.29 - Current Pipeline Simplification Targets / Layer Noise Reduction v1`
 
 ## PRD-047.23 Audit State
 PRD-047.23 closed the evidence gap between Bot_data_base chunks, retrieval query assembly, Writer KB payload, and Web Trace preview.
@@ -123,7 +124,7 @@ Knowledge Graph runtime flag remains backend-legacy/optional but is shown as com
 5. Keep full historical details in `TO_DO_LIST`, keep docs operational and compact.
 
 ## Last Updated
-2026-06-19
+2026-06-23
 - Date: 2026-06-05
 - Source cycle: PRD-047.12
 - Source cycle: PRD-047.11-HF3

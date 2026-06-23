@@ -1,6 +1,7 @@
 ﻿# Roadmap
 
 ## Done
+- PRD-047.28: completed an isolated thin-spine live experiment without mutating the production runtime. Added experiment-only `A_current|B_thin|C_thin_note` runner paths, fixture/case loader, thin context collector, short natural-language live-turn note, safety/leak checks, comparative/owner/retirement/no-mutation artifacts, and targeted tests. The live result is an honest `BLOCKED`: baseline `A_current` still scores strongest or tied (`A=1.8`, `B=1.7`, `C=1.6`), while thin variants still show forced-practice and constraint-respect regressions, so the next step is pipeline simplification targets rather than thin-spine apply.
 - PRD-047.27: completed the minimal DB-track semantic chunk cards pilot as a local/dev/test-only advisory Writer-grounding layer. Added `semantic_cards_pilot_v1` pack (`12` cards), schema/loader/adapter modules, current-turn card selection, `writer_kb_payload_v1` enrichment, runtime/debug/API trace visibility, PRD runner/artifacts, and no-mutation/encoding proof without changing retrieval authority, Chroma, registry, processed blocks, or DB schema. Live evidence ended `passed_with_warning`: `selected_when_expected=5`, `suppressed_when_not_needed=2`, `direct_answer_success_rate=1.0`, with one bounded textbook-style warning on `SCP-005`.
 - PRD-047.26-HF1: repaired deterministic dialogue-act / answer-obligation routing for explicit answer-first knowledge asks, explicit one-practice asks, and panic/control why-questions; added bounded-practice and textbook-support acceptance checks, aligned PRD-047.26 eval expectations, reran dry/live triage, and moved the readiness outcome from `not_ready` to `ready_with_warning` while keeping overlay apply off and all DB/Chroma/runtime-authority boundaries unchanged.
 - PRD-047.26: completed read-only live answer quality triage over the repaired retrieval baseline plus trace-only overlay shadow and canonical Writer KB payload. Proved `source_gate=passed`, `dry_run=passed`, `live_cases=12`, `overlay_apply_detected_count=0`, `internal_leak_count=0`, `raw_kb_dump_count=0`, `unsafe_practice_count=0`, `diagnostic_overclaim_count=0`, and `trace_missing_evidence_count=0`. Final status is `passed_with_warning`: evidence is trustworthy, but DB-track is still `not_ready` because live triage shows `direct_answer_success_rate=0.8333`, `overlay_false_positive_count=8`, `dialogue_act_error_count=3`, `answer_obligation_error_count=3`, `writer_style_regression_count=2`, and `evaluator_false_pass_count=2`. The next step shifts from generic overlay cleanup to `PRD-047.26-HF1 - Dialogue Act / Answer Obligation Repair v1`.
@@ -79,6 +80,7 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
+- PRD-047.28 closed the question of whether the current architecture can be replaced by a thin spine immediately. The answer is no for now: evidence supports simplification work, but not replacement. The remaining problem is concentrated in noisy layers and constraint-respect debt, not in lack of yet another experimental route.
 - PRD-047.27-HF1 closed the owner-facing semantic-card visibility blocker. Admin Runtime now exposes pack/count/authority status, Web Trace shows selected/suppressed semantic-card state, Writer KB payload trace preserves semantic-card origin markers, and core trace mojibake is removed. The next step is owner live review, not broader DB-track mutation.
 - PRD-047.27 closed the first semantic-card pilot slice. The next work is no longer metadata plumbing; it is owner-facing live review of whether the advisory cards improve answer quality without pushing the tone into textbook mode.
 - PRD-047.26-HF1 closed the route/obligation/evaluator debt that PRD-047.26 exposed. The remaining live-quality issue is now narrower: persistent overlay false-positive noise without overlay apply or answer-authority expansion. The next cycle should reduce overlay noise first, not mutate DB metadata yet.
@@ -99,9 +101,9 @@
 - No active PRD-047.12 blocker remains; unified dialogue policy v2 is accepted on the current developer-local runtime baseline.
 
 ## Next
-1. Start `PRD-047.28 - Live Interactive Pilot / Owner Dialogue Review v1`.
-2. Keep semantic cards advisory-only until owner review confirms that the pilot improves quality without recurring textbook drift.
-3. Use `PRD-047.27-HF2` only if owner review shows weak selection or textbook overreach despite HF1 visibility being fixed.
+1. Start `PRD-047.29 - Current Pipeline Simplification Targets / Layer Noise Reduction v1`.
+2. Keep semantic cards advisory-only until a later PRD proves they help without recurring textbook drift or explicit no-KB conflict.
+3. Reduce confirmed noisy/control-only layers before considering any thin-spine replacement path again.
 4. Keep any broader DB-track mutation, overlay authority expansion, retrieval-ranking rewrite, live metadata apply, runtime activation, or Chroma reindex in a separate explicit governance PRD.
 
 ## Later

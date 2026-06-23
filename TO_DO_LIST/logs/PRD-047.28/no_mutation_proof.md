@@ -1,6 +1,6 @@
 # PRD-047.28 No Mutation Proof
 
-- status: `pre_push_verified_post_push_pending`
+- status: `post_push_verified`
 - prd: `PRD-047.28`
 - runtime_result: `BLOCKED`
 
@@ -146,9 +146,9 @@ Additional note:
 
 - The rerun after runner refactor completed without the earlier `Event loop is closed` teardown noise.
 
-## Pending Post-Push Verification
+## Post-Push Verification
 
-- implementation_commit: `PENDING_MAIN_COMMIT`
-- metadata_commit: `PENDING_METADATA_COMMIT`
-- `HEAD == origin/main`: pending
-- clean working tree after metadata micro-push: pending
+- implementation_commit: `8a8b980`
+- metadata_commit: `post_push_metadata_commit_on_origin_main`
+- `HEAD == origin/main`: `true`
+- clean working tree after metadata micro-push: `true`

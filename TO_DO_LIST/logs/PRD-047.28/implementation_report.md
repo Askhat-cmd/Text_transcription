@@ -6,8 +6,11 @@
 - force_mock: `False`
 - case_count: `10`
 - row_count: `30`
-- implementation_commit: `PENDING_MAIN_COMMIT`
-- metadata_commit: `PENDING_METADATA_COMMIT`
+- implementation_commit: `8a8b980`
+- metadata_commit: `post_push_metadata_commit_on_origin_main`
+- main_push_status: `pushed_to_origin_main`
+- head_equals_origin_main_after_metadata_push: `true`
+- working_tree_clean_after_metadata_push: `true`
 
 ## Outcome
 - Experiment code is isolated from the production runtime path.

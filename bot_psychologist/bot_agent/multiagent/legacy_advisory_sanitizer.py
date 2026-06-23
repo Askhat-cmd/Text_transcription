@@ -45,6 +45,11 @@ def sanitize_legacy_advisory_for_writer(source_signals: dict) -> dict[str, Any]:
         if isinstance(knowledge.get("knowledge_answer"), dict)
         else {}
     )
+    latest_turn_constraints = (
+        dict(signals.get("latest_turn_constraints_v1", {}))
+        if isinstance(signals.get("latest_turn_constraints_v1"), dict)
+        else {}
+    )
     practice_gate = (
         dict(knowledge.get("practice_gate", {}))
         if isinstance(knowledge.get("practice_gate"), dict)
@@ -92,8 +97,19 @@ def sanitize_legacy_advisory_for_writer(source_signals: dict) -> dict[str, Any]:
     if bool(active_line.get("should_continue_line", True)):
         _append_line(lines, "Лучше продолжать уже начатую тему, а не начинать новую ветку.")
 
-    practice_suppressed = bool(active_line.get("practice_suppression_active", False)) or not bool(
-        practice_gate.get("practice_allowed", True)
+    if bool(latest_turn_constraints.get("simplify", False)):
+        _append_line(lines, "В этом ходе нужен более простой и короткий ответ без лекции.")
+    if bool(latest_turn_constraints.get("long_term_perspective", False)):
+        _append_line(lines, "Полезно дать долгосрочную рамку и 2-3 направления, а не только моментную стабилизацию.")
+    if bool(latest_turn_constraints.get("no_breathing_only", False)):
+        _append_line(lines, "Не своди ответ к дыханию; если нужны варианты, дай недыхательные альтернативы.")
+    if bool(latest_turn_constraints.get("no_internal_db", False)):
+        _append_line(lines, "Отвечай своими словами без опоры на внутреннюю БД и внутренние карточки.")
+
+    practice_suppressed = (
+        bool(latest_turn_constraints.get("no_practice", False))
+        or bool(active_line.get("practice_suppression_active", False))
+        or not bool(practice_gate.get("practice_allowed", True))
     )
     if practice_suppressed:
         practice_note = (
@@ -137,6 +153,13 @@ def sanitize_legacy_advisory_for_writer(source_signals: dict) -> dict[str, Any]:
         "question_policy": _clean_text(signals.get("question_policy", "")) or "optional",
         "practice_instruction": writer_visible_practice_instruction,
         "writer_autonomy": _clean_text(signals.get("writer_autonomy", "")) or "guided",
+        "latest_turn_constraints": {
+            "no_practice": bool(latest_turn_constraints.get("no_practice", False)),
+            "no_breathing_only": bool(latest_turn_constraints.get("no_breathing_only", False)),
+            "simplify": bool(latest_turn_constraints.get("simplify", False)),
+            "long_term_perspective": bool(latest_turn_constraints.get("long_term_perspective", False)),
+            "no_internal_db": bool(latest_turn_constraints.get("no_internal_db", False)),
+        },
     }
     gate_feedback = signals.get("acceptance_gate_feedback")
     if isinstance(gate_feedback, dict) and gate_feedback:

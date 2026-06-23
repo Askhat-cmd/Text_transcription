@@ -86,6 +86,7 @@ from .response_planner import (
     build_response_planner_decision,
     build_response_planner_fallback_decision,
 )
+from .runtime_trace_summary import build_runtime_trace_summary_v1
 from .thread_storage import thread_storage
 from .last_assistant_offer_tracker import (
     build_last_assistant_offer_v1,
@@ -847,6 +848,12 @@ class MultiAgentOrchestrator:
                 "first_status": str(first_acceptance_gate.get("status", "")),
                 "first_failed_checks": list(first_acceptance_gate.get("failed_checks", []) or []),
             }
+        runtime_trace_summary = build_runtime_trace_summary_v1(
+            entrypoint="multiagent_adapter",
+            final_answer_directive=writer_contract.final_answer_directive,
+            writer_debug=writer_debug,
+            overlay_shadow=overlay_shadow,
+        )
 
         if bool(final_answer_acceptance_gate.get("can_mark_question_answered", False)):
             updated_unanswered_question_state = update_unanswered_question_state_after_answer_v1(
@@ -1159,6 +1166,7 @@ class MultiAgentOrchestrator:
                 "retrieval_decision": dict(retrieval_decision),
                 "contextual_retrieval_query_composer": dict(contextual_retrieval_query_composer),
                 "final_answer_directive": dict(final_answer_directive),
+                "runtime_trace_summary_v1": dict(runtime_trace_summary),
                 "final_answer_acceptance_gate": dict(final_answer_acceptance_gate),
                 "final_answer_acceptance_retry_attempted": bool(acceptance_retry_attempted),
                 "live_turn_evidence": dict(live_turn_evidence),

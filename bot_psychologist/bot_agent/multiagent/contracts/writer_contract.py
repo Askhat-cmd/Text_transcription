@@ -99,6 +99,12 @@ class WriterContract:
             context_package=self.context_package,
             retrieval_decision=self.retrieval_decision,
             fresh_chat_context_policy=fresh_chat_context_policy,
+            latest_turn_constraints=(
+                dict(self.final_answer_directive.get("latest_turn_constraints_v1", {}))
+                if isinstance(self.final_answer_directive, dict)
+                and isinstance(self.final_answer_directive.get("latest_turn_constraints_v1"), dict)
+                else {}
+            ),
         )
         if self.context_package is not None:
             conversation_context = format_context_for_writer(
@@ -351,6 +357,11 @@ class WriterContract:
             "active_line": active_line,
             "response_planner": response_planner,
             "knowledge_answer_guard": knowledge_answer_guard,
+            "latest_turn_constraints_v1": (
+                dict(final_answer_directive.get("latest_turn_constraints_v1", {}))
+                if isinstance(final_answer_directive.get("latest_turn_constraints_v1"), dict)
+                else {}
+            ),
             "final_answer_directive_version": str(
                 final_answer_directive.get("version", "final_answer_directive_v1")
                 or "final_answer_directive_v1"
@@ -701,6 +712,21 @@ class WriterContract:
             "answer_obligation_source": ", ".join(
                 [str(item) for item in list(answer_obligation_resolution.get("source", []) or []) if str(item).strip()]
             ) or "none",
+            "latest_turn_constraints_v1": (
+                dict(final_answer_directive.get("latest_turn_constraints_v1", {}))
+                if isinstance(final_answer_directive.get("latest_turn_constraints_v1"), dict)
+                else {}
+            ),
+            "latest_turn_constraint_names": [
+                str(item)
+                for item in list(
+                    dict(final_answer_directive.get("latest_turn_constraints_v1", {})).get(
+                        "active_constraints", []
+                    )
+                    or []
+                )
+                if str(item).strip()
+            ],
             "final_answer_directive": final_answer_directive,
             "final_answer_summary_request": bool(
                 final_answer_directive.get("summary_request", False)

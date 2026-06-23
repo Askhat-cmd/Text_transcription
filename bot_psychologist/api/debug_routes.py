@@ -883,6 +883,11 @@ async def get_multiagent_trace(
             if isinstance(debug.get("future_graduation_notes"), dict)
             else None
         ),
+        runtime_trace_summary_v1=(
+            debug.get("runtime_trace_summary_v1")
+            if isinstance(debug.get("runtime_trace_summary_v1"), dict)
+            else None
+        ),
         live_turn_evidence=(
             debug.get("live_turn_evidence")
             if isinstance(debug.get("live_turn_evidence"), dict)

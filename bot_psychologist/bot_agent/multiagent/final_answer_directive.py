@@ -11,6 +11,7 @@ from .dialogue_policy import (
     normalize_dialogue_profile,
     resolve_profile_preset,
 )
+from .latest_turn_constraints import build_latest_turn_constraints_v1
 
 FINAL_ANSWER_DIRECTIVE_VERSION = "final_answer_directive_v1"
 FINAL_DIRECTIVE_AUTHORITY_ORDER = [
@@ -77,6 +78,7 @@ class FinalAnswerDirective:
     unanswered_question_summary: dict[str, Any]
     advisory_context: dict[str, Any]
     suppressed_legacy_constraints: list[str]
+    latest_turn_constraints_v1: dict[str, Any]
     source_signals: dict[str, Any]
     conflict_resolution: dict[str, Any]
 
@@ -113,6 +115,7 @@ class FinalAnswerDirective:
             "unanswered_question_summary": dict(self.unanswered_question_summary),
             "advisory_context": dict(self.advisory_context),
             "suppressed_legacy_constraints": list(self.suppressed_legacy_constraints),
+            "latest_turn_constraints_v1": dict(self.latest_turn_constraints_v1),
             "source_signals": dict(self.source_signals),
             "conflict_resolution": dict(self.conflict_resolution),
         }
@@ -216,6 +219,12 @@ def _suppressed_constraints(*, profile: str, safety_active: bool) -> list[str]:
     ]
 
 
+def _append_unique(items: list[str], value: str) -> None:
+    text = str(value or "").strip()
+    if text and text not in items:
+        items.append(text)
+
+
 def build_final_answer_directive_v1(
     *,
     user_message: str,
@@ -242,6 +251,7 @@ def build_final_answer_directive_v1(
     knowledge = dict(knowledge_answer_guard or {})
     obligation_resolution = dict(answer_obligation_resolution or {})
     unified_policy = dict(unified_dialogue_profile or {})
+    latest_turn_constraints = build_latest_turn_constraints_v1(user_message)
 
     profile = normalize_dialogue_profile(policy.get("profile", "safe_guided"))
     profile_preset = str(policy.get("profile_preset") or resolve_profile_preset(profile))
@@ -339,8 +349,51 @@ def build_final_answer_directive_v1(
             for item in list(policy.get("soft_guidance", unified_policy.get("soft_guidance", [])) or [])
             if str(item).strip()
         ]
+    hard_boundaries = [
+        str(item)
+        for item in list(policy.get("hard_boundaries", unified_policy.get("hard_boundaries", [])) or [])
+        if str(item).strip()
+    ]
+    if bool(latest_turn_constraints.get("no_practice", False)):
+        practice_policy = "forbidden_explicit_latest_turn"
+        _append_unique(
+            hard_boundaries,
+            "Do not offer a practice, breathing drill, grounding drill, exercise, or homework in this answer.",
+        )
+        _append_unique(soft_guidance, "answer_current_turn_without_practice")
+    if bool(latest_turn_constraints.get("no_breathing_only", False)):
+        _append_unique(hard_boundaries, "Do not make breathing the main or only answer.")
+        _append_unique(
+            soft_guidance,
+            "If you give options, offer 3 to 5 non-breathing alternatives and keep breathing non-central.",
+        )
+    if bool(latest_turn_constraints.get("simplify", False)):
+        depth = "short"
+        style = "simple, brief"
+        question_policy = "optional_none"
+        answer_shape = "direct_answer"
+        _append_unique(hard_boundaries, "Keep one main point, simple wording, and no lecture.")
+        _append_unique(soft_guidance, "shorter_simpler_answer_for_current_turn")
+    if bool(latest_turn_constraints.get("long_term_perspective", False)):
+        if depth == "short" and not bool(latest_turn_constraints.get("simplify", False)):
+            depth = "medium"
+        _append_unique(
+            hard_boundaries,
+            "Do not reduce the answer to moment-only stabilization or immediate practice.",
+        )
+        _append_unique(soft_guidance, "start_with_long_term_frame")
+        _append_unique(soft_guidance, "name_2_to_3_long_term_directions")
+    if bool(latest_turn_constraints.get("no_internal_db", False)):
+        rag_policy = "forbidden_by_latest_turn"
+        _append_unique(
+            hard_boundaries,
+            "Do not rely on internal DB or semantic-card grounding in the Writer-visible payload for this answer.",
+        )
+        _append_unique(soft_guidance, "answer_in_own_words_without_internal_db_grounding")
     if summary_request:
         must_answer_value = "summary of current conversation"
+    elif bool(latest_turn_constraints.get("active_constraints", [])):
+        must_answer_value = str(user_message or "").strip()
     elif _must_answer_current_turn(user_message):
         must_answer_value = str(user_message or "").strip()
     else:
@@ -371,7 +424,7 @@ def build_final_answer_directive_v1(
         active_line_role=str(policy.get("active_line_role", unified_policy.get("active_line_role", "advisory_context_only")) or "advisory_context_only"),
         diagnostic_card_role=str(policy.get("diagnostic_card_role", unified_policy.get("diagnostic_card_role", "advisory_context_only")) or "advisory_context_only"),
         writer_autonomy=str(policy.get("writer_autonomy", unified_policy.get("effective_writer_autonomy", "medium")) or "medium"),
-        hard_boundaries=[str(item) for item in list(policy.get("hard_boundaries", unified_policy.get("hard_boundaries", [])) or []) if str(item).strip()],
+        hard_boundaries=hard_boundaries,
         soft_guidance=soft_guidance,
         style_state_summary=style_state_summary,
         last_assistant_offer_summary=last_offer_summary,
@@ -385,10 +438,12 @@ def build_final_answer_directive_v1(
             "knowledge_answer": knowledge.get("knowledge_answer", {}),
         },
         suppressed_legacy_constraints=_suppressed_constraints(profile=profile, safety_active=safety_active),
+        latest_turn_constraints_v1=latest_turn_constraints,
         source_signals={
             "dialogue_pragmatics": pragmatics,
             "dialogue_act_resolution": dict(policy.get("dialogue_act_resolution", {})) if isinstance(policy.get("dialogue_act_resolution"), dict) else {},
             "answer_obligation_resolution": obligation_resolution,
+            "latest_turn_constraints_v1": latest_turn_constraints,
             "style_state_summary": style_state_summary,
             "summary_request": summary_request,
             "summary_scope": summary_scope,
@@ -399,5 +454,6 @@ def build_final_answer_directive_v1(
             "authority_order": FINAL_DIRECTIVE_AUTHORITY_ORDER,
             "safety_active": safety_active,
             "advisory_mode": True,
+            "latest_turn_constraints_active": bool(latest_turn_constraints.get("active_constraints", [])),
         },
     )

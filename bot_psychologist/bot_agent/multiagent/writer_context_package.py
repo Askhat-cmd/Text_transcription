@@ -70,8 +70,11 @@ def build_writer_context_package_v1(
     context_package: ContextAssemblyPackage | None,
     retrieval_decision: dict[str, Any] | None,
     fresh_chat_context_policy: dict[str, Any] | None,
+    latest_turn_constraints: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     retrieval = dict(retrieval_decision or {})
+    constraints = dict(latest_turn_constraints or {})
+    no_internal_db = bool(constraints.get("no_internal_db", False))
     composer = (
         dict(retrieval.get("composer", {}))
         if isinstance(retrieval.get("composer"), dict)
@@ -98,7 +101,9 @@ def build_writer_context_package_v1(
     )
 
     explicit_retrieval_gate = "rag_included_count" in retrieval
-    if explicit_retrieval_gate:
+    if no_internal_db:
+        rag_for_writer = []
+    elif explicit_retrieval_gate:
         rag_for_writer = [
             dict(item)
             for item in list(retrieval.get("rag_included_for_writer", []) or [])
@@ -133,7 +138,11 @@ def build_writer_context_package_v1(
                 "reason_not_included": (
                     ""
                     if chunk_id in included_chunk_ids
-                    else str(retrieval.get("rag_suppressed_reason", "") or "not_selected_for_writer")
+                    else (
+                        "latest_turn_no_internal_db"
+                        if no_internal_db
+                        else str(retrieval.get("rag_suppressed_reason", "") or "not_selected_for_writer")
+                    )
                 ),
             }
         )
@@ -168,6 +177,14 @@ def build_writer_context_package_v1(
         retrieval_decision=retrieval,
         config=get_semantic_cards_pilot_config(),
     )
+    if no_internal_db:
+        semantic_cards_pilot = dict(semantic_cards_pilot)
+        semantic_cards_pilot["status"] = "suppressed"
+        semantic_cards_pilot["suppressed_reason"] = "latest_turn_no_internal_db"
+        semantic_cards_pilot["writer_payload_enriched"] = False
+        semantic_cards_pilot["selected_card_count"] = 0
+        semantic_cards_pilot["selected_card_ids"] = []
+        semantic_cards_pilot["payload_items"] = []
     semantic_card_payload_items = [
         dict(item)
         for item in list(semantic_cards_pilot.get("payload_items", []) or [])
@@ -189,30 +206,36 @@ def build_writer_context_package_v1(
         ]
     try:
         writer_kb_payload = build_writer_kb_payload(
-            semantic_hits=[
-                dict(item)
-                for item in list(memory_bundle.knowledge_rag_hits or [])
-                if isinstance(item, dict)
-            ]
-            or [
-                {
-                    "chunk_id": str(getattr(hit, "chunk_id", "") or ""),
-                    "source": str(getattr(hit, "source", "unknown") or "unknown"),
-                    "score": float(getattr(hit, "score", 0.0) or 0.0),
-                    "content": str(getattr(hit, "content", "") or ""),
-                    "governance": (
-                        dict(getattr(hit, "governance", {}) or {})
-                        if isinstance(getattr(hit, "governance", None), dict)
-                        else {}
-                    ),
-                    "chunking_quality": (
-                        dict(getattr(hit, "chunking_quality", {}) or {})
-                        if isinstance(getattr(hit, "chunking_quality", None), dict)
-                        else {}
-                    ),
-                }
-                for hit in list(memory_bundle.semantic_hits or [])
-            ],
+            semantic_hits=(
+                []
+                if no_internal_db
+                else (
+                    [
+                        dict(item)
+                        for item in list(memory_bundle.knowledge_rag_hits or [])
+                        if isinstance(item, dict)
+                    ]
+                    or [
+                        {
+                            "chunk_id": str(getattr(hit, "chunk_id", "") or ""),
+                            "source": str(getattr(hit, "source", "unknown") or "unknown"),
+                            "score": float(getattr(hit, "score", 0.0) or 0.0),
+                            "content": str(getattr(hit, "content", "") or ""),
+                            "governance": (
+                                dict(getattr(hit, "governance", {}) or {})
+                                if isinstance(getattr(hit, "governance", None), dict)
+                                else {}
+                            ),
+                            "chunking_quality": (
+                                dict(getattr(hit, "chunking_quality", {}) or {})
+                                if isinstance(getattr(hit, "chunking_quality", None), dict)
+                                else {}
+                            ),
+                        }
+                        for hit in list(memory_bundle.semantic_hits or [])
+                    ]
+                )
+            ),
             rag_for_writer=rag_for_writer_for_payload,
             overlay_items=overlay_items,
             config=payload_config,
@@ -232,6 +255,8 @@ def build_writer_context_package_v1(
     fallback_reason = ""
     if not bool(payload_resolution.get("effective_value", False)):
         fallback_reason = "disabled_by_config"
+    elif no_internal_db:
+        fallback_reason = "latest_turn_no_internal_db"
     elif writer_kb_payload_failed:
         fallback_reason = "builder_failure"
     elif int(writer_kb_payload.get("chunk_count", 0) or 0) <= 0:
@@ -289,6 +314,7 @@ def build_writer_context_package_v1(
         "writer_kb_payload_enabled": bool(payload_resolution.get("effective_value", False)),
         "writer_kb_payload_failed": writer_kb_payload_failed,
         "writer_kb_payload_failure_reason": fallback_reason or writer_kb_payload_failure_reason,
+        "latest_turn_constraints_v1": constraints,
         "retrieval_context": {
             "retrieval_action": str(
                 hybrid_plan.get("retrieval_action", retrieval.get("retrieval_action", "trace_only"))

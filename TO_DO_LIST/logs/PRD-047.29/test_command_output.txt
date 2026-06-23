@@ -1,0 +1,35 @@
+PRD-047.29 test command log
+Date: 2026-06-23
+
+1) Targeted PRD tests
+Command:
+.venv\Scripts\python -m pytest tests/test_prd_047_29_latest_turn_constraints.py tests/test_prd_047_29_writer_payload_and_contract.py tests/test_prd_047_29_runtime_trace_summary.py tests/api/test_prd_047_29_runtime_trace_summary_api.py -q
+Result:
+8 passed
+
+2) Broader regression subset
+Command:
+.venv\Scripts\python -m pytest tests/test_final_answer_directive_v1.py tests/test_prd_047_27_hf1_semantic_cards_runtime_visibility.py tests/test_prd_047_27_semantic_card_pilot_selection.py tests/test_writer_contract_contextual_retrieval_v1.py tests/api/test_overlay_shadow_trace_api_debug.py tests/api/test_writer_kb_payload_trace_api_debug.py tests/api/test_writer_kb_payload_live_http_path.py -q
+Result:
+19 passed
+
+3) Follow-up targeted rerun after extractor adjustment
+Command:
+.venv\Scripts\python -m pytest tests/test_prd_047_29_latest_turn_constraints.py tests/test_prd_047_29_runtime_trace_summary.py -q
+Result:
+5 passed
+
+4) Full suite truth check
+Command:
+.venv\Scripts\python -m pytest tests -q
+Result:
+blocked by existing unrelated collection error
+ImportError:
+tests/regression/test_no_sd_required_by_response_flow.py
+cannot import name `_build_llm_prompts` from `bot_agent.answer_adaptive`
+
+5) Live smoke runner
+Command:
+.venv\Scripts\python tools\run_prd_047_29_current_pipeline_simplification.py --base-url http://127.0.0.1:8001 --fixture ..\TO_DO_LIST\fixtures\PRD-047.29\current_pipeline_simplification_cases_ru.jsonl --log-dir ..\TO_DO_LIST\logs\PRD-047.29
+Result:
+8 passed

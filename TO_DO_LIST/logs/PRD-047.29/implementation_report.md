@@ -1,6 +1,6 @@
 # PRD-047.29 Implementation Report
 
-Status: completed_pending_push_metadata
+Status: completed
 Date: 2026-06-23
 PRD: `PRD-047.29 - Current Pipeline Simplification Targets / Layer Noise Reduction v1`
 
@@ -38,5 +38,5 @@ This PRD improved the canonical current pipeline instead of replacing it. The ru
 ## Delivery Notes
 
 - restored owner file `TO_DO_LIST/PRD-047.27-HF2_TASK_LIST.md` is included in scope for push without rewrite
-- commit hash: pending_before_main_push
-- micro-push hash: pending_before_micro_push
+- commit hash: `af4f3e6`
+- metadata sync: delivered in the immediate follow-up micro-push after this report update

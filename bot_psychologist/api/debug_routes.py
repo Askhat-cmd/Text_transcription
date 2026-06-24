@@ -271,6 +271,23 @@ def _compact_trace_payload(raw_trace: Dict[str, Any]) -> Dict[str, Any]:
             if trace.get("hybrid_retrieval_fallback_used") is not None
             else retrieval_decision.get("hybrid_retrieval_fallback_used")
         ),
+        "planner_status": (
+            trace.get("hybrid_retrieval_planner_status")
+            or retrieval_decision.get("hybrid_retrieval_planner_status")
+        ),
+        "fallback_scope": (
+            trace.get("hybrid_retrieval_fallback_scope")
+            or retrieval_decision.get("hybrid_retrieval_fallback_scope")
+        ),
+        "production_query_source": (
+            trace.get("hybrid_retrieval_production_query_source")
+            or retrieval_decision.get("hybrid_retrieval_production_query_source")
+        ),
+        "production_answer_affected": (
+            trace.get("hybrid_retrieval_production_answer_affected")
+            if trace.get("hybrid_retrieval_production_answer_affected") is not None
+            else retrieval_decision.get("hybrid_retrieval_production_answer_affected")
+        ),
         "llm_called": (
             trace.get("hybrid_retrieval_llm_called")
             if trace.get("hybrid_retrieval_llm_called") is not None
@@ -493,6 +510,17 @@ async def get_multiagent_trace(
         "fallback_used": (
             bool(debug.get("hybrid_retrieval_fallback_used"))
             if debug.get("hybrid_retrieval_fallback_used") is not None
+            else None
+        ),
+        "planner_status": str(debug.get("hybrid_retrieval_planner_status", "") or ""),
+        "fallback_scope": str(debug.get("hybrid_retrieval_fallback_scope", "") or ""),
+        "owner_severity": str(debug.get("hybrid_retrieval_owner_severity", "") or ""),
+        "production_query_source": str(
+            debug.get("hybrid_retrieval_production_query_source", "") or ""
+        ),
+        "production_answer_affected": (
+            bool(debug.get("hybrid_retrieval_production_answer_affected"))
+            if debug.get("hybrid_retrieval_production_answer_affected") is not None
             else None
         ),
         "universal_gate": str(debug.get("hybrid_retrieval_universal_gate", "") or ""),
@@ -789,6 +817,31 @@ async def get_multiagent_trace(
             if debug.get("hybrid_retrieval_fallback_used") is not None
             else None
         ),
+        hybrid_retrieval_planner_status=(
+            str(debug.get("hybrid_retrieval_planner_status"))
+            if debug.get("hybrid_retrieval_planner_status") is not None
+            else None
+        ),
+        hybrid_retrieval_fallback_scope=(
+            str(debug.get("hybrid_retrieval_fallback_scope"))
+            if debug.get("hybrid_retrieval_fallback_scope") is not None
+            else None
+        ),
+        hybrid_retrieval_owner_severity=(
+            str(debug.get("hybrid_retrieval_owner_severity"))
+            if debug.get("hybrid_retrieval_owner_severity") is not None
+            else None
+        ),
+        hybrid_retrieval_production_query_source=(
+            str(debug.get("hybrid_retrieval_production_query_source"))
+            if debug.get("hybrid_retrieval_production_query_source") is not None
+            else None
+        ),
+        hybrid_retrieval_production_answer_affected=(
+            bool(debug.get("hybrid_retrieval_production_answer_affected"))
+            if debug.get("hybrid_retrieval_production_answer_affected") is not None
+            else None
+        ),
         planned_composed_query=(
             str(debug.get("planned_composed_query"))
             if debug.get("planned_composed_query") is not None
@@ -891,6 +944,11 @@ async def get_multiagent_trace(
         runtime_trace_summary_v1=(
             debug.get("runtime_trace_summary_v1")
             if isinstance(debug.get("runtime_trace_summary_v1"), dict)
+            else None
+        ),
+        runtime_truth_trace_v1=(
+            debug.get("runtime_truth_trace_v1")
+            if isinstance(debug.get("runtime_truth_trace_v1"), dict)
             else None
         ),
         live_turn_evidence=(

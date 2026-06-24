@@ -71,6 +71,10 @@ function createTrace(): MultiAgentTraceData {
         llm_reason: 'universal_gate_resolved',
         fallback_used: false,
         universal_gate: 'clear_kb_ask',
+        planner_status: 'valid',
+        fallback_scope: 'none',
+        production_query_source: 'current_turn_focus_v1',
+        production_answer_affected: false,
       },
       semantic_hits: [
         {
@@ -136,6 +140,11 @@ function createTrace(): MultiAgentTraceData {
     hybrid_retrieval_llm_called: false,
     hybrid_retrieval_llm_reason: 'universal_gate_resolved',
     hybrid_retrieval_fallback_used: false,
+    hybrid_retrieval_planner_status: 'valid',
+    hybrid_retrieval_fallback_scope: 'none',
+    hybrid_retrieval_owner_severity: 'info',
+    hybrid_retrieval_production_query_source: 'current_turn_focus_v1',
+    hybrid_retrieval_production_answer_affected: false,
     planned_composed_query: 'паника контроль механизм',
     executed_rag_query: 'паника контроль механизм',
     legacy_rag_query: 'привет поддержка',
@@ -248,12 +257,50 @@ function createTrace(): MultiAgentTraceData {
           payload_item_origin: 'semantic_card',
           semantic_card_id: 'program_imperfect_self_v1',
           semantic_card_pack_id: 'semantic_cards_pilot_v1',
+          sent_to_writer: true,
+          inclusion_reason: 'selected_for_writer_payload',
           writer_can_ignore: true,
           applied_as_authority: false,
         },
       ],
       warnings: [],
       blockers: [],
+    },
+    runtime_truth_trace_v1: {
+      trace_version: 'runtime_truth_trace_v1',
+      current_user_message: 'привет',
+      dialogue_act: 'support_request',
+      answer_obligation: 'answer_concrete_situation',
+      latest_must_answer: 'привет',
+      retrieval_query_source: 'current_turn_focus_v1',
+      retrieved_candidates_count: 2,
+      trace_only_candidates_count: 1,
+      filtered_out_for_writer_count: 1,
+      writer_visible_payload_count: 1,
+      actual_writer_payload_count: 1,
+      writer_visible_payload_ids: ['semantic_card:program_imperfect_self_v1'],
+      writer_visible_payload_types: ['concept'],
+      payload_decision_reason: 'structured_payload_used',
+      grounding_visibility_reason: 'direct_knowledge_question',
+      legacy_fallback_scope: 'none',
+      planner_shadow_status: 'valid',
+      planner_fallback_scope: 'none',
+      production_query_source: 'current_turn_focus_v1',
+      json_decode_error_affected_production_answer: false,
+      production_answer_affected_by_shadow_planner: false,
+      writer_can_ignore_grounding: true,
+      broad_kb_visible: true,
+      narrow_grounding_visible: false,
+      filtered_out_for_writer: [
+        {
+          item_id: 'trace-only-hit',
+          origin: 'memory_semantic_hit',
+          chunk_type: 'concept',
+          source_doc: 'lecture_1',
+          sent_to_writer: false,
+          filter_reason: 'not_selected_for_writer',
+        },
+      ],
     },
     semantic_cards_pilot: {
       schema_version: 'semantic_cards_pilot_trace_v1',
@@ -373,6 +420,22 @@ describe('MultiAgentTraceWidget (rev2)', () => {
     harness.cleanup();
   });
 
+  it('renders runtime truth trace with writer-visible payload proof', () => {
+    const harness = renderWidget(
+      React.createElement(MultiAgentTraceWidget, {
+        trace: createTrace(),
+        isExpanded: true,
+      })
+    );
+    clickButtonContains(harness.container, 'Runtime Truth Trace');
+    clickButtonContains(harness.container, 'Writer-visible payload proof');
+    expect(harness.container.textContent).toContain('runtime_truth_trace_v1');
+    expect(harness.container.textContent).toContain('WRITER PAYLOAD');
+    expect(harness.container.textContent).toContain('semantic_card:program_imperfect_self_v1');
+    expect(harness.container.textContent).toContain('JSON ERROR AFFECTED PROD');
+    harness.cleanup();
+  });
+
   it('expands chunk card and shows safe preview content', () => {
     const harness = renderWidget(
       React.createElement(MultiAgentTraceWidget, {
@@ -382,9 +445,10 @@ describe('MultiAgentTraceWidget (rev2)', () => {
     );
 
     clickButtonContains(harness.container, 'Контекст памяти');
-    clickButtonContains(harness.container, 'Чанки в Writer');
+    clickButtonContains(harness.container, 'Retrieval candidates / trace-only');
     clickButtonContains(harness.container, 'score:');
 
+    expect(harness.container.textContent).toContain('Diagnostic candidate list only');
     expect(harness.container.textContent).toContain('safe_preview_mock');
     harness.cleanup();
   });
@@ -406,7 +470,7 @@ describe('MultiAgentTraceWidget (rev2)', () => {
     );
 
     clickButtonContains(harness.container, 'Контекст памяти');
-    clickButtonContains(harness.container, 'Чанки в Writer');
+    clickButtonContains(harness.container, 'Retrieval candidates / trace-only');
     clickButtonContains(harness.container, 'score:');
 
     expect(harness.container.textContent).toContain('content_full_fallback');

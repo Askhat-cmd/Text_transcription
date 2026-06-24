@@ -41,15 +41,23 @@ def build_runtime_trace_summary_v1(
     final_answer_directive: dict[str, Any] | None,
     writer_debug: dict[str, Any] | None,
     overlay_shadow: dict[str, Any] | None,
+    user_message: str = "",
+    dialogue_act_resolution: dict[str, Any] | None = None,
+    retrieval_decision: dict[str, Any] | None = None,
+    hybrid_retrieval_plan: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     directive = _safe_dict(final_answer_directive)
     writer = _safe_dict(writer_debug)
     overlay = _safe_dict(overlay_shadow)
+    dialogue_act = _safe_dict(dialogue_act_resolution)
+    retrieval = _safe_dict(retrieval_decision)
+    hybrid = _safe_dict(hybrid_retrieval_plan)
     latest_turn_constraints = _safe_dict(directive.get("latest_turn_constraints_v1"))
     active_constraints = active_latest_turn_constraint_names(latest_turn_constraints)
     writer_kb_payload_trace = _safe_dict(writer.get("writer_kb_payload_trace"))
     semantic_cards_pilot = _safe_dict(writer.get("semantic_cards_pilot"))
     writer_grounding_visibility = _safe_dict(writer.get("writer_grounding_visibility_v1"))
+    runtime_truth_trace = _safe_dict(writer.get("runtime_truth_trace_v1"))
     if writer_grounding_visibility:
         kb_visible_to_writer = bool(writer_grounding_visibility.get("kb_visible_to_writer", False))
         semantic_cards_visible_to_writer = bool(
@@ -99,6 +107,62 @@ def build_runtime_trace_summary_v1(
             if str(writer_grounding_visibility.get("reason", "") or "") == "explicit_practice_request_narrow_grounding"
             else "Detected explicit practice request. Forced contextual practice answer."
         )
+    hybrid_error = str(hybrid.get("error") or retrieval.get("hybrid_retrieval_plan_error") or "")
+    hybrid_mode = str(hybrid.get("mode") or retrieval.get("hybrid_retrieval_planner_mode") or "shadow")
+    hybrid_fallback_used = bool(
+        hybrid.get("fallback_used")
+        if hybrid.get("fallback_used") is not None
+        else retrieval.get("hybrid_retrieval_fallback_used", False)
+    )
+    planner_status = str(hybrid.get("planner_status") or "")
+    if not planner_status:
+        if "JSONDecodeError" in hybrid_error and hybrid_mode == "shadow":
+            planner_status = "shadow_invalid_json"
+        elif hybrid_fallback_used and hybrid_mode == "shadow":
+            planner_status = "shadow_fallback"
+        elif hybrid.get("valid") is False or retrieval.get("hybrid_retrieval_plan_valid") is False:
+            planner_status = "invalid"
+        else:
+            planner_status = "valid"
+    fallback_scope = str(hybrid.get("fallback_scope") or "")
+    if not fallback_scope:
+        fallback_scope = "shadow_only" if hybrid_mode == "shadow" and hybrid_fallback_used else "none"
+    production_query_source = str(
+        hybrid.get("production_query_source")
+        or retrieval.get("retrieval_query_source")
+        or _safe_dict(retrieval.get("retrieval_query_build_trace")).get("primary_path", "")
+        or "current_turn_focus_v1"
+    )
+    production_answer_affected = bool(
+        hybrid.get("production_answer_affected")
+        if hybrid.get("production_answer_affected") is not None
+        else False
+    )
+    json_decode_error_affected_production = bool(
+        "JSONDecodeError" in hybrid_error and production_answer_affected
+    )
+    if runtime_truth_trace:
+        runtime_truth_trace = dict(runtime_truth_trace)
+        runtime_truth_trace.update(
+            {
+                "current_user_message": str(user_message or ""),
+                "dialogue_act": str(dialogue_act.get("dialogue_act", "") or ""),
+                "answer_obligation": str(directive.get("answer_obligation", "") or ""),
+                "latest_must_answer": str(directive.get("must_answer", "") or ""),
+                "retrieval_query_source": production_query_source,
+                "legacy_fallback_scope": str(
+                    runtime_truth_trace.get("legacy_fallback_scope")
+                    or writer_kb_payload_trace.get("fallback_scope", "none")
+                    or "none"
+                ),
+                "planner_shadow_status": planner_status,
+                "planner_fallback_scope": fallback_scope,
+                "planner_owner_severity": str(hybrid.get("owner_severity") or "info"),
+                "production_query_source": production_query_source,
+                "json_decode_error_affected_production_answer": json_decode_error_affected_production,
+                "production_answer_affected_by_shadow_planner": production_answer_affected,
+            }
+        )
 
     return {
         "version": RUNTIME_TRACE_SUMMARY_VERSION,
@@ -116,6 +180,11 @@ def build_runtime_trace_summary_v1(
         "explicit_practice_request": explicit_practice_request,
         "practice_request_runtime_note": practice_request_runtime_note,
         "practice_blocked_by_user_request": bool(latest_turn_constraints.get("no_practice", False)),
+        "runtime_truth_trace_v1": runtime_truth_trace,
+        "planner_shadow_status": planner_status,
+        "planner_fallback_scope": fallback_scope,
+        "planner_production_query_source": production_query_source,
+        "planner_json_decode_error_affected_production_answer": json_decode_error_affected_production,
         "warnings": warnings,
         "full_trace_available": True,
     }

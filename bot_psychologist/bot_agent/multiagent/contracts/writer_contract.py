@@ -305,6 +305,11 @@ class WriterContract:
             if isinstance(writer_context_package.get("writer_kb_payload_trace"), dict)
             else {}
         )
+        runtime_truth_trace = (
+            dict(writer_context_package.get("runtime_truth_trace_v1", {}))
+            if isinstance(writer_context_package.get("runtime_truth_trace_v1"), dict)
+            else {}
+        )
         writer_kb_payload_future_graduation_notes = (
             dict(writer_context_package.get("writer_kb_payload_future_graduation_notes", {}))
             if isinstance(writer_context_package.get("writer_kb_payload_future_graduation_notes"), dict)
@@ -484,6 +489,7 @@ class WriterContract:
             "writer_kb_payload_failure_reason": writer_kb_payload_failure_reason,
             "writer_kb_payload": writer_kb_payload,
             "writer_kb_payload_trace": writer_kb_payload_trace,
+            "runtime_truth_trace_v1": runtime_truth_trace,
             "writer_kb_payload_trace_version": str(
                 writer_kb_payload_trace.get("schema_version", "writer_kb_payload_trace_v1")
                 or "writer_kb_payload_trace_v1"

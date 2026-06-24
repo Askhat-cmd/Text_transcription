@@ -156,6 +156,23 @@ def _build_plan_dict(plan: HybridRetrievalPlan) -> dict[str, Any]:
     return payload
 
 
+def _owner_status_fields(
+    *,
+    mode: str,
+    planner_status: str,
+    fallback_used: bool,
+    owner_severity: str = "info",
+) -> dict[str, Any]:
+    shadow_only = mode == "shadow" and bool(fallback_used)
+    return {
+        "planner_status": planner_status,
+        "owner_severity": owner_severity,
+        "fallback_scope": "shadow_only" if shadow_only else "none",
+        "production_query_source": "current_turn_focus_v1",
+        "production_answer_affected": False,
+    }
+
+
 def _validate_plan_payload(raw_plan: dict[str, Any]) -> tuple[dict[str, Any] | None, str | None]:
     if not isinstance(raw_plan, dict):
         return None, "plan_not_dict"
@@ -422,6 +439,11 @@ async def build_hybrid_retrieval_plan_v1(
             "llm_called": False,
             "llm_reason": "universal_gate_resolved",
             "fallback_used": False,
+            **_owner_status_fields(
+                mode=mode,
+                planner_status="valid",
+                fallback_used=False,
+            ),
         }
 
     base_constraints = _constraints_from_text(user_message)
@@ -450,6 +472,11 @@ async def build_hybrid_retrieval_plan_v1(
             "llm_called": False,
             "llm_reason": "planner_client_unavailable" if client is None else "planner_mode_off",
             "fallback_used": True,
+            **_owner_status_fields(
+                mode=mode,
+                planner_status="shadow_client_unavailable" if mode == "shadow" else "planner_unavailable",
+                fallback_used=True,
+            ),
         }
 
     prompt_payload = _planner_input_payload(
@@ -498,6 +525,11 @@ async def build_hybrid_retrieval_plan_v1(
                 "llm_called": True,
                 "llm_reason": llm_reason,
                 "fallback_used": True,
+                **_owner_status_fields(
+                    mode=mode,
+                    planner_status="shadow_invalid_plan" if mode == "shadow" else "invalid_plan",
+                    fallback_used=True,
+                ),
                 "llm_tokens_prompt": result.tokens_prompt,
                 "llm_tokens_completion": result.tokens_completion,
                 "llm_tokens_total": result.tokens_total,
@@ -512,12 +544,17 @@ async def build_hybrid_retrieval_plan_v1(
             "llm_called": True,
             "llm_reason": llm_reason,
             "fallback_used": False,
+            **_owner_status_fields(
+                mode=mode,
+                planner_status="valid",
+                fallback_used=False,
+            ),
             "llm_tokens_prompt": result.tokens_prompt,
             "llm_tokens_completion": result.tokens_completion,
             "llm_tokens_total": result.tokens_total,
         }
     except Exception as exc:  # noqa: BLE001
-        logger.warning("[HYBRID_RETRIEVAL] planner fallback used: %s", exc)
+        logger.debug("[HYBRID_RETRIEVAL] planner fallback used in %s mode: %s", mode, exc.__class__.__name__)
         fallback_plan = _build_plan_dict(
             HybridRetrievalPlan(
                 retrieval_action="trace_only",
@@ -527,16 +564,31 @@ async def build_hybrid_retrieval_plan_v1(
                 confidence=0.0,
             )
         )
+        invalid_json = isinstance(exc, json.JSONDecodeError)
+        compact_error = "JSONDecodeError:invalid_json" if invalid_json else f"{exc.__class__.__name__}:planner_error"
         return {
             "version": HYBRID_RETRIEVAL_PLANNER_VERSION,
             "mode": mode,
             "plan": fallback_plan,
             "valid": False,
-            "error": f"{exc.__class__.__name__}:{exc}",
+            "error": compact_error,
             "universal_gate": universal_gate,
             "llm_called": True,
             "llm_reason": llm_reason,
             "fallback_used": True,
+            **_owner_status_fields(
+                mode=mode,
+                planner_status=(
+                    "shadow_invalid_json"
+                    if mode == "shadow" and invalid_json
+                    else "shadow_error"
+                    if mode == "shadow"
+                    else "invalid_json"
+                    if invalid_json
+                    else "planner_error"
+                ),
+                fallback_used=True,
+            ),
         }
 
 

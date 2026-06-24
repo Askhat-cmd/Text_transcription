@@ -562,6 +562,22 @@ class MultiAgentOrchestrator:
         retrieval_decision["hybrid_retrieval_fallback_used"] = bool(
             hybrid_retrieval_plan.get("fallback_used", False)
         )
+        retrieval_decision["hybrid_retrieval_planner_status"] = str(
+            hybrid_retrieval_plan.get("planner_status", "") or ""
+        )
+        retrieval_decision["hybrid_retrieval_fallback_scope"] = str(
+            hybrid_retrieval_plan.get("fallback_scope", "") or ""
+        )
+        retrieval_decision["hybrid_retrieval_owner_severity"] = str(
+            hybrid_retrieval_plan.get("owner_severity", "") or ""
+        )
+        retrieval_decision["hybrid_retrieval_production_query_source"] = str(
+            hybrid_retrieval_plan.get("production_query_source", "current_turn_focus_v1")
+            or "current_turn_focus_v1"
+        )
+        retrieval_decision["hybrid_retrieval_production_answer_affected"] = bool(
+            hybrid_retrieval_plan.get("production_answer_affected", False)
+        )
         dialogue_policy["retrieval_decision"] = dict(retrieval_decision)
         diagnostic_card = build_diagnostic_card_v1(
             user_message=query,
@@ -853,6 +869,10 @@ class MultiAgentOrchestrator:
             final_answer_directive=writer_contract.final_answer_directive,
             writer_debug=writer_debug,
             overlay_shadow=overlay_shadow,
+            user_message=query,
+            dialogue_act_resolution=dialogue_act_resolution,
+            retrieval_decision=retrieval_decision,
+            hybrid_retrieval_plan=hybrid_retrieval_plan,
         )
 
         if bool(final_answer_acceptance_gate.get("can_mark_question_answered", False)):
@@ -1119,6 +1139,22 @@ class MultiAgentOrchestrator:
                 "hybrid_retrieval_llm_called": bool(hybrid_retrieval_plan.get("llm_called", False)),
                 "hybrid_retrieval_llm_reason": str(hybrid_retrieval_plan.get("llm_reason", "") or ""),
                 "hybrid_retrieval_fallback_used": bool(hybrid_retrieval_plan.get("fallback_used", False)),
+                "hybrid_retrieval_planner_status": str(
+                    hybrid_retrieval_plan.get("planner_status", "") or ""
+                ),
+                "hybrid_retrieval_fallback_scope": str(
+                    hybrid_retrieval_plan.get("fallback_scope", "") or ""
+                ),
+                "hybrid_retrieval_owner_severity": str(
+                    hybrid_retrieval_plan.get("owner_severity", "") or ""
+                ),
+                "hybrid_retrieval_production_query_source": str(
+                    hybrid_retrieval_plan.get("production_query_source", "current_turn_focus_v1")
+                    or "current_turn_focus_v1"
+                ),
+                "hybrid_retrieval_production_answer_affected": bool(
+                    hybrid_retrieval_plan.get("production_answer_affected", False)
+                ),
                 "planned_composed_query": str(
                     hybrid_retrieval_trace.get("planned_composed_query", "")
                     or ""
@@ -1167,6 +1203,11 @@ class MultiAgentOrchestrator:
                 "contextual_retrieval_query_composer": dict(contextual_retrieval_query_composer),
                 "final_answer_directive": dict(final_answer_directive),
                 "runtime_trace_summary_v1": dict(runtime_trace_summary),
+                "runtime_truth_trace_v1": (
+                    dict(runtime_trace_summary.get("runtime_truth_trace_v1", {}))
+                    if isinstance(runtime_trace_summary.get("runtime_truth_trace_v1"), dict)
+                    else {}
+                ),
                 "final_answer_acceptance_gate": dict(final_answer_acceptance_gate),
                 "final_answer_acceptance_retry_attempted": bool(acceptance_retry_attempted),
                 "live_turn_evidence": dict(live_turn_evidence),
@@ -1329,6 +1370,11 @@ class MultiAgentOrchestrator:
                 "writer_kb_payload_trace": (
                     dict(writer_debug.get("writer_kb_payload_trace", {}))
                     if isinstance(writer_debug.get("writer_kb_payload_trace"), dict)
+                    else {}
+                ),
+                "runtime_truth_trace_raw": (
+                    dict(writer_debug.get("runtime_truth_trace_v1", {}))
+                    if isinstance(writer_debug.get("runtime_truth_trace_v1"), dict)
                     else {}
                 ),
                 "future_graduation_notes": (

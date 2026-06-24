@@ -245,6 +245,16 @@ def build_effective_dialogue_policy(
     style_preference_priority = bool(
         expansion_requested or explicit_short_support_requested or repair_and_expand_requested
     )
+    compact_support_answer = bool(
+        not safety_priority
+        and profile_preset != "safe_guided"
+        and not rich_answer_requested
+        and not concept_or_practice_need
+        and not explicit_answer_need
+        and not direct_concrete_request
+        and not application_request
+        and not summary_request
+    )
 
     if safety_priority:
         answer_depth = "short"
@@ -351,13 +361,17 @@ def build_effective_dialogue_policy(
         "human_like_answer_policy": {
             "enabled": human_like_enabled,
             "answer_style": "human_chatgpt_like" if human_like_enabled else "guided_compact",
-            "default_depth": "medium_to_long" if profile_preset != "safe_guided" else "short_to_medium",
-            "allow_long_answers": profile_preset != "safe_guided",
+            "default_depth": (
+                "short_to_medium"
+                if compact_support_answer or profile_preset == "safe_guided"
+                else "medium_to_long"
+            ),
+            "allow_long_answers": bool(profile_preset != "safe_guided" and not compact_support_answer),
             "allow_lists": bool((profile_preset != "safe_guided") and (numbered_list_requested or rich_answer_requested)),
             "allow_examples": bool((profile_preset != "safe_guided") and (examples_requested or rich_answer_requested)),
             "allow_direct_answer": True,
-            "allow_reflection_plus_explanation_plus_step": profile_preset != "safe_guided",
-            "allow_multiple_options": profile_preset != "safe_guided",
+            "allow_reflection_plus_explanation_plus_step": bool(profile_preset != "safe_guided" and not compact_support_answer),
+            "allow_multiple_options": bool(profile_preset != "safe_guided" and not compact_support_answer),
             "question_is_optional": True,
             "micro_step_only_when_user_explicitly_requests_one_step": True,
             "do_not_force_question_at_end": True,
@@ -366,6 +380,14 @@ def build_effective_dialogue_policy(
             "respect_user_requested_format": True,
             "sarcasm_and_dissatisfaction_repair": True,
             "direct_answer_repair_when_user_complains": True,
+            "support_answer_compactness": "ordinary_support_compact" if compact_support_answer else "adaptive",
+            "preferred_shape": (
+                "one_main_point_one_optional_next_step"
+                if compact_support_answer
+                else "adaptive"
+            ),
+            "target_length_chars": "600_1400" if compact_support_answer else "",
+            "avoid_mechanism_heavy_default": compact_support_answer,
         },
         "constraint_resolution": {
             "profile": normalized_profile,
@@ -392,6 +414,7 @@ def build_effective_dialogue_policy(
         "sarcasm_or_negative_feedback": sarcasm_or_negative_feedback,
         "application_request": application_request,
         "style_preference_priority": style_preference_priority,
+        "compact_support_answer": compact_support_answer,
         "active_concept": active_concept,
         "knowledge_answer_type": knowledge_answer_type,
         "planner_is_advisory": planner_advisory,

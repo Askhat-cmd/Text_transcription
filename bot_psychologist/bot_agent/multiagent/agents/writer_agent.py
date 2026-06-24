@@ -592,6 +592,11 @@ class WriterAgent:
             if isinstance(ctx.get("writer_kb_payload_trace"), dict)
             else {}
         )
+        self.last_debug["runtime_truth_trace_v1"] = (
+            dict(ctx.get("runtime_truth_trace_v1", {}))
+            if isinstance(ctx.get("runtime_truth_trace_v1"), dict)
+            else {}
+        )
         self.last_debug["writer_kb_payload_future_graduation_notes"] = (
             dict(ctx.get("writer_kb_payload_future_graduation_notes", {}))
             if isinstance(ctx.get("writer_kb_payload_future_graduation_notes"), dict)
@@ -931,6 +936,18 @@ class WriterAgent:
             human_like_repair_user_dissatisfaction=str(bool(repair_user_dissatisfaction)).lower(),
             human_like_direct_answer_repair=str(
                 bool(human_like_answer_policy.get("direct_answer_repair_when_user_complains", False))
+            ).lower(),
+            human_like_support_answer_compactness=str(
+                human_like_answer_policy.get("support_answer_compactness", "adaptive") or "adaptive"
+            ),
+            human_like_preferred_shape=str(
+                human_like_answer_policy.get("preferred_shape", "adaptive") or "adaptive"
+            ),
+            human_like_target_length_chars=str(
+                human_like_answer_policy.get("target_length_chars", "") or ""
+            ),
+            human_like_avoid_mechanism_heavy_default=str(
+                bool(human_like_answer_policy.get("avoid_mechanism_heavy_default", False))
             ).lower(),
             constraint_resolution_profile=str(
                 constraint_resolution.get("profile", dialogue_profile) or dialogue_profile

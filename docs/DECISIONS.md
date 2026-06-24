@@ -1322,3 +1322,24 @@ Consequences:
 - Admin Runtime, Web Chat trace, and owner live proof now read the same pilot truth when local pilot startup is used;
 - future cleanup should consolidate pilot toggles instead of multiplying runtime branches;
 - semantic-card expansion is deferred until the unified runtime baseline is explicitly documented.
+
+## ADR-080 - Owner trace must separate retrieval candidates from Writer-visible payload
+
+Status: accepted
+
+Date: 2026-06-24
+
+Context: PRD-047.32 showed that owner Web Chat trace could be technically rich but semantically misleading. The UI label `Чанки в Writer` rendered `memory.semantic_hits`, while actual Writer input came from `writer_kb_payload_v1` and sometimes contained a different semantic-card payload. Hybrid Planner shadow invalid JSON also looked like a production failure without scope.
+
+Decision:
+- introduce `runtime_truth_trace_v1` inside the existing Writer context/runtime trace path, not as a new runtime subsystem;
+- treat retrieved candidates, filtered-out candidates, trace-only grounding, and Writer-visible payload as separate trace categories;
+- make actual Writer payload provable through item ids, origin, chunk type, source doc, `sent_to_writer`, `writer_can_ignore`, `applied_as_authority`, and inclusion reason;
+- keep diagnostic candidate lists visible, but label them as `Retrieval candidates / trace-only`;
+- scope shadow/compatibility fallback fields with `fallback_scope`, `production_query_source`, and `production_answer_affected`.
+
+Consequences:
+- owner trace can explain why a chunk was found but not sent to Writer;
+- semantic cards can be Writer-visible advisory payload without becoming authority;
+- Hybrid Planner shadow failures remain observable without being confused with production answer failure;
+- future cleanup should retire legacy/fallback fields only after trace taxonomy proves which ones are still active.

@@ -334,10 +334,12 @@ def build_writer_kb_payload(
         )
         chunk = {
             "chunk_id": chunk_id,
+            "item_id": chunk_id,
             "source_id": source_id,
             "source_doc": _extract_source_doc(item, overlay_item),
             "chunk_type": _extract_chunk_type(item, overlay_item),
             "payload_item_origin": str(item.get("payload_item_origin") or ""),
+            "origin": str(item.get("payload_item_origin") or "retrieval"),
             "semantic_card_id": str(item.get("semantic_card_id") or ""),
             "semantic_card_pack_id": str(item.get("semantic_card_pack_id") or ""),
             "core_thesis": str(item.get("core_thesis") or overlay_item.get("core_thesis") or _core_thesis(content)),
@@ -366,6 +368,14 @@ def build_writer_kb_payload(
             "truncation_reason": str(excerpt["truncation_reason"]),
             "truncated_mid_sentence": bool(excerpt["truncated_mid_sentence"]),
             "overlay_metadata_used": bool(overlay_item),
+            "sent_to_writer": True,
+            "writer_can_ignore": True,
+            "applied_as_authority": False,
+            "inclusion_reason": str(
+                item.get("inclusion_reason")
+                or item.get("why_included")
+                or "selected_for_writer_payload"
+            ),
         }
         payload_chunks.append(chunk)
         total_sent += int(chunk["sent_char_count"])
@@ -402,7 +412,9 @@ def build_writer_kb_payload_trace(
     preview_char_count = min(total_sent_char_count, max(0, int(display_preview_char_cap or 0)))
     chunk_summaries = [
         {
+            "item_id": str(item.get("item_id") or item.get("chunk_id", "") or ""),
             "chunk_id": str(item.get("chunk_id", "") or ""),
+            "origin": str(item.get("origin") or item.get("payload_item_origin", "") or "retrieval"),
             "source_doc": str(item.get("source_doc", "") or ""),
             "chunk_type": str(item.get("chunk_type", "") or ""),
             "quote_policy": str(item.get("quote_policy", "") or ""),
@@ -410,11 +422,16 @@ def build_writer_kb_payload_trace(
             "payload_item_origin": str(item.get("payload_item_origin", "") or ""),
             "semantic_card_id": str(item.get("semantic_card_id", "") or ""),
             "semantic_card_pack_id": str(item.get("semantic_card_pack_id", "") or ""),
+            "sent_to_writer": True,
             "writer_can_ignore": True,
             "applied_as_authority": False,
+            "inclusion_reason": str(item.get("inclusion_reason", "") or "selected_for_writer_payload"),
         }
         for item in chunks[:8]
     ]
+    fallback_scope = "none"
+    if fallback_is_primary:
+        fallback_scope = "compatibility"
     return {
         "schema_version": WRITER_KB_PAYLOAD_TRACE_VERSION,
         "enabled": effective_enabled,
@@ -438,6 +455,8 @@ def build_writer_kb_payload_trace(
         "chunk_summaries": chunk_summaries,
         "fallback_reason": normalized_fallback_reason,
         "fallback_is_primary": fallback_is_primary,
+        "fallback_scope": fallback_scope,
+        "payload_scope": "production" if has_structured_payload else "compatibility",
         "warning": (
             "legacy semantic hits fallback used instead of writer_kb_payload_v1"
             if fallback_is_primary

@@ -104,6 +104,11 @@ export interface MemoryContextTrace {
     llm_reason?: string;
     fallback_used?: boolean | null;
     universal_gate?: string;
+    planner_status?: string | null;
+    fallback_scope?: string | null;
+    owner_severity?: string | null;
+    production_query_source?: string | null;
+    production_answer_affected?: boolean | null;
   } | null;
   semantic_hits: SemanticHitTrace[];
   user_profile_patterns: string[];
@@ -170,6 +175,11 @@ export interface MultiAgentTraceData {
   hybrid_retrieval_llm_called?: boolean | null;
   hybrid_retrieval_llm_reason?: string | null;
   hybrid_retrieval_fallback_used?: boolean | null;
+  hybrid_retrieval_planner_status?: string | null;
+  hybrid_retrieval_fallback_scope?: string | null;
+  hybrid_retrieval_owner_severity?: string | null;
+  hybrid_retrieval_production_query_source?: string | null;
+  hybrid_retrieval_production_answer_affected?: boolean | null;
   planned_composed_query?: string | null;
   executed_rag_query?: string | null;
   legacy_rag_query?: string | null;
@@ -191,7 +201,10 @@ export interface MultiAgentTraceData {
   retrieval_query_build_trace?: Record<string, unknown> | null;
   writer_kb_payload_trace?: Record<string, unknown> | null;
   semantic_cards_pilot?: Record<string, unknown> | null;
+  writer_grounding_visibility_v1?: Record<string, unknown> | null;
   future_graduation_notes?: Record<string, unknown> | null;
+  runtime_trace_summary_v1?: Record<string, unknown> | null;
+  runtime_truth_trace_v1?: Record<string, unknown> | null;
   live_turn_evidence?: Record<string, unknown> | null;
 }
 

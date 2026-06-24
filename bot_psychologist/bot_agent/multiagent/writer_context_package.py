@@ -23,6 +23,7 @@ from .writer_kb_payload import (
 
 WRITER_CONTEXT_PACKAGE_VERSION = "writer_context_package_v1"
 WRITER_GROUNDING_VISIBILITY_VERSION = "writer_grounding_visibility_v1"
+RUNTIME_TRUTH_TRACE_VERSION = "runtime_truth_trace_v1"
 NARROW_PRACTICE_GROUNDING_TYPES = frozenset({"practice", "dialogue_move", "anti_pattern", "safety"})
 
 _KNOWLEDGE_MARKERS = (
@@ -43,7 +44,10 @@ _DIRECT_SOURCE_MARKERS = (
     "в базе",
     "из базы",
     "из внутренней базы",
+    "во внутренней базе",
+    "внутренней базе",
     "что в базе говорится",
+    "что во внутренней базе говорится",
     "что база говорит",
     "источник",
     "источники",
@@ -352,6 +356,198 @@ def build_writer_grounding_authority_note_v1() -> str:
     )
 
 
+def _string_list(value: Any) -> list[str]:
+    if isinstance(value, list):
+        return [str(item).strip() for item in value if str(item).strip()]
+    if isinstance(value, str) and value.strip():
+        return [value.strip()]
+    return []
+
+
+def _candidate_id(item: dict[str, Any]) -> str:
+    for key in ("chunk_id", "item_id", "semantic_card_id", "source_id", "source"):
+        value = str(item.get(key, "") or "").strip()
+        if value:
+            return value
+    return "unknown"
+
+
+def _source_doc(item: dict[str, Any]) -> str:
+    for key in ("source_doc", "source_document", "doc_title", "title", "source"):
+        value = str(item.get(key, "") or "").strip()
+        if value:
+            return value
+    return "unknown"
+
+
+def _candidate_origin(item: dict[str, Any], default: str) -> str:
+    return str(
+        item.get("origin")
+        or item.get("payload_item_origin")
+        or ("semantic_card" if str(item.get("semantic_card_id", "") or "").strip() else default)
+    )
+
+
+def _filtered_reason(
+    *,
+    item: dict[str, Any],
+    writer_grounding_visibility: dict[str, Any],
+    no_internal_db: bool,
+    sent_to_writer: bool,
+    narrow_practice_grounding_active: bool,
+    actual_writer_payload_ids: set[str],
+) -> str:
+    if sent_to_writer:
+        return ""
+    if no_internal_db:
+        return "latest_turn_no_internal_db"
+    chunk_type = _extract_chunk_type(item)
+    allowed_types = {
+        _normalize_chunk_type(value)
+        for value in list(writer_grounding_visibility.get("allowed_grounding_types", []) or [])
+        if _normalize_chunk_type(value)
+    }
+    if narrow_practice_grounding_active and chunk_type and chunk_type not in allowed_types:
+        return "filtered_by_narrow_practice_grounding"
+    if _candidate_id(item) in actual_writer_payload_ids:
+        return ""
+    return str(writer_grounding_visibility.get("reason", "") or "not_selected_for_writer")
+
+
+def _build_runtime_truth_trace_v1(
+    *,
+    rag_candidates_for_trace: list[dict[str, Any]],
+    base_rag_for_writer: list[dict[str, Any]],
+    semantic_card_candidate_payload_items: list[dict[str, Any]],
+    writer_kb_payload: dict[str, Any],
+    writer_kb_payload_trace: dict[str, Any],
+    writer_grounding_visibility: dict[str, Any],
+    retrieval: dict[str, Any],
+    no_internal_db: bool,
+    narrow_practice_grounding_active: bool,
+    fallback_reason: str,
+) -> dict[str, Any]:
+    payload_chunks = [
+        dict(item)
+        for item in list(writer_kb_payload.get("chunks", []) or [])
+        if isinstance(item, dict)
+    ]
+    writer_visible_payload_items: list[dict[str, Any]] = []
+    actual_writer_payload_ids: set[str] = set()
+    for item in payload_chunks:
+        item_id = _candidate_id(item)
+        actual_writer_payload_ids.add(item_id)
+        writer_visible_payload_items.append(
+            {
+                "item_id": item_id,
+                "origin": _candidate_origin(item, "retrieval"),
+                "chunk_type": _extract_chunk_type(item),
+                "source_doc": _source_doc(item),
+                "allowed_use": _string_list(item.get("allowed_use")),
+                "quote_policy": str(item.get("quote_policy", "") or "paraphrase_only"),
+                "sent_to_writer": True,
+                "writer_can_ignore": bool(item.get("writer_can_ignore", True)),
+                "applied_as_authority": bool(item.get("applied_as_authority", False)),
+                "inclusion_reason": str(item.get("inclusion_reason", "") or "selected_for_writer_payload"),
+            }
+        )
+
+    candidate_pool: list[dict[str, Any]] = []
+    seen_candidates: set[str] = set()
+    for origin, items in (
+        ("retrieval_candidate", base_rag_for_writer),
+        ("semantic_card_candidate", semantic_card_candidate_payload_items),
+        ("memory_semantic_hit", rag_candidates_for_trace),
+    ):
+        for raw in list(items or []):
+            if not isinstance(raw, dict):
+                continue
+            item = dict(raw)
+            item_id = _candidate_id(item)
+            dedupe_key = f"{origin}:{item_id}"
+            if dedupe_key in seen_candidates:
+                continue
+            seen_candidates.add(dedupe_key)
+            item["_runtime_origin"] = origin
+            candidate_pool.append(item)
+
+    filtered_out: list[dict[str, Any]] = []
+    trace_only: list[dict[str, Any]] = []
+    for item in candidate_pool:
+        item_id = _candidate_id(item)
+        sent_to_writer = item_id in actual_writer_payload_ids
+        reason = _filtered_reason(
+            item=item,
+            writer_grounding_visibility=writer_grounding_visibility,
+            no_internal_db=no_internal_db,
+            sent_to_writer=sent_to_writer,
+            narrow_practice_grounding_active=narrow_practice_grounding_active,
+            actual_writer_payload_ids=actual_writer_payload_ids,
+        )
+        if not sent_to_writer:
+            entry = {
+                "item_id": item_id,
+                "origin": _candidate_origin(item, str(item.get("_runtime_origin", "trace"))),
+                "chunk_type": _extract_chunk_type(item),
+                "source_doc": _source_doc(item),
+                "sent_to_writer": False,
+                "filter_reason": reason,
+            }
+            filtered_out.append(entry)
+            trace_only.append(entry)
+
+    writer_visible_payload_types = [
+        str(item.get("chunk_type", "") or "")
+        for item in writer_visible_payload_items
+        if str(item.get("chunk_type", "") or "").strip()
+    ]
+    grounding_reason = str(writer_grounding_visibility.get("reason", "") or "")
+    retrieval_query_build_trace = (
+        dict(retrieval.get("retrieval_query_build_trace", {}))
+        if isinstance(retrieval.get("retrieval_query_build_trace"), dict)
+        else {}
+    )
+    retrieval_query_source = str(
+        retrieval.get("retrieval_query_source")
+        or retrieval_query_build_trace.get("primary_path", "")
+        or "current_turn_focus_v1"
+    )
+    payload_decision_reason = (
+        str(fallback_reason or "")
+        or str(writer_kb_payload_trace.get("status", "") or "")
+        or grounding_reason
+    )
+    return {
+        "trace_version": RUNTIME_TRUTH_TRACE_VERSION,
+        "retrieved_candidates_count": len(candidate_pool),
+        "trace_only_candidates_count": len(trace_only),
+        "filtered_out_for_writer_count": len(filtered_out),
+        "writer_visible_payload_count": len(writer_visible_payload_items),
+        "actual_writer_payload_count": len(writer_visible_payload_items),
+        "writer_visible_payload_ids": [
+            str(item.get("item_id", "") or "")
+            for item in writer_visible_payload_items
+            if str(item.get("item_id", "") or "").strip()
+        ],
+        "writer_visible_payload_types": writer_visible_payload_types,
+        "payload_decision_reason": payload_decision_reason,
+        "grounding_visibility_reason": grounding_reason,
+        "writer_can_ignore_grounding": bool(writer_grounding_visibility.get("writer_may_ignore_grounding", True)),
+        "broad_kb_visible": bool(
+            writer_grounding_visibility.get("kb_visible_to_writer", False)
+            and grounding_reason != "explicit_practice_request_narrow_grounding"
+        ),
+        "narrow_grounding_visible": bool(grounding_reason == "explicit_practice_request_narrow_grounding"),
+        "writer_visible_payload_items": writer_visible_payload_items,
+        "filtered_out_for_writer": filtered_out,
+        "trace_only_grounding": trace_only,
+        "retrieval_query_source": retrieval_query_source,
+        "legacy_fallback_scope": str(writer_kb_payload_trace.get("fallback_scope", "none") or "none"),
+        "writer_kb_payload_status": str(writer_kb_payload_trace.get("status", "") or ""),
+        "writer_kb_payload_primary_path": str(writer_kb_payload_trace.get("primary_path", "") or ""),
+    }
+
+
 def build_writer_context_package_v1(
     *,
     user_message: str = "",
@@ -631,6 +827,18 @@ def build_writer_context_package_v1(
                 + ["writer_kb_payload_failed"]
             )
         )
+    runtime_truth_trace = _build_runtime_truth_trace_v1(
+        rag_candidates_for_trace=rag_candidates_for_trace,
+        base_rag_for_writer=base_rag_for_writer,
+        semantic_card_candidate_payload_items=semantic_card_candidate_payload_items,
+        writer_kb_payload=writer_kb_payload,
+        writer_kb_payload_trace=writer_kb_payload_trace,
+        writer_grounding_visibility=writer_grounding_visibility,
+        retrieval=retrieval,
+        no_internal_db=no_internal_db,
+        narrow_practice_grounding_active=narrow_practice_grounding_active,
+        fallback_reason=fallback_reason,
+    )
     future_graduation_notes = build_future_graduation_notes(
         payload=writer_kb_payload,
         trace=writer_kb_payload_trace,
@@ -665,6 +873,7 @@ def build_writer_context_package_v1(
         "writer_can_ignore_rag": bool(composer.get("writer_can_ignore_rag", True)),
         "writer_kb_payload": writer_kb_payload,
         "writer_kb_payload_trace": writer_kb_payload_trace,
+        "runtime_truth_trace_v1": runtime_truth_trace,
         "writer_kb_payload_future_graduation_notes": future_graduation_notes,
         "writer_kb_payload_enabled": bool(payload_resolution.get("effective_value", False)),
         "writer_kb_payload_failed": writer_kb_payload_failed,
@@ -703,6 +912,7 @@ def build_writer_context_package_v1(
 __all__ = [
     "WRITER_CONTEXT_PACKAGE_VERSION",
     "WRITER_GROUNDING_VISIBILITY_VERSION",
+    "RUNTIME_TRUTH_TRACE_VERSION",
     "build_writer_context_package_v1",
     "build_writer_grounding_authority_note_v1",
     "build_writer_grounding_visibility_v1",

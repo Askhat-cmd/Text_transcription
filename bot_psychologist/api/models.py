@@ -477,6 +477,11 @@ class MultiAgentTraceResponse(BaseModel):
     hybrid_retrieval_llm_called: Optional[bool] = None
     hybrid_retrieval_llm_reason: Optional[str] = None
     hybrid_retrieval_fallback_used: Optional[bool] = None
+    hybrid_retrieval_planner_status: Optional[str] = None
+    hybrid_retrieval_fallback_scope: Optional[str] = None
+    hybrid_retrieval_owner_severity: Optional[str] = None
+    hybrid_retrieval_production_query_source: Optional[str] = None
+    hybrid_retrieval_production_answer_affected: Optional[bool] = None
     planned_composed_query: Optional[str] = None
     executed_rag_query: Optional[str] = None
     legacy_rag_query: Optional[str] = None
@@ -501,6 +506,7 @@ class MultiAgentTraceResponse(BaseModel):
     writer_grounding_visibility_v1: Optional[Dict[str, Any]] = None
     future_graduation_notes: Optional[Dict[str, Any]] = None
     runtime_trace_summary_v1: Optional[Dict[str, Any]] = None
+    runtime_truth_trace_v1: Optional[Dict[str, Any]] = None
     live_turn_evidence: Optional[Dict[str, Any]] = None
 
 

@@ -339,6 +339,15 @@ flexible_length_allowed={human_like_flexible_length_allowed}
 respect_user_requested_format={human_like_respect_user_requested_format}
 repair_user_dissatisfaction={human_like_repair_user_dissatisfaction}
 direct_answer_repair_when_user_complains={human_like_direct_answer_repair}
+support_answer_compactness={human_like_support_answer_compactness}
+preferred_shape={human_like_preferred_shape}
+target_length_chars={human_like_target_length_chars}
+avoid_mechanism_heavy_default={human_like_avoid_mechanism_heavy_default}
+If support_answer_compactness=ordinary_support_compact:
+- Treat target_length_chars as the preferred answer budget unless safety or explicit detail request requires more.
+- Prefer 1-3 short paragraphs, not a numbered lecture.
+- Give one main meaning and at most one gentle next step or question.
+- Do not use the default "what happens / why it matters / what to do" mechanism-heavy structure.
 
 CONSTRAINT RESOLUTION:
 constraint_profile={constraint_resolution_profile}

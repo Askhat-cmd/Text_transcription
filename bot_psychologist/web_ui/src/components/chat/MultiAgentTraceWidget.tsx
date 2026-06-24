@@ -193,6 +193,14 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
   const semanticCardsTrace = trace.semantic_cards_pilot && typeof trace.semantic_cards_pilot === 'object'
     ? (trace.semantic_cards_pilot as Record<string, unknown>)
     : null;
+  const runtimeTraceSummary = trace.runtime_trace_summary_v1 && typeof trace.runtime_trace_summary_v1 === 'object'
+    ? (trace.runtime_trace_summary_v1 as Record<string, unknown>)
+    : null;
+  const runtimeTruthTrace = trace.runtime_truth_trace_v1 && typeof trace.runtime_truth_trace_v1 === 'object'
+    ? (trace.runtime_truth_trace_v1 as Record<string, unknown>)
+    : runtimeTraceSummary?.runtime_truth_trace_v1 && typeof runtimeTraceSummary.runtime_truth_trace_v1 === 'object'
+      ? (runtimeTraceSummary.runtime_truth_trace_v1 as Record<string, unknown>)
+      : null;
   const futureGraduationNotes = trace.future_graduation_notes && typeof trace.future_graduation_notes === 'object'
     ? (trace.future_graduation_notes as Record<string, unknown>)
     : null;
@@ -207,6 +215,7 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
   const retrievalQueryBuildAvailable = Boolean(retrievalQueryBuildTrace);
   const writerKbPayloadAvailable = Boolean(writerKbPayloadTrace);
   const semanticCardsAvailable = Boolean(semanticCardsTrace);
+  const runtimeTruthAvailable = Boolean(runtimeTruthTrace);
 
   const timeline = [
     { key: 'state', label: 'State', ms: Math.max(trace.agents.state_analyzer.latency_ms, 0), className: 'bg-blue-500' },
@@ -346,6 +355,10 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
                   <MetaItem label="UNIVERSAL GATE" value={trace.hybrid_retrieval_universal_gate || hybrid?.universal_gate || '—'} />
                   <MetaItem label="PLAN VALID" value={trace.hybrid_retrieval_plan_valid == null ? '—' : String(Boolean(trace.hybrid_retrieval_plan_valid))} />
                   <MetaItem label="FALLBACK USED" value={trace.hybrid_retrieval_fallback_used == null ? String(Boolean(hybrid?.fallback_used)) : String(Boolean(trace.hybrid_retrieval_fallback_used))} />
+                  <MetaItem label="PLANNER STATUS" value={trace.hybrid_retrieval_planner_status || String(hybrid?.planner_status || '—')} highlight />
+                  <MetaItem label="FALLBACK SCOPE" value={trace.hybrid_retrieval_fallback_scope || String(hybrid?.fallback_scope || '—')} />
+                  <MetaItem label="PRODUCTION QUERY" value={trace.hybrid_retrieval_production_query_source || String(hybrid?.production_query_source || '—')} />
+                  <MetaItem label="PRODUCTION AFFECTED" value={trace.hybrid_retrieval_production_answer_affected == null ? String(Boolean(hybrid?.production_answer_affected)) : String(Boolean(trace.hybrid_retrieval_production_answer_affected))} />
                   <MetaItem label="LLM CALLED" value={trace.hybrid_retrieval_llm_called == null ? String(Boolean(hybrid?.llm_called)) : String(Boolean(trace.hybrid_retrieval_llm_called))} />
                   <MetaItem label="WRITER CAN IGNORE RAG" value={trace.writer_can_ignore_rag == null ? String(Boolean(hybrid?.writer_can_ignore_rag)) : String(Boolean(trace.writer_can_ignore_rag))} />
                 </div>
@@ -414,6 +427,57 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
                     <div><span className="text-slate-500">inherited_topic_reason:</span> {String(retrievalQueryBuildTrace?.inherited_topic_reason || '—')}</div>
                     <div><span className="text-slate-500">inherited_topic:</span> {String(retrievalQueryBuildTrace?.inherited_topic || '—')}</div>
                   </div>
+                </AccordionSection>
+              </div>
+            </AccordionSection>
+          )}
+
+          {runtimeTruthAvailable && (
+            <AccordionSection
+              title={`Runtime Truth Trace | Writer-visible ${String(runtimeTruthTrace?.writer_visible_payload_count ?? 0)} | filtered ${String(runtimeTruthTrace?.filtered_out_for_writer_count ?? 0)}`}
+            >
+              <div className="space-y-2">
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <MetaItem label="TRACE VERSION" value={String(runtimeTruthTrace?.trace_version || 'runtime_truth_trace_v1')} />
+                  <MetaItem label="DIALOGUE ACT" value={String(runtimeTruthTrace?.dialogue_act || '—')} />
+                  <MetaItem label="ANSWER OBLIGATION" value={String(runtimeTruthTrace?.answer_obligation || '—')} />
+                  <MetaItem label="RETRIEVAL SOURCE" value={String(runtimeTruthTrace?.retrieval_query_source || runtimeTruthTrace?.production_query_source || '—')} />
+                  <MetaItem label="RETRIEVED CANDIDATES" value={String(runtimeTruthTrace?.retrieved_candidates_count ?? 0)} />
+                  <MetaItem label="TRACE-ONLY" value={String(runtimeTruthTrace?.trace_only_candidates_count ?? 0)} />
+                  <MetaItem label="FILTERED OUT" value={String(runtimeTruthTrace?.filtered_out_for_writer_count ?? 0)} />
+                  <MetaItem label="WRITER PAYLOAD" value={String(runtimeTruthTrace?.writer_visible_payload_count ?? 0)} highlight />
+                  <MetaItem label="GROUNDING REASON" value={String(runtimeTruthTrace?.grounding_visibility_reason || '—')} />
+                  <MetaItem label="LEGACY FALLBACK SCOPE" value={String(runtimeTruthTrace?.legacy_fallback_scope || 'none')} />
+                  <MetaItem label="PLANNER STATUS" value={String(runtimeTruthTrace?.planner_shadow_status || '—')} />
+                  <MetaItem label="JSON ERROR AFFECTED PROD" value={String(Boolean(runtimeTruthTrace?.json_decode_error_affected_production_answer))} />
+                </div>
+
+                <AccordionSection title="Writer-visible payload proof" nested>
+                  <div className="space-y-1 text-xs">
+                    <div><span className="text-slate-500">payload_ids:</span> {Array.isArray(runtimeTruthTrace?.writer_visible_payload_ids) ? (runtimeTruthTrace?.writer_visible_payload_ids as unknown[]).join(', ') || '—' : '—'}</div>
+                    <div><span className="text-slate-500">payload_types:</span> {Array.isArray(runtimeTruthTrace?.writer_visible_payload_types) ? (runtimeTruthTrace?.writer_visible_payload_types as unknown[]).join(', ') || '—' : '—'}</div>
+                    <div><span className="text-slate-500">writer_can_ignore_grounding:</span> {String(Boolean(runtimeTruthTrace?.writer_can_ignore_grounding))}</div>
+                    <div><span className="text-slate-500">broad_kb_visible:</span> {String(Boolean(runtimeTruthTrace?.broad_kb_visible))}</div>
+                    <div><span className="text-slate-500">narrow_grounding_visible:</span> {String(Boolean(runtimeTruthTrace?.narrow_grounding_visible))}</div>
+                  </div>
+                </AccordionSection>
+
+                <AccordionSection title="Filtered / trace-only candidates" nested>
+                  {Array.isArray(runtimeTruthTrace?.filtered_out_for_writer) && (runtimeTruthTrace?.filtered_out_for_writer as unknown[]).length > 0 ? (
+                    <div className="space-y-2">
+                      {(runtimeTruthTrace?.filtered_out_for_writer as Array<Record<string, unknown>>).map((item, index) => (
+                        <div key={String(item.item_id || index)} className="rounded-lg border border-slate-200 bg-white p-2 text-xs space-y-1">
+                          <div className="font-semibold text-slate-700">{String(item.item_id || '—')}</div>
+                          <div><span className="text-slate-500">origin:</span> {String(item.origin || '—')}</div>
+                          <div><span className="text-slate-500">chunk_type:</span> {String(item.chunk_type || '—')}</div>
+                          <div><span className="text-slate-500">sent_to_writer:</span> {String(Boolean(item.sent_to_writer))}</div>
+                          <div><span className="text-slate-500">filter_reason:</span> {String(item.filter_reason || '—')}</div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-xs text-slate-500">No filtered candidates recorded for this turn</div>
+                  )}
                 </AccordionSection>
               </div>
             </AccordionSection>
@@ -634,7 +698,10 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
                   <pre className="text-xs whitespace-pre-wrap">{memory.conversation_context || '—'}</pre>
                 </AccordionSection>
 
-                <AccordionSection title={`Чанки в Writer (${(memory.semantic_hits || []).length})`} nested>
+                <AccordionSection title={`Retrieval candidates / trace-only (${(memory.semantic_hits || []).length})`} nested>
+                  <div className="mb-2 rounded-lg bg-amber-50 border border-amber-200 p-2 text-[11px] text-amber-800">
+                    Diagnostic candidate list only. Actual Writer-visible payload is shown in Runtime Truth Trace and Writer KB Payload.
+                  </div>
                   {(memory.semantic_hits || []).length > 0 ? (
                     memory.semantic_hits.map((hit) => <ChunkCard key={hit.chunk_id || `${hit.source}-${hit.score}`} hit={hit} />)
                   ) : (

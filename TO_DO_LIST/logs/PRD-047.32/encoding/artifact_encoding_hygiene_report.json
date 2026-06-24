@@ -1,0 +1,28 @@
+{
+  "schema_version": "artifact_encoding_hygiene_report_v1",
+  "prd": "PRD-046.1.2-HF1",
+  "checked_prd": "PRD-047.32",
+  "final_status": "passed",
+  "files_checked": 8,
+  "utf8_decode_error_count": 0,
+  "nul_byte_file_count": 0,
+  "nul_char_file_count": 0,
+  "replacement_char_warning_count": 0,
+  "mojibake_warning_count": 0,
+  "json_parse_error_count": 0,
+  "empty_text_artifact_count": 0,
+  "unexpected_debug_dir_count": 0,
+  "fixed_files": [],
+  "warnings": [],
+  "blockers": [],
+  "checked_files": [
+    "TO_DO_LIST/logs/PRD-047.32/implementation_report.md",
+    "TO_DO_LIST/logs/PRD-047.32/legacy_fallback_noise_map.md",
+    "TO_DO_LIST/logs/PRD-047.32/live_owner_web_chat_trace_raw.json",
+    "TO_DO_LIST/logs/PRD-047.32/live_owner_web_chat_trace_report.md",
+    "TO_DO_LIST/logs/PRD-047.32/next_recommendation.md",
+    "TO_DO_LIST/logs/PRD-047.32/no_mutation_proof.md",
+    "TO_DO_LIST/logs/PRD-047.32/runtime_truth_audit.md",
+    "TO_DO_LIST/logs/PRD-047.32/test_results.md"
+  ]
+}

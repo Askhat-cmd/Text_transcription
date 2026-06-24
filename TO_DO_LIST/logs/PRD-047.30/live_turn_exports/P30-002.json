@@ -1,0 +1,60 @@
+{
+  "case_id": "P30-002",
+  "title": "Anger without term request",
+  "query": "Я злюсь и потом себя виню.",
+  "answer": "Это важное и понятное наблюдение — спасибо, что написал(а). Коротко и ясно — здесь обычно работает такой механизм:\n\n1) Триггер и мгновенная реакция. Что-то задевает — ощущение угрозы, фрустрации или несправедливости — и тело/ум быстро отвечают злостью. Это быстрый, автоматический ответ.\n\n2) Поведение или выражение злости. Может быть выражено словами, интонацией, избеганием или внутренним кипением. Часто это происходит до того, как успевают включиться рассуждение или контроль.\n\n3) Быстрая смена на самокритику. После вспышки появляется сожаление: «Я плохо себя повёл(а)», «Я несправедлив(на)» — и начинается самообвинение. Оно может быть громче, если в прошлом на злость реагировали критикой, разводами внимания или наказанием — то есть обвинение стало знаком безопасности (лучше обвинить себя, чем потерять связь).\n\n4) Что это поддерживает. Самообвинение может временно снижать тревогу (кажется, что я возьму всё под контроль), но в долгой перспективе усиливает стыд и мешает учиться на ситуации: эмоции остаются запретными, и злость продолжает приходить внезапно.\n\nПример в двух предложениях: вы раздражены на коллегу и резко отозвались — потом чувствуете вину, потому что боитесь, что повредили отношения. Вина закрывает проблему вместо того, чтобы понять, откуда пришла злость и что можно изменить.\n\nКороткие полезные мысли (без упражнений): замечать паттерн — «сначала злость, потом вина» — уже важно; разделять саму эмоцию (злость как сигнал) и оценку себя (вина как моральный ярлык); понять, что вина часто работает как попытка восстановить безопасность, а не как объективный мерило вашей ценности.\n\nЕсли хочешь, могу помочь чуть глубже: например, разобрать один конкретный эпизод или вместе поискать, какие именно убеждения запускают самообвинение. Часто полезно понять, чего именно боится внутренняя часть, которая обвиняет. Что предпочитаешь — разбирать случай или продолжать про механизм.",
+  "runtime_trace_summary_v1": {
+    "version": "runtime_trace_summary_v1",
+    "entrypoint": "multiagent_adapter",
+    "latest_turn_constraints": [],
+    "latest_turn_constraints_v1": {
+      "version": "latest_turn_constraints_v1",
+      "no_practice": false,
+      "no_breathing_only": false,
+      "simplify": false,
+      "long_term_perspective": false,
+      "no_internal_db": false,
+      "active_constraints": [],
+      "source": "none"
+    },
+    "writer_grounding_visibility_v1": {
+      "version": "writer_grounding_visibility_v1",
+      "kb_visible_to_writer": false,
+      "semantic_cards_visible_to_writer": false,
+      "reason": "non_kb_emotional_support_turn",
+      "direct_kb_question": false,
+      "direct_source_request": false,
+      "explicit_knowledge_request": false,
+      "safety_grounding_allowed": false,
+      "no_internal_db": false,
+      "trace_only_grounding_available": true,
+      "writer_may_ignore_grounding": true,
+      "retrieval_action": "trace_only",
+      "retrieval_need": "memory_context"
+    },
+    "kb_visible_to_writer": false,
+    "semantic_cards_visible_to_writer": false,
+    "overlay_apply_detected": false,
+    "final_directive_mode": "structured_explanation",
+    "practice_blocked_by_user_request": false,
+    "warnings": [],
+    "full_trace_available": true
+  },
+  "writer_grounding_visibility_v1": {
+    "version": "writer_grounding_visibility_v1",
+    "kb_visible_to_writer": false,
+    "semantic_cards_visible_to_writer": false,
+    "reason": "non_kb_emotional_support_turn",
+    "direct_kb_question": false,
+    "direct_source_request": false,
+    "explicit_knowledge_request": false,
+    "safety_grounding_allowed": false,
+    "no_internal_db": false,
+    "trace_only_grounding_available": true,
+    "writer_may_ignore_grounding": true,
+    "retrieval_action": "trace_only",
+    "retrieval_need": "memory_context"
+  },
+  "status": "passed",
+  "mismatches": []
+}

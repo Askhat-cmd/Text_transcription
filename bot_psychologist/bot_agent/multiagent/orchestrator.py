@@ -1341,6 +1341,11 @@ class MultiAgentOrchestrator:
                     if isinstance(writer_debug.get("semantic_cards_pilot"), dict)
                     else {}
                 ),
+                "writer_grounding_visibility_v1": (
+                    dict(writer_debug.get("writer_grounding_visibility_v1", {}))
+                    if isinstance(writer_debug.get("writer_grounding_visibility_v1"), dict)
+                    else {}
+                ),
                 "writer_human_like_answer_policy_enabled": writer_debug.get(
                     "human_like_answer_policy_enabled"
                 ),

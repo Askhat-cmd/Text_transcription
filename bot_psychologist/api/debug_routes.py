@@ -878,6 +878,11 @@ async def get_multiagent_trace(
             if isinstance(debug.get("semantic_cards_pilot"), dict)
             else None
         ),
+        writer_grounding_visibility_v1=(
+            debug.get("writer_grounding_visibility_v1")
+            if isinstance(debug.get("writer_grounding_visibility_v1"), dict)
+            else None
+        ),
         future_graduation_notes=(
             debug.get("future_graduation_notes")
             if isinstance(debug.get("future_graduation_notes"), dict)

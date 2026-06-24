@@ -1,6 +1,7 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
+PRD-047.30 completed Writer input authority recovery on the canonical current pipeline. The runtime still stays `multiagent_adapter`; no thin-spine live apply, no new agent, no new route, and no DB/Chroma mutation were introduced. `knowledge_policy.py` remains the chunk governance gate, while `writer_context_package.py` now exposes `writer_grounding_visibility_v1` so ordinary emotional/support/repair/simplify/pushback turns hide Writer-visible KB/semantic-card payload by default and keep that evidence in trace-only form. Writer prompt assembly now marks KB/semantic cards/retrieval notes as optional grounding, duplicate advisory prose is shorter, `runtime_trace_summary_v1` and `/api/debug/session/{session_id}/multiagent-trace` expose the visibility decision, and live smoke on the restarted `:8001` backend passed `10/10`. The only honest remaining global blocker is still the unrelated full-suite import error around `_build_llm_prompts`. The next recommended step is `PRD-047.31 - Legacy Advisory Retirement / Writer Prompt Noise Collapse v1`.
 PRD-047.29 completed targeted current-pipeline simplification and latest-turn constraint repair on top of the PRD-047.28 thin-spine blocker evidence. The canonical runtime remains `multiagent_adapter`; no thin-spine live apply, no new agent, and no DB/Chroma mutation were introduced. The runtime now exposes `latest_turn_constraints_v1` for explicit user requests (`no_practice`, `no_breathing_only`, `simplify`, `long_term_perspective`, `no_internal_db`), suppresses Writer-visible KB/semantic-card payload when `no_internal_db=true`, and adds compact `runtime_trace_summary_v1` over the full debug payload. Live smoke on the real backend after restart passed `8/8`, while the only honest remaining global blocker is still the unrelated full-suite import error around `_build_llm_prompts`. The next recommended step is `PRD-047.30 - Writer Grounding Visibility Throttle / Non-KB Turn Noise Reduction v1`, not thin-spine replacement.
 PRD-047.28 completed as an isolated thin-spine live experiment with honest `BLOCKED` status and no production-runtime mutation. The experiment added a separate A/B/C runner (`A_current`, `B_thin`, `C_thin_note`), fixture set, thin context collector, short natural-language live-turn-note path, safety/leak checks, comparative reporting, and no-mutation evidence outside the canonical runtime. Live evidence is explicit: `case_count=10`, `row_count=30`, `average_direct_answer_score_A=1.8`, `average_direct_answer_score_B=1.7`, `average_direct_answer_score_C=1.6`. The main blocker is answer-quality, not infrastructure: thin variants still forced practice in `TS-003`, and constraint-respect weaknesses remain visible (`TS-005`, `TS-008`). The next recommended step is `PRD-047.29 - Current Pipeline Simplification Targets / Layer Noise Reduction v1`, not thin-spine apply.
 PRD-047.27 completed the minimal DB-track semantic chunk cards pilot as a bounded, advisory-only Writer grounding layer with `passed_with_warning` status. A local/dev/test-only `semantic_cards_pilot_v1` pack now feeds 1-3 compact semantic cards into the existing `writer_kb_payload_v1` path without changing retrieval authority, Chroma, registry, processed blocks, DB schema, or Writer authorship. Live pilot evidence is explicit: `semantic_card_selected_when_expected_count=5`, `semantic_card_suppressed_when_not_needed_count=2`, `direct_answer_success_rate=1.0`, `card_internal_leak_count=0`, `raw_source_dump_count=0`, `practice_overpush_count=0`. The only honest warning is one overly textbook answer (`SCP-005`), so the next recommended step is `PRD-047.28 - Live Interactive Pilot / Owner Dialogue Review v1`, not broader runtime authority or DB mutation.
@@ -100,7 +101,7 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 - Historical artifact encoding noise may be misread as current runtime corruption without normalization report.
 
 ## Next Planned PRD
-`PRD-047.30 - Writer Grounding Visibility Throttle / Non-KB Turn Noise Reduction v1`
+`PRD-047.31 - Legacy Advisory Retirement / Writer Prompt Noise Collapse v1`
 
 ## PRD-047.23 Audit State
 PRD-047.23 closed the evidence gap between Bot_data_base chunks, retrieval query assembly, Writer KB payload, and Web Trace preview.
@@ -125,7 +126,7 @@ Knowledge Graph runtime flag remains backend-legacy/optional but is shown as com
 5. Keep full historical details in `TO_DO_LIST`, keep docs operational and compact.
 
 ## Last Updated
-2026-06-23
+2026-06-24
 - Date: 2026-06-05
 - Source cycle: PRD-047.12
 - Source cycle: PRD-047.11-HF3

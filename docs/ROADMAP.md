@@ -1,6 +1,7 @@
 ﻿# Roadmap
 
 ## Done
+- PRD-047.30: completed Writer input authority recovery on the canonical current pipeline without adding a new subsystem. Added `writer_grounding_visibility_v1`, hid Writer-visible KB/semantic cards by default on ordinary support/repair/simplify/pushback turns, preserved direct KB/source/safety grounded paths, compressed duplicate advisory prose, exposed visibility state in runtime/debug/API, created fixture/runner/artifacts, and passed live smoke `10/10` on the restarted `:8001` backend. The next step is retirement of remaining advisory/prompt noise, not another routing layer.
 - PRD-047.29: completed targeted simplification on the canonical current pipeline without replacing it. Added compact `latest_turn_constraints_v1`, hardened explicit no-practice/no-breathing/simplify/long-term/no-internal-db signals inside `final_answer_directive_v1`, suppressed Writer-visible KB/semantic-card payload on explicit `no_internal_db`, added compact `runtime_trace_summary_v1`, created PRD fixture/runner/artifacts, and passed live smoke `8/8` on the restarted `:8001` backend. The next step is no longer thin-spine experimentation; it is throttling unnecessary Writer-visible grounding on non-KB turns.
 - PRD-047.28: completed an isolated thin-spine live experiment without mutating the production runtime. Added experiment-only `A_current|B_thin|C_thin_note` runner paths, fixture/case loader, thin context collector, short natural-language live-turn note, safety/leak checks, comparative/owner/retirement/no-mutation artifacts, and targeted tests. The live result is an honest `BLOCKED`: baseline `A_current` still scores strongest or tied (`A=1.8`, `B=1.7`, `C=1.6`), while thin variants still show forced-practice and constraint-respect regressions, so the next step is pipeline simplification targets rather than thin-spine apply.
 - PRD-047.27: completed the minimal DB-track semantic chunk cards pilot as a local/dev/test-only advisory Writer-grounding layer. Added `semantic_cards_pilot_v1` pack (`12` cards), schema/loader/adapter modules, current-turn card selection, `writer_kb_payload_v1` enrichment, runtime/debug/API trace visibility, PRD runner/artifacts, and no-mutation/encoding proof without changing retrieval authority, Chroma, registry, processed blocks, or DB schema. Live evidence ended `passed_with_warning`: `selected_when_expected=5`, `suppressed_when_not_needed=2`, `direct_answer_success_rate=1.0`, with one bounded textbook-style warning on `SCP-005`.
@@ -81,7 +82,8 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
-- PRD-047.29 closed the explicit latest-turn constraint respect gap inside the current runtime. The biggest remaining pilot-noise layer is now narrower: Writer-visible KB/semantic-card grounding still appears on many ordinary non-KB turns unless the user explicitly forbids internal DB grounding.
+- PRD-047.30 closed the main Writer-visible grounding authority problem on ordinary non-KB turns. The remaining noise is now narrower: duplicate advisory wording and residual prompt/context redundancy, not chunk governance or route selection.
+- PRD-047.29 closed the explicit latest-turn constraint respect gap inside the current runtime. That work remains intact underneath PRD-047.30 and still owns compact explicit latest-turn constraints.
 - PRD-047.28 closed the question of whether the current architecture can be replaced by a thin spine immediately. The answer is no for now: evidence supports simplification work, but not replacement. The remaining problem is concentrated in noisy layers and constraint-respect debt, not in lack of yet another experimental route.
 - PRD-047.27-HF1 closed the owner-facing semantic-card visibility blocker. Admin Runtime now exposes pack/count/authority status, Web Trace shows selected/suppressed semantic-card state, Writer KB payload trace preserves semantic-card origin markers, and core trace mojibake is removed. The next step is owner live review, not broader DB-track mutation.
 - PRD-047.27 closed the first semantic-card pilot slice. The next work is no longer metadata plumbing; it is owner-facing live review of whether the advisory cards improve answer quality without pushing the tone into textbook mode.
@@ -103,9 +105,9 @@
 - No active PRD-047.12 blocker remains; unified dialogue policy v2 is accepted on the current developer-local runtime baseline.
 
 ## Next
-1. Start `PRD-047.30 - Writer Grounding Visibility Throttle / Non-KB Turn Noise Reduction v1`.
+1. Start `PRD-047.31 - Legacy Advisory Retirement / Writer Prompt Noise Collapse v1`.
 2. Keep semantic cards advisory-only until a later PRD proves they help without recurring textbook drift or explicit no-KB conflict.
-3. Reduce unnecessary Writer-visible grounding/noise on non-knowledge turns before considering any wider pipeline replacement discussion.
+3. Reduce remaining duplicate advisory/prompt noise before considering any wider pipeline replacement discussion.
 4. Keep any broader DB-track mutation, overlay authority expansion, retrieval-ranking rewrite, live metadata apply, runtime activation, or Chroma reindex in a separate explicit governance PRD.
 
 ## Later

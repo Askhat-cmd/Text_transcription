@@ -498,6 +498,7 @@ class MultiAgentTraceResponse(BaseModel):
     retrieval_query_build_trace: Optional[Dict[str, Any]] = None
     writer_kb_payload_trace: Optional[Dict[str, Any]] = None
     semantic_cards_pilot: Optional[Dict[str, Any]] = None
+    writer_grounding_visibility_v1: Optional[Dict[str, Any]] = None
     future_graduation_notes: Optional[Dict[str, Any]] = None
     runtime_trace_summary_v1: Optional[Dict[str, Any]] = None
     live_turn_evidence: Optional[Dict[str, Any]] = None

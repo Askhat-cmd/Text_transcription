@@ -49,11 +49,18 @@ def build_runtime_trace_summary_v1(
     active_constraints = active_latest_turn_constraint_names(latest_turn_constraints)
     writer_kb_payload_trace = _safe_dict(writer.get("writer_kb_payload_trace"))
     semantic_cards_pilot = _safe_dict(writer.get("semantic_cards_pilot"))
-    kb_visible_to_writer = int(writer_kb_payload_trace.get("payload_chunk_count", 0) or 0) > 0
-    semantic_cards_visible_to_writer = bool(
-        semantic_cards_pilot.get("writer_payload_enriched", False)
-        or int(semantic_cards_pilot.get("selected_card_count", 0) or 0) > 0
-    )
+    writer_grounding_visibility = _safe_dict(writer.get("writer_grounding_visibility_v1"))
+    if writer_grounding_visibility:
+        kb_visible_to_writer = bool(writer_grounding_visibility.get("kb_visible_to_writer", False))
+        semantic_cards_visible_to_writer = bool(
+            writer_grounding_visibility.get("semantic_cards_visible_to_writer", False)
+        )
+    else:
+        kb_visible_to_writer = int(writer_kb_payload_trace.get("payload_chunk_count", 0) or 0) > 0
+        semantic_cards_visible_to_writer = bool(
+            semantic_cards_pilot.get("writer_payload_enriched", False)
+            or int(semantic_cards_pilot.get("selected_card_count", 0) or 0) > 0
+        )
     overlay_apply_detected = bool(
         overlay.get("used_for_writer", False)
         or overlay.get("used_for_retrieval_execution", False)
@@ -64,6 +71,14 @@ def build_runtime_trace_summary_v1(
         kb_visible_to_writer or semantic_cards_visible_to_writer
     ):
         warnings.append("no_internal_db_visible_payload_leak")
+    if writer_grounding_visibility and not bool(writer_grounding_visibility.get("kb_visible_to_writer", True)):
+        if int(writer_kb_payload_trace.get("payload_chunk_count", 0) or 0) > 0:
+            warnings.append("writer_grounding_visibility_payload_mismatch")
+    if writer_grounding_visibility and not bool(
+        writer_grounding_visibility.get("semantic_cards_visible_to_writer", True)
+    ):
+        if bool(semantic_cards_pilot.get("writer_payload_enriched", False)):
+            warnings.append("writer_grounding_visibility_semantic_mismatch")
     if latest_turn_constraints.get("no_practice") and not str(
         directive.get("practice_policy", "")
     ).startswith("forbidden"):
@@ -78,6 +93,7 @@ def build_runtime_trace_summary_v1(
         "entrypoint": str(entrypoint or "multiagent_adapter"),
         "latest_turn_constraints": active_constraints,
         "latest_turn_constraints_v1": latest_turn_constraints,
+        "writer_grounding_visibility_v1": writer_grounding_visibility,
         "kb_visible_to_writer": kb_visible_to_writer,
         "semantic_cards_visible_to_writer": semantic_cards_visible_to_writer,
         "overlay_apply_detected": overlay_apply_detected,

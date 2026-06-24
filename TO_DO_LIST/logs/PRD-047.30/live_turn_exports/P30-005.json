@@ -1,0 +1,64 @@
+{
+  "case_id": "P30-005",
+  "title": "No internal DB hard suppression",
+  "query": "Ответь своими словами, без внутренней БД.",
+  "answer": "Хорошо. Ключевой механизм — это простая цепочка: событие → мысль (оценка) → эмоция → реакция. Объясню своими словами, коротко и по сути.\n\n1) Что это значит  \n- Событие — то, что произошло: чья‑то фраза, ситуация, телесное ощущение.  \n- Мысль/оценка — то, как вы это интерпретируете в голове: вывод или смысл, который вы придаёте событию (“меня критикуют”, “она меня игнорирует”, “я хуже других”). Это не факт, а ваша интерпретация.  \n- Эмоция — ощущение, которое возникает после этой мысли: обида, стыд, злость, тревога и т.п.  \n- Реакция — поведение или внутренний ответ: сказанное, сделанное, избегание, замыкание.\n\n2) Почему это важно  \n- Эмоции чаще всего идут не прямо от события, а через нашу интерпретацию. Если изменить мысль или заметить её, меняется и эмоция, а значит и реакция.  \n- Это даёт контроль: событие не обязательно диктует ваше состояние — ваша оценка играет ключевую роль.\n\n3) Пример, своими словами  \nКоллега сказал “Это можно улучшить”. Оценка А: “Меня критикуют, значит я плох” → эмоция: раздражение или обида → реакция: защита или уход. Оценка Б: “Это обратная связь, чтобы сделать лучше” → эмоция: нейтральность или мотивация → реакция: вопрос о деталях и правки.\n\n4) Что с этим можно делать на уровне понимания (без практик)  \n- Наблюдать: заметить, какое событие и какая мысль перед эмоцией.  \n- Назвать мысль словами — уже уменьшает её автоматизм.  \n- Понять, что мысль — интерпретация, а не объективный факт.",
+  "runtime_trace_summary_v1": {
+    "version": "runtime_trace_summary_v1",
+    "entrypoint": "multiagent_adapter",
+    "latest_turn_constraints": [
+      "no_internal_db"
+    ],
+    "latest_turn_constraints_v1": {
+      "version": "latest_turn_constraints_v1",
+      "no_practice": false,
+      "no_breathing_only": false,
+      "simplify": false,
+      "long_term_perspective": false,
+      "no_internal_db": true,
+      "active_constraints": [
+        "no_internal_db"
+      ],
+      "source": "latest_user_turn_explicit_text"
+    },
+    "writer_grounding_visibility_v1": {
+      "version": "writer_grounding_visibility_v1",
+      "kb_visible_to_writer": false,
+      "semantic_cards_visible_to_writer": false,
+      "reason": "latest_turn_no_internal_db",
+      "direct_kb_question": false,
+      "direct_source_request": false,
+      "explicit_knowledge_request": false,
+      "safety_grounding_allowed": false,
+      "no_internal_db": true,
+      "trace_only_grounding_available": true,
+      "writer_may_ignore_grounding": true,
+      "retrieval_action": "trace_only",
+      "retrieval_need": "memory_context"
+    },
+    "kb_visible_to_writer": false,
+    "semantic_cards_visible_to_writer": false,
+    "overlay_apply_detected": false,
+    "final_directive_mode": "answer_without_internal_db_grounding",
+    "practice_blocked_by_user_request": false,
+    "warnings": [],
+    "full_trace_available": true
+  },
+  "writer_grounding_visibility_v1": {
+    "version": "writer_grounding_visibility_v1",
+    "kb_visible_to_writer": false,
+    "semantic_cards_visible_to_writer": false,
+    "reason": "latest_turn_no_internal_db",
+    "direct_kb_question": false,
+    "direct_source_request": false,
+    "explicit_knowledge_request": false,
+    "safety_grounding_allowed": false,
+    "no_internal_db": true,
+    "trace_only_grounding_available": true,
+    "writer_may_ignore_grounding": true,
+    "retrieval_action": "trace_only",
+    "retrieval_need": "memory_context"
+  },
+  "status": "passed",
+  "mismatches": []
+}

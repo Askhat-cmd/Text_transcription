@@ -263,6 +263,14 @@ class WriterContract:
             for item in list(retrieval_decision.get("rag_included_for_writer", []) or [])
             if isinstance(item, dict) and str(item.get("content", "") or "").strip()
         ]
+        writer_grounding_visibility = (
+            dict(writer_context_package.get("writer_grounding_visibility_v1", {}))
+            if isinstance(writer_context_package.get("writer_grounding_visibility_v1"), dict)
+            else {}
+        )
+        writer_grounding_authority_note = str(
+            writer_context_package.get("writer_grounding_authority_note", "") or ""
+        )
         semantic_hits_budget = (
             dict(dialogue_policy.get("semantic_hits_budget", {}))
             if isinstance(dialogue_policy.get("semantic_hits_budget"), dict)
@@ -280,6 +288,8 @@ class WriterContract:
             if has_explicit_retrieval_decision
             else semantic_hits
         )
+        if not bool(writer_grounding_visibility.get("kb_visible_to_writer", True)):
+            semantic_source = []
         semantic_hits_trimmed = [
             str(item or "")[:semantic_hit_chars]
             for item in semantic_source[:semantic_hits_max]
@@ -362,6 +372,7 @@ class WriterContract:
                 if isinstance(final_answer_directive.get("latest_turn_constraints_v1"), dict)
                 else {}
             ),
+            "writer_grounding_visibility_v1": writer_grounding_visibility,
             "final_answer_directive_version": str(
                 final_answer_directive.get("version", "final_answer_directive_v1")
                 or "final_answer_directive_v1"
@@ -479,6 +490,16 @@ class WriterContract:
             ),
             "writer_kb_payload_future_graduation_notes": writer_kb_payload_future_graduation_notes,
             "semantic_cards_pilot": semantic_cards_pilot,
+            "writer_grounding_visibility_v1": writer_grounding_visibility,
+            "writer_grounding_visibility_json": json.dumps(
+                writer_grounding_visibility,
+                ensure_ascii=False,
+                indent=2,
+            )
+            if writer_grounding_visibility
+            else "{}",
+            "writer_grounding_authority_note": writer_grounding_authority_note
+            or "Safety and the explicit latest user request are mandatory. Grounding is optional support only.",
             "context_assembly_trace": context_assembly_trace,
             "context_package_summary": {
                 "present": self.context_package is not None,

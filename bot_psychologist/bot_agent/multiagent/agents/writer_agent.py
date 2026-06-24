@@ -249,6 +249,7 @@ class WriterAgent:
             "writer_kb_payload_trace": {},
             "writer_kb_payload_future_graduation_notes": {},
             "semantic_cards_pilot": {},
+            "writer_grounding_visibility_v1": {},
             "writer_kb_payload_enabled": None,
             "writer_kb_payload_failed": None,
             "human_like_answer_policy_enabled": None,
@@ -403,6 +404,9 @@ class WriterAgent:
         ctx.setdefault("writer_visible_advisory_summary", "")
         ctx.setdefault("writer_visible_practice_instruction", "")
         ctx.setdefault("writer_visible_practice_note", "")
+        ctx.setdefault("writer_grounding_visibility_v1", {})
+        ctx.setdefault("writer_grounding_visibility_json", "{}")
+        ctx.setdefault("writer_grounding_authority_note", "")
         ctx.setdefault("practice_rewrite_applied", False)
         ctx.setdefault("legacy_advisory_sanitization", {})
         ctx.setdefault("writer_kb_payload_enabled", False)
@@ -564,6 +568,16 @@ class WriterAgent:
                 ]
             )
 
+        writer_kb_payload_fallback_reason = str(
+            ctx.get("writer_kb_payload_failure_reason", "")
+            or (
+                "writer_kb_payload_disabled"
+                if not bool(ctx.get("writer_kb_payload_enabled", False))
+                else "writer_kb_payload_empty_or_failed"
+            )
+        )
+        if writer_kb_payload_fallback_reason == "builder_failure":
+            writer_kb_payload_fallback_reason = "writer_kb_payload_empty_or_failed"
         writer_kb_payload_text = format_writer_kb_payload_for_prompt(
             payload=(
                 dict(ctx.get("writer_kb_payload", {}))
@@ -571,14 +585,7 @@ class WriterAgent:
                 else {}
             ),
             legacy_hits=list(ctx.get("semantic_hits", []) or []),
-            fallback_reason=str(
-                ctx.get("writer_kb_payload_failure_reason", "")
-                or (
-                    "writer_kb_payload_disabled"
-                    if not bool(ctx.get("writer_kb_payload_enabled", False))
-                    else "writer_kb_payload_empty_or_failed"
-                )
-            ),
+            fallback_reason=writer_kb_payload_fallback_reason,
         )
         self.last_debug["writer_kb_payload_trace"] = (
             dict(ctx.get("writer_kb_payload_trace", {}))
@@ -593,6 +600,11 @@ class WriterAgent:
         self.last_debug["semantic_cards_pilot"] = (
             dict(ctx.get("semantic_cards_pilot", {}))
             if isinstance(ctx.get("semantic_cards_pilot"), dict)
+            else {}
+        )
+        self.last_debug["writer_grounding_visibility_v1"] = (
+            dict(ctx.get("writer_grounding_visibility_v1", {}))
+            if isinstance(ctx.get("writer_grounding_visibility_v1"), dict)
             else {}
         )
         self.last_debug["writer_kb_payload_enabled"] = bool(ctx.get("writer_kb_payload_enabled", False))
@@ -734,6 +746,12 @@ class WriterAgent:
             ),
             writer_visible_practice_note=str(
                 ctx.get("writer_visible_practice_note", "") or "нет"
+            ),
+            writer_grounding_authority_note=str(
+                ctx.get("writer_grounding_authority_note", "") or "none"
+            ),
+            writer_grounding_visibility_json=str(
+                ctx.get("writer_grounding_visibility_json", "{}") or "{}"
             ),
             fresh_chat_context_policy_version=str(
                 ctx.get("fresh_chat_context_policy_version", "fresh_chat_context_policy_v1")

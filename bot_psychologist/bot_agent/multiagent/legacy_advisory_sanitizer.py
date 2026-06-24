@@ -50,6 +50,11 @@ def sanitize_legacy_advisory_for_writer(source_signals: dict) -> dict[str, Any]:
         if isinstance(signals.get("latest_turn_constraints_v1"), dict)
         else {}
     )
+    writer_grounding_visibility = (
+        dict(signals.get("writer_grounding_visibility_v1", {}))
+        if isinstance(signals.get("writer_grounding_visibility_v1"), dict)
+        else {}
+    )
     practice_gate = (
         dict(knowledge.get("practice_gate", {}))
         if isinstance(knowledge.get("practice_gate"), dict)
@@ -57,72 +62,40 @@ def sanitize_legacy_advisory_for_writer(source_signals: dict) -> dict[str, Any]:
     )
 
     lines: list[str] = []
-    _append_line(lines, "Пользователь продолжает текущую линию разговора; ответ лучше держать живым, спокойным и по сути.")
+    _append_line(lines, "Answer the user's latest request first, in a direct and human tone.")
 
     if _clean_text(active_line.get("active_line")):
-        _append_line(lines, f"Текущий смысловой фокус: {_clean_text(active_line.get('active_line'))}.")
+        _append_line(lines, f"Current line: {_clean_text(active_line.get('active_line'))}.")
     elif _clean_text(active_line.get("user_intent")):
-        _append_line(lines, f"Пользовательский вектор сейчас: {_clean_text(active_line.get('user_intent'))}.")
+        _append_line(lines, f"Current user vector: {_clean_text(active_line.get('user_intent'))}.")
 
     if _clean_text(diagnostic.get("current_need")):
-        _append_line(lines, f"Полезно ответить на актуальную потребность: {_clean_text(diagnostic.get('current_need'))}.")
-
-    if _clean_text(diagnostic.get("suggested_writer_move")):
-        _append_line(
-            lines,
-            f"Можно опереться на такой ход ответа: {_clean_text(diagnostic.get('suggested_writer_move'))}.",
-        )
-    elif _clean_text(writer_move.get("move")):
-        _append_line(lines, f"Уместный ход ответа: {_clean_text(writer_move.get('move'))}.")
+        _append_line(lines, f"Primary need to cover: {_clean_text(diagnostic.get('current_need'))}.")
 
     if bool(knowledge_answer.get("should_answer_directly", False)):
         concept = _clean_text(knowledge_answer.get("concept"))
         if concept:
-            _append_line(lines, f"Лучше отвечать прямо по известному понятию: {concept}.")
+            _append_line(lines, f"Answer the known concept directly: {concept}.")
         else:
-            _append_line(lines, "Лучше отвечать прямо и не уводить пользователя в лишние уточнения.")
+            _append_line(lines, "Answer directly; do not bounce the user back into clarifying a known term.")
 
     if _clean_text(response_planner.get("target_micro_shift")):
-        _append_line(
-            lines,
-            f"Один полезный смысловой сдвиг: {_clean_text(response_planner.get('target_micro_shift'))}.",
-        )
-
-    if _clean_text(response_planner.get("answer_shape")):
-        _append_line(
-            lines,
-            f"Формат можно держать таким: {_clean_text(response_planner.get('answer_shape'))}.",
-        )
+        _append_line(lines, f"Useful meaning shift: {_clean_text(response_planner.get('target_micro_shift'))}.")
+    elif _clean_text(diagnostic.get("suggested_writer_move")):
+        _append_line(lines, f"Helpful move: {_clean_text(diagnostic.get('suggested_writer_move'))}.")
+    elif _clean_text(writer_move.get("move")):
+        _append_line(lines, f"Helpful move: {_clean_text(writer_move.get('move'))}.")
 
     if bool(active_line.get("should_continue_line", True)):
-        _append_line(lines, "Лучше продолжать уже начатую тему, а не начинать новую ветку.")
+        _append_line(lines, "Keep the same conversation line; do not open a noisy side branch.")
 
-    if bool(latest_turn_constraints.get("simplify", False)):
-        _append_line(lines, "В этом ходе нужен более простой и короткий ответ без лекции.")
-    if bool(latest_turn_constraints.get("long_term_perspective", False)):
-        _append_line(lines, "Полезно дать долгосрочную рамку и 2-3 направления, а не только моментную стабилизацию.")
-    if bool(latest_turn_constraints.get("no_breathing_only", False)):
-        _append_line(lines, "Не своди ответ к дыханию; если нужны варианты, дай недыхательные альтернативы.")
-    if bool(latest_turn_constraints.get("no_internal_db", False)):
-        _append_line(lines, "Отвечай своими словами без опоры на внутреннюю БД и внутренние карточки.")
+    if writer_grounding_visibility:
+        if bool(writer_grounding_visibility.get("kb_visible_to_writer", False)):
+            _append_line(lines, "Grounding is optional support here: use it only if it helps, without sounding like an internal recital.")
+        else:
+            _append_line(lines, "Grounding is not needed in the visible answer here: answer in your own words and do not dump internal material.")
 
-    practice_suppressed = (
-        bool(latest_turn_constraints.get("no_practice", False))
-        or bool(active_line.get("practice_suppression_active", False))
-        or not bool(practice_gate.get("practice_allowed", True))
-    )
-    if practice_suppressed:
-        practice_note = (
-            "Если практика сейчас не запрошена или неуместна, не предлагай упражнение, технику или пошаговую практику. "
-            "Вместо этого ответь нормально: объяснением, примером, отражением или продолжением мысли."
-        )
-        writer_visible_practice_instruction = "no_exercise_but_answer_normally"
-    else:
-        practice_note = "Если практика действительно помогает вопросу пользователя, её можно предлагать только уместно и без навязывания."
-        writer_visible_practice_instruction = "practice_allowed_if_relevant"
-    _append_line(lines, practice_note)
-
-    writer_visible_summary = "\n".join(lines)
+    writer_visible_summary = "\n".join(lines[:5])
     lower_summary = writer_visible_summary.lower()
     forbidden_tokens = (
         "must",
@@ -137,13 +110,45 @@ def sanitize_legacy_advisory_for_writer(source_signals: dict) -> dict[str, Any]:
         if token in lower_summary:
             raise ValueError(f"sanitized advisory summary leaked forbidden token: {token}")
 
+    practice_suppressed = (
+        bool(latest_turn_constraints.get("no_practice", False))
+        or bool(active_line.get("practice_suppression_active", False))
+        or not bool(practice_gate.get("practice_allowed", True))
+    )
+    if practice_suppressed:
+        practice_note = (
+            "Do not offer an exercise, drill, breathing routine, or homework here. "
+            "Answer normally with explanation, reflection, example, or continuation of the thought."
+        )
+        writer_visible_practice_instruction = "no_exercise_but_answer_normally"
+    else:
+        practice_note = (
+            "Practice is optional and should appear only if it clearly helps the current user request."
+        )
+        writer_visible_practice_instruction = "practice_allowed_if_relevant"
+
     directive_writer_payload = {
-        "version": str(signals.get("final_answer_directive_version", "final_answer_directive_v1") or "final_answer_directive_v1"),
+        "version": str(
+            signals.get("final_answer_directive_version", "final_answer_directive_v1")
+            or "final_answer_directive_v1"
+        ),
         "roles": {
-            "diagnostic_center": str(signals.get("final_answer_diagnostic_center_role", "guided_legacy") or "guided_legacy"),
-            "planner": str(signals.get("final_answer_planner_role", "guided_legacy") or "guided_legacy"),
-            "active_line": str(signals.get("final_answer_active_line_role", "guided_legacy") or "guided_legacy"),
-            "diagnostic_card": str(signals.get("final_answer_diagnostic_card_role", "guided_legacy") or "guided_legacy"),
+            "diagnostic_center": str(
+                signals.get("final_answer_diagnostic_center_role", "guided_legacy")
+                or "guided_legacy"
+            ),
+            "planner": str(
+                signals.get("final_answer_planner_role", "guided_legacy")
+                or "guided_legacy"
+            ),
+            "active_line": str(
+                signals.get("final_answer_active_line_role", "guided_legacy")
+                or "guided_legacy"
+            ),
+            "diagnostic_card": str(
+                signals.get("final_answer_diagnostic_card_role", "guided_legacy")
+                or "guided_legacy"
+            ),
         },
         "answer_obligation": _clean_text(signals.get("answer_obligation", "")) or "continue_line_with_focus",
         "must_answer": _clean_text(signals.get("must_answer", "")) or "answer_user_question_directly",
@@ -159,6 +164,28 @@ def sanitize_legacy_advisory_for_writer(source_signals: dict) -> dict[str, Any]:
             "simplify": bool(latest_turn_constraints.get("simplify", False)),
             "long_term_perspective": bool(latest_turn_constraints.get("long_term_perspective", False)),
             "no_internal_db": bool(latest_turn_constraints.get("no_internal_db", False)),
+        },
+        "grounding_authority": {
+            "safety_and_latest_user_request": "mandatory",
+            "conversation_context": "supportive",
+            "kb_semantic_cards_diagnostic_hints": "optional_grounding",
+            "never_change_user_request": True,
+            "do_not_sound_like_internal_recital": True,
+        },
+        "grounding_visibility": {
+            "kb_visible_to_writer": bool(writer_grounding_visibility.get("kb_visible_to_writer", False)),
+            "semantic_cards_visible_to_writer": bool(
+                writer_grounding_visibility.get("semantic_cards_visible_to_writer", False)
+            ),
+            "reason": _clean_text(writer_grounding_visibility.get("reason", "")) or "unknown",
+            "direct_kb_question": bool(writer_grounding_visibility.get("direct_kb_question", False)),
+            "safety_grounding_allowed": bool(
+                writer_grounding_visibility.get("safety_grounding_allowed", False)
+            ),
+            "no_internal_db": bool(writer_grounding_visibility.get("no_internal_db", False)),
+            "trace_only_grounding_available": bool(
+                writer_grounding_visibility.get("trace_only_grounding_available", False)
+            ),
         },
     }
     gate_feedback = signals.get("acceptance_gate_feedback")

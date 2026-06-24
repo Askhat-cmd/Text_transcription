@@ -1,0 +1,60 @@
+{
+  "case_id": "P30-009",
+  "title": "Context follow-up should not force KB",
+  "query": "Да, а как это проявляется в обычной ссоре с начальником?",
+  "answer": "Коротко пройдусь по каждому из «пяти драйверов» и покажу типичные поведенческие паттерны в обычной ссоре с начальником — что происходит автоматически и как это выглядит в словах/тоне/действиях.\n\n1) «Будь совершенным» (Be Perfect)  \n- Что внутри: страх показаться недоработавшимся или допустить ошибку.  \n- Как проявляется в ссоре: детальные оправдания, перечисление всех фактов и доказательств, попытки «подтянуть» разговор фактами, избегание признания упущений, нервное стремление всё разъяснить до идеала.  \n- Пример: вместо «да, ошибся» — длинный монолог о том, как всё планировалось, какие шаги предпринимались, почему это было не ваша вина.\n\n2) «Будь сильным» (Be Strong)  \n- Что внутри: ненависть к уязвимости, страх выглядеть слабым.  \n- Как проявляется в ссоре: холодность, отстранённость, сухие ответы, упор на правоту и принципиальность; иногда агрессивная манера, чтобы «не дать себя сломать».  \n- Пример: короткие резкие фразы, отказ обсуждать эмоции, демонстрация, что вас это «не трогает».\n\n3) «Поспеши» / «Делай быстро» (Hurry Up)  \n- Что внутри: тревога, что промедление опасно; нужно быстро действовать/реагировать.  \n- Как проявляется в ссоре: перебивание, стремление «закончить разговор побыстрее», резкие и поспешные ответы, стресс от пауз.  \n- Пример: вы говорите быстро, без пауз, пытаетесь подвести итог и уйти, не дав возможности подумать.\n\n4) «Угоди другим» (Please Others)  \n- Что внутри: желание быть принятым, страх отторжения.  \n- Как проявляется в ссоре: быстрое согласие, извинения даже при отсутствии вины, смягчающие фразы, желание разрядить начальника ценой своих границ; в иных случаях — пассивно-агрессивное поведение, если попытки угодить не работают.  \n- Пример: «Извините, я не хотел…» ещё до того, как вас обвинят, или постоянные уступки, чтобы не усугублять конфликт.\n\n5) «Старайся изо всех сил» (Try Hard)  \n- Что внутри: убеждение, что нужно прилагать максимум усилий, чтобы заслужить одобрение.  \n- Как проявляется в ссоре: чрезмерная защита своих действий как «я действительно стараюсь», объяснения о проделанной работе, обещания делать ещё больше; может привести к перегибам и выгоранию.  \n- Пример: «Я работаю по 12 часов, делаю всё возможное — просто не понимаю, почему это не учитывается».\n\nЗачем это заметить (коротко):  \n- Увидев, какой драйвер активен, вы начинаете распознавать автоматическую «кнопку», которая запускает реакцию. Это не оправдание, а карта: она помогает выбрать, хотите ли вы действовать иначе (например, взять паузу при «поспеши», признать ошибку при «будь совершенным», мягко обозначить границы при «угоди»).  \n- Маленький ориентир: в момент ссоры спросите себя мысленно: «Что я сейчас пытаюсь доказать/избежать. » — это сразу даёт дистанцию.",
+  "runtime_trace_summary_v1": {
+    "version": "runtime_trace_summary_v1",
+    "entrypoint": "multiagent_adapter",
+    "latest_turn_constraints": [],
+    "latest_turn_constraints_v1": {
+      "version": "latest_turn_constraints_v1",
+      "no_practice": false,
+      "no_breathing_only": false,
+      "simplify": false,
+      "long_term_perspective": false,
+      "no_internal_db": false,
+      "active_constraints": [],
+      "source": "none"
+    },
+    "writer_grounding_visibility_v1": {
+      "version": "writer_grounding_visibility_v1",
+      "kb_visible_to_writer": false,
+      "semantic_cards_visible_to_writer": false,
+      "reason": "contextual_followup_without_knowledge_need",
+      "direct_kb_question": false,
+      "direct_source_request": false,
+      "explicit_knowledge_request": false,
+      "safety_grounding_allowed": false,
+      "no_internal_db": false,
+      "trace_only_grounding_available": true,
+      "writer_may_ignore_grounding": true,
+      "retrieval_action": "trace_only",
+      "retrieval_need": "memory_context"
+    },
+    "kb_visible_to_writer": false,
+    "semantic_cards_visible_to_writer": false,
+    "overlay_apply_detected": false,
+    "final_directive_mode": "structured_explanation",
+    "practice_blocked_by_user_request": false,
+    "warnings": [],
+    "full_trace_available": true
+  },
+  "writer_grounding_visibility_v1": {
+    "version": "writer_grounding_visibility_v1",
+    "kb_visible_to_writer": false,
+    "semantic_cards_visible_to_writer": false,
+    "reason": "contextual_followup_without_knowledge_need",
+    "direct_kb_question": false,
+    "direct_source_request": false,
+    "explicit_knowledge_request": false,
+    "safety_grounding_allowed": false,
+    "no_internal_db": false,
+    "trace_only_grounding_available": true,
+    "writer_may_ignore_grounding": true,
+    "retrieval_action": "trace_only",
+    "retrieval_need": "memory_context"
+  },
+  "status": "passed",
+  "mismatches": []
+}

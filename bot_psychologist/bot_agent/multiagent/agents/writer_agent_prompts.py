@@ -234,6 +234,11 @@ ADVISORY CONTEXT SUMMARY:
 PRACTICE NOTE:
 {writer_visible_practice_note}
 
+GROUNDING AUTHORITY:
+{writer_grounding_authority_note}
+grounding_visibility_json:
+{writer_grounding_visibility_json}
+
 FRESH CHAT CONTEXT POLICY:
 version={fresh_chat_context_policy_version}
 is_new_chat={fresh_chat_is_new_chat}

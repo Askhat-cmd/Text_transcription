@@ -1,0 +1,60 @@
+{
+  "case_id": "P30-001",
+  "title": "Emotional support without KB pressure",
+  "query": "Меня бесит начальник, я уже не понимаю, что со мной.",
+  "answer": "Понимаю — это звучит очень тяжело. Ты злишься на начальника и при этом чувствуешь растерянность: «что со мной» — как будто реакция выходит за рамки ожидаемого. Давай посмотрим, что могло это породить, чтобы стало понятнее.\n\n1) Что происходит с эмоциями\n- Злость часто как «сигнал» — она сообщает, что нарушены границы, не учтены потребности или с тобой обошлись несправедливо. Она сильна, потому что ситуация для тебя важна.  \n- Растерянность и чувство «непонимания себя» появляются, когда эмоция оказывается неожиданной, или когда рядом есть смешанные чувства (стыд, страх, обида) — и тебе сложно их распознать отдельно.\n\n2) Типичные механизмы в отношениях с начальником\n- Динамика власти: начальник обладает влиянием, и это усиленно активирует защитные реакции — злость, раздражение, желание отстоять себя.  \n- Хронический стресс: накопившееся давление делает реакцию интенсивнее — мелкие раздражители вызывают большой всплеск.  \n- Нереализованные ожидания: если ты ждёшь понимания или справедливости и не получаешь их, разочарование со временем превращается в злость.  \n- Проекция и триггеры: поведение начальника может напоминать прошлые обиды (в семье, школе), и тогда реакция кажется непропорциональной сейчас — но на самом деле «переработывает» старую боль.  \n- Самозащита и потеря контроля: чувство, что теряешь контроль над рабочей ситуацией или своим статусом, вызывает сильную эмоциональную реакцию и смятение.\n\n3) Как это проявляется в теле и мыслях (чтобы понять себя)\n- Тело: напряжение, учащённое дыхание, усталость, раздражение.  \n- Мысли: «Он/она меня не ценит», «Я не справляюсь», «Почему я снова реагирую так?» — такие мысли усиливают смятение.  \n- Поведение: избегание, срыв, молчание или взрывная реакция — все это способ справляться в текущих условиях.\n\n4) Что это значит для тебя прямо сейчас\n- Твоя реакция имеет смыслы: она указывает на нарушение границ, накопление стресса или неразрешённые ожидания. Это не доказательство «чего-то не так с тобой», а сигнал о проблеме в отношениях/среде и в твоём внутреннем ресурсе.  \n- Разобравшись в механизме, легче выбрать следующий шаг: говорить с начальником, менять границы, искать поддержку или пересматривать ожидания.\n\nКоротко: твоя злость — это рабочий сигнал; растерянность — результат смешения сильных эмоций и смыслов. Оба явления нормальны и объяснимы, а не «поломка» тебя.",
+  "runtime_trace_summary_v1": {
+    "version": "runtime_trace_summary_v1",
+    "entrypoint": "multiagent_adapter",
+    "latest_turn_constraints": [],
+    "latest_turn_constraints_v1": {
+      "version": "latest_turn_constraints_v1",
+      "no_practice": false,
+      "no_breathing_only": false,
+      "simplify": false,
+      "long_term_perspective": false,
+      "no_internal_db": false,
+      "active_constraints": [],
+      "source": "none"
+    },
+    "writer_grounding_visibility_v1": {
+      "version": "writer_grounding_visibility_v1",
+      "kb_visible_to_writer": false,
+      "semantic_cards_visible_to_writer": false,
+      "reason": "non_kb_emotional_support_turn",
+      "direct_kb_question": false,
+      "direct_source_request": false,
+      "explicit_knowledge_request": false,
+      "safety_grounding_allowed": false,
+      "no_internal_db": false,
+      "trace_only_grounding_available": true,
+      "writer_may_ignore_grounding": true,
+      "retrieval_action": "trace_only",
+      "retrieval_need": "none"
+    },
+    "kb_visible_to_writer": false,
+    "semantic_cards_visible_to_writer": false,
+    "overlay_apply_detected": false,
+    "final_directive_mode": "structured_explanation",
+    "practice_blocked_by_user_request": false,
+    "warnings": [],
+    "full_trace_available": true
+  },
+  "writer_grounding_visibility_v1": {
+    "version": "writer_grounding_visibility_v1",
+    "kb_visible_to_writer": false,
+    "semantic_cards_visible_to_writer": false,
+    "reason": "non_kb_emotional_support_turn",
+    "direct_kb_question": false,
+    "direct_source_request": false,
+    "explicit_knowledge_request": false,
+    "safety_grounding_allowed": false,
+    "no_internal_db": false,
+    "trace_only_grounding_available": true,
+    "writer_may_ignore_grounding": true,
+    "retrieval_action": "trace_only",
+    "retrieval_need": "none"
+  },
+  "status": "passed",
+  "mismatches": []
+}

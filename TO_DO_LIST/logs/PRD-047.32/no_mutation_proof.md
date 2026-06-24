@@ -1,6 +1,6 @@
 # PRD-047.32 No-Mutation Proof
 
-Status: pending_final_git_checks
+Status: passed_with_warning
 Date: 2026-06-24
 
 ## Scope Proof
@@ -21,4 +21,8 @@ Date: 2026-06-24
 - Live smoke showed explicit practice payload `1` on mandatory practice turns.
 
 ## Git Proof
-- Final `git status --short` and `HEAD == origin/main` checks will be appended after the required push/micro-push sequence.
+- Main implementation commit: `aed27db63120709c32106eeeb46c716e8c61c405`.
+- Main implementation push: `origin/main` updated to `aed27db63120709c32106eeeb46c716e8c61c405`.
+- Main push verification before metadata micro-sync: `HEAD == origin/main`.
+- Raw private owner chat context `TO_DO_LIST/context/ЧАТ_С_БОТОМ_3.txt` was intentionally not committed; `.gitignore` now excludes that exact raw context file.
+- Final clean working tree and `HEAD == origin/main` are verified after metadata micro-push in the delivery command log/final response.

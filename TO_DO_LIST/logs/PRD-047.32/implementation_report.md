@@ -2,6 +2,7 @@
 
 Status: passed_with_warning
 Date: 2026-06-24
+Main implementation commit: `aed27db63120709c32106eeeb46c716e8c61c405`
 
 ## What Changed
 - Added `runtime_truth_trace_v1` to the existing Writer context package, Writer debug, runtime trace summary, orchestrator debug payload, API trace response, and Web Chat trace UI.

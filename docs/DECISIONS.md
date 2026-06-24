@@ -1,5 +1,23 @@
 # Architecture Decisions
 
+## ADR-086 - Latest explicit practice request outranks stale must-answer, while Writer grounding stays narrow
+
+Status: accepted
+
+Date: 2026-06-24
+
+Context: PRD-047.30 correctly hid broad Writer-visible KB/semantic-card grounding on ordinary support turns, but live `ЧАТ_С_БОТОМ2` evidence showed a new failure class: the user explicitly asked for a practice to build non-reactivity, while the runtime followed stale `must_answer` state and returned an unrelated generic productivity fallback (`открой задачу / 5 минут`).
+
+Decision:
+- keep the canonical runtime path unchanged (`multiagent_adapter`);
+- let the latest explicit practice request override stale unanswered-question / `must_answer` carry-over in the existing dialogue-act, unanswered-question, and final-directive layers;
+- preserve current-thread continuity for explicit practice follow-ups after a concrete situation discussion, even if lexical overlap is low;
+- allow Writer-visible grounding for explicit practice turns only through a narrow chunk-type allowlist: `practice`, `dialogue_move`, `anti_pattern`, and `safety`;
+- keep broad KB/concept/mechanism grounding hidden by default on ordinary support turns and on explicit practice turns unless the chunk type is in that narrow allowlist;
+- expose the explicit-practice mode through compact trace/runtime summary notes without adding a new route, new agent, DB mutation, Chroma mutation, or thin-spine production apply.
+
+Consequences: the latest explicit user request now has a stronger bounded authority than stale carry-over state for this practice-turn class, while PRD-047.30's anti-noise boundary remains intact. Future work should target remaining fallback/prompt verbosity and runtime-truth noise rather than creating another routing subsystem.
+
 ## ADR-085 - Semantic chunk cards are advisory local Writer grounding, not retrieval or KB authority
 
 Status: accepted

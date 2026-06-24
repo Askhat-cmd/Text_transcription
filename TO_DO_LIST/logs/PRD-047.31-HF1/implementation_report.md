@@ -1,7 +1,11 @@
 # PRD-047.31-HF1 Implementation Report
 
 ## Status
-- `implemented_pre_push`
+- `completed_main_push`
+
+## Delivery Metadata
+- main implementation commit: `13db9ce`
+- main push target: `origin/main`
 
 ## Scope Delivered
 - Repaired explicit practice-request detection in the latest-turn layer so generic requests like `Дай мне какую-нибудь практику...` route to `practice_request` even without `?`.

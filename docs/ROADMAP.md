@@ -1,6 +1,7 @@
 ﻿# Roadmap
 
 ## Done
+- PRD-047.31-HF1: completed the urgent explicit-practice-request repair on the canonical current pipeline. Repaired generic explicit practice-request detection, stale `must_answer` override, thread continuation for anger/boss follow-up practice asks, narrow Writer-visible practice grounding allowlist inside `writer_context_package.py`, compact explicit-practice runtime trace note, PRD fixture/artifacts, and full backend/frontend restart live smoke. The `ЧАТ_С_БОТОМ2` scenario no longer returns the stale `открой задачу / 5 минут` fallback; the next step is runtime-truth and fallback-noise collapse, not another routing layer.
 - PRD-047.30: completed Writer input authority recovery on the canonical current pipeline without adding a new subsystem. Added `writer_grounding_visibility_v1`, hid Writer-visible KB/semantic cards by default on ordinary support/repair/simplify/pushback turns, preserved direct KB/source/safety grounded paths, compressed duplicate advisory prose, exposed visibility state in runtime/debug/API, created fixture/runner/artifacts, and passed live smoke `10/10` on the restarted `:8001` backend. The next step is retirement of remaining advisory/prompt noise, not another routing layer.
 - PRD-047.29: completed targeted simplification on the canonical current pipeline without replacing it. Added compact `latest_turn_constraints_v1`, hardened explicit no-practice/no-breathing/simplify/long-term/no-internal-db signals inside `final_answer_directive_v1`, suppressed Writer-visible KB/semantic-card payload on explicit `no_internal_db`, added compact `runtime_trace_summary_v1`, created PRD fixture/runner/artifacts, and passed live smoke `8/8` on the restarted `:8001` backend. The next step is no longer thin-spine experimentation; it is throttling unnecessary Writer-visible grounding on non-KB turns.
 - PRD-047.28: completed an isolated thin-spine live experiment without mutating the production runtime. Added experiment-only `A_current|B_thin|C_thin_note` runner paths, fixture/case loader, thin context collector, short natural-language live-turn note, safety/leak checks, comparative/owner/retirement/no-mutation artifacts, and targeted tests. The live result is an honest `BLOCKED`: baseline `A_current` still scores strongest or tied (`A=1.8`, `B=1.7`, `C=1.6`), while thin variants still show forced-practice and constraint-respect regressions, so the next step is pipeline simplification targets rather than thin-spine apply.
@@ -82,6 +83,7 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
+- PRD-047.31-HF1 closed the stale latest-turn authority bug for explicit practice asks. The remaining live-quality debt is no longer “practice request ignored”; it is residual fallback/prompt noise and verbosity on support/explanation turns.
 - PRD-047.30 closed the main Writer-visible grounding authority problem on ordinary non-KB turns. The remaining noise is now narrower: duplicate advisory wording and residual prompt/context redundancy, not chunk governance or route selection.
 - PRD-047.29 closed the explicit latest-turn constraint respect gap inside the current runtime. That work remains intact underneath PRD-047.30 and still owns compact explicit latest-turn constraints.
 - PRD-047.28 closed the question of whether the current architecture can be replaced by a thin spine immediately. The answer is no for now: evidence supports simplification work, but not replacement. The remaining problem is concentrated in noisy layers and constraint-respect debt, not in lack of yet another experimental route.
@@ -105,7 +107,7 @@
 - No active PRD-047.12 blocker remains; unified dialogue policy v2 is accepted on the current developer-local runtime baseline.
 
 ## Next
-1. Start `PRD-047.31 - Legacy Advisory Retirement / Writer Prompt Noise Collapse v1`.
+1. Start `PRD-047.32 - Owner Web Chat Runtime Truth / Legacy Fallback Noise Collapse v1`.
 2. Keep semantic cards advisory-only until a later PRD proves they help without recurring textbook drift or explicit no-KB conflict.
 3. Reduce remaining duplicate advisory/prompt noise before considering any wider pipeline replacement discussion.
 4. Keep any broader DB-track mutation, overlay authority expansion, retrieval-ranking rewrite, live metadata apply, runtime activation, or Chroma reindex in a separate explicit governance PRD.

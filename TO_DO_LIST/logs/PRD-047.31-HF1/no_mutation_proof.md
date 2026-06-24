@@ -15,11 +15,14 @@
 - live Web Chat smoke rerun passed after full backend/frontend restart
 - full `pytest tests -q` still fails only on the known `_build_llm_prompts` import blocker
 
-## Final Push Verification
-- pending post-push micro-update:
+## Main Push Verification
+- `git status --short` after main push: clean
+- `git diff --stat` after main push: clean
+- main implementation commit hash: `13db9ce`
+- `HEAD == origin/main` after main push: yes
+
+## Final Delivery Note
+- This file is synchronized in the metadata micro-push that follows the main implementation push.
+- Final delivery confirmation still requires the post-micro-push check:
   - `git status --short`
-  - `git diff --stat`
-  - main implementation commit hash
-  - metadata micro-commit hash
   - `HEAD == origin/main`
-  - clean working tree

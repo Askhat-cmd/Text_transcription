@@ -44,5 +44,5 @@ This PRD kept the current runtime and corrected Writer input authority instead o
 ## Delivery Notes
 
 - restored owner file `TO_DO_LIST/PRD-047.27-HF2_TASK_LIST.md` remains present and untouched
-- main implementation commit hash: `PENDING_MAIN_COMMIT`
-- metadata sync will be completed in the immediate post-push micro-commit
+- main implementation commit hash: `e17ba4f`
+- metadata sync is delivered in the immediate post-push micro-commit

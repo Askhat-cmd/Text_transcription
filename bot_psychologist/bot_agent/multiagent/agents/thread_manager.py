@@ -758,6 +758,8 @@ class ThreadManagerAgent:
         relation_reason = "continuity_continue"
 
         lowered = user_message.lower()
+        request_type = detect_request_type_v1(user_message)
+        explicit_practice_request = request_type == REQUEST_TYPE_PRACTICE
         return_marker_hit = any(marker in lowered for marker in _RETURN_MARKERS)
         followup_continue_marker_hit = any(marker in lowered for marker in _FOLLOWUP_CONTINUE_MARKERS)
         low_resource_continue_marker_hit = any(marker in lowered for marker in _LOW_RESOURCE_CONTINUE_MARKERS)
@@ -788,6 +790,10 @@ class ThreadManagerAgent:
             relation = "continue"
             continuity = max(continuity_raw, 0.25)
             relation_reason = "active_frame_semantic_continuity"
+        elif explicit_practice_request and not resolution_marker_hit:
+            relation = "continue"
+            continuity = max(continuity_raw, 0.25)
+            relation_reason = "explicit_practice_request_continuation"
         elif continuity_raw < _NEW_THREAD_THRESHOLD:
             relation = "new_thread"
             continuity = continuity_raw
@@ -1217,6 +1223,10 @@ class ThreadManagerAgent:
             flags.append("active_frame_semantic_continuity")
             if float(relation.get("continuity_raw") or 0.0) < _NEW_THREAD_THRESHOLD:
                 flags.append("semantic_guard_overrode_low_overlap")
+        if relation.get("relation_reason") == "explicit_practice_request_continuation":
+            flags.append("explicit_practice_request_continuation")
+            if float(relation.get("continuity_raw") or 0.0) < _NEW_THREAD_THRESHOLD:
+                flags.append("practice_request_overrode_low_overlap")
         if relation.get("branch_marker_hit"):
             flags.append("branch_marker_hit")
         if relation.get("return_marker_hit"):

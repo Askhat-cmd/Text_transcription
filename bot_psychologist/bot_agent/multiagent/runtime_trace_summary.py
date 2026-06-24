@@ -87,6 +87,18 @@ def build_runtime_trace_summary_v1(
         warnings.append("simplify_constraint_not_short")
     if overlay_apply_detected:
         warnings.append("overlay_apply_detected")
+    explicit_practice_request = bool(
+        writer_grounding_visibility.get("explicit_practice_request", False)
+        or str(directive.get("answer_obligation", "") or "") == "provide_one_bounded_practice"
+    )
+    practice_request_runtime_note = ""
+    if explicit_practice_request:
+        practice_request_runtime_note = (
+            "Detected explicit practice request. Forced contextual practice answer. "
+            "KB remains optional/narrow."
+            if str(writer_grounding_visibility.get("reason", "") or "") == "explicit_practice_request_narrow_grounding"
+            else "Detected explicit practice request. Forced contextual practice answer."
+        )
 
     return {
         "version": RUNTIME_TRACE_SUMMARY_VERSION,
@@ -101,6 +113,8 @@ def build_runtime_trace_summary_v1(
             final_answer_directive=directive,
             latest_turn_constraints=latest_turn_constraints,
         ),
+        "explicit_practice_request": explicit_practice_request,
+        "practice_request_runtime_note": practice_request_runtime_note,
         "practice_blocked_by_user_request": bool(latest_turn_constraints.get("no_practice", False)),
         "warnings": warnings,
         "full_trace_available": True,

@@ -11,6 +11,7 @@ _QUESTION_ACTS = {
     "direct_question": "direct_question",
     "knowledge_question": "direct_knowledge_question",
     "concrete_situation_question": "concrete_situation_question",
+    "practice_request": "practice_request",
 }
 
 

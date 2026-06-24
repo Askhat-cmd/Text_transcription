@@ -129,6 +129,26 @@ _ONE_PRACTICE_MARKERS = (
     "короткую практику",
     "микропрактик",
 )
+_GENERIC_PRACTICE_REQUEST_MARKERS = (
+    "дай практику",
+    "дай мне практику",
+    "дай какую нибудь практику",
+    "дай какую-нибудь практику",
+    "предложи практику",
+    "подбери практику",
+    "нужна практика",
+    "мне нужна практика",
+    "хочу практику",
+    "какую нибудь практику",
+    "какую-нибудь практику",
+)
+_PRACTICE_OVERVIEW_MARKERS = (
+    "какие практики",
+    "какие способы",
+    "какие варианты",
+    "какие направления",
+    "как это видеть",
+)
 _CLARIFICATION_MARKERS = ("что именно", "в каком смысле", "уточни", "clarify")
 _TOPIC_SHIFT_MARKERS = ("другая тема", "другой вопрос", "сменим тему", "новая тема")
 _META_FEEDBACK_MARKERS = ("бот", "система", "ответил как бот", "не как человек")
@@ -230,6 +250,33 @@ def _is_explicit_one_practice_request(lowered: str) -> bool:
     return (
         ("одну" in lowered or "один" in lowered or "коротк" in lowered or "микро" in lowered)
         and _contains_any(lowered, _PRACTICE_MARKERS)
+    )
+
+
+def _is_explicit_generic_practice_request(lowered: str) -> bool:
+    if not lowered:
+        return False
+    if _contains_any(lowered, _PRACTICE_OVERVIEW_MARKERS):
+        return False
+    if _is_explicit_no_practice_cause_request(lowered):
+        return False
+    if _contains_any(lowered, _GENERIC_PRACTICE_REQUEST_MARKERS):
+        return True
+    if not _contains_any(lowered, _PRACTICE_MARKERS):
+        return False
+    return any(
+        marker in lowered
+        for marker in (
+            "дай",
+            "предложи",
+            "подбери",
+            "хочу",
+            "нужна",
+            "нужны",
+            "мне бы",
+            "чтобы я мог",
+            "чтобы я могла",
+        )
     )
 
 
@@ -507,6 +554,17 @@ def build_dialogue_act_resolution_v1(
             "confidence": 0.95,
             "evidence": evidence,
             "reason": "explicit_bounded_practice_request",
+            "source": "practice_request_override",
+            "not_exact_match_rule": True,
+        }
+
+    if _is_explicit_generic_practice_request(lowered):
+        return {
+            "version": DIALOGUE_ACT_RESOLVER_VERSION,
+            "dialogue_act": "practice_request",
+            "confidence": 0.9,
+            "evidence": ["explicit_practice_request"],
+            "reason": "explicit_practice_request_without_question",
             "source": "practice_request_override",
             "not_exact_match_rule": True,
         }

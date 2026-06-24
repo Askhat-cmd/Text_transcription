@@ -157,6 +157,160 @@ def test_semantic_cards_become_trace_only_on_simplify_turn(monkeypatch) -> None:
     assert package["semantic_card_payload_items"] == []
 
 
+def test_explicit_practice_request_allows_only_narrow_grounding_types(monkeypatch) -> None:
+    monkeypatch.setenv("APP_ENV", "local")
+    monkeypatch.setenv("SEMANTIC_CARDS_PILOT_ENABLED", "true")
+    monkeypatch.setenv("WRITER_KB_PAYLOAD_ENABLED", "true")
+
+    import bot_agent.multiagent.writer_context_package as package_module
+
+    def _selected_cards(**_: object) -> dict:
+        return {
+            "schema_version": "semantic_cards_pilot_trace_v1",
+            "status": "selected",
+            "selected_card_count": 2,
+            "selected_card_ids": ["practice_card_v1", "theory_card_v1"],
+            "writer_payload_enriched": True,
+            "payload_items": [
+                {
+                    "chunk_id": "semantic_card:practice_card_v1",
+                    "source": "semantic_cards_pilot_v1",
+                    "content": "Pause before replying.",
+                    "allowed_use": ["writer_support"],
+                    "chunk_type": "practice",
+                },
+                {
+                    "chunk_id": "semantic_card:theory_card_v1",
+                    "source": "semantic_cards_pilot_v1",
+                    "content": "Long theory about control.",
+                    "allowed_use": ["writer_support"],
+                    "chunk_type": "concept",
+                },
+            ],
+        }
+
+    monkeypatch.setattr(package_module, "build_semantic_cards_pilot_selection", _selected_cards)
+
+    bundle = MemoryBundle(
+        conversation_context="",
+        user_profile=UserProfile(),
+        knowledge_rag_hits=[
+            {
+                "chunk_id": "kb-practice",
+                "source": "internal_doc",
+                "content": "Name the trigger and pause before replying.",
+                "allowed_use": ["writer_support"],
+                "chunking_quality": {"chunk_type": "practice"},
+            },
+            {
+                "chunk_id": "kb-theory",
+                "source": "internal_doc",
+                "content": "Broad concept dump about control and self-worth.",
+                "allowed_use": ["writer_support"],
+                "chunking_quality": {"chunk_type": "concept"},
+            },
+        ],
+        has_relevant_knowledge=True,
+        context_turns=3,
+    )
+
+    package = build_writer_context_package_v1(
+        user_message="Дай мне какую-нибудь практику, чтобы не быть реактивным в разговоре с начальником.",
+        memory_bundle=bundle,
+        context_package=None,
+        retrieval_decision={
+            "retrieval_action": "query_kb",
+            "retrieval_need": "practice_context",
+            "rag_included_count": 2,
+            "rag_included_reason": "selected_for_writer",
+            "rag_included_for_writer": [
+                {
+                    "chunk_id": "kb-practice",
+                    "source": "internal_doc",
+                    "content": "Name the trigger and pause before replying.",
+                    "allowed_use": ["writer_support"],
+                    "chunking_quality": {"chunk_type": "practice"},
+                },
+                {
+                    "chunk_id": "kb-theory",
+                    "source": "internal_doc",
+                    "content": "Broad concept dump about control and self-worth.",
+                    "allowed_use": ["writer_support"],
+                    "chunking_quality": {"chunk_type": "concept"},
+                },
+            ],
+        },
+        fresh_chat_context_policy={"cross_session_memory_allowed": True},
+        latest_turn_constraints={},
+    )
+
+    visibility = package["writer_grounding_visibility_v1"]
+
+    assert visibility["kb_visible_to_writer"] is True
+    assert visibility["semantic_cards_visible_to_writer"] is True
+    assert visibility["reason"] == "explicit_practice_request_narrow_grounding"
+    assert visibility["allowed_grounding_types"] == ["practice"]
+    assert {item["chunk_id"] for item in package["rag_for_writer"]} == {"kb-practice"}
+    assert {item["chunk_id"] for item in package["semantic_card_payload_items"]} == {
+        "semantic_card:practice_card_v1"
+    }
+    assert all(
+        chunk["chunk_type"] == "practice"
+        for chunk in package["writer_kb_payload"]["chunks"]
+    )
+
+
+def test_no_internal_db_still_suppresses_practice_grounding(monkeypatch) -> None:
+    monkeypatch.setenv("APP_ENV", "local")
+    monkeypatch.setenv("SEMANTIC_CARDS_PILOT_ENABLED", "true")
+    monkeypatch.setenv("WRITER_KB_PAYLOAD_ENABLED", "true")
+
+    package = build_writer_context_package_v1(
+        user_message="Дай мне практику, чтобы не срываться на начальника.",
+        memory_bundle=MemoryBundle(
+            conversation_context="",
+            user_profile=UserProfile(),
+            knowledge_rag_hits=[
+                {
+                    "chunk_id": "kb-practice",
+                    "source": "internal_doc",
+                    "content": "Pause before replying.",
+                    "allowed_use": ["writer_support"],
+                    "chunking_quality": {"chunk_type": "practice"},
+                }
+            ],
+            has_relevant_knowledge=True,
+            context_turns=2,
+        ),
+        context_package=None,
+        retrieval_decision={
+            "retrieval_action": "query_kb",
+            "retrieval_need": "practice_context",
+            "rag_included_count": 1,
+            "rag_included_for_writer": [
+                {
+                    "chunk_id": "kb-practice",
+                    "source": "internal_doc",
+                    "content": "Pause before replying.",
+                    "allowed_use": ["writer_support"],
+                    "chunking_quality": {"chunk_type": "practice"},
+                }
+            ],
+        },
+        fresh_chat_context_policy={"cross_session_memory_allowed": True},
+        latest_turn_constraints={"no_internal_db": True},
+    )
+
+    visibility = package["writer_grounding_visibility_v1"]
+
+    assert visibility["reason"] == "latest_turn_no_internal_db"
+    assert visibility["kb_visible_to_writer"] is False
+    assert visibility["semantic_cards_visible_to_writer"] is False
+    assert package["rag_for_writer"] == []
+    assert package["semantic_card_payload_items"] == []
+    assert package["writer_kb_payload"]["chunk_count"] == 0
+
+
 def test_knowledge_policy_still_blocks_internal_only_and_do_not_use() -> None:
     decisions, trace = apply_knowledge_policy_v1(
         [

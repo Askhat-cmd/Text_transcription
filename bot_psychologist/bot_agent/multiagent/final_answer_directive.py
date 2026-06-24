@@ -392,6 +392,8 @@ def build_final_answer_directive_v1(
         _append_unique(soft_guidance, "answer_in_own_words_without_internal_db_grounding")
     if summary_request:
         must_answer_value = "summary of current conversation"
+    elif answer_obligation == "provide_one_bounded_practice" or dialogue_act == "practice_request":
+        must_answer_value = str(user_message or "").strip()
     elif bool(latest_turn_constraints.get("active_constraints", [])):
         must_answer_value = str(user_message or "").strip()
     elif _must_answer_current_turn(user_message):

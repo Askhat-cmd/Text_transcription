@@ -10,6 +10,7 @@ from ..knowledge.semantic_card_payload_adapter import (
     build_semantic_cards_pilot_selection,
     get_semantic_cards_pilot_config,
 )
+from .creator_live_behavior_guard import REQUEST_TYPE_PRACTICE, detect_request_type_v1
 from .contracts.context_package import ContextAssemblyPackage
 from .contracts.memory_bundle import MemoryBundle
 from .writer_kb_payload import (
@@ -22,6 +23,7 @@ from .writer_kb_payload import (
 
 WRITER_CONTEXT_PACKAGE_VERSION = "writer_context_package_v1"
 WRITER_GROUNDING_VISIBILITY_VERSION = "writer_grounding_visibility_v1"
+NARROW_PRACTICE_GROUNDING_TYPES = frozenset({"practice", "dialogue_move", "anti_pattern", "safety"})
 
 _KNOWLEDGE_MARKERS = (
     "что такое",
@@ -165,21 +167,95 @@ def _looks_like_safety_grounding_need(user_message: str) -> bool:
     return _contains_any(user_message, _SAFETY_GROUNDING_MARKERS)
 
 
+def _normalize_chunk_type(value: Any) -> str:
+    return str(value or "").strip().lower()
+
+
+def _extract_chunk_type(item: dict[str, Any]) -> str:
+    if not isinstance(item, dict):
+        return ""
+    chunking_quality = (
+        dict(item.get("chunking_quality", {}))
+        if isinstance(item.get("chunking_quality"), dict)
+        else {}
+    )
+    governance = (
+        dict(item.get("governance", {}))
+        if isinstance(item.get("governance"), dict)
+        else {}
+    )
+    for candidate in (
+        item.get("chunk_type"),
+        chunking_quality.get("chunk_type"),
+        governance.get("chunk_type"),
+    ):
+        chunk_type = _normalize_chunk_type(candidate)
+        if chunk_type:
+            return chunk_type
+    return ""
+
+
+def _collect_candidate_chunk_types(items: list[dict[str, Any]]) -> list[str]:
+    seen: set[str] = set()
+    ordered: list[str] = []
+    for item in list(items or []):
+        chunk_type = _extract_chunk_type(item)
+        if chunk_type and chunk_type not in seen:
+            seen.add(chunk_type)
+            ordered.append(chunk_type)
+    return ordered
+
+
+def _filter_items_by_chunk_types(
+    items: list[dict[str, Any]],
+    allowed_chunk_types: set[str],
+) -> list[dict[str, Any]]:
+    if not allowed_chunk_types:
+        return [
+            dict(item)
+            for item in list(items or [])
+            if isinstance(item, dict)
+        ]
+    return [
+        dict(item)
+        for item in list(items or [])
+        if isinstance(item, dict) and _extract_chunk_type(item) in allowed_chunk_types
+    ]
+
+
 def build_writer_grounding_visibility_v1(
     *,
     user_message: str,
     retrieval_decision: dict[str, Any] | None,
     latest_turn_constraints: dict[str, Any] | None,
     has_grounding_candidates: bool,
+    candidate_chunk_types: list[str] | None = None,
 ) -> dict[str, Any]:
     retrieval = dict(retrieval_decision or {})
     constraints = dict(latest_turn_constraints or {})
     no_internal_db = bool(constraints.get("no_internal_db", False))
     retrieval_action = str(retrieval.get("retrieval_action", "trace_only") or "trace_only")
     retrieval_need = str(retrieval.get("retrieval_need", "") or "")
+    request_type = detect_request_type_v1(user_message)
+    explicit_practice_request = request_type == REQUEST_TYPE_PRACTICE
     direct_source_request = _looks_like_direct_source_request(user_message)
     explicit_knowledge_request = _looks_like_explicit_knowledge_request(user_message)
     safety_grounding_allowed = _looks_like_safety_grounding_need(user_message)
+    normalized_candidate_chunk_types = [
+        chunk_type
+        for chunk_type in (
+            _normalize_chunk_type(item)
+            for item in list(candidate_chunk_types or [])
+        )
+        if chunk_type
+    ]
+    narrow_practice_chunk_types = sorted(
+        {
+            chunk_type
+            for chunk_type in normalized_candidate_chunk_types
+            if chunk_type in NARROW_PRACTICE_GROUNDING_TYPES
+        }
+    )
     direct_kb_question = bool(
         direct_source_request
         or (
@@ -193,6 +269,9 @@ def build_writer_grounding_visibility_v1(
                 or has_grounding_candidates
             )
         )
+    )
+    narrow_practice_grounding_available = bool(
+        explicit_practice_request and narrow_practice_chunk_types
     )
 
     if no_internal_db:
@@ -223,6 +302,10 @@ def build_writer_grounding_visibility_v1(
         kb_visible_to_writer = False
         semantic_cards_visible_to_writer = False
         reason = "support_or_pushback_turn_trace_only"
+    elif narrow_practice_grounding_available:
+        kb_visible_to_writer = True
+        semantic_cards_visible_to_writer = True
+        reason = "explicit_practice_request_narrow_grounding"
     elif direct_kb_question:
         kb_visible_to_writer = True
         semantic_cards_visible_to_writer = True
@@ -248,6 +331,10 @@ def build_writer_grounding_visibility_v1(
         "direct_kb_question": direct_kb_question,
         "direct_source_request": direct_source_request,
         "explicit_knowledge_request": explicit_knowledge_request,
+        "explicit_practice_request": explicit_practice_request,
+        "candidate_chunk_types": normalized_candidate_chunk_types,
+        "allowed_grounding_types": narrow_practice_chunk_types if narrow_practice_grounding_available else [],
+        "narrow_practice_grounding_available": narrow_practice_grounding_available,
         "safety_grounding_allowed": safety_grounding_allowed,
         "no_internal_db": no_internal_db,
         "trace_only_grounding_available": bool(has_grounding_candidates),
@@ -316,14 +403,42 @@ def build_writer_context_package_v1(
     else:
         base_rag_for_writer = [dict(item) for item in list(memory_bundle.knowledge_rag_hits or []) if isinstance(item, dict)]
 
+    semantic_cards_pilot = build_semantic_cards_pilot_selection(
+        user_message=user_message,
+        retrieval_decision=retrieval,
+        config=get_semantic_cards_pilot_config(),
+    )
+    semantic_card_candidate_payload_items = [
+        dict(item)
+        for item in list(semantic_cards_pilot.get("payload_items", []) or [])
+        if isinstance(item, dict)
+    ]
+    candidate_chunk_types = _collect_candidate_chunk_types(base_rag_for_writer)
+    candidate_chunk_types.extend(
+        chunk_type
+        for chunk_type in _collect_candidate_chunk_types(semantic_card_candidate_payload_items)
+        if chunk_type not in candidate_chunk_types
+    )
     writer_grounding_visibility = build_writer_grounding_visibility_v1(
         user_message=user_message,
         retrieval_decision=retrieval,
         latest_turn_constraints=constraints,
-        has_grounding_candidates=bool(base_rag_for_writer) or bool(list(memory_bundle.semantic_hits or [])),
+        has_grounding_candidates=bool(base_rag_for_writer) or bool(semantic_card_candidate_payload_items),
+        candidate_chunk_types=candidate_chunk_types,
+    )
+    allowed_grounding_types = {
+        _normalize_chunk_type(item)
+        for item in list(writer_grounding_visibility.get("allowed_grounding_types", []) or [])
+        if _normalize_chunk_type(item)
+    }
+    narrow_practice_grounding_active = bool(
+        writer_grounding_visibility.get("reason") == "explicit_practice_request_narrow_grounding"
+        and allowed_grounding_types
     )
     rag_for_writer = (
-        list(base_rag_for_writer)
+        _filter_items_by_chunk_types(base_rag_for_writer, allowed_grounding_types)
+        if narrow_practice_grounding_active
+        else list(base_rag_for_writer)
         if bool(writer_grounding_visibility.get("kb_visible_to_writer", False))
         else []
     )
@@ -390,11 +505,6 @@ def build_writer_context_package_v1(
         if isinstance(retrieval.get("hybrid_retrieval_plan"), dict)
         else {}
     )
-    semantic_cards_pilot = build_semantic_cards_pilot_selection(
-        user_message=user_message,
-        retrieval_decision=retrieval,
-        config=get_semantic_cards_pilot_config(),
-    )
     if no_internal_db:
         semantic_cards_pilot = dict(semantic_cards_pilot)
         semantic_cards_pilot["status"] = "suppressed"
@@ -411,11 +521,26 @@ def build_writer_context_package_v1(
         )
         semantic_cards_pilot["writer_payload_enriched"] = False
         semantic_cards_pilot["payload_items"] = []
-    semantic_card_payload_items = [
-        dict(item)
-        for item in list(semantic_cards_pilot.get("payload_items", []) or [])
-        if isinstance(item, dict)
-    ]
+    semantic_card_payload_items = (
+        _filter_items_by_chunk_types(
+            [
+                dict(item)
+                for item in list(semantic_cards_pilot.get("payload_items", []) or [])
+                if isinstance(item, dict)
+            ],
+            allowed_grounding_types,
+        )
+        if narrow_practice_grounding_active
+        else [
+            dict(item)
+            for item in list(semantic_cards_pilot.get("payload_items", []) or [])
+            if isinstance(item, dict)
+        ]
+    )
+    if narrow_practice_grounding_active:
+        semantic_cards_pilot = dict(semantic_cards_pilot)
+        semantic_cards_pilot["writer_payload_enriched"] = bool(semantic_card_payload_items)
+        semantic_cards_pilot["payload_items"] = list(semantic_card_payload_items)
     rag_for_writer_for_payload = list(rag_for_writer) + semantic_card_payload_items
 
     payload_config = get_writer_kb_payload_config()

@@ -39,3 +39,35 @@ def test_runtime_trace_summary_prefers_writer_grounding_visibility_flags() -> No
     assert summary["semantic_cards_visible_to_writer"] is False
     assert "writer_grounding_visibility_payload_mismatch" in summary["warnings"]
     assert "writer_grounding_visibility_semantic_mismatch" in summary["warnings"]
+
+
+def test_runtime_trace_summary_marks_explicit_practice_request_note() -> None:
+    summary = build_runtime_trace_summary_v1(
+        entrypoint="multiagent_adapter",
+        final_answer_directive={
+            "answer_obligation": "provide_one_bounded_practice",
+            "answer_shape": "one_short_practice",
+            "latest_turn_constraints_v1": {
+                "version": "latest_turn_constraints_v1",
+                "active_constraints": [],
+            },
+        },
+        writer_debug={
+            "writer_grounding_visibility_v1": {
+                "version": "writer_grounding_visibility_v1",
+                "kb_visible_to_writer": True,
+                "semantic_cards_visible_to_writer": True,
+                "reason": "explicit_practice_request_narrow_grounding",
+                "explicit_practice_request": True,
+            },
+            "writer_kb_payload_trace": {"payload_chunk_count": 1},
+            "semantic_cards_pilot": {"writer_payload_enriched": False, "selected_card_count": 0},
+        },
+        overlay_shadow={},
+    )
+
+    assert summary["explicit_practice_request"] is True
+    assert summary["practice_request_runtime_note"] == (
+        "Detected explicit practice request. Forced contextual practice answer. "
+        "KB remains optional/narrow."
+    )

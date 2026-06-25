@@ -58,6 +58,14 @@ def build_runtime_trace_summary_v1(
     semantic_cards_pilot = _safe_dict(writer.get("semantic_cards_pilot"))
     writer_grounding_visibility = _safe_dict(writer.get("writer_grounding_visibility_v1"))
     runtime_truth_trace = _safe_dict(writer.get("runtime_truth_trace_v1"))
+    selected_answer_shape_profile = str(
+        directive.get("answer_shape_profile", "") or "adaptive_current_pipeline"
+    )
+    answer_shape_profile_notes = [
+        str(item)
+        for item in list(directive.get("answer_shape_profile_notes", []) or [])
+        if str(item).strip()
+    ]
     if writer_grounding_visibility:
         kb_visible_to_writer = bool(writer_grounding_visibility.get("kb_visible_to_writer", False))
         semantic_cards_visible_to_writer = bool(
@@ -177,6 +185,8 @@ def build_runtime_trace_summary_v1(
             final_answer_directive=directive,
             latest_turn_constraints=latest_turn_constraints,
         ),
+        "selected_answer_shape_profile": selected_answer_shape_profile,
+        "answer_shape_profile_notes": answer_shape_profile_notes,
         "explicit_practice_request": explicit_practice_request,
         "practice_request_runtime_note": practice_request_runtime_note,
         "practice_blocked_by_user_request": bool(latest_turn_constraints.get("no_practice", False)),

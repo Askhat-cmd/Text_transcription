@@ -27,8 +27,11 @@ def test_ordinary_support_turn_gets_compact_answer_shape_hint() -> None:
     assert policy["compact_support_answer"] is True
     assert human_like["support_answer_compactness"] == "ordinary_support_compact"
     assert human_like["preferred_shape"] == "one_main_point_one_optional_next_step"
-    assert human_like["target_length_chars"] == "600_1400"
+    assert human_like["target_length_chars"] == "450_1100"
     assert human_like["avoid_mechanism_heavy_default"] is True
+    assert human_like["prefer_direct_answer_first"] is True
+    assert human_like["prefer_single_main_mechanism"] is True
+    assert human_like["max_list_items"] == 3
     assert human_like["default_depth"] == "short_to_medium"
     assert human_like["allow_long_answers"] is False
     assert human_like["allow_multiple_options"] is False
@@ -68,3 +71,4 @@ def test_no_practice_explanation_does_not_become_practice_first() -> None:
     assert human_like["support_answer_compactness"] == "ordinary_support_compact"
     assert human_like["allow_long_answers"] is False
     assert human_like["avoid_mechanism_heavy_default"] is True
+    assert human_like["prefer_direct_answer_first"] is True

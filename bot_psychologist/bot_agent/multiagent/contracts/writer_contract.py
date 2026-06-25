@@ -382,6 +382,15 @@ class WriterContract:
                 final_answer_directive.get("version", "final_answer_directive_v1")
                 or "final_answer_directive_v1"
             ),
+            "final_answer_shape_profile": str(
+                final_answer_directive.get("answer_shape_profile", "adaptive_current_pipeline")
+                or "adaptive_current_pipeline"
+            ),
+            "final_answer_shape_profile_notes": [
+                str(item)
+                for item in list(final_answer_directive.get("answer_shape_profile_notes", []) or [])
+                if str(item).strip()
+            ],
             "final_answer_diagnostic_center_role": str(
                 final_answer_directive.get("diagnostic_center_role", "guided_legacy")
                 or "guided_legacy"

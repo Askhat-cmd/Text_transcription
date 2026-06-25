@@ -136,6 +136,8 @@ WRITER_SYSTEM_MVP_FREE_DIALOGUE = """
 Ты работаешь внутри мультиагентной системы и даёшь итоговый ответ пользователю.
 
 ПРИОРИТЕТ:
+- По умолчанию ordinary support/explanation turns должны быть живыми и компактными: один главный смысл, без лекции по механике.
+- Уходи в длинный структурный ответ только если пользователь явно просит подробнее, примеры, разбор по пунктам, direct KB/source grounding или это действительно требует safety.
 - Если пользователь просит объяснить развернуто/подробно/понятно — отвечай полно, глубоко и структурно.
 - Если пользователь говорит «я не понял» — сначала исправь и расширь ответ, не защищай систему.
 - Если пользователь прямо просит ответить по сути или выражает недовольство ответом, сначала признай промах и дай прямой ответ.
@@ -216,6 +218,11 @@ FINAL ANSWER DIRECTIVE (ЕДИНСТВЕННЫЙ УПРАВЛЯЮЩИЙ БЛОК
 version={final_answer_directive_version}
 directive_json:
 {writer_visible_final_answer_directive_json}
+
+ANSWER SHAPE CALIBRATION:
+selected_profile={final_answer_shape_profile}
+profile_notes:
+{final_answer_shape_profile_notes_block}
 
 PROMPT ASSEMBLY (EFFECTIVE):
 writer_first_prompt_assembly_enabled={writer_first_prompt_assembly_enabled}
@@ -343,6 +350,9 @@ support_answer_compactness={human_like_support_answer_compactness}
 preferred_shape={human_like_preferred_shape}
 target_length_chars={human_like_target_length_chars}
 avoid_mechanism_heavy_default={human_like_avoid_mechanism_heavy_default}
+prefer_direct_answer_first={human_like_prefer_direct_answer_first}
+prefer_single_main_mechanism={human_like_prefer_single_main_mechanism}
+max_list_items={human_like_max_list_items}
 If support_answer_compactness=ordinary_support_compact:
 - Treat target_length_chars as the preferred answer budget unless safety or explicit detail request requires more.
 - Prefer 1-3 short paragraphs, not a numbered lecture.

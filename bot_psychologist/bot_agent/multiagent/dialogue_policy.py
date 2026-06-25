@@ -386,8 +386,11 @@ def build_effective_dialogue_policy(
                 if compact_support_answer
                 else "adaptive"
             ),
-            "target_length_chars": "600_1400" if compact_support_answer else "",
+            "target_length_chars": "450_1100" if compact_support_answer else "",
             "avoid_mechanism_heavy_default": compact_support_answer,
+            "prefer_direct_answer_first": compact_support_answer,
+            "prefer_single_main_mechanism": compact_support_answer,
+            "max_list_items": 3 if compact_support_answer else 0,
         },
         "constraint_resolution": {
             "profile": normalized_profile,

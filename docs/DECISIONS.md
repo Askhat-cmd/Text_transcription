@@ -1,5 +1,30 @@
 # Architecture Decisions
 
+## ADR-087 - Answer shape is calibrated through soft final-directive profiles, not a new runtime route
+
+Status: accepted
+
+Date: 2026-06-25
+
+Context: PRD-047.32 proved that ordinary owner-pilot verbosity was no longer mainly a KB-leak problem: Writer payload was often `0`, while some answers still sounded too methodical or lecture-like. The repository needed a narrower answer-shape control inside the current runtime rather than a new style-agent, a new route, or DB mutation.
+
+Decision:
+- keep the canonical runtime path unchanged (`multiagent_adapter`);
+- add soft `answer_shape_profile` selection inside `final_answer_directive_v1` rather than introducing a new subsystem;
+- pass the selected profile and profile notes through `WriterContract` into Writer prompt assembly and `runtime_trace_summary_v1`;
+- treat profiles as soft shape hints only, not a hard rule engine:
+  - `contact_brief`
+  - `ordinary_explanation_compact`
+  - `concrete_situation_compact`
+  - `bounded_practice`
+  - `no_internal_db_compact`
+  - `direct_kb_grounded_compact`
+  - `safety_grounding_compact`
+- preserve higher-priority boundaries for safety, explicit practice, explicit no-internal-db, and direct KB/source requests;
+- forbid any new agent, new runtime path, broad KB re-enable, Bot_data_base mutation, Chroma mutation, or thin-spine production apply in this calibration layer.
+
+Consequences: answer-shape steering now lives in the existing final-directive -> Writer prompt -> runtime-trace chain, which is easier to audit and cheaper to evolve than another routing layer. Future work should repair remaining shape conflicts inside that chain, not expand architecture.
+
 ## ADR-086 - Latest explicit practice request outranks stale must-answer, while Writer grounding stays narrow
 
 Status: accepted

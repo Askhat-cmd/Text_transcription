@@ -153,6 +153,12 @@ def sanitize_legacy_advisory_for_writer(source_signals: dict) -> dict[str, Any]:
         "answer_obligation": _clean_text(signals.get("answer_obligation", "")) or "continue_line_with_focus",
         "must_answer": _clean_text(signals.get("must_answer", "")) or "answer_user_question_directly",
         "answer_shape": _clean_text(signals.get("answer_shape", "")) or "compact_direct",
+        "answer_shape_profile": _clean_text(signals.get("final_answer_shape_profile", "")) or "adaptive_current_pipeline",
+        "answer_shape_profile_notes": [
+            _clean_text(item)
+            for item in list(signals.get("final_answer_shape_profile_notes", []) or [])
+            if _clean_text(item)
+        ][:6],
         "depth": _clean_text(signals.get("depth", "")) or "medium",
         "style": _clean_text(signals.get("style", "")) or "human_conversational",
         "question_policy": _clean_text(signals.get("question_policy", "")) or "optional",

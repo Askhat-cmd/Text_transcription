@@ -879,7 +879,11 @@ def build_response_planner_decision(
             continuity_policy="continue_active_line",
             safety_priority=False,
             must_include=["назвать один механизм", "связать с active_line"],
-            must_avoid=["не предлагать практику", "не начинать механический пересказ"],
+            must_avoid=[
+                "не предлагать практику",
+                "не начинать механический пересказ",
+                "не превращать ответ в мини-лекцию или каталог причин",
+            ],
             source_signals=source_signals,
             confidence=0.9,
             rationale="Mechanism intent: нужен объяснительный ход без разворота в практику.",

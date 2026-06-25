@@ -949,6 +949,27 @@ class WriterAgent:
             human_like_avoid_mechanism_heavy_default=str(
                 bool(human_like_answer_policy.get("avoid_mechanism_heavy_default", False))
             ).lower(),
+            human_like_prefer_direct_answer_first=str(
+                bool(human_like_answer_policy.get("prefer_direct_answer_first", False))
+            ).lower(),
+            human_like_prefer_single_main_mechanism=str(
+                bool(human_like_answer_policy.get("prefer_single_main_mechanism", False))
+            ).lower(),
+            human_like_max_list_items=str(
+                int(human_like_answer_policy.get("max_list_items", 0) or 0)
+            ),
+            final_answer_shape_profile=str(
+                ctx.get("final_answer_shape_profile", "adaptive_current_pipeline")
+                or "adaptive_current_pipeline"
+            ),
+            final_answer_shape_profile_notes_block=(
+                "\n".join(
+                    f"- {str(item).strip()}"
+                    for item in list(ctx.get("final_answer_shape_profile_notes", []) or [])
+                    if str(item).strip()
+                )
+                or "- Follow the current answer obligation and stay direct."
+            ),
             constraint_resolution_profile=str(
                 constraint_resolution.get("profile", dialogue_profile) or dialogue_profile
             ),

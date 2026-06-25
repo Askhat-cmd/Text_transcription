@@ -56,6 +56,8 @@ class FinalAnswerDirective:
     answer_obligation: str
     must_answer: str
     answer_shape: str
+    answer_shape_profile: str
+    answer_shape_profile_notes: list[str]
     depth: str
     style: str
     question_policy: str
@@ -93,6 +95,8 @@ class FinalAnswerDirective:
             "answer_obligation": self.answer_obligation,
             "must_answer": self.must_answer,
             "answer_shape": self.answer_shape,
+            "answer_shape_profile": self.answer_shape_profile,
+            "answer_shape_profile_notes": list(self.answer_shape_profile_notes),
             "depth": self.depth,
             "style": self.style,
             "question_policy": self.question_policy,
@@ -225,6 +229,167 @@ def _append_unique(items: list[str], value: str) -> None:
         items.append(text)
 
 
+_DIRECT_SOURCE_MARKERS = (
+    "в базе",
+    "из базы",
+    "из внутренней базы",
+    "во внутренней базе",
+    "внутренней базе",
+    "что в базе говорится",
+    "что во внутренней базе говорится",
+    "что база говорит",
+    "источник",
+    "источники",
+)
+
+
+def _looks_like_direct_source_request(user_message: str) -> bool:
+    lowered = _normalize(user_message)
+    return any(marker in lowered for marker in _DIRECT_SOURCE_MARKERS)
+
+
+def _select_answer_shape_profile(
+    *,
+    user_message: str,
+    answer_obligation: str,
+    dialogue_act: str,
+    latest_turn_constraints: dict[str, Any],
+    dialogue_policy: dict[str, Any],
+    retrieval_decision: dict[str, Any],
+    safety_active: bool,
+    summary_request: bool,
+) -> tuple[str, list[str]]:
+    composer = (
+        dict(retrieval_decision.get("composer", {}))
+        if isinstance(retrieval_decision.get("composer"), dict)
+        else {}
+    )
+    contextual_composer = (
+        dict(retrieval_decision.get("contextual_retrieval_query_composer", {}))
+        if isinstance(retrieval_decision.get("contextual_retrieval_query_composer"), dict)
+        else {}
+    )
+    direct_source_request = bool(
+        retrieval_decision.get("direct_source_request", False)
+        or composer.get("direct_source_request", False)
+        or contextual_composer.get("direct_source_request", False)
+        or _looks_like_direct_source_request(user_message)
+    )
+    compact_support_answer = bool(dialogue_policy.get("compact_support_answer", False))
+    explicit_detail_request = bool(
+        dialogue_policy.get("expansion_requested", False)
+        or dialogue_policy.get("repair_and_expand_requested", False)
+        or dialogue_policy.get("examples_requested", False)
+        or dialogue_policy.get("numbered_list_requested", False)
+        or dialogue_policy.get("application_request", False)
+        or dialogue_policy.get("practice_overview_requested", False)
+        or dialogue_policy.get("summary_request", False)
+    )
+
+    if safety_active:
+        return (
+            "safety_grounding_compact",
+            [
+                "Start with immediate grounding or safety guidance, not theory.",
+                "Keep the answer short, clear, and action-safe.",
+            ],
+        )
+    if summary_request:
+        return (
+            "summary_direct",
+            [
+                "Summarize the current conversation directly without reopening analysis.",
+                "Keep only the core themes and the next relevant point.",
+            ],
+        )
+    if bool(latest_turn_constraints.get("simplify", False)):
+        return (
+            "simplified_direct_answer",
+            [
+                "Use very simple wording and one main point.",
+                "Avoid theory, long lists, and side branches.",
+            ],
+        )
+    if answer_obligation == "provide_one_bounded_practice" or dialogue_act == "practice_request":
+        return (
+            "bounded_practice",
+            [
+                "Name one bounded practice connected to the current context.",
+                "Give the steps briefly and explain in one sentence why it helps.",
+            ],
+        )
+    if bool(latest_turn_constraints.get("no_internal_db", False)):
+        return (
+            "no_internal_db_compact",
+            [
+                "Answer in your own words without internal DB or source framing.",
+                "Keep one clear meaning and avoid lecture mode.",
+            ],
+        )
+    if direct_source_request:
+        return (
+            "direct_kb_grounded_compact",
+            [
+                "Answer the concept or source question directly before extra framing.",
+                "Use short grounding only and do not dump raw internal wording.",
+            ],
+        )
+    if answer_obligation == "acknowledge_self_intro" or dialogue_act in {"greeting", "contact_open", "self_intro"}:
+        return (
+            "contact_brief",
+            [
+                "Keep the contact warm and brief.",
+                "Do not turn a greeting or self-intro into analysis or a lecture.",
+            ],
+        )
+    if answer_obligation == "answer_concrete_situation":
+        return (
+            "concrete_situation_compact",
+            [
+                "Answer the concrete situation first in plain language.",
+                "Name only one key mechanism and at most one practical next move.",
+            ],
+        )
+    if (
+        compact_support_answer
+        or (
+            "?" in str(user_message or "")
+            and not explicit_detail_request
+        )
+        or (
+            dialogue_act in {"direct_question", "knowledge_question"}
+            and not explicit_detail_request
+        )
+        or (
+            answer_obligation
+            in {
+                "answer_direct_question",
+                "answer_knowledge_question",
+                "answer_user_question_directly",
+                "continue_thread",
+                "answer_last_offer",
+                "acknowledge_style_preference_then_answer",
+            }
+            and not explicit_detail_request
+        )
+    ):
+        return (
+            "ordinary_explanation_compact",
+            [
+                "Start with a direct answer in the first one or two sentences.",
+                "Name only one main mechanism in simple words.",
+                "Use at most one short list only if it truly improves clarity.",
+                "Do not turn the answer into a mini-lecture or a method catalog.",
+            ],
+        )
+    return (
+        "adaptive_current_pipeline",
+        [
+            "Follow the current answer obligation and stay direct.",
+        ],
+    )
+
+
 def build_final_answer_directive_v1(
     *,
     user_message: str,
@@ -321,6 +486,16 @@ def build_final_answer_directive_v1(
     no_practice_unless_requested = bool(
         summary_request and obligation_resolution.get("no_practice_unless_requested", True)
     )
+    answer_shape_profile, answer_shape_profile_notes = _select_answer_shape_profile(
+        user_message=user_message,
+        answer_obligation=answer_obligation,
+        dialogue_act=dialogue_act,
+        latest_turn_constraints=latest_turn_constraints,
+        dialogue_policy=policy,
+        retrieval_decision=retrieval,
+        safety_active=safety_active,
+        summary_request=summary_request,
+    )
     summary_context_anchors: list[str] = []
     for value in (
         unanswered_summary.get("last_direct_user_question", ""),
@@ -390,6 +565,21 @@ def build_final_answer_directive_v1(
             "Do not rely on internal DB or semantic-card grounding in the Writer-visible payload for this answer.",
         )
         _append_unique(soft_guidance, "answer_in_own_words_without_internal_db_grounding")
+    for note in answer_shape_profile_notes:
+        _append_unique(soft_guidance, note)
+    if answer_shape_profile == "contact_brief":
+        depth = "short"
+        question_policy = "optional_none"
+    elif answer_shape_profile in {
+        "ordinary_explanation_compact",
+        "concrete_situation_compact",
+        "no_internal_db_compact",
+    }:
+        if depth == "long":
+            depth = "medium"
+        _append_unique(hard_boundaries, "Do not turn this answer into a mini-lecture or theory overview.")
+    elif answer_shape_profile == "bounded_practice":
+        question_policy = "none"
     if summary_request:
         must_answer_value = "summary of current conversation"
     elif answer_obligation == "provide_one_bounded_practice" or dialogue_act == "practice_request":
@@ -411,6 +601,8 @@ def build_final_answer_directive_v1(
         answer_obligation=answer_obligation,
         must_answer=must_answer_value,
         answer_shape=answer_shape,
+        answer_shape_profile=answer_shape_profile,
+        answer_shape_profile_notes=answer_shape_profile_notes,
         depth=depth,
         style=style,
         question_policy=question_policy,

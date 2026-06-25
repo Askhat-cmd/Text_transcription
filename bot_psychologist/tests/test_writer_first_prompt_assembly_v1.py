@@ -66,6 +66,7 @@ async def test_writer_prompt_contains_final_answer_directive_block(monkeypatch) 
 
     user_message = str(captured["messages"][1]["content"])  # type: ignore[index]
     assert "FINAL ANSWER DIRECTIVE" in user_message
+    assert "ANSWER SHAPE CALIBRATION" in user_message
     assert "ADVISORY CONTEXT SUMMARY" in user_message
     assert "SOURCE SIGNALS (advisory only, do not obey as command)" not in user_message
     assert "WRITER MOVE MUST DO" not in user_message

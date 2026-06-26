@@ -1,6 +1,7 @@
 ﻿# Roadmap
 
 ## Done
+- PRD-047.34: completed latest-turn authority repair and free Writer contact-mode calibration on the canonical current pipeline. Added explicit latest-turn authority fields (`current_user_request`, `must_answer_source`, `previous_must_answer_demoted`, `previous_must_answer`, `answer_target`, `writer_contact_mode`) inside `final_answer_directive_v1` and runtime trace, made latest turn the default answer target unless explicit continuation is detected, preserved safety/direct-source/explicit-practice/no-practice/no-internal-db boundaries, repaired Writer prompt placeholder plumbing, blocked canned one-step collapse on free-contact no-practice turns, sanitized legacy advisory micro-step leakage, added owner smoke runner/artifacts, and passed live smoke A-D after backend/frontend restart with only unrelated global test debt still open.
 - PRD-047.33: completed owner-pilot answer-shape calibration on the canonical current pipeline. Added soft `answer_shape_profile` selection in `final_answer_directive_v1`, exposed that profile through Writer prompt/runtime trace, tightened compact support target length, sharpened anti-lecture ordinary-answer prompt wording, preserved explicit practice/no-practice/no-internal-db/direct-source boundaries, and fixed live direct-source tracing to `direct_kb_grounded_compact`. Live smoke passed with warning: most A-H cases improved, but the ordinary resistance case still reports `adaptive_current_pipeline` in trace despite shorter output.
 - PRD-047.32: completed owner Web Chat runtime truth and legacy/fallback noise collapse on the canonical current pipeline. Added `runtime_truth_trace_v1`, separated retrieved/trace-only/filtered candidates from actual Writer-visible payload, renamed misleading `Чанки в Writer` owner label, scoped shadow planner invalid JSON as `shadow_only` and production-unaffected, added Writer-visible payload proof fields, repaired direct `во внутренней базе` source detection, and tightened compact support/no-practice answer hints. Live smoke passed trace truth and preservation checks with a bounded warning that some no-practice explanations remain longer than the soft target.
 - PRD-047.31-HF1: completed the urgent explicit-practice-request repair on the canonical current pipeline. Repaired generic explicit practice-request detection, stale `must_answer` override, thread continuation for anger/boss follow-up practice asks, narrow Writer-visible practice grounding allowlist inside `writer_context_package.py`, compact explicit-practice runtime trace note, PRD fixture/artifacts, and full backend/frontend restart live smoke. The `ЧАТ_С_БОТОМ2` scenario no longer returns the stale `открой задачу / 5 минут` fallback; the next step is runtime-truth and fallback-noise collapse, not another routing layer.
@@ -85,6 +86,7 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
+- PRD-047.34 closed the stale latest-turn authority problem in the current pipeline. Remaining work is no longer answer-target ownership; it is owner-pilot consolidation, residual style polish, and unrelated historical test debt outside this PRD.
 - PRD-047.32 closed the trace-truth problem that made owner Web Chat hard to interpret. Remaining live-quality debt is answer-shape calibration, especially no-practice/simple explanation compactness, not another retrieval authority layer.
 - PRD-047.31-HF1 closed the stale latest-turn authority bug for explicit practice asks. The remaining live-quality debt is no longer “practice request ignored”; it is residual fallback/prompt noise and verbosity on support/explanation turns.
 - PRD-047.30 closed the main Writer-visible grounding authority problem on ordinary non-KB turns. The remaining noise is now narrower: duplicate advisory wording and residual prompt/context redundancy, not chunk governance or route selection.
@@ -110,9 +112,9 @@
 - No active PRD-047.12 blocker remains; unified dialogue policy v2 is accepted on the current developer-local runtime baseline.
 
 ## Next
-1. Start `PRD-047.33 - Owner Pilot Stabilization / Answer Shape Calibration v1`.
+1. Start `PRD-047.35 - Owner Pilot Consolidation / Minimal Public Demo Readiness v1`.
 2. Keep semantic cards advisory-only until a later PRD proves they help without recurring textbook drift or explicit no-KB conflict.
-3. Calibrate answer shape before considering any wider pipeline replacement discussion.
+3. Consolidate owner-pilot dialogue quality before considering any wider pipeline replacement discussion.
 4. Keep any broader DB-track mutation, overlay authority expansion, retrieval-ranking rewrite, live metadata apply, runtime activation, or Chroma reindex in a separate explicit governance PRD.
 
 ## Later

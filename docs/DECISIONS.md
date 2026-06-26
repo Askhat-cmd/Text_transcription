@@ -1,5 +1,31 @@
 # Architecture Decisions
 
+## ADR-088 - Latest user turn is the primary answer target; previous must-answer/open loop is context unless explicitly continued
+
+Status: accepted
+
+Date: 2026-06-26
+
+Context: after PRD-047.30 to PRD-047.33, the runtime already reduced broad KB authority and improved answer-shape compactness, but owner live evidence still showed a deeper behavioral failure: after a previous KB or practice topic, a new human latest turn like `мне тяжело, просто скажи по-человечески` could still be answered as continuation of the old internal task.
+
+Decision:
+- keep the canonical runtime path unchanged (`multiagent_adapter`);
+- treat the latest non-empty user turn as the default answer target inside `final_answer_directive_v1`;
+- keep previous unanswered/open-loop state visible as `previous_must_answer`, but demote it to context-only unless explicit continuation is detected;
+- expose latest-turn authority explicitly through:
+  - `current_user_request`
+  - `must_answer_source`
+  - `previous_must_answer_demoted`
+  - `previous_must_answer`
+  - `explicit_continue_previous_detected`
+  - `answer_target`
+  - `writer_contact_mode`
+- preserve higher-priority overrides for safety, direct KB/source, explicit practice, explicit no-practice, and no-internal-db boundaries;
+- allow `free_writer_contact` as a soft contact-mode answer profile inside the current runtime, not as a new route or a new agent;
+- suppress legacy advisory micro-step leakage when the latest turn forbids practice or requests human contact.
+
+Consequences: the runtime now answers the latest user turn first and treats older internal tasks as context unless the user explicitly continues them. This reduces stale-task pressure on Writer without expanding architecture, retrieval authority, or DB/Chroma scope. Future work should refine remaining style polish inside this chain, not create another authority subsystem.
+
 ## ADR-087 - Answer shape is calibrated through soft final-directive profiles, not a new runtime route
 
 Status: accepted

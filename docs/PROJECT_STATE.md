@@ -1,6 +1,7 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
+PRD-047.34 completed latest-turn authority repair and free Writer contact-mode calibration on the canonical current pipeline with `passed_with_warning` status. The runtime still stays on `multiagent_adapter`; no new route, no new LLM agent, no Bot_data_base/Chroma/registry/source mutation, and no semantic-card expansion were introduced. `final_answer_directive_v1` now makes the latest non-empty user turn the default answer target, keeps `previous_must_answer` as context-only unless explicit continuation is detected, exposes `must_answer_source` / `previous_must_answer_demoted` / `answer_target` / `writer_contact_mode`, and drives `latest_turn_authority_v1` through runtime trace and Writer prompt assembly. Live smoke after backend/frontend restart passed A-D, including the exact Chat5 stale-KB failure and the support-after-practice refusal case, while the only honest remaining warning is unrelated test-suite debt outside PRD-047.34. The next recommended step is `PRD-047.35 - Owner Pilot Consolidation / Minimal Public Demo Readiness v1`.
 PRD-047.33 completed owner-pilot answer-shape calibration on the canonical current pipeline with `passed_with_warning` status. No new runtime path, no new LLM agent, no Bot_data_base/Chroma/registry/source mutation, and no broad KB re-enable were introduced. The runtime now carries soft `answer_shape_profile` hints through `final_answer_directive_v1`, Writer prompt assembly, and `runtime_trace_summary_v1`; compact support target length is tighter; direct KB/source turns now trace as `direct_kb_grounded_compact`; explicit practice, no-practice, and no-internal-db boundaries remain preserved. Live smoke after backend/frontend restart stayed honest and passed with warning: most A-H cases are shorter and more human-like, but one ordinary resistance case still reports `adaptive_current_pipeline` in trace even though the answer itself improved. The next recommended step remains `PRD-047.34 - Owner Pilot Consolidation / Minimal Public Demo Readiness v1`, with `PRD-047.34-HF1` reserved if owner review rejects that residual shape-conflict warning.
 PRD-047.32 completed owner Web Chat runtime truth and fallback-noise collapse on the canonical current pipeline with `passed_with_warning` status. The runtime remains `multiagent_adapter`; no thin-spine apply, no new route, no new LLM agent, and no DB/Chroma mutation were introduced. Owner trace now separates retrieved candidates, trace-only/filtered candidates, and actual Writer-visible payload through `runtime_truth_trace_v1`; the misleading `Чанки в Writer` label is replaced by `Retrieval candidates / trace-only`; Hybrid Planner shadow JSON errors are scoped as `shadow_only` with `production_answer_affected=false`; direct KB/source and explicit practice paths remain preserved. Live smoke passed the required trace truth checks after backend/frontend restart, with a bounded warning that some no-practice explanation answers remain above the soft compact target. The next recommended step is `PRD-047.33 - Owner Pilot Stabilization / Answer Shape Calibration v1`.
 PRD-047.31-HF1 completed the urgent explicit-practice-request repair on the canonical current pipeline. The runtime remains `multiagent_adapter`; no thin-spine apply, no new route, no new LLM agent, and no DB/Chroma mutation were introduced. The repaired path now lets the latest explicit practice request override stale `must_answer`, keeps the anger/boss/lying follow-up in the current thread, allows only narrow Writer-visible practice grounding (`practice`, `dialogue_move`, `anti_pattern`, `safety`) instead of broad KB reopening, and exposes a compact explicit-practice runtime note in trace surfaces. Full backend/frontend restart plus live smoke passed the `ЧАТ_С_БОТОМ2` scenario and removed the stale `открой задачу / 5 минут` fallback. The only honest remaining global blocker is still the unrelated full-suite import error around `_build_llm_prompts`. The next recommended step is `PRD-047.32 - Owner Web Chat Runtime Truth / Legacy Fallback Noise Collapse v1`.
@@ -104,7 +105,7 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 - Historical artifact encoding noise may be misread as current runtime corruption without normalization report.
 
 ## Next Planned PRD
-`PRD-047.33 - Owner Pilot Stabilization / Answer Shape Calibration v1`
+`PRD-047.35 - Owner Pilot Consolidation / Minimal Public Demo Readiness v1`
 
 ## PRD-047.23 Audit State
 PRD-047.23 closed the evidence gap between Bot_data_base chunks, retrieval query assembly, Writer KB payload, and Web Trace preview.
@@ -129,7 +130,7 @@ Knowledge Graph runtime flag remains backend-legacy/optional but is shown as com
 5. Keep full historical details in `TO_DO_LIST`, keep docs operational and compact.
 
 ## Last Updated
-2026-06-24
+2026-06-26
 - Date: 2026-06-05
 - Source cycle: PRD-047.12
 - Source cycle: PRD-047.11-HF3
@@ -212,5 +213,11 @@ Diagnostic Center Track Status: CLOSED FOR CURRENT PHASE
 ## PRD-047.32 Delivery Metadata
 - prd_id: PRD-047.32
 - commit_hash: aed27db
+- push_status: pushed_to_origin_main
+- status: passed_with_warning
+
+## PRD-047.34 Delivery Metadata
+- prd_id: PRD-047.34
+- commit_hash: 39ff982
 - push_status: pushed_to_origin_main
 - status: passed_with_warning

@@ -162,6 +162,7 @@ _SELF_HARM_MARKERS = (
     "суицид",
     "покончить с собой",
 )
+_PUBLIC_INTERNALS_AVOID = "не говорить о базе, чанках, semantic cards или внутренних материалах"
 
 
 @dataclass(frozen=True)
@@ -321,7 +322,7 @@ def build_response_planner_fallback_decision(
         continuity_policy="continue_active_line",
         safety_priority=False,
         must_include=["один ясный ход", "связать с текущей линией"],
-        must_avoid=["не предлагать практику по умолчанию", "не открывать новую теорию"],
+        must_avoid=["не предлагать практику по умолчанию", "не открывать новую теорию", _PUBLIC_INTERNALS_AVOID],
         source_signals=source_signals,
         confidence=0.5,
         rationale=f"fallback: {reason}",
@@ -723,7 +724,7 @@ def build_response_planner_decision(
             continuity_policy="continue_active_line",
             safety_priority=False,
             must_include=["коротко", "без давления"],
-            must_avoid=["без лекции", "без практики", "без глубокого анализа"],
+            must_avoid=["без лекции", "без практики", "без глубокого анализа", _PUBLIC_INTERNALS_AVOID],
             source_signals=source_signals,
             confidence=0.9,
             rationale="Low-resource контур: предпочтителен сверхкороткий контакт.",
@@ -783,7 +784,7 @@ def build_response_planner_decision(
                 continuity_policy="continue_active_line",
                 safety_priority=False,
                 must_include=["дать определение", "дать пример", "показать применение"],
-                must_avoid=["не сводить ответ к одной короткой формулировке"],
+                must_avoid=["не сводить ответ к одной короткой формулировке", _PUBLIC_INTERNALS_AVOID],
                 source_signals=source_signals,
                 confidence=0.93,
                 rationale="MVP known concept with application/example request needs full/deep explanation.",
@@ -800,7 +801,7 @@ def build_response_planner_decision(
             continuity_policy="continue_active_line",
             safety_priority=False,
             must_include=["дать определение/смысл сразу", "связать с текущей линией"],
-            must_avoid=["не просить пользователя определять термин", "без внешнего surveillance-фрейма"],
+            must_avoid=["не просить пользователя определять термин", "без внешнего surveillance-фрейма", _PUBLIC_INTERNALS_AVOID],
             source_signals=source_signals,
             confidence=0.91,
             rationale="Knowledge-answer direct path активен: ответ сначала, без уточняющего барьера.",
@@ -878,11 +879,12 @@ def build_response_planner_decision(
             revoicing_policy="suppressed",
             continuity_policy="continue_active_line",
             safety_priority=False,
-            must_include=["назвать один механизм", "связать с active_line"],
+            must_include=["назвать один механизм", "показать что он защищает", "связать с active_line"],
             must_avoid=[
                 "не предлагать практику",
                 "не начинать механический пересказ",
                 "не превращать ответ в мини-лекцию или каталог причин",
+                _PUBLIC_INTERNALS_AVOID,
             ],
             source_signals=source_signals,
             confidence=0.9,
@@ -901,7 +903,7 @@ def build_response_planner_decision(
         continuity_policy="continue_active_line",
         safety_priority=False,
         must_include=["держать continuity", "один следующий ход"],
-        must_avoid=["не расползаться в несколько направлений"],
+        must_avoid=["не расползаться в несколько направлений", _PUBLIC_INTERNALS_AVOID],
         source_signals=source_signals,
         confidence=0.75,
         rationale="Default path: continuity-first один компактный ход без unsolicited практики.",

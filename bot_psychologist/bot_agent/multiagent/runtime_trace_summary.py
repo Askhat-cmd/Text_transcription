@@ -56,6 +56,45 @@ def _kb_payload_expected(
     return "0"
 
 
+def _hidden_knowledge_competence_fallback(
+    *,
+    latest_turn_constraints: dict[str, Any],
+    writer_grounding_visibility: dict[str, Any],
+) -> dict[str, Any]:
+    no_internal_db = bool(latest_turn_constraints.get("no_internal_db", False))
+    safety_grounding_allowed = bool(writer_grounding_visibility.get("safety_grounding_allowed", False))
+    direct_source_request = bool(writer_grounding_visibility.get("direct_source_request", False))
+    owner_debug_question_detected = bool(
+        direct_source_request
+        or writer_grounding_visibility.get("direct_kb_question", False)
+    )
+    if no_internal_db:
+        reason = "no_internal_db"
+    elif safety_grounding_allowed:
+        reason = "safety"
+    elif direct_source_request:
+        reason = "direct_source_debug"
+    elif owner_debug_question_detected:
+        reason = "owner_debug"
+    else:
+        reason = "latest_turn"
+    return {
+        "version": "hidden_knowledge_competence_v1",
+        "public_user_mode": True,
+        "owner_debug_question_detected": owner_debug_question_detected,
+        "user_facing_db_language_suppressed": True,
+        "knowledge_used_as_hidden_lens": bool(
+            writer_grounding_visibility.get("trace_only_grounding_available", False)
+            or writer_grounding_visibility.get("kb_visible_to_writer", False)
+            or writer_grounding_visibility.get("semantic_cards_visible_to_writer", False)
+            or writer_grounding_visibility.get("explicit_knowledge_request", False)
+            or writer_grounding_visibility.get("direct_kb_question", False)
+        ),
+        "raw_kb_dump_allowed": False,
+        "reason": reason,
+    }
+
+
 def build_runtime_trace_summary_v1(
     *,
     entrypoint: str,
@@ -79,6 +118,12 @@ def build_runtime_trace_summary_v1(
     semantic_cards_pilot = _safe_dict(writer.get("semantic_cards_pilot"))
     writer_grounding_visibility = _safe_dict(writer.get("writer_grounding_visibility_v1"))
     runtime_truth_trace = _safe_dict(writer.get("runtime_truth_trace_v1"))
+    hidden_knowledge_competence = _safe_dict(writer.get("hidden_knowledge_competence_v1"))
+    if not hidden_knowledge_competence:
+        hidden_knowledge_competence = _hidden_knowledge_competence_fallback(
+            latest_turn_constraints=latest_turn_constraints,
+            writer_grounding_visibility=writer_grounding_visibility,
+        )
     current_user_request = str(directive.get("current_user_request", "") or str(user_message or ""))
     must_answer_source = str(directive.get("must_answer_source", "") or "latest_turn")
     previous_must_answer_demoted = bool(directive.get("previous_must_answer_demoted", False))
@@ -206,6 +251,7 @@ def build_runtime_trace_summary_v1(
                 "production_query_source": production_query_source,
                 "json_decode_error_affected_production_answer": json_decode_error_affected_production,
                 "production_answer_affected_by_shadow_planner": production_answer_affected,
+                "hidden_knowledge_competence_v1": hidden_knowledge_competence,
             }
         )
 
@@ -246,6 +292,7 @@ def build_runtime_trace_summary_v1(
         "practice_request_runtime_note": practice_request_runtime_note,
         "practice_blocked_by_user_request": bool(latest_turn_constraints.get("no_practice", False)),
         "runtime_truth_trace_v1": runtime_truth_trace,
+        "hidden_knowledge_competence_v1": hidden_knowledge_competence,
         "planner_shadow_status": planner_status,
         "planner_fallback_scope": fallback_scope,
         "planner_production_query_source": production_query_source,

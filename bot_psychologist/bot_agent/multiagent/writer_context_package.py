@@ -24,6 +24,7 @@ from .writer_kb_payload import (
 WRITER_CONTEXT_PACKAGE_VERSION = "writer_context_package_v1"
 WRITER_GROUNDING_VISIBILITY_VERSION = "writer_grounding_visibility_v1"
 RUNTIME_TRUTH_TRACE_VERSION = "runtime_truth_trace_v1"
+HIDDEN_KNOWLEDGE_COMPETENCE_VERSION = "hidden_knowledge_competence_v1"
 NARROW_PRACTICE_GROUNDING_TYPES = frozenset({"practice", "dialogue_move", "anti_pattern", "safety"})
 
 _KNOWLEDGE_MARKERS = (
@@ -51,6 +52,18 @@ _DIRECT_SOURCE_MARKERS = (
     "что база говорит",
     "источник",
     "источники",
+)
+_OWNER_DEBUG_MARKERS = (
+    "РІ Р±Р°Р·Рµ",
+    "РІРЅСѓС‚СЂРµРЅРЅРµР№ Р±Р°Р·Рµ",
+    "semantic card",
+    "semantic cards",
+    "СЃРµРјР°РЅС‚РёС‡РµСЃРє",
+    "С‡Р°РЅРє",
+    "С‡Р°РЅРєРё",
+    "Р·Р°РіСЂСѓР¶РµРЅРЅС‹С… РјР°С‚РµСЂРёР°Р»Р°С…",
+    "Р·Р°РіСЂСѓР¶РµРЅРЅС‹С… РёСЃС‚РѕС‡РЅРёРєР°С…",
+    "РІ СЃРёСЃС‚РµРјРµ РЅРµР№СЂРѕСЃС‚Р°Р»РєРёРЅРіР°",
 )
 _EMOTIONAL_SUPPORT_MARKERS = (
     "мне тяжело",
@@ -161,6 +174,12 @@ def _looks_like_emotional_support_turn(user_message: str) -> bool:
 
 def _looks_like_direct_source_request(user_message: str) -> bool:
     return _contains_any(user_message, _DIRECT_SOURCE_MARKERS)
+
+
+def _looks_like_owner_debug_question(user_message: str) -> bool:
+    return _contains_any(user_message, _OWNER_DEBUG_MARKERS) or _looks_like_direct_source_request(
+        user_message
+    )
 
 
 def _looks_like_explicit_knowledge_request(user_message: str) -> bool:
@@ -352,7 +371,10 @@ def build_writer_grounding_authority_note_v1() -> str:
     return (
         "Safety and the explicit latest user request are mandatory. Conversation context supports continuity. "
         "KB, semantic cards, retrieval notes, and diagnostic hints are optional grounding: use them only if they help "
-        "the current answer, never let them change the user's request, and do not sound like internal recitation."
+        "the current answer, never let them change the user's request, and do not sound like internal recitation. "
+        "Treat internal knowledge as hidden competence: do not talk about the base, chunks, semantic cards, "
+        "uploaded materials, or system internals in the user-facing answer. Speak from understanding, name one main "
+        "mechanism, show what it protects, and offer at most one next question or step only when it truly helps."
     )
 
 
@@ -422,6 +444,7 @@ def _build_runtime_truth_trace_v1(
     writer_kb_payload: dict[str, Any],
     writer_kb_payload_trace: dict[str, Any],
     writer_grounding_visibility: dict[str, Any],
+    hidden_knowledge_competence: dict[str, Any],
     retrieval: dict[str, Any],
     no_internal_db: bool,
     narrow_practice_grounding_active: bool,
@@ -538,6 +561,7 @@ def _build_runtime_truth_trace_v1(
             and grounding_reason != "explicit_practice_request_narrow_grounding"
         ),
         "narrow_grounding_visible": bool(grounding_reason == "explicit_practice_request_narrow_grounding"),
+        "hidden_knowledge_competence_v1": dict(hidden_knowledge_competence),
         "writer_visible_payload_items": writer_visible_payload_items,
         "filtered_out_for_writer": filtered_out,
         "trace_only_grounding": trace_only,
@@ -545,6 +569,46 @@ def _build_runtime_truth_trace_v1(
         "legacy_fallback_scope": str(writer_kb_payload_trace.get("fallback_scope", "none") or "none"),
         "writer_kb_payload_status": str(writer_kb_payload_trace.get("status", "") or ""),
         "writer_kb_payload_primary_path": str(writer_kb_payload_trace.get("primary_path", "") or ""),
+    }
+
+
+def _build_hidden_knowledge_competence_v1(
+    *,
+    user_message: str,
+    latest_turn_constraints: dict[str, Any],
+    writer_grounding_visibility: dict[str, Any],
+    has_grounding_candidates: bool,
+) -> dict[str, Any]:
+    no_internal_db = bool(latest_turn_constraints.get("no_internal_db", False))
+    safety_grounding_allowed = bool(writer_grounding_visibility.get("safety_grounding_allowed", False))
+    direct_source_request = bool(writer_grounding_visibility.get("direct_source_request", False))
+    owner_debug_question_detected = _looks_like_owner_debug_question(user_message)
+    if no_internal_db:
+        reason = "no_internal_db"
+    elif safety_grounding_allowed:
+        reason = "safety"
+    elif direct_source_request:
+        reason = "direct_source_debug"
+    elif owner_debug_question_detected:
+        reason = "owner_debug"
+    else:
+        reason = "latest_turn"
+    knowledge_used_as_hidden_lens = bool(
+        has_grounding_candidates
+        or writer_grounding_visibility.get("trace_only_grounding_available", False)
+        or writer_grounding_visibility.get("kb_visible_to_writer", False)
+        or writer_grounding_visibility.get("semantic_cards_visible_to_writer", False)
+        or writer_grounding_visibility.get("explicit_knowledge_request", False)
+        or writer_grounding_visibility.get("direct_kb_question", False)
+    )
+    return {
+        "version": HIDDEN_KNOWLEDGE_COMPETENCE_VERSION,
+        "public_user_mode": True,
+        "owner_debug_question_detected": owner_debug_question_detected,
+        "user_facing_db_language_suppressed": True,
+        "knowledge_used_as_hidden_lens": knowledge_used_as_hidden_lens,
+        "raw_kb_dump_allowed": False,
+        "reason": reason,
     }
 
 
@@ -621,6 +685,16 @@ def build_writer_context_package_v1(
         latest_turn_constraints=constraints,
         has_grounding_candidates=bool(base_rag_for_writer) or bool(semantic_card_candidate_payload_items),
         candidate_chunk_types=candidate_chunk_types,
+    )
+    hidden_knowledge_competence = _build_hidden_knowledge_competence_v1(
+        user_message=user_message,
+        latest_turn_constraints=constraints,
+        writer_grounding_visibility=writer_grounding_visibility,
+        has_grounding_candidates=(
+            bool(base_rag_for_writer)
+            or bool(semantic_card_candidate_payload_items)
+            or bool(memory_bundle.semantic_hits)
+        ),
     )
     allowed_grounding_types = {
         _normalize_chunk_type(item)
@@ -834,6 +908,7 @@ def build_writer_context_package_v1(
         writer_kb_payload=writer_kb_payload,
         writer_kb_payload_trace=writer_kb_payload_trace,
         writer_grounding_visibility=writer_grounding_visibility,
+        hidden_knowledge_competence=hidden_knowledge_competence,
         retrieval=retrieval,
         no_internal_db=no_internal_db,
         narrow_practice_grounding_active=narrow_practice_grounding_active,
@@ -874,6 +949,7 @@ def build_writer_context_package_v1(
         "writer_kb_payload": writer_kb_payload,
         "writer_kb_payload_trace": writer_kb_payload_trace,
         "runtime_truth_trace_v1": runtime_truth_trace,
+        "hidden_knowledge_competence_v1": hidden_knowledge_competence,
         "writer_kb_payload_future_graduation_notes": future_graduation_notes,
         "writer_kb_payload_enabled": bool(payload_resolution.get("effective_value", False)),
         "writer_kb_payload_failed": writer_kb_payload_failed,

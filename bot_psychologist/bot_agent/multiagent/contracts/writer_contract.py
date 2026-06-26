@@ -310,6 +310,11 @@ class WriterContract:
             if isinstance(writer_context_package.get("runtime_truth_trace_v1"), dict)
             else {}
         )
+        hidden_knowledge_competence = (
+            dict(writer_context_package.get("hidden_knowledge_competence_v1", {}))
+            if isinstance(writer_context_package.get("hidden_knowledge_competence_v1"), dict)
+            else {}
+        )
         writer_kb_payload_future_graduation_notes = (
             dict(writer_context_package.get("writer_kb_payload_future_graduation_notes", {}))
             if isinstance(writer_context_package.get("writer_kb_payload_future_graduation_notes"), dict)
@@ -378,6 +383,7 @@ class WriterContract:
                 else {}
             ),
             "writer_grounding_visibility_v1": writer_grounding_visibility,
+            "hidden_knowledge_competence_v1": hidden_knowledge_competence,
             "final_answer_directive_version": str(
                 final_answer_directive.get("version", "final_answer_directive_v1")
                 or "final_answer_directive_v1"
@@ -520,6 +526,7 @@ class WriterContract:
             "writer_kb_payload": writer_kb_payload,
             "writer_kb_payload_trace": writer_kb_payload_trace,
             "runtime_truth_trace_v1": runtime_truth_trace,
+            "hidden_knowledge_competence_v1": hidden_knowledge_competence,
             "writer_kb_payload_trace_version": str(
                 writer_kb_payload_trace.get("schema_version", "writer_kb_payload_trace_v1")
                 or "writer_kb_payload_trace_v1"

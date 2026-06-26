@@ -1,5 +1,27 @@
 # Architecture Decisions
 
+## ADR-089 - Public user mode treats internal knowledge as hidden competence, not a conversation topic
+
+Status: accepted
+
+Date: 2026-06-26
+
+Context: PRD-047.34 repaired latest-turn authority, but owner live evidence still showed a product-level mismatch: even when retrieval/payload boundaries were technically correct, public answers could still sound like they were reporting from internal storage or explaining too much theory. The next repair had to stay inside the current runtime and make the product speak from competence rather than about its internals.
+
+Decision:
+- keep the canonical runtime path unchanged (`multiagent_adapter`);
+- add `hidden_knowledge_competence_v1` inside the existing writer-context/runtime-trace chain;
+- treat internal KB/semantic-card evidence as Writer-only hidden competence in public user mode, not as user-facing DB/chunk/system talk;
+- preserve explicit direct-source/debug questions as diagnosable exceptions without letting them redefine the ordinary product path;
+- bias ordinary answers toward:
+  - one main mechanism
+  - what that mechanism protects
+  - at most one next question or one next step
+- use Wake as a depth/mechanism reference only, never as a style template;
+- forbid any new route, new agent, broad KB default, Bot_data_base mutation, Chroma mutation, or semantic-card expansion in this layer.
+
+Consequences: the product now sounds more like a competent specialist and less like a system describing its storage. Runtime trace keeps the hidden-competence evidence visible for owner review, while public answers remain free of internal-language leakage. Remaining work shifts to bounded live-shape polish and readiness gating, not architecture expansion.
+
 ## ADR-088 - Latest user turn is the primary answer target; previous must-answer/open loop is context unless explicitly continued
 
 Status: accepted

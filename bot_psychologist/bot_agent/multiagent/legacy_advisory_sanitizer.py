@@ -74,6 +74,11 @@ def sanitize_legacy_advisory_for_writer(source_signals: dict) -> dict[str, Any]:
         if isinstance(signals.get("writer_grounding_visibility_v1"), dict)
         else {}
     )
+    hidden_knowledge_competence = (
+        dict(signals.get("hidden_knowledge_competence_v1", {}))
+        if isinstance(signals.get("hidden_knowledge_competence_v1"), dict)
+        else {}
+    )
     practice_gate = (
         dict(knowledge.get("practice_gate", {}))
         if isinstance(knowledge.get("practice_gate"), dict)
@@ -125,8 +130,22 @@ def sanitize_legacy_advisory_for_writer(source_signals: dict) -> dict[str, Any]:
             _append_line(lines, "Grounding is optional support here: use it only if it helps, without sounding like an internal recital.")
         else:
             _append_line(lines, "Grounding is not needed in the visible answer here: answer in your own words and do not dump internal material.")
+    if bool(hidden_knowledge_competence.get("public_user_mode", False)):
+        _append_line(
+            lines,
+            "Use internal knowledge as hidden competence; do not mention the base, chunks, semantic cards, uploaded materials, or system internals.",
+        )
+        _append_line(
+            lines,
+            "Depth rule: start from the user's real situation, name one main mechanism, show what it protects, then give at most one next question or one next step if it helps.",
+        )
+    if bool(hidden_knowledge_competence.get("owner_debug_question_detected", False)):
+        _append_line(
+            lines,
+            "Even if the user asks about the base or internals, answer as a concise specialist explanation, not as a storage report.",
+        )
 
-    writer_visible_summary = "\n".join(lines[:5])
+    writer_visible_summary = "\n".join(lines[:7])
     lower_summary = writer_visible_summary.lower()
     forbidden_tokens = (
         "must",
@@ -203,6 +222,28 @@ def sanitize_legacy_advisory_for_writer(source_signals: dict) -> dict[str, Any]:
             "kb_semantic_cards_diagnostic_hints": "optional_grounding",
             "never_change_user_request": True,
             "do_not_sound_like_internal_recital": True,
+        },
+        "hidden_knowledge_competence": {
+            "public_user_mode": bool(hidden_knowledge_competence.get("public_user_mode", False)),
+            "owner_debug_question_detected": bool(
+                hidden_knowledge_competence.get("owner_debug_question_detected", False)
+            ),
+            "user_facing_db_language_suppressed": bool(
+                hidden_knowledge_competence.get("user_facing_db_language_suppressed", True)
+            ),
+            "knowledge_used_as_hidden_lens": bool(
+                hidden_knowledge_competence.get("knowledge_used_as_hidden_lens", False)
+            ),
+            "raw_kb_dump_allowed": False,
+            "reason": _clean_text(hidden_knowledge_competence.get("reason", "")) or "latest_turn",
+        },
+        "wake_depth_reference": {
+            "style_copy_forbidden": True,
+            "start_from_user_words": True,
+            "one_main_mechanism": True,
+            "show_protective_function": True,
+            "at_most_one_next_question_or_step": True,
+            "panic_support_stabilize_first": True,
         },
         "grounding_visibility": {
             "kb_visible_to_writer": bool(writer_grounding_visibility.get("kb_visible_to_writer", False)),

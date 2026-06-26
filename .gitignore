@@ -177,10 +177,13 @@ TO_DO_LIST/context/СКРИНЫ ВЕБ АДМИНКИ/
 TO_DO_LIST/context/ЧАТ_С_БОТОМ_3.txt
 TO_DO_LIST/context/ЧАТ_С_БОТОМ_4.txt
 TO_DO_LIST/context/ЧАТ_С_БОТОМ_5.txt
+TO_DO_LIST/context/Чат с ботом Wake_up.md
 TO_DO_LIST/logs/PRD-047.33/backend_restart*.log
 TO_DO_LIST/logs/PRD-047.33/frontend_dev*.log
 TO_DO_LIST/logs/PRD-047.34/backend_restart*.log
 TO_DO_LIST/logs/PRD-047.34/frontend_dev*.log
+TO_DO_LIST/logs/PRD-047.35/backend_restart*.log
+TO_DO_LIST/logs/PRD-047.35/frontend_dev*.log
 TO_DO_LIST/logs/PRD-047.19-HF1/tmp/
 TO_DO_LIST/logs/PRD-047.19-HF1/pytest_tmp/
 TO_DO_LIST/logs/PRD-047.19-HF1/hf1_runtime/

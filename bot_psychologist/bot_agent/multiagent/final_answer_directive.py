@@ -306,11 +306,29 @@ _DIRECT_SOURCE_MARKERS = (
     "источник",
     "источники",
 )
+_OWNER_DEBUG_MARKERS = (
+    "в базе",
+    "во внутренней базе",
+    "внутренней базе",
+    "semantic card",
+    "semantic cards",
+    "семантическ",
+    "чанк",
+    "чанки",
+    "загруженных материалах",
+    "загруженных источниках",
+    "в системе нейросталкинга",
+)
 
 
 def _looks_like_direct_source_request(user_message: str) -> bool:
     lowered = _normalize(user_message)
     return any(marker in lowered for marker in _DIRECT_SOURCE_MARKERS)
+
+
+def _looks_like_owner_debug_question(user_message: str) -> bool:
+    lowered = _normalize(user_message)
+    return any(marker in lowered for marker in _OWNER_DEBUG_MARKERS)
 
 
 def _select_answer_shape_profile(
@@ -358,6 +376,8 @@ def _select_answer_shape_profile(
             [
                 "Start with immediate grounding or safety guidance, not theory.",
                 "Keep the answer short, clear, and action-safe.",
+                "Stabilize first; only then add one deeper layer if it truly helps.",
+                "Do not diagnose and do not present one universal fix.",
             ],
         )
     if summary_request:
@@ -390,6 +410,7 @@ def _select_answer_shape_profile(
             [
                 "Answer in your own words without internal DB or source framing.",
                 "Keep one clear meaning and avoid lecture mode.",
+                "Do not mention the base, chunks, semantic cards, or uploaded materials.",
             ],
         )
     if direct_source_request:
@@ -398,6 +419,7 @@ def _select_answer_shape_profile(
             [
                 "Answer the concept or source question directly before extra framing.",
                 "Use short grounding only and do not dump raw internal wording.",
+                "Reframe as a concise specialist explanation, not as a storage or chunk report.",
             ],
         )
     if (
@@ -428,6 +450,7 @@ def _select_answer_shape_profile(
             [
                 "Answer the concrete situation first in plain language.",
                 "Name only one key mechanism and at most one practical next move.",
+                "Show what that mechanism is trying to protect before offering the next move.",
             ],
         )
     if (
@@ -458,8 +481,11 @@ def _select_answer_shape_profile(
             [
                 "Start with a direct answer in the first one or two sentences.",
                 "Name only one main mechanism in simple words.",
+                "Show what this mechanism is trying to protect or prevent.",
+                "If a next move helps, give only one question or one step.",
                 "Use at most one short list only if it truly improves clarity.",
                 "Do not turn the answer into a mini-lecture or a method catalog.",
+                "Do not mention internal DB, chunks, semantic cards, or system materials.",
             ],
         )
     return (
@@ -805,6 +831,8 @@ def build_final_answer_directive_v1(
             "explicit_continue_previous_detected": explicit_continue_previous_detected,
             "answer_target": answer_target,
             "writer_contact_mode": writer_contact_mode,
+            "direct_source_request": direct_source_request,
+            "owner_debug_question_detected": _looks_like_owner_debug_question(user_message),
             "summary_request": summary_request,
             "summary_scope": summary_scope,
             "no_confirmation_needed": no_confirmation_needed,

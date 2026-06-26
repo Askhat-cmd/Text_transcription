@@ -21,6 +21,8 @@ _NO_PRACTICE_PATTERNS = (
     re.compile(r"не\s+дава\w*\s+практик", re.IGNORECASE),
     re.compile(r"не\s+дава\w*(?:\s+\w+){0,3}\s+практик", re.IGNORECASE),
     re.compile(r"не\s+хоч\w*\s+практик", re.IGNORECASE),
+    re.compile(r"не\s+хоч\w*(?:\s+\w+){0,3}\s+практик\w*", re.IGNORECASE),
+    re.compile(r"не\s+хоч\w*(?:\s+\w+){0,3}\s+упражнен\w*", re.IGNORECASE),
     re.compile(r"без\s+практик", re.IGNORECASE),
     re.compile(r"не\s+предлаг\w*\s+(?:упражнен|практик)", re.IGNORECASE),
     re.compile(r"не\s+надо\s+(?:практик|упражнен)", re.IGNORECASE),

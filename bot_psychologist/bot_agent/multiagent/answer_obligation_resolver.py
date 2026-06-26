@@ -46,7 +46,11 @@ def build_answer_obligation_resolver_v1(
         depth = "short"
 
     if act == "repair_complaint":
-        if unanswered.get("answer_required") and str(unanswered.get("last_direct_user_question", "") or "").strip():
+        if (
+            unanswered.get("answer_required")
+            and str(unanswered.get("answer_status", "pending") or "pending") == "pending"
+            and str(unanswered.get("last_direct_user_question", "") or "").strip()
+        ):
             return {
                 "version": ANSWER_OBLIGATION_RESOLVER_VERSION,
                 "answer_obligation": "repair_and_answer_last_question",
@@ -62,16 +66,27 @@ def build_answer_obligation_resolver_v1(
             }
         return {
             "version": ANSWER_OBLIGATION_RESOLVER_VERSION,
-            "answer_obligation": "repair_ask_to_repeat_briefly",
-            "answer_shape": "brief_repair_then_repeat_request",
-            "question_policy": "single_if_needed",
+            "answer_obligation": "answer_latest_turn",
+            "answer_shape": "repair_then_latest_turn",
+            "question_policy": "none",
             "depth": "short",
             "style_overrides": style_overrides,
             "source": [
                 "dialogue_act=repair_complaint",
-                "unanswered_question_state=missing",
+                "latest_turn_authority_default",
                 f"profile_preset={profile_preset}",
             ],
+        }
+
+    if act in {"support_request", "meta_system_feedback"}:
+        return {
+            "version": ANSWER_OBLIGATION_RESOLVER_VERSION,
+            "answer_obligation": "answer_latest_turn",
+            "answer_shape": "simple_contact",
+            "question_policy": "none",
+            "depth": "short",
+            "style_overrides": style_overrides,
+            "source": [f"dialogue_act={act}", "latest_turn_authority_default", f"profile_preset={profile_preset}"],
         }
 
     if act == "summary_request":
@@ -230,12 +245,12 @@ def build_answer_obligation_resolver_v1(
 
     return {
         "version": ANSWER_OBLIGATION_RESOLVER_VERSION,
-        "answer_obligation": "continue_thread",
-        "answer_shape": "structured_explanation",
+        "answer_obligation": "answer_latest_turn",
+        "answer_shape": "direct_answer",
         "question_policy": "optional_none",
         "depth": depth,
         "style_overrides": style_overrides,
-        "source": ["dialogue_act=fallback_unknown", f"profile_preset={profile_preset}"],
+        "source": ["dialogue_act=fallback_unknown_latest_turn", f"profile_preset={profile_preset}"],
     }
 
 

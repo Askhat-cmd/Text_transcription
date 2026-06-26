@@ -8,6 +8,7 @@ from .latest_turn_constraints import active_latest_turn_constraint_names
 
 
 RUNTIME_TRACE_SUMMARY_VERSION = "runtime_trace_summary_v1"
+LATEST_TURN_AUTHORITY_VERSION = "latest_turn_authority_v1"
 
 
 def _safe_dict(value: Any) -> dict[str, Any]:
@@ -35,6 +36,26 @@ def _directive_mode(
     return answer_shape or answer_obligation or "standard_current_pipeline"
 
 
+def _kb_payload_expected(
+    *,
+    writer_grounding_visibility: dict[str, Any],
+    writer_contact_mode: str,
+    latest_turn_constraints: dict[str, Any],
+) -> str:
+    if bool(latest_turn_constraints.get("no_internal_db", False)):
+        return "0"
+    if writer_contact_mode == "free_writer_contact":
+        return "0"
+    reason = str(writer_grounding_visibility.get("reason", "") or "")
+    if reason == "explicit_practice_request_narrow_grounding":
+        return "narrow"
+    if reason == "direct_source_request":
+        return "direct_source"
+    if reason == "safety_grounding_allowed":
+        return "safety"
+    return "0"
+
+
 def build_runtime_trace_summary_v1(
     *,
     entrypoint: str,
@@ -58,6 +79,15 @@ def build_runtime_trace_summary_v1(
     semantic_cards_pilot = _safe_dict(writer.get("semantic_cards_pilot"))
     writer_grounding_visibility = _safe_dict(writer.get("writer_grounding_visibility_v1"))
     runtime_truth_trace = _safe_dict(writer.get("runtime_truth_trace_v1"))
+    current_user_request = str(directive.get("current_user_request", "") or str(user_message or ""))
+    must_answer_source = str(directive.get("must_answer_source", "") or "latest_turn")
+    previous_must_answer_demoted = bool(directive.get("previous_must_answer_demoted", False))
+    previous_must_answer = str(directive.get("previous_must_answer", "") or "")
+    explicit_continue_previous_detected = bool(
+        directive.get("explicit_continue_previous_detected", False)
+    )
+    answer_target = str(directive.get("answer_target", "") or "latest_turn")
+    writer_contact_mode = str(directive.get("writer_contact_mode", "") or "structured_answer")
     selected_answer_shape_profile = str(
         directive.get("answer_shape_profile", "") or "adaptive_current_pipeline"
     )
@@ -157,6 +187,13 @@ def build_runtime_trace_summary_v1(
                 "dialogue_act": str(dialogue_act.get("dialogue_act", "") or ""),
                 "answer_obligation": str(directive.get("answer_obligation", "") or ""),
                 "latest_must_answer": str(directive.get("must_answer", "") or ""),
+                "current_user_request": current_user_request,
+                "must_answer_source": must_answer_source,
+                "previous_must_answer_demoted": previous_must_answer_demoted,
+                "previous_must_answer": previous_must_answer,
+                "explicit_continue_previous_detected": explicit_continue_previous_detected,
+                "answer_target": answer_target,
+                "writer_contact_mode": writer_contact_mode,
                 "retrieval_query_source": production_query_source,
                 "legacy_fallback_scope": str(
                     runtime_truth_trace.get("legacy_fallback_scope")
@@ -171,6 +208,23 @@ def build_runtime_trace_summary_v1(
                 "production_answer_affected_by_shadow_planner": production_answer_affected,
             }
         )
+
+    latest_turn_authority = {
+        "latest_turn_authority_version": LATEST_TURN_AUTHORITY_VERSION,
+        "current_user_request": current_user_request,
+        "must_answer_source": must_answer_source,
+        "previous_must_answer_demoted": previous_must_answer_demoted,
+        "previous_must_answer": previous_must_answer or "none",
+        "explicit_continue_previous_detected": explicit_continue_previous_detected,
+        "answer_target": answer_target,
+        "writer_contact_mode": writer_contact_mode,
+        "hard_constraints_active": active_constraints,
+        "kb_payload_expected": _kb_payload_expected(
+            writer_grounding_visibility=writer_grounding_visibility,
+            writer_contact_mode=writer_contact_mode,
+            latest_turn_constraints=latest_turn_constraints,
+        ),
+    }
 
     return {
         "version": RUNTIME_TRACE_SUMMARY_VERSION,
@@ -187,6 +241,7 @@ def build_runtime_trace_summary_v1(
         ),
         "selected_answer_shape_profile": selected_answer_shape_profile,
         "answer_shape_profile_notes": answer_shape_profile_notes,
+        "latest_turn_authority_v1": latest_turn_authority,
         "explicit_practice_request": explicit_practice_request,
         "practice_request_runtime_note": practice_request_runtime_note,
         "practice_blocked_by_user_request": bool(latest_turn_constraints.get("no_practice", False)),

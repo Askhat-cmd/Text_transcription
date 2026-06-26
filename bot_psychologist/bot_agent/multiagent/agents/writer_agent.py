@@ -722,6 +722,28 @@ class WriterAgent:
                 ctx.get("final_answer_directive_version", "final_answer_directive_v1")
                 or "final_answer_directive_v1"
             ),
+            final_answer_current_user_request=str(
+                ctx.get("final_answer_current_user_request", "") or ""
+            ),
+            final_answer_must_answer_source=str(
+                ctx.get("final_answer_must_answer_source", "latest_turn") or "latest_turn"
+            ),
+            final_answer_previous_must_answer_demoted=str(
+                bool(ctx.get("final_answer_previous_must_answer_demoted", False))
+            ).lower(),
+            final_answer_previous_must_answer=str(
+                ctx.get("final_answer_previous_must_answer", "") or "none"
+            ),
+            final_answer_explicit_continue_previous_detected=str(
+                bool(ctx.get("final_answer_explicit_continue_previous_detected", False))
+            ).lower(),
+            final_answer_answer_target=str(
+                ctx.get("final_answer_answer_target", "latest_turn") or "latest_turn"
+            ),
+            final_answer_writer_contact_mode=str(
+                ctx.get("final_answer_writer_contact_mode", "structured_answer")
+                or "structured_answer"
+            ),
             final_answer_diagnostic_center_role=str(
                 ctx.get("final_answer_diagnostic_center_role", "guided_legacy") or "guided_legacy"
             ),
@@ -1188,6 +1210,11 @@ class WriterAgent:
             if isinstance(ctx.get("final_answer_directive"), dict)
             else {}
         )
+        writer_contact_mode = str(
+            ctx.get("final_answer_writer_contact_mode")
+            or final_answer_directive.get("writer_contact_mode", "")
+            or ""
+        )
         self.last_debug["final_answer_directive"] = final_answer_directive
         gate_feedback = (
             dict(final_answer_directive.get("acceptance_gate_feedback", {}))
@@ -1238,7 +1265,15 @@ class WriterAgent:
             lowered_user, ("без вопросов", "не задавай вопросов", "ответь без вопроса", "без вопроса")
         )
         user_requests_no_practice = _contains_any(
-            lowered_user, ("без практик", "без перехода в практик", "не давай практик", "без упражн")
+            lowered_user,
+            (
+                "без практик",
+                "без перехода в практик",
+                "не давай практик",
+                "без упражн",
+                "не хочу практик",
+                "не хочу упражн",
+            ),
         )
         user_repair_signal = _contains_any(
             lowered_user, ("ушел не туда", "вернись к сути", "снова предлагаешь практику", "я просил разбор механизма")
@@ -1249,6 +1284,12 @@ class WriterAgent:
         self.last_debug["microstep_forced"] = bool(
             planner_answer_shape == "one_step" and not user_step_request
         )
+        canned_step_disallowed = bool(
+            planner_practice_policy == "forbidden"
+            or user_requests_no_practice
+            or (writer_contact_mode == "free_writer_contact" and not user_step_request)
+        )
+        self.last_debug["canned_step_disallowed"] = canned_step_disallowed
         user_mechanism_request = _contains_any(
             lowered_user, ("механизм", "почему застреваю", "как это работает", "разбор")
         )
@@ -1385,6 +1426,7 @@ class WriterAgent:
                 last_offer_summary=last_offer_summary,
                 last_direct_question=last_direct_question,
                 answer_fit=answer_fit,
+                canned_step_disallowed=canned_step_disallowed,
             )
 
         # Greeting path: remove unsolicited practice when gate forbids it.
@@ -1668,6 +1710,7 @@ class WriterAgent:
         last_offer_summary: str,
         last_direct_question: str,
         answer_fit: dict[str, Any],
+        canned_step_disallowed: bool,
     ) -> str:
         offer_repair_context = f"{last_offer_summary} {last_direct_question}".lower()
         if pragmatics_repair_dissatisfaction:
@@ -1714,6 +1757,10 @@ class WriterAgent:
                 return "Я рядом. Сейчас важнее немного стабилизироваться и снизить перегруз, без лишнего давления."
             self._set_final_answer_shape_debug("safety_grounding")
             return text
+
+        if canned_step_disallowed and (planner_answer_shape == "one_step" or planner_next_move == "give_direct_step"):
+            self._set_final_answer_shape_debug("sanitized_direct_no_forced_practice")
+            return self._strip_optional_followup_invitation(text) or text
 
         if planner_answer_shape == "one_step" or user_step_request:
             self._set_final_answer_shape_debug("one_step")
@@ -1876,7 +1923,7 @@ class WriterAgent:
     @staticmethod
     def _strip_optional_followup_invitation(text: str) -> str:
         return re.sub(
-            r"\n{2,}(?:Если хочешь|Если хотите|Хочешь|Хотите|Могу дальше|Могу сразу|Если нужно).*$",
+            r"(?:\n{2,}|[.!?]\s+)(?:Если хочется|Если захочешь|Если хочешь|Если хотите|Хочешь|Хотите|Могу дальше|Могу сразу|Если нужно).*$",
             "",
             text.strip(),
             flags=re.IGNORECASE | re.DOTALL,

@@ -219,6 +219,19 @@ version={final_answer_directive_version}
 directive_json:
 {writer_visible_final_answer_directive_json}
 
+LATEST TURN AUTHORITY:
+current_user_request={final_answer_current_user_request}
+must_answer_source={final_answer_must_answer_source}
+previous_must_answer_demoted={final_answer_previous_must_answer_demoted}
+previous_must_answer={final_answer_previous_must_answer}
+explicit_continue_previous_detected={final_answer_explicit_continue_previous_detected}
+answer_target={final_answer_answer_target}
+writer_contact_mode={final_answer_writer_contact_mode}
+Rule:
+- Answer the latest user message first.
+- Everything above is context unless explicit_continue_previous_detected=true.
+- If writer_contact_mode=free_writer_contact, do not continue the old KB/practice task; answer the current human turn directly.
+
 ANSWER SHAPE CALIBRATION:
 selected_profile={final_answer_shape_profile}
 profile_notes:

@@ -410,8 +410,29 @@ class WriterContract:
             "answer_obligation": str(
                 final_answer_directive.get("answer_obligation", "") or ""
             ),
+            "current_user_request": str(
+                final_answer_directive.get("current_user_request", "") or ""
+            ),
             "must_answer": str(final_answer_directive.get("must_answer", "") or ""),
+            "must_answer_source": str(
+                final_answer_directive.get("must_answer_source", "") or "latest_turn"
+            ),
+            "previous_must_answer_demoted": bool(
+                final_answer_directive.get("previous_must_answer_demoted", False)
+            ),
+            "previous_must_answer": str(
+                final_answer_directive.get("previous_must_answer", "") or ""
+            ),
+            "explicit_continue_previous_detected": bool(
+                final_answer_directive.get("explicit_continue_previous_detected", False)
+            ),
+            "answer_target": str(
+                final_answer_directive.get("answer_target", "") or "latest_turn"
+            ),
             "answer_shape": str(final_answer_directive.get("answer_shape", "") or ""),
+            "writer_contact_mode": str(
+                final_answer_directive.get("writer_contact_mode", "") or "structured_answer"
+            ),
             "depth": str(final_answer_directive.get("depth", "") or ""),
             "style": str(final_answer_directive.get("style", "") or ""),
             "question_policy": str(final_answer_directive.get("question_policy", "") or ""),
@@ -775,6 +796,27 @@ class WriterContract:
             ),
             "final_answer_no_practice_unless_requested": bool(
                 final_answer_directive.get("no_practice_unless_requested", False)
+            ),
+            "final_answer_current_user_request": str(
+                final_answer_directive.get("current_user_request", "") or ""
+            ),
+            "final_answer_must_answer_source": str(
+                final_answer_directive.get("must_answer_source", "") or "latest_turn"
+            ),
+            "final_answer_previous_must_answer_demoted": bool(
+                final_answer_directive.get("previous_must_answer_demoted", False)
+            ),
+            "final_answer_previous_must_answer": str(
+                final_answer_directive.get("previous_must_answer", "") or ""
+            ),
+            "final_answer_explicit_continue_previous_detected": bool(
+                final_answer_directive.get("explicit_continue_previous_detected", False)
+            ),
+            "final_answer_answer_target": str(
+                final_answer_directive.get("answer_target", "") or "latest_turn"
+            ),
+            "final_answer_writer_contact_mode": str(
+                final_answer_directive.get("writer_contact_mode", "") or "structured_answer"
             ),
             "final_answer_summary_context_anchors": [
                 str(item)

@@ -29,6 +29,25 @@ def _append_line(lines: list[str], text: str) -> None:
         lines.append(cleaned)
 
 
+def _looks_like_practice_push(text: Any) -> bool:
+    lowered = _clean_text(text).lower()
+    if not lowered:
+        return False
+    return any(
+        marker in lowered
+        for marker in (
+            "шаг",
+            "практи",
+            "упражн",
+            "дыхан",
+            "таймер",
+            "запиши",
+            "сделай",
+            "выполни",
+        )
+    )
+
+
 def _safe_json(payload: dict[str, Any]) -> str:
     return json.dumps(payload, ensure_ascii=False, indent=2)
 
@@ -60,12 +79,21 @@ def sanitize_legacy_advisory_for_writer(source_signals: dict) -> dict[str, Any]:
         if isinstance(knowledge.get("practice_gate"), dict)
         else {}
     )
+    practice_suppressed = (
+        bool(latest_turn_constraints.get("no_practice", False))
+        or bool(active_line.get("practice_suppression_active", False))
+        or not bool(practice_gate.get("practice_allowed", True))
+    )
 
     lines: list[str] = []
     _append_line(lines, "Answer the user's latest request first, in a direct and human tone.")
 
-    if _clean_text(active_line.get("active_line")):
-        _append_line(lines, f"Current line: {_clean_text(active_line.get('active_line'))}.")
+    active_line_text = _clean_text(active_line.get("active_line"))
+    active_line_suppressed = practice_suppressed and _looks_like_practice_push(active_line_text)
+    if active_line_text and not active_line_suppressed:
+        _append_line(lines, f"Current line: {active_line_text}.")
+    elif active_line_suppressed:
+        _append_line(lines, "Current line: stay with the user's feeling and do not turn the answer into an exercise.")
     elif _clean_text(active_line.get("user_intent")):
         _append_line(lines, f"Current user vector: {_clean_text(active_line.get('user_intent'))}.")
 
@@ -79,8 +107,11 @@ def sanitize_legacy_advisory_for_writer(source_signals: dict) -> dict[str, Any]:
         else:
             _append_line(lines, "Answer directly; do not bounce the user back into clarifying a known term.")
 
-    if _clean_text(response_planner.get("target_micro_shift")):
-        _append_line(lines, f"Useful meaning shift: {_clean_text(response_planner.get('target_micro_shift'))}.")
+    target_micro_shift = _clean_text(response_planner.get("target_micro_shift"))
+    if target_micro_shift and not (practice_suppressed and _looks_like_practice_push(target_micro_shift)):
+        _append_line(lines, f"Useful meaning shift: {target_micro_shift}.")
+    elif practice_suppressed and target_micro_shift:
+        _append_line(lines, "Useful meaning shift: lower pressure, name the feeling plainly, and stay with the human contact.")
     elif _clean_text(diagnostic.get("suggested_writer_move")):
         _append_line(lines, f"Helpful move: {_clean_text(diagnostic.get('suggested_writer_move'))}.")
     elif _clean_text(writer_move.get("move")):
@@ -110,11 +141,6 @@ def sanitize_legacy_advisory_for_writer(source_signals: dict) -> dict[str, Any]:
         if token in lower_summary:
             raise ValueError(f"sanitized advisory summary leaked forbidden token: {token}")
 
-    practice_suppressed = (
-        bool(latest_turn_constraints.get("no_practice", False))
-        or bool(active_line.get("practice_suppression_active", False))
-        or not bool(practice_gate.get("practice_allowed", True))
-    )
     if practice_suppressed:
         practice_note = (
             "Do not offer an exercise, drill, breathing routine, or homework here. "

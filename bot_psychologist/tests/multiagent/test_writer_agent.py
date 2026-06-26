@@ -483,6 +483,35 @@ def test_mvp_preserves_substantive_knowledge_answer_when_practice_is_forbidden()
     assert "если хочешь" not in result.lower()
 
 
+def test_mvp_free_contact_no_practice_does_not_collapse_into_canned_one_step() -> None:
+    agent = WriterAgent(client=_FakeClient("ok"), model="gpt-5-mini")
+    contract = _mvp_contract(
+        message="Всё, не хочу сейчас практику. Мне тяжело, просто скажи по-человечески.",
+        dialogue_policy={
+            "answer_obligation_resolution": {
+                "answer_obligation": "answer_latest_turn",
+            },
+        },
+        response_planner={
+            "next_move": "give_direct_step",
+            "answer_shape": "one_step",
+            "question_policy": "none",
+            "practice_policy": "forbidden",
+        },
+    )
+    response_text = (
+        "Понял — тебе тяжело, и это нормально. Не нужно сейчас ничего исправлять или заставлять себя.\n\n"
+        "Если захочешь дальше — можем вместе придумать один маленький шаг, когда тебе станет легче."
+    )
+
+    result = agent._enforce_answer_compliance(response_text, contract)
+
+    assert "сделай один шаг прямо сейчас" not in result.lower()
+    assert "не нужно сейчас ничего исправлять" in result.lower()
+    assert "если захочешь дальше" not in result.lower()
+    assert agent.last_debug.get("final_answer_shape") == "sanitized_direct_no_forced_practice"
+
+
 def test_mvp_preserves_offer_outline_for_later_confirmation_flow() -> None:
     agent = WriterAgent(client=_FakeClient("ok"), model="gpt-5-mini")
     contract = _mvp_contract(

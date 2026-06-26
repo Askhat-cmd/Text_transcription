@@ -43,6 +43,14 @@ _CURRENT_TURN_MUST_ANSWER_PATTERNS = (
     re.compile(r"что\s+с\s+причин\w*", re.IGNORECASE),
     re.compile(r"как\s+быть\s+с\s+причин\w*", re.IGNORECASE),
 )
+_CONTINUE_PREVIOUS_PATTERNS = (
+    re.compile(r"\bпродолж\w*", re.IGNORECASE),
+    re.compile(r"\bподробн\w*", re.IGNORECASE),
+    re.compile(r"\bобъясн\w*.*\b(втор\w*|перв\w*|эт\w*)", re.IGNORECASE),
+    re.compile(r"\bвтор\w*\s+пункт", re.IGNORECASE),
+    re.compile(r"\bперв\w*\s+пункт", re.IGNORECASE),
+    re.compile(r"\bпример\b.*\bк\b.*\bэтому\b", re.IGNORECASE),
+)
 
 
 @dataclass
@@ -54,10 +62,17 @@ class FinalAnswerDirective:
     user_intent: str
     dialogue_act: str
     answer_obligation: str
+    current_user_request: str
     must_answer: str
+    must_answer_source: str
+    previous_must_answer_demoted: bool
+    previous_must_answer: str
+    explicit_continue_previous_detected: bool
+    answer_target: str
     answer_shape: str
     answer_shape_profile: str
     answer_shape_profile_notes: list[str]
+    writer_contact_mode: str
     depth: str
     style: str
     question_policy: str
@@ -93,10 +108,17 @@ class FinalAnswerDirective:
             "user_intent": self.user_intent,
             "dialogue_act": self.dialogue_act,
             "answer_obligation": self.answer_obligation,
+            "current_user_request": self.current_user_request,
             "must_answer": self.must_answer,
+            "must_answer_source": self.must_answer_source,
+            "previous_must_answer_demoted": bool(self.previous_must_answer_demoted),
+            "previous_must_answer": self.previous_must_answer,
+            "explicit_continue_previous_detected": bool(self.explicit_continue_previous_detected),
+            "answer_target": self.answer_target,
             "answer_shape": self.answer_shape,
             "answer_shape_profile": self.answer_shape_profile,
             "answer_shape_profile_notes": list(self.answer_shape_profile_notes),
+            "writer_contact_mode": self.writer_contact_mode,
             "depth": self.depth,
             "style": self.style,
             "question_policy": self.question_policy,
@@ -209,6 +231,49 @@ def _must_answer_current_turn(user_message: str) -> bool:
     return any(pattern.search(text) for pattern in _CURRENT_TURN_MUST_ANSWER_PATTERNS)
 
 
+def _sanitize_trace_text(text: str, *, limit: int = 180) -> str:
+    compact = re.sub(r"\s+", " ", str(text or "").strip())
+    if len(compact) <= limit:
+        return compact
+    return compact[: max(0, limit - 3)].rstrip() + "..."
+
+
+def _is_explicit_continue_previous(
+    *,
+    user_message: str,
+    dialogue_act: str,
+    last_assistant_offer: dict[str, Any],
+    latest_turn_constraints: dict[str, Any],
+    summary_request: bool,
+) -> bool:
+    if summary_request:
+        return False
+    if bool(latest_turn_constraints.get("active_constraints", [])):
+        return False
+    if dialogue_act == "confirmation_to_last_offer" and bool(last_assistant_offer.get("is_open")):
+        return True
+    if dialogue_act == "continuation_request":
+        return True
+    lowered = _normalize(user_message)
+    return any(pattern.search(lowered) for pattern in _CONTINUE_PREVIOUS_PATTERNS)
+
+
+def _select_writer_contact_mode(
+    *,
+    must_answer_source: str,
+    answer_shape_profile: str,
+) -> str:
+    if must_answer_source == "safety":
+        return "safety"
+    if must_answer_source == "direct_source":
+        return "direct_kb"
+    if must_answer_source == "explicit_practice":
+        return "bounded_practice"
+    if answer_shape_profile == "free_writer_contact":
+        return "free_writer_contact"
+    return "structured_answer"
+
+
 def _suppressed_constraints(*, profile: str, safety_active: bool) -> list[str]:
     if profile != DIALOGUE_PROFILE_MVP_FREE or safety_active:
         return []
@@ -253,6 +318,7 @@ def _select_answer_shape_profile(
     user_message: str,
     answer_obligation: str,
     dialogue_act: str,
+    explicit_continue_previous_detected: bool,
     latest_turn_constraints: dict[str, Any],
     dialogue_policy: dict[str, Any],
     retrieval_decision: dict[str, Any],
@@ -332,6 +398,20 @@ def _select_answer_shape_profile(
             [
                 "Answer the concept or source question directly before extra framing.",
                 "Use short grounding only and do not dump raw internal wording.",
+            ],
+        )
+    if (
+        not explicit_continue_previous_detected
+        and answer_obligation == "answer_latest_turn"
+        and "?" not in str(user_message or "")
+        and not explicit_detail_request
+    ) or dialogue_act in {"support_request", "meta_system_feedback"}:
+        return (
+            "free_writer_contact",
+            [
+                "Answer the latest user message directly and humanly.",
+                "Use previous context only to understand what the user means now.",
+                "Do not continue the previous internal task unless the user explicitly asks for it.",
             ],
         )
     if answer_obligation == "acknowledge_self_intro" or dialogue_act in {"greeting", "contact_open", "self_intro"}:
@@ -476,6 +556,17 @@ def build_final_answer_directive_v1(
         or str(dict(policy.get("dialogue_act_resolution", {})).get("summary_scope", "") or "")
         or ("current_conversation" if summary_request else "")
     )
+    current_user_request = str(user_message or "").strip()
+    previous_must_answer_raw = str(
+        unanswered_summary.get("last_direct_user_question", "")
+        or last_offer_summary.get("offer_text_summary", "")
+        or ""
+    ).strip()
+    previous_must_answer = (
+        previous_must_answer_raw
+        if previous_must_answer_raw and previous_must_answer_raw != current_user_request
+        else ""
+    )
     no_confirmation_needed = bool(
         summary_request
         and (
@@ -486,15 +577,39 @@ def build_final_answer_directive_v1(
     no_practice_unless_requested = bool(
         summary_request and obligation_resolution.get("no_practice_unless_requested", True)
     )
+    explicit_continue_previous_detected = _is_explicit_continue_previous(
+        user_message=user_message,
+        dialogue_act=dialogue_act,
+        last_assistant_offer=last_offer_summary,
+        latest_turn_constraints=latest_turn_constraints,
+        summary_request=summary_request,
+    )
     answer_shape_profile, answer_shape_profile_notes = _select_answer_shape_profile(
         user_message=user_message,
         answer_obligation=answer_obligation,
         dialogue_act=dialogue_act,
+        explicit_continue_previous_detected=explicit_continue_previous_detected,
         latest_turn_constraints=latest_turn_constraints,
         dialogue_policy=policy,
         retrieval_decision=retrieval,
         safety_active=safety_active,
         summary_request=summary_request,
+    )
+    direct_source_request = bool(
+        retrieval.get("direct_source_request", False)
+        or (
+            dict(retrieval.get("composer", {})).get("direct_source_request", False)
+            if isinstance(retrieval.get("composer"), dict)
+            else False
+        )
+        or (
+            dict(retrieval.get("contextual_retrieval_query_composer", {})).get(
+                "direct_source_request", False
+            )
+            if isinstance(retrieval.get("contextual_retrieval_query_composer"), dict)
+            else False
+        )
+        or _looks_like_direct_source_request(user_message)
     )
     summary_context_anchors: list[str] = []
     for value in (
@@ -567,7 +682,20 @@ def build_final_answer_directive_v1(
         _append_unique(soft_guidance, "answer_in_own_words_without_internal_db_grounding")
     for note in answer_shape_profile_notes:
         _append_unique(soft_guidance, note)
-    if answer_shape_profile == "contact_brief":
+    if answer_shape_profile == "free_writer_contact":
+        depth = "short" if depth == "long" else depth
+        question_policy = "none"
+        practice_policy = "forbidden_latest_turn_contact_mode"
+        answer_shape = "simple_contact"
+        _append_unique(
+            hard_boundaries,
+            "Answer the latest user message directly; previous tasks are context only unless explicitly continued.",
+        )
+        _append_unique(
+            hard_boundaries,
+            "Do not continue the previous KB/practice/explanation task when the latest turn changes contact mode.",
+        )
+    elif answer_shape_profile == "contact_brief":
         depth = "short"
         question_policy = "optional_none"
     elif answer_shape_profile in {
@@ -582,14 +710,38 @@ def build_final_answer_directive_v1(
         question_policy = "none"
     if summary_request:
         must_answer_value = "summary of current conversation"
+        must_answer_source = "latest_turn"
+        answer_target = "latest_turn"
+        previous_must_answer_demoted = bool(previous_must_answer)
+    elif safety_active:
+        must_answer_value = current_user_request
+        must_answer_source = "safety"
+        answer_target = "latest_turn"
+        previous_must_answer_demoted = bool(previous_must_answer)
     elif answer_obligation == "provide_one_bounded_practice" or dialogue_act == "practice_request":
-        must_answer_value = str(user_message or "").strip()
-    elif bool(latest_turn_constraints.get("active_constraints", [])):
-        must_answer_value = str(user_message or "").strip()
-    elif _must_answer_current_turn(user_message):
-        must_answer_value = str(user_message or "").strip()
+        must_answer_value = current_user_request
+        must_answer_source = "explicit_practice"
+        answer_target = "latest_turn"
+        previous_must_answer_demoted = bool(previous_must_answer)
+    elif direct_source_request:
+        must_answer_value = current_user_request
+        must_answer_source = "direct_source"
+        answer_target = "latest_turn"
+        previous_must_answer_demoted = bool(previous_must_answer)
+    elif explicit_continue_previous_detected:
+        must_answer_value = previous_must_answer or current_user_request
+        must_answer_source = "explicit_continue_previous"
+        answer_target = "previous_open_loop"
+        previous_must_answer_demoted = False
     else:
-        must_answer_value = str(unanswered_summary.get("last_direct_user_question", "") or str(user_message or "").strip())
+        must_answer_value = current_user_request or previous_must_answer_raw
+        must_answer_source = "latest_turn"
+        answer_target = "latest_turn"
+        previous_must_answer_demoted = bool(previous_must_answer)
+    writer_contact_mode = _select_writer_contact_mode(
+        must_answer_source=must_answer_source,
+        answer_shape_profile=answer_shape_profile,
+    )
 
     return FinalAnswerDirective(
         version=FINAL_ANSWER_DIRECTIVE_VERSION,
@@ -599,10 +751,17 @@ def build_final_answer_directive_v1(
         user_intent=effective_user_intent,
         dialogue_act=str(dialogue_act or "unknown"),
         answer_obligation=answer_obligation,
+        current_user_request=current_user_request,
         must_answer=must_answer_value,
+        must_answer_source=must_answer_source,
+        previous_must_answer_demoted=previous_must_answer_demoted,
+        previous_must_answer=_sanitize_trace_text(previous_must_answer),
+        explicit_continue_previous_detected=explicit_continue_previous_detected,
+        answer_target=answer_target,
         answer_shape=answer_shape,
         answer_shape_profile=answer_shape_profile,
         answer_shape_profile_notes=answer_shape_profile_notes,
+        writer_contact_mode=writer_contact_mode,
         depth=depth,
         style=style,
         question_policy=question_policy,
@@ -639,6 +798,13 @@ def build_final_answer_directive_v1(
             "answer_obligation_resolution": obligation_resolution,
             "latest_turn_constraints_v1": latest_turn_constraints,
             "style_state_summary": style_state_summary,
+            "current_user_request": _sanitize_trace_text(current_user_request),
+            "must_answer_source": must_answer_source,
+            "previous_must_answer_demoted": previous_must_answer_demoted,
+            "previous_must_answer": _sanitize_trace_text(previous_must_answer),
+            "explicit_continue_previous_detected": explicit_continue_previous_detected,
+            "answer_target": answer_target,
+            "writer_contact_mode": writer_contact_mode,
             "summary_request": summary_request,
             "summary_scope": summary_scope,
             "no_confirmation_needed": no_confirmation_needed,
@@ -649,5 +815,7 @@ def build_final_answer_directive_v1(
             "safety_active": safety_active,
             "advisory_mode": True,
             "latest_turn_constraints_active": bool(latest_turn_constraints.get("active_constraints", [])),
+            "explicit_continue_previous_detected": explicit_continue_previous_detected,
+            "previous_must_answer_demoted": previous_must_answer_demoted,
         },
     )

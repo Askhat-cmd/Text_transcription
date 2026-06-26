@@ -5,6 +5,8 @@ from __future__ import annotations
 import re
 from typing import Any
 
+from .creator_live_behavior_guard import REQUEST_TYPE_SUPPORT, detect_request_type_v1
+
 
 DIALOGUE_ACT_RESOLVER_VERSION = "dialogue_act_resolver_v1"
 
@@ -62,6 +64,9 @@ _REPAIR_MARKERS = (
     "не уходи от вопроса",
     "ты усложнил",
     "я просто познакомился",
+    "слишком сложно",
+    "скажи проще",
+    "скажи по-человечески",
 )
 _STYLE_MARKERS = (
     "спокойнее",
@@ -183,6 +188,18 @@ _CONCRETE_SITUATION_MARKERS = (
     "я теряю",
     "я выхожу из себя",
 )
+_SUPPORT_CONTACT_MARKERS = (
+    "мне тяжело",
+    "мне сейчас тяжело",
+    "мне плохо",
+    "просто поддержи",
+    "побудь рядом",
+    "скажи по-человечески",
+    "не хочу разбирать",
+    "не хочу анализ",
+    "не хочу сейчас практику",
+    "не хочу упражнения",
+)
 _CONTACT_OPEN_MARKERS = ("давай знакомиться", "приятно познакомиться", "будем знакомы")
 _CONTINUATION_MARKERS = ("продолжай", "давай дальше", "можешь продолжить", "расскажи дальше")
 _SMALLTALK_MARKERS = ("как дела", "что нового", "как ты")
@@ -265,6 +282,10 @@ def _is_explicit_generic_practice_request(lowered: str) -> bool:
         return False
     if _is_explicit_no_practice_cause_request(lowered):
         return False
+    if _is_support_contact_request(lowered):
+        return False
+    if "не хочу" in lowered and _contains_any(lowered, _PRACTICE_MARKERS):
+        return False
     if _contains_any(lowered, _GENERIC_PRACTICE_REQUEST_MARKERS):
         return True
     if not _contains_any(lowered, _PRACTICE_MARKERS):
@@ -332,6 +353,12 @@ def _is_explicit_no_practice_cause_request(lowered: str) -> bool:
             "почему",
         )
     )
+
+
+def _is_support_contact_request(lowered: str) -> bool:
+    if not lowered:
+        return False
+    return any(marker in lowered for marker in _SUPPORT_CONTACT_MARKERS)
 
 
 def detect_summary_request_route_v1(user_message: str) -> dict[str, Any]:
@@ -626,6 +653,23 @@ def build_dialogue_act_resolution_v1(
             "dialogue_act": "clarification_request",
             "confidence": 0.78,
             "evidence": ["clarification_markers"],
+            "not_exact_match_rule": True,
+        }
+
+    if (
+        not _contains_any(lowered, _KNOWLEDGE_MARKERS)
+        and (
+            _is_support_contact_request(lowered)
+            or detect_request_type_v1(text) == REQUEST_TYPE_SUPPORT
+        )
+    ):
+        return {
+            "version": DIALOGUE_ACT_RESOLVER_VERSION,
+            "dialogue_act": "support_request",
+            "confidence": 0.84,
+            "evidence": ["support_request_markers", "latest_turn_contact_mode_shift"],
+            "reason": "latest_turn_support_contact_request",
+            "source": "latest_turn_support_override",
             "not_exact_match_rule": True,
         }
 

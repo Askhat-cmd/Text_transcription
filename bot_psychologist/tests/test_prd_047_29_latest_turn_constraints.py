@@ -56,6 +56,15 @@ def test_final_answer_directive_hardens_no_practice_and_simplify_requests() -> N
     assert any("practice" in item.lower() for item in payload["hard_boundaries"])
 
 
+def test_latest_turn_constraints_detect_no_practice_with_intermediate_words() -> None:
+    payload = build_latest_turn_constraints_v1(
+        "Всё, не хочу сейчас практику и упражнения. Мне тяжело, просто поддержи меня."
+    )
+
+    assert payload["no_practice"] is True
+    assert "no_practice" in payload["active_constraints"]
+
+
 def test_final_answer_directive_adds_long_term_and_non_breathing_guidance() -> None:
     payload = _build_directive(
         "Что делать в долгосрочной перспективе и не своди ответ только к дыханию?"

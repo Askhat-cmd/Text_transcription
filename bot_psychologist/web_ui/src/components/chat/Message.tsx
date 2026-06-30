@@ -45,6 +45,7 @@ export const MessageItem: React.FC<MessageItemProps> = ({
   const { trace: multiagentTrace, isLoading: multiagentTraceLoading } = useMultiAgentTrace(
     sessionId,
     message.id,
+    message.turnNumber,
     shouldLoadMultiagentTrace
   );
   const showMultiagentTrace = Boolean(shouldLoadMultiagentTrace && (multiagentTrace || multiagentTraceLoading));

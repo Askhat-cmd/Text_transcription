@@ -121,3 +121,56 @@ def test_gate_detects_repeated_bad_answer() -> None:
     assert payload["status"] == "failed"
     assert "answer_repeats_previous_bad_answer" in payload["failed_checks"]
     assert "repair_failed_to_answer_recovered_question" in payload["failed_checks"]
+
+
+def test_gate_allows_benign_no_stub_signal_for_latest_turn_answer() -> None:
+    payload = _gate(
+        user_message="Только без практик. Просто объясни, почему меня так резко сносит.",
+        final_answer=(
+            "Похоже, реакция включается автоматически: напряжение поднимается быстрее, чем ты успеваешь "
+            "это осмыслить, поэтому тебя так резко сносит в привычный способ быстро снизить перегруз. "
+            "Это не про слабость, а про защитную реакцию, которая срабатывает раньше спокойного выбора."
+        ),
+        act="unknown",
+        obligation="answer_latest_turn",
+        unanswered={"answer_required": False, "answer_status": "answered"},
+        writer_debug={
+            "no_stub_repair_signal": {
+                "version": "no_stub_repair_signal_v1",
+                "reason": "acceptance_gate_greeting_repair",
+                "recommended_action": "writer_retry",
+                "must_answer": "latest_turn",
+                "user_facing_replacement_created": False,
+            }
+        },
+    )
+
+    assert payload["status"] == "warning"
+    assert payload["failed_checks"] == []
+    assert "benign_no_stub_signal_ignored" in payload["warnings"]
+    assert payload["must_quarantine_answer"] is False
+    assert payload["can_save_as_healthy_context"] is True
+
+
+def test_gate_allows_benign_no_stub_signal_for_gentle_close() -> None:
+    payload = _gate(
+        user_message="Спасибо, мне пока достаточно. На этом закончим.",
+        final_answer="Пожалуйста. Береги себя.",
+        act="close_ack",
+        obligation="close_gently",
+        unanswered={"answer_required": False, "answer_status": "answered"},
+        writer_debug={
+            "no_stub_repair_signal": {
+                "version": "no_stub_repair_signal_v1",
+                "reason": "close_repair",
+                "recommended_action": "writer_retry",
+                "must_answer": "close_gently",
+                "user_facing_replacement_created": False,
+            }
+        },
+    )
+
+    assert payload["status"] == "warning"
+    assert payload["failed_checks"] == []
+    assert "benign_no_stub_signal_ignored" in payload["warnings"]
+    assert payload["can_save_as_healthy_context"] is True

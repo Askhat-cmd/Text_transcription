@@ -149,7 +149,7 @@ class APIService {
     query: string,
     userId: string,
     onToken: (token: string) => void,
-    onDone?: (meta: { mode?: string; latency_ms?: number; trace?: InlineTrace; answer?: string }) => void,
+    onDone?: (meta: { mode?: string; latency_ms?: number; trace?: InlineTrace; answer?: string; turn_number?: number }) => void,
     onError?: (message: string) => void,
     options?: {
       includePath?: boolean;
@@ -206,7 +206,7 @@ class APIService {
         let fullText = '';
         let doneReceived = false;
         let tracePayload: InlineTrace | undefined;
-        let doneMetaPayload: { mode?: string; latency_ms?: number; answer?: string } | null = null;
+        let doneMetaPayload: { mode?: string; latency_ms?: number; answer?: string; turn_number?: number } | null = null;
 
         const finalizeDone = (): void => {
           if (!doneReceived) {
@@ -225,6 +225,7 @@ class APIService {
             latency_ms: doneMetaPayload?.latency_ms,
             trace: tracePayload,
             answer: finalAnswer,
+            turn_number: doneMetaPayload?.turn_number,
           });
         };
 
@@ -264,6 +265,7 @@ class APIService {
             answer_fallback?: string;
             mode?: string;
             latency_ms?: number;
+            turn_number?: number;
             trace?: InlineTrace;
           };
           let payload: StreamPayload | null = null;
@@ -303,6 +305,7 @@ class APIService {
               mode: payload.mode,
               latency_ms: payload.latency_ms,
               answer: fullText,
+              turn_number: payload.turn_number,
             };
             if (payload.trace) {
               tracePayload = payload.trace;

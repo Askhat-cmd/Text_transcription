@@ -130,4 +130,22 @@ describe('useChat stream finalization', () => {
 
     harness.cleanup();
   });
+
+  it('stores bot turnNumber from done meta for stable trace binding', async () => {
+    vi.spyOn(apiService, 'streamAdaptiveAnswer').mockImplementation(
+      async (_query, _userId, onToken, onDone) => {
+        onToken('partial');
+        onDone?.({ answer: 'final', turn_number: 7 });
+      }
+    );
+
+    const harness = mountUseChat({ userId: 'u1', sessionId: 'sess-1' });
+    await harness.sendQuestion('test');
+
+    const botMessages = harness.state.messages.filter((msg) => msg.role === 'bot');
+    expect(botMessages).toHaveLength(1);
+    expect(botMessages[0]?.turnNumber).toBe(7);
+
+    harness.cleanup();
+  });
 });

@@ -793,6 +793,11 @@ async def ask_adaptive_question_stream(
             answer = str(result.get("answer", "") or "")
             _save_multiagent_debug_if_present(result=result, store=store, session_id=session_key)
             await conv_service.touch_conversation(identity.conversation_id)
+            resolved_turn_number = _resolve_multiagent_turn_index(
+                result=result,
+                store=store,
+                session_id=session_key,
+            )
 
             latency_ms = int(float(result.get("processing_time_seconds", 0) or 0) * 1000)
             trace_raw_debug_trace = result.get("debug_trace")
@@ -814,10 +819,12 @@ async def ask_adaptive_question_stream(
                 "latency_ms": latency_ms,
                 "session_id": session_key,
                 "conversation_id": identity.conversation_id,
+                "turn_number": resolved_turn_number,
             }
 
             yield f"data: {json.dumps(done_payload, ensure_ascii=False)}\n\n"
             if request.debug and trace is not None:
+                trace["turn_number"] = resolved_turn_number
                 try:
                     trace = _append_trace_with_resolved_session(
                         store=store,

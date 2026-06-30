@@ -68,6 +68,7 @@ def test_history_returns_requested_session_turns(client: TestClient, tmp_path: P
     turns = payload["turns"]
     assert payload["total_turns"] == 1
     assert len(turns) == 1
+    assert turns[0]["turn_number"] == 1
     assert turns[0]["user_input"] == "A: first"
     assert turns[0]["bot_response"] == "A: answer"
 

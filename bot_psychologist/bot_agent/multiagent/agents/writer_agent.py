@@ -1230,11 +1230,7 @@ class WriterAgent:
             "greeting_answered_with_mechanism_explanation" in gate_failed_checks
             and _contains_any(lowered_user, ("здравств", "привет", "добрый день", "добрый вечер"))
         ):
-            return self._defer_no_stub_repair(
-                signal="acceptance_gate_greeting_repair",
-                text=text,
-                must_answer="greeting_without_mechanism_lecture",
-            )
+            return self._repair_greeting_without_mechanism_lecture(user_message=user_message)
         self.last_debug["legacy_constraints_suppressed"] = [
             str(item)
             for item in list(ctx.get("legacy_constraints_suppressed", []) or [])
@@ -1290,6 +1286,13 @@ class WriterAgent:
             or (writer_contact_mode == "free_writer_contact" and not user_step_request)
         )
         self.last_debug["canned_step_disallowed"] = canned_step_disallowed
+        if answer_obligation == "close_gently" and (
+            has_question
+            or has_unsolicited_practice
+            or _contains_any(lowered_text, ("если хочешь", "если захочешь", "давай продолжим", "следующий шаг"))
+        ):
+            self._set_final_answer_shape_debug("gentle_close")
+            return self._build_gentle_close_reply()
         user_mechanism_request = _contains_any(
             lowered_user, ("механизм", "почему застреваю", "как это работает", "разбор")
         )
@@ -1519,7 +1522,12 @@ class WriterAgent:
 
         if planner_question_policy == "none" and has_question:
             if planner_next_move == "give_direct_step" or planner_answer_shape == "one_step":
-                return "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
+                return self._resolve_one_step_or_no_practice_fallback(
+                    text=text,
+                    user_message=user_message,
+                    lowered_user=lowered_user,
+                    canned_step_disallowed=canned_step_disallowed,
+                )
             if planner_next_move == "give_short_support" or planner_answer_shape == "short_support":
                 return "Я рядом. Сейчас не нужно ничего разбирать. Можно просто немного снизить внутреннее давление."
             if planner_next_move == "stabilize_safety" or planner_answer_shape == "safety_grounding":
@@ -1542,7 +1550,12 @@ class WriterAgent:
             lowered_text, ("что именно", "почему", "как ты", "можешь ли", "хочешь")
         ):
             if planner_next_move == "give_direct_step" or planner_answer_shape == "one_step":
-                return "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
+                return self._resolve_one_step_or_no_practice_fallback(
+                    text=text,
+                    user_message=user_message,
+                    lowered_user=lowered_user,
+                    canned_step_disallowed=canned_step_disallowed,
+                )
             if planner_next_move == "give_short_support":
                 return "Я рядом. Сейчас не нужно ничего разбирать. Можно просто немного снизить внутреннее давление."
             if planner_next_move == "stabilize_safety":
@@ -1552,7 +1565,12 @@ class WriterAgent:
             return "Я рядом. Продолжим спокойно и без лишней нагрузки."
         if planner_question_policy == "none":
             if planner_next_move == "give_direct_step" or planner_answer_shape == "one_step":
-                return "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
+                return self._resolve_one_step_or_no_practice_fallback(
+                    text=text,
+                    user_message=user_message,
+                    lowered_user=lowered_user,
+                    canned_step_disallowed=canned_step_disallowed,
+                )
             if planner_next_move == "deepen_mechanism" or planner_answer_shape == "mechanism_explanation":
                 return self._defer_no_stub_repair(
                     signal="mechanism_explanation_repair",
@@ -1586,7 +1604,12 @@ class WriterAgent:
             )
 
         if planner_answer_shape == "one_step" or planner_next_move == "give_direct_step":
-            return "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
+            return self._resolve_one_step_or_no_practice_fallback(
+                text=text,
+                user_message=user_message,
+                lowered_user=lowered_user,
+                canned_step_disallowed=canned_step_disallowed,
+            )
 
         if planner_answer_shape == "one_step" or user_step_request or active_line_intent == "ask_for_direct_step":
             list_like = bool(re.search(r"(^|\n)\s*(?:[-*•]|\d+[.)])\s+", text))
@@ -1596,7 +1619,12 @@ class WriterAgent:
                     return first_item.group(1).strip()
             sentence_parts = [part.strip() for part in re.split(r"(?<=[.!?])\s+", text) if part.strip()]
             if len(sentence_parts) > 2:
-                return "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
+                return self._resolve_one_step_or_no_practice_fallback(
+                    text=text,
+                    user_message=user_message,
+                    lowered_user=lowered_user,
+                    canned_step_disallowed=canned_step_disallowed,
+                )
             if planner_question_policy == "none" and _contains_any(
                 lowered_text,
                 (
@@ -1609,10 +1637,20 @@ class WriterAgent:
                     "что выбрать",
                 ),
             ):
-                return "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
+                return self._resolve_one_step_or_no_practice_fallback(
+                    text=text,
+                    user_message=user_message,
+                    lowered_user=lowered_user,
+                    canned_step_disallowed=canned_step_disallowed,
+                )
             has_step_marker = _contains_any(lowered_text, ("сделай", "начни", "открой", "выбери", "напиши", "шаг"))
             if not has_step_marker:
-                return "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
+                return self._resolve_one_step_or_no_practice_fallback(
+                    text=text,
+                    user_message=user_message,
+                    lowered_user=lowered_user,
+                    canned_step_disallowed=canned_step_disallowed,
+                )
 
         if active_line_practice_suppression and not active_line_should_offer_practice and has_unsolicited_practice:
             if planner_next_move == "stabilize_safety" or planner_answer_shape == "safety_grounding":
@@ -1763,8 +1801,12 @@ class WriterAgent:
             return self._strip_optional_followup_invitation(text) or text
 
         if planner_answer_shape == "one_step" or user_step_request:
-            self._set_final_answer_shape_debug("one_step")
-            return "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
+            return self._resolve_one_step_or_no_practice_fallback(
+                text=text,
+                user_message=user_message,
+                lowered_user=lowered_user,
+                canned_step_disallowed=canned_step_disallowed,
+            )
 
         if summary_request:
             self._set_final_answer_shape_debug("structured_summary")
@@ -1893,6 +1935,57 @@ class WriterAgent:
         self._set_final_answer_shape_debug(planner_answer_shape or "compact_direct")
         return sanitized_final
 
+    def _repair_greeting_without_mechanism_lecture(self, *, user_message: str) -> str:
+        lowered_user = str(user_message or "").lower()
+        self._set_final_answer_shape_debug("contact_brief")
+        if "?" in user_message or _contains_any(lowered_user, ("как", "почему", "можешь", "что делать")):
+            return (
+                "Привет. Такое обычно повторяется, когда в похожих ситуациях снова включается "
+                "один и тот же автоматический способ справляться, даже если он уже не помогает. "
+                "Это не про слабость, а про привычную защитную реакцию."
+            )
+        return "Привет. Я рядом. Можем спокойно начать без спешки и лишней нагрузки."
+
+    @staticmethod
+    def _build_gentle_close_reply() -> str:
+        return "Пожалуйста. Береги себя."
+
+    @staticmethod
+    def _build_no_practice_fallback_text(user_message: str) -> str:
+        lowered_user = str(user_message or "").lower()
+        if _contains_any(lowered_user, ("почему", "объясни", "механизм", "как это работает", "разбор", "что со мной")):
+            return (
+                "Похоже, реакция включается автоматически: внутреннее напряжение поднимается быстрее, "
+                "чем ты успеваешь это осмыслить, и система уводит тебя в привычный способ защиты. "
+                "Это не про слабость, а про попытку быстро снизить перегруз."
+            )
+        return "Я рядом. Сейчас не нужно ничего делать через силу. Можно остаться в разговоре без практики и лишней нагрузки."
+
+    def _resolve_one_step_or_no_practice_fallback(
+        self,
+        *,
+        text: str,
+        user_message: str,
+        lowered_user: str,
+        canned_step_disallowed: bool,
+    ) -> str:
+        if not canned_step_disallowed:
+            self._set_final_answer_shape_debug("one_step")
+            return "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
+
+        sanitized = self._strip_optional_followup_invitation(text) or text
+        lowered_sanitized = sanitized.lower()
+        if (
+            len(sanitized.strip()) >= 90
+            and "?" not in sanitized
+            and not _contains_any(lowered_sanitized, _PRACTICE_MARKERS)
+        ):
+            self._set_final_answer_shape_debug("sanitized_direct_no_forced_practice")
+            return sanitized
+
+        self._set_final_answer_shape_debug("sanitized_direct_no_forced_practice")
+        return self._build_no_practice_fallback_text(user_message if user_message.strip() else lowered_user)
+
     def _set_final_answer_shape_debug(self, shape: str) -> None:
         self.last_debug["final_answer_shape"] = str(shape or "compact_direct")
 
@@ -1984,15 +2077,53 @@ class WriterAgent:
         planner_answer_shape = str(response_planner.get("answer_shape", "") or "")
         planner_question_policy = str(response_planner.get("question_policy", "") or "")
         planner_practice_policy = str(response_planner.get("practice_policy", "") or "")
+        user_message = str(getattr(contract, "user_message", "") or "")
+        lowered_user = user_message.lower()
+        dialogue_policy = (
+            dict(contract.dialogue_policy) if isinstance(getattr(contract, "dialogue_policy", None), dict) else {}
+        )
+        final_answer_directive = (
+            dict(dialogue_policy.get("final_answer_directive", {}))
+            if isinstance(dialogue_policy.get("final_answer_directive"), dict)
+            else {}
+        )
+        writer_contact_mode = str(
+            dialogue_policy.get("final_answer_writer_contact_mode")
+            or final_answer_directive.get("writer_contact_mode", "")
+            or ""
+        )
+        latest_turn_constraints = (
+            dict(dialogue_policy.get("latest_turn_constraints_v1", {}))
+            if isinstance(dialogue_policy.get("latest_turn_constraints_v1"), dict)
+            else {}
+        )
+        user_requests_no_practice = _contains_any(
+            lowered_user,
+            (
+                "без практик",
+                "не давай практик",
+                "не хочу практик",
+                "без упражн",
+                "просто объясни",
+            ),
+        )
+        canned_step_disallowed = bool(
+            planner_practice_policy == "forbidden"
+            or bool(latest_turn_constraints.get("no_practice", False))
+            or user_requests_no_practice
+            or writer_contact_mode == "free_writer_contact"
+        )
 
         if planner_next_move == "stabilize_safety" or planner_answer_shape == "safety_grounding":
             return "Я рядом. Сейчас важнее чуть стабилизироваться и снизить внутреннюю перегрузку. Без разбора, только опора здесь-и-сейчас."
         if planner_next_move == "give_short_support" or planner_answer_shape == "short_support":
             return "Я рядом. Сейчас не нужно ничего разбирать. Можно просто немного снизить внутреннее давление."
         if planner_next_move == "give_direct_step" or planner_answer_shape == "one_step":
+            if canned_step_disallowed:
+                return WriterAgent._build_no_practice_fallback_text(user_message)
             return "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
         if planner_next_move == "close_gently" or planner_answer_shape == "gentle_close":
-            return "Пожалуйста. Рад, что стало чуть яснее."
+            return WriterAgent._build_gentle_close_reply()
         if planner_next_move == "clarify_one_point" or planner_answer_shape == "one_question":
             return "Если выбрать один узел прямо сейчас, что больше всего сжимает тебя в этой ситуации?"
         if planner_question_policy == "none":

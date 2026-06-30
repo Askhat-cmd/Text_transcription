@@ -281,6 +281,7 @@ export interface AdaptiveAnswerResponse {
 }
 
 export interface ConversationTurn {
+  turn_number?: number;
   timestamp: string;
   user_input: string;
   user_state?: string;

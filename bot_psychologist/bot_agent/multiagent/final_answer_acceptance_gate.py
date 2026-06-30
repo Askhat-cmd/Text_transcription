@@ -238,6 +238,42 @@ def _is_panic_control_support_question(text: str) -> bool:
     return "паник" in lowered and "контрол" in lowered and "почему" in lowered
 
 
+def _benign_no_stub_only_can_pass(
+    *,
+    user_message: str,
+    final_answer: str,
+    dialogue_act: str,
+    answer_obligation: str,
+) -> bool:
+    answer = str(final_answer or "").strip()
+    if answer_obligation == "close_gently":
+        lowered_answer = _normalize(answer)
+        return (
+            "?" not in answer
+            and 12 <= len(answer) <= 220
+            and not _looks_like_practice_step(answer)
+            and not _contains_any(lowered_answer, _MECHANISM_LECTURE_MARKERS)
+        )
+    if len(answer) < 80:
+        return False
+    if _is_explicit_one_practice_request(user_message):
+        return (
+            _looks_like_practice_step(answer)
+            and _count_list_items(answer) <= 1
+            and "?" not in answer
+            and len(answer) <= 900
+        )
+    if dialogue_act in {"unknown", "contact_open"} or answer_obligation in {"answer_latest_turn", "continue_thread"}:
+        lowered_answer = _normalize(answer)
+        return (
+            "?" not in answer
+            and len(answer) <= 520
+            and not _looks_like_practice_step(answer)
+            and not _contains_any(lowered_answer, _SUMMARY_RECONFIRM_MARKERS)
+        )
+    return False
+
+
 def build_final_answer_acceptance_gate_v1(
     *,
     user_message: str,
@@ -410,6 +446,16 @@ def build_final_answer_acceptance_gate_v1(
     if _contains_any(answer, ("как специалист", "я ии", "я искусственный интеллект")):
         warnings.append("user_facing_role_leak_risk")
 
+    unique_failed_checks = sorted(set(failed_checks))
+    if unique_failed_checks == ["no_stub_repair_signal"] and _benign_no_stub_only_can_pass(
+        user_message=user,
+        final_answer=answer,
+        dialogue_act=dialogue_act,
+        answer_obligation=answer_obligation,
+    ):
+        failed_checks = []
+        warnings.append("benign_no_stub_signal_ignored")
+
     failed_checks = sorted(set(failed_checks))
     warnings = sorted(set(warnings))
     blocker_checks = {
@@ -430,7 +476,7 @@ def build_final_answer_acceptance_gate_v1(
     high = any(check in blocker_checks for check in failed_checks)
     status = "failed" if failed_checks else ("warning" if warnings else "passed")
     severity = "blocker" if high else ("medium" if failed_checks else ("low" if warnings else "none"))
-    can_accept = status == "passed"
+    can_accept = not failed_checks
     can_save_last_assistant_offer = bool(can_accept and not summary_request)
 
     return {

@@ -113,19 +113,23 @@ function historyToMessages(sessionId: string, turns: ConversationTurn[]): Messag
 
   turns.forEach((turn, index) => {
     const turnTime = new Date(turn.timestamp);
+    const turnNumber = turn.turn_number ?? (index + 1);
+    const turnSuffix = turnNumber - 1;
 
     mapped.push({
-      id: `${sessionId}-u-${index}`,
+      id: `${sessionId}-u-${turnSuffix}`,
       role: 'user',
       content: turn.user_input,
       timestamp: turnTime,
+      turnNumber,
     });
 
     mapped.push({
-      id: `${sessionId}-b-${index}`,
+      id: `${sessionId}-b-${turnSuffix}`,
       role: 'bot',
       content: turn.bot_response,
       timestamp: turnTime,
+      turnNumber,
       state: turn.user_state,
       concepts: turn.concepts,
     });

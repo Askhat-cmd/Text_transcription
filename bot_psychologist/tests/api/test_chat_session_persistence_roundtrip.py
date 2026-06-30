@@ -159,6 +159,7 @@ def test_created_session_history_roundtrip(client: TestClient) -> None:
     payload_a_1 = history_a_1.json()
     assert payload_a_1["total_turns"] >= 1
     assert len(payload_a_1["turns"]) >= 1
+    assert payload_a_1["turns"][-1]["turn_number"] == 1
 
     create_b = client.post(
         f"/api/v1/users/{user_id}/sessions",
@@ -186,4 +187,5 @@ def test_created_session_history_roundtrip(client: TestClient) -> None:
     assert history_a_2.status_code == 200
     payload_a_2 = history_a_2.json()
     assert payload_a_2["total_turns"] >= 1
+    assert payload_a_2["turns"][-1]["turn_number"] == 1
     assert payload_a_2["turns"][-1]["user_input"] == "roundtrip question"

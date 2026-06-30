@@ -512,6 +512,66 @@ def test_mvp_free_contact_no_practice_does_not_collapse_into_canned_one_step() -
     assert agent.last_debug.get("final_answer_shape") == "sanitized_direct_no_forced_practice"
 
 
+def test_greeting_gate_feedback_repairs_into_brief_contact_answer() -> None:
+    agent = WriterAgent(client=_FakeClient("ok"), model="gpt-5-mini")
+    contract = _mvp_contract(
+        message="Привет! Как перестать наступать на одни и те же грабли?",
+        dialogue_policy={
+            "answer_obligation_resolution": {
+                "answer_obligation": "continue_thread",
+            },
+        },
+        response_planner={
+            "next_move": "deepen_mechanism",
+            "answer_shape": "mechanism_explanation",
+            "question_policy": "optional_none",
+            "practice_policy": "forbidden",
+        },
+    )
+    contract.final_answer_directive = {
+        "acceptance_gate_feedback": {
+            "failed_checks": ["greeting_answered_with_mechanism_explanation"],
+        }
+    }
+    response_text = (
+        "Главный механизм в том, что автоматический контроль заранее забирает ресурс, "
+        "поэтому ты снова попадаешь в тот же цикл."
+    )
+
+    result = agent._enforce_answer_compliance(response_text, contract)
+
+    assert result.lower().startswith("привет.")
+    assert "автоматический способ справляться" in result.lower()
+    assert "главный механизм" not in result.lower()
+    assert "no_stub_repair_signal" not in agent.last_debug
+    assert agent.last_debug.get("final_answer_shape") == "contact_brief"
+
+
+def test_close_gently_obligation_does_not_reopen_thread() -> None:
+    agent = WriterAgent(client=_FakeClient("ok"), model="gpt-5-mini")
+    contract = _mvp_contract(
+        message="Спасибо, мне пока хватит.",
+        dialogue_policy={
+            "answer_obligation_resolution": {
+                "answer_obligation": "close_gently",
+            },
+        },
+        response_planner={
+            "next_move": "continue_active_line",
+            "answer_shape": "expanded_explanation",
+            "question_policy": "optional_none",
+            "practice_policy": "forbidden",
+        },
+    )
+    response_text = "Пожалуйста. Если хочешь, в следующий раз можем продолжить и разобрать это глубже?"
+
+    result = agent._enforce_answer_compliance(response_text, contract)
+
+    assert result == "Пожалуйста. Береги себя."
+    assert "?" not in result
+    assert agent.last_debug.get("final_answer_shape") == "gentle_close"
+
+
 def test_mvp_preserves_offer_outline_for_later_confirmation_flow() -> None:
     agent = WriterAgent(client=_FakeClient("ok"), model="gpt-5-mini")
     contract = _mvp_contract(

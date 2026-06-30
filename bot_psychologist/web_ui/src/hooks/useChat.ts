@@ -88,13 +88,9 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
   const replaceMessages = useCallback((nextMessages: Message[]) => {
     const normalized = nextMessages.map(normalizeMessage);
 
-    // FIX 3b: Hydration — восстановить трейсы по порядку бот-сообщений
-    let botIndex = 0;
     const hydrated = normalized.map((msg) => {
-      if (msg.role === 'bot') {
-        const cached = getTrace(`turn:${botIndex}`);
-        botIndex++;
-        // Не перезаписывать если trace уже есть в сообщении
+      if (msg.role === 'bot' && msg.turnNumber !== undefined) {
+        const cached = getTrace(`turn:${msg.turnNumber}`);
         if (cached && !msg.trace) {
           return { ...msg, trace: cached };
         }
@@ -116,10 +112,11 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
     if (!query.trim()) return;
 
     const turnIndex = Math.floor(messagesRef.current.length / 2);
+    const turnNumber = turnIndex + 1;
     const userMessageId = sessionId ? `${sessionId}-u-${turnIndex}` : uuidv4();
     const botMessageId = sessionId ? `${sessionId}-b-${turnIndex}` : uuidv4();
 
-    addMessage('user', query, { id: userMessageId });
+    addMessage('user', query, { id: userMessageId, turnNumber });
     setIsLoading(true);
     setIsThinking(true);
     setStreamingText('');
@@ -165,15 +162,15 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
         console.warn('[useChat] finalized without done.answer, using degraded streamed fallback');
       }
       const botTrace = doneMeta?.trace ?? undefined;
-      const botTurnIndex = Math.floor(messagesRef.current.length / 2);  // индекс до добавления сообщения
+      const botTurnNumber = doneMeta?.turn_number ?? turnNumber;
       addMessage('bot', finalText, {
         id: botMessageId,
+        turnNumber: botTurnNumber,
         processingTime: doneMeta?.latency_ms ? doneMeta.latency_ms / 1000 : undefined,
         trace: botTrace,
       });
-      // FIX 3b: сохранить трейс по позиции (не по ID, т.к. ID из БД не совпадают)
       if (botTrace) {
-        setTrace(`turn:${botTurnIndex}`, botTrace);
+        setTrace(`turn:${botTurnNumber}`, botTrace);
       }
       setStreamingText('');
       setIsThinking(false);

@@ -307,6 +307,7 @@ async def get_user_history(
                 sliced_turns = all_turns[-max(1, int(last_n_turns)) :]
                 turns = [
                     ConversationTurnResponse(
+                        turn_number=turn.get("turn_number"),
                         timestamp=turn.get("timestamp", ""),
                         user_input=turn.get("user_input", ""),
                         user_state=turn.get("user_state"),
@@ -346,9 +347,10 @@ async def get_user_history(
         last_turns = memory.get_last_turns(last_n_turns)
 
         turns = []
-        for turn in last_turns:
+        for index, turn in enumerate(last_turns, start=1):
             turns.append(
                 ConversationTurnResponse(
+                    turn_number=index,
                     timestamp=turn.timestamp,
                     user_input=turn.user_input,
                     user_state=turn.user_state,

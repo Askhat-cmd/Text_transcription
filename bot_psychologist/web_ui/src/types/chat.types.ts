@@ -213,6 +213,7 @@ export interface Message {
   role: 'user' | 'bot';
   content: string;
   timestamp: Date;
+  turnNumber?: number;
   state?: string;
   confidence?: number;
   sources?: Source[];

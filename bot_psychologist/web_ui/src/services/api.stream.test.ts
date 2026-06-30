@@ -328,7 +328,7 @@ describe('APIService.streamAdaptiveAnswer', () => {
         buildResponseFromSSE(
           buildSSEStream([
             { dataLines: ['{"token":"answer"}'] },
-            { dataLines: ['{"done":true,"mode":"PRESENCE","latency_ms":123}'] },
+            { dataLines: ['{"done":true,"mode":"PRESENCE","latency_ms":123,"turn_number":7}'] },
             { event: 'trace', dataLines: ['{"recommended_mode":"PRESENCE","turn_number":7}'] },
           ])
         )
@@ -347,6 +347,7 @@ describe('APIService.streamAdaptiveAnswer', () => {
 
     expect(doneMeta?.mode).toBe('PRESENCE');
     expect(doneMeta?.latency_ms).toBe(123);
+    expect(doneMeta?.turn_number).toBe(7);
     expect(doneMeta?.trace?.turn_number).toBe(7);
     expect(doneMeta?.answer).toBe('answer');
   });

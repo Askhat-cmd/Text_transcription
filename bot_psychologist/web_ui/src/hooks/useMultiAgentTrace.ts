@@ -10,7 +10,7 @@ interface UseMultiAgentTraceResult {
   refetch: () => void;
 }
 
-function extractTurnIndex(messageId: string): number | undefined {
+function extractLegacyTurnIndex(messageId: string): number | undefined {
   const match = messageId.match(/-b-(\d+)$/);
   if (!match) {
     return undefined;
@@ -27,6 +27,7 @@ function extractTurnIndex(messageId: string): number | undefined {
 export function useMultiAgentTrace(
   sessionId: string | undefined,
   messageId: string,
+  turnNumber: number | undefined,
   enabled: boolean
 ): UseMultiAgentTraceResult {
   const [trace, setTrace] = useState<MultiAgentTraceData | null>(null);
@@ -34,7 +35,10 @@ export function useMultiAgentTrace(
   const [error, setError] = useState<string | null>(null);
   const requestSeqRef = useRef(0);
 
-  const turnIndex = useMemo(() => extractTurnIndex(messageId), [messageId]);
+  const turnIndex = useMemo(
+    () => turnNumber ?? extractLegacyTurnIndex(messageId),
+    [messageId, turnNumber]
+  );
 
   const fetchTrace = useCallback(async () => {
     if (!sessionId || !enabled) {
@@ -54,6 +58,16 @@ export function useMultiAgentTrace(
         try {
           const data = await apiService.getMultiAgentTrace(sessionId, turnIndex);
           if (requestSeq !== requestSeqRef.current) {
+            return;
+          }
+          if (
+            turnIndex !== undefined &&
+            data.turn_index !== undefined &&
+            data.turn_index !== null &&
+            data.turn_index !== turnIndex
+          ) {
+            setError(`Trace turn mismatch: expected ${turnIndex}, got ${data.turn_index}`);
+            setTrace(null);
             return;
           }
           setTrace(data);

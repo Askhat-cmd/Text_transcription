@@ -532,6 +532,7 @@ class AdaptiveAnswerResponse(BaseModel):
 
 class ConversationTurnResponse(BaseModel):
     """Один ход диалога"""
+    turn_number: Optional[int] = None
     timestamp: str
     user_input: str
     user_state: Optional[str] = None

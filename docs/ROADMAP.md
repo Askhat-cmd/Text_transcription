@@ -1,6 +1,7 @@
 ﻿# Roadmap
 
 ## Done
+- PRD-047.36: completed the owner-pilot readiness gate over `14` fixed scenarios on the canonical current pipeline. Added a read-only scenario runner, delivery/payload/trace evidence reports, targeted tests, no-mutation proof, and owner live exports/prompt canvases. Final authoritative live result is `BLOCKER`: `S8` still violates explicit `no_practice`; `S6/S14` remain honest `source_missing_expected` warnings; and benign-turn acceptance-gate quarantine means saved-memory parity is not fully proven for `S1/S2/S7/S8/S12`.
 - PRD-047.36-HF2: completed retrieval recall audit and source-chunk match proof on the canonical current pipeline. Added `raw_hit_summaries`, `source_chunk_match_trace_v1`, owner/Web trace rendering for source-proof visibility, a read-only A1-A8 audit runner with candidate-path matrix, and a bounded `retrieval_gate_recovery_applied` repair for empty explicit retrieval gates when a policy-allowed near-exact direct-knowledge hit already exists. Live audit repaired `A4/A6`, honestly classified `A1/A2/A3/A7/A8` as `raw_source` missing, and preserved hidden-competence/no-internal-db/latest-turn/safety boundaries without DB/Chroma/source mutation.
 - PRD-047.35: completed product-simplicity calibration for public user mode on the canonical current pipeline. Added `hidden_knowledge_competence_v1` into `writer_context_package.py` and compact runtime trace, treated internal KB/semantic-card evidence as Writer-only hidden competence instead of a user-facing storage topic, tightened Writer prompt/final-directive/legacy-sanitizer wording toward one mechanism plus protective function, preserved latest-turn/direct-source/explicit-practice/no-practice/no-internal-db/safety boundaries, added owner smoke runner/artifacts, and passed live smoke with no internal-language leakage. Warning remains for one panic-helper opening, one overlong deepening answer, and one over-recap close turn.
 - PRD-047.34: completed latest-turn authority repair and free Writer contact-mode calibration on the canonical current pipeline. Added explicit latest-turn authority fields (`current_user_request`, `must_answer_source`, `previous_must_answer_demoted`, `previous_must_answer`, `answer_target`, `writer_contact_mode`) inside `final_answer_directive_v1` and runtime trace, made latest turn the default answer target unless explicit continuation is detected, preserved safety/direct-source/explicit-practice/no-practice/no-internal-db boundaries, repaired Writer prompt placeholder plumbing, blocked canned one-step collapse on free-contact no-practice turns, sanitized legacy advisory micro-step leakage, added owner smoke runner/artifacts, and passed live smoke A-D after backend/frontend restart with only unrelated global test debt still open.
@@ -88,6 +89,7 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
+- PRD-047.36 closed the readiness-check question itself: the current pipeline is not pilot-freeze ready yet. The remaining work is not another broad retrieval/runtime rewrite; it is one narrow HF around explicit no-practice compliance and benign-turn acceptance/persistence alignment.
 - PRD-047.36-HF2 closed the silent direct-match loss class inside the current runtime. The remaining split is now explicit: some owner terms are fixed at runtime (`A4/A6`), while others are honestly source-missing in current runtime top-k (`A1/A2/A3/A7/A8`). The next choice is not another retrieval hack; it is either delivery-integrity cleanup or separate source/DB preparation.
 - PRD-047.35 closed the public-user-mode internal-language leak problem in the current pipeline. Remaining work is not another knowledge-authority mechanism; it is live shape polish and a bounded readiness decision across fixed owner scenarios.
 - PRD-047.34 closed the stale latest-turn authority problem in the current pipeline. Remaining work is no longer answer-target ownership; it is owner-pilot consolidation, residual style polish, and unrelated historical test debt outside this PRD.
@@ -116,8 +118,8 @@
 - No active PRD-047.12 blocker remains; unified dialogue policy v2 is accepted on the current developer-local runtime baseline.
 
 ## Next
-1. Decide whether the next cycle is `PRD-047.36-HF1` delivery-integrity repair or a separate source/DB preparation PRD for the branch-`D` missing-source cases.
-2. Move to `PRD-047.36 - Owner Pilot Readiness Gate / 12 Scenario Freeze v1` only after that decision is explicit.
+1. Execute `PRD-047.36-HF1 - No-Practice Boundary and Benign-Turn Acceptance Alignment`.
+2. Re-run the fixed owner readiness gate after HF1 before claiming owner-pilot freeze readiness.
 3. Keep semantic cards advisory-only until a later PRD proves they help without recurring textbook drift or explicit no-KB conflict.
 4. Keep any broader DB-track mutation, overlay authority expansion, retrieval-ranking rewrite, live metadata apply, runtime activation, or Chroma reindex in a separate explicit governance PRD.
 

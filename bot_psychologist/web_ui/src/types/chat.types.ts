@@ -155,6 +155,19 @@ export interface SessionDashboardTrace {
   validator_blocks: number;
 }
 
+export interface TraceAvailability {
+  status: string;
+  requested_turn_index?: number | null;
+  resolved_turn_index?: number | null;
+  exact_turn_match?: boolean | null;
+  reason_code?: string | null;
+  reason?: string | null;
+  resolved_session_id?: string | null;
+  searched_trace_keys?: string[];
+  available_trace_keys?: string[];
+  available_turn_indices?: number[];
+}
+
 export interface MultiAgentTraceData {
   session_id: string;
   turn_index?: number | null;
@@ -206,6 +219,7 @@ export interface MultiAgentTraceData {
   runtime_trace_summary_v1?: Record<string, unknown> | null;
   runtime_truth_trace_v1?: Record<string, unknown> | null;
   live_turn_evidence?: Record<string, unknown> | null;
+  trace_availability?: TraceAvailability | null;
 }
 
 export interface Message {

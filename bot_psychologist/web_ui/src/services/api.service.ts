@@ -20,7 +20,23 @@ import type {
   DeleteSessionResponse,
   ResetSessionResponse,
 } from '../types/api.types';
-import type { InlineTrace, MultiAgentTraceData } from '../types';
+import type { InlineTrace, MultiAgentTraceData, TraceAvailability } from '../types';
+
+interface TraceUnavailablePayload {
+  detail?: string;
+  session_id?: string;
+  trace_availability?: TraceAvailability;
+}
+
+export class TraceUnavailableError extends Error {
+  availability: TraceAvailability | null;
+
+  constructor(message: string, availability?: TraceAvailability | null) {
+    super(message);
+    this.name = 'TraceUnavailableError';
+    this.availability = availability ?? null;
+  }
+}
 
 class APIService {
   private api: AxiosInstance;
@@ -450,6 +466,15 @@ class APIService {
       });
       return response.data;
     } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const payload = error.response?.data as TraceUnavailablePayload | undefined;
+        if (error.response?.status === 404 && payload?.trace_availability) {
+          throw new TraceUnavailableError(
+            payload.detail || 'Trace unavailable',
+            payload.trace_availability
+          );
+        }
+      }
       throw this.handleError(error);
     }
   }

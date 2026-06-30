@@ -170,6 +170,19 @@ class SessionStore:
             payload = session_debug.get(normalized_turn)
             return dict(payload) if isinstance(payload, dict) else None
 
+    def get_multiagent_debug_turn_indices(self, session_id: str) -> List[int]:
+        if not session_id:
+            return []
+        with self._lock:
+            session_debug = self._multiagent_debug.get(session_id)
+            if not session_debug:
+                return []
+            return sorted(
+                int(turn)
+                for turn in session_debug.keys()
+                if not isinstance(turn, bool)
+            )
+
     def get_latest_multiagent_debug(self, session_id: str) -> Optional[Dict[str, Any]]:
         if not session_id:
             return None
@@ -192,6 +205,7 @@ class SessionStore:
         *,
         candidate_session_ids: Optional[List[str]] = None,
         turn_index: Optional[int] = None,
+        include_all_keys: bool = False,
     ) -> Optional[tuple[str, Dict[str, Any]]]:
         normalized_candidates: List[str] = []
         seen: set[str] = set()
@@ -213,7 +227,12 @@ class SessionStore:
 
         with self._lock:
             all_keys = list(self._multiagent_debug.keys())
-            search_order = normalized_candidates + [key for key in all_keys if key not in seen]
+            if normalized_candidates:
+                search_order = list(normalized_candidates)
+                if include_all_keys:
+                    search_order.extend(key for key in all_keys if key not in seen)
+            else:
+                search_order = all_keys
 
             for session_id in search_order:
                 session_debug = self._multiagent_debug.get(session_id)

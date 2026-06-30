@@ -1,6 +1,7 @@
 ﻿# Roadmap
 
 ## Done
+- PRD-047.36-HF3: completed narrow trace-availability / reload-hydration observability repair on the canonical current pipeline. Removed silent latest-trace fallback for explicit `turn_index` lookup, made in-memory debug lookup candidate-scoped instead of drifting across unrelated session keys, added structured `trace_availability` metadata to the debug endpoint, surfaced that state in owner/dev Web Chat as an explicit unavailable notice under assistant turns, added targeted backend/API/UI tests plus a live smoke runner, and preserved Writer/retrieval/DB/Chroma/source/SSE behavior unchanged.
 - PRD-047.36-HF1: completed narrow no-practice boundary + benign-turn acceptance + chat turn-identity repair on the canonical current pipeline. Removed forced one-step fallback when latest-turn no-practice/contact constraints forbid it, calibrated `final_answer_acceptance_gate_v1` so benign `no_stub_repair_signal` warnings remain savable when no real failed checks remain, threaded explicit `turn_number` through SSE/API/history/frontend state, bound Web trace/canvas lookup to stable turn identity, added targeted backend/API/UI tests, and preserved retry/quarantine behavior for real failed answers without adding a new runtime path or any DB/Chroma/source mutation.
 - PRD-047.36: completed the owner-pilot readiness gate over `14` fixed scenarios on the canonical current pipeline. Added a read-only scenario runner, delivery/payload/trace evidence reports, targeted tests, no-mutation proof, and owner live exports/prompt canvases. Final authoritative live result is `BLOCKER`: `S8` still violates explicit `no_practice`; `S6/S14` remain honest `source_missing_expected` warnings; and benign-turn acceptance-gate quarantine means saved-memory parity is not fully proven for `S1/S2/S7/S8/S12`.
 - PRD-047.36-HF2: completed retrieval recall audit and source-chunk match proof on the canonical current pipeline. Added `raw_hit_summaries`, `source_chunk_match_trace_v1`, owner/Web trace rendering for source-proof visibility, a read-only A1-A8 audit runner with candidate-path matrix, and a bounded `retrieval_gate_recovery_applied` repair for empty explicit retrieval gates when a policy-allowed near-exact direct-knowledge hit already exists. Live audit repaired `A4/A6`, honestly classified `A1/A2/A3/A7/A8` as `raw_source` missing, and preserved hidden-competence/no-internal-db/latest-turn/safety boundaries without DB/Chroma/source mutation.
@@ -90,6 +91,7 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
+- PRD-047.36-HF3 closed the silent trace-disappearance class after reload. Remaining readiness work is no longer exact-trace observability; it is rerunning the owner freeze against the repaired pipeline and honestly classifying any remaining behavior blockers.
 - PRD-047.36-HF1 closed the proven S8 blocker class and the benign-turn delivery/history mismatch inside the current runtime. The next work is not another narrow hotfix by default; it is rerunning the owner readiness freeze on the repaired pipeline to measure whether the remaining blocker set has actually collapsed.
 - PRD-047.36 closed the readiness-check question itself: the current pipeline is not pilot-freeze ready yet. The remaining work is not another broad retrieval/runtime rewrite; it is one narrow HF around explicit no-practice compliance and benign-turn acceptance/persistence alignment.
 - PRD-047.36-HF2 closed the silent direct-match loss class inside the current runtime. The remaining split is now explicit: some owner terms are fixed at runtime (`A4/A6`), while others are honestly source-missing in current runtime top-k (`A1/A2/A3/A7/A8`). The next choice is not another retrieval hack; it is either delivery-integrity cleanup or separate source/DB preparation.
@@ -120,8 +122,8 @@
 - No active PRD-047.12 blocker remains; unified dialogue policy v2 is accepted on the current developer-local runtime baseline.
 
 ## Next
-1. Execute `PRD-047.36-HF1 - No-Practice Boundary and Benign-Turn Acceptance Alignment`.
-2. Re-run the fixed owner readiness gate after HF1 before claiming owner-pilot freeze readiness.
+1. Re-run `PRD-047.36 - Owner Pilot Readiness Gate / 12 Scenario Freeze v1` on top of HF1 + HF2 + HF3 before claiming owner-pilot freeze readiness.
+2. If the rerun still blocks, classify the next step from fresh evidence instead of adding another speculative runtime layer.
 3. Keep semantic cards advisory-only until a later PRD proves they help without recurring textbook drift or explicit no-KB conflict.
 4. Keep any broader DB-track mutation, overlay authority expansion, retrieval-ranking rewrite, live metadata apply, runtime activation, or Chroma reindex in a separate explicit governance PRD.
 

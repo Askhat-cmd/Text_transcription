@@ -1,5 +1,24 @@
 # Architecture Decisions
 
+## ADR-092 - Exact trace lookup must stay candidate-scoped and missing trace must be explicit in owner/dev mode
+
+Status: accepted
+
+Date: 2026-06-30
+
+Context: PRD-047.36-HF1 fixed wrong trace-to-bubble binding by threading explicit `turn_number`, but owner Chat 11 evidence showed a residual observability defect: after reload, some delivered assistant turns still had no visible trace/canvas. Audit showed two unsafe behaviors in the debug path: explicit `turn_index` lookup could silently fall back to latest trace, and store lookup could search beyond the requested candidate session keys. Frontend then suppressed the mismatch, leaving a silent missing-state.
+
+Decision:
+- keep the canonical runtime path unchanged (`multiagent_adapter`);
+- keep exact trace lookup candidate-scoped to the requested session identity set;
+- do not silently fall back to latest trace when `turn_index` is explicitly requested;
+- add structured `trace_availability` metadata to the debug trace contract for both `available` and `unavailable` states;
+- preserve owner/dev visibility by rendering an explicit unavailable-state under assistant turns when exact trace cannot be recovered;
+- keep normal public mode free of this debug noise;
+- do not change Writer behavior, retrieval ranking, DB/Chroma/source content, semantic cards, SSE protocol, or safety policy in this PRD.
+
+Consequences: owner/debug reload behavior is now honest: every delivered assistant turn either resolves its exact trace or shows a structured unavailable reason with available turn indices. This closes the silent trace disappearance class without adding a new runtime path or mutating answer behavior.
+
 ## ADR-091 - Benign warning answers remain acceptable if no real failed checks remain, and chat trace must bind by explicit turn identity
 
 Status: accepted

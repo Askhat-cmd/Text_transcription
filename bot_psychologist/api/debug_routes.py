@@ -14,6 +14,7 @@ from .models import (
     SemanticHitTrace,
     SessionDashboard,
     StateAnalyzerTrace,
+    TraceAvailability,
     ThreadManagerTrace,
     TurnDiffTrace,
     ValidatorTrace,
@@ -189,6 +190,41 @@ def _collect_trace_lookup_keys(session_id: str, store: SessionStore) -> List[str
         _push(trace.get("request_user_id"))
 
     return keys
+
+
+def _collect_available_turn_indices(store: SessionStore, session_ids: List[str]) -> List[int]:
+    turn_indices: set[int] = set()
+    for session_id in session_ids:
+        for turn_index in store.get_multiagent_debug_turn_indices(session_id):
+            turn_indices.add(int(turn_index))
+    return sorted(turn_indices)
+
+
+def _build_trace_availability(
+    *,
+    status: str,
+    requested_turn_index: Optional[int],
+    resolved_turn_index: Optional[int],
+    exact_turn_match: Optional[bool],
+    reason_code: Optional[str],
+    reason: Optional[str],
+    resolved_session_id: Optional[str],
+    searched_trace_keys: List[str],
+    available_trace_keys: List[str],
+    available_turn_indices: List[int],
+) -> TraceAvailability:
+    return TraceAvailability(
+        status=status,
+        requested_turn_index=requested_turn_index,
+        resolved_turn_index=resolved_turn_index,
+        exact_turn_match=exact_turn_match,
+        reason_code=reason_code,
+        reason=reason,
+        resolved_session_id=resolved_session_id,
+        searched_trace_keys=searched_trace_keys,
+        available_trace_keys=available_trace_keys,
+        available_turn_indices=available_turn_indices,
+    )
 
 
 def _compact_trace_payload(raw_trace: Dict[str, Any]) -> Dict[str, Any]:
@@ -407,32 +443,53 @@ async def get_multiagent_trace(
     resolved_debug = store.find_multiagent_debug(
         candidate_session_ids=lookup_keys,
         turn_index=turn_index,
+        include_all_keys=False,
     )
     resolved_session_id = session_id
     debug: Optional[Dict[str, Any]] = None
     if resolved_debug is not None:
         resolved_session_id, debug = resolved_debug
 
-    # If requested turn is missing (for example stale frontend index), fall back
-    # to latest available trace instead of a noisy 404.
-    if debug is None and turn_index is not None:
-        fallback_debug = store.find_multiagent_debug(
-            candidate_session_ids=lookup_keys,
-            turn_index=None,
-        )
-        if fallback_debug is not None:
-            resolved_session_id, debug = fallback_debug
-
+    available_keys = sorted(store.get_multiagent_debug_keys())
+    available_turn_indices = _collect_available_turn_indices(store=store, session_ids=lookup_keys)
     if not debug:
-        available_keys = sorted(store.get_multiagent_debug_keys())
+        detail = (
+            "No multiagent trace found for requested turn"
+            if turn_index is not None
+            else "No multiagent trace found for session"
+        )
+        reason_code = (
+            "requested_turn_missing"
+            if turn_index is not None
+            else "session_trace_missing"
+        )
+        reason = (
+            f"Exact trace for turn {turn_index} is unavailable for this session scope"
+            if turn_index is not None
+            else "No trace payload is available for this session scope"
+        )
+        trace_availability = _build_trace_availability(
+            status="unavailable",
+            requested_turn_index=turn_index,
+            resolved_turn_index=None,
+            exact_turn_match=False if turn_index is not None else None,
+            reason_code=reason_code,
+            reason=reason,
+            resolved_session_id=None,
+            searched_trace_keys=lookup_keys,
+            available_trace_keys=available_keys[:20],
+            available_turn_indices=available_turn_indices,
+        )
         return JSONResponse(
             status_code=status.HTTP_404_NOT_FOUND,
             content={
-                "detail": "No multiagent trace found for session",
+                "detail": detail,
                 "session_id": session_id,
                 "hint": "Trace may be stored under user_id or conversation_id key",
                 "searched_trace_keys": lookup_keys,
                 "available_trace_keys": available_keys[:20],
+                "available_turn_indices": available_turn_indices,
+                "trace_availability": trace_availability.model_dump(),
             },
         )
 
@@ -955,6 +1012,25 @@ async def get_multiagent_trace(
             debug.get("live_turn_evidence")
             if isinstance(debug.get("live_turn_evidence"), dict)
             else None
+        ),
+        trace_availability=_build_trace_availability(
+            status="available",
+            requested_turn_index=turn_index,
+            resolved_turn_index=resolved_turn_index,
+            exact_turn_match=(
+                turn_index == resolved_turn_index
+                if turn_index is not None and resolved_turn_index is not None
+                else None
+            ),
+            reason_code=None,
+            reason=None,
+            resolved_session_id=resolved_session_id,
+            searched_trace_keys=lookup_keys,
+            available_trace_keys=available_keys[:20],
+            available_turn_indices=_collect_available_turn_indices(
+                store=store,
+                session_ids=[resolved_session_id],
+            ),
         ),
     )
 

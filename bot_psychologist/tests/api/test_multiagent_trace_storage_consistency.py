@@ -148,6 +148,8 @@ def test_multiagent_trace_endpoint_consistent_with_adaptive_response(client: Tes
     assert trace_payload["writer_llm"]["api_mode"] == "responses"
     assert trace_payload["quality_trace_version"] == "quality_trace_v1"
     assert trace_payload["quality_trace"]["summary_flags"] == ["generic_phrase_risk"]
+    assert trace_payload["trace_availability"]["status"] == "available"
+    assert trace_payload["trace_availability"]["resolved_turn_index"] == 1
 
     traces_response = client.get(
         f"/api/debug/session/{session_id}/traces",
@@ -160,7 +162,7 @@ def test_multiagent_trace_endpoint_consistent_with_adaptive_response(client: Tes
     assert traces_payload["traces"][-1]["quality_trace"]["summary_flags"] == ["generic_phrase_risk"]
 
 
-def test_multiagent_trace_endpoint_falls_back_to_latest_when_turn_missing(client: TestClient) -> None:
+def test_multiagent_trace_endpoint_returns_structured_unavailable_when_turn_missing(client: TestClient) -> None:
     session_id = "trace-session-002"
     response = client.post(
         "/api/v1/questions/adaptive",
@@ -173,10 +175,13 @@ def test_multiagent_trace_endpoint_falls_back_to_latest_when_turn_missing(client
         f"/api/debug/session/{session_id}/multiagent-trace?turn_index=999",
         headers=DEV_HEADERS,
     )
-    assert trace_response.status_code == 200
+    assert trace_response.status_code == 404
     trace_payload = trace_response.json()
-    assert trace_payload["pipeline_version"] == "multiagent_v1"
-    assert trace_payload["turn_index"] == 1
+    assert trace_payload["detail"] == "No multiagent trace found for requested turn"
+    assert trace_payload["available_turn_indices"] == [1]
+    assert trace_payload["trace_availability"]["status"] == "unavailable"
+    assert trace_payload["trace_availability"]["reason_code"] == "requested_turn_missing"
+    assert trace_payload["trace_availability"]["requested_turn_index"] == 999
 
 
 def test_multiagent_trace_endpoint_returns_diagnostic_payload_when_missing(client: TestClient) -> None:
@@ -190,3 +195,22 @@ def test_multiagent_trace_endpoint_returns_diagnostic_payload_when_missing(clien
     assert payload["session_id"] == "unknown-session"
     assert isinstance(payload.get("available_trace_keys"), list)
     assert isinstance(payload.get("searched_trace_keys"), list)
+
+
+def test_multiagent_trace_endpoint_does_not_leak_other_session_latest_trace(client: TestClient) -> None:
+    response = client.post(
+        "/api/v1/questions/adaptive",
+        headers=DEV_HEADERS,
+        json={"query": "turn", "session_id": "known-session", "debug": True},
+    )
+    assert response.status_code == 200
+
+    trace_response = client.get(
+        "/api/debug/session/unknown-session/multiagent-trace",
+        headers=DEV_HEADERS,
+    )
+    assert trace_response.status_code == 404
+    payload = trace_response.json()
+    assert payload["session_id"] == "unknown-session"
+    assert payload["detail"] == "No multiagent trace found for session"
+    assert payload["trace_availability"]["status"] == "unavailable"

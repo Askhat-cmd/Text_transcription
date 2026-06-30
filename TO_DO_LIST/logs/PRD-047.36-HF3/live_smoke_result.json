@@ -1,0 +1,65 @@
+{
+  "verdict": "PASS",
+  "warnings": [],
+  "session_id": "prd-047-36-hf3-d93bf2b4",
+  "asked_query": "Мне просто тревожно и хочется спокойно разобрать это по шагам.",
+  "backend_health_status": 200,
+  "backend_health_payload": {
+    "status": "healthy",
+    "version": "0.6.1",
+    "timestamp": "2026-06-30T16:35:15.513538",
+    "data_source": "api",
+    "blocks_loaded": 247,
+    "bot_data_base_api": "available",
+    "modules": {
+      "bot_agent": true,
+      "conversation_memory": true,
+      "state_classifier": true,
+      "path_builder": true,
+      "api": true
+    }
+  },
+  "frontend_status": 200,
+  "adaptive_status": 200,
+  "adaptive_answer_preview": "Понимаю — когда тревожно, хочется именно спокойного и понятного разбора. Это нормально и важно, что вы это чувствуете и хотите понять ситуацию шаг за шагом.\n\nОдин главный механизм, который сейчас работает — мозг усиливает сигнал угрозы (катастрофизация или фокус на опасном вариан",
+  "exact_trace_status": 200,
+  "exact_trace_availability": {
+    "status": "available",
+    "requested_turn_index": 1,
+    "resolved_turn_index": 1,
+    "exact_turn_match": true,
+    "reason_code": null,
+    "reason": null,
+    "resolved_session_id": "prd-047-36-hf3-d93bf2b4",
+    "searched_trace_keys": [
+      "prd-047-36-hf3-d93bf2b4"
+    ],
+    "available_trace_keys": [
+      "prd-047-36-hf3-d93bf2b4"
+    ],
+    "available_turn_indices": [
+      1
+    ]
+  },
+  "exact_trace_turn_index": 1,
+  "missing_trace_status": 404,
+  "missing_trace_availability": {
+    "status": "unavailable",
+    "requested_turn_index": 999,
+    "resolved_turn_index": null,
+    "exact_turn_match": false,
+    "reason_code": "requested_turn_missing",
+    "reason": "Exact trace for turn 999 is unavailable for this session scope",
+    "resolved_session_id": null,
+    "searched_trace_keys": [
+      "prd-047-36-hf3-d93bf2b4"
+    ],
+    "available_trace_keys": [
+      "prd-047-36-hf3-d93bf2b4"
+    ],
+    "available_turn_indices": [
+      1
+    ]
+  },
+  "missing_trace_detail": "No multiagent trace found for requested turn"
+}

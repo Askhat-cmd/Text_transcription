@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { apiService } from '../services/api.service';
-import type { MultiAgentTraceData } from '../types';
+import { apiService, TraceUnavailableError } from '../services/api.service';
+import type { MultiAgentTraceData, TraceAvailability } from '../types';
 
 interface UseMultiAgentTraceResult {
   trace: MultiAgentTraceData | null;
+  availability: TraceAvailability | null;
   isLoading: boolean;
   error: string | null;
   refetch: () => void;
@@ -31,6 +32,7 @@ export function useMultiAgentTrace(
   enabled: boolean
 ): UseMultiAgentTraceResult {
   const [trace, setTrace] = useState<MultiAgentTraceData | null>(null);
+  const [availability, setAvailability] = useState<TraceAvailability | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const requestSeqRef = useRef(0);
@@ -43,6 +45,7 @@ export function useMultiAgentTrace(
   const fetchTrace = useCallback(async () => {
     if (!sessionId || !enabled) {
       setTrace(null);
+      setAvailability(null);
       setError(null);
       return;
     }
@@ -66,14 +69,44 @@ export function useMultiAgentTrace(
             data.turn_index !== null &&
             data.turn_index !== turnIndex
           ) {
+            setAvailability({
+              status: 'unavailable',
+              requested_turn_index: turnIndex,
+              resolved_turn_index: data.turn_index,
+              exact_turn_match: false,
+              reason_code: 'turn_mismatch',
+              reason: `Expected trace for turn ${turnIndex}, got turn ${data.turn_index}`,
+              resolved_session_id: data.session_id,
+              available_turn_indices: data.trace_availability?.available_turn_indices ?? [],
+            });
             setError(`Trace turn mismatch: expected ${turnIndex}, got ${data.turn_index}`);
             setTrace(null);
             return;
           }
           setTrace(data);
+          setAvailability(data.trace_availability ?? null);
           setError(null);
           return;
         } catch (err) {
+          if (err instanceof TraceUnavailableError) {
+            const canRetry =
+              err.availability?.status === 'unavailable' &&
+              attempt < maxAttempts;
+
+            if (canRetry) {
+              await new Promise((resolve) => {
+                window.setTimeout(resolve, retryDelayMs);
+              });
+              continue;
+            }
+            if (requestSeq !== requestSeqRef.current) {
+              return;
+            }
+            setAvailability(err.availability);
+            setError(err.message);
+            setTrace(null);
+            return;
+          }
           const message = err instanceof Error ? err.message : 'Trace unavailable';
           const isNotFound = /not found/i.test(message);
           const canRetry = isNotFound && attempt < maxAttempts;
@@ -87,8 +120,9 @@ export function useMultiAgentTrace(
           if (requestSeq !== requestSeqRef.current) {
             return;
           }
+          setAvailability(null);
           setError(message);
-          setTrace((prev) => (isNotFound && prev ? prev : null));
+          setTrace(null);
           return;
         }
       }
@@ -97,6 +131,7 @@ export function useMultiAgentTrace(
       if (requestSeq !== requestSeqRef.current) {
         return;
       }
+      setAvailability(null);
       setError(message);
       setTrace(null);
     } finally {
@@ -112,6 +147,7 @@ export function useMultiAgentTrace(
 
   return {
     trace,
+    availability,
     isLoading,
     error,
     refetch: () => {

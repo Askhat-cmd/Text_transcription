@@ -443,6 +443,19 @@ class SessionDashboard(BaseModel):
     validator_blocks: int = 0
 
 
+class TraceAvailability(BaseModel):
+    status: str
+    requested_turn_index: Optional[int] = None
+    resolved_turn_index: Optional[int] = None
+    exact_turn_match: Optional[bool] = None
+    reason_code: Optional[str] = None
+    reason: Optional[str] = None
+    resolved_session_id: Optional[str] = None
+    searched_trace_keys: List[str] = Field(default_factory=list)
+    available_trace_keys: List[str] = Field(default_factory=list)
+    available_turn_indices: List[int] = Field(default_factory=list)
+
+
 class MultiAgentTraceResponse(BaseModel):
     session_id: str
     turn_index: Optional[int] = None
@@ -508,6 +521,7 @@ class MultiAgentTraceResponse(BaseModel):
     runtime_trace_summary_v1: Optional[Dict[str, Any]] = None
     runtime_truth_trace_v1: Optional[Dict[str, Any]] = None
     live_turn_evidence: Optional[Dict[str, Any]] = None
+    trace_availability: Optional[TraceAvailability] = None
 
 
 class AdaptiveAnswerResponse(BaseModel):

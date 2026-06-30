@@ -49,6 +49,7 @@ export type {
   TurnDiffTrace,
   AnomalyItem,
   SessionDashboardTrace,
+  TraceAvailability,
   MultiAgentTraceData,
   ChatState,
   UserSettings,

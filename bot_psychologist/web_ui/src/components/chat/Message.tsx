@@ -17,12 +17,41 @@ import clsx from 'clsx';
 
 // Import standalone insight components
 import { MultiAgentTraceWidget } from './MultiAgentTraceWidget';
+import type { TraceAvailability } from '../../types';
 
 interface MessageItemProps {
   message: Message;
   sessionId?: string;
   compactMode?: boolean;
 }
+
+const TraceUnavailableNotice: React.FC<{
+  availability: TraceAvailability | null;
+  error: string | null;
+}> = ({ availability, error }) => {
+  const requestedTurn = availability?.requested_turn_index;
+  const availableTurns = availability?.available_turn_indices ?? [];
+
+  return (
+    <div className="mt-3 rounded-xl border border-amber-300 bg-amber-50 px-3 py-2 text-xs text-amber-900">
+      <div className="font-semibold">Trace unavailable</div>
+      <div className="mt-1">
+        {availability?.reason || error || 'No trace payload was found for this assistant turn.'}
+      </div>
+      <div className="mt-2 flex flex-wrap gap-3 text-[11px] text-amber-800">
+        {requestedTurn !== undefined && requestedTurn !== null && (
+          <span>requested turn: {requestedTurn}</span>
+        )}
+        {availableTurns.length > 0 && (
+          <span>available turns: {availableTurns.join(', ')}</span>
+        )}
+        {availability?.reason_code && (
+          <span>reason: {availability.reason_code}</span>
+        )}
+      </div>
+    </div>
+  );
+};
 
 export const MessageItem: React.FC<MessageItemProps> = ({
   message,
@@ -42,13 +71,24 @@ export const MessageItem: React.FC<MessageItemProps> = ({
       isDevMode &&
       (isMultiagentTraceCandidate || hasBotTurnPattern)
   );
-  const { trace: multiagentTrace, isLoading: multiagentTraceLoading } = useMultiAgentTrace(
+  const {
+    trace: multiagentTrace,
+    availability: multiagentTraceAvailability,
+    isLoading: multiagentTraceLoading,
+    error: multiagentTraceError,
+  } = useMultiAgentTrace(
     sessionId,
     message.id,
     message.turnNumber,
     shouldLoadMultiagentTrace
   );
   const showMultiagentTrace = Boolean(shouldLoadMultiagentTrace && (multiagentTrace || multiagentTraceLoading));
+  const showTraceUnavailable = Boolean(
+    shouldLoadMultiagentTrace &&
+      !multiagentTrace &&
+      !multiagentTraceLoading &&
+      multiagentTraceAvailability?.status === 'unavailable'
+  );
 
   return (
     <div className="flex justify-start">
@@ -74,6 +114,12 @@ export const MessageItem: React.FC<MessageItemProps> = ({
           <>
             {showMultiagentTrace && (
               <MultiAgentTraceWidget trace={multiagentTrace} isLoading={multiagentTraceLoading} />
+            )}
+            {showTraceUnavailable && (
+              <TraceUnavailableNotice
+                availability={multiagentTraceAvailability}
+                error={multiagentTraceError}
+              />
             )}
 
             {/* Processing Time */}

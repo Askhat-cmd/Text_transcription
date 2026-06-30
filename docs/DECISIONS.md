@@ -1,5 +1,28 @@
 # Architecture Decisions
 
+## ADR-091 - Benign warning answers remain acceptable if no real failed checks remain, and chat trace must bind by explicit turn identity
+
+Status: accepted
+
+Date: 2026-06-30
+
+Context: PRD-047.36 proved two coupled defects in the current pipeline: explicit `no_practice` turns could still collapse into a canned one-step answer, and even visibly acceptable benign turns could disappear from saved memory/history because `final_answer_acceptance_gate_v1` treated any `no_stub_repair_signal` warning as unsavable. Owner Web Chat evidence also showed trace/canvas mismatch after reload because frontend lookup still relied on fragile message-index inference.
+
+Decision:
+- keep the canonical runtime path unchanged (`multiagent_adapter`);
+- preserve strict quarantine for real failed answers, but treat warning-only answers as acceptable when `failed_checks` is empty;
+- add one narrow benign-warning calibration only for `no_stub_repair_signal` when the visible answer is already a bounded acceptable user-facing reply;
+- keep no-practice repair inside the existing Writer compliance layer by removing forced canned one-step fallback on latest-turn no-practice/contact turns;
+- thread explicit `turn_number` through:
+  - SSE done payload
+  - debug trace payload
+  - history API response
+  - frontend chat message state
+  - trace-cache keys and trace lookup
+- reject mismatched trace turns in the frontend instead of silently showing another turn's canvas.
+
+Consequences: benign answers that are already acceptable no longer break saved-memory parity just because a retry signal exists, while real failed answers still quarantine. Web Chat trace/canvas/history now bind to explicit turn identity instead of positional reconstruction, reducing reload drift without adding a new runtime path, agent, retrieval policy, or DB/Chroma/source mutation.
+
 ## ADR-090 - Source-loss proof is mandatory for direct knowledge turns; empty explicit gates may recover only existing near-exact policy-allowed hits
 
 Status: accepted

@@ -617,19 +617,27 @@ def _build_source_chunk_match_trace_v1(
     best_runtime_match = _best_match_snapshot(runtime_snapshots)
     payload_match = _best_match_snapshot(payload_snapshots)
 
+    raw_near_exact = bool(best_raw_match.get("near_exact_match", False))
+    runtime_near_exact = bool(best_runtime_match.get("near_exact_match", False))
+    payload_near_exact = bool(payload_match.get("near_exact_match", False))
+    payload_sent_to_writer = bool(payload_match.get("sent_to_writer", False))
+
     if no_internal_db:
         loss_stage = "gate"
         loss_reason = "latest_turn_no_internal_db"
     elif not explicit_knowledge_question:
         loss_stage = "unknown"
         loss_reason = "not_an_explicit_knowledge_question"
-    elif not raw_snapshots or not best_raw_match.get("near_exact_match", False):
+    elif payload_near_exact and payload_sent_to_writer and runtime_near_exact and not raw_near_exact:
+        loss_stage = "recovered_without_raw_source_match"
+        loss_reason = "payload_recovered_from_runtime_candidate_without_raw_source_top_k_match"
+    elif not raw_snapshots or not raw_near_exact:
         loss_stage = "raw_source"
         loss_reason = "no_raw_source_match_in_runtime_top_k"
-    elif not runtime_snapshots or not best_runtime_match.get("near_exact_match", False):
+    elif not runtime_snapshots or not runtime_near_exact:
         loss_stage = "runtime_retrieval"
         loss_reason = "raw_match_not_preserved_in_runtime_candidates"
-    elif not payload_match.get("near_exact_match", False):
+    elif not payload_near_exact:
         loss_stage = "gate"
         loss_reason = str(best_runtime_match.get("filter_reason", "") or "runtime_match_not_sent_to_writer")
     else:

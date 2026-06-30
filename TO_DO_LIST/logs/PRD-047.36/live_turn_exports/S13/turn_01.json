@@ -1,0 +1,3613 @@
+{
+  "turn_number": null,
+  "live_turn_evidence": {
+    "version": "live_turn_evidence_v1",
+    "created_at_utc": "2026-06-30T07:44:46.131470+00:00",
+    "turn_identity": {
+      "user_id": "prd-047-36-s13-76cf2db4",
+      "session_id": "prd-047-36-s13-76cf2db4",
+      "turn_index": null
+    },
+    "input": {
+      "query": "Как разработчик, объясни, какие материалы ты использовал для ответа и что дошло до Writer?",
+      "query_chars": 90
+    },
+    "state_thread": {
+      "nervous_state": "window",
+      "intent": "explore",
+      "safety_flag": false,
+      "thread_id": "tm_1fbb2a0b332f",
+      "phase": "clarify",
+      "relation_to_thread": "new_thread",
+      "response_mode": "reflect"
+    },
+    "dialogue": {
+      "policy": {
+        "version": "unified_dialogue_policy_v2",
+        "profile": "mvp_free_dialogue",
+        "active_profile_alias": "mvp_free_dialogue",
+        "profile_preset": "free_dialogue_default",
+        "authority_order": [
+          "minimal_safety_baseline",
+          "explicit_user_request",
+          "knowledge_or_concept_need",
+          "writer_freedom",
+          "planner_and_diagnostic_advisory"
+        ],
+        "minimal_safety_baseline": true,
+        "effective_writer_autonomy": "high",
+        "writer_autonomy": "high",
+        "effective_safety_floor": "minimal_baseline",
+        "planner_authority": "advisory",
+        "diagnostic_card_authority": "advisory",
+        "writer_move_authority": "advisory",
+        "active_line_authority": "advisory",
+        "knowledge_answer_priority": "normal",
+        "user_explicit_request_priority": "highest_after_safety",
+        "answer_depth": "medium",
+        "allow_numbered_lists": false,
+        "allow_examples": false,
+        "allow_practice_catalog": false,
+        "allow_multi_step_overview": false,
+        "human_like_answer_policy": {
+          "enabled": true,
+          "answer_style": "human_chatgpt_like",
+          "default_depth": "short_to_medium",
+          "allow_long_answers": false,
+          "allow_lists": false,
+          "allow_examples": false,
+          "allow_direct_answer": true,
+          "allow_reflection_plus_explanation_plus_step": false,
+          "allow_multiple_options": false,
+          "question_is_optional": true,
+          "micro_step_only_when_user_explicitly_requests_one_step": true,
+          "do_not_force_question_at_end": true,
+          "do_not_force_practice_frame": true,
+          "do_not_force_max_sentences": true,
+          "respect_user_requested_format": true,
+          "sarcasm_and_dissatisfaction_repair": true,
+          "direct_answer_repair_when_user_complains": true,
+          "support_answer_compactness": "ordinary_support_compact",
+          "preferred_shape": "one_main_point_one_optional_next_step",
+          "target_length_chars": "450_1100",
+          "avoid_mechanism_heavy_default": true,
+          "prefer_direct_answer_first": true,
+          "prefer_single_main_mechanism": true,
+          "max_list_items": 3
+        },
+        "constraint_resolution": {
+          "profile": "mvp_free_dialogue",
+          "planner_authority": "advisory",
+          "overruled_constraints": [],
+          "overrule_reason": "none"
+        },
+        "must_not_force_one_step": false,
+        "context_budget_chars": 7000,
+        "semantic_hits_budget": {
+          "max_hits": 4,
+          "max_chars_per_hit": 900
+        },
+        "expansion_requested": false,
+        "repair_and_expand_requested": false,
+        "explicit_short_support_requested": false,
+        "explicit_one_step_requested": false,
+        "practice_overview_requested": false,
+        "examples_requested": false,
+        "numbered_list_requested": false,
+        "explicit_answer_need": false,
+        "direct_concrete_request": false,
+        "summary_request": false,
+        "sarcasm_or_negative_feedback": false,
+        "application_request": false,
+        "style_preference_priority": false,
+        "compact_support_answer": true,
+        "active_concept": "",
+        "knowledge_answer_type": "concept_explanation",
+        "planner_is_advisory": true,
+        "final_answer_directive_enabled": true,
+        "final_answer_directive_role": "single_control_block",
+        "writer_context_package_role": "single_context_package",
+        "writer_first_prompt_assembly_enabled": true,
+        "legacy_blocks_visible_to_writer": false,
+        "legacy_blocks_source_signals_only": true,
+        "legacy_prompt_blocks_mode": "source_signals_only",
+        "diagnostic_center_role": "advisory_context_only",
+        "planner_role": "advisory_context_only",
+        "active_line_role": "advisory_context_only",
+        "diagnostic_card_role": "advisory_context_only",
+        "hard_boundaries": [
+          "safety",
+          "crisis_routing",
+          "no_diagnosis",
+          "no_medical_legal_financial_directives",
+          "no_spiritual_authority",
+          "no_raw_kb_quote_dumping",
+          "privacy_sanitized_trace_only"
+        ],
+        "soft_guidance": [
+          "state",
+          "thread",
+          "planner",
+          "diagnostic_card",
+          "knowledge_context",
+          "style_preference",
+          "target_micro_shift"
+        ],
+        "broad_rollout_allowed": false,
+        "production_ready": false,
+        "normal_user_activation_allowed": false,
+        "mvp_overrides": {
+          "explicit_user_request_wins": true,
+          "old_max_sentence_constraints_softened": true,
+          "planner_advisory": true,
+          "overview_questions_allow_lists": false,
+          "question_is_optional": true,
+          "repair_user_dissatisfaction": true,
+          "target_answer_depth": "medium"
+        },
+        "knowledge_answer": {
+          "needed": false,
+          "reason": "no_known_concept_question",
+          "concept": "",
+          "answer_type": "concept_explanation",
+          "concept_match_type": "none",
+          "matched_concepts": [],
+          "kb_grounding_available": false,
+          "kb_grounding_sources": [],
+          "kb_grounding_max_score": 0.09075,
+          "fallback_grounding_used": false,
+          "fallback_grounding_concepts": [],
+          "should_answer_directly": false,
+          "should_ask_definition_first": true,
+          "practice_overview_requested": false,
+          "preferred_hit_tags": [],
+          "practice_allowed": true,
+          "preferred_response_mode": "reflect",
+          "writer_instruction": "follow_response_mode_with_normal_clarification_policy"
+        },
+        "dialogue_pragmatics": {
+          "version": "dialogue_pragmatics_v1",
+          "is_short_utterance": false,
+          "short_utterance_type": "not_short",
+          "is_contextual_followup": false,
+          "followup_relation": "none",
+          "previous_assistant_offer_type": "unknown",
+          "inherited_user_intent": "continue_previous_offer",
+          "inherited_topic": "",
+          "should_answer_directly": false,
+          "should_not_ask_confirmation_again": false,
+          "allow_concrete_step_or_phrase": false,
+          "retrieval_need_hint": "contextual_optional",
+          "repair_user_dissatisfaction": false,
+          "should_apologize_briefly": false,
+          "reason": "none"
+        },
+        "unified_dialogue_profile": {
+          "version": "unified_dialogue_policy_v2",
+          "active_profile_alias": "mvp_free_dialogue",
+          "profile_preset": "free_dialogue_default",
+          "effective_writer_autonomy": "high",
+          "effective_safety_floor": "minimal_baseline",
+          "diagnostic_center_role": "advisory_context_only",
+          "planner_role": "advisory_context_only",
+          "active_line_role": "advisory_context_only",
+          "diagnostic_card_role": "advisory_context_only",
+          "final_answer_directive_role": "single_control_block",
+          "writer_context_package_role": "single_context_package",
+          "legacy_blocks_visible_to_writer": false,
+          "legacy_blocks_source_signals_only": true,
+          "hard_boundaries": [
+            "safety",
+            "crisis_routing",
+            "no_diagnosis",
+            "no_medical_legal_financial_directives",
+            "no_spiritual_authority",
+            "no_raw_kb_quote_dumping",
+            "privacy_sanitized_trace_only"
+          ],
+          "soft_guidance": [
+            "state",
+            "thread",
+            "planner",
+            "diagnostic_card",
+            "knowledge_context",
+            "style_preference",
+            "target_micro_shift"
+          ],
+          "style_state_enabled": true,
+          "last_offer_tracker_enabled": true,
+          "unanswered_question_tracker_enabled": true,
+          "dialogue_act_resolver_enabled": true,
+          "answer_obligation_resolver_enabled": true,
+          "style_state_summary": {
+            "tone": "neutral",
+            "length_preference": "adaptive",
+            "complexity_preference": "normal",
+            "avoid": []
+          },
+          "broad_rollout_allowed": false,
+          "production_ready": false,
+          "normal_user_activation_allowed": false
+        },
+        "dialogue_act_resolution": {
+          "version": "dialogue_act_resolver_v1",
+          "dialogue_act": "knowledge_question",
+          "confidence": 0.93,
+          "evidence": [
+            "explicit_direct_knowledge_request"
+          ],
+          "reason": "explicit_answer_first_knowledge_request",
+          "source": "explicit_direct_question_override",
+          "not_exact_match_rule": true
+        },
+        "last_assistant_offer": {
+          "version": "last_assistant_offer_v1",
+          "offer_id": "",
+          "turn_index": 0,
+          "offer_type": "none",
+          "offer_text_summary": "",
+          "expected_user_reply": "none",
+          "action_on_confirmation": "none",
+          "is_open": false
+        },
+        "unanswered_question_state": {
+          "version": "unanswered_question_tracker_v1",
+          "last_direct_user_question": "Как разработчик, объясни, какие материалы ты использовал для ответа и что дошло до Writer?",
+          "turn_index": 6,
+          "answer_required": true,
+          "answer_status": "pending",
+          "reason": "direct_knowledge_question"
+        },
+        "dialogue_style_state": {
+          "version": "dialogue_style_state_v1",
+          "tone": "neutral",
+          "length_preference": "adaptive",
+          "complexity_preference": "normal",
+          "avoid": [],
+          "updated_by_turn_index": 0,
+          "source": "carry_forward"
+        },
+        "answer_obligation_resolution": {
+          "version": "answer_obligation_resolver_v1",
+          "answer_obligation": "answer_knowledge_question",
+          "answer_shape": "structured_explanation",
+          "question_policy": "optional_none",
+          "depth": "medium",
+          "reason": "knowledge_question_requires_direct_answer",
+          "confidence": "high",
+          "style_overrides": {
+            "tone": "neutral",
+            "length_preference": "adaptive",
+            "complexity_preference": "normal",
+            "avoid": [],
+            "avoid_overexplaining": false,
+            "avoid_unrequested_practice": false
+          },
+          "source": [
+            "dialogue_act=knowledge_question",
+            "profile_preset=free_dialogue_default"
+          ]
+        },
+        "fresh_chat_context_policy": {
+          "version": "fresh_chat_context_policy_v1",
+          "is_new_chat": true,
+          "turn_index": 1,
+          "fresh_window_active": true,
+          "is_greeting_or_contact": false,
+          "explicit_continuation_requested": false,
+          "explicit_question_or_knowledge_need": true,
+          "cross_session_memory_allowed": true,
+          "cross_session_memory_reason": "explicit_question_or_knowledge_need",
+          "active_context_source": "current_chat_runtime_scope"
+        },
+        "retrieval_decision": {
+          "version": "contextual_retrieval_gating_v1",
+          "retrieval_decision_version": "contextual_retrieval_gating_v1",
+          "retrieval_action": "query_kb",
+          "rag_candidates_count": 3,
+          "rag_included_count": 0,
+          "rag_included_reason": "knowledge question needs compact KB support",
+          "rag_suppressed_reason": "candidate_available_but_current_turn_prefers_recent_context",
+          "writer_can_ignore_rag": false,
+          "rag_relevance_to_current_turn": "medium",
+          "inherited_topic": "",
+          "inherited_offer_type": "unknown",
+          "why_memory_only_still_included_rag": "",
+          "fresh_chat_context_policy": {
+            "version": "fresh_chat_context_policy_v1",
+            "is_new_chat": true,
+            "turn_index": 1,
+            "fresh_window_active": true,
+            "is_greeting_or_contact": false,
+            "explicit_continuation_requested": false,
+            "explicit_question_or_knowledge_need": true,
+            "cross_session_memory_allowed": true,
+            "cross_session_memory_reason": "explicit_question_or_knowledge_need",
+            "active_context_source": "current_chat_runtime_scope"
+          },
+          "rag_included_for_writer": [],
+          "hybrid_retrieval_planner_version": "hybrid_retrieval_planner_v1_r1",
+          "hybrid_retrieval_planner_mode": "shadow",
+          "hybrid_retrieval_plan": {
+            "version": "hybrid_retrieval_planner_v1_r1",
+            "retrieval_needed": true,
+            "retrieval_action": "query_kb",
+            "composed_query": "как разработчик какие материалы использовал для ответа что",
+            "needed_chunk_types": [
+              "concept",
+              "source_fragment"
+            ],
+            "avoided_chunk_types": [],
+            "mechanism_hints": [],
+            "depth_level_hint": 1,
+            "safety_layer_required": false,
+            "allowed_use_filter_hint": [
+              "writer_support"
+            ],
+            "diagnostic_hints_used": false,
+            "writer_can_ignore_rag": false,
+            "retrieval_gap_reason": "",
+            "no_user_facing_text_created": true,
+            "fallback_if_invalid": "legacy_query",
+            "constraints_for_writer": [],
+            "confidence": 0.84
+          },
+          "hybrid_retrieval_plan_valid": true,
+          "hybrid_retrieval_plan_error": null,
+          "hybrid_retrieval_universal_gate": "clear_kb_ask",
+          "hybrid_retrieval_llm_called": false,
+          "hybrid_retrieval_llm_reason": "universal_gate_resolved",
+          "hybrid_retrieval_fallback_used": false,
+          "hybrid_retrieval_planner_status": "valid",
+          "hybrid_retrieval_fallback_scope": "none",
+          "hybrid_retrieval_owner_severity": "info",
+          "hybrid_retrieval_production_query_source": "current_turn_focus_v1",
+          "hybrid_retrieval_production_answer_affected": false,
+          "composer": {
+            "version": "contextual_retrieval_query_composer_v1",
+            "enabled": true,
+            "mode": "deterministic_v1",
+            "retrieval_need": "knowledge_context",
+            "retrieval_action": "query_kb",
+            "query_source": "current_user_message",
+            "composed_query": "разработчик материалы использовал для ответа дошло writer",
+            "query_terms": [
+              "разработчик",
+              "материалы",
+              "использовал",
+              "для",
+              "ответа",
+              "дошло",
+              "writer"
+            ],
+            "inherited_topic": "",
+            "inherited_offer_type": "none",
+            "confidence": 0.88,
+            "writer_can_ignore_rag": false,
+            "include_for_writer_if_found": true,
+            "max_chunks_for_writer": 3,
+            "max_chars_per_chunk": 700,
+            "suppress_reason": "",
+            "reason": "knowledge question needs compact KB support",
+            "evidence": [
+              "knowledge_question",
+              "query_composed_from_current_message"
+            ],
+            "no_user_facing_text_created": true,
+            "pre_retrieval": {
+              "version": "contextual_retrieval_query_composer_v1",
+              "enabled": true,
+              "mode": "deterministic_v1",
+              "retrieval_need": "knowledge_context",
+              "retrieval_action": "query_kb",
+              "query_source": "current_user_message",
+              "composed_query": "разработчик материалы использовал для ответа дошло writer",
+              "query_terms": [
+                "разработчик",
+                "материалы",
+                "использовал",
+                "для",
+                "ответа",
+                "дошло",
+                "writer"
+              ],
+              "inherited_topic": "",
+              "inherited_offer_type": "",
+              "confidence": 0.88,
+              "writer_can_ignore_rag": false,
+              "include_for_writer_if_found": true,
+              "max_chunks_for_writer": 3,
+              "max_chars_per_chunk": 700,
+              "suppress_reason": "",
+              "reason": "knowledge question needs compact KB support",
+              "evidence": [
+                "knowledge_question",
+                "query_composed_from_current_message"
+              ],
+              "no_user_facing_text_created": true,
+              "hybrid_retrieval_plan": {
+                "version": "hybrid_retrieval_planner_v1_r1",
+                "retrieval_needed": true,
+                "retrieval_action": "query_kb",
+                "composed_query": "как разработчик какие материалы использовал для ответа что",
+                "needed_chunk_types": [
+                  "concept",
+                  "source_fragment"
+                ],
+                "avoided_chunk_types": [],
+                "mechanism_hints": [],
+                "depth_level_hint": 1,
+                "safety_layer_required": false,
+                "allowed_use_filter_hint": [
+                  "writer_support"
+                ],
+                "diagnostic_hints_used": false,
+                "writer_can_ignore_rag": false,
+                "retrieval_gap_reason": "",
+                "no_user_facing_text_created": true,
+                "fallback_if_invalid": "legacy_query",
+                "constraints_for_writer": [],
+                "confidence": 0.84
+              },
+              "hybrid_retrieval_universal_gate": "clear_kb_ask"
+            },
+            "executed_rag_query": "как разработчик какие материалы использовал для ответа что",
+            "hybrid_retrieval_plan": {
+              "version": "hybrid_retrieval_planner_v1_r1",
+              "retrieval_needed": true,
+              "retrieval_action": "query_kb",
+              "composed_query": "как разработчик какие материалы использовал для ответа что",
+              "needed_chunk_types": [
+                "concept",
+                "source_fragment"
+              ],
+              "avoided_chunk_types": [],
+              "mechanism_hints": [],
+              "depth_level_hint": 1,
+              "safety_layer_required": false,
+              "allowed_use_filter_hint": [
+                "writer_support"
+              ],
+              "diagnostic_hints_used": false,
+              "writer_can_ignore_rag": false,
+              "retrieval_gap_reason": "",
+              "no_user_facing_text_created": true,
+              "fallback_if_invalid": "legacy_query",
+              "constraints_for_writer": [],
+              "confidence": 0.84
+            }
+          },
+          "contextual_retrieval_query_composer": {
+            "version": "contextual_retrieval_query_composer_v1",
+            "enabled": true,
+            "mode": "deterministic_v1",
+            "retrieval_need": "knowledge_context",
+            "retrieval_action": "query_kb",
+            "query_source": "current_user_message",
+            "composed_query": "разработчик материалы использовал для ответа дошло writer",
+            "query_terms": [
+              "разработчик",
+              "материалы",
+              "использовал",
+              "для",
+              "ответа",
+              "дошло",
+              "writer"
+            ],
+            "inherited_topic": "",
+            "inherited_offer_type": "none",
+            "confidence": 0.88,
+            "writer_can_ignore_rag": false,
+            "include_for_writer_if_found": true,
+            "max_chunks_for_writer": 3,
+            "max_chars_per_chunk": 700,
+            "suppress_reason": "",
+            "reason": "knowledge question needs compact KB support",
+            "evidence": [
+              "knowledge_question",
+              "query_composed_from_current_message"
+            ],
+            "no_user_facing_text_created": true,
+            "pre_retrieval": {
+              "version": "contextual_retrieval_query_composer_v1",
+              "enabled": true,
+              "mode": "deterministic_v1",
+              "retrieval_need": "knowledge_context",
+              "retrieval_action": "query_kb",
+              "query_source": "current_user_message",
+              "composed_query": "разработчик материалы использовал для ответа дошло writer",
+              "query_terms": [
+                "разработчик",
+                "материалы",
+                "использовал",
+                "для",
+                "ответа",
+                "дошло",
+                "writer"
+              ],
+              "inherited_topic": "",
+              "inherited_offer_type": "",
+              "confidence": 0.88,
+              "writer_can_ignore_rag": false,
+              "include_for_writer_if_found": true,
+              "max_chunks_for_writer": 3,
+              "max_chars_per_chunk": 700,
+              "suppress_reason": "",
+              "reason": "knowledge question needs compact KB support",
+              "evidence": [
+                "knowledge_question",
+                "query_composed_from_current_message"
+              ],
+              "no_user_facing_text_created": true,
+              "hybrid_retrieval_plan": {
+                "version": "hybrid_retrieval_planner_v1_r1",
+                "retrieval_needed": true,
+                "retrieval_action": "query_kb",
+                "composed_query": "как разработчик какие материалы использовал для ответа что",
+                "needed_chunk_types": [
+                  "concept",
+                  "source_fragment"
+                ],
+                "avoided_chunk_types": [],
+                "mechanism_hints": [],
+                "depth_level_hint": 1,
+                "safety_layer_required": false,
+                "allowed_use_filter_hint": [
+                  "writer_support"
+                ],
+                "diagnostic_hints_used": false,
+                "writer_can_ignore_rag": false,
+                "retrieval_gap_reason": "",
+                "no_user_facing_text_created": true,
+                "fallback_if_invalid": "legacy_query",
+                "constraints_for_writer": [],
+                "confidence": 0.84
+              },
+              "hybrid_retrieval_universal_gate": "clear_kb_ask"
+            },
+            "executed_rag_query": "как разработчик какие материалы использовал для ответа что",
+            "hybrid_retrieval_plan": {
+              "version": "hybrid_retrieval_planner_v1_r1",
+              "retrieval_needed": true,
+              "retrieval_action": "query_kb",
+              "composed_query": "как разработчик какие материалы использовал для ответа что",
+              "needed_chunk_types": [
+                "concept",
+                "source_fragment"
+              ],
+              "avoided_chunk_types": [],
+              "mechanism_hints": [],
+              "depth_level_hint": 1,
+              "safety_layer_required": false,
+              "allowed_use_filter_hint": [
+                "writer_support"
+              ],
+              "diagnostic_hints_used": false,
+              "writer_can_ignore_rag": false,
+              "retrieval_gap_reason": "",
+              "no_user_facing_text_created": true,
+              "fallback_if_invalid": "legacy_query",
+              "constraints_for_writer": [],
+              "confidence": 0.84
+            }
+          },
+          "contextual_retrieval_query_composer_version": "contextual_retrieval_query_composer_v1",
+          "retrieval_query_source": "current_user_message",
+          "composed_retrieval_query": "разработчик материалы использовал для ответа дошло writer",
+          "retrieval_need": "knowledge_context",
+          "planned_composed_query": "как разработчик какие материалы использовал для ответа что",
+          "executed_rag_query": "как разработчик какие материалы использовал для ответа что",
+          "legacy_rag_query": "Как разработчик, объясни, какие материалы ты использовал для ответа и что дошло до Writer?",
+          "query_before_rag_proof": true,
+          "retrieval_query_build_trace": {
+            "schema_version": "retrieval_query_build_trace_v1",
+            "enabled": true,
+            "primary_path": "current_turn_focus_v1",
+            "raw_user_query": "Как разработчик, объясни, какие материалы ты использовал для ответа и что дошло до Writer?",
+            "previous_user_query": "",
+            "canonical_query": "как разработчик какие материалы использовал для ответа что",
+            "executed_query": "как разработчик какие материалы использовал для ответа что",
+            "planned_query": "как разработчик какие материалы использовал для ответа что",
+            "planner_query_used": true,
+            "previous_user_query_included": false,
+            "previous_user_query_inclusion_reason": "standalone_current_knowledge_question",
+            "inherited_topic_used": false,
+            "inherited_topic_reason": "none",
+            "inherited_topic": "",
+            "dialogue_act_hint": "",
+            "dedupe_applied": false,
+            "duplicate_fragment_count": 0,
+            "truncation_applied": false,
+            "truncation_strategy": "none",
+            "query_truncated_mid_word": false,
+            "current_turn_focus_status": "clean",
+            "fallback_used": false,
+            "fallback_reason": "",
+            "legacy_query_builder_fallback": false,
+            "query_builder_primary_path": "current_turn_focus_v1"
+          },
+          "retrieval_gap_reason": "",
+          "needed_chunk_types": [
+            "concept",
+            "source_fragment"
+          ],
+          "mechanism_hints": []
+        }
+      },
+      "unified_dialogue_policy": {
+        "version": "unified_dialogue_policy_v2",
+        "active_profile_alias": "mvp_free_dialogue",
+        "profile_preset": "free_dialogue_default",
+        "effective_writer_autonomy": "high",
+        "effective_safety_floor": "minimal_baseline",
+        "diagnostic_center_role": "advisory_context_only",
+        "planner_role": "advisory_context_only",
+        "active_line_role": "advisory_context_only",
+        "diagnostic_card_role": "advisory_context_only",
+        "final_answer_directive_role": "single_control_block",
+        "writer_context_package_role": "single_context_package",
+        "legacy_blocks_visible_to_writer": false,
+        "legacy_blocks_source_signals_only": true,
+        "hard_boundaries": [
+          "safety",
+          "crisis_routing",
+          "no_diagnosis",
+          "no_medical_legal_financial_directives",
+          "no_spiritual_authority",
+          "no_raw_kb_quote_dumping",
+          "privacy_sanitized_trace_only"
+        ],
+        "soft_guidance": [
+          "state",
+          "thread",
+          "planner",
+          "diagnostic_card",
+          "knowledge_context",
+          "style_preference",
+          "target_micro_shift"
+        ],
+        "style_state_enabled": true,
+        "last_offer_tracker_enabled": true,
+        "unanswered_question_tracker_enabled": true,
+        "dialogue_act_resolver_enabled": true,
+        "answer_obligation_resolver_enabled": true,
+        "style_state_summary": {
+          "tone": "neutral",
+          "length_preference": "adaptive",
+          "complexity_preference": "normal",
+          "avoid": []
+        },
+        "broad_rollout_allowed": false,
+        "production_ready": false,
+        "normal_user_activation_allowed": false
+      },
+      "pragmatics": {
+        "version": "dialogue_pragmatics_v1",
+        "is_short_utterance": false,
+        "short_utterance_type": "not_short",
+        "is_contextual_followup": false,
+        "followup_relation": "none",
+        "previous_assistant_offer_type": "unknown",
+        "inherited_user_intent": "continue_previous_offer",
+        "inherited_topic": "",
+        "should_answer_directly": false,
+        "should_not_ask_confirmation_again": false,
+        "allow_concrete_step_or_phrase": false,
+        "retrieval_need_hint": "contextual_optional",
+        "repair_user_dissatisfaction": false,
+        "should_apologize_briefly": false,
+        "reason": "none"
+      },
+      "dialogue_act_resolution": {
+        "version": "dialogue_act_resolver_v1",
+        "dialogue_act": "knowledge_question",
+        "confidence": 0.93,
+        "evidence": [
+          "explicit_direct_knowledge_request"
+        ],
+        "reason": "explicit_answer_first_knowledge_request",
+        "source": "explicit_direct_question_override",
+        "not_exact_match_rule": true
+      },
+      "last_assistant_offer": {
+        "version": "last_assistant_offer_v1",
+        "offer_id": "offer_turn_006_001",
+        "turn_index": 6,
+        "offer_type": "shorten",
+        "offer_text_summary": "Коротко: я опирался на два коротких ориентирума (семантические заметки), и обе дошли до Writer. Главный механизм, который я использовал: «контроль как стратегия...",
+        "expected_user_reply": "yes_no_or_request",
+        "action_on_confirmation": "answer_last_offer",
+        "is_open": true
+      },
+      "unanswered_question_state": {
+        "version": "unanswered_question_tracker_v1",
+        "last_direct_user_question": "Как разработчик, объясни, какие материалы ты использовал для ответа и что дошло до Writer?",
+        "turn_index": 6,
+        "answer_required": false,
+        "answer_status": "answered",
+        "reason": "direct_knowledge_question"
+      },
+      "dialogue_style_state": {
+        "version": "dialogue_style_state_v1",
+        "tone": "neutral",
+        "length_preference": "adaptive",
+        "complexity_preference": "normal",
+        "avoid": [],
+        "updated_by_turn_index": 0,
+        "source": "carry_forward"
+      },
+      "answer_obligation_resolution": {
+        "version": "answer_obligation_resolver_v1",
+        "answer_obligation": "answer_knowledge_question",
+        "answer_shape": "structured_explanation",
+        "question_policy": "optional_none",
+        "depth": "medium",
+        "reason": "knowledge_question_requires_direct_answer",
+        "confidence": "high",
+        "style_overrides": {
+          "tone": "neutral",
+          "length_preference": "adaptive",
+          "complexity_preference": "normal",
+          "avoid": [],
+          "avoid_overexplaining": false,
+          "avoid_unrequested_practice": false
+        },
+        "source": [
+          "dialogue_act=knowledge_question",
+          "profile_preset=free_dialogue_default"
+        ]
+      },
+      "fresh_chat_context_policy": {
+        "version": "fresh_chat_context_policy_v1",
+        "is_new_chat": true,
+        "turn_index": 1,
+        "fresh_window_active": true,
+        "is_greeting_or_contact": false,
+        "explicit_continuation_requested": false,
+        "explicit_question_or_knowledge_need": true,
+        "cross_session_memory_allowed": true,
+        "cross_session_memory_reason": "explicit_question_or_knowledge_need",
+        "active_context_source": "current_chat_runtime_scope"
+      },
+      "retrieval": {
+        "version": "contextual_retrieval_gating_v1",
+        "retrieval_decision_version": "contextual_retrieval_gating_v1",
+        "retrieval_action": "query_kb",
+        "rag_candidates_count": 3,
+        "rag_included_count": 0,
+        "rag_included_reason": "knowledge question needs compact KB support",
+        "rag_suppressed_reason": "candidate_available_but_current_turn_prefers_recent_context",
+        "writer_can_ignore_rag": false,
+        "rag_relevance_to_current_turn": "medium",
+        "inherited_topic": "",
+        "inherited_offer_type": "unknown",
+        "why_memory_only_still_included_rag": "",
+        "fresh_chat_context_policy": {
+          "version": "fresh_chat_context_policy_v1",
+          "is_new_chat": true,
+          "turn_index": 1,
+          "fresh_window_active": true,
+          "is_greeting_or_contact": false,
+          "explicit_continuation_requested": false,
+          "explicit_question_or_knowledge_need": true,
+          "cross_session_memory_allowed": true,
+          "cross_session_memory_reason": "explicit_question_or_knowledge_need",
+          "active_context_source": "current_chat_runtime_scope"
+        },
+        "rag_included_for_writer": [],
+        "hybrid_retrieval_planner_version": "hybrid_retrieval_planner_v1_r1",
+        "hybrid_retrieval_planner_mode": "shadow",
+        "hybrid_retrieval_plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": true,
+          "retrieval_action": "query_kb",
+          "composed_query": "как разработчик какие материалы использовал для ответа что",
+          "needed_chunk_types": [
+            "concept",
+            "source_fragment"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 1,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": false,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.84
+        },
+        "hybrid_retrieval_plan_valid": true,
+        "hybrid_retrieval_plan_error": null,
+        "hybrid_retrieval_universal_gate": "clear_kb_ask",
+        "hybrid_retrieval_llm_called": false,
+        "hybrid_retrieval_llm_reason": "universal_gate_resolved",
+        "hybrid_retrieval_fallback_used": false,
+        "hybrid_retrieval_planner_status": "valid",
+        "hybrid_retrieval_fallback_scope": "none",
+        "hybrid_retrieval_owner_severity": "info",
+        "hybrid_retrieval_production_query_source": "current_turn_focus_v1",
+        "hybrid_retrieval_production_answer_affected": false,
+        "composer": {
+          "version": "contextual_retrieval_query_composer_v1",
+          "enabled": true,
+          "mode": "deterministic_v1",
+          "retrieval_need": "knowledge_context",
+          "retrieval_action": "query_kb",
+          "query_source": "current_user_message",
+          "composed_query": "разработчик материалы использовал для ответа дошло writer",
+          "query_terms": [
+            "разработчик",
+            "материалы",
+            "использовал",
+            "для",
+            "ответа",
+            "дошло",
+            "writer"
+          ],
+          "inherited_topic": "",
+          "inherited_offer_type": "none",
+          "confidence": 0.88,
+          "writer_can_ignore_rag": false,
+          "include_for_writer_if_found": true,
+          "max_chunks_for_writer": 3,
+          "max_chars_per_chunk": 700,
+          "suppress_reason": "",
+          "reason": "knowledge question needs compact KB support",
+          "evidence": [
+            "knowledge_question",
+            "query_composed_from_current_message"
+          ],
+          "no_user_facing_text_created": true,
+          "pre_retrieval": {
+            "version": "contextual_retrieval_query_composer_v1",
+            "enabled": true,
+            "mode": "deterministic_v1",
+            "retrieval_need": "knowledge_context",
+            "retrieval_action": "query_kb",
+            "query_source": "current_user_message",
+            "composed_query": "разработчик материалы использовал для ответа дошло writer",
+            "query_terms": [
+              "разработчик",
+              "материалы",
+              "использовал",
+              "для",
+              "ответа",
+              "дошло",
+              "writer"
+            ],
+            "inherited_topic": "",
+            "inherited_offer_type": "",
+            "confidence": 0.88,
+            "writer_can_ignore_rag": false,
+            "include_for_writer_if_found": true,
+            "max_chunks_for_writer": 3,
+            "max_chars_per_chunk": 700,
+            "suppress_reason": "",
+            "reason": "knowledge question needs compact KB support",
+            "evidence": [
+              "knowledge_question",
+              "query_composed_from_current_message"
+            ],
+            "no_user_facing_text_created": true,
+            "hybrid_retrieval_plan": {
+              "version": "hybrid_retrieval_planner_v1_r1",
+              "retrieval_needed": true,
+              "retrieval_action": "query_kb",
+              "composed_query": "как разработчик какие материалы использовал для ответа что",
+              "needed_chunk_types": [
+                "concept",
+                "source_fragment"
+              ],
+              "avoided_chunk_types": [],
+              "mechanism_hints": [],
+              "depth_level_hint": 1,
+              "safety_layer_required": false,
+              "allowed_use_filter_hint": [
+                "writer_support"
+              ],
+              "diagnostic_hints_used": false,
+              "writer_can_ignore_rag": false,
+              "retrieval_gap_reason": "",
+              "no_user_facing_text_created": true,
+              "fallback_if_invalid": "legacy_query",
+              "constraints_for_writer": [],
+              "confidence": 0.84
+            },
+            "hybrid_retrieval_universal_gate": "clear_kb_ask"
+          },
+          "executed_rag_query": "как разработчик какие материалы использовал для ответа что",
+          "hybrid_retrieval_plan": {
+            "version": "hybrid_retrieval_planner_v1_r1",
+            "retrieval_needed": true,
+            "retrieval_action": "query_kb",
+            "composed_query": "как разработчик какие материалы использовал для ответа что",
+            "needed_chunk_types": [
+              "concept",
+              "source_fragment"
+            ],
+            "avoided_chunk_types": [],
+            "mechanism_hints": [],
+            "depth_level_hint": 1,
+            "safety_layer_required": false,
+            "allowed_use_filter_hint": [
+              "writer_support"
+            ],
+            "diagnostic_hints_used": false,
+            "writer_can_ignore_rag": false,
+            "retrieval_gap_reason": "",
+            "no_user_facing_text_created": true,
+            "fallback_if_invalid": "legacy_query",
+            "constraints_for_writer": [],
+            "confidence": 0.84
+          }
+        },
+        "contextual_retrieval_query_composer": {
+          "version": "contextual_retrieval_query_composer_v1",
+          "enabled": true,
+          "mode": "deterministic_v1",
+          "retrieval_need": "knowledge_context",
+          "retrieval_action": "query_kb",
+          "query_source": "current_user_message",
+          "composed_query": "разработчик материалы использовал для ответа дошло writer",
+          "query_terms": [
+            "разработчик",
+            "материалы",
+            "использовал",
+            "для",
+            "ответа",
+            "дошло",
+            "writer"
+          ],
+          "inherited_topic": "",
+          "inherited_offer_type": "none",
+          "confidence": 0.88,
+          "writer_can_ignore_rag": false,
+          "include_for_writer_if_found": true,
+          "max_chunks_for_writer": 3,
+          "max_chars_per_chunk": 700,
+          "suppress_reason": "",
+          "reason": "knowledge question needs compact KB support",
+          "evidence": [
+            "knowledge_question",
+            "query_composed_from_current_message"
+          ],
+          "no_user_facing_text_created": true,
+          "pre_retrieval": {
+            "version": "contextual_retrieval_query_composer_v1",
+            "enabled": true,
+            "mode": "deterministic_v1",
+            "retrieval_need": "knowledge_context",
+            "retrieval_action": "query_kb",
+            "query_source": "current_user_message",
+            "composed_query": "разработчик материалы использовал для ответа дошло writer",
+            "query_terms": [
+              "разработчик",
+              "материалы",
+              "использовал",
+              "для",
+              "ответа",
+              "дошло",
+              "writer"
+            ],
+            "inherited_topic": "",
+            "inherited_offer_type": "",
+            "confidence": 0.88,
+            "writer_can_ignore_rag": false,
+            "include_for_writer_if_found": true,
+            "max_chunks_for_writer": 3,
+            "max_chars_per_chunk": 700,
+            "suppress_reason": "",
+            "reason": "knowledge question needs compact KB support",
+            "evidence": [
+              "knowledge_question",
+              "query_composed_from_current_message"
+            ],
+            "no_user_facing_text_created": true,
+            "hybrid_retrieval_plan": {
+              "version": "hybrid_retrieval_planner_v1_r1",
+              "retrieval_needed": true,
+              "retrieval_action": "query_kb",
+              "composed_query": "как разработчик какие материалы использовал для ответа что",
+              "needed_chunk_types": [
+                "concept",
+                "source_fragment"
+              ],
+              "avoided_chunk_types": [],
+              "mechanism_hints": [],
+              "depth_level_hint": 1,
+              "safety_layer_required": false,
+              "allowed_use_filter_hint": [
+                "writer_support"
+              ],
+              "diagnostic_hints_used": false,
+              "writer_can_ignore_rag": false,
+              "retrieval_gap_reason": "",
+              "no_user_facing_text_created": true,
+              "fallback_if_invalid": "legacy_query",
+              "constraints_for_writer": [],
+              "confidence": 0.84
+            },
+            "hybrid_retrieval_universal_gate": "clear_kb_ask"
+          },
+          "executed_rag_query": "как разработчик какие материалы использовал для ответа что",
+          "hybrid_retrieval_plan": {
+            "version": "hybrid_retrieval_planner_v1_r1",
+            "retrieval_needed": true,
+            "retrieval_action": "query_kb",
+            "composed_query": "как разработчик какие материалы использовал для ответа что",
+            "needed_chunk_types": [
+              "concept",
+              "source_fragment"
+            ],
+            "avoided_chunk_types": [],
+            "mechanism_hints": [],
+            "depth_level_hint": 1,
+            "safety_layer_required": false,
+            "allowed_use_filter_hint": [
+              "writer_support"
+            ],
+            "diagnostic_hints_used": false,
+            "writer_can_ignore_rag": false,
+            "retrieval_gap_reason": "",
+            "no_user_facing_text_created": true,
+            "fallback_if_invalid": "legacy_query",
+            "constraints_for_writer": [],
+            "confidence": 0.84
+          }
+        },
+        "contextual_retrieval_query_composer_version": "contextual_retrieval_query_composer_v1",
+        "retrieval_query_source": "current_user_message",
+        "composed_retrieval_query": "разработчик материалы использовал для ответа дошло writer",
+        "retrieval_need": "knowledge_context",
+        "planned_composed_query": "как разработчик какие материалы использовал для ответа что",
+        "executed_rag_query": "как разработчик какие материалы использовал для ответа что",
+        "legacy_rag_query": "Как разработчик, объясни, какие материалы ты использовал для ответа и что дошло до Writer?",
+        "query_before_rag_proof": true,
+        "retrieval_query_build_trace": {
+          "schema_version": "retrieval_query_build_trace_v1",
+          "enabled": true,
+          "primary_path": "current_turn_focus_v1",
+          "raw_user_query": "Как разработчик, объясни, какие материалы ты использовал для ответа и что дошло до Writer?",
+          "previous_user_query": "",
+          "canonical_query": "как разработчик какие материалы использовал для ответа что",
+          "executed_query": "как разработчик какие материалы использовал для ответа что",
+          "planned_query": "как разработчик какие материалы использовал для ответа что",
+          "planner_query_used": true,
+          "previous_user_query_included": false,
+          "previous_user_query_inclusion_reason": "standalone_current_knowledge_question",
+          "inherited_topic_used": false,
+          "inherited_topic_reason": "none",
+          "inherited_topic": "",
+          "dialogue_act_hint": "",
+          "dedupe_applied": false,
+          "duplicate_fragment_count": 0,
+          "truncation_applied": false,
+          "truncation_strategy": "none",
+          "query_truncated_mid_word": false,
+          "current_turn_focus_status": "clean",
+          "fallback_used": false,
+          "fallback_reason": "",
+          "legacy_query_builder_fallback": false,
+          "query_builder_primary_path": "current_turn_focus_v1"
+        },
+        "retrieval_gap_reason": "",
+        "needed_chunk_types": [
+          "concept",
+          "source_fragment"
+        ],
+        "mechanism_hints": []
+      },
+      "active_line": {
+        "version": "active_line_v1",
+        "active_line": "помочь увидеть механизм происходящего без ухода в практику",
+        "user_intent": "understand_mechanism",
+        "continuity_mode": "start_new_line",
+        "next_meaningful_move": "назвать механизм и при необходимости задать один уточняющий вопрос",
+        "should_continue_line": false,
+        "should_ask_question": true,
+        "should_offer_practice": false,
+        "revoicing_allowed": false,
+        "revoicing_style": "suppressed",
+        "repair_mode": null,
+        "evidence_turn_ids": [],
+        "confidence": 0.7,
+        "practice_suppression_active": true
+      },
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "target_micro_shift": "показать один механизм, который продвигает понимание",
+        "should_answer_directly": true,
+        "question_policy": "max_one_if_needed",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "назвать один механизм",
+          "показать что он защищает",
+          "связать с active_line"
+        ],
+        "must_avoid": [
+          "не предлагать практику",
+          "не начинать механический пересказ",
+          "не превращать ответ в мини-лекцию или каталог причин",
+          "не говорить о базе, чанках, semantic cards или внутренних материалах"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window",
+          "low_resource_text": false,
+          "soft_distress_text": false,
+          "defensive_text": false,
+          "no_question_text": false,
+          "close_text": false,
+          "mechanism_text": false,
+          "practice_suppression_text": false,
+          "repair_text": false,
+          "explicit_action_requested": false,
+          "explicit_step_requested": false,
+          "explicit_practice_requested": false,
+          "explicit_practice_overview_requested": false,
+          "dialogue_profile": "mvp_free_dialogue",
+          "expansion_requested": false,
+          "repair_and_expand_requested": false,
+          "active_concept": "",
+          "explicit_short_support": false,
+          "practice_overview_requested": false,
+          "explicit_one_step_requested": false,
+          "examples_requested": false,
+          "numbered_list_requested": false,
+          "application_requested": false,
+          "active_line_stale": false,
+          "dialogue_pragmatics_contextual_followup": false,
+          "dialogue_pragmatics_offer_type": "unknown",
+          "dialogue_pragmatics_repair_user_dissatisfaction": false
+        },
+        "confidence": 0.9,
+        "rationale": "Mechanism intent: нужен объяснительный ход без разворота в практику."
+      },
+      "thread_debug": {
+        "version": "thread_diagnostics_v1",
+        "relation": {
+          "selected_relation": "new_thread",
+          "relation_reason": "no_current_thread",
+          "continuity_score": 1.0,
+          "new_thread_threshold": 0.2,
+          "current_thread_present": false,
+          "archived_threads_count": 0,
+          "return_marker_hit": false,
+          "followup_continue_marker_hit": false,
+          "low_resource_continue_marker_hit": false,
+          "branch_marker_hit": false,
+          "resolution_marker_hit": false,
+          "message_token_count": 11,
+          "core_token_count": 11,
+          "token_intersection_count": 11,
+          "token_union_count": 11,
+          "active_frame_semantic_continue_hit": false,
+          "active_frame_semantic_continue_reason": "",
+          "semantic_frame_token_overlap": 0,
+          "semantic_frame_token_count": 0,
+          "semantic_frame_sources_checked": []
+        },
+        "phase": {
+          "previous_phase": null,
+          "selected_phase": "clarify",
+          "phase_reason": "new_thread_default_clarify",
+          "turns_in_phase_before": 0,
+          "turns_in_phase_after": 1,
+          "closed_loops_count": 0,
+          "continuity_score": 1.0
+        },
+        "mode": {
+          "selected_mode": "reflect",
+          "response_goal": "clarify key point",
+          "mode_reason": "phase_clarify_reflect",
+          "safety_flag": false,
+          "intent": "explore",
+          "nervous_state": "window",
+          "phase": "clarify"
+        },
+        "loops": {
+          "open_loops_before": 0,
+          "open_loops_after": 1,
+          "closed_loops_before": 0,
+          "closed_loops_after": 0,
+          "open_loop_added": true,
+          "closed_loop_added": false,
+          "resolution_marker_hit": false
+        },
+        "action": {
+          "thread_action": "new_thread",
+          "previous_thread_id_present": false,
+          "selected_thread_id_present": true,
+          "archived_previous_thread": false,
+          "restored_archived_thread": false,
+          "safety_patch_used": false
+        },
+        "semantic_frame": {
+          "pattern_core_present": true,
+          "active_frame_present": true,
+          "active_frame_keys": [
+            "current_need",
+            "last_supportive_move",
+            "next_recommended_direction"
+          ],
+          "current_need": "explore perspective carefully",
+          "next_recommended_direction": "expand carefully without strong interpretation"
+        },
+        "summary_flags": [
+          "phase_transition",
+          "pattern_core_present",
+          "active_frame_present"
+        ]
+      }
+    },
+    "memory": {
+      "conversation_context": "",
+      "conversation_context_chars": 0,
+      "semantic_hits_count": 3,
+      "semantic_hits": [
+        {
+          "chunk_id_hash": "sha256:35bfb447ebb4fce1aac91a84c666ae79601edf70a54e45a2815ad0c8d7ecb012",
+          "source": "book",
+          "score": 0.09075009814518892,
+          "content_preview": "Ты открыл эту книгу не случайно. Скорее всего, ты уже прошёл терапию, читал умные книжки, медитировал, делал практики. И всё равно что-то внутри скребёт. Какой-то фоновый шум, который не даёт покоя. Ощущение, что ты не дотягиваешь, не доста...[truncated:700]"
+        },
+        {
+          "chunk_id_hash": "sha256:b1d2024fd95d9c32e8924d072f346344d17db706d4b05d3ac1d77f71611cb603",
+          "source": "book",
+          "score": 0.08457318936163004,
+          "content_preview": "В начале 1950-х годов американский психолог **Клэр Грейвз** начал задавать своим студентам простой вопрос: «Опиши зрелого, психологически здорового человека». Он ждал общего ответа. Получил хаос.\n\nОтветы не просто различались — они были нес...[truncated:1105]"
+        },
+        {
+          "chunk_id_hash": "sha256:8e80536baeb1c3ee567b5ab7ea8fbaec24256e87d8c352e89dba6a1189178c4b",
+          "source": "book",
+          "score": 0.07610429822372175,
+          "content_preview": "**Цель:** найти входы в тень через реакции на других людей.\n\n**Время:** 20–30 минут. Один раз как исследование.\n\nВозьми лист бумаги. Раздели на две колонки.\n\nВ первой — напиши имена или описания людей, которые тебя сильно раздражают. Не про...[truncated:737]"
+        }
+      ]
+    },
+    "writer": {
+      "contract_excerpt": {
+        "response_mode": "reflect",
+        "response_goal": "clarify key point",
+        "must_avoid": [],
+        "dialogue_profile": "mvp_free_dialogue",
+        "retrieval_action": "query_kb",
+        "dialogue_pragmatics_short_type": "not_short"
+      },
+      "final_answer_directive": {
+        "version": "final_answer_directive_v1",
+        "profile": "mvp_free_dialogue",
+        "profile_preset": "free_dialogue_default",
+        "unified_dialogue_policy_version": "unified_dialogue_policy_v2",
+        "user_intent": "knowledge_question",
+        "dialogue_act": "knowledge_question",
+        "answer_obligation": "answer_knowledge_question",
+        "current_user_request": "Как разработчик, объясни, какие материалы ты использовал для ответа и что дошло до Writer?",
+        "must_answer": "Как разработчик, объясни, какие материалы ты использовал для ответа и что дошло до Writer?",
+        "must_answer_source": "latest_turn",
+        "previous_must_answer_demoted": false,
+        "previous_must_answer": "",
+        "explicit_continue_previous_detected": false,
+        "answer_target": "latest_turn",
+        "answer_shape": "structured_explanation",
+        "answer_shape_profile": "ordinary_explanation_compact",
+        "answer_shape_profile_notes": [
+          "Start with a direct answer in the first one or two sentences.",
+          "Name only one main mechanism in simple words.",
+          "Show what this mechanism is trying to protect or prevent.",
+          "If a next move helps, give only one question or one step.",
+          "Use at most one short list only if it truly improves clarity.",
+          "Do not turn the answer into a mini-lecture or a method catalog.",
+          "Do not mention internal DB, chunks, semantic cards, or system materials."
+        ],
+        "writer_contact_mode": "structured_answer",
+        "depth": "medium",
+        "style": "neutral",
+        "question_policy": "optional_none",
+        "practice_policy": "forbidden",
+        "summary_request": false,
+        "summary_scope": "",
+        "no_confirmation_needed": false,
+        "no_practice_unless_requested": false,
+        "summary_context_anchors": [],
+        "rag_policy": "optional_if_relevant",
+        "diagnostic_center_role": "advisory_context_only",
+        "planner_role": "advisory_context_only",
+        "active_line_role": "advisory_context_only",
+        "diagnostic_card_role": "advisory_context_only",
+        "writer_autonomy": "high",
+        "hard_boundaries": [
+          "safety",
+          "crisis_routing",
+          "no_diagnosis",
+          "no_medical_legal_financial_directives",
+          "no_spiritual_authority",
+          "no_raw_kb_quote_dumping",
+          "privacy_sanitized_trace_only",
+          "Do not turn this answer into a mini-lecture or theory overview."
+        ],
+        "soft_guidance": [
+          "state",
+          "thread",
+          "planner",
+          "diagnostic_card",
+          "knowledge_context",
+          "style_preference",
+          "target_micro_shift",
+          "Start with a direct answer in the first one or two sentences.",
+          "Name only one main mechanism in simple words.",
+          "Show what this mechanism is trying to protect or prevent.",
+          "If a next move helps, give only one question or one step.",
+          "Use at most one short list only if it truly improves clarity.",
+          "Do not turn the answer into a mini-lecture or a method catalog.",
+          "Do not mention internal DB, chunks, semantic cards, or system materials."
+        ],
+        "style_state_summary": {
+          "version": "dialogue_style_state_v1",
+          "tone": "neutral",
+          "length_preference": "adaptive",
+          "complexity_preference": "normal",
+          "avoid": [],
+          "updated_by_turn_index": 0,
+          "source": "carry_forward"
+        },
+        "last_assistant_offer_summary": {
+          "version": "last_assistant_offer_v1",
+          "offer_id": "",
+          "turn_index": 0,
+          "offer_type": "none",
+          "offer_text_summary": "",
+          "expected_user_reply": "none",
+          "action_on_confirmation": "none",
+          "is_open": false
+        },
+        "unanswered_question_summary": {
+          "version": "unanswered_question_tracker_v1",
+          "last_direct_user_question": "Как разработчик, объясни, какие материалы ты использовал для ответа и что дошло до Writer?",
+          "turn_index": 6,
+          "answer_required": true,
+          "answer_status": "pending",
+          "reason": "direct_knowledge_question"
+        },
+        "advisory_context": {
+          "response_planner": {
+            "version": "response_planner_v1",
+            "enabled": true,
+            "next_move": "deepen_mechanism",
+            "answer_shape": "mechanism_explanation",
+            "response_depth": "medium",
+            "target_micro_shift": "показать один механизм, который продвигает понимание",
+            "should_answer_directly": true,
+            "question_policy": "max_one_if_needed",
+            "practice_policy": "forbidden",
+            "revoicing_policy": "suppressed",
+            "continuity_policy": "continue_active_line",
+            "safety_priority": false,
+            "must_include": [
+              "назвать один механизм",
+              "показать что он защищает",
+              "связать с active_line"
+            ],
+            "must_avoid": [
+              "не предлагать практику",
+              "не начинать механический пересказ",
+              "не превращать ответ в мини-лекцию или каталог причин",
+              "не говорить о базе, чанках, semantic cards или внутренних материалах"
+            ],
+            "source_signals": {
+              "active_line_user_intent": "understand_mechanism",
+              "active_line_continuity_mode": "start_new_line",
+              "active_line_should_ask_question": true,
+              "practice_gate_allowed": true,
+              "knowledge_answer_needed": false,
+              "knowledge_answer_should_answer_directly": false,
+              "response_mode": "reflect",
+              "safety_active": false,
+              "safety_flag": false,
+              "nervous_state": "window",
+              "low_resource_text": false,
+              "soft_distress_text": false,
+              "defensive_text": false,
+              "no_question_text": false,
+              "close_text": false,
+              "mechanism_text": false,
+              "practice_suppression_text": false,
+              "repair_text": false,
+              "explicit_action_requested": false,
+              "explicit_step_requested": false,
+              "explicit_practice_requested": false,
+              "explicit_practice_overview_requested": false,
+              "dialogue_profile": "mvp_free_dialogue",
+              "expansion_requested": false,
+              "repair_and_expand_requested": false,
+              "active_concept": "",
+              "explicit_short_support": false,
+              "practice_overview_requested": false,
+              "explicit_one_step_requested": false,
+              "examples_requested": false,
+              "numbered_list_requested": false,
+              "application_requested": false,
+              "active_line_stale": false,
+              "dialogue_pragmatics_contextual_followup": false,
+              "dialogue_pragmatics_offer_type": "unknown",
+              "dialogue_pragmatics_repair_user_dissatisfaction": false
+            },
+            "confidence": 0.9,
+            "rationale": "Mechanism intent: нужен объяснительный ход без разворота в практику."
+          },
+          "active_line": {
+            "version": "active_line_v1",
+            "active_line": "помочь увидеть механизм происходящего без ухода в практику",
+            "user_intent": "understand_mechanism",
+            "continuity_mode": "start_new_line",
+            "next_meaningful_move": "назвать механизм и при необходимости задать один уточняющий вопрос",
+            "should_continue_line": false,
+            "should_ask_question": true,
+            "should_offer_practice": false,
+            "revoicing_allowed": false,
+            "revoicing_style": "suppressed",
+            "repair_mode": null,
+            "evidence_turn_ids": [],
+            "confidence": 0.7,
+            "practice_suppression_active": true
+          },
+          "diagnostic_card": {
+            "version": "diagnostic_card_v1",
+            "situation_label": "new_exploration",
+            "user_state_summary": "window/explore: openness=open, ok_position=I+W+",
+            "thread_line_summary": "new thread started",
+            "current_need": "explore perspective carefully",
+            "suggested_writer_move": "clarify_one_point",
+            "avoid_list": [
+              "do_not_give_directive_life_advice",
+              "do_not_diagnose",
+              "do_not_over_explain",
+              "ask_at_most_one_question"
+            ],
+            "evidence_refs": [
+              {
+                "source": "state",
+                "key": "nervous_state",
+                "value_preview": "window"
+              },
+              {
+                "source": "state",
+                "key": "intent",
+                "value_preview": "explore"
+              },
+              {
+                "source": "state",
+                "key": "openness",
+                "value_preview": "open"
+              },
+              {
+                "source": "thread",
+                "key": "relation_to_thread",
+                "value_preview": "new_thread"
+              },
+              {
+                "source": "thread",
+                "key": "relation_reason",
+                "value_preview": "no_current_thread"
+              },
+              {
+                "source": "thread",
+                "key": "response_mode",
+                "value_preview": "reflect"
+              },
+              {
+                "source": "thread",
+                "key": "pattern_core_present",
+                "value_preview": "true"
+              },
+              {
+                "source": "context",
+                "key": "recent_full_count",
+                "value_preview": "0"
+              },
+              {
+                "source": "context",
+                "key": "summarized_count",
+                "value_preview": "0"
+              },
+              {
+                "source": "behavior_guard",
+                "key": "request_type",
+                "value_preview": "explain_request"
+              },
+              {
+                "source": "behavior_guard",
+                "key": "practice_suppressed",
+                "value_preview": "false"
+              },
+              {
+                "source": "behavior_guard",
+                "key": "practice_suppression_reasons",
+                "value_preview": "user_requested_example_or_explanation"
+              }
+            ],
+            "confidence": 0.45,
+            "risk_flags": [
+              "context_sparse"
+            ],
+            "trace": {
+              "version": "diagnostic_card_v1",
+              "builder": "deterministic_rules_v1",
+              "rules_applied": [
+                "new_exploration_rule",
+                "move_clarify_one_point",
+                "base_avoid_rules",
+                "risk_context_sparse",
+                "request_type=explain_request",
+                "practice_suppressed=false",
+                "practice_suppression_reason=user_requested_example_or_explanation",
+                "confidence_low_fallback"
+              ],
+              "risk_flags": [
+                "context_sparse"
+              ],
+              "evidence_sources": [
+                "state",
+                "thread",
+                "context",
+                "behavior_guard"
+              ]
+            }
+          },
+          "diagnostic_center_shadow": {
+            "enabled": true,
+            "status": "ok",
+            "schema_version": "diagnostic_center_output_v1",
+            "runtime_mode": "shadow_only",
+            "user_path_effect": "none",
+            "output": {
+              "schema_version": "diagnostic_center_output_v1",
+              "status": "ok",
+              "nervous_state": "window",
+              "intent": "explore",
+              "openness": "open",
+              "ok_position": "I+W+",
+              "relation_to_thread": "new_thread",
+              "phase": "clarify",
+              "working_hypothesis": {
+                "pattern_candidate": "integration_ready_exploration",
+                "mechanism_summary": "user appears able to tolerate perspective broadening",
+                "blind_spot_candidate": "premature advice may reduce reflective quality",
+                "confidence": 0.62,
+                "evidence": [
+                  "nervous_state:window",
+                  "intent:explore",
+                  "openness:open",
+                  "ok_position:I+W+",
+                  "relation_to_thread:new_thread",
+                  "phase:clarify",
+                  "pattern_core:Как разработчик, объясни, какие материалы ты использовал для отв",
+                  "lens_hint:unknown"
+                ],
+                "counter_evidence": [],
+                "risk_flags": []
+              },
+              "lens_signals": [
+                {
+                  "lens_family": "unknown",
+                  "score": 0.09075009814518892,
+                  "source": "knowledge_hits",
+                  "rationale": "retrieval metadata hint"
+                }
+              ],
+              "next_micro_shift": {
+                "response_goal": "deepen_and_integrate",
+                "response_mode": "reflect_plus_alternative",
+                "target_micro_shift": "expand perspective while preserving agency",
+                "must_do": [
+                  "validate_feeling",
+                  "offer_alternative_perspective"
+                ],
+                "must_not_do": [
+                  "give_final_advice",
+                  "quote_kb_directly",
+                  "introduce_new_framework"
+                ],
+                "depth_allowed": "medium|high",
+                "max_questions": 1,
+                "max_concepts": 2
+              },
+              "trace": {
+                "version": "diagnostic_center_trace_v1",
+                "builder": "diagnostic_center_dry_run_v1",
+                "rules_applied": [
+                  "deterministic_dry_run_v1",
+                  "internal_only_contract",
+                  "kb_lens_internal_rule",
+                  "must_not_quote_source_rule"
+                ],
+                "safety_priority_applied": false,
+                "evidence_sources": [
+                  "state_snapshot",
+                  "thread_state",
+                  "context_package",
+                  "knowledge_hits"
+                ],
+                "kb_usage_mode": "internal_lens_only",
+                "must_not_quote_source": true
+              },
+              "diagnostic_center_runtime_enabled": false,
+              "user_facing_text_generated": false
+            },
+            "divergence": {
+              "safety_priority_match": true,
+              "depth_compatible": true,
+              "writer_move_compatible": true,
+              "response_mode_compatible": true,
+              "relation_to_thread_match": true,
+              "phase_match": true,
+              "pattern_core_present": true,
+              "kb_boundary_ok": true,
+              "raw_kb_text_exposed": false,
+              "thread_risk": "none",
+              "warnings": [],
+              "hard_blocker_reasons": [],
+              "expected_divergence": true,
+              "confidence": 0.62,
+              "diagnostic_card_alignment": {
+                "safety_priority_match": true,
+                "low_resource_depth_match": true,
+                "writer_move_compatible": true,
+                "response_mode_compatible": true
+              },
+              "thread_alignment": {
+                "relation_to_thread_match": true,
+                "phase_match": true,
+                "pattern_core_present": true,
+                "continuity_risk": "none"
+              },
+              "kb_boundary": {
+                "kb_usage_mode": "internal_lens_only",
+                "must_not_quote_source": true,
+                "raw_kb_text_exposed": false
+              },
+              "user_path": {
+                "writer_contract_changed": false,
+                "writer_prompt_changed_by_shadow": false,
+                "final_answer_changed_by_shadow": false,
+                "diagnostic_center_output_passed_to_writer": false
+              }
+            },
+            "kb_sanitization": {
+              "source_hits_count": 6,
+              "sanitized_hits_count": 6,
+              "forbidden_fields_stripped": 0,
+              "raw_kb_text_exposed": false
+            },
+            "timing_ms": 0,
+            "error": null
+          },
+          "retrieval": {
+            "version": "contextual_retrieval_gating_v1",
+            "retrieval_decision_version": "contextual_retrieval_gating_v1",
+            "retrieval_action": "memory_only",
+            "rag_candidates_count": 3,
+            "rag_included_count": 0,
+            "rag_included_reason": "",
+            "rag_suppressed_reason": "candidate_available_but_current_turn_prefers_recent_context",
+            "writer_can_ignore_rag": true,
+            "rag_relevance_to_current_turn": "medium",
+            "inherited_topic": "",
+            "inherited_offer_type": "unknown",
+            "why_memory_only_still_included_rag": "",
+            "fresh_chat_context_policy": {
+              "version": "fresh_chat_context_policy_v1",
+              "is_new_chat": true,
+              "turn_index": 1,
+              "fresh_window_active": true,
+              "is_greeting_or_contact": false,
+              "explicit_continuation_requested": false,
+              "explicit_question_or_knowledge_need": true,
+              "cross_session_memory_allowed": true,
+              "cross_session_memory_reason": "explicit_question_or_knowledge_need",
+              "active_context_source": "current_chat_runtime_scope"
+            },
+            "rag_included_for_writer": [],
+            "hybrid_retrieval_planner_version": "hybrid_retrieval_planner_v1_r1",
+            "hybrid_retrieval_planner_mode": "shadow",
+            "hybrid_retrieval_plan": {
+              "version": "hybrid_retrieval_planner_v1_r1",
+              "retrieval_needed": true,
+              "retrieval_action": "query_kb",
+              "composed_query": "как разработчик какие материалы использовал для ответа что",
+              "needed_chunk_types": [
+                "concept",
+                "source_fragment"
+              ],
+              "avoided_chunk_types": [],
+              "mechanism_hints": [],
+              "depth_level_hint": 1,
+              "safety_layer_required": false,
+              "allowed_use_filter_hint": [
+                "writer_support"
+              ],
+              "diagnostic_hints_used": false,
+              "writer_can_ignore_rag": false,
+              "retrieval_gap_reason": "",
+              "no_user_facing_text_created": true,
+              "fallback_if_invalid": "legacy_query",
+              "constraints_for_writer": [],
+              "confidence": 0.84
+            },
+            "hybrid_retrieval_plan_valid": true,
+            "hybrid_retrieval_plan_error": null,
+            "hybrid_retrieval_universal_gate": "clear_kb_ask",
+            "hybrid_retrieval_llm_called": false,
+            "hybrid_retrieval_llm_reason": "universal_gate_resolved",
+            "hybrid_retrieval_fallback_used": false,
+            "hybrid_retrieval_planner_status": "valid",
+            "hybrid_retrieval_fallback_scope": "none",
+            "hybrid_retrieval_owner_severity": "info",
+            "hybrid_retrieval_production_query_source": "current_turn_focus_v1",
+            "hybrid_retrieval_production_answer_affected": false
+          },
+          "knowledge_answer": {
+            "needed": false,
+            "reason": "no_known_concept_question",
+            "concept": "",
+            "answer_type": "concept_explanation",
+            "concept_match_type": "none",
+            "matched_concepts": [],
+            "kb_grounding_available": false,
+            "kb_grounding_sources": [],
+            "kb_grounding_max_score": 0.09075,
+            "fallback_grounding_used": false,
+            "fallback_grounding_concepts": [],
+            "should_answer_directly": false,
+            "should_ask_definition_first": true,
+            "practice_overview_requested": false,
+            "preferred_hit_tags": [],
+            "practice_allowed": true,
+            "preferred_response_mode": "reflect",
+            "writer_instruction": "follow_response_mode_with_normal_clarification_policy"
+          }
+        },
+        "suppressed_legacy_constraints": [
+          "writer_move.max_sentences=5",
+          "writer_move.max_questions=1",
+          "writer_move.must_do.ask_one_specific_question",
+          "diagnostic_card.ask_at_most_one_question",
+          "response_planner.response_depth=short",
+          "active_line.should_ask_question=true",
+          "active_line.practice_suppression_active=true"
+        ],
+        "latest_turn_constraints_v1": {
+          "version": "latest_turn_constraints_v1",
+          "no_practice": false,
+          "no_breathing_only": false,
+          "simplify": false,
+          "long_term_perspective": false,
+          "no_internal_db": false,
+          "active_constraints": [],
+          "source": "none"
+        },
+        "source_signals": {
+          "dialogue_pragmatics": {
+            "version": "dialogue_pragmatics_v1",
+            "is_short_utterance": false,
+            "short_utterance_type": "not_short",
+            "is_contextual_followup": false,
+            "followup_relation": "none",
+            "previous_assistant_offer_type": "unknown",
+            "inherited_user_intent": "continue_previous_offer",
+            "inherited_topic": "",
+            "should_answer_directly": false,
+            "should_not_ask_confirmation_again": false,
+            "allow_concrete_step_or_phrase": false,
+            "retrieval_need_hint": "contextual_optional",
+            "repair_user_dissatisfaction": false,
+            "should_apologize_briefly": false,
+            "reason": "none"
+          },
+          "dialogue_act_resolution": {
+            "version": "dialogue_act_resolver_v1",
+            "dialogue_act": "knowledge_question",
+            "confidence": 0.93,
+            "evidence": [
+              "explicit_direct_knowledge_request"
+            ],
+            "reason": "explicit_answer_first_knowledge_request",
+            "source": "explicit_direct_question_override",
+            "not_exact_match_rule": true
+          },
+          "answer_obligation_resolution": {
+            "version": "answer_obligation_resolver_v1",
+            "answer_obligation": "answer_knowledge_question",
+            "answer_shape": "structured_explanation",
+            "question_policy": "optional_none",
+            "depth": "medium",
+            "reason": "knowledge_question_requires_direct_answer",
+            "confidence": "high",
+            "style_overrides": {
+              "tone": "neutral",
+              "length_preference": "adaptive",
+              "complexity_preference": "normal",
+              "avoid": [],
+              "avoid_overexplaining": false,
+              "avoid_unrequested_practice": false
+            },
+            "source": [
+              "dialogue_act=knowledge_question",
+              "profile_preset=free_dialogue_default"
+            ]
+          },
+          "latest_turn_constraints_v1": {
+            "version": "latest_turn_constraints_v1",
+            "no_practice": false,
+            "no_breathing_only": false,
+            "simplify": false,
+            "long_term_perspective": false,
+            "no_internal_db": false,
+            "active_constraints": [],
+            "source": "none"
+          },
+          "style_state_summary": {
+            "version": "dialogue_style_state_v1",
+            "tone": "neutral",
+            "length_preference": "adaptive",
+            "complexity_preference": "normal",
+            "avoid": [],
+            "updated_by_turn_index": 0,
+            "source": "carry_forward"
+          },
+          "current_user_request": "Как разработчик, объясни, какие материалы ты использовал для ответа и что дошло до Writer?",
+          "must_answer_source": "latest_turn",
+          "previous_must_answer_demoted": false,
+          "previous_must_answer": "",
+          "explicit_continue_previous_detected": false,
+          "answer_target": "latest_turn",
+          "writer_contact_mode": "structured_answer",
+          "direct_source_request": false,
+          "owner_debug_question_detected": false,
+          "summary_request": false,
+          "summary_scope": "",
+          "no_confirmation_needed": false,
+          "no_practice_unless_requested": false
+        },
+        "conflict_resolution": {
+          "authority_order": [
+            "minimal_safety_baseline",
+            "explicit_user_request",
+            "answer_obligation",
+            "last_offer_or_unanswered_question_recovery",
+            "style_preference",
+            "knowledge_or_concept_need",
+            "planner_and_diagnostic_advisory",
+            "writer_freedom"
+          ],
+          "safety_active": false,
+          "advisory_mode": true,
+          "latest_turn_constraints_active": false,
+          "explicit_continue_previous_detected": false,
+          "previous_must_answer_demoted": false
+        }
+      },
+      "prompt_assembly": {
+        "writer_first_enabled": true,
+        "fresh_chat_context_policy": {
+          "version": "fresh_chat_context_policy_v1",
+          "is_new_chat": true,
+          "turn_index": 1,
+          "fresh_window_active": true,
+          "is_greeting_or_contact": false,
+          "explicit_continuation_requested": false,
+          "explicit_question_or_knowledge_need": true,
+          "cross_session_memory_allowed": true,
+          "cross_session_memory_reason": "explicit_question_or_knowledge_need",
+          "active_context_source": "current_chat_runtime_scope"
+        },
+        "writer_context_package": {
+          "version": "writer_context_package_v1",
+          "recent_turns_for_writer": [],
+          "profile_for_writer": {
+            "patterns": [],
+            "values": [],
+            "progress_notes": []
+          },
+          "rag_for_writer": [],
+          "semantic_cards_pilot": {
+            "schema_version": "semantic_cards_pilot_trace_v1",
+            "enabled": true,
+            "enabled_requested": true,
+            "enabled_source": "env",
+            "runtime_mode": "local",
+            "pack_id": "semantic_cards_pilot_v1",
+            "loaded_card_count": 12,
+            "adapter_enabled": true,
+            "writer_payload_enabled": true,
+            "authority": "advisory_only",
+            "selected_card_count": 3,
+            "selected_card_ids": [
+              "control_as_safety_v1",
+              "fact_vs_interpretation_v1",
+              "program_imperfect_self_v1"
+            ],
+            "selection_reason": "title/core_thesis/current_turn_overlap",
+            "writer_can_ignore": true,
+            "applied_as_authority": false,
+            "suppressed_reason": "",
+            "writer_payload_enriched": true,
+            "status": "selected",
+            "error": "",
+            "candidate_scores": [
+              {
+                "card_id": "control_as_safety_v1",
+                "score": 1,
+                "reasons": [
+                  "current_turn_overlap"
+                ]
+              },
+              {
+                "card_id": "fact_vs_interpretation_v1",
+                "score": 1,
+                "reasons": [
+                  "current_turn_overlap"
+                ]
+              },
+              {
+                "card_id": "program_imperfect_self_v1",
+                "score": 1,
+                "reasons": [
+                  "current_turn_overlap"
+                ]
+              }
+            ]
+          },
+          "semantic_card_payload_items": [
+            {
+              "chunk_id": "semantic_card:control_as_safety_v1",
+              "source": "semantic_cards_pilot_v1",
+              "source_id": "semantic_cards_pilot_v1",
+              "source_doc": "Kuznica Duha v2",
+              "chunk_type": "mechanism",
+              "core_thesis": "Control can function as a safety strategy: the system tries to reduce uncertainty by managing people, events, or inner states.",
+              "content": "Control can function as a safety strategy: the system tries to reduce uncertainty by managing people, events, or inner states.",
+              "mechanism_hints": [
+                "control_as_safety",
+                "uncertainty_reduction",
+                "threat_prediction"
+              ],
+              "user_markers_examples": [
+                "контроль как безопасность",
+                "мне нужно все контролировать",
+                "без контроля тревожно"
+              ],
+              "use_when": [
+                "контроль как безопасность",
+                "мне нужно все контролировать",
+                "без контроля тревожно"
+              ],
+              "avoid_when": [
+                "acute_crisis",
+                "user_asked_no_theory"
+              ],
+              "allowed_use": [
+                "direct_to_writer",
+                "internal_lens"
+              ],
+              "quote_policy": "paraphrase_only",
+              "practice_policy": "no_practice_unless_requested",
+              "writer_instruction": "Explain the protective logic plainly and avoid pathologizing control.",
+              "recommended_moves": [],
+              "forbidden_moves": [
+                "acute_crisis",
+                "user_asked_no_theory"
+              ],
+              "semantic_card_id": "control_as_safety_v1",
+              "semantic_card_pack_id": "semantic_cards_pilot_v1",
+              "payload_item_origin": "semantic_card",
+              "writer_can_ignore": true,
+              "applied_as_authority": false
+            },
+            {
+              "chunk_id": "semantic_card:fact_vs_interpretation_v1",
+              "source": "semantic_cards_pilot_v1",
+              "source_id": "semantic_cards_pilot_v1",
+              "source_doc": "Kuznica Duha v2",
+              "chunk_type": "diagnostic_lens",
+              "core_thesis": "Separating fact from interpretation helps a person see what actually happened before the nervous system turns it into a story about danger, shame, or rejection.",
+              "content": "Separating fact from interpretation helps a person see what actually happened before the nervous system turns it into a story about danger, shame, or rejection.",
+              "mechanism_hints": [
+                "fact_interpretation",
+                "meaning_making",
+                "threat_story"
+              ],
+              "user_markers_examples": [
+                "это факт или интерпретация",
+                "я додумал",
+                "какие есть доказательства"
+              ],
+              "use_when": [
+                "это факт или интерпретация",
+                "я додумал",
+                "какие есть доказательства"
+              ],
+              "avoid_when": [
+                "acute_crisis",
+                "user_asked_no_theory"
+              ],
+              "allowed_use": [
+                "direct_to_writer",
+                "internal_lens"
+              ],
+              "quote_policy": "paraphrase_only",
+              "practice_policy": "no_practice_unless_requested",
+              "writer_instruction": "Use this as a gentle lens, not as a cross-examination.",
+              "recommended_moves": [],
+              "forbidden_moves": [
+                "acute_crisis",
+                "user_asked_no_theory"
+              ],
+              "semantic_card_id": "fact_vs_interpretation_v1",
+              "semantic_card_pack_id": "semantic_cards_pilot_v1",
+              "payload_item_origin": "semantic_card",
+              "writer_can_ignore": true,
+              "applied_as_authority": false
+            },
+            {
+              "chunk_id": "semantic_card:program_imperfect_self_v1",
+              "source": "semantic_cards_pilot_v1",
+              "source_id": "semantic_cards_pilot_v1",
+              "source_doc": "Kuznica Duha v2",
+              "chunk_type": "concept",
+              "core_thesis": "The imperfect-self program is a stable inner pattern that reads ordinary experience through the feeling that something is wrong with me; explain it as a mechanism, not as a diagnosis or identity.",
+              "content": "The imperfect-self program is a stable inner pattern that reads ordinary experience through the feeling that something is wrong with me; explain it as a mechanism, not as a diagnosis or identity.",
+              "mechanism_hints": [
+                "imperfect_self",
+                "shame",
+                "self_fixing_loop"
+              ],
+              "user_markers_examples": [
+                "со мной что-то не так",
+                "я недостаточно хорош",
+                "несовершенное Я"
+              ],
+              "use_when": [
+                "со мной что-то не так",
+                "я недостаточно хорош",
+                "несовершенное Я"
+              ],
+              "avoid_when": [
+                "acute_crisis",
+                "user_asked_no_theory"
+              ],
+              "allowed_use": [
+                "direct_to_writer",
+                "internal_lens"
+              ],
+              "quote_policy": "paraphrase_only",
+              "practice_policy": "no_practice_unless_requested",
+              "writer_instruction": "Explain softly as a learned mechanism. Do not label the user and do not offer a practice unless the user asks.",
+              "recommended_moves": [],
+              "forbidden_moves": [
+                "acute_crisis",
+                "user_asked_no_theory"
+              ],
+              "semantic_card_id": "program_imperfect_self_v1",
+              "semantic_card_pack_id": "semantic_cards_pilot_v1",
+              "payload_item_origin": "semantic_card",
+              "writer_can_ignore": true,
+              "applied_as_authority": false
+            }
+          ],
+          "rag_candidates_for_trace": [
+            {
+              "chunk_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+              "source": "book",
+              "score": 0.09075009814518892,
+              "content_preview": "Ты открыл эту книгу не случайно. Скорее всего, ты уже прошёл терапию, читал умные книжки, медитировал, делал практики. И всё равно что-то внутри скребёт. Какой-то фоновый шум, который не даёт покоя. Ощущение, что ты не дотягиваешь, не доста",
+              "chunk_type": "general_text",
+              "included_for_writer": false,
+              "reason_not_included": "direct_knowledge_question"
+            },
+            {
+              "chunk_id": "ccf4ee87-2070-4ac9-affa-460a7c601be9",
+              "source": "book",
+              "score": 0.08457318936163004,
+              "content_preview": "В начале 1950-х годов американский психолог **Клэр Грейвз** начал задавать своим студентам простой вопрос: «Опиши зрелого, психологически здорового человека». Он ждал общего ответа. Получил хаос.\n\nОтветы не просто различались — они были нес",
+              "chunk_type": "general_text",
+              "included_for_writer": false,
+              "reason_not_included": "direct_knowledge_question"
+            },
+            {
+              "chunk_id": "11a72efd-5a3c-413a-bd74-70356a407983",
+              "source": "book",
+              "score": 0.07610429822372175,
+              "content_preview": "**Цель:** найти входы в тень через реакции на других людей.\n\n**Время:** 20–30 минут. Один раз как исследование.\n\nВозьми лист бумаги. Раздели на две колонки.\n\nВ первой — напиши имена или описания людей, которые тебя сильно раздражают. Не про",
+              "chunk_type": "general_text",
+              "included_for_writer": false,
+              "reason_not_included": "direct_knowledge_question"
+            }
+          ],
+          "rag_gate_decision": {
+            "version": "contextual_retrieval_gating_v1",
+            "retrieval_decision_version": "contextual_retrieval_gating_v1",
+            "retrieval_action": "query_kb",
+            "rag_candidates_count": 3,
+            "rag_included_count": 0,
+            "rag_included_reason": "knowledge question needs compact KB support",
+            "rag_suppressed_reason": "candidate_available_but_current_turn_prefers_recent_context",
+            "writer_can_ignore_rag": false,
+            "rag_relevance_to_current_turn": "medium",
+            "inherited_topic": "",
+            "inherited_offer_type": "unknown",
+            "why_memory_only_still_included_rag": "",
+            "fresh_chat_context_policy": {
+              "version": "fresh_chat_context_policy_v1",
+              "is_new_chat": true,
+              "turn_index": 1,
+              "fresh_window_active": true,
+              "is_greeting_or_contact": false,
+              "explicit_continuation_requested": false,
+              "explicit_question_or_knowledge_need": true,
+              "cross_session_memory_allowed": true,
+              "cross_session_memory_reason": "explicit_question_or_knowledge_need",
+              "active_context_source": "current_chat_runtime_scope"
+            },
+            "rag_included_for_writer": [],
+            "hybrid_retrieval_planner_version": "hybrid_retrieval_planner_v1_r1",
+            "hybrid_retrieval_planner_mode": "shadow",
+            "hybrid_retrieval_plan": {
+              "version": "hybrid_retrieval_planner_v1_r1",
+              "retrieval_needed": true,
+              "retrieval_action": "query_kb",
+              "composed_query": "как разработчик какие материалы использовал для ответа что",
+              "needed_chunk_types": [
+                "concept",
+                "source_fragment"
+              ],
+              "avoided_chunk_types": [],
+              "mechanism_hints": [],
+              "depth_level_hint": 1,
+              "safety_layer_required": false,
+              "allowed_use_filter_hint": [
+                "writer_support"
+              ],
+              "diagnostic_hints_used": false,
+              "writer_can_ignore_rag": false,
+              "retrieval_gap_reason": "",
+              "no_user_facing_text_created": true,
+              "fallback_if_invalid": "legacy_query",
+              "constraints_for_writer": [],
+              "confidence": 0.84
+            },
+            "hybrid_retrieval_plan_valid": true,
+            "hybrid_retrieval_plan_error": null,
+            "hybrid_retrieval_universal_gate": "clear_kb_ask",
+            "hybrid_retrieval_llm_called": false,
+            "hybrid_retrieval_llm_reason": "universal_gate_resolved",
+            "hybrid_retrieval_fallback_used": false,
+            "hybrid_retrieval_planner_status": "valid",
+            "hybrid_retrieval_fallback_scope": "none",
+            "hybrid_retrieval_owner_severity": "info",
+            "hybrid_retrieval_production_query_source": "current_turn_focus_v1",
+            "hybrid_retrieval_production_answer_affected": false,
+            "composer": {
+              "version": "contextual_retrieval_query_composer_v1",
+              "enabled": true,
+              "mode": "deterministic_v1",
+              "retrieval_need": "knowledge_context",
+              "retrieval_action": "query_kb",
+              "query_source": "current_user_message",
+              "composed_query": "разработчик материалы использовал для ответа дошло writer",
+              "query_terms": [
+                "разработчик",
+                "материалы",
+                "использовал",
+                "для",
+                "ответа",
+                "дошло",
+                "writer"
+              ],
+              "inherited_topic": "",
+              "inherited_offer_type": "none",
+              "confidence": 0.88,
+              "writer_can_ignore_rag": false,
+              "include_for_writer_if_found": true,
+              "max_chunks_for_writer": 3,
+              "max_chars_per_chunk": 700,
+              "suppress_reason": "",
+              "reason": "knowledge question needs compact KB support",
+              "evidence": [
+                "knowledge_question",
+                "query_composed_from_current_message"
+              ],
+              "no_user_facing_text_created": true,
+              "pre_retrieval": {
+                "version": "contextual_retrieval_query_composer_v1",
+                "enabled": true,
+                "mode": "deterministic_v1",
+                "retrieval_need": "knowledge_context",
+                "retrieval_action": "query_kb",
+                "query_source": "current_user_message",
+                "composed_query": "разработчик материалы использовал для ответа дошло writer",
+                "query_terms": [
+                  "разработчик",
+                  "материалы",
+                  "использовал",
+                  "для",
+                  "ответа",
+                  "дошло",
+                  "writer"
+                ],
+                "inherited_topic": "",
+                "inherited_offer_type": "",
+                "confidence": 0.88,
+                "writer_can_ignore_rag": false,
+                "include_for_writer_if_found": true,
+                "max_chunks_for_writer": 3,
+                "max_chars_per_chunk": 700,
+                "suppress_reason": "",
+                "reason": "knowledge question needs compact KB support",
+                "evidence": [
+                  "knowledge_question",
+                  "query_composed_from_current_message"
+                ],
+                "no_user_facing_text_created": true,
+                "hybrid_retrieval_plan": {
+                  "version": "hybrid_retrieval_planner_v1_r1",
+                  "retrieval_needed": true,
+                  "retrieval_action": "query_kb",
+                  "composed_query": "как разработчик какие материалы использовал для ответа что",
+                  "needed_chunk_types": [
+                    "concept",
+                    "source_fragment"
+                  ],
+                  "avoided_chunk_types": [],
+                  "mechanism_hints": [],
+                  "depth_level_hint": 1,
+                  "safety_layer_required": false,
+                  "allowed_use_filter_hint": [
+                    "writer_support"
+                  ],
+                  "diagnostic_hints_used": false,
+                  "writer_can_ignore_rag": false,
+                  "retrieval_gap_reason": "",
+                  "no_user_facing_text_created": true,
+                  "fallback_if_invalid": "legacy_query",
+                  "constraints_for_writer": [],
+                  "confidence": 0.84
+                },
+                "hybrid_retrieval_universal_gate": "clear_kb_ask"
+              },
+              "executed_rag_query": "как разработчик какие материалы использовал для ответа что",
+              "hybrid_retrieval_plan": {
+                "version": "hybrid_retrieval_planner_v1_r1",
+                "retrieval_needed": true,
+                "retrieval_action": "query_kb",
+                "composed_query": "как разработчик какие материалы использовал для ответа что",
+                "needed_chunk_types": [
+                  "concept",
+                  "source_fragment"
+                ],
+                "avoided_chunk_types": [],
+                "mechanism_hints": [],
+                "depth_level_hint": 1,
+                "safety_layer_required": false,
+                "allowed_use_filter_hint": [
+                  "writer_support"
+                ],
+                "diagnostic_hints_used": false,
+                "writer_can_ignore_rag": false,
+                "retrieval_gap_reason": "",
+                "no_user_facing_text_created": true,
+                "fallback_if_invalid": "legacy_query",
+                "constraints_for_writer": [],
+                "confidence": 0.84
+              }
+            },
+            "contextual_retrieval_query_composer": {
+              "version": "contextual_retrieval_query_composer_v1",
+              "enabled": true,
+              "mode": "deterministic_v1",
+              "retrieval_need": "knowledge_context",
+              "retrieval_action": "query_kb",
+              "query_source": "current_user_message",
+              "composed_query": "разработчик материалы использовал для ответа дошло writer",
+              "query_terms": [
+                "разработчик",
+                "материалы",
+                "использовал",
+                "для",
+                "ответа",
+                "дошло",
+                "writer"
+              ],
+              "inherited_topic": "",
+              "inherited_offer_type": "none",
+              "confidence": 0.88,
+              "writer_can_ignore_rag": false,
+              "include_for_writer_if_found": true,
+              "max_chunks_for_writer": 3,
+              "max_chars_per_chunk": 700,
+              "suppress_reason": "",
+              "reason": "knowledge question needs compact KB support",
+              "evidence": [
+                "knowledge_question",
+                "query_composed_from_current_message"
+              ],
+              "no_user_facing_text_created": true,
+              "pre_retrieval": {
+                "version": "contextual_retrieval_query_composer_v1",
+                "enabled": true,
+                "mode": "deterministic_v1",
+                "retrieval_need": "knowledge_context",
+                "retrieval_action": "query_kb",
+                "query_source": "current_user_message",
+                "composed_query": "разработчик материалы использовал для ответа дошло writer",
+                "query_terms": [
+                  "разработчик",
+                  "материалы",
+                  "использовал",
+                  "для",
+                  "ответа",
+                  "дошло",
+                  "writer"
+                ],
+                "inherited_topic": "",
+                "inherited_offer_type": "",
+                "confidence": 0.88,
+                "writer_can_ignore_rag": false,
+                "include_for_writer_if_found": true,
+                "max_chunks_for_writer": 3,
+                "max_chars_per_chunk": 700,
+                "suppress_reason": "",
+                "reason": "knowledge question needs compact KB support",
+                "evidence": [
+                  "knowledge_question",
+                  "query_composed_from_current_message"
+                ],
+                "no_user_facing_text_created": true,
+                "hybrid_retrieval_plan": {
+                  "version": "hybrid_retrieval_planner_v1_r1",
+                  "retrieval_needed": true,
+                  "retrieval_action": "query_kb",
+                  "composed_query": "как разработчик какие материалы использовал для ответа что",
+                  "needed_chunk_types": [
+                    "concept",
+                    "source_fragment"
+                  ],
+                  "avoided_chunk_types": [],
+                  "mechanism_hints": [],
+                  "depth_level_hint": 1,
+                  "safety_layer_required": false,
+                  "allowed_use_filter_hint": [
+                    "writer_support"
+                  ],
+                  "diagnostic_hints_used": false,
+                  "writer_can_ignore_rag": false,
+                  "retrieval_gap_reason": "",
+                  "no_user_facing_text_created": true,
+                  "fallback_if_invalid": "legacy_query",
+                  "constraints_for_writer": [],
+                  "confidence": 0.84
+                },
+                "hybrid_retrieval_universal_gate": "clear_kb_ask"
+              },
+              "executed_rag_query": "как разработчик какие материалы использовал для ответа что",
+              "hybrid_retrieval_plan": {
+                "version": "hybrid_retrieval_planner_v1_r1",
+                "retrieval_needed": true,
+                "retrieval_action": "query_kb",
+                "composed_query": "как разработчик какие материалы использовал для ответа что",
+                "needed_chunk_types": [
+                  "concept",
+                  "source_fragment"
+                ],
+                "avoided_chunk_types": [],
+                "mechanism_hints": [],
+                "depth_level_hint": 1,
+                "safety_layer_required": false,
+                "allowed_use_filter_hint": [
+                  "writer_support"
+                ],
+                "diagnostic_hints_used": false,
+                "writer_can_ignore_rag": false,
+                "retrieval_gap_reason": "",
+                "no_user_facing_text_created": true,
+                "fallback_if_invalid": "legacy_query",
+                "constraints_for_writer": [],
+                "confidence": 0.84
+              }
+            },
+            "contextual_retrieval_query_composer_version": "contextual_retrieval_query_composer_v1",
+            "retrieval_query_source": "current_user_message",
+            "composed_retrieval_query": "разработчик материалы использовал для ответа дошло writer",
+            "retrieval_need": "knowledge_context",
+            "planned_composed_query": "как разработчик какие материалы использовал для ответа что",
+            "executed_rag_query": "как разработчик какие материалы использовал для ответа что",
+            "legacy_rag_query": "Как разработчик, объясни, какие материалы ты использовал для ответа и что дошло до Writer?",
+            "query_before_rag_proof": true,
+            "retrieval_query_build_trace": {
+              "schema_version": "retrieval_query_build_trace_v1",
+              "enabled": true,
+              "primary_path": "current_turn_focus_v1",
+              "raw_user_query": "Как разработчик, объясни, какие материалы ты использовал для ответа и что дошло до Writer?",
+              "previous_user_query": "",
+              "canonical_query": "как разработчик какие материалы использовал для ответа что",
+              "executed_query": "как разработчик какие материалы использовал для ответа что",
+              "planned_query": "как разработчик какие материалы использовал для ответа что",
+              "planner_query_used": true,
+              "previous_user_query_included": false,
+              "previous_user_query_inclusion_reason": "standalone_current_knowledge_question",
+              "inherited_topic_used": false,
+              "inherited_topic_reason": "none",
+              "inherited_topic": "",
+              "dialogue_act_hint": "",
+              "dedupe_applied": false,
+              "duplicate_fragment_count": 0,
+              "truncation_applied": false,
+              "truncation_strategy": "none",
+              "query_truncated_mid_word": false,
+              "current_turn_focus_status": "clean",
+              "fallback_used": false,
+              "fallback_reason": "",
+              "legacy_query_builder_fallback": false,
+              "query_builder_primary_path": "current_turn_focus_v1"
+            },
+            "retrieval_gap_reason": "",
+            "needed_chunk_types": [
+              "concept",
+              "source_fragment"
+            ],
+            "mechanism_hints": []
+          },
+          "contextual_retrieval_query_composer": {
+            "version": "contextual_retrieval_query_composer_v1",
+            "enabled": true,
+            "mode": "deterministic_v1",
+            "retrieval_need": "knowledge_context",
+            "retrieval_action": "query_kb",
+            "query_source": "current_user_message",
+            "composed_query": "разработчик материалы использовал для ответа дошло writer",
+            "query_terms": [
+              "разработчик",
+              "материалы",
+              "использовал",
+              "для",
+              "ответа",
+              "дошло",
+              "writer"
+            ],
+            "inherited_topic": "",
+            "inherited_offer_type": "none",
+            "confidence": 0.88,
+            "writer_can_ignore_rag": false,
+            "include_for_writer_if_found": true,
+            "max_chunks_for_writer": 3,
+            "max_chars_per_chunk": 700,
+            "suppress_reason": "",
+            "reason": "knowledge question needs compact KB support",
+            "evidence": [
+              "knowledge_question",
+              "query_composed_from_current_message"
+            ],
+            "no_user_facing_text_created": true,
+            "pre_retrieval": {
+              "version": "contextual_retrieval_query_composer_v1",
+              "enabled": true,
+              "mode": "deterministic_v1",
+              "retrieval_need": "knowledge_context",
+              "retrieval_action": "query_kb",
+              "query_source": "current_user_message",
+              "composed_query": "разработчик материалы использовал для ответа дошло writer",
+              "query_terms": [
+                "разработчик",
+                "материалы",
+                "использовал",
+                "для",
+                "ответа",
+                "дошло",
+                "writer"
+              ],
+              "inherited_topic": "",
+              "inherited_offer_type": "",
+              "confidence": 0.88,
+              "writer_can_ignore_rag": false,
+              "include_for_writer_if_found": true,
+              "max_chunks_for_writer": 3,
+              "max_chars_per_chunk": 700,
+              "suppress_reason": "",
+              "reason": "knowledge question needs compact KB support",
+              "evidence": [
+                "knowledge_question",
+                "query_composed_from_current_message"
+              ],
+              "no_user_facing_text_created": true,
+              "hybrid_retrieval_plan": {
+                "version": "hybrid_retrieval_planner_v1_r1",
+                "retrieval_needed": true,
+                "retrieval_action": "query_kb",
+                "composed_query": "как разработчик какие материалы использовал для ответа что",
+                "needed_chunk_types": [
+                  "concept",
+                  "source_fragment"
+                ],
+                "avoided_chunk_types": [],
+                "mechanism_hints": [],
+                "depth_level_hint": 1,
+                "safety_layer_required": false,
+                "allowed_use_filter_hint": [
+                  "writer_support"
+                ],
+                "diagnostic_hints_used": false,
+                "writer_can_ignore_rag": false,
+                "retrieval_gap_reason": "",
+                "no_user_facing_text_created": true,
+                "fallback_if_invalid": "legacy_query",
+                "constraints_for_writer": [],
+                "confidence": 0.84
+              },
+              "hybrid_retrieval_universal_gate": "clear_kb_ask"
+            },
+            "executed_rag_query": "как разработчик какие материалы использовал для ответа что",
+            "hybrid_retrieval_plan": {
+              "version": "hybrid_retrieval_planner_v1_r1",
+              "retrieval_needed": true,
+              "retrieval_action": "query_kb",
+              "composed_query": "как разработчик какие материалы использовал для ответа что",
+              "needed_chunk_types": [
+                "concept",
+                "source_fragment"
+              ],
+              "avoided_chunk_types": [],
+              "mechanism_hints": [],
+              "depth_level_hint": 1,
+              "safety_layer_required": false,
+              "allowed_use_filter_hint": [
+                "writer_support"
+              ],
+              "diagnostic_hints_used": false,
+              "writer_can_ignore_rag": false,
+              "retrieval_gap_reason": "",
+              "no_user_facing_text_created": true,
+              "fallback_if_invalid": "legacy_query",
+              "constraints_for_writer": [],
+              "confidence": 0.84
+            }
+          },
+          "contextual_retrieval_query_composer_version": "contextual_retrieval_query_composer_v1",
+          "hybrid_retrieval_plan": {
+            "version": "hybrid_retrieval_planner_v1_r1",
+            "retrieval_needed": true,
+            "retrieval_action": "query_kb",
+            "composed_query": "как разработчик какие материалы использовал для ответа что",
+            "needed_chunk_types": [
+              "concept",
+              "source_fragment"
+            ],
+            "avoided_chunk_types": [],
+            "mechanism_hints": [],
+            "depth_level_hint": 1,
+            "safety_layer_required": false,
+            "allowed_use_filter_hint": [
+              "writer_support"
+            ],
+            "diagnostic_hints_used": false,
+            "writer_can_ignore_rag": false,
+            "retrieval_gap_reason": "",
+            "no_user_facing_text_created": true,
+            "fallback_if_invalid": "legacy_query",
+            "constraints_for_writer": [],
+            "confidence": 0.84
+          },
+          "hybrid_retrieval_planner_mode": "shadow",
+          "retrieval_query_source": "current_user_message",
+          "composed_retrieval_query": "разработчик материалы использовал для ответа дошло writer",
+          "retrieval_need": "knowledge_context",
+          "writer_can_ignore_rag": false,
+          "writer_kb_payload": {
+            "schema_version": "writer_kb_payload_v1",
+            "enabled": true,
+            "chunk_count": 2,
+            "total_sent_char_count": 286,
+            "chunks": [
+              {
+                "chunk_id": "semantic_card:control_as_safety_v1",
+                "item_id": "semantic_card:control_as_safety_v1",
+                "source_id": "semantic_cards_pilot_v1",
+                "source_doc": "Kuznica Duha v2",
+                "chunk_type": "mechanism",
+                "payload_item_origin": "semantic_card",
+                "origin": "semantic_card",
+                "semantic_card_id": "control_as_safety_v1",
+                "semantic_card_pack_id": "semantic_cards_pilot_v1",
+                "core_thesis": "Control can function as a safety strategy: the system tries to reduce uncertainty by managing people, events, or inner states.",
+                "content_excerpt": "Control can function as a safety strategy: the system tries to reduce uncertainty by managing people, events, or inner states.",
+                "mechanism_hints": [
+                  "control_as_safety",
+                  "uncertainty_reduction",
+                  "threat_prediction"
+                ],
+                "user_markers_examples": [
+                  "контроль как безопасность",
+                  "мне нужно все контролировать",
+                  "без контроля тревожно"
+                ],
+                "use_when": [
+                  "контроль как безопасность",
+                  "мне нужно все контролировать",
+                  "без контроля тревожно"
+                ],
+                "avoid_when": [
+                  "acute_crisis",
+                  "user_asked_no_theory"
+                ],
+                "allowed_use": [
+                  "direct_to_writer",
+                  "internal_lens"
+                ],
+                "quote_policy": "paraphrase_only",
+                "writer_instruction": "Explain the protective logic plainly and avoid pathologizing control.",
+                "recommended_moves": [],
+                "forbidden_moves": [
+                  "acute_crisis",
+                  "user_asked_no_theory"
+                ],
+                "original_char_count": 126,
+                "sent_char_count": 126,
+                "content_truncated": false,
+                "truncation_strategy": "none",
+                "truncation_reason": "none",
+                "truncated_mid_sentence": false,
+                "overlay_metadata_used": false,
+                "sent_to_writer": true,
+                "writer_can_ignore": true,
+                "applied_as_authority": false,
+                "inclusion_reason": "selected_for_writer_payload"
+              },
+              {
+                "chunk_id": "semantic_card:fact_vs_interpretation_v1",
+                "item_id": "semantic_card:fact_vs_interpretation_v1",
+                "source_id": "semantic_cards_pilot_v1",
+                "source_doc": "Kuznica Duha v2",
+                "chunk_type": "diagnostic_lens",
+                "payload_item_origin": "semantic_card",
+                "origin": "semantic_card",
+                "semantic_card_id": "fact_vs_interpretation_v1",
+                "semantic_card_pack_id": "semantic_cards_pilot_v1",
+                "core_thesis": "Separating fact from interpretation helps a person see what actually happened before the nervous system turns it into a story about danger, shame, or rejection.",
+                "content_excerpt": "Separating fact from interpretation helps a person see what actually happened before the nervous system turns it into a story about danger, shame, or rejection.",
+                "mechanism_hints": [
+                  "fact_interpretation",
+                  "meaning_making",
+                  "threat_story"
+                ],
+                "user_markers_examples": [
+                  "это факт или интерпретация",
+                  "я додумал",
+                  "какие есть доказательства"
+                ],
+                "use_when": [
+                  "это факт или интерпретация",
+                  "я додумал",
+                  "какие есть доказательства"
+                ],
+                "avoid_when": [
+                  "acute_crisis",
+                  "user_asked_no_theory"
+                ],
+                "allowed_use": [
+                  "direct_to_writer",
+                  "internal_lens"
+                ],
+                "quote_policy": "paraphrase_only",
+                "writer_instruction": "Use this as a gentle lens, not as a cross-examination.",
+                "recommended_moves": [],
+                "forbidden_moves": [
+                  "acute_crisis",
+                  "user_asked_no_theory"
+                ],
+                "original_char_count": 160,
+                "sent_char_count": 160,
+                "content_truncated": false,
+                "truncation_strategy": "none",
+                "truncation_reason": "none",
+                "truncated_mid_sentence": false,
+                "overlay_metadata_used": false,
+                "sent_to_writer": true,
+                "writer_can_ignore": true,
+                "applied_as_authority": false,
+                "inclusion_reason": "selected_for_writer_payload"
+              }
+            ],
+            "warnings": [],
+            "blockers": []
+          },
+          "writer_kb_payload_trace": {
+            "schema_version": "writer_kb_payload_trace_v1",
+            "enabled": true,
+            "configured_enabled": true,
+            "configured_source": "default_local",
+            "status": "structured_payload_used",
+            "primary_path": "writer_kb_payload_v1",
+            "payload_version": "writer_kb_payload_v1",
+            "input_rag_for_writer_count": 0,
+            "payload_chunk_count": 2,
+            "total_original_char_count": 286,
+            "total_sent_char_count": 286,
+            "truncated_chunk_count": 0,
+            "mid_sentence_cut_count": 0,
+            "overlay_metadata_used_count": 0,
+            "payload_sent_to_writer_char_count": 286,
+            "payload_display_preview_char_count": 286,
+            "payload_display_is_preview": true,
+            "payload_full_text_sent_to_writer": true,
+            "payload_full_text_exposed_in_web_trace": false,
+            "chunk_summaries": [
+              {
+                "item_id": "semantic_card:control_as_safety_v1",
+                "chunk_id": "semantic_card:control_as_safety_v1",
+                "origin": "semantic_card",
+                "source_doc": "Kuznica Duha v2",
+                "chunk_type": "mechanism",
+                "quote_policy": "paraphrase_only",
+                "allowed_use": [
+                  "direct_to_writer",
+                  "internal_lens"
+                ],
+                "payload_item_origin": "semantic_card",
+                "semantic_card_id": "control_as_safety_v1",
+                "semantic_card_pack_id": "semantic_cards_pilot_v1",
+                "sent_to_writer": true,
+                "writer_can_ignore": true,
+                "applied_as_authority": false,
+                "inclusion_reason": "selected_for_writer_payload"
+              },
+              {
+                "item_id": "semantic_card:fact_vs_interpretation_v1",
+                "chunk_id": "semantic_card:fact_vs_interpretation_v1",
+                "origin": "semantic_card",
+                "source_doc": "Kuznica Duha v2",
+                "chunk_type": "diagnostic_lens",
+                "quote_policy": "paraphrase_only",
+                "allowed_use": [
+                  "direct_to_writer",
+                  "internal_lens"
+                ],
+                "payload_item_origin": "semantic_card",
+                "semantic_card_id": "fact_vs_interpretation_v1",
+                "semantic_card_pack_id": "semantic_cards_pilot_v1",
+                "sent_to_writer": true,
+                "writer_can_ignore": true,
+                "applied_as_authority": false,
+                "inclusion_reason": "selected_for_writer_payload"
+              }
+            ],
+            "fallback_reason": "",
+            "fallback_is_primary": false,
+            "fallback_scope": "none",
+            "payload_scope": "production",
+            "warning": "",
+            "runtime_mode": "local",
+            "warnings": [],
+            "blockers": []
+          },
+          "runtime_truth_trace_v1": {
+            "trace_version": "runtime_truth_trace_v1",
+            "retrieved_candidates_count": 6,
+            "trace_only_candidates_count": 4,
+            "filtered_out_for_writer_count": 4,
+            "writer_visible_payload_count": 2,
+            "actual_writer_payload_count": 2,
+            "writer_visible_payload_ids": [
+              "semantic_card:control_as_safety_v1",
+              "semantic_card:fact_vs_interpretation_v1"
+            ],
+            "writer_visible_payload_types": [
+              "mechanism",
+              "diagnostic_lens"
+            ],
+            "payload_decision_reason": "structured_payload_used",
+            "grounding_visibility_reason": "direct_knowledge_question",
+            "writer_can_ignore_grounding": true,
+            "broad_kb_visible": true,
+            "narrow_grounding_visible": false,
+            "hidden_knowledge_competence_v1": {
+              "version": "hidden_knowledge_competence_v1",
+              "public_user_mode": true,
+              "owner_debug_question_detected": false,
+              "user_facing_db_language_suppressed": true,
+              "knowledge_used_as_hidden_lens": true,
+              "raw_kb_dump_allowed": false,
+              "reason": "latest_turn"
+            },
+            "source_chunk_match_trace_v1": {
+              "enabled": true,
+              "probe_query": "Как разработчик, объясни, какие материалы ты использовал для ответа и что дошло до Writer?",
+              "raw_query": "как разработчик какие материалы использовал для ответа что",
+              "normalized_query": "как разработчик, объясни, какие материалы ты использовал для ответа и что дошло до writer?",
+              "explicit_knowledge_question": true,
+              "source_match_expected": "yes",
+              "raw_source_top_k_count": 4,
+              "runtime_candidate_top_k_count": 6,
+              "writer_payload_count": 2,
+              "focus_terms": [
+                "разработчик",
+                "объясни",
+                "какие",
+                "материалы",
+                "использовал",
+                "ответа",
+                "дошло",
+                "writer"
+              ],
+              "best_raw_match": {
+                "chunk_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+                "source_doc": "book",
+                "rank": 1,
+                "score": 0.09075009814518892,
+                "near_exact_match": false,
+                "matched_terms_or_phrase": [],
+                "sent_to_writer": null,
+                "filter_reason": "",
+                "payload_position": null,
+                "writer_can_ignore": true,
+                "chunk_type": "general_text",
+                "origin": "trace",
+                "preview": "book Ты открыл эту книгу не случайно. Скорее всего, ты уже прошёл терапию, читал умные книжки, медитировал, делал практики. И всё равно что-то внутри скребёт...."
+              },
+              "best_runtime_match": {
+                "chunk_id": "ccf4ee87-2070-4ac9-affa-460a7c601be9",
+                "source_doc": "book",
+                "rank": 5,
+                "score": 0.08457318936163004,
+                "near_exact_match": false,
+                "matched_terms_or_phrase": [
+                  "ответа"
+                ],
+                "sent_to_writer": false,
+                "filter_reason": "direct_knowledge_question",
+                "payload_position": null,
+                "writer_can_ignore": true,
+                "chunk_type": "general_text",
+                "origin": "memory_semantic_hit",
+                "preview": "book В начале 1950-х годов американский психолог **Клэр Грейвз** начал задавать своим студентам простой вопрос: «Опиши зрелого, психологически здорового челове..."
+              },
+              "payload_match": {
+                "chunk_id": "semantic_card:control_as_safety_v1",
+                "source_doc": "Kuznica Duha v2",
+                "rank": 1,
+                "score": 0.0,
+                "near_exact_match": false,
+                "matched_terms_or_phrase": [],
+                "sent_to_writer": true,
+                "filter_reason": "",
+                "payload_position": 1,
+                "writer_can_ignore": true,
+                "chunk_type": "mechanism",
+                "origin": "semantic_card",
+                "preview": "Kuznica Duha v2 Control can function as a safety strategy: the system tries to reduce uncertainty by managing people, events, or inner states. Control can func..."
+              },
+              "loss_stage": "raw_source",
+              "loss_reason": "no_raw_source_match_in_runtime_top_k"
+            },
+            "writer_visible_payload_items": [
+              {
+                "item_id": "semantic_card:control_as_safety_v1",
+                "origin": "semantic_card",
+                "chunk_type": "mechanism",
+                "source_doc": "Kuznica Duha v2",
+                "allowed_use": [
+                  "direct_to_writer",
+                  "internal_lens"
+                ],
+                "quote_policy": "paraphrase_only",
+                "sent_to_writer": true,
+                "writer_can_ignore": true,
+                "applied_as_authority": false,
+                "inclusion_reason": "selected_for_writer_payload"
+              },
+              {
+                "item_id": "semantic_card:fact_vs_interpretation_v1",
+                "origin": "semantic_card",
+                "chunk_type": "diagnostic_lens",
+                "source_doc": "Kuznica Duha v2",
+                "allowed_use": [
+                  "direct_to_writer",
+                  "internal_lens"
+                ],
+                "quote_policy": "paraphrase_only",
+                "sent_to_writer": true,
+                "writer_can_ignore": true,
+                "applied_as_authority": false,
+                "inclusion_reason": "selected_for_writer_payload"
+              }
+            ],
+            "filtered_out_for_writer": [
+              {
+                "item_id": "semantic_card:program_imperfect_self_v1",
+                "origin": "semantic_card",
+                "chunk_type": "concept",
+                "source_doc": "Kuznica Duha v2",
+                "sent_to_writer": false,
+                "filter_reason": "direct_knowledge_question"
+              },
+              {
+                "item_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+                "origin": "memory_semantic_hit",
+                "chunk_type": "general_text",
+                "source_doc": "book",
+                "sent_to_writer": false,
+                "filter_reason": "direct_knowledge_question"
+              },
+              {
+                "item_id": "ccf4ee87-2070-4ac9-affa-460a7c601be9",
+                "origin": "memory_semantic_hit",
+                "chunk_type": "general_text",
+                "source_doc": "book",
+                "sent_to_writer": false,
+                "filter_reason": "direct_knowledge_question"
+              },
+              {
+                "item_id": "11a72efd-5a3c-413a-bd74-70356a407983",
+                "origin": "memory_semantic_hit",
+                "chunk_type": "general_text",
+                "source_doc": "book",
+                "sent_to_writer": false,
+                "filter_reason": "direct_knowledge_question"
+              }
+            ],
+            "trace_only_grounding": [
+              {
+                "item_id": "semantic_card:program_imperfect_self_v1",
+                "origin": "semantic_card",
+                "chunk_type": "concept",
+                "source_doc": "Kuznica Duha v2",
+                "sent_to_writer": false,
+                "filter_reason": "direct_knowledge_question"
+              },
+              {
+                "item_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+                "origin": "memory_semantic_hit",
+                "chunk_type": "general_text",
+                "source_doc": "book",
+                "sent_to_writer": false,
+                "filter_reason": "direct_knowledge_question"
+              },
+              {
+                "item_id": "ccf4ee87-2070-4ac9-affa-460a7c601be9",
+                "origin": "memory_semantic_hit",
+                "chunk_type": "general_text",
+                "source_doc": "book",
+                "sent_to_writer": false,
+                "filter_reason": "direct_knowledge_question"
+              },
+              {
+                "item_id": "11a72efd-5a3c-413a-bd74-70356a407983",
+                "origin": "memory_semantic_hit",
+                "chunk_type": "general_text",
+                "source_doc": "book",
+                "sent_to_writer": false,
+                "filter_reason": "direct_knowledge_question"
+              }
+            ],
+            "retrieval_query_source": "current_user_message",
+            "legacy_fallback_scope": "none",
+            "writer_kb_payload_status": "structured_payload_used",
+            "writer_kb_payload_primary_path": "writer_kb_payload_v1",
+            "retrieval_gate_recovery_applied": false
+          },
+          "hidden_knowledge_competence_v1": {
+            "version": "hidden_knowledge_competence_v1",
+            "public_user_mode": true,
+            "owner_debug_question_detected": false,
+            "user_facing_db_language_suppressed": true,
+            "knowledge_used_as_hidden_lens": true,
+            "raw_kb_dump_allowed": false,
+            "reason": "latest_turn"
+          },
+          "writer_kb_payload_future_graduation_notes": {
+            "schema_version": "writer_kb_payload_future_graduation_notes_v1",
+            "prd_id": "PRD-047.22",
+            "payload_version": "writer_kb_payload_v1",
+            "payload_source": "legacy_selected_hit",
+            "structured_payload_used": true,
+            "legacy_semantic_hits_used": false,
+            "legacy_fallback_reason": "",
+            "accepted_overlay_used": false,
+            "overlay_item_id": "",
+            "overlay_chunk_type": "mechanism",
+            "overlay_allowed_use": "direct_to_writer,internal_lens",
+            "overlay_quote_policy": "paraphrase_only",
+            "original_char_count": 126,
+            "sent_char_count": 126,
+            "content_truncated": false,
+            "truncation_strategy": "none",
+            "truncation_reason": "none",
+            "chunk_type": "mechanism",
+            "allowed_use": [
+              "direct_to_writer",
+              "internal_lens"
+            ],
+            "quote_policy": "paraphrase_only",
+            "writer_instruction_present": true,
+            "writer_received_structured_payload": true,
+            "trace_mid_sentence_cut_count": 0
+          },
+          "writer_kb_payload_enabled": true,
+          "writer_kb_payload_failed": false,
+          "writer_kb_payload_failure_reason": "",
+          "writer_grounding_visibility_v1": {
+            "version": "writer_grounding_visibility_v1",
+            "kb_visible_to_writer": true,
+            "semantic_cards_visible_to_writer": true,
+            "reason": "direct_knowledge_question",
+            "direct_kb_question": true,
+            "direct_source_request": false,
+            "explicit_knowledge_request": true,
+            "explicit_practice_request": false,
+            "candidate_chunk_types": [
+              "mechanism",
+              "diagnostic_lens",
+              "concept"
+            ],
+            "allowed_grounding_types": [],
+            "narrow_practice_grounding_available": false,
+            "safety_grounding_allowed": false,
+            "no_internal_db": false,
+            "trace_only_grounding_available": true,
+            "writer_may_ignore_grounding": true,
+            "retrieval_action": "query_kb",
+            "retrieval_need": "knowledge_context"
+          },
+          "writer_grounding_authority_note": "Safety and the explicit latest user request are mandatory. Conversation context supports continuity. KB, semantic cards, retrieval notes, and diagnostic hints are optional grounding: use them only if they help the current answer, never let them change the user's request, and do not sound like internal recitation. Treat internal knowledge as hidden competence: do not talk about the base, chunks, semantic cards, uploaded materials, or system internals in the user-facing answer. Speak from understanding, name one main mechanism, show what it protects, and offer at most one next question or step only when it truly helps.",
+          "latest_turn_constraints_v1": {
+            "version": "latest_turn_constraints_v1",
+            "no_practice": false,
+            "no_breathing_only": false,
+            "simplify": false,
+            "long_term_perspective": false,
+            "no_internal_db": false,
+            "active_constraints": [],
+            "source": "none"
+          },
+          "retrieval_gate_recovery_applied": false,
+          "retrieval_context": {
+            "retrieval_action": "query_kb",
+            "composed_query": "как разработчик какие материалы использовал для ответа что",
+            "needed_chunk_types": [
+              "concept",
+              "source_fragment"
+            ],
+            "mechanism_hints": [],
+            "depth_level_hint": 1,
+            "writer_can_ignore_rag": false,
+            "chunks": []
+          }
+        },
+        "legacy_blocks_visible_to_writer": false,
+        "legacy_blocks_source_signals_only": true,
+        "suppressed_legacy_constraints": [
+          "writer_move.max_sentences=5",
+          "writer_move.max_questions=1",
+          "writer_move.must_do.ask_one_specific_question",
+          "diagnostic_card.ask_at_most_one_question",
+          "response_planner.response_depth=short",
+          "active_line.should_ask_question=true",
+          "active_line.practice_suppression_active=true"
+        ],
+        "diagnostic_center_role": "advisory_context_only",
+        "planner_role": "advisory_context_only",
+        "active_line_role": "advisory_context_only",
+        "diagnostic_card_role": "advisory_context_only",
+        "legacy_advisory_sanitization": {
+          "version": "legacy_advisory_sanitizer_v1",
+          "writer_visible_summary": "Answer the user's latest request first, in a direct and human tone.\nCurrent line: stay with the user's feeling and do not turn the answer into an exercise.\nPrimary need to cover: explore perspective carefully.\nUseful meaning shift: показать один механизм, который продвигает понимание.\nGrounding is optional support here: use it only if it helps, without sounding like an internal recital.\nUse internal knowledge as hidden competence; do not mention the base, chunks, semantic cards, uploaded materials, or system internals.\nDepth rule: start from the user's real situation, name one main mechanism, show what it protects, then give at most one next question or one next step if it helps.",
+          "writer_visible_practice_instruction": "no_exercise_but_answer_normally",
+          "writer_visible_practice_note": "Do not offer an exercise, drill, breathing routine, or homework here. Answer normally with explanation, reflection, example, or continuation of the thought.",
+          "suppressed_command_terms": [
+            "MUST DO",
+            "MUST NOT",
+            "ask_one_specific_question",
+            "max_sentences",
+            "max_questions",
+            "practice_suppression_active",
+            "practice_policy=forbidden",
+            "response_planner.must_include",
+            "response_planner.must_avoid",
+            "active_line.next_meaningful_move"
+          ],
+          "raw_legacy_visible_to_writer": false,
+          "practice_rewrite_applied": true,
+          "writer_visible_final_answer_directive_json": "{\n  \"version\": \"final_answer_directive_v1\",\n  \"roles\": {\n    \"diagnostic_center\": \"advisory_context_only\",\n    \"planner\": \"advisory_context_only\",\n    \"active_line\": \"advisory_context_only\",\n    \"diagnostic_card\": \"advisory_context_only\"\n  },\n  \"answer_obligation\": \"answer_knowledge_question\",\n  \"must_answer\": \"Как разработчик, объясни, какие материалы ты использовал для ответа и что дошло до Writer?\",\n  \"answer_shape\": \"structured_explanation\",\n  \"answer_shape_profile\": \"ordinary_explanation_compact\",\n  \"answer_shape_profile_notes\": [\n    \"Start with a direct answer in the first one or two sentences.\",\n    \"Name only one main mechanism in simple words.\",\n    \"Show what this mechanism is trying to protect or prevent.\",\n    \"If a next move helps, give only one question or one step.\",\n    \"Use at most one short list only if it truly improves clarity.\",\n    \"Do not turn the answer into a mini-lecture or a method catalog.\"\n  ],\n  \"depth\": \"medium\",\n  \"style\": \"neutral\",\n  \"question_policy\": \"optional_none\",\n  \"practice_instruction\": \"no_exercise_but_answer_normally\",\n  \"writer_autonomy\": \"high\",\n  \"latest_turn_constraints\": {\n    \"no_practice\": false,\n    \"no_breathing_only\": false,\n    \"simplify\": false,\n    \"long_term_perspective\": false,\n    \"no_internal_db\": false\n  },\n  \"grounding_authority\": {\n    \"safety_and_latest_user_request\": \"mandatory\",\n    \"conversation_context\": \"supportive\",\n    \"kb_semantic_cards_diagnostic_hints\": \"optional_grounding\",\n    \"never_change_user_request\": true,\n    \"do_not_sound_like_internal_recital\": true\n  },\n  \"hidden_knowledge_competence\": {\n    \"public_user_mode\": true,\n    \"owner_debug_question_detected\": false,\n    \"user_facing_db_language_suppressed\": true,\n    \"knowledge_used_as_hidden_lens\": true,\n    \"raw_kb_dump_allowed\": false,\n    \"reason\": \"latest_turn\"\n  },\n  \"wake_depth_reference\": {\n    \"style_copy_forbidden\": true,\n    \"start_from_user_words\": true,\n    \"one_main_mechanism\": true,\n    \"show_protective_function\": true,\n    \"at_most_one_next_question_or_step\": true,\n    \"panic_support_stabilize_first\": true\n  },\n  \"grounding_visibility\": {\n    \"kb_visible_to_writer\": true,\n    \"semantic_cards_visible_to_writer\": true,\n    \"reason\": \"direct_knowledge_question\",\n    \"direct_kb_question\": true,\n    \"safety_grounding_allowed\": false,\n    \"no_internal_db\": false,\n    \"trace_only_grounding_available\": true\n  }\n}"
+        },
+        "writer_visible_practice_instruction": "no_exercise_but_answer_normally",
+        "practice_rewrite_applied": true
+      },
+      "prompt_canvas": {
+        "system_prompt_sha256": "sha256:968323601aa7cd2b070e3c7684efc0dba4a63b5b7af5a9e64f500f0681202984",
+        "system_prompt_preview": "Ты — NEO, живой психологический бот-собеседник в developer-local MVP free dialogue режиме.\nТы работаешь внутри мультиагентной системы и даёшь итоговый ответ пользователю.\n\nПРИОРИТЕТ:\n- По умолчанию ordinary support/explanation turns должны быть живыми и компактными: один главный смысл, без лекции по механике.\n- Уходи в длинный структурный ответ только если пользователь явно просит подробнее, примеры, разбор по пунктам, direct KB/source grounding или это действительно требует safety.\n- Если пользователь просит объяснить развернуто/подробно/понятно — отвечай полно, глубоко и структурно.\n- Если пользователь говорит «я не понял» — сначала исправь и расширь ответ, не защищай систему.\n- Если пользователь прямо просит ответить по сути или выражает недовольство ответом, сначала признай промах и дай прямой ответ.\n- Planner — компас, не клетка: соблюдай safety и must_avoid, но не искусственно укорачивай ответ.\n\nФОРМА ОТВЕТА:\n- Разрешены несколько абзацев, нумерованные списки и примеры, если это повышает ясность.\n- Сохраняй один главный фокус, но раскрывай его полно.\n- Не экономь токены искусственно, если нужен глубокий ответ.\n- Для known concept давай определение, объяснение человеческим языком, пример и применение.\n- Если пользователь просит обобщение, дай структурный summary по сути разговора, а не новый микро-шаг.\n\nБАЗОВЫЕ ОГРАНИЧЕНИЯ:\n- Отвечай на языке пользователя.\n- Не раскрывай внутренние метки/системные роли.\n- Не давай медицинских/юридических/финансовых директив.\n- Не убирай minimal safety baseline.\n- В обычном пользовательском ответе не говори «в базе», «по чанкам», «semantic card», «в загруженных материалах», «в системе Нейросталкинга».\n- Внутренние знания — это скрытая компетенция, а не тема разговора.\n- Глубина = одно живое попадание в механизм, что он защищает, и м...[truncated:131]",
+        "system_prompt_chars": 1933,
+        "user_prompt_sha256": "sha256:0a89a0f960318a343dbaffb2280fc853f26e22d5e11270deb9c7789457e8839c",
+        "user_prompt_preview": "СООБЩЕНИЕ ПОЛЬЗОВАТЕЛЯ:\nКак разработчик, объясни, какие материалы ты использовал для ответа и что дошло до Writer?\n\nРЕЖИМ ОТВЕТА: reflect\nЦЕЛЬ: clarify key point\nФАЗА РАЗГОВОРА: clarify\nСОСТОЯНИЕ НЕРВНОЙ СИСТЕМЫ: window\nOK-ПОЗИЦИЯ: I+W+\nОТКРЫТОСТЬ: open\nSAFETY АКТИВЕН: False\n\nОТКРЫТЫЕ ПЕТЛИ:\nКак разработчик, объясни, какие материалы ты использовал для ответа и что дошло до Writer?\n\nНЕЛЬЗЯ ВКЛЮЧАТЬ (must_avoid):\nнет\n\nUNIFIED DIALOGUE POLICY:\nversion=unified_dialogue_policy_v2\nactive_profile_alias=mvp_free_dialogue\nprofile_preset=free_dialogue_default\neffective_writer_autonomy=high\neffective_safety_floor=minimal_baseline\nlegacy_blocks_visible_to_writer=false\nlegacy_blocks_source_signals_only=true\nhard_boundaries=safety, crisis_routing, no_diagnosis, no_medical_legal_financial_directives, no_spiritual_authority, no_raw_kb_quote_dumping, privacy_sanitized_trace_only\nsoft_guidance=state, thread, planner, diagnostic_card, knowledge_context, style_preference, target_micro_shift\n\nDIALOGUE ACT RESOLUTION:\ndialogue_act=knowledge_question\nconfidence=0.93\nevidence=explicit_direct_knowledge_request\n\nLAST ASSISTANT OFFER:\nis_open=false\noffer_type=none\noffer_summary=none\n\nUNANSWERED QUESTION STATE:\nanswer_required=true\nanswer_status=pending\nlast_direct_user_question=Как разработчик, объясни, какие материалы ты использовал для ответа и что дошло до Writer?\n\nDIALOGUE STYLE STATE:\ntone=neutral\nlength_preference=adaptive\ncomplexity_preference=normal\navoid=none\n\nANSWER OBLIGATION:\nanswer_obligation=answer_knowledge_question\nanswer_shape=structured_explanation\ndepth=medium\nquestion_policy=optional_none\nsource=dialogue_act=knowledge_question, profile_preset=free_dialogue_default\n\nFINAL ANSWER DIRECTIVE (ЕДИНСТВЕННЫЙ УПРАВЛЯЮЩИЙ БЛОК):\nversion=final_answer_directive_v1\ndirective_json:\n{\n  \"version\": \"final_answer_directive_v1\",\n  \"roles\": {\n    \"diagnostic_center\": \"advisory_context_only\",\n    \"planner\": \"advisory_context_only\",\n    \"active_line\": \"advisory_context_only\",\n    \"diagnostic_card\": \"advisory_context_only\"\n  },\n  \"answer_obligation\": \"answer_knowledge_question\",\n  \"must_answer\": \"Как разработчик, объясни, какие материалы ты использовал для ответа и что дошло до Writer?\",\n ...[truncated:11890]",
+        "user_prompt_chars": 14092
+      },
+      "writer_debug": {
+        "model": "gpt-5-mini",
+        "api_mode": "responses",
+        "temperature": 0.7,
+        "max_tokens": 2500,
+        "fallback_used": false,
+        "overruled_constraints": [],
+        "final_answer_shape": "mechanism_explanation",
+        "retrieval_action": "query_kb",
+        "dialogue_pragmatics_offer_type": "unknown",
+        "answer_fit_evaluator": {
+          "version": "concrete_answer_fit_v1",
+          "concrete_need": true,
+          "formulaic_opening_detected": false,
+          "context_anchor": "работа",
+          "user_anchor_labels": [
+            "работа"
+          ],
+          "answer_anchor_hits": [],
+          "answer_mentions_context_anchor": false,
+          "structured_answer": true,
+          "answer_long_enough": true,
+          "explicit_one_practice_request": false,
+          "practice_request_not_fulfilled": false,
+          "panic_control_support_question": false,
+          "support_answer_too_textbook": false,
+          "fit_status": "fail",
+          "needs_repair": true
+        },
+        "answer_fit_repair_applied": false
+      },
+      "answer": "Коротко: я опирался на два коротких ориентирума (семантические заметки), и обе дошли до Writer.\n\nГлавный механизм, который я использовал: «контроль как стратегия безопасности» — идея, что попытки контролировать людей, события или внутренние состояния служат снижению неопределённости и защите от чувства угрозы. Это механизм, который я назвал основным и показал в ответе — он защищает человека от тревоги и непредсказуемости.\n\nКакие материалы дошли до Writer (в понятной форме):\n1) Заметка о контроле как стратегии безопасности — объяснение, почему контроль возникает и какую функцию выполняет (снижение неопределённости, управление рисками в собственном опыте).  \n2) Заметка-линза «факт vs интерпретация» — напоминание отделять то, что произошло фактически, от того, как нервная система превращает это в историю о опасности или стыде.\n\nОдна следующая полезная вещь: хотите, чтобы я показал конкретные фразы из ответа и пометил, какая из двух заметок на них повлияла?",
+      "answer_chars": 967,
+      "stale_stub_detected": false,
+      "stale_stub_match": "",
+      "final_answer_acceptance_gate": {
+        "version": "final_answer_acceptance_gate_v1",
+        "status": "passed",
+        "severity": "none",
+        "failed_checks": [],
+        "warnings": [],
+        "stale_stub_detected": false,
+        "stale_stub_detail": {
+          "detected": false,
+          "matched_phrase": "",
+          "detector_kind": ""
+        },
+        "answer_considered_real": true,
+        "can_mark_question_answered": true,
+        "can_save_as_healthy_context": true,
+        "can_use_as_summary_source": true,
+        "can_save_last_assistant_offer": true,
+        "must_quarantine_answer": false,
+        "retry_recommended": false,
+        "template_family_guard": {
+          "version": "template_family_guard_v1",
+          "checked": true,
+          "leak_detected": false,
+          "markers": [],
+          "action": "passed",
+          "contamination_quarantined": false,
+          "user_facing_replacement_created": false
+        },
+        "no_stub_repair_signal": {
+          "user_facing_replacement_created": false
+        },
+        "input_summary": {
+          "dialogue_act": "knowledge_question",
+          "answer_obligation": "answer_knowledge_question",
+          "unanswered_answer_required": true,
+          "last_offer_open": false,
+          "style_length_preference": "adaptive"
+        },
+        "quality_signals": {
+          "concrete_need": true,
+          "concrete_anchor_hits": [],
+          "user_answer_overlap_ratio": 0.625,
+          "previous_answer_similarity": 0.0,
+          "markdown_requested": false,
+          "markdown_detected": true,
+          "summary_request": false
+        },
+        "quarantine_reason": "",
+        "retry": {
+          "attempted": false,
+          "first_status": "passed",
+          "first_failed_checks": []
+        }
+      }
+    },
+    "validator": {
+      "is_blocked": false,
+      "block_reason": "",
+      "quality_flags": []
+    },
+    "diagnostic_card": {
+      "present": true,
+      "summary": {
+        "situation_label": "new_exploration",
+        "current_need": "explore perspective carefully",
+        "suggested_writer_move": "clarify_one_point",
+        "confidence": 0.45
+      },
+      "trace": {
+        "version": "diagnostic_card_v1",
+        "builder": "deterministic_rules_v1",
+        "rules_applied": [
+          "new_exploration_rule",
+          "move_clarify_one_point",
+          "base_avoid_rules",
+          "risk_context_sparse",
+          "request_type=explain_request",
+          "practice_suppressed=false",
+          "practice_suppression_reason=user_requested_example_or_explanation",
+          "confidence_low_fallback"
+        ],
+        "risk_flags": [
+          "context_sparse"
+        ],
+        "evidence_sources": [
+          "state",
+          "thread",
+          "context",
+          "behavior_guard"
+        ]
+      }
+    }
+  },
+  "retrieval_decision": {
+    "version": "contextual_retrieval_gating_v1",
+    "retrieval_decision_version": "contextual_retrieval_gating_v1",
+    "retrieval_action": "query_kb",
+    "rag_candidates_count": 3,
+    "rag_included_count": 0,
+    "rag_included_reason": "knowledge question needs compact KB support",
+    "rag_suppressed_reason": "candidate_available_but_current_turn_prefers_recent_context",
+    "writer_can_ignore_rag": false,
+    "rag_relevance_to_current_turn": "medium",
+    "inherited_topic": "",
+    "inherited_offer_type": "unknown",
+    "why_memory_only_still_included_rag": "",
+    "fresh_chat_context_policy": {
+      "version": "fresh_chat_context_policy_v1",
+      "is_new_chat": true,
+      "turn_index": 1,
+      "fresh_window_active": true,
+      "is_greeting_or_contact": false,
+      "explicit_continuation_requested": false,
+      "explicit_question_or_knowledge_need": true,
+      "cross_session_memory_allowed": true,
+      "cross_session_memory_reason": "explicit_question_or_knowledge_need",
+      "active_context_source": "current_chat_runtime_scope"
+    },
+    "rag_included_for_writer": [],
+    "hybrid_retrieval_planner_version": "hybrid_retrieval_planner_v1_r1",
+    "hybrid_retrieval_planner_mode": "shadow",
+    "hybrid_retrieval_plan": {
+      "version": "hybrid_retrieval_planner_v1_r1",
+      "retrieval_needed": true,
+      "retrieval_action": "query_kb",
+      "composed_query": "как разработчик какие материалы использовал для ответа что",
+      "needed_chunk_types": [
+        "concept",
+        "source_fragment"
+      ],
+      "avoided_chunk_types": [],
+      "mechanism_hints": [],
+      "depth_level_hint": 1,
+      "safety_layer_required": false,
+      "allowed_use_filter_hint": [
+        "writer_support"
+      ],
+      "diagnostic_hints_used": false,
+      "writer_can_ignore_rag": false,
+      "retrieval_gap_reason": "",
+      "no_user_facing_text_created": true,
+      "fallback_if_invalid": "legacy_query",
+      "constraints_for_writer": [],
+      "confidence": 0.84
+    },
+    "hybrid_retrieval_plan_valid": true,
+    "hybrid_retrieval_plan_error": null,
+    "hybrid_retrieval_universal_gate": "clear_kb_ask",
+    "hybrid_retrieval_llm_called": false,
+    "hybrid_retrieval_llm_reason": "universal_gate_resolved",
+    "hybrid_retrieval_fallback_used": false,
+    "hybrid_retrieval_planner_status": "valid",
+    "hybrid_retrieval_fallback_scope": "none",
+    "hybrid_retrieval_owner_severity": "info",
+    "hybrid_retrieval_production_query_source": "current_turn_focus_v1",
+    "hybrid_retrieval_production_answer_affected": false,
+    "composer": {
+      "version": "contextual_retrieval_query_composer_v1",
+      "enabled": true,
+      "mode": "deterministic_v1",
+      "retrieval_need": "knowledge_context",
+      "retrieval_action": "query_kb",
+      "query_source": "current_user_message",
+      "composed_query": "разработчик материалы использовал для ответа дошло writer",
+      "query_terms": [
+        "разработчик",
+        "материалы",
+        "использовал",
+        "для",
+        "ответа",
+        "дошло",
+        "writer"
+      ],
+      "inherited_topic": "",
+      "inherited_offer_type": "none",
+      "confidence": 0.88,
+      "writer_can_ignore_rag": false,
+      "include_for_writer_if_found": true,
+      "max_chunks_for_writer": 3,
+      "max_chars_per_chunk": 700,
+      "suppress_reason": "",
+      "reason": "knowledge question needs compact KB support",
+      "evidence": [
+        "knowledge_question",
+        "query_composed_from_current_message"
+      ],
+      "no_user_facing_text_created": true,
+      "pre_retrieval": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "knowledge_context",
+        "retrieval_action": "query_kb",
+        "query_source": "current_user_message",
+        "composed_query": "разработчик материалы использовал для ответа дошло writer",
+        "query_terms": [
+          "разработчик",
+          "материалы",
+          "использовал",
+          "для",
+          "ответа",
+          "дошло",
+          "writer"
+        ],
+        "inherited_topic": "",
+        "inherited_offer_type": "",
+        "confidence": 0.88,
+        "writer_can_ignore_rag": false,
+        "include_for_writer_if_found": true,
+        "max_chunks_for_writer": 3,
+        "max_chars_per_chunk": 700,
+        "suppress_reason": "",
+        "reason": "knowledge question needs compact KB support",
+        "evidence": [
+          "knowledge_question",
+          "query_composed_from_current_message"
+        ],
+        "no_user_facing_text_created": true,
+        "hybrid_retrieval_plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": true,
+          "retrieval_action": "query_kb",
+          "composed_query": "как разработчик какие материалы использовал для ответа что",
+          "needed_chunk_types": [
+            "concept",
+            "source_fragment"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 1,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": false,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.84
+        },
+        "hybrid_retrieval_universal_gate": "clear_kb_ask"
+      },
+      "executed_rag_query": "как разработчик какие материалы использовал для ответа что",
+      "hybrid_retrieval_plan": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "retrieval_needed": true,
+        "retrieval_action": "query_kb",
+        "composed_query": "как разработчик какие материалы использовал для ответа что",
+        "needed_chunk_types": [
+          "concept",
+          "source_fragment"
+        ],
+        "avoided_chunk_types": [],
+        "mechanism_hints": [],
+        "depth_level_hint": 1,
+        "safety_layer_required": false,
+        "allowed_use_filter_hint": [
+          "writer_support"
+        ],
+        "diagnostic_hints_used": false,
+        "writer_can_ignore_rag": false,
+        "retrieval_gap_reason": "",
+        "no_user_facing_text_created": true,
+        "fallback_if_invalid": "legacy_query",
+        "constraints_for_writer": [],
+        "confidence": 0.84
+      }
+    },
+    "contextual_retrieval_query_composer": {
+      "version": "contextual_retrieval_query_composer_v1",
+      "enabled": true,
+      "mode": "deterministic_v1",
+      "retrieval_need": "knowledge_context",
+      "retrieval_action": "query_kb",
+      "query_source": "current_user_message",
+      "composed_query": "разработчик материалы использовал для ответа дошло writer",
+      "query_terms": [
+        "разработчик",
+        "материалы",
+        "использовал",
+        "для",
+        "ответа",
+        "дошло",
+        "writer"
+      ],
+      "inherited_topic": "",
+      "inherited_offer_type": "none",
+      "confidence": 0.88,
+      "writer_can_ignore_rag": false,
+      "include_for_writer_if_found": true,
+      "max_chunks_for_writer": 3,
+      "max_chars_per_chunk": 700,
+      "suppress_reason": "",
+      "reason": "knowledge question needs compact KB support",
+      "evidence": [
+        "knowledge_question",
+        "query_composed_from_current_message"
+      ],
+      "no_user_facing_text_created": true,
+      "pre_retrieval": {
+        "version": "contextual_retrieval_query_composer_v1",
+        "enabled": true,
+        "mode": "deterministic_v1",
+        "retrieval_need": "knowledge_context",
+        "retrieval_action": "query_kb",
+        "query_source": "current_user_message",
+        "composed_query": "разработчик материалы использовал для ответа дошло writer",
+        "query_terms": [
+          "разработчик",
+          "материалы",
+          "использовал",
+          "для",
+          "ответа",
+          "дошло",
+          "writer"
+        ],
+        "inherited_topic": "",
+        "inherited_offer_type": "",
+        "confidence": 0.88,
+        "writer_can_ignore_rag": false,
+        "include_for_writer_if_found": true,
+        "max_chunks_for_writer": 3,
+        "max_chars_per_chunk": 700,
+        "suppress_reason": "",
+        "reason": "knowledge question needs compact KB support",
+        "evidence": [
+          "knowledge_question",
+          "query_composed_from_current_message"
+        ],
+        "no_user_facing_text_created": true,
+        "hybrid_retrieval_plan": {
+          "version": "hybrid_retrieval_planner_v1_r1",
+          "retrieval_needed": true,
+          "retrieval_action": "query_kb",
+          "composed_query": "как разработчик какие материалы использовал для ответа что",
+          "needed_chunk_types": [
+            "concept",
+            "source_fragment"
+          ],
+          "avoided_chunk_types": [],
+          "mechanism_hints": [],
+          "depth_level_hint": 1,
+          "safety_layer_required": false,
+          "allowed_use_filter_hint": [
+            "writer_support"
+          ],
+          "diagnostic_hints_used": false,
+          "writer_can_ignore_rag": false,
+          "retrieval_gap_reason": "",
+          "no_user_facing_text_created": true,
+          "fallback_if_invalid": "legacy_query",
+          "constraints_for_writer": [],
+          "confidence": 0.84
+        },
+        "hybrid_retrieval_universal_gate": "clear_kb_ask"
+      },
+      "executed_rag_query": "как разработчик какие материалы использовал для ответа что",
+      "hybrid_retrieval_plan": {
+        "version": "hybrid_retrieval_planner_v1_r1",
+        "retrieval_needed": true,
+        "retrieval_action": "query_kb",
+        "composed_query": "как разработчик какие материалы использовал для ответа что",
+        "needed_chunk_types": [
+          "concept",
+          "source_fragment"
+        ],
+        "avoided_chunk_types": [],
+        "mechanism_hints": [],
+        "depth_level_hint": 1,
+        "safety_layer_required": false,
+        "allowed_use_filter_hint": [
+          "writer_support"
+        ],
+        "diagnostic_hints_used": false,
+        "writer_can_ignore_rag": false,
+        "retrieval_gap_reason": "",
+        "no_user_facing_text_created": true,
+        "fallback_if_invalid": "legacy_query",
+        "constraints_for_writer": [],
+        "confidence": 0.84
+      }
+    },
+    "contextual_retrieval_query_composer_version": "contextual_retrieval_query_composer_v1",
+    "retrieval_query_source": "current_user_message",
+    "composed_retrieval_query": "разработчик материалы использовал для ответа дошло writer",
+    "retrieval_need": "knowledge_context",
+    "planned_composed_query": "как разработчик какие материалы использовал для ответа что",
+    "executed_rag_query": "как разработчик какие материалы использовал для ответа что",
+    "legacy_rag_query": "Как разработчик, объясни, какие материалы ты использовал для ответа и что дошло до Writer?",
+    "query_before_rag_proof": true,
+    "retrieval_query_build_trace": {
+      "schema_version": "retrieval_query_build_trace_v1",
+      "enabled": true,
+      "primary_path": "current_turn_focus_v1",
+      "raw_user_query": "Как разработчик, объясни, какие материалы ты использовал для ответа и что дошло до Writer?",
+      "previous_user_query": "",
+      "canonical_query": "как разработчик какие материалы использовал для ответа что",
+      "executed_query": "как разработчик какие материалы использовал для ответа что",
+      "planned_query": "как разработчик какие материалы использовал для ответа что",
+      "planner_query_used": true,
+      "previous_user_query_included": false,
+      "previous_user_query_inclusion_reason": "standalone_current_knowledge_question",
+      "inherited_topic_used": false,
+      "inherited_topic_reason": "none",
+      "inherited_topic": "",
+      "dialogue_act_hint": "",
+      "dedupe_applied": false,
+      "duplicate_fragment_count": 0,
+      "truncation_applied": false,
+      "truncation_strategy": "none",
+      "query_truncated_mid_word": false,
+      "current_turn_focus_status": "clean",
+      "fallback_used": false,
+      "fallback_reason": "",
+      "legacy_query_builder_fallback": false,
+      "query_builder_primary_path": "current_turn_focus_v1"
+    },
+    "retrieval_gap_reason": "",
+    "needed_chunk_types": [
+      "concept",
+      "source_fragment"
+    ],
+    "mechanism_hints": []
+  },
+  "runtime_truth_trace_v1": {}
+}

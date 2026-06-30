@@ -1,6 +1,7 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
+PRD-047.36-HF2 completed retrieval recall proof and direct-match candidate-selection repair on the canonical current pipeline with `accepted_with_warning` status. The runtime still stays on `multiagent_adapter`; no new route, no new LLM agent, and no Bot_data_base/Chroma/registry/source mutation were introduced. `memory_retrieval.py` now exposes `raw_hit_summaries`, `writer_context_package.py` now emits `source_chunk_match_trace_v1` plus a bounded `retrieval_gate_recovery_applied` flag, and owner/Web trace can now prove whether a knowledge answer was lost at raw source, runtime retrieval, or writer payload. Live A1-A8 audit fixed the silent-loss class for `A4` and `A6`, while `A1/A2/A3/A7/A8` remain honestly classified as `raw_source` missing in the current runtime top-k; the next step is either `PRD-047.36-HF1` delivery-integrity repair if UI truncation is still reproducible, or a separate source/DB preparation PRD before the owner readiness gate.
 PRD-047.35 completed hidden-knowledge competence and Wake-depth calibration on the canonical current pipeline with `passed_with_warning` status. The runtime still stays on `multiagent_adapter`; no new route, no new LLM agent, no Bot_data_base/Chroma/registry/source mutation, and no semantic-card expansion were introduced. `writer_context_package.py` now emits `hidden_knowledge_competence_v1`, public user mode suppresses DB/chunk/semantic-card/internal-system wording, Writer prompt/runtime trace carry the same rule, and ordinary answers are biased toward one mechanism plus its protective function instead of theory dumps. Live smoke after backend/frontend restart kept `contains_internal_language=false` across all checked turns and preserved PRD-047.34 latest-turn authority, while honest warnings remain for one panic-helper opening, one overlong deep explanation, and one over-recap close turn. The next recommended step is `PRD-047.36 - Owner Pilot Readiness Gate / 12 Scenario Freeze v1`.
 PRD-047.34 completed latest-turn authority repair and free Writer contact-mode calibration on the canonical current pipeline with `passed_with_warning` status. The runtime still stays on `multiagent_adapter`; no new route, no new LLM agent, no Bot_data_base/Chroma/registry/source mutation, and no semantic-card expansion were introduced. `final_answer_directive_v1` now makes the latest non-empty user turn the default answer target, keeps `previous_must_answer` as context-only unless explicit continuation is detected, exposes `must_answer_source` / `previous_must_answer_demoted` / `answer_target` / `writer_contact_mode`, and drives `latest_turn_authority_v1` through runtime trace and Writer prompt assembly. Live smoke after backend/frontend restart passed A-D, including the exact Chat5 stale-KB failure and the support-after-practice refusal case, while the only honest remaining warning is unrelated test-suite debt outside PRD-047.34. The next recommended step is `PRD-047.35 - Owner Pilot Consolidation / Minimal Public Demo Readiness v1`.
 PRD-047.33 completed owner-pilot answer-shape calibration on the canonical current pipeline with `passed_with_warning` status. No new runtime path, no new LLM agent, no Bot_data_base/Chroma/registry/source mutation, and no broad KB re-enable were introduced. The runtime now carries soft `answer_shape_profile` hints through `final_answer_directive_v1`, Writer prompt assembly, and `runtime_trace_summary_v1`; compact support target length is tighter; direct KB/source turns now trace as `direct_kb_grounded_compact`; explicit practice, no-practice, and no-internal-db boundaries remain preserved. Live smoke after backend/frontend restart stayed honest and passed with warning: most A-H cases are shorter and more human-like, but one ordinary resistance case still reports `adaptive_current_pipeline` in trace even though the answer itself improved. The next recommended step remains `PRD-047.34 - Owner Pilot Consolidation / Minimal Public Demo Readiness v1`, with `PRD-047.34-HF1` reserved if owner review rejects that residual shape-conflict warning.
@@ -106,7 +107,7 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 - Historical artifact encoding noise may be misread as current runtime corruption without normalization report.
 
 ## Next Planned PRD
-`PRD-047.36 - Owner Pilot Readiness Gate / 12 Scenario Freeze v1`
+`PRD-047.36-HF1 delivery integrity repair` or separate source/DB preparation PRD for missing-source terms, depending on owner priority
 
 ## PRD-047.23 Audit State
 PRD-047.23 closed the evidence gap between Bot_data_base chunks, retrieval query assembly, Writer KB payload, and Web Trace preview.
@@ -216,6 +217,12 @@ Diagnostic Center Track Status: CLOSED FOR CURRENT PHASE
 - commit_hash: aed27db
 - push_status: pushed_to_origin_main
 - status: passed_with_warning
+
+## PRD-047.36-HF2 Delivery Metadata
+- prd_id: PRD-047.36-HF2
+- commit_hash: 51fbfbf
+- push_status: pushed_to_origin_main
+- status: accepted_with_warning
 
 ## PRD-047.34 Delivery Metadata
 - prd_id: PRD-047.34

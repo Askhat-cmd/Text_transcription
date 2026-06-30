@@ -1,5 +1,30 @@
 # Architecture Decisions
 
+## ADR-090 - Source-loss proof is mandatory for direct knowledge turns; empty explicit gates may recover only existing near-exact policy-allowed hits
+
+Status: accepted
+
+Date: 2026-06-30
+
+Context: PRD-047.35 made public answers cleaner, but owner Chat 8 evidence still showed a deeper retrieval-truth gap: for direct knowledge turns the runtime could lose a source silently between raw retrieval, candidate selection, and Writer payload, and the owner trace could not prove where that happened.
+
+Decision:
+- keep the canonical runtime path unchanged (`multiagent_adapter`);
+- expose raw retrieval evidence through `raw_hit_summaries`;
+- add `source_chunk_match_trace_v1` in the existing writer-context/runtime-trace chain so owner/debug surfaces can prove:
+  - raw source match
+  - runtime candidate match
+  - payload match
+  - `loss_stage`
+  - `loss_reason`
+- allow one bounded recovery only inside the existing writer-context packaging path:
+  - only when the explicit retrieval gate is empty;
+  - only when the current turn already allows KB-visible direct knowledge grounding;
+  - only when an existing policy-allowed hit in `memory_bundle.knowledge_rag_hits` has a near-exact current-turn match;
+  - no dictionary, no alias map, no new route, no new agent, no DB/source/Chroma mutation.
+
+Consequences: direct-match silent loss is now observable and repairable inside the current runtime without hiding true missing-source cases. Owner review can now distinguish source absence from candidate-selection failure, and future work can move either to delivery integrity or separate source-preparation PRDs instead of ad-hoc runtime hacks.
+
 ## ADR-089 - Public user mode treats internal knowledge as hidden competence, not a conversation topic
 
 Status: accepted

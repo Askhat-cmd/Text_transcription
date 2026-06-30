@@ -35,6 +35,42 @@ from .memory_retrieval_config import (
 logger = logging.getLogger(__name__)
 
 
+def _string_list(value: Any) -> list[str]:
+    if isinstance(value, list):
+        return [str(item).strip() for item in value if str(item).strip()]
+    if isinstance(value, str) and value.strip():
+        return [value.strip()]
+    return []
+
+
+def _normalize_chunk_type(hit: SemanticHit) -> str:
+    governance = dict(getattr(hit, "governance", {}) or {})
+    chunking_quality = dict(getattr(hit, "chunking_quality", {}) or {})
+    for candidate in (
+        governance.get("chunk_type"),
+        chunking_quality.get("chunk_type"),
+    ):
+        value = str(candidate or "").strip()
+        if value:
+            return value
+    return "general_text"
+
+
+def _summarize_raw_hit(hit: SemanticHit, *, rank: int) -> dict[str, Any]:
+    governance = dict(getattr(hit, "governance", {}) or {})
+    preview = _sanitize_query_preview(str(getattr(hit, "content", "") or ""), max_len=180)
+    return {
+        "chunk_id": str(getattr(hit, "chunk_id", "") or ""),
+        "source_doc": str(getattr(hit, "source", "unknown") or "unknown"),
+        "score": float(getattr(hit, "score", 0.0) or 0.0),
+        "rank": int(rank),
+        "chunk_type": _normalize_chunk_type(hit),
+        "allowed_use": _string_list(governance.get("allowed_use")),
+        "quote_policy": str(governance.get("quote_policy", "") or "paraphrase_only"),
+        "preview": preview,
+    }
+
+
 def _sanitize_query_preview(query: str, *, max_len: int = 160) -> str:
     normalized = " ".join((query or "").split())
     if len(normalized) <= max_len:
@@ -290,6 +326,11 @@ class MemoryRetrievalAgent:
                 if isinstance(retrieval_runtime.get("retrieval_query_build_trace"), dict)
                 else {}
             ),
+            "raw_hit_summaries": [
+                _summarize_raw_hit(hit, rank=index)
+                for index, hit in enumerate(list(raw_hits or [])[:10], start=1)
+                if isinstance(hit, SemanticHit)
+            ],
         }
         policy_decisions, knowledge_policy_trace = apply_knowledge_policy_v1(filtered_hits)
         knowledge_rag_hits = [

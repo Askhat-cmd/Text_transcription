@@ -1,0 +1,3497 @@
+{
+  "probes": [
+    {
+      "probe_id": "A1",
+      "query": "Что такое анестетическая депрессия?",
+      "classification": "FAIL_raw_source_missing",
+      "source_material_phrase_present_in_workspace": true,
+      "raw_source_search_top_10": [
+        {
+          "rank": 1,
+          "chunk_id": "99c31e75-b401-40df-96e5-c82c5cb11569",
+          "source_doc": "ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.06349511357933718,
+          "preview": "> **Из сессии** > > **Сергей, 44 года:** Я три месяца в этой пустоте. Пробовал всё — новый проект, поездки, смена работы. Всё равно пусто. Начал думать, что что-то сломалось. >..."
+        },
+        {
+          "rank": 2,
+          "chunk_id": "71ca41f6-57de-4f57-badb-35e34e8bd9c6",
+          "source_doc": "ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0568117797194021,
+          "preview": "> **Из сессии** > > **Мария, 39 лет, топ-менеджер:** Я не понимаю, что со мной. Всё есть — работа, деньги, отношения, здоровье. Я занимаюсь всем, чем «надо»: терапия, медитация,..."
+        },
+        {
+          "rank": 3,
+          "chunk_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.05255788435017025,
+          "preview": "Ты открыл эту книгу не случайно. Скорее всего, ты уже прошёл терапию, читал умные книжки, медитировал, делал практики. И всё равно что-то внутри скребёт. Какой-то фоновый шум, к..."
+        },
+        {
+          "rank": 4,
+          "chunk_id": "5943bece-db10-460a-bc21-7e23e6485925",
+          "source_doc": "ГЛАВА 10. НейроСталкинг — жизнь из присутствия",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.04755503454468583,
+          "preview": "НейроСталкинг и НеоСталкинг — это два уровня одного процесса. **НейроСталкинг** — это работа с первым этажом. Паттерны, триггеры, автоматические реакции, нейрофизиология страдан..."
+        },
+        {
+          "rank": 5,
+          "chunk_id": "39f6eafa-7403-4450-80b8-9b94097035b2",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.04635631673929621,
+          "preview": "Здесь важно одно различение — оно многое проясняет. У тебя в голове два этажа, которые работают одновременно. **Нижний этаж** — древний. Ему миллионы лет. Это лимбическая систем..."
+        },
+        {
+          "rank": 6,
+          "chunk_id": "d527d369-beb2-4113-b370-cb2738e76b55",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.04606311562914835,
+          "preview": "Три причины, по которым программа «несовершенное Я» держится так крепко: **1. Нейропластичность в критический период** Мозг ребёнка — пластилин. Всё, что записалось в возрасте о..."
+        },
+        {
+          "rank": 7,
+          "chunk_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.043374745151013305,
+          "preview": "Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается операционная система. Но это не Windows и не macOS. Это **OS «Я нед..."
+        },
+        {
+          "rank": 8,
+          "chunk_id": "7910da47-485f-45c6-b774-0772d5aaddec",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.03966518730373223,
+          "preview": "Давай без эзотерики. Только нейрофизиология. В возрасте от 2 до 6 лет мозг ребёнка находится в состоянии **гиперпластичности**. Нейронные связи формируются с огромной скоростью...."
+        },
+        {
+          "rank": 9,
+          "chunk_id": "a2c87ed5-8c7c-4494-9a12-02bc07cc4b58",
+          "source_doc": "ГЛАВА 7. Страх: союзник, которого ты превратил во врага",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0383530796340463,
+          "preview": "**Цель:** начать обновлять нейронную оценку угрозы через малые шаги. **Время:** по ситуации. Регулярно — в течение нескольких недель. Выбери один маленький страх из своей карты..."
+        },
+        {
+          "rank": 10,
+          "chunk_id": "cb798df0-e1dc-4225-b216-d8b8e6979d7c",
+          "source_doc": "ГЛАВА 2. Химия клетки: почему мозг зависит от страдания",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.035164684179905044,
+          "preview": "**Цель:** поработать с одним старым болезненным воспоминанием — не через анализ, а через телесный опыт. **Время:** 15–20 минут. В тихом месте. Выбери одно воспоминание — не само..."
+        }
+      ],
+      "botdb_vector_top_10": [
+        {
+          "rank": 1,
+          "chunk_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Ты открыл эту книгу не случайно. Скорее всего, ты уже прошёл терапию, читал умные книжки, медитировал, делал практики. И всё равно что-то внутри скребёт. Какой-то фоновый шум, к..."
+        },
+        {
+          "rank": 2,
+          "chunk_id": "cb798df0-e1dc-4225-b216-d8b8e6979d7c",
+          "source_doc": "ГЛАВА 2. Химия клетки: почему мозг зависит от страдания",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "**Цель:** поработать с одним старым болезненным воспоминанием — не через анализ, а через телесный опыт. **Время:** 15–20 минут. В тихом месте. Выбери одно воспоминание — не само..."
+        },
+        {
+          "rank": 3,
+          "chunk_id": "71ca41f6-57de-4f57-badb-35e34e8bd9c6",
+          "source_doc": "ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "> **Из сессии** > > **Мария, 39 лет, топ-менеджер:** Я не понимаю, что со мной. Всё есть — работа, деньги, отношения, здоровье. Я занимаюсь всем, чем «надо»: терапия, медитация,..."
+        },
+        {
+          "rank": 4,
+          "chunk_id": "99c31e75-b401-40df-96e5-c82c5cb11569",
+          "source_doc": "ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "> **Из сессии** > > **Сергей, 44 года:** Я три месяца в этой пустоте. Пробовал всё — новый проект, поездки, смена работы. Всё равно пусто. Начал думать, что что-то сломалось. >..."
+        },
+        {
+          "rank": 5,
+          "chunk_id": "a2c87ed5-8c7c-4494-9a12-02bc07cc4b58",
+          "source_doc": "ГЛАВА 7. Страх: союзник, которого ты превратил во врага",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "**Цель:** начать обновлять нейронную оценку угрозы через малые шаги. **Время:** по ситуации. Регулярно — в течение нескольких недель. Выбери один маленький страх из своей карты..."
+        },
+        {
+          "rank": 6,
+          "chunk_id": "5943bece-db10-460a-bc21-7e23e6485925",
+          "source_doc": "ГЛАВА 10. НейроСталкинг — жизнь из присутствия",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "НейроСталкинг и НеоСталкинг — это два уровня одного процесса. **НейроСталкинг** — это работа с первым этажом. Паттерны, триггеры, автоматические реакции, нейрофизиология страдан..."
+        },
+        {
+          "rank": 7,
+          "chunk_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается операционная система. Но это не Windows и не macOS. Это **OS «Я нед..."
+        },
+        {
+          "rank": 8,
+          "chunk_id": "7910da47-485f-45c6-b774-0772d5aaddec",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Давай без эзотерики. Только нейрофизиология. В возрасте от 2 до 6 лет мозг ребёнка находится в состоянии **гиперпластичности**. Нейронные связи формируются с огромной скоростью...."
+        },
+        {
+          "rank": 9,
+          "chunk_id": "39f6eafa-7403-4450-80b8-9b94097035b2",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Здесь важно одно различение — оно многое проясняет. У тебя в голове два этажа, которые работают одновременно. **Нижний этаж** — древний. Ему миллионы лет. Это лимбическая систем..."
+        },
+        {
+          "rank": 10,
+          "chunk_id": "d527d369-beb2-4113-b370-cb2738e76b55",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Три причины, по которым программа «несовершенное Я» держится так крепко: **1. Нейропластичность в критический период** Мозг ребёнка — пластилин. Всё, что записалось в возрасте о..."
+        }
+      ],
+      "botdb_lexical_or_keyword_top_10": [],
+      "runtime_memory_candidates_top_10": [
+        {
+          "chunk_id": "e796cd02-6301-489f-906b-716f76e8cd63",
+          "source": "book",
+          "score": 0.06542473607237215,
+          "content_preview": "Здесь необходимо остановиться отдельно. Это то место, которое не описано в большинстве книг по спиральной динамике —…",
+          "content_full": "Здесь необходимо остановиться отдельно. Это то место, которое не описано в большинстве книг по спиральной динамике —…"
+        },
+        {
+          "chunk_id": "99c31e75-b401-40df-96e5-c82c5cb11569",
+          "source": "book",
+          "score": 0.05100386151721005,
+          "content_preview": "> **Из сессии** > > **Сергей, 44 года:** Я три месяца в этой пустоте. Пробовал всё — новый проект, поездки, смена…",
+          "content_full": "> **Из сессии** > > **Сергей, 44 года:** Я три месяца в этой пустоте. Пробовал всё — новый проект, поездки, смена…"
+        },
+        {
+          "chunk_id": "71ca41f6-57de-4f57-badb-35e34e8bd9c6",
+          "source": "book",
+          "score": 0.0479724328561783,
+          "content_preview": "> **Из сессии** > > **Мария, 39 лет, топ-менеджер:** Я не понимаю, что со мной.…",
+          "content_full": "> **Из сессии** > > **Мария, 39 лет, топ-менеджер:** Я не понимаю, что со мной.…"
+        }
+      ],
+      "hybrid_candidates_top_10": [],
+      "semantic_card_candidates": [
+        {
+          "card_id": "program_imperfect_self_v1",
+          "score": 1,
+          "reasons": [
+            "current_turn_overlap"
+          ]
+        }
+      ],
+      "filtered_candidates": [
+        {
+          "item_id": "71ca41f6-57de-4f57-badb-35e34e8bd9c6",
+          "origin": "retrieval_candidate",
+          "chunk_type": "",
+          "source_doc": "book",
+          "sent_to_writer": false,
+          "filter_reason": "direct_knowledge_question"
+        },
+        {
+          "item_id": "semantic_card:program_imperfect_self_v1",
+          "origin": "semantic_card",
+          "chunk_type": "concept",
+          "source_doc": "Kuznica Duha v2",
+          "sent_to_writer": false,
+          "filter_reason": "direct_knowledge_question"
+        },
+        {
+          "item_id": "71ca41f6-57de-4f57-badb-35e34e8bd9c6",
+          "origin": "memory_semantic_hit",
+          "chunk_type": "general_text",
+          "source_doc": "book",
+          "sent_to_writer": false,
+          "filter_reason": "direct_knowledge_question"
+        }
+      ],
+      "writer_payload_chunks": [
+        {
+          "item_id": "e796cd02-6301-489f-906b-716f76e8cd63",
+          "chunk_id": "e796cd02-6301-489f-906b-716f76e8cd63",
+          "origin": "retrieval",
+          "source_doc": "book",
+          "chunk_type": "general_text",
+          "quote_policy": "paraphrase_only",
+          "allowed_use": [
+            "direct_to_writer"
+          ],
+          "payload_item_origin": "",
+          "semantic_card_id": "",
+          "semantic_card_pack_id": "",
+          "sent_to_writer": true,
+          "writer_can_ignore": true,
+          "applied_as_authority": false,
+          "inclusion_reason": "selected_for_writer_payload"
+        },
+        {
+          "item_id": "99c31e75-b401-40df-96e5-c82c5cb11569",
+          "chunk_id": "99c31e75-b401-40df-96e5-c82c5cb11569",
+          "origin": "retrieval",
+          "source_doc": "book",
+          "chunk_type": "general_text",
+          "quote_policy": "paraphrase_only",
+          "allowed_use": [
+            "direct_to_writer"
+          ],
+          "payload_item_origin": "",
+          "semantic_card_id": "",
+          "semantic_card_pack_id": "",
+          "sent_to_writer": true,
+          "writer_can_ignore": true,
+          "applied_as_authority": false,
+          "inclusion_reason": "selected_for_writer_payload"
+        }
+      ],
+      "runtime_truth_summary": {
+        "retrieved_candidates_count": 7,
+        "filtered_out_for_writer_count": 3,
+        "writer_visible_payload_count": 2,
+        "payload_decision_reason": "structured_payload_used",
+        "grounding_visibility_reason": "direct_knowledge_question",
+        "writer_kb_payload_status": "structured_payload_used",
+        "writer_kb_payload_primary_path": "writer_kb_payload_v1",
+        "retrieval_gate_recovery_applied": true
+      },
+      "writer_grounding_visibility_v1": {
+        "version": "writer_grounding_visibility_v1",
+        "kb_visible_to_writer": true,
+        "semantic_cards_visible_to_writer": true,
+        "reason": "direct_knowledge_question",
+        "direct_kb_question": true,
+        "direct_source_request": false,
+        "explicit_knowledge_request": true,
+        "explicit_practice_request": false,
+        "candidate_chunk_types": [
+          "concept"
+        ],
+        "allowed_grounding_types": [],
+        "narrow_practice_grounding_available": false,
+        "safety_grounding_allowed": false,
+        "no_internal_db": false,
+        "trace_only_grounding_available": true,
+        "writer_may_ignore_grounding": true,
+        "retrieval_action": "query_kb",
+        "retrieval_need": "knowledge_context",
+        "retrieval_gate_recovery_applied": true,
+        "retrieval_gate_recovery_source": "memory_bundle.knowledge_rag_hits",
+        "retrieval_gate_recovery_match_chunk_id": "99c31e75-b401-40df-96e5-c82c5cb11569"
+      },
+      "retrieval_decision_summary": {
+        "retrieval_action": "query_kb",
+        "retrieval_need": "knowledge_context",
+        "rag_included_count": 0,
+        "rag_suppressed_reason": "candidate_available_but_current_turn_prefers_recent_context"
+      },
+      "source_chunk_match_trace_v1": {
+        "enabled": true,
+        "probe_query": "Что такое анестетическая депрессия?",
+        "raw_query": "анестетическая депрессия",
+        "normalized_query": "что такое анестетическая депрессия?",
+        "explicit_knowledge_question": true,
+        "source_match_expected": "yes",
+        "raw_source_top_k_count": 4,
+        "runtime_candidate_top_k_count": 7,
+        "writer_payload_count": 2,
+        "focus_terms": [
+          "анестетическая",
+          "депрессия"
+        ],
+        "best_raw_match": {
+          "chunk_id": "e796cd02-6301-489f-906b-716f76e8cd63",
+          "source_doc": "book",
+          "rank": 1,
+          "score": 0.06542473607237215,
+          "near_exact_match": false,
+          "matched_terms_or_phrase": [],
+          "sent_to_writer": null,
+          "filter_reason": "",
+          "payload_position": null,
+          "writer_can_ignore": true,
+          "chunk_type": "general_text",
+          "origin": "trace",
+          "preview": "book Здесь необходимо остановиться отдельно. Это то место, которое не описано в большинстве книг по спиральной динамике — но именно здесь застревают умные, ищу..."
+        },
+        "best_runtime_match": {
+          "chunk_id": "99c31e75-b401-40df-96e5-c82c5cb11569",
+          "source_doc": "book",
+          "rank": 2,
+          "score": 0.05100386151721005,
+          "near_exact_match": true,
+          "matched_terms_or_phrase": [
+            "анестетическая",
+            "депрессия"
+          ],
+          "sent_to_writer": true,
+          "filter_reason": "",
+          "payload_position": null,
+          "writer_can_ignore": true,
+          "chunk_type": "",
+          "origin": "retrieval_candidate",
+          "preview": "book > **Из сессии** > > **Сергей, 44 года:** Я три месяца в этой пустоте. Пробовал всё — новый проект, поездки, смена работы. Всё равно пусто. Начал думать, ч..."
+        },
+        "payload_match": {
+          "chunk_id": "99c31e75-b401-40df-96e5-c82c5cb11569",
+          "source_doc": "book",
+          "rank": 2,
+          "score": 0.0,
+          "near_exact_match": true,
+          "matched_terms_or_phrase": [
+            "анестетическая",
+            "депрессия"
+          ],
+          "sent_to_writer": true,
+          "filter_reason": "",
+          "payload_position": 2,
+          "writer_can_ignore": true,
+          "chunk_type": "general_text",
+          "origin": "retrieval",
+          "preview": "book > **Из сессии** > > **Сергей, 44 года:** Я три месяца в этой пустоте. Пробовал всё — новый проект, поездки, смена работы. Всё равно пусто. Начал думать, ч..."
+        },
+        "loss_stage": "raw_source",
+        "loss_reason": "no_raw_source_match_in_runtime_top_k"
+      },
+      "final_answer_summary": "Анестетическая депрессия — это состояние эмоциональной «пустоты» или онемения: человек продолжает функционировать (работа, обязанности, поведение в целом), но не испытывает ни боли, ни радости — словно под стеклянным колпаком. Главный механизм: нервная сист..."
+    },
+    {
+      "probe_id": "A2",
+      "query": "анестетическая депрессия это ведь еще и психологический термин, что ты знаешь об этом?",
+      "classification": "FAIL_raw_source_missing",
+      "source_material_phrase_present_in_workspace": true,
+      "raw_source_search_top_10": [
+        {
+          "rank": 1,
+          "chunk_id": "e796cd02-6301-489f-906b-716f76e8cd63",
+          "source_doc": "ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.08609137448102022,
+          "preview": "Здесь необходимо остановиться отдельно. Это то место, которое не описано в большинстве книг по спиральной динамике — но именно здесь застревают умные, ищущие люди. Между **зелён..."
+        },
+        {
+          "rank": 2,
+          "chunk_id": "553bccee-feff-4b43-b93e-7023fd3b8840",
+          "source_doc": "ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.08270008185254646,
+          "preview": "*** **— Получается, объективной реальности не существует? Всё субъективно? Это же ведёт к нигилизму.** — Нет. Объективная реальность существует. Стол — твёрдый. Солнце — горячее..."
+        },
+        {
+          "rank": 3,
+          "chunk_id": "71ca41f6-57de-4f57-badb-35e34e8bd9c6",
+          "source_doc": "ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.07888258781808585,
+          "preview": "> **Из сессии** > > **Мария, 39 лет, топ-менеджер:** Я не понимаю, что со мной. Всё есть — работа, деньги, отношения, здоровье. Я занимаюсь всем, чем «надо»: терапия, медитация,..."
+        },
+        {
+          "rank": 4,
+          "chunk_id": "99c31e75-b401-40df-96e5-c82c5cb11569",
+          "source_doc": "ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.07604151119853611,
+          "preview": "> **Из сессии** > > **Сергей, 44 года:** Я три месяца в этой пустоте. Пробовал всё — новый проект, поездки, смена работы. Всё равно пусто. Начал думать, что что-то сломалось. >..."
+        },
+        {
+          "rank": 5,
+          "chunk_id": "c85eabc6-ac56-476a-8ec9-9f0ce093a734",
+          "source_doc": "ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.07551790372863057,
+          "preview": "Переходы между уровнями не происходят потому что ты «решил развиваться». Это не выбор ума. Переходы случаются, когда **текущий уровень исчерпывает себя**. Когда его инструменты..."
+        },
+        {
+          "rank": 6,
+          "chunk_id": "0674108a-c3e0-4a64-838e-da0017627a23",
+          "source_doc": "ГЛАВА 2. Химия клетки: почему мозг зависит от страдания",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.07501739451585947,
+          "preview": "Всё, что описано выше — это знание. Ты теперь знаешь про кортизол, дофамин, опиоидную систему, DMN. И ты уже, возможно, замечаешь в себе: «да, узнаю. Это про меня». Но знание не..."
+        },
+        {
+          "rank": 7,
+          "chunk_id": "ced62ddd-d52a-4008-952e-c6d3616f1bf5",
+          "source_doc": "ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.07471761509072092,
+          "preview": "Это один из самых частых запросов на сессиях: «Я хочу сразу на жёлтый. Как туда попасть быстрее?» Ответ прямой: никак. Каждый уровень — это накопленный **опыт**, а не информация..."
+        },
+        {
+          "rank": 8,
+          "chunk_id": "82e2a971-659c-4655-b596-d1eadec87329",
+          "source_doc": "ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.06585294878392389,
+          "preview": "Теперь самый неудобный вывод из всего вышесказанного. Когда ты встречаешь человека — ты встречаешь не его. Ты встречаешь **образ**, который построил твой мозг из нескольких набл..."
+        },
+        {
+          "rank": 9,
+          "chunk_id": "538dcd01-2545-4ecf-9e7e-a8699ca76164",
+          "source_doc": "ГЛАВА 2. Химия клетки: почему мозг зависит от страдания",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.05795405997913134,
+          "preview": "> Из сессии: > > **Максим, 40 лет:** Я несколько месяцев в каком-то странном состоянии. Ничего не хочу, ничего не радует, ничего не делаю — хотя дела есть. Просто лежу. Думал —..."
+        },
+        {
+          "rank": 10,
+          "chunk_id": "ed040495-4607-4386-b0fc-6ca31f26ee7d",
+          "source_doc": "ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.05303039434658975,
+          "preview": "И да — это пугает. Потому что карта была привычной. Она давала ощущение, что ты знаешь, как устроен мир. Без неё — мир становится более живым, непредсказуемым, настоящим. Это не..."
+        }
+      ],
+      "botdb_vector_top_10": [
+        {
+          "rank": 1,
+          "chunk_id": "99c31e75-b401-40df-96e5-c82c5cb11569",
+          "source_doc": "ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "> **Из сессии** > > **Сергей, 44 года:** Я три месяца в этой пустоте. Пробовал всё — новый проект, поездки, смена работы. Всё равно пусто. Начал думать, что что-то сломалось. >..."
+        },
+        {
+          "rank": 2,
+          "chunk_id": "71ca41f6-57de-4f57-badb-35e34e8bd9c6",
+          "source_doc": "ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "> **Из сессии** > > **Мария, 39 лет, топ-менеджер:** Я не понимаю, что со мной. Всё есть — работа, деньги, отношения, здоровье. Я занимаюсь всем, чем «надо»: терапия, медитация,..."
+        },
+        {
+          "rank": 3,
+          "chunk_id": "ced62ddd-d52a-4008-952e-c6d3616f1bf5",
+          "source_doc": "ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Это один из самых частых запросов на сессиях: «Я хочу сразу на жёлтый. Как туда попасть быстрее?» Ответ прямой: никак. Каждый уровень — это накопленный **опыт**, а не информация..."
+        },
+        {
+          "rank": 4,
+          "chunk_id": "538dcd01-2545-4ecf-9e7e-a8699ca76164",
+          "source_doc": "ГЛАВА 2. Химия клетки: почему мозг зависит от страдания",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "> Из сессии: > > **Максим, 40 лет:** Я несколько месяцев в каком-то странном состоянии. Ничего не хочу, ничего не радует, ничего не делаю — хотя дела есть. Просто лежу. Думал —..."
+        },
+        {
+          "rank": 5,
+          "chunk_id": "0674108a-c3e0-4a64-838e-da0017627a23",
+          "source_doc": "ГЛАВА 2. Химия клетки: почему мозг зависит от страдания",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Всё, что описано выше — это знание. Ты теперь знаешь про кортизол, дофамин, опиоидную систему, DMN. И ты уже, возможно, замечаешь в себе: «да, узнаю. Это про меня». Но знание не..."
+        },
+        {
+          "rank": 6,
+          "chunk_id": "82e2a971-659c-4655-b596-d1eadec87329",
+          "source_doc": "ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Теперь самый неудобный вывод из всего вышесказанного. Когда ты встречаешь человека — ты встречаешь не его. Ты встречаешь **образ**, который построил твой мозг из нескольких набл..."
+        },
+        {
+          "rank": 7,
+          "chunk_id": "553bccee-feff-4b43-b93e-7023fd3b8840",
+          "source_doc": "ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "*** **— Получается, объективной реальности не существует? Всё субъективно? Это же ведёт к нигилизму.** — Нет. Объективная реальность существует. Стол — твёрдый. Солнце — горячее..."
+        },
+        {
+          "rank": 8,
+          "chunk_id": "ed040495-4607-4386-b0fc-6ca31f26ee7d",
+          "source_doc": "ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "И да — это пугает. Потому что карта была привычной. Она давала ощущение, что ты знаешь, как устроен мир. Без неё — мир становится более живым, непредсказуемым, настоящим. Это не..."
+        },
+        {
+          "rank": 9,
+          "chunk_id": "c85eabc6-ac56-476a-8ec9-9f0ce093a734",
+          "source_doc": "ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Переходы между уровнями не происходят потому что ты «решил развиваться». Это не выбор ума. Переходы случаются, когда **текущий уровень исчерпывает себя**. Когда его инструменты..."
+        },
+        {
+          "rank": 10,
+          "chunk_id": "e796cd02-6301-489f-906b-716f76e8cd63",
+          "source_doc": "ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Здесь необходимо остановиться отдельно. Это то место, которое не описано в большинстве книг по спиральной динамике — но именно здесь застревают умные, ищущие люди. Между **зелён..."
+        }
+      ],
+      "botdb_lexical_or_keyword_top_10": [],
+      "runtime_memory_candidates_top_10": [
+        {
+          "chunk_id": "99c31e75-b401-40df-96e5-c82c5cb11569",
+          "source": "book",
+          "score": 0.07157204966564687,
+          "content_preview": "> **Из сессии** > > **Сергей, 44 года:** Я три месяца в этой пустоте. Пробовал всё — новый проект, поездки, смена…",
+          "content_full": "> **Из сессии** > > **Сергей, 44 года:** Я три месяца в этой пустоте. Пробовал всё — новый проект, поездки, смена…"
+        },
+        {
+          "chunk_id": "ced62ddd-d52a-4008-952e-c6d3616f1bf5",
+          "source": "book",
+          "score": 0.06921528247879881,
+          "content_preview": "Это один из самых частых запросов на сессиях: Я хочу сразу на жёлтый. Как туда попасть быстрее? Ответ прямой: никак.…",
+          "content_full": "Это один из самых частых запросов на сессиях: Я хочу сразу на жёлтый. Как туда попасть быстрее? Ответ прямой: никак.…"
+        },
+        {
+          "chunk_id": "71ca41f6-57de-4f57-badb-35e34e8bd9c6",
+          "source": "book",
+          "score": 0.0684564385867853,
+          "content_preview": "> **Из сессии** > > **Мария, 39 лет, топ-менеджер:** Я не понимаю, что со мной.…",
+          "content_full": "> **Из сессии** > > **Мария, 39 лет, топ-менеджер:** Я не понимаю, что со мной.…"
+        }
+      ],
+      "hybrid_candidates_top_10": [],
+      "semantic_card_candidates": [
+        {
+          "card_id": "fact_vs_interpretation_v1",
+          "score": 1,
+          "reasons": [
+            "current_turn_overlap"
+          ]
+        },
+        {
+          "card_id": "program_imperfect_self_v1",
+          "score": 1,
+          "reasons": [
+            "current_turn_overlap"
+          ]
+        }
+      ],
+      "filtered_candidates": [
+        {
+          "item_id": "71ca41f6-57de-4f57-badb-35e34e8bd9c6",
+          "origin": "retrieval_candidate",
+          "chunk_type": "",
+          "source_doc": "book",
+          "sent_to_writer": false,
+          "filter_reason": "direct_knowledge_question"
+        },
+        {
+          "item_id": "semantic_card:fact_vs_interpretation_v1",
+          "origin": "semantic_card",
+          "chunk_type": "diagnostic_lens",
+          "source_doc": "Kuznica Duha v2",
+          "sent_to_writer": false,
+          "filter_reason": "direct_knowledge_question"
+        },
+        {
+          "item_id": "semantic_card:program_imperfect_self_v1",
+          "origin": "semantic_card",
+          "chunk_type": "concept",
+          "source_doc": "Kuznica Duha v2",
+          "sent_to_writer": false,
+          "filter_reason": "direct_knowledge_question"
+        },
+        {
+          "item_id": "71ca41f6-57de-4f57-badb-35e34e8bd9c6",
+          "origin": "memory_semantic_hit",
+          "chunk_type": "general_text",
+          "source_doc": "book",
+          "sent_to_writer": false,
+          "filter_reason": "direct_knowledge_question"
+        }
+      ],
+      "writer_payload_chunks": [
+        {
+          "item_id": "99c31e75-b401-40df-96e5-c82c5cb11569",
+          "chunk_id": "99c31e75-b401-40df-96e5-c82c5cb11569",
+          "origin": "retrieval",
+          "source_doc": "book",
+          "chunk_type": "general_text",
+          "quote_policy": "paraphrase_only",
+          "allowed_use": [
+            "direct_to_writer"
+          ],
+          "payload_item_origin": "",
+          "semantic_card_id": "",
+          "semantic_card_pack_id": "",
+          "sent_to_writer": true,
+          "writer_can_ignore": true,
+          "applied_as_authority": false,
+          "inclusion_reason": "selected_for_writer_payload"
+        },
+        {
+          "item_id": "ced62ddd-d52a-4008-952e-c6d3616f1bf5",
+          "chunk_id": "ced62ddd-d52a-4008-952e-c6d3616f1bf5",
+          "origin": "retrieval",
+          "source_doc": "book",
+          "chunk_type": "general_text",
+          "quote_policy": "paraphrase_only",
+          "allowed_use": [
+            "direct_to_writer"
+          ],
+          "payload_item_origin": "",
+          "semantic_card_id": "",
+          "semantic_card_pack_id": "",
+          "sent_to_writer": true,
+          "writer_can_ignore": true,
+          "applied_as_authority": false,
+          "inclusion_reason": "selected_for_writer_payload"
+        }
+      ],
+      "runtime_truth_summary": {
+        "retrieved_candidates_count": 8,
+        "filtered_out_for_writer_count": 4,
+        "writer_visible_payload_count": 2,
+        "payload_decision_reason": "structured_payload_used",
+        "grounding_visibility_reason": "direct_knowledge_question",
+        "writer_kb_payload_status": "structured_payload_used",
+        "writer_kb_payload_primary_path": "writer_kb_payload_v1",
+        "retrieval_gate_recovery_applied": true
+      },
+      "writer_grounding_visibility_v1": {
+        "version": "writer_grounding_visibility_v1",
+        "kb_visible_to_writer": true,
+        "semantic_cards_visible_to_writer": true,
+        "reason": "direct_knowledge_question",
+        "direct_kb_question": true,
+        "direct_source_request": false,
+        "explicit_knowledge_request": true,
+        "explicit_practice_request": false,
+        "candidate_chunk_types": [
+          "diagnostic_lens",
+          "concept"
+        ],
+        "allowed_grounding_types": [],
+        "narrow_practice_grounding_available": false,
+        "safety_grounding_allowed": false,
+        "no_internal_db": false,
+        "trace_only_grounding_available": true,
+        "writer_may_ignore_grounding": true,
+        "retrieval_action": "trace_only",
+        "retrieval_need": "none",
+        "retrieval_gate_recovery_applied": true,
+        "retrieval_gate_recovery_source": "memory_bundle.knowledge_rag_hits",
+        "retrieval_gate_recovery_match_chunk_id": "99c31e75-b401-40df-96e5-c82c5cb11569"
+      },
+      "retrieval_decision_summary": {
+        "retrieval_action": "trace_only",
+        "retrieval_need": "none",
+        "rag_included_count": 0,
+        "rag_suppressed_reason": "no_clear_retrieval_need"
+      },
+      "source_chunk_match_trace_v1": {
+        "enabled": true,
+        "probe_query": "анестетическая депрессия это ведь еще и психологический термин, что ты знаешь об этом?",
+        "raw_query": "анестетическая депрессия ведь еще психологический термин ты знаешь об этом",
+        "normalized_query": "анестетическая депрессия это ведь еще и психологический термин, что ты знаешь об этом?",
+        "explicit_knowledge_question": true,
+        "source_match_expected": "yes",
+        "raw_source_top_k_count": 4,
+        "runtime_candidate_top_k_count": 8,
+        "writer_payload_count": 2,
+        "focus_terms": [
+          "анестетическая",
+          "депрессия",
+          "психологический"
+        ],
+        "best_raw_match": {
+          "chunk_id": "99c31e75-b401-40df-96e5-c82c5cb11569",
+          "source_doc": "book",
+          "rank": 1,
+          "score": 0.07157204966564687,
+          "near_exact_match": false,
+          "matched_terms_or_phrase": [],
+          "sent_to_writer": null,
+          "filter_reason": "",
+          "payload_position": null,
+          "writer_can_ignore": true,
+          "chunk_type": "general_text",
+          "origin": "trace",
+          "preview": "book > **Из сессии** > > **Сергей, 44 года:** Я три месяца в этой пустоте. Пробовал всё — новый проект, поездки, смена работы. Всё равно пусто. Начал думать, ч..."
+        },
+        "best_runtime_match": {
+          "chunk_id": "99c31e75-b401-40df-96e5-c82c5cb11569",
+          "source_doc": "book",
+          "rank": 1,
+          "score": 0.07157204966564687,
+          "near_exact_match": true,
+          "matched_terms_or_phrase": [
+            "анестетическая",
+            "депрессия"
+          ],
+          "sent_to_writer": true,
+          "filter_reason": "",
+          "payload_position": null,
+          "writer_can_ignore": true,
+          "chunk_type": "",
+          "origin": "retrieval_candidate",
+          "preview": "book > **Из сессии** > > **Сергей, 44 года:** Я три месяца в этой пустоте. Пробовал всё — новый проект, поездки, смена работы. Всё равно пусто. Начал думать, ч..."
+        },
+        "payload_match": {
+          "chunk_id": "99c31e75-b401-40df-96e5-c82c5cb11569",
+          "source_doc": "book",
+          "rank": 1,
+          "score": 0.0,
+          "near_exact_match": true,
+          "matched_terms_or_phrase": [
+            "анестетическая",
+            "депрессия"
+          ],
+          "sent_to_writer": true,
+          "filter_reason": "",
+          "payload_position": 1,
+          "writer_can_ignore": true,
+          "chunk_type": "general_text",
+          "origin": "retrieval",
+          "preview": "book > **Из сессии** > > **Сергей, 44 года:** Я три месяца в этой пустоте. Пробовал всё — новый проект, поездки, смена работы. Всё равно пусто. Начал думать, ч..."
+        },
+        "loss_stage": "raw_source",
+        "loss_reason": "no_raw_source_match_in_runtime_top_k"
+      },
+      "final_answer_summary": "Коротко — да: «анестетическая депрессия» в психологическом употреблении обычно описывает состояние эмоционального оцепенения или пустоты (эмоциональная «анестезия»), когда человек чувствует пустоту, апатию и потерю смысла, несмотря на отсутствие ярко выраже..."
+    },
+    {
+      "probe_id": "A3",
+      "query": "Так стоп! Что такое анестетическая депрессия в Нейросталкинге?",
+      "classification": "FAIL_raw_source_missing",
+      "source_material_phrase_present_in_workspace": true,
+      "raw_source_search_top_10": [
+        {
+          "rank": 1,
+          "chunk_id": "5943bece-db10-460a-bc21-7e23e6485925",
+          "source_doc": "ГЛАВА 10. НейроСталкинг — жизнь из присутствия",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.09585960837182139,
+          "preview": "НейроСталкинг и НеоСталкинг — это два уровня одного процесса. **НейроСталкинг** — это работа с первым этажом. Паттерны, триггеры, автоматические реакции, нейрофизиология страдан..."
+        },
+        {
+          "rank": 2,
+          "chunk_id": "99c31e75-b401-40df-96e5-c82c5cb11569",
+          "source_doc": "ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.07946165005683987,
+          "preview": "> **Из сессии** > > **Сергей, 44 года:** Я три месяца в этой пустоте. Пробовал всё — новый проект, поездки, смена работы. Всё равно пусто. Начал думать, что что-то сломалось. >..."
+        },
+        {
+          "rank": 3,
+          "chunk_id": "de3a88e9-0c75-4c05-9d54-761c959acd6c",
+          "source_doc": "ГЛАВА 10. НейроСталкинг — жизнь из присутствия",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.07414474662926877,
+          "preview": "**В: Я понимаю всё, что описано в книге. Но в жизни это не работает. Что я делаю не так?** Ничего не делаешь не так. Понимание и переживание — это разные уровни. Ты не можешь «п..."
+        },
+        {
+          "rank": 4,
+          "chunk_id": "71ca41f6-57de-4f57-badb-35e34e8bd9c6",
+          "source_doc": "ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.06828106447366813,
+          "preview": "> **Из сессии** > > **Мария, 39 лет, топ-менеджер:** Я не понимаю, что со мной. Всё есть — работа, деньги, отношения, здоровье. Я занимаюсь всем, чем «надо»: терапия, медитация,..."
+        },
+        {
+          "rank": 5,
+          "chunk_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.06324146201327754,
+          "preview": "Ты открыл эту книгу не случайно. Скорее всего, ты уже прошёл терапию, читал умные книжки, медитировал, делал практики. И всё равно что-то внутри скребёт. Какой-то фоновый шум, к..."
+        },
+        {
+          "rank": 6,
+          "chunk_id": "39f6eafa-7403-4450-80b8-9b94097035b2",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.06044702287872405,
+          "preview": "Здесь важно одно различение — оно многое проясняет. У тебя в голове два этажа, которые работают одновременно. **Нижний этаж** — древний. Ему миллионы лет. Это лимбическая систем..."
+        },
+        {
+          "rank": 7,
+          "chunk_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.05979775611361251,
+          "preview": "Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается операционная система. Но это не Windows и не macOS. Это **OS «Я нед..."
+        },
+        {
+          "rank": 8,
+          "chunk_id": "a2c87ed5-8c7c-4494-9a12-02bc07cc4b58",
+          "source_doc": "ГЛАВА 7. Страх: союзник, которого ты превратил во врага",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.05612625390041134,
+          "preview": "**Цель:** начать обновлять нейронную оценку угрозы через малые шаги. **Время:** по ситуации. Регулярно — в течение нескольких недель. Выбери один маленький страх из своей карты..."
+        },
+        {
+          "rank": 9,
+          "chunk_id": "538dcd01-2545-4ecf-9e7e-a8699ca76164",
+          "source_doc": "ГЛАВА 2. Химия клетки: почему мозг зависит от страдания",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.05493733047476972,
+          "preview": "> Из сессии: > > **Максим, 40 лет:** Я несколько месяцев в каком-то странном состоянии. Ничего не хочу, ничего не радует, ничего не делаю — хотя дела есть. Просто лежу. Думал —..."
+        },
+        {
+          "rank": 10,
+          "chunk_id": "cb798df0-e1dc-4225-b216-d8b8e6979d7c",
+          "source_doc": "ГЛАВА 2. Химия клетки: почему мозг зависит от страдания",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0425763851644903,
+          "preview": "**Цель:** поработать с одним старым болезненным воспоминанием — не через анализ, а через телесный опыт. **Время:** 15–20 минут. В тихом месте. Выбери одно воспоминание — не само..."
+        }
+      ],
+      "botdb_vector_top_10": [
+        {
+          "rank": 1,
+          "chunk_id": "71ca41f6-57de-4f57-badb-35e34e8bd9c6",
+          "source_doc": "ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "> **Из сессии** > > **Мария, 39 лет, топ-менеджер:** Я не понимаю, что со мной. Всё есть — работа, деньги, отношения, здоровье. Я занимаюсь всем, чем «надо»: терапия, медитация,..."
+        },
+        {
+          "rank": 2,
+          "chunk_id": "99c31e75-b401-40df-96e5-c82c5cb11569",
+          "source_doc": "ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "> **Из сессии** > > **Сергей, 44 года:** Я три месяца в этой пустоте. Пробовал всё — новый проект, поездки, смена работы. Всё равно пусто. Начал думать, что что-то сломалось. >..."
+        },
+        {
+          "rank": 3,
+          "chunk_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Ты открыл эту книгу не случайно. Скорее всего, ты уже прошёл терапию, читал умные книжки, медитировал, делал практики. И всё равно что-то внутри скребёт. Какой-то фоновый шум, к..."
+        },
+        {
+          "rank": 4,
+          "chunk_id": "538dcd01-2545-4ecf-9e7e-a8699ca76164",
+          "source_doc": "ГЛАВА 2. Химия клетки: почему мозг зависит от страдания",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "> Из сессии: > > **Максим, 40 лет:** Я несколько месяцев в каком-то странном состоянии. Ничего не хочу, ничего не радует, ничего не делаю — хотя дела есть. Просто лежу. Думал —..."
+        },
+        {
+          "rank": 5,
+          "chunk_id": "cb798df0-e1dc-4225-b216-d8b8e6979d7c",
+          "source_doc": "ГЛАВА 2. Химия клетки: почему мозг зависит от страдания",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "**Цель:** поработать с одним старым болезненным воспоминанием — не через анализ, а через телесный опыт. **Время:** 15–20 минут. В тихом месте. Выбери одно воспоминание — не само..."
+        },
+        {
+          "rank": 6,
+          "chunk_id": "a2c87ed5-8c7c-4494-9a12-02bc07cc4b58",
+          "source_doc": "ГЛАВА 7. Страх: союзник, которого ты превратил во врага",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "**Цель:** начать обновлять нейронную оценку угрозы через малые шаги. **Время:** по ситуации. Регулярно — в течение нескольких недель. Выбери один маленький страх из своей карты..."
+        },
+        {
+          "rank": 7,
+          "chunk_id": "5943bece-db10-460a-bc21-7e23e6485925",
+          "source_doc": "ГЛАВА 10. НейроСталкинг — жизнь из присутствия",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "НейроСталкинг и НеоСталкинг — это два уровня одного процесса. **НейроСталкинг** — это работа с первым этажом. Паттерны, триггеры, автоматические реакции, нейрофизиология страдан..."
+        },
+        {
+          "rank": 8,
+          "chunk_id": "de3a88e9-0c75-4c05-9d54-761c959acd6c",
+          "source_doc": "ГЛАВА 10. НейроСталкинг — жизнь из присутствия",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "**В: Я понимаю всё, что описано в книге. Но в жизни это не работает. Что я делаю не так?** Ничего не делаешь не так. Понимание и переживание — это разные уровни. Ты не можешь «п..."
+        },
+        {
+          "rank": 9,
+          "chunk_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается операционная система. Но это не Windows и не macOS. Это **OS «Я нед..."
+        },
+        {
+          "rank": 10,
+          "chunk_id": "39f6eafa-7403-4450-80b8-9b94097035b2",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Здесь важно одно различение — оно многое проясняет. У тебя в голове два этажа, которые работают одновременно. **Нижний этаж** — древний. Ему миллионы лет. Это лимбическая систем..."
+        }
+      ],
+      "botdb_lexical_or_keyword_top_10": [],
+      "runtime_memory_candidates_top_10": [
+        {
+          "chunk_id": "99c31e75-b401-40df-96e5-c82c5cb11569",
+          "source": "book",
+          "score": 0.08766062734314568,
+          "content_preview": "> **Из сессии** > > **Сергей, 44 года:** Я три месяца в этой пустоте. Пробовал всё — новый проект, поездки, смена…",
+          "content_full": "> **Из сессии** > > **Сергей, 44 года:** Я три месяца в этой пустоте. Пробовал всё — новый проект, поездки, смена…"
+        },
+        {
+          "chunk_id": "d527d369-beb2-4113-b370-cb2738e76b55",
+          "source": "book",
+          "score": 0.07605308382941596,
+          "content_preview": "Три причины, по которым программа несовершенное Я держится так крепко: **1.…",
+          "content_full": "Три причины, по которым программа несовершенное Я держится так крепко: **1.…"
+        },
+        {
+          "chunk_id": "71ca41f6-57de-4f57-badb-35e34e8bd9c6",
+          "source": "book",
+          "score": 0.07424079461858976,
+          "content_preview": "> **Из сессии** > > **Мария, 39 лет, топ-менеджер:** Я не понимаю, что со мной.…",
+          "content_full": "> **Из сессии** > > **Мария, 39 лет, топ-менеджер:** Я не понимаю, что со мной.…"
+        }
+      ],
+      "hybrid_candidates_top_10": [
+        {
+          "chunk_id": "99c31e75-b401-40df-96e5-c82c5cb11569",
+          "content": "> **Из сессии**\n>\n> **Сергей, 44 года:** Я три месяца в этой пустоте. Пробовал всё — новый проект, поездки, смена работы. Всё равно пусто. Начал думать, что что-то сломалось.\n>\n> **Саламат:** А что если ничего не сломалось? Что если ты просто первый раз в жизни не знаешь, куда бежать — и твоя нервная система наконец-то получила возможность остановиться?\n>\n> **Сергей:** Остановиться — это и есть проблема. Я не умею останавливаться.\n>\n> **Саламат:** Вот. Ты только что сказал главное. Сорок четыре года в движении — и тело остановилось. Не сломалось — остановилось. Твой организм умнее программы. Он знает, что дальше — нельзя на том же топливе. Сейчас пауза не проблема. Сейчас пауза и есть работа",
+          "source": "book",
+          "score": 0.08766062734314568
+        },
+        {
+          "chunk_id": "d527d369-beb2-4113-b370-cb2738e76b55",
+          "content": "Три причины, по которым программа «несовершенное Я» держится так крепко:\n\n**1. Нейропластичность в критический период**\n\nМозг ребёнка — пластилин. Всё, что записалось в возрасте от 2 до 6 лет, записалось **на уровне базовой архитектуры**. Это не файл, который можно удалить. Это фундамент, на котором строится всё остальное.\n\n**2. Эмоциональная окраска**\n\nПрограмма формируется не через логику, а через **эмоции**. А эмоции для мозга — маркеры важности. Чем сильнее эмоция, тем глубже запись. Страх отвержения, стыд, вина — это эмоции высшей интенсивности. Поэтому опыты, связанные с ними, записываются особенно прочно.\n\n**3. Бессознательность**\n\nПрограмма работает **за пределами сознания**. Ты не п",
+          "source": "book",
+          "score": 0.07605308382941596
+        }
+      ],
+      "semantic_card_candidates": [
+        {
+          "card_id": "neurostalking_basic_lens_v1",
+          "score": 6,
+          "reasons": [
+            "topic_alias"
+          ]
+        },
+        {
+          "card_id": "program_imperfect_self_v1",
+          "score": 2,
+          "reasons": [
+            "current_turn_overlap"
+          ]
+        }
+      ],
+      "filtered_candidates": [
+        {
+          "item_id": "semantic_card:neurostalking_basic_lens_v1",
+          "origin": "semantic_card",
+          "chunk_type": "diagnostic_lens",
+          "source_doc": "Kuznica Duha v2",
+          "sent_to_writer": false,
+          "filter_reason": "direct_knowledge_question"
+        },
+        {
+          "item_id": "semantic_card:program_imperfect_self_v1",
+          "origin": "semantic_card",
+          "chunk_type": "concept",
+          "source_doc": "Kuznica Duha v2",
+          "sent_to_writer": false,
+          "filter_reason": "direct_knowledge_question"
+        },
+        {
+          "item_id": "71ca41f6-57de-4f57-badb-35e34e8bd9c6",
+          "origin": "memory_semantic_hit",
+          "chunk_type": "general_text",
+          "source_doc": "book",
+          "sent_to_writer": false,
+          "filter_reason": "direct_knowledge_question"
+        }
+      ],
+      "writer_payload_chunks": [
+        {
+          "item_id": "99c31e75-b401-40df-96e5-c82c5cb11569",
+          "chunk_id": "99c31e75-b401-40df-96e5-c82c5cb11569",
+          "origin": "retrieval",
+          "source_doc": "book",
+          "chunk_type": "general_text",
+          "quote_policy": "paraphrase_only",
+          "allowed_use": [
+            "direct_to_writer"
+          ],
+          "payload_item_origin": "",
+          "semantic_card_id": "",
+          "semantic_card_pack_id": "",
+          "sent_to_writer": true,
+          "writer_can_ignore": true,
+          "applied_as_authority": false,
+          "inclusion_reason": "selected_for_writer_payload"
+        },
+        {
+          "item_id": "d527d369-beb2-4113-b370-cb2738e76b55",
+          "chunk_id": "d527d369-beb2-4113-b370-cb2738e76b55",
+          "origin": "retrieval",
+          "source_doc": "book",
+          "chunk_type": "general_text",
+          "quote_policy": "paraphrase_only",
+          "allowed_use": [
+            "direct_to_writer"
+          ],
+          "payload_item_origin": "",
+          "semantic_card_id": "",
+          "semantic_card_pack_id": "",
+          "sent_to_writer": true,
+          "writer_can_ignore": true,
+          "applied_as_authority": false,
+          "inclusion_reason": "selected_for_writer_payload"
+        }
+      ],
+      "runtime_truth_summary": {
+        "retrieved_candidates_count": 7,
+        "filtered_out_for_writer_count": 3,
+        "writer_visible_payload_count": 2,
+        "payload_decision_reason": "structured_payload_used",
+        "grounding_visibility_reason": "direct_knowledge_question",
+        "writer_kb_payload_status": "structured_payload_used",
+        "writer_kb_payload_primary_path": "writer_kb_payload_v1",
+        "retrieval_gate_recovery_applied": false
+      },
+      "writer_grounding_visibility_v1": {
+        "version": "writer_grounding_visibility_v1",
+        "kb_visible_to_writer": true,
+        "semantic_cards_visible_to_writer": true,
+        "reason": "direct_knowledge_question",
+        "direct_kb_question": true,
+        "direct_source_request": false,
+        "explicit_knowledge_request": true,
+        "explicit_practice_request": false,
+        "candidate_chunk_types": [
+          "diagnostic_lens",
+          "concept"
+        ],
+        "allowed_grounding_types": [],
+        "narrow_practice_grounding_available": false,
+        "safety_grounding_allowed": false,
+        "no_internal_db": false,
+        "trace_only_grounding_available": true,
+        "writer_may_ignore_grounding": true,
+        "retrieval_action": "query_kb",
+        "retrieval_need": "knowledge_context"
+      },
+      "retrieval_decision_summary": {
+        "retrieval_action": "query_kb",
+        "retrieval_need": "knowledge_context",
+        "rag_included_count": 2,
+        "rag_suppressed_reason": ""
+      },
+      "source_chunk_match_trace_v1": {
+        "enabled": true,
+        "probe_query": "Так стоп! Что такое анестетическая депрессия в Нейросталкинге?",
+        "raw_query": "так стоп анестетическая депрессия нейросталкинге",
+        "normalized_query": "так стоп! что такое анестетическая депрессия в нейросталкинге?",
+        "explicit_knowledge_question": true,
+        "source_match_expected": "yes",
+        "raw_source_top_k_count": 4,
+        "runtime_candidate_top_k_count": 7,
+        "writer_payload_count": 2,
+        "focus_terms": [
+          "анестетическая",
+          "депрессия",
+          "нейросталкинге"
+        ],
+        "best_raw_match": {
+          "chunk_id": "99c31e75-b401-40df-96e5-c82c5cb11569",
+          "source_doc": "book",
+          "rank": 1,
+          "score": 0.08766062734314568,
+          "near_exact_match": false,
+          "matched_terms_or_phrase": [],
+          "sent_to_writer": null,
+          "filter_reason": "",
+          "payload_position": null,
+          "writer_can_ignore": true,
+          "chunk_type": "general_text",
+          "origin": "trace",
+          "preview": "book > **Из сессии** > > **Сергей, 44 года:** Я три месяца в этой пустоте. Пробовал всё — новый проект, поездки, смена работы. Всё равно пусто. Начал думать, ч..."
+        },
+        "best_runtime_match": {
+          "chunk_id": "99c31e75-b401-40df-96e5-c82c5cb11569",
+          "source_doc": "book",
+          "rank": 1,
+          "score": 0.08766062734314568,
+          "near_exact_match": false,
+          "matched_terms_or_phrase": [],
+          "sent_to_writer": true,
+          "filter_reason": "",
+          "payload_position": null,
+          "writer_can_ignore": true,
+          "chunk_type": "",
+          "origin": "retrieval_candidate",
+          "preview": "book > **Из сессии** > > **Сергей, 44 года:** Я три месяца в этой пустоте. Пробовал всё — новый проект, поездки, смена работы. Всё равно пусто. Начал думать, ч..."
+        },
+        "payload_match": {
+          "chunk_id": "99c31e75-b401-40df-96e5-c82c5cb11569",
+          "source_doc": "book",
+          "rank": 1,
+          "score": 0.0,
+          "near_exact_match": false,
+          "matched_terms_or_phrase": [],
+          "sent_to_writer": true,
+          "filter_reason": "",
+          "payload_position": 1,
+          "writer_can_ignore": true,
+          "chunk_type": "general_text",
+          "origin": "retrieval",
+          "preview": "book > **Из сессии** > > **Сергей, 44 года:** Я три месяца в этой пустоте. Пробовал всё — новый проект, поездки, смена работы. Всё равно пусто. Начал думать, ч..."
+        },
+        "loss_stage": "raw_source",
+        "loss_reason": "no_raw_source_match_in_runtime_top_k"
+      },
+      "final_answer_summary": "Анестетическая депрессия в нейросталкинге — это состояние, когда нервная система «онемела»: эмоции и телесные ощущения притупляются, интерес и мотивация как будто выключаются. Один главный механизм — эмоциональное онемение: мозг снижает чувствительность, чт..."
+    },
+    {
+      "probe_id": "A4",
+      "query": "Что такое программа несовершенное Я?",
+      "classification": "PASS_source_found_and_payload_visible",
+      "source_material_phrase_present_in_workspace": null,
+      "raw_source_search_top_10": [
+        {
+          "rank": 1,
+          "chunk_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.10282487936791833,
+          "preview": "Ты открыл эту книгу не случайно. Скорее всего, ты уже прошёл терапию, читал умные книжки, медитировал, делал практики. И всё равно что-то внутри скребёт. Какой-то фоновый шум, к..."
+        },
+        {
+          "rank": 2,
+          "chunk_id": "d527d369-beb2-4113-b370-cb2738e76b55",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.09383417941714954,
+          "preview": "Три причины, по которым программа «несовершенное Я» держится так крепко: **1. Нейропластичность в критический период** Мозг ребёнка — пластилин. Всё, что записалось в возрасте о..."
+        },
+        {
+          "rank": 3,
+          "chunk_id": "a601e45d-9bef-4d6e-90df-0e8b6a1c8c1e",
+          "source_doc": "ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.08204915760762335,
+          "preview": "**— Я понял, что живу в оранжевом. Как перейти в зелёный?** — Никак. Не напрямую. Переход происходит, когда оранжевые инструменты исчерпывают себя перед реальным вызовом. Не в т..."
+        },
+        {
+          "rank": 4,
+          "chunk_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.07923443929584176,
+          "preview": "Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается операционная система. Но это не Windows и не macOS. Это **OS «Я нед..."
+        },
+        {
+          "rank": 5,
+          "chunk_id": "f68050f9-d789-4d8b-b5b1-d6302ddfb88e",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.07367016828633817,
+          "preview": "**Шаг 1: Триггер** Что-то случается — начальник делает замечание, партнёр не отвечает, кто-то посмотрел не так. Само по себе — просто факт. Нейтральное событие. **Шаг 2: Мгновен..."
+        },
+        {
+          "rank": 6,
+          "chunk_id": "39f6eafa-7403-4450-80b8-9b94097035b2",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.07071117780219763,
+          "preview": "Здесь важно одно различение — оно многое проясняет. У тебя в голове два этажа, которые работают одновременно. **Нижний этаж** — древний. Ему миллионы лет. Это лимбическая систем..."
+        },
+        {
+          "rank": 7,
+          "chunk_id": "a15d79f8-0ac0-42fc-9bc3-6985a529fb07",
+          "source_doc": "ГЛАВА 7. Страх: союзник, которого ты превратил во врага",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.06588104835393001,
+          "preview": "Страх становится тюрьмой не сам по себе — а через один конкретный механизм: **избегание**. Когда человек избегает ситуации, которая вызывает страх — нервная система запоминает:..."
+        },
+        {
+          "rank": 8,
+          "chunk_id": "6990807e-5d14-4f39-a3db-0f8c687d97d0",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.06040279410562776,
+          "preview": "**Базовая установка:** «Результат не важен. Важно бесконечное усилие» Ребёнок приносит рисунок. Родитель: «Хорошо, но мог бы постараться больше». Вывод: **«Что бы я ни сделал —..."
+        },
+        {
+          "rank": 9,
+          "chunk_id": "e49d8638-4f2d-4185-8e50-1726081a1654",
+          "source_doc": "ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.059555953669302025,
+          "preview": "**Мантра:** «Есть правила — и им нужно следовать. Есть высший смысл». **Что важно:** дисциплина, ответственность, иерархия, долг. Правильное и неправильное — чётко разграничены...."
+        },
+        {
+          "rank": 10,
+          "chunk_id": "cf618346-aa79-49e4-8756-0be86e889897",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.05765776566710687,
+          "preview": "Ещё более тонкая история: **твоё страдание стало частью твоей личности**. Ты так долго живёшь с ощущением «я недостаточен», что оно стало своим. Знакомым. И если убрать его — кт..."
+        }
+      ],
+      "botdb_vector_top_10": [
+        {
+          "rank": 1,
+          "chunk_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Ты открыл эту книгу не случайно. Скорее всего, ты уже прошёл терапию, читал умные книжки, медитировал, делал практики. И всё равно что-то внутри скребёт. Какой-то фоновый шум, к..."
+        },
+        {
+          "rank": 2,
+          "chunk_id": "d527d369-beb2-4113-b370-cb2738e76b55",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Три причины, по которым программа «несовершенное Я» держится так крепко: **1. Нейропластичность в критический период** Мозг ребёнка — пластилин. Всё, что записалось в возрасте о..."
+        },
+        {
+          "rank": 3,
+          "chunk_id": "e49d8638-4f2d-4185-8e50-1726081a1654",
+          "source_doc": "ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "**Мантра:** «Есть правила — и им нужно следовать. Есть высший смысл». **Что важно:** дисциплина, ответственность, иерархия, долг. Правильное и неправильное — чётко разграничены...."
+        },
+        {
+          "rank": 4,
+          "chunk_id": "a601e45d-9bef-4d6e-90df-0e8b6a1c8c1e",
+          "source_doc": "ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "**— Я понял, что живу в оранжевом. Как перейти в зелёный?** — Никак. Не напрямую. Переход происходит, когда оранжевые инструменты исчерпывают себя перед реальным вызовом. Не в т..."
+        },
+        {
+          "rank": 5,
+          "chunk_id": "a15d79f8-0ac0-42fc-9bc3-6985a529fb07",
+          "source_doc": "ГЛАВА 7. Страх: союзник, которого ты превратил во врага",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Страх становится тюрьмой не сам по себе — а через один конкретный механизм: **избегание**. Когда человек избегает ситуации, которая вызывает страх — нервная система запоминает:..."
+        },
+        {
+          "rank": 6,
+          "chunk_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается операционная система. Но это не Windows и не macOS. Это **OS «Я нед..."
+        },
+        {
+          "rank": 7,
+          "chunk_id": "39f6eafa-7403-4450-80b8-9b94097035b2",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Здесь важно одно различение — оно многое проясняет. У тебя в голове два этажа, которые работают одновременно. **Нижний этаж** — древний. Ему миллионы лет. Это лимбическая систем..."
+        },
+        {
+          "rank": 8,
+          "chunk_id": "6990807e-5d14-4f39-a3db-0f8c687d97d0",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "**Базовая установка:** «Результат не важен. Важно бесконечное усилие» Ребёнок приносит рисунок. Родитель: «Хорошо, но мог бы постараться больше». Вывод: **«Что бы я ни сделал —..."
+        },
+        {
+          "rank": 9,
+          "chunk_id": "f68050f9-d789-4d8b-b5b1-d6302ddfb88e",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "**Шаг 1: Триггер** Что-то случается — начальник делает замечание, партнёр не отвечает, кто-то посмотрел не так. Само по себе — просто факт. Нейтральное событие. **Шаг 2: Мгновен..."
+        },
+        {
+          "rank": 10,
+          "chunk_id": "cf618346-aa79-49e4-8756-0be86e889897",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Ещё более тонкая история: **твоё страдание стало частью твоей личности**. Ты так долго живёшь с ощущением «я недостаточен», что оно стало своим. Знакомым. И если убрать его — кт..."
+        }
+      ],
+      "botdb_lexical_or_keyword_top_10": [],
+      "runtime_memory_candidates_top_10": [
+        {
+          "chunk_id": "d527d369-beb2-4113-b370-cb2738e76b55",
+          "source": "book",
+          "score": 0.10480750947604399,
+          "content_preview": "Три причины, по которым программа несовершенное Я держится так крепко: **1.…",
+          "content_full": "Три причины, по которым программа несовершенное Я держится так крепко: **1.…"
+        },
+        {
+          "chunk_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+          "source": "book",
+          "score": 0.09476826972757242,
+          "content_preview": "Ты открыл эту книгу не случайно. Скорее всего, ты уже прошёл терапию, читал умные книжки, медитировал, делал практики.…",
+          "content_full": "Ты открыл эту книгу не случайно. Скорее всего, ты уже прошёл терапию, читал умные книжки, медитировал, делал практики.…"
+        },
+        {
+          "chunk_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+          "source": "book",
+          "score": 0.08044916290661704,
+          "content_preview": "Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается…",
+          "content_full": "Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается…"
+        }
+      ],
+      "hybrid_candidates_top_10": [],
+      "semantic_card_candidates": [
+        {
+          "card_id": "program_imperfect_self_v1",
+          "score": 5,
+          "reasons": [
+            "current_turn_overlap",
+            "topic_alias"
+          ]
+        }
+      ],
+      "filtered_candidates": [
+        {
+          "item_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+          "origin": "retrieval_candidate",
+          "chunk_type": "",
+          "source_doc": "book",
+          "sent_to_writer": false,
+          "filter_reason": "direct_knowledge_question"
+        },
+        {
+          "item_id": "semantic_card:program_imperfect_self_v1",
+          "origin": "semantic_card",
+          "chunk_type": "concept",
+          "source_doc": "Kuznica Duha v2",
+          "sent_to_writer": false,
+          "filter_reason": "direct_knowledge_question"
+        },
+        {
+          "item_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+          "origin": "memory_semantic_hit",
+          "chunk_type": "general_text",
+          "source_doc": "book",
+          "sent_to_writer": false,
+          "filter_reason": "direct_knowledge_question"
+        }
+      ],
+      "writer_payload_chunks": [
+        {
+          "item_id": "d527d369-beb2-4113-b370-cb2738e76b55",
+          "chunk_id": "d527d369-beb2-4113-b370-cb2738e76b55",
+          "origin": "retrieval",
+          "source_doc": "book",
+          "chunk_type": "general_text",
+          "quote_policy": "paraphrase_only",
+          "allowed_use": [
+            "direct_to_writer"
+          ],
+          "payload_item_origin": "",
+          "semantic_card_id": "",
+          "semantic_card_pack_id": "",
+          "sent_to_writer": true,
+          "writer_can_ignore": true,
+          "applied_as_authority": false,
+          "inclusion_reason": "selected_for_writer_payload"
+        },
+        {
+          "item_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+          "chunk_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+          "origin": "retrieval",
+          "source_doc": "book",
+          "chunk_type": "general_text",
+          "quote_policy": "paraphrase_only",
+          "allowed_use": [
+            "direct_to_writer"
+          ],
+          "payload_item_origin": "",
+          "semantic_card_id": "",
+          "semantic_card_pack_id": "",
+          "sent_to_writer": true,
+          "writer_can_ignore": true,
+          "applied_as_authority": false,
+          "inclusion_reason": "selected_for_writer_payload"
+        }
+      ],
+      "runtime_truth_summary": {
+        "retrieved_candidates_count": 7,
+        "filtered_out_for_writer_count": 3,
+        "writer_visible_payload_count": 2,
+        "payload_decision_reason": "structured_payload_used",
+        "grounding_visibility_reason": "direct_knowledge_question",
+        "writer_kb_payload_status": "structured_payload_used",
+        "writer_kb_payload_primary_path": "writer_kb_payload_v1",
+        "retrieval_gate_recovery_applied": true
+      },
+      "writer_grounding_visibility_v1": {
+        "version": "writer_grounding_visibility_v1",
+        "kb_visible_to_writer": true,
+        "semantic_cards_visible_to_writer": true,
+        "reason": "direct_knowledge_question",
+        "direct_kb_question": true,
+        "direct_source_request": false,
+        "explicit_knowledge_request": true,
+        "explicit_practice_request": false,
+        "candidate_chunk_types": [
+          "concept"
+        ],
+        "allowed_grounding_types": [],
+        "narrow_practice_grounding_available": false,
+        "safety_grounding_allowed": false,
+        "no_internal_db": false,
+        "trace_only_grounding_available": true,
+        "writer_may_ignore_grounding": true,
+        "retrieval_action": "query_kb",
+        "retrieval_need": "knowledge_context",
+        "retrieval_gate_recovery_applied": true,
+        "retrieval_gate_recovery_source": "memory_bundle.knowledge_rag_hits",
+        "retrieval_gate_recovery_match_chunk_id": "d527d369-beb2-4113-b370-cb2738e76b55"
+      },
+      "retrieval_decision_summary": {
+        "retrieval_action": "query_kb",
+        "retrieval_need": "knowledge_context",
+        "rag_included_count": 0,
+        "rag_suppressed_reason": "candidate_available_but_current_turn_prefers_recent_context"
+      },
+      "source_chunk_match_trace_v1": {
+        "enabled": true,
+        "probe_query": "Что такое программа несовершенное Я?",
+        "raw_query": "программа несовершенное",
+        "normalized_query": "что такое программа несовершенное я?",
+        "explicit_knowledge_question": true,
+        "source_match_expected": "yes",
+        "raw_source_top_k_count": 4,
+        "runtime_candidate_top_k_count": 7,
+        "writer_payload_count": 2,
+        "focus_terms": [
+          "программа",
+          "несовершенное"
+        ],
+        "best_raw_match": {
+          "chunk_id": "d527d369-beb2-4113-b370-cb2738e76b55",
+          "source_doc": "book",
+          "rank": 1,
+          "score": 0.10480750947604399,
+          "near_exact_match": true,
+          "matched_terms_or_phrase": [
+            "программа",
+            "несовершенное"
+          ],
+          "sent_to_writer": null,
+          "filter_reason": "",
+          "payload_position": null,
+          "writer_can_ignore": true,
+          "chunk_type": "general_text",
+          "origin": "trace",
+          "preview": "book Три причины, по которым программа «несовершенное Я» держится так крепко: **1. Нейропластичность в критический период** Мозг ребёнка — пластилин. Всё, что..."
+        },
+        "best_runtime_match": {
+          "chunk_id": "d527d369-beb2-4113-b370-cb2738e76b55",
+          "source_doc": "book",
+          "rank": 1,
+          "score": 0.10480750947604399,
+          "near_exact_match": true,
+          "matched_terms_or_phrase": [
+            "программа",
+            "несовершенное"
+          ],
+          "sent_to_writer": true,
+          "filter_reason": "",
+          "payload_position": null,
+          "writer_can_ignore": true,
+          "chunk_type": "",
+          "origin": "retrieval_candidate",
+          "preview": "book Три причины, по которым программа «несовершенное Я» держится так крепко: **1. Нейропластичность в критический период** Мозг ребёнка — пластилин. Всё, что..."
+        },
+        "payload_match": {
+          "chunk_id": "d527d369-beb2-4113-b370-cb2738e76b55",
+          "source_doc": "book",
+          "rank": 1,
+          "score": 0.0,
+          "near_exact_match": true,
+          "matched_terms_or_phrase": [
+            "программа",
+            "несовершенное"
+          ],
+          "sent_to_writer": true,
+          "filter_reason": "",
+          "payload_position": 1,
+          "writer_can_ignore": true,
+          "chunk_type": "general_text",
+          "origin": "retrieval",
+          "preview": "book Три причины, по которым программа «несовершенное Я» держится так крепко: **1. Нейропластичность в критический период** Мозг ребёнка — пластилин. Всё, что..."
+        },
+        "loss_stage": "none",
+        "loss_reason": ""
+      },
+      "final_answer_summary": "Программа «несовершенное Я» — это устойчивая внутренняя схема или автоматическая реакция, которая убеждает вас, что вы «недостаточны» или «не такой, как нужно», и запускает чувства стыда, тревоги и попытки исправить себя. Главный механизм: эмоциональная авт..."
+    },
+    {
+      "probe_id": "A5",
+      "query": "Назови пять драйверов выживания.",
+      "classification": "INCONCLUSIVE_missing_trace_or_insufficient_fields",
+      "source_material_phrase_present_in_workspace": null,
+      "raw_source_search_top_10": [
+        {
+          "rank": 1,
+          "chunk_id": "5808a31f-2872-4e48-826c-b318bf0d60b0",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.06260608986850673,
+          "preview": "Программа не возникает в один момент. Она складывается постепенно. **От рождения до 2 лет — базовое ощущение мира** Ребёнок ещё не думает словами. Он просто чувствует и запомина..."
+        },
+        {
+          "rank": 2,
+          "chunk_id": "7451908b-565b-4d40-a214-88c5adfceac4",
+          "source_doc": "ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.05711960114350797,
+          "preview": "**Мантра:** «Выжить. Сейчас». **Что важно:** еда, тепло, безопасность, вода. Нет «я» в социальном смысле — только биологическое существо. Нет планирования — только момент. Нет м..."
+        },
+        {
+          "rank": 3,
+          "chunk_id": "f68050f9-d789-4d8b-b5b1-d6302ddfb88e",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.05420524460437444,
+          "preview": "**Шаг 1: Триггер** Что-то случается — начальник делает замечание, партнёр не отвечает, кто-то посмотрел не так. Само по себе — просто факт. Нейтральное событие. **Шаг 2: Мгновен..."
+        },
+        {
+          "rank": 4,
+          "chunk_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.046777740758517754,
+          "preview": "Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается операционная система. Но это не Windows и не macOS. Это **OS «Я нед..."
+        },
+        {
+          "rank": 5,
+          "chunk_id": "3dfeca39-dbb2-4da0-b12f-15ef07fdad2b",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.04473385310234556,
+          "preview": "И ещё один момент: если ты ждёшь «результата» — спроси себя, что именно ты ждёшь. Часто за этим вопросом стоит драйвер «будь лучшим» — ему нужен конкретный финал, оценка, зачёт...."
+        },
+        {
+          "rank": 6,
+          "chunk_id": "35fa3df5-190b-4901-9308-5400165c4906",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.041451682961390755,
+          "preview": "> Из сессии: > > **Айгерим, 33 года:** Это звучит слишком просто. У меня серьёзная тревога. Пять вдохов её не уберут. > > **Саламат:** Правильно. Не уберут. Задача не убрать тре..."
+        },
+        {
+          "rank": 7,
+          "chunk_id": "187fb00d-2f31-4f33-9445-87b7f3c98431",
+          "source_doc": "ГЛАВА 2. Химия клетки: почему мозг зависит от страдания",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.04106098415216326,
+          "preview": "Это самый тонкий и при этом самый важный механизм. В мозге есть **опиоидная система** — та же самая, на которую действуют морфин и другие обезболивающие. Она существует не потом..."
+        },
+        {
+          "rank": 8,
+          "chunk_id": "82e2a971-659c-4655-b596-d1eadec87329",
+          "source_doc": "ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.03986835882114122,
+          "preview": "Теперь самый неудобный вывод из всего вышесказанного. Когда ты встречаешь человека — ты встречаешь не его. Ты встречаешь **образ**, который построил твой мозг из нескольких набл..."
+        },
+        {
+          "rank": 9,
+          "chunk_id": "51f99d1c-3cb8-4943-8577-bc0fad717cc1",
+          "source_doc": "ГЛАВА 5. Тени: то, что мы не видим в себе",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.03905891199835615,
+          "preview": "**Цель:** прямой контакт с вытесненным содержанием. **Время:** 30 минут. Желательно письменно. Выбери одно качество из своей тени — то, которое ты уже определил через первые две..."
+        },
+        {
+          "rank": 10,
+          "chunk_id": "f4535025-fce3-4d6a-b955-22c968f758c9",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.031719998897377304,
+          "preview": "**Цель:** создать быстрый якорь — короткое телесное упражнение, которое работает в любой момент дня. **Время:** 5 минут. Повторять столько раз в день, сколько хочешь. Это самая..."
+        }
+      ],
+      "botdb_vector_top_10": [
+        {
+          "rank": 1,
+          "chunk_id": "5808a31f-2872-4e48-826c-b318bf0d60b0",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Программа не возникает в один момент. Она складывается постепенно. **От рождения до 2 лет — базовое ощущение мира** Ребёнок ещё не думает словами. Он просто чувствует и запомина..."
+        },
+        {
+          "rank": 2,
+          "chunk_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается операционная система. Но это не Windows и не macOS. Это **OS «Я нед..."
+        },
+        {
+          "rank": 3,
+          "chunk_id": "f68050f9-d789-4d8b-b5b1-d6302ddfb88e",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "**Шаг 1: Триггер** Что-то случается — начальник делает замечание, партнёр не отвечает, кто-то посмотрел не так. Само по себе — просто факт. Нейтральное событие. **Шаг 2: Мгновен..."
+        },
+        {
+          "rank": 4,
+          "chunk_id": "f4535025-fce3-4d6a-b955-22c968f758c9",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "**Цель:** создать быстрый якорь — короткое телесное упражнение, которое работает в любой момент дня. **Время:** 5 минут. Повторять столько раз в день, сколько хочешь. Это самая..."
+        },
+        {
+          "rank": 5,
+          "chunk_id": "35fa3df5-190b-4901-9308-5400165c4906",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "> Из сессии: > > **Айгерим, 33 года:** Это звучит слишком просто. У меня серьёзная тревога. Пять вдохов её не уберут. > > **Саламат:** Правильно. Не уберут. Задача не убрать тре..."
+        },
+        {
+          "rank": 6,
+          "chunk_id": "3dfeca39-dbb2-4da0-b12f-15ef07fdad2b",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "И ещё один момент: если ты ждёшь «результата» — спроси себя, что именно ты ждёшь. Часто за этим вопросом стоит драйвер «будь лучшим» — ему нужен конкретный финал, оценка, зачёт...."
+        },
+        {
+          "rank": 7,
+          "chunk_id": "187fb00d-2f31-4f33-9445-87b7f3c98431",
+          "source_doc": "ГЛАВА 2. Химия клетки: почему мозг зависит от страдания",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Это самый тонкий и при этом самый важный механизм. В мозге есть **опиоидная система** — та же самая, на которую действуют морфин и другие обезболивающие. Она существует не потом..."
+        },
+        {
+          "rank": 8,
+          "chunk_id": "82e2a971-659c-4655-b596-d1eadec87329",
+          "source_doc": "ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Теперь самый неудобный вывод из всего вышесказанного. Когда ты встречаешь человека — ты встречаешь не его. Ты встречаешь **образ**, который построил твой мозг из нескольких набл..."
+        },
+        {
+          "rank": 9,
+          "chunk_id": "7451908b-565b-4d40-a214-88c5adfceac4",
+          "source_doc": "ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "**Мантра:** «Выжить. Сейчас». **Что важно:** еда, тепло, безопасность, вода. Нет «я» в социальном смысле — только биологическое существо. Нет планирования — только момент. Нет м..."
+        },
+        {
+          "rank": 10,
+          "chunk_id": "51f99d1c-3cb8-4943-8577-bc0fad717cc1",
+          "source_doc": "ГЛАВА 5. Тени: то, что мы не видим в себе",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "**Цель:** прямой контакт с вытесненным содержанием. **Время:** 30 минут. Желательно письменно. Выбери одно качество из своей тени — то, которое ты уже определил через первые две..."
+        }
+      ],
+      "botdb_lexical_or_keyword_top_10": [],
+      "runtime_memory_candidates_top_10": [
+        {
+          "chunk_id": "5808a31f-2872-4e48-826c-b318bf0d60b0",
+          "source": "book",
+          "score": 0.06640478434499963,
+          "content_preview": "Программа не возникает в один момент. Она складывается постепенно. **От рождения до 2 лет — базовое ощущение мира**…",
+          "content_full": "Программа не возникает в один момент. Она складывается постепенно. **От рождения до 2 лет — базовое ощущение мира**…"
+        },
+        {
+          "chunk_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+          "source": "book",
+          "score": 0.06159266063433417,
+          "content_preview": "Ты открыл эту книгу не случайно. Скорее всего, ты уже прошёл терапию, читал умные книжки, медитировал, делал практики.…",
+          "content_full": "Ты открыл эту книгу не случайно. Скорее всего, ты уже прошёл терапию, читал умные книжки, медитировал, делал практики.…"
+        },
+        {
+          "chunk_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+          "source": "book",
+          "score": 0.05121146239015395,
+          "content_preview": "Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается…",
+          "content_full": "Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается…"
+        }
+      ],
+      "hybrid_candidates_top_10": [],
+      "semantic_card_candidates": [
+        {
+          "card_id": "five_survival_drivers_v1",
+          "score": 9,
+          "reasons": [
+            "current_turn_overlap",
+            "topic_alias"
+          ]
+        }
+      ],
+      "filtered_candidates": [
+        {
+          "item_id": "semantic_card:five_survival_drivers_v1",
+          "origin": "semantic_card",
+          "chunk_type": "concept",
+          "source_doc": "Kuznica Duha v2",
+          "sent_to_writer": false,
+          "filter_reason": "no_clear_retrieval_need"
+        },
+        {
+          "item_id": "5808a31f-2872-4e48-826c-b318bf0d60b0",
+          "origin": "memory_semantic_hit",
+          "chunk_type": "general_text",
+          "source_doc": "book",
+          "sent_to_writer": false,
+          "filter_reason": "no_clear_retrieval_need"
+        },
+        {
+          "item_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+          "origin": "memory_semantic_hit",
+          "chunk_type": "general_text",
+          "source_doc": "book",
+          "sent_to_writer": false,
+          "filter_reason": "no_clear_retrieval_need"
+        },
+        {
+          "item_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+          "origin": "memory_semantic_hit",
+          "chunk_type": "general_text",
+          "source_doc": "book",
+          "sent_to_writer": false,
+          "filter_reason": "no_clear_retrieval_need"
+        }
+      ],
+      "writer_payload_chunks": [],
+      "runtime_truth_summary": {
+        "retrieved_candidates_count": 4,
+        "filtered_out_for_writer_count": 4,
+        "writer_visible_payload_count": 0,
+        "payload_decision_reason": "no_clear_retrieval_need",
+        "grounding_visibility_reason": "no_clear_retrieval_need",
+        "writer_kb_payload_status": "fallback_used",
+        "writer_kb_payload_primary_path": "legacy_semantic_hits_fallback_v1",
+        "retrieval_gate_recovery_applied": false
+      },
+      "writer_grounding_visibility_v1": {
+        "version": "writer_grounding_visibility_v1",
+        "kb_visible_to_writer": false,
+        "semantic_cards_visible_to_writer": false,
+        "reason": "no_clear_retrieval_need",
+        "direct_kb_question": false,
+        "direct_source_request": false,
+        "explicit_knowledge_request": false,
+        "explicit_practice_request": false,
+        "candidate_chunk_types": [
+          "concept"
+        ],
+        "allowed_grounding_types": [],
+        "narrow_practice_grounding_available": false,
+        "safety_grounding_allowed": false,
+        "no_internal_db": false,
+        "trace_only_grounding_available": true,
+        "writer_may_ignore_grounding": true,
+        "retrieval_action": "trace_only",
+        "retrieval_need": "none"
+      },
+      "retrieval_decision_summary": {
+        "retrieval_action": "trace_only",
+        "retrieval_need": "none",
+        "rag_included_count": 0,
+        "rag_suppressed_reason": "no_clear_retrieval_need"
+      },
+      "source_chunk_match_trace_v1": {
+        "enabled": true,
+        "probe_query": "Назови пять драйверов выживания.",
+        "raw_query": "назови пять драйверов выживания",
+        "normalized_query": "назови пять драйверов выживания.",
+        "explicit_knowledge_question": false,
+        "source_match_expected": "unknown",
+        "raw_source_top_k_count": 4,
+        "runtime_candidate_top_k_count": 4,
+        "writer_payload_count": 0,
+        "focus_terms": [
+          "назови",
+          "пять",
+          "драйверов",
+          "выживания"
+        ],
+        "best_raw_match": {
+          "chunk_id": "5808a31f-2872-4e48-826c-b318bf0d60b0",
+          "source_doc": "book",
+          "rank": 1,
+          "score": 0.06640478434499963,
+          "near_exact_match": false,
+          "matched_terms_or_phrase": [],
+          "sent_to_writer": null,
+          "filter_reason": "",
+          "payload_position": null,
+          "writer_can_ignore": true,
+          "chunk_type": "general_text",
+          "origin": "trace",
+          "preview": "book Программа не возникает в один момент. Она складывается постепенно. **От рождения до 2 лет — базовое ощущение мира** Ребёнок ещё не думает словами. Он прос..."
+        },
+        "best_runtime_match": {
+          "chunk_id": "5808a31f-2872-4e48-826c-b318bf0d60b0",
+          "source_doc": "book",
+          "rank": 2,
+          "score": 0.06640478434499963,
+          "near_exact_match": false,
+          "matched_terms_or_phrase": [],
+          "sent_to_writer": false,
+          "filter_reason": "no_clear_retrieval_need",
+          "payload_position": null,
+          "writer_can_ignore": true,
+          "chunk_type": "general_text",
+          "origin": "memory_semantic_hit",
+          "preview": "book Программа не возникает в один момент. Она складывается постепенно. **От рождения до 2 лет — базовое ощущение мира** Ребёнок ещё не думает словами. Он прос..."
+        },
+        "payload_match": {},
+        "loss_stage": "unknown",
+        "loss_reason": "not_an_explicit_knowledge_question"
+      },
+      "final_answer_summary": "Я слышу тебя. Расскажи больше, если хочешь."
+    },
+    {
+      "probe_id": "A6",
+      "query": "Что значит страдание как безопасность?",
+      "classification": "PASS_source_found_and_payload_visible",
+      "source_material_phrase_present_in_workspace": null,
+      "raw_source_search_top_10": [
+        {
+          "rank": 1,
+          "chunk_id": "2a2ffcc2-89c6-41f2-bb53-3188eac08875",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.11097822705855184,
+          "preview": "Логика такая: если я страдаю → значит, я признаю, что недостаточен → значит, я не угроза → значит, меня не атакуют → значит, я в безопасности. Страдание — это **поза подчинения*..."
+        },
+        {
+          "rank": 2,
+          "chunk_id": "3dfeca39-dbb2-4da0-b12f-15ef07fdad2b",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.06735074180965091,
+          "preview": "И ещё один момент: если ты ждёшь «результата» — спроси себя, что именно ты ждёшь. Часто за этим вопросом стоит драйвер «будь лучшим» — ему нужен конкретный финал, оценка, зачёт...."
+        },
+        {
+          "rank": 3,
+          "chunk_id": "b870528b-313c-46ef-b5a1-5266a4bedf2c",
+          "source_doc": "ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.06519870631860325,
+          "preview": "Здесь — важная оговорка. Потому что знание о спиральной динамике может стать новым инструментом программы. Программа «несовершенное Я» немедленно захватывает эту модель и начина..."
+        },
+        {
+          "rank": 4,
+          "chunk_id": "6440c58d-424c-4d15-9856-0775b2baa161",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.06405261791148907,
+          "preview": "После заполнения — посмотри на карту целиком. Три вопроса: - *Где больше всего страдания?* - *Это страдание «живое» — то есть связано с реальной текущей ситуацией — или оно «хро..."
+        },
+        {
+          "rank": 5,
+          "chunk_id": "187fb00d-2f31-4f33-9445-87b7f3c98431",
+          "source_doc": "ГЛАВА 2. Химия клетки: почему мозг зависит от страдания",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.06230390162697193,
+          "preview": "Это самый тонкий и при этом самый важный механизм. В мозге есть **опиоидная система** — та же самая, на которую действуют морфин и другие обезболивающие. Она существует не потом..."
+        },
+        {
+          "rank": 6,
+          "chunk_id": "47928bce-3306-4351-862e-290b3edeea59",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.061636428782495985,
+          "preview": "Последнее. Страдание даёт иллюзию контроля. Если ты страдаешь — ты что-то делаешь. Работаешь над собой. Стараешься. Есть процесс, есть движение. А если ты просто **примешь** себ..."
+        },
+        {
+          "rank": 7,
+          "chunk_id": "a46d2ec4-c016-40bf-806a-6d404cdfec99",
+          "source_doc": "ГЛАВА 2. Химия клетки: почему мозг зависит от страдания",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.05860894694791812,
+          "preview": "*** **— Вы говорите, что мозг зависим от страдания. Но тогда получается, что я не могу это изменить? Если это химия — значит, это сильнее меня?** — Химия — это не приговор. Это..."
+        },
+        {
+          "rank": 8,
+          "chunk_id": "7b61940d-f6ff-46f8-9514-797efaf0ad00",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.056814271700376576,
+          "preview": "*Это реальные вопросы участников сессий. Они возникают почти у всех. Если ты читаешь и узнаёшь свой вопрос — значит, ты в правильном месте.* *** **— Я всё понял про программу. Н..."
+        },
+        {
+          "rank": 9,
+          "chunk_id": "ca959d97-21e3-4b7f-9bf7-6482517f483f",
+          "source_doc": "ГЛАВА 2. Химия клетки: почему мозг зависит от страдания",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.05034783093335191,
+          "preview": "**Цель:** дать нейронной сети по умолчанию паузу — и заметить, что происходит, когда нарратив «я» замолкает. **Время:** 10 минут. Сядь удобно. Поставь таймер на 10 минут. Задача..."
+        },
+        {
+          "rank": 10,
+          "chunk_id": "35fa3df5-190b-4901-9308-5400165c4906",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.04453520042877059,
+          "preview": "> Из сессии: > > **Айгерим, 33 года:** Это звучит слишком просто. У меня серьёзная тревога. Пять вдохов её не уберут. > > **Саламат:** Правильно. Не уберут. Задача не убрать тре..."
+        }
+      ],
+      "botdb_vector_top_10": [
+        {
+          "rank": 1,
+          "chunk_id": "2a2ffcc2-89c6-41f2-bb53-3188eac08875",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Логика такая: если я страдаю → значит, я признаю, что недостаточен → значит, я не угроза → значит, меня не атакуют → значит, я в безопасности. Страдание — это **поза подчинения*..."
+        },
+        {
+          "rank": 2,
+          "chunk_id": "187fb00d-2f31-4f33-9445-87b7f3c98431",
+          "source_doc": "ГЛАВА 2. Химия клетки: почему мозг зависит от страдания",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Это самый тонкий и при этом самый важный механизм. В мозге есть **опиоидная система** — та же самая, на которую действуют морфин и другие обезболивающие. Она существует не потом..."
+        },
+        {
+          "rank": 3,
+          "chunk_id": "b870528b-313c-46ef-b5a1-5266a4bedf2c",
+          "source_doc": "ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Здесь — важная оговорка. Потому что знание о спиральной динамике может стать новым инструментом программы. Программа «несовершенное Я» немедленно захватывает эту модель и начина..."
+        },
+        {
+          "rank": 4,
+          "chunk_id": "47928bce-3306-4351-862e-290b3edeea59",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Последнее. Страдание даёт иллюзию контроля. Если ты страдаешь — ты что-то делаешь. Работаешь над собой. Стараешься. Есть процесс, есть движение. А если ты просто **примешь** себ..."
+        },
+        {
+          "rank": 5,
+          "chunk_id": "6440c58d-424c-4d15-9856-0775b2baa161",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "После заполнения — посмотри на карту целиком. Три вопроса: - *Где больше всего страдания?* - *Это страдание «живое» — то есть связано с реальной текущей ситуацией — или оно «хро..."
+        },
+        {
+          "rank": 6,
+          "chunk_id": "35fa3df5-190b-4901-9308-5400165c4906",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "> Из сессии: > > **Айгерим, 33 года:** Это звучит слишком просто. У меня серьёзная тревога. Пять вдохов её не уберут. > > **Саламат:** Правильно. Не уберут. Задача не убрать тре..."
+        },
+        {
+          "rank": 7,
+          "chunk_id": "7b61940d-f6ff-46f8-9514-797efaf0ad00",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "*Это реальные вопросы участников сессий. Они возникают почти у всех. Если ты читаешь и узнаёшь свой вопрос — значит, ты в правильном месте.* *** **— Я всё понял про программу. Н..."
+        },
+        {
+          "rank": 8,
+          "chunk_id": "3dfeca39-dbb2-4da0-b12f-15ef07fdad2b",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "И ещё один момент: если ты ждёшь «результата» — спроси себя, что именно ты ждёшь. Часто за этим вопросом стоит драйвер «будь лучшим» — ему нужен конкретный финал, оценка, зачёт...."
+        },
+        {
+          "rank": 9,
+          "chunk_id": "ca959d97-21e3-4b7f-9bf7-6482517f483f",
+          "source_doc": "ГЛАВА 2. Химия клетки: почему мозг зависит от страдания",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "**Цель:** дать нейронной сети по умолчанию паузу — и заметить, что происходит, когда нарратив «я» замолкает. **Время:** 10 минут. Сядь удобно. Поставь таймер на 10 минут. Задача..."
+        },
+        {
+          "rank": 10,
+          "chunk_id": "a46d2ec4-c016-40bf-806a-6d404cdfec99",
+          "source_doc": "ГЛАВА 2. Химия клетки: почему мозг зависит от страдания",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "*** **— Вы говорите, что мозг зависим от страдания. Но тогда получается, что я не могу это изменить? Если это химия — значит, это сильнее меня?** — Химия — это не приговор. Это..."
+        }
+      ],
+      "botdb_lexical_or_keyword_top_10": [],
+      "runtime_memory_candidates_top_10": [
+        {
+          "chunk_id": "2a2ffcc2-89c6-41f2-bb53-3188eac08875",
+          "source": "book",
+          "score": 0.08801783568513444,
+          "content_preview": "Логика такая: если я страдаю → значит, я признаю, что недостаточен → значит, я не угроза → значит, меня не атакуют →…",
+          "content_full": "Логика такая: если я страдаю → значит, я признаю, что недостаточен → значит, я не угроза → значит, меня не атакуют →…"
+        },
+        {
+          "chunk_id": "47928bce-3306-4351-862e-290b3edeea59",
+          "source": "book",
+          "score": 0.06915743335479627,
+          "content_preview": "Последнее. Страдание даёт иллюзию контроля. Если ты страдаешь — ты что-то делаешь. Работаешь над собой. Стараешься.…",
+          "content_full": "Последнее. Страдание даёт иллюзию контроля. Если ты страдаешь — ты что-то делаешь. Работаешь над собой. Стараешься.…"
+        },
+        {
+          "chunk_id": "6440c58d-424c-4d15-9856-0775b2baa161",
+          "source": "book",
+          "score": 0.06459738732886026,
+          "content_preview": "После заполнения — посмотри на карту целиком. Три вопроса: - *Где больше всего страдания?…",
+          "content_full": "После заполнения — посмотри на карту целиком. Три вопроса: - *Где больше всего страдания?…"
+        }
+      ],
+      "hybrid_candidates_top_10": [],
+      "semantic_card_candidates": [
+        {
+          "card_id": "control_as_safety_v1",
+          "score": 5,
+          "reasons": [
+            "current_turn_overlap",
+            "topic_alias"
+          ]
+        },
+        {
+          "card_id": "program_imperfect_self_v1",
+          "score": 1,
+          "reasons": [
+            "current_turn_overlap"
+          ]
+        }
+      ],
+      "filtered_candidates": [
+        {
+          "item_id": "6440c58d-424c-4d15-9856-0775b2baa161",
+          "origin": "retrieval_candidate",
+          "chunk_type": "",
+          "source_doc": "book",
+          "sent_to_writer": false,
+          "filter_reason": "direct_knowledge_question"
+        },
+        {
+          "item_id": "semantic_card:control_as_safety_v1",
+          "origin": "semantic_card",
+          "chunk_type": "mechanism",
+          "source_doc": "Kuznica Duha v2",
+          "sent_to_writer": false,
+          "filter_reason": "direct_knowledge_question"
+        },
+        {
+          "item_id": "semantic_card:program_imperfect_self_v1",
+          "origin": "semantic_card",
+          "chunk_type": "concept",
+          "source_doc": "Kuznica Duha v2",
+          "sent_to_writer": false,
+          "filter_reason": "direct_knowledge_question"
+        },
+        {
+          "item_id": "6440c58d-424c-4d15-9856-0775b2baa161",
+          "origin": "memory_semantic_hit",
+          "chunk_type": "general_text",
+          "source_doc": "book",
+          "sent_to_writer": false,
+          "filter_reason": "direct_knowledge_question"
+        }
+      ],
+      "writer_payload_chunks": [
+        {
+          "item_id": "2a2ffcc2-89c6-41f2-bb53-3188eac08875",
+          "chunk_id": "2a2ffcc2-89c6-41f2-bb53-3188eac08875",
+          "origin": "retrieval",
+          "source_doc": "book",
+          "chunk_type": "general_text",
+          "quote_policy": "paraphrase_only",
+          "allowed_use": [
+            "direct_to_writer"
+          ],
+          "payload_item_origin": "",
+          "semantic_card_id": "",
+          "semantic_card_pack_id": "",
+          "sent_to_writer": true,
+          "writer_can_ignore": true,
+          "applied_as_authority": false,
+          "inclusion_reason": "selected_for_writer_payload"
+        },
+        {
+          "item_id": "47928bce-3306-4351-862e-290b3edeea59",
+          "chunk_id": "47928bce-3306-4351-862e-290b3edeea59",
+          "origin": "retrieval",
+          "source_doc": "book",
+          "chunk_type": "general_text",
+          "quote_policy": "paraphrase_only",
+          "allowed_use": [
+            "direct_to_writer"
+          ],
+          "payload_item_origin": "",
+          "semantic_card_id": "",
+          "semantic_card_pack_id": "",
+          "sent_to_writer": true,
+          "writer_can_ignore": true,
+          "applied_as_authority": false,
+          "inclusion_reason": "selected_for_writer_payload"
+        }
+      ],
+      "runtime_truth_summary": {
+        "retrieved_candidates_count": 8,
+        "filtered_out_for_writer_count": 4,
+        "writer_visible_payload_count": 2,
+        "payload_decision_reason": "structured_payload_used",
+        "grounding_visibility_reason": "direct_knowledge_question",
+        "writer_kb_payload_status": "structured_payload_used",
+        "writer_kb_payload_primary_path": "writer_kb_payload_v1",
+        "retrieval_gate_recovery_applied": true
+      },
+      "writer_grounding_visibility_v1": {
+        "version": "writer_grounding_visibility_v1",
+        "kb_visible_to_writer": true,
+        "semantic_cards_visible_to_writer": true,
+        "reason": "direct_knowledge_question",
+        "direct_kb_question": true,
+        "direct_source_request": false,
+        "explicit_knowledge_request": true,
+        "explicit_practice_request": false,
+        "candidate_chunk_types": [
+          "mechanism",
+          "concept"
+        ],
+        "allowed_grounding_types": [],
+        "narrow_practice_grounding_available": false,
+        "safety_grounding_allowed": false,
+        "no_internal_db": false,
+        "trace_only_grounding_available": true,
+        "writer_may_ignore_grounding": true,
+        "retrieval_action": "query_kb",
+        "retrieval_need": "knowledge_context",
+        "retrieval_gate_recovery_applied": true,
+        "retrieval_gate_recovery_source": "memory_bundle.knowledge_rag_hits",
+        "retrieval_gate_recovery_match_chunk_id": "2a2ffcc2-89c6-41f2-bb53-3188eac08875"
+      },
+      "retrieval_decision_summary": {
+        "retrieval_action": "query_kb",
+        "retrieval_need": "knowledge_context",
+        "rag_included_count": 0,
+        "rag_suppressed_reason": "candidate_available_but_current_turn_prefers_recent_context"
+      },
+      "source_chunk_match_trace_v1": {
+        "enabled": true,
+        "probe_query": "Что значит страдание как безопасность?",
+        "raw_query": "страдание как безопасность",
+        "normalized_query": "что значит страдание как безопасность?",
+        "explicit_knowledge_question": true,
+        "source_match_expected": "yes",
+        "raw_source_top_k_count": 4,
+        "runtime_candidate_top_k_count": 8,
+        "writer_payload_count": 2,
+        "focus_terms": [
+          "значит",
+          "страдание",
+          "безопасность"
+        ],
+        "best_raw_match": {
+          "chunk_id": "2a2ffcc2-89c6-41f2-bb53-3188eac08875",
+          "source_doc": "book",
+          "rank": 1,
+          "score": 0.08801783568513444,
+          "near_exact_match": true,
+          "matched_terms_or_phrase": [
+            "значит",
+            "страдание"
+          ],
+          "sent_to_writer": null,
+          "filter_reason": "",
+          "payload_position": null,
+          "writer_can_ignore": true,
+          "chunk_type": "general_text",
+          "origin": "trace",
+          "preview": "book Логика такая: если я страдаю → значит, я признаю, что недостаточен → значит, я не угроза → значит, меня не атакуют → значит, я в безопасности. Страдание —..."
+        },
+        "best_runtime_match": {
+          "chunk_id": "2a2ffcc2-89c6-41f2-bb53-3188eac08875",
+          "source_doc": "book",
+          "rank": 1,
+          "score": 0.08801783568513444,
+          "near_exact_match": true,
+          "matched_terms_or_phrase": [
+            "значит",
+            "страдание"
+          ],
+          "sent_to_writer": true,
+          "filter_reason": "",
+          "payload_position": null,
+          "writer_can_ignore": true,
+          "chunk_type": "",
+          "origin": "retrieval_candidate",
+          "preview": "book Логика такая: если я страдаю → значит, я признаю, что недостаточен → значит, я не угроза → значит, меня не атакуют → значит, я в безопасности. Страдание —..."
+        },
+        "payload_match": {
+          "chunk_id": "2a2ffcc2-89c6-41f2-bb53-3188eac08875",
+          "source_doc": "book",
+          "rank": 1,
+          "score": 0.0,
+          "near_exact_match": true,
+          "matched_terms_or_phrase": [
+            "значит",
+            "страдание"
+          ],
+          "sent_to_writer": true,
+          "filter_reason": "",
+          "payload_position": 1,
+          "writer_can_ignore": true,
+          "chunk_type": "general_text",
+          "origin": "retrieval",
+          "preview": "book Логика такая: если я страдаю → значит, я признаю, что недостаточен → значит, я не угроза → значит, меня не атакуют → значит, я в безопасности. Страдание —..."
+        },
+        "loss_stage": "none",
+        "loss_reason": ""
+      },
+      "final_answer_summary": "Коротко: «страдание как безопасность» — это поведение, когда человек сознательно или бессознательно выбирает страдать, потому что это кажется способом снизить риск: страдание сигнализирует подчинение и даёт иллюзию контроля над будущей болью. Главный механи..."
+    },
+    {
+      "probe_id": "A7",
+      "query": "Что такое контролёр в панике?",
+      "classification": "FAIL_raw_source_missing",
+      "source_material_phrase_present_in_workspace": null,
+      "raw_source_search_top_10": [
+        {
+          "rank": 1,
+          "chunk_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.05907855547225133,
+          "preview": "Ты открыл эту книгу не случайно. Скорее всего, ты уже прошёл терапию, читал умные книжки, медитировал, делал практики. И всё равно что-то внутри скребёт. Какой-то фоновый шум, к..."
+        },
+        {
+          "rank": 2,
+          "chunk_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.05413566369004947,
+          "preview": "Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается операционная система. Но это не Windows и не macOS. Это **OS «Я нед..."
+        },
+        {
+          "rank": 3,
+          "chunk_id": "5943bece-db10-460a-bc21-7e23e6485925",
+          "source_doc": "ГЛАВА 10. НейроСталкинг — жизнь из присутствия",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.05293957182758191,
+          "preview": "НейроСталкинг и НеоСталкинг — это два уровня одного процесса. **НейроСталкинг** — это работа с первым этажом. Паттерны, триггеры, автоматические реакции, нейрофизиология страдан..."
+        },
+        {
+          "rank": 4,
+          "chunk_id": "39f6eafa-7403-4450-80b8-9b94097035b2",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.04733984254030158,
+          "preview": "Здесь важно одно различение — оно многое проясняет. У тебя в голове два этажа, которые работают одновременно. **Нижний этаж** — древний. Ему миллионы лет. Это лимбическая систем..."
+        },
+        {
+          "rank": 5,
+          "chunk_id": "ebf047f2-c678-40a1-8747-b98dfae1a2ea",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0469025003141907,
+          "preview": "**Базовая установка:** «Показывать слабость = опасно» Ребёнок плачет. Родитель говорит: «Не реви. Ты же мальчик» / «Хватит ныть, ты уже большая». Или просто игнорирует — показыв..."
+        },
+        {
+          "rank": 6,
+          "chunk_id": "cb798df0-e1dc-4225-b216-d8b8e6979d7c",
+          "source_doc": "ГЛАВА 2. Химия клетки: почему мозг зависит от страдания",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.042568960405261695,
+          "preview": "**Цель:** поработать с одним старым болезненным воспоминанием — не через анализ, а через телесный опыт. **Время:** 15–20 минут. В тихом месте. Выбери одно воспоминание — не само..."
+        },
+        {
+          "rank": 7,
+          "chunk_id": "d527d369-beb2-4113-b370-cb2738e76b55",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.04164563089396213,
+          "preview": "Три причины, по которым программа «несовершенное Я» держится так крепко: **1. Нейропластичность в критический период** Мозг ребёнка — пластилин. Всё, что записалось в возрасте о..."
+        },
+        {
+          "rank": 8,
+          "chunk_id": "a2c87ed5-8c7c-4494-9a12-02bc07cc4b58",
+          "source_doc": "ГЛАВА 7. Страх: союзник, которого ты превратил во врага",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.04161287565814852,
+          "preview": "**Цель:** начать обновлять нейронную оценку угрозы через малые шаги. **Время:** по ситуации. Регулярно — в течение нескольких недель. Выбери один маленький страх из своей карты..."
+        },
+        {
+          "rank": 9,
+          "chunk_id": "6d0c2432-96ca-4293-beec-9bf337955a7a",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.04022680937747294,
+          "preview": "**Базовая установка:** «Любовь нужно заслужить достижениями» Родители хвалят только за успехи. «Пятёрка — молодец! Четвёрка — мог бы лучше». Или сравнивают: «А вот Маша в классе..."
+        },
+        {
+          "rank": 10,
+          "chunk_id": "7910da47-485f-45c6-b774-0772d5aaddec",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.03724036755914163,
+          "preview": "Давай без эзотерики. Только нейрофизиология. В возрасте от 2 до 6 лет мозг ребёнка находится в состоянии **гиперпластичности**. Нейронные связи формируются с огромной скоростью...."
+        }
+      ],
+      "botdb_vector_top_10": [
+        {
+          "rank": 1,
+          "chunk_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Ты открыл эту книгу не случайно. Скорее всего, ты уже прошёл терапию, читал умные книжки, медитировал, делал практики. И всё равно что-то внутри скребёт. Какой-то фоновый шум, к..."
+        },
+        {
+          "rank": 2,
+          "chunk_id": "cb798df0-e1dc-4225-b216-d8b8e6979d7c",
+          "source_doc": "ГЛАВА 2. Химия клетки: почему мозг зависит от страдания",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "**Цель:** поработать с одним старым болезненным воспоминанием — не через анализ, а через телесный опыт. **Время:** 15–20 минут. В тихом месте. Выбери одно воспоминание — не само..."
+        },
+        {
+          "rank": 3,
+          "chunk_id": "a2c87ed5-8c7c-4494-9a12-02bc07cc4b58",
+          "source_doc": "ГЛАВА 7. Страх: союзник, которого ты превратил во врага",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "**Цель:** начать обновлять нейронную оценку угрозы через малые шаги. **Время:** по ситуации. Регулярно — в течение нескольких недель. Выбери один маленький страх из своей карты..."
+        },
+        {
+          "rank": 4,
+          "chunk_id": "5943bece-db10-460a-bc21-7e23e6485925",
+          "source_doc": "ГЛАВА 10. НейроСталкинг — жизнь из присутствия",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "НейроСталкинг и НеоСталкинг — это два уровня одного процесса. **НейроСталкинг** — это работа с первым этажом. Паттерны, триггеры, автоматические реакции, нейрофизиология страдан..."
+        },
+        {
+          "rank": 5,
+          "chunk_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается операционная система. Но это не Windows и не macOS. Это **OS «Я нед..."
+        },
+        {
+          "rank": 6,
+          "chunk_id": "7910da47-485f-45c6-b774-0772d5aaddec",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Давай без эзотерики. Только нейрофизиология. В возрасте от 2 до 6 лет мозг ребёнка находится в состоянии **гиперпластичности**. Нейронные связи формируются с огромной скоростью...."
+        },
+        {
+          "rank": 7,
+          "chunk_id": "39f6eafa-7403-4450-80b8-9b94097035b2",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Здесь важно одно различение — оно многое проясняет. У тебя в голове два этажа, которые работают одновременно. **Нижний этаж** — древний. Ему миллионы лет. Это лимбическая систем..."
+        },
+        {
+          "rank": 8,
+          "chunk_id": "d527d369-beb2-4113-b370-cb2738e76b55",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Три причины, по которым программа «несовершенное Я» держится так крепко: **1. Нейропластичность в критический период** Мозг ребёнка — пластилин. Всё, что записалось в возрасте о..."
+        },
+        {
+          "rank": 9,
+          "chunk_id": "ebf047f2-c678-40a1-8747-b98dfae1a2ea",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "**Базовая установка:** «Показывать слабость = опасно» Ребёнок плачет. Родитель говорит: «Не реви. Ты же мальчик» / «Хватит ныть, ты уже большая». Или просто игнорирует — показыв..."
+        },
+        {
+          "rank": 10,
+          "chunk_id": "6d0c2432-96ca-4293-beec-9bf337955a7a",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "**Базовая установка:** «Любовь нужно заслужить достижениями» Родители хвалят только за успехи. «Пятёрка — молодец! Четвёрка — мог бы лучше». Или сравнивают: «А вот Маша в классе..."
+        }
+      ],
+      "botdb_lexical_or_keyword_top_10": [],
+      "runtime_memory_candidates_top_10": [
+        {
+          "chunk_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+          "source": "book",
+          "score": 0.05118361168538438,
+          "content_preview": "Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается…",
+          "content_full": "Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается…"
+        },
+        {
+          "chunk_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+          "source": "book",
+          "score": 0.04821942972776971,
+          "content_preview": "Ты открыл эту книгу не случайно. Скорее всего, ты уже прошёл терапию, читал умные книжки, медитировал, делал практики.…",
+          "content_full": "Ты открыл эту книгу не случайно. Скорее всего, ты уже прошёл терапию, читал умные книжки, медитировал, делал практики.…"
+        },
+        {
+          "chunk_id": "7910da47-485f-45c6-b774-0772d5aaddec",
+          "source": "book",
+          "score": 0.040282001938998384,
+          "content_preview": "Давай без эзотерики. Только нейрофизиология. В возрасте от 2 до 6 лет мозг ребёнка находится в состоянии…",
+          "content_full": "Давай без эзотерики. Только нейрофизиология. В возрасте от 2 до 6 лет мозг ребёнка находится в состоянии…"
+        }
+      ],
+      "hybrid_candidates_top_10": [],
+      "semantic_card_candidates": [
+        {
+          "card_id": "panic_control_support_v1",
+          "score": 5,
+          "reasons": [
+            "retrieval_hint_overlap",
+            "topic_alias"
+          ]
+        },
+        {
+          "card_id": "control_as_safety_v1",
+          "score": 2,
+          "reasons": [
+            "retrieval_hint_overlap"
+          ]
+        },
+        {
+          "card_id": "program_imperfect_self_v1",
+          "score": 1,
+          "reasons": [
+            "current_turn_overlap"
+          ]
+        }
+      ],
+      "filtered_candidates": [
+        {
+          "item_id": "semantic_card:program_imperfect_self_v1",
+          "origin": "semantic_card",
+          "chunk_type": "concept",
+          "source_doc": "Kuznica Duha v2",
+          "sent_to_writer": false,
+          "filter_reason": "safety_grounding_allowed"
+        },
+        {
+          "item_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+          "origin": "memory_semantic_hit",
+          "chunk_type": "general_text",
+          "source_doc": "book",
+          "sent_to_writer": false,
+          "filter_reason": "safety_grounding_allowed"
+        },
+        {
+          "item_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+          "origin": "memory_semantic_hit",
+          "chunk_type": "general_text",
+          "source_doc": "book",
+          "sent_to_writer": false,
+          "filter_reason": "safety_grounding_allowed"
+        },
+        {
+          "item_id": "7910da47-485f-45c6-b774-0772d5aaddec",
+          "origin": "memory_semantic_hit",
+          "chunk_type": "general_text",
+          "source_doc": "book",
+          "sent_to_writer": false,
+          "filter_reason": "safety_grounding_allowed"
+        }
+      ],
+      "writer_payload_chunks": [
+        {
+          "item_id": "semantic_card:panic_control_support_v1",
+          "chunk_id": "semantic_card:panic_control_support_v1",
+          "origin": "semantic_card",
+          "source_doc": "Kuznica Duha v2",
+          "chunk_type": "mechanism",
+          "quote_policy": "paraphrase_only",
+          "allowed_use": [
+            "direct_to_writer",
+            "internal_lens"
+          ],
+          "payload_item_origin": "semantic_card",
+          "semantic_card_id": "panic_control_support_v1",
+          "semantic_card_pack_id": "semantic_cards_pilot_v1",
+          "sent_to_writer": true,
+          "writer_can_ignore": true,
+          "applied_as_authority": false,
+          "inclusion_reason": "selected_for_writer_payload"
+        },
+        {
+          "item_id": "semantic_card:control_as_safety_v1",
+          "chunk_id": "semantic_card:control_as_safety_v1",
+          "origin": "semantic_card",
+          "source_doc": "Kuznica Duha v2",
+          "chunk_type": "mechanism",
+          "quote_policy": "paraphrase_only",
+          "allowed_use": [
+            "direct_to_writer",
+            "internal_lens"
+          ],
+          "payload_item_origin": "semantic_card",
+          "semantic_card_id": "control_as_safety_v1",
+          "semantic_card_pack_id": "semantic_cards_pilot_v1",
+          "sent_to_writer": true,
+          "writer_can_ignore": true,
+          "applied_as_authority": false,
+          "inclusion_reason": "selected_for_writer_payload"
+        }
+      ],
+      "runtime_truth_summary": {
+        "retrieved_candidates_count": 6,
+        "filtered_out_for_writer_count": 4,
+        "writer_visible_payload_count": 2,
+        "payload_decision_reason": "structured_payload_used",
+        "grounding_visibility_reason": "safety_grounding_allowed",
+        "writer_kb_payload_status": "structured_payload_used",
+        "writer_kb_payload_primary_path": "writer_kb_payload_v1",
+        "retrieval_gate_recovery_applied": false
+      },
+      "writer_grounding_visibility_v1": {
+        "version": "writer_grounding_visibility_v1",
+        "kb_visible_to_writer": true,
+        "semantic_cards_visible_to_writer": true,
+        "reason": "safety_grounding_allowed",
+        "direct_kb_question": true,
+        "direct_source_request": false,
+        "explicit_knowledge_request": true,
+        "explicit_practice_request": false,
+        "candidate_chunk_types": [
+          "mechanism",
+          "concept"
+        ],
+        "allowed_grounding_types": [],
+        "narrow_practice_grounding_available": false,
+        "safety_grounding_allowed": true,
+        "no_internal_db": false,
+        "trace_only_grounding_available": true,
+        "writer_may_ignore_grounding": true,
+        "retrieval_action": "query_kb",
+        "retrieval_need": "knowledge_context"
+      },
+      "retrieval_decision_summary": {
+        "retrieval_action": "query_kb",
+        "retrieval_need": "knowledge_context",
+        "rag_included_count": 0,
+        "rag_suppressed_reason": "candidate_available_but_current_turn_prefers_recent_context"
+      },
+      "source_chunk_match_trace_v1": {
+        "enabled": true,
+        "probe_query": "Что такое контролёр в панике?",
+        "raw_query": "контролер панике",
+        "normalized_query": "что такое контролер в панике?",
+        "explicit_knowledge_question": true,
+        "source_match_expected": "yes",
+        "raw_source_top_k_count": 4,
+        "runtime_candidate_top_k_count": 6,
+        "writer_payload_count": 2,
+        "focus_terms": [
+          "контролер",
+          "панике"
+        ],
+        "best_raw_match": {
+          "chunk_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+          "source_doc": "book",
+          "rank": 1,
+          "score": 0.05118361168538438,
+          "near_exact_match": false,
+          "matched_terms_or_phrase": [],
+          "sent_to_writer": null,
+          "filter_reason": "",
+          "payload_position": null,
+          "writer_can_ignore": true,
+          "chunk_type": "general_text",
+          "origin": "trace",
+          "preview": "book Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается операционная система. Но это не Windows и не..."
+        },
+        "best_runtime_match": {
+          "chunk_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+          "source_doc": "book",
+          "rank": 4,
+          "score": 0.05118361168538438,
+          "near_exact_match": false,
+          "matched_terms_or_phrase": [],
+          "sent_to_writer": false,
+          "filter_reason": "safety_grounding_allowed",
+          "payload_position": null,
+          "writer_can_ignore": true,
+          "chunk_type": "general_text",
+          "origin": "memory_semantic_hit",
+          "preview": "book Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается операционная система. Но это не Windows и не..."
+        },
+        "payload_match": {
+          "chunk_id": "semantic_card:panic_control_support_v1",
+          "source_doc": "Kuznica Duha v2",
+          "rank": 1,
+          "score": 0.0,
+          "near_exact_match": false,
+          "matched_terms_or_phrase": [],
+          "sent_to_writer": true,
+          "filter_reason": "",
+          "payload_position": 1,
+          "writer_can_ignore": true,
+          "chunk_type": "mechanism",
+          "origin": "semantic_card",
+          "preview": "Kuznica Duha v2 During panic, control often intensifies because the system is trying to restore safety and predictability; answer supportively and avoid diagno..."
+        },
+        "loss_stage": "raw_source",
+        "loss_reason": "no_raw_source_match_in_runtime_top_k"
+      },
+      "final_answer_summary": "Контролёр в панике — это поведение (или роль), когда человек пытается усиленно управлять событиями, людьми или собой в ответ на сильный страх или тревогу. Главный механизм: желание восстановить предсказуемость и безопасность — контроль снижает неопределённо..."
+    },
+    {
+      "probe_id": "A8",
+      "query": "Что такое духовная кома?",
+      "classification": "FAIL_raw_source_missing",
+      "source_material_phrase_present_in_workspace": null,
+      "raw_source_search_top_10": [
+        {
+          "rank": 1,
+          "chunk_id": "648f6960-e5cf-4558-a111-fcd668b2096a",
+          "source_doc": "ГЛАВА 10. НейроСталкинг — жизнь из присутствия",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.06897008799240252,
+          "preview": "Когда слышишь «безусловная любовь» — первый импульс обычно: умиление, что-то про принятие, про добро. Мягкое. Здесь — другое. Безусловная любовь в понимании НеоСталкинга — это н..."
+        },
+        {
+          "rank": 2,
+          "chunk_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.06174288941200435,
+          "preview": "Ты открыл эту книгу не случайно. Скорее всего, ты уже прошёл терапию, читал умные книжки, медитировал, делал практики. И всё равно что-то внутри скребёт. Какой-то фоновый шум, к..."
+        },
+        {
+          "rank": 3,
+          "chunk_id": "03b71eb2-d88f-49fc-9459-0590d0f57a10",
+          "source_doc": "ГЛАВА 5. Тени: то, что мы не видим в себе",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0565903943235731,
+          "preview": "**Цель:** завершить цикл — от обнаружения тени к первому контакту с ней. **Время:** 30–40 минут. Один раз как ритуал. Напиши письмо своей тени — как письмо человеку, которого да..."
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2fc538fa-d37a-4559-bfed-1a3ff829e731",
+          "source_doc": "ГЛАВА 10. НейроСталкинг — жизнь из присутствия",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.05498203434505763,
+          "preview": "Название может ввести в заблуждение. «Сталкинг» — преследование? Слежка? Нет. Образ другой. Сталкер в смысле проводника — тот, кто идёт в зону, которую другие обходят стороной...."
+        },
+        {
+          "rank": 5,
+          "chunk_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.05217873682832856,
+          "preview": "Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается операционная система. Но это не Windows и не macOS. Это **OS «Я нед..."
+        },
+        {
+          "rank": 6,
+          "chunk_id": "ae905f5d-9ca4-40ed-88e4-d43f73e9afa8",
+          "source_doc": "ГЛАВА 10. НейроСталкинг — жизнь из присутствия",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.04860572950594329,
+          "preview": "*** Девять глав до этой — это была карта. Подробная, с масштабом, с легендой. Ты изучил рельеф: программу несовершенного Я, химию страдания, фильтры восприятия, тени, инстинкты,..."
+        },
+        {
+          "rank": 7,
+          "chunk_id": "5943bece-db10-460a-bc21-7e23e6485925",
+          "source_doc": "ГЛАВА 10. НейроСталкинг — жизнь из присутствия",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.04564798414273011,
+          "preview": "НейроСталкинг и НеоСталкинг — это два уровня одного процесса. **НейроСталкинг** — это работа с первым этажом. Паттерны, триггеры, автоматические реакции, нейрофизиология страдан..."
+        },
+        {
+          "rank": 8,
+          "chunk_id": "7910da47-485f-45c6-b774-0772d5aaddec",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.038569191761866434,
+          "preview": "Давай без эзотерики. Только нейрофизиология. В возрасте от 2 до 6 лет мозг ребёнка находится в состоянии **гиперпластичности**. Нейронные связи формируются с огромной скоростью...."
+        },
+        {
+          "rank": 9,
+          "chunk_id": "cb798df0-e1dc-4225-b216-d8b8e6979d7c",
+          "source_doc": "ГЛАВА 2. Химия клетки: почему мозг зависит от страдания",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.03461671343973482,
+          "preview": "**Цель:** поработать с одним старым болезненным воспоминанием — не через анализ, а через телесный опыт. **Время:** 15–20 минут. В тихом месте. Выбери одно воспоминание — не само..."
+        },
+        {
+          "rank": 10,
+          "chunk_id": "a2c87ed5-8c7c-4494-9a12-02bc07cc4b58",
+          "source_doc": "ГЛАВА 7. Страх: союзник, которого ты превратил во врага",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.03094540348807,
+          "preview": "**Цель:** начать обновлять нейронную оценку угрозы через малые шаги. **Время:** по ситуации. Регулярно — в течение нескольких недель. Выбери один маленький страх из своей карты..."
+        }
+      ],
+      "botdb_vector_top_10": [
+        {
+          "rank": 1,
+          "chunk_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Ты открыл эту книгу не случайно. Скорее всего, ты уже прошёл терапию, читал умные книжки, медитировал, делал практики. И всё равно что-то внутри скребёт. Какой-то фоновый шум, к..."
+        },
+        {
+          "rank": 2,
+          "chunk_id": "cb798df0-e1dc-4225-b216-d8b8e6979d7c",
+          "source_doc": "ГЛАВА 2. Химия клетки: почему мозг зависит от страдания",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "**Цель:** поработать с одним старым болезненным воспоминанием — не через анализ, а через телесный опыт. **Время:** 15–20 минут. В тихом месте. Выбери одно воспоминание — не само..."
+        },
+        {
+          "rank": 3,
+          "chunk_id": "03b71eb2-d88f-49fc-9459-0590d0f57a10",
+          "source_doc": "ГЛАВА 5. Тени: то, что мы не видим в себе",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "**Цель:** завершить цикл — от обнаружения тени к первому контакту с ней. **Время:** 30–40 минут. Один раз как ритуал. Напиши письмо своей тени — как письмо человеку, которого да..."
+        },
+        {
+          "rank": 4,
+          "chunk_id": "a2c87ed5-8c7c-4494-9a12-02bc07cc4b58",
+          "source_doc": "ГЛАВА 7. Страх: союзник, которого ты превратил во врага",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "**Цель:** начать обновлять нейронную оценку угрозы через малые шаги. **Время:** по ситуации. Регулярно — в течение нескольких недель. Выбери один маленький страх из своей карты..."
+        },
+        {
+          "rank": 5,
+          "chunk_id": "ae905f5d-9ca4-40ed-88e4-d43f73e9afa8",
+          "source_doc": "ГЛАВА 10. НейроСталкинг — жизнь из присутствия",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "*** Девять глав до этой — это была карта. Подробная, с масштабом, с легендой. Ты изучил рельеф: программу несовершенного Я, химию страдания, фильтры восприятия, тени, инстинкты,..."
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2fc538fa-d37a-4559-bfed-1a3ff829e731",
+          "source_doc": "ГЛАВА 10. НейроСталкинг — жизнь из присутствия",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Название может ввести в заблуждение. «Сталкинг» — преследование? Слежка? Нет. Образ другой. Сталкер в смысле проводника — тот, кто идёт в зону, которую другие обходят стороной...."
+        },
+        {
+          "rank": 7,
+          "chunk_id": "5943bece-db10-460a-bc21-7e23e6485925",
+          "source_doc": "ГЛАВА 10. НейроСталкинг — жизнь из присутствия",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "НейроСталкинг и НеоСталкинг — это два уровня одного процесса. **НейроСталкинг** — это работа с первым этажом. Паттерны, триггеры, автоматические реакции, нейрофизиология страдан..."
+        },
+        {
+          "rank": 8,
+          "chunk_id": "648f6960-e5cf-4558-a111-fcd668b2096a",
+          "source_doc": "ГЛАВА 10. НейроСталкинг — жизнь из присутствия",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Когда слышишь «безусловная любовь» — первый импульс обычно: умиление, что-то про принятие, про добро. Мягкое. Здесь — другое. Безусловная любовь в понимании НеоСталкинга — это н..."
+        },
+        {
+          "rank": 9,
+          "chunk_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается операционная система. Но это не Windows и не macOS. Это **OS «Я нед..."
+        },
+        {
+          "rank": 10,
+          "chunk_id": "7910da47-485f-45c6-b774-0772d5aaddec",
+          "source_doc": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+          "source_type": "book",
+          "chunk_type": "general_text",
+          "allowed_use": [],
+          "quote_policy": "paraphrase_only",
+          "score": 0.0,
+          "preview": "Давай без эзотерики. Только нейрофизиология. В возрасте от 2 до 6 лет мозг ребёнка находится в состоянии **гиперпластичности**. Нейронные связи формируются с огромной скоростью...."
+        }
+      ],
+      "botdb_lexical_or_keyword_top_10": [],
+      "runtime_memory_candidates_top_10": [
+        {
+          "chunk_id": "6d484c8a-f7f0-407e-99e5-d35048f7b48d",
+          "source": "book",
+          "score": 0.03528188631734756,
+          "content_preview": "Страх — самая быстрая из всех эмоций. Быстрее злости, быстрее радости, быстрее любви.…",
+          "content_full": "Страх — самая быстрая из всех эмоций. Быстрее злости, быстрее радости, быстрее любви.…"
+        },
+        {
+          "chunk_id": "03b71eb2-d88f-49fc-9459-0590d0f57a10",
+          "source": "book",
+          "score": 0.033854475758898814,
+          "content_preview": "**Цель:** завершить цикл — от обнаружения тени к первому контакту с ней. **Время:** 30–40 минут. Один раз как ритуал.…",
+          "content_full": "**Цель:** завершить цикл — от обнаружения тени к первому контакту с ней. **Время:** 30–40 минут. Один раз как ритуал.…"
+        },
+        {
+          "chunk_id": "02850e6b-1f41-4f94-8413-cdec8c45479b",
+          "source": "book",
+          "score": 0.03224981117537747,
+          "content_preview": "*** **— Я знаю о своей тени уже много лет. Хожу на терапию, читал Юнга. Но она всё равно управляет.…",
+          "content_full": "*** **— Я знаю о своей тени уже много лет. Хожу на терапию, читал Юнга. Но она всё равно управляет.…"
+        }
+      ],
+      "hybrid_candidates_top_10": [],
+      "semantic_card_candidates": [
+        {
+          "card_id": "program_imperfect_self_v1",
+          "score": 1,
+          "reasons": [
+            "current_turn_overlap"
+          ]
+        }
+      ],
+      "filtered_candidates": [
+        {
+          "item_id": "6d484c8a-f7f0-407e-99e5-d35048f7b48d",
+          "origin": "memory_semantic_hit",
+          "chunk_type": "general_text",
+          "source_doc": "book",
+          "sent_to_writer": false,
+          "filter_reason": "direct_knowledge_question"
+        },
+        {
+          "item_id": "03b71eb2-d88f-49fc-9459-0590d0f57a10",
+          "origin": "memory_semantic_hit",
+          "chunk_type": "general_text",
+          "source_doc": "book",
+          "sent_to_writer": false,
+          "filter_reason": "direct_knowledge_question"
+        },
+        {
+          "item_id": "02850e6b-1f41-4f94-8413-cdec8c45479b",
+          "origin": "memory_semantic_hit",
+          "chunk_type": "general_text",
+          "source_doc": "book",
+          "sent_to_writer": false,
+          "filter_reason": "direct_knowledge_question"
+        }
+      ],
+      "writer_payload_chunks": [
+        {
+          "item_id": "semantic_card:program_imperfect_self_v1",
+          "chunk_id": "semantic_card:program_imperfect_self_v1",
+          "origin": "semantic_card",
+          "source_doc": "Kuznica Duha v2",
+          "chunk_type": "concept",
+          "quote_policy": "paraphrase_only",
+          "allowed_use": [
+            "direct_to_writer",
+            "internal_lens"
+          ],
+          "payload_item_origin": "semantic_card",
+          "semantic_card_id": "program_imperfect_self_v1",
+          "semantic_card_pack_id": "semantic_cards_pilot_v1",
+          "sent_to_writer": true,
+          "writer_can_ignore": true,
+          "applied_as_authority": false,
+          "inclusion_reason": "selected_for_writer_payload"
+        }
+      ],
+      "runtime_truth_summary": {
+        "retrieved_candidates_count": 4,
+        "filtered_out_for_writer_count": 3,
+        "writer_visible_payload_count": 1,
+        "payload_decision_reason": "structured_payload_used",
+        "grounding_visibility_reason": "direct_knowledge_question",
+        "writer_kb_payload_status": "structured_payload_used",
+        "writer_kb_payload_primary_path": "writer_kb_payload_v1",
+        "retrieval_gate_recovery_applied": false
+      },
+      "writer_grounding_visibility_v1": {
+        "version": "writer_grounding_visibility_v1",
+        "kb_visible_to_writer": true,
+        "semantic_cards_visible_to_writer": true,
+        "reason": "direct_knowledge_question",
+        "direct_kb_question": true,
+        "direct_source_request": false,
+        "explicit_knowledge_request": true,
+        "explicit_practice_request": false,
+        "candidate_chunk_types": [
+          "concept"
+        ],
+        "allowed_grounding_types": [],
+        "narrow_practice_grounding_available": false,
+        "safety_grounding_allowed": false,
+        "no_internal_db": false,
+        "trace_only_grounding_available": true,
+        "writer_may_ignore_grounding": true,
+        "retrieval_action": "query_kb",
+        "retrieval_need": "knowledge_context"
+      },
+      "retrieval_decision_summary": {
+        "retrieval_action": "query_kb",
+        "retrieval_need": "knowledge_context",
+        "rag_included_count": 0,
+        "rag_suppressed_reason": "candidate_available_but_current_turn_prefers_recent_context"
+      },
+      "source_chunk_match_trace_v1": {
+        "enabled": true,
+        "probe_query": "Что такое духовная кома?",
+        "raw_query": "духовная кома",
+        "normalized_query": "что такое духовная кома?",
+        "explicit_knowledge_question": true,
+        "source_match_expected": "yes",
+        "raw_source_top_k_count": 4,
+        "runtime_candidate_top_k_count": 4,
+        "writer_payload_count": 1,
+        "focus_terms": [
+          "духовная",
+          "кома"
+        ],
+        "best_raw_match": {
+          "chunk_id": "6d484c8a-f7f0-407e-99e5-d35048f7b48d",
+          "source_doc": "book",
+          "rank": 1,
+          "score": 0.03528188631734756,
+          "near_exact_match": false,
+          "matched_terms_or_phrase": [],
+          "sent_to_writer": null,
+          "filter_reason": "",
+          "payload_position": null,
+          "writer_can_ignore": true,
+          "chunk_type": "general_text",
+          "origin": "trace",
+          "preview": "book Страх — самая быстрая из всех эмоций. Быстрее злости, быстрее радости, быстрее любви. Это не случайность — это архитектура выживания. Вот что происходит,..."
+        },
+        "best_runtime_match": {
+          "chunk_id": "6d484c8a-f7f0-407e-99e5-d35048f7b48d",
+          "source_doc": "book",
+          "rank": 2,
+          "score": 0.03528188631734756,
+          "near_exact_match": false,
+          "matched_terms_or_phrase": [],
+          "sent_to_writer": false,
+          "filter_reason": "direct_knowledge_question",
+          "payload_position": null,
+          "writer_can_ignore": true,
+          "chunk_type": "general_text",
+          "origin": "memory_semantic_hit",
+          "preview": "book Страх — самая быстрая из всех эмоций. Быстрее злости, быстрее радости, быстрее любви. Это не случайность — это архитектура выживания. Вот что происходит,..."
+        },
+        "payload_match": {
+          "chunk_id": "semantic_card:program_imperfect_self_v1",
+          "source_doc": "Kuznica Duha v2",
+          "rank": 1,
+          "score": 0.0,
+          "near_exact_match": false,
+          "matched_terms_or_phrase": [],
+          "sent_to_writer": true,
+          "filter_reason": "",
+          "payload_position": 1,
+          "writer_can_ignore": true,
+          "chunk_type": "concept",
+          "origin": "semantic_card",
+          "preview": "Kuznica Duha v2 The imperfect-self program is a stable inner pattern that reads ordinary experience through the feeling that something is wrong with me; explai..."
+        },
+        "loss_stage": "raw_source",
+        "loss_reason": "no_raw_source_match_in_runtime_top_k"
+      },
+      "final_answer_summary": "Духовная кома — это образное описание состояния, когда человек эмоционально и смыслово «отключается»: теряет интерес к ценностям, утрачивает внутреннюю мотивацию и чувствует пустоту или апатию, как будто душевная жизнь притупилась. Главный механизм здесь —..."
+    }
+  ]
+}

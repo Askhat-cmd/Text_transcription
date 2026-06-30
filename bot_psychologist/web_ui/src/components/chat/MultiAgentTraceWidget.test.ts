@@ -291,6 +291,50 @@ function createTrace(): MultiAgentTraceData {
       writer_can_ignore_grounding: true,
       broad_kb_visible: true,
       narrow_grounding_visible: false,
+      source_chunk_match_trace_v1: {
+        enabled: true,
+        explicit_knowledge_question: true,
+        source_match_expected: 'yes',
+        focus_terms: ['программа', 'несовершенное'],
+        raw_source_top_k_count: 3,
+        runtime_candidate_top_k_count: 2,
+        writer_payload_count: 1,
+        loss_stage: 'none',
+        loss_reason: '',
+        best_raw_match: {
+          chunk_id: 'semantic_card:program_imperfect_self_v1',
+          source_doc: 'semantic_cards_pilot_v1',
+          rank: 1,
+          score: 0.91,
+          near_exact_match: true,
+          matched_terms_or_phrase: ['программа', 'несовершенное'],
+          sent_to_writer: true,
+          filter_reason: '',
+          payload_position: 1,
+        },
+        best_runtime_match: {
+          chunk_id: 'semantic_card:program_imperfect_self_v1',
+          source_doc: 'semantic_cards_pilot_v1',
+          rank: 1,
+          score: 0.91,
+          near_exact_match: true,
+          matched_terms_or_phrase: ['программа', 'несовершенное'],
+          sent_to_writer: true,
+          filter_reason: '',
+          payload_position: 1,
+        },
+        payload_match: {
+          chunk_id: 'semantic_card:program_imperfect_self_v1',
+          source_doc: 'semantic_cards_pilot_v1',
+          rank: 1,
+          score: 0.91,
+          near_exact_match: true,
+          matched_terms_or_phrase: ['программа', 'несовершенное'],
+          sent_to_writer: true,
+          filter_reason: '',
+          payload_position: 1,
+        },
+      },
       filtered_out_for_writer: [
         {
           item_id: 'trace-only-hit',
@@ -433,6 +477,20 @@ describe('MultiAgentTraceWidget (rev2)', () => {
     expect(harness.container.textContent).toContain('WRITER PAYLOAD');
     expect(harness.container.textContent).toContain('semantic_card:program_imperfect_self_v1');
     expect(harness.container.textContent).toContain('JSON ERROR AFFECTED PROD');
+    harness.cleanup();
+  });
+
+  it('renders source chunk match proof when available', () => {
+    const harness = renderWidget(
+      React.createElement(MultiAgentTraceWidget, {
+        trace: createTrace(),
+        isExpanded: true,
+      })
+    );
+    clickButtonContains(harness.container, 'Runtime Truth Trace');
+    clickButtonContains(harness.container, 'Source chunk match proof');
+    expect(harness.container.textContent).toContain('semantic_card:program_imperfect_self_v1');
+    expect(harness.container.textContent).toContain('loss_stage:');
     harness.cleanup();
   });
 

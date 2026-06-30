@@ -246,6 +246,14 @@ def _filter_items_by_chunk_types(
     ]
 
 
+def _policy_allowed_knowledge_hits(memory_bundle: MemoryBundle) -> list[dict[str, Any]]:
+    return [
+        dict(item)
+        for item in list(memory_bundle.knowledge_rag_hits or [])
+        if isinstance(item, dict)
+    ]
+
+
 def build_writer_grounding_visibility_v1(
     *,
     user_message: str,
@@ -436,8 +444,221 @@ def _filtered_reason(
     return str(writer_grounding_visibility.get("reason", "") or "not_selected_for_writer")
 
 
+_SOURCE_MATCH_STOPWORDS = frozenset(
+    {
+        "что",
+        "такое",
+        "это",
+        "ведь",
+        "еще",
+        "ещё",
+        "термин",
+        "знаешь",
+        "этом",
+        "так",
+        "стоп",
+        "про",
+        "как",
+        "этой",
+        "этот",
+        "того",
+        "куда",
+        "если",
+        "меня",
+        "тебя",
+        "него",
+        "него",
+    }
+)
+
+
+def _safe_preview(text: str, *, max_len: int = 160) -> str:
+    normalized = " ".join(str(text or "").split())
+    if len(normalized) <= max_len:
+        return normalized
+    return normalized[: max_len - 1].rstrip() + "..."
+
+
+def _query_focus_terms(user_message: str) -> list[str]:
+    ordered: list[str] = []
+    seen: set[str] = set()
+    for token in _tokens(user_message):
+        if len(token) < 4 or token in _SOURCE_MATCH_STOPWORDS:
+            continue
+        if token not in seen:
+            seen.add(token)
+            ordered.append(token)
+    return ordered
+
+
+def _candidate_match_text(item: dict[str, Any]) -> str:
+    parts = [
+        str(item.get("source_doc", "") or ""),
+        str(item.get("source", "") or ""),
+        str(item.get("title", "") or ""),
+        str(item.get("content_excerpt", "") or ""),
+        str(item.get("content_preview", "") or ""),
+        str(item.get("preview", "") or ""),
+        str(item.get("core_thesis", "") or ""),
+        str(item.get("content", "") or ""),
+    ]
+    return " ".join(part for part in parts if part).strip()
+
+
+def _candidate_matched_terms(item: dict[str, Any], focus_terms: list[str]) -> list[str]:
+    haystack = _normalize(_candidate_match_text(item))
+    return [term for term in focus_terms if term in haystack]
+
+
+def _candidate_match_snapshot(
+    item: dict[str, Any],
+    *,
+    focus_terms: list[str],
+    sent_to_writer: bool | None = None,
+    filter_reason: str = "",
+    payload_position: int | None = None,
+    rank_fallback: int = 0,
+) -> dict[str, Any]:
+    matched_terms = _candidate_matched_terms(item, focus_terms)
+    exact_phrase = bool(focus_terms) and " ".join(focus_terms) in _normalize(_candidate_match_text(item))
+    match_ratio = (len(matched_terms) / len(focus_terms)) if focus_terms else 0.0
+    near_exact = bool(focus_terms) and (exact_phrase or match_ratio >= 0.6 or len(matched_terms) >= 2)
+    return {
+        "chunk_id": _candidate_id(item),
+        "source_doc": _source_doc(item),
+        "rank": int(item.get("rank", 0) or rank_fallback),
+        "score": float(item.get("score", 0.0) or 0.0),
+        "near_exact_match": near_exact,
+        "matched_terms_or_phrase": matched_terms,
+        "sent_to_writer": sent_to_writer,
+        "filter_reason": str(filter_reason or ""),
+        "payload_position": payload_position,
+        "writer_can_ignore": bool(item.get("writer_can_ignore", True)),
+        "chunk_type": _extract_chunk_type(item),
+        "origin": _candidate_origin(item, str(item.get("_runtime_origin", "trace"))),
+        "preview": _safe_preview(_candidate_match_text(item)),
+        "_match_ratio": match_ratio,
+        "_exact_phrase": exact_phrase,
+    }
+
+
+def _best_match_snapshot(items: list[dict[str, Any]]) -> dict[str, Any]:
+    if not items:
+        return {}
+    ranked = sorted(
+        items,
+        key=lambda item: (
+            bool(item.get("near_exact_match", False)),
+            float(item.get("_match_ratio", 0.0) or 0.0),
+            float(item.get("score", 0.0) or 0.0),
+            -int(item.get("rank", 0) or 0),
+        ),
+        reverse=True,
+    )
+    best = dict(ranked[0])
+    best.pop("_match_ratio", None)
+    best.pop("_exact_phrase", None)
+    return best
+
+
+def _build_source_chunk_match_trace_v1(
+    *,
+    user_message: str,
+    rag_retrieval_trace: dict[str, Any],
+    candidate_pool: list[dict[str, Any]],
+    payload_chunks: list[dict[str, Any]],
+    filtered_out: list[dict[str, Any]],
+    actual_writer_payload_ids: set[str],
+    writer_grounding_visibility: dict[str, Any],
+    no_internal_db: bool,
+) -> dict[str, Any]:
+    focus_terms = _query_focus_terms(user_message)
+    explicit_knowledge_question = bool(
+        writer_grounding_visibility.get("explicit_knowledge_request", False)
+        or writer_grounding_visibility.get("direct_kb_question", False)
+    )
+    raw_candidates = [
+        dict(item)
+        for item in list(rag_retrieval_trace.get("raw_hit_summaries", []) or [])
+        if isinstance(item, dict)
+    ]
+    raw_snapshots = [
+        _candidate_match_snapshot(item, focus_terms=focus_terms, rank_fallback=index)
+        for index, item in enumerate(raw_candidates, start=1)
+    ]
+    runtime_snapshots = []
+    filter_reason_by_id = {
+        str(item.get("item_id", "") or ""): str(item.get("filter_reason", "") or "")
+        for item in list(filtered_out or [])
+        if isinstance(item, dict)
+    }
+    for index, item in enumerate(candidate_pool, start=1):
+        item_id = _candidate_id(item)
+        runtime_snapshots.append(
+            _candidate_match_snapshot(
+                item,
+                focus_terms=focus_terms,
+                sent_to_writer=item_id in actual_writer_payload_ids,
+                filter_reason=filter_reason_by_id.get(item_id, ""),
+                rank_fallback=index,
+            )
+        )
+    payload_snapshots = [
+        _candidate_match_snapshot(
+            item,
+            focus_terms=focus_terms,
+            sent_to_writer=True,
+            payload_position=index,
+            rank_fallback=index,
+        )
+        for index, item in enumerate(payload_chunks, start=1)
+    ]
+    best_raw_match = _best_match_snapshot(raw_snapshots)
+    best_runtime_match = _best_match_snapshot(runtime_snapshots)
+    payload_match = _best_match_snapshot(payload_snapshots)
+
+    if no_internal_db:
+        loss_stage = "gate"
+        loss_reason = "latest_turn_no_internal_db"
+    elif not explicit_knowledge_question:
+        loss_stage = "unknown"
+        loss_reason = "not_an_explicit_knowledge_question"
+    elif not raw_snapshots or not best_raw_match.get("near_exact_match", False):
+        loss_stage = "raw_source"
+        loss_reason = "no_raw_source_match_in_runtime_top_k"
+    elif not runtime_snapshots or not best_runtime_match.get("near_exact_match", False):
+        loss_stage = "runtime_retrieval"
+        loss_reason = "raw_match_not_preserved_in_runtime_candidates"
+    elif not payload_match.get("near_exact_match", False):
+        loss_stage = "gate"
+        loss_reason = str(best_runtime_match.get("filter_reason", "") or "runtime_match_not_sent_to_writer")
+    else:
+        loss_stage = "none"
+        loss_reason = ""
+
+    return {
+        "enabled": True,
+        "probe_query": str(user_message or ""),
+        "raw_query": str(rag_retrieval_trace.get("query", "") or user_message or ""),
+        "normalized_query": _normalize(user_message),
+        "explicit_knowledge_question": explicit_knowledge_question,
+        "source_match_expected": "yes" if explicit_knowledge_question and focus_terms else "unknown",
+        "raw_source_top_k_count": len(raw_snapshots),
+        "runtime_candidate_top_k_count": len(runtime_snapshots),
+        "writer_payload_count": len(payload_snapshots),
+        "focus_terms": focus_terms,
+        "best_raw_match": best_raw_match,
+        "best_runtime_match": best_runtime_match,
+        "payload_match": payload_match,
+        "loss_stage": loss_stage,
+        "loss_reason": loss_reason,
+    }
+
+
 def _build_runtime_truth_trace_v1(
     *,
+    user_message: str,
+    rag_retrieval_trace: dict[str, Any],
     rag_candidates_for_trace: list[dict[str, Any]],
     base_rag_for_writer: list[dict[str, Any]],
     semantic_card_candidate_payload_items: list[dict[str, Any]],
@@ -519,6 +740,17 @@ def _build_runtime_truth_trace_v1(
             filtered_out.append(entry)
             trace_only.append(entry)
 
+    source_chunk_match_trace = _build_source_chunk_match_trace_v1(
+        user_message=user_message,
+        rag_retrieval_trace=rag_retrieval_trace,
+        candidate_pool=candidate_pool,
+        payload_chunks=payload_chunks,
+        filtered_out=filtered_out,
+        actual_writer_payload_ids=actual_writer_payload_ids,
+        writer_grounding_visibility=writer_grounding_visibility,
+        no_internal_db=no_internal_db,
+    )
+
     writer_visible_payload_types = [
         str(item.get("chunk_type", "") or "")
         for item in writer_visible_payload_items
@@ -562,6 +794,7 @@ def _build_runtime_truth_trace_v1(
         ),
         "narrow_grounding_visible": bool(grounding_reason == "explicit_practice_request_narrow_grounding"),
         "hidden_knowledge_competence_v1": dict(hidden_knowledge_competence),
+        "source_chunk_match_trace_v1": source_chunk_match_trace,
         "writer_visible_payload_items": writer_visible_payload_items,
         "filtered_out_for_writer": filtered_out,
         "trace_only_grounding": trace_only,
@@ -569,6 +802,9 @@ def _build_runtime_truth_trace_v1(
         "legacy_fallback_scope": str(writer_kb_payload_trace.get("fallback_scope", "none") or "none"),
         "writer_kb_payload_status": str(writer_kb_payload_trace.get("status", "") or ""),
         "writer_kb_payload_primary_path": str(writer_kb_payload_trace.get("primary_path", "") or ""),
+        "retrieval_gate_recovery_applied": bool(
+            writer_grounding_visibility.get("retrieval_gate_recovery_applied", False)
+        ),
     }
 
 
@@ -648,6 +884,7 @@ def build_writer_context_package_v1(
         if profile_allowed
         else {}
     )
+    memory_bundle_knowledge_hits = _policy_allowed_knowledge_hits(memory_bundle)
 
     explicit_retrieval_gate = "rag_included_count" in retrieval
     if no_internal_db:
@@ -686,6 +923,30 @@ def build_writer_context_package_v1(
         has_grounding_candidates=bool(base_rag_for_writer) or bool(semantic_card_candidate_payload_items),
         candidate_chunk_types=candidate_chunk_types,
     )
+    fallback_focus_terms = _query_focus_terms(user_message)
+    fallback_match_snapshots = [
+        _candidate_match_snapshot(item, focus_terms=fallback_focus_terms, rank_fallback=index)
+        for index, item in enumerate(memory_bundle_knowledge_hits, start=1)
+    ]
+    best_policy_allowed_fallback_match = _best_match_snapshot(fallback_match_snapshots)
+    retrieval_gate_recovery_applied = False
+    if (
+        not no_internal_db
+        and explicit_retrieval_gate
+        and not base_rag_for_writer
+        and bool(writer_grounding_visibility.get("kb_visible_to_writer", False))
+        and bool(best_policy_allowed_fallback_match.get("near_exact_match", False))
+        and bool(memory_bundle_knowledge_hits)
+    ):
+        base_rag_for_writer = list(memory_bundle_knowledge_hits)
+        retrieval_gate_recovery_applied = True
+        writer_grounding_visibility = dict(writer_grounding_visibility)
+        writer_grounding_visibility["trace_only_grounding_available"] = True
+        writer_grounding_visibility["retrieval_gate_recovery_applied"] = True
+        writer_grounding_visibility["retrieval_gate_recovery_source"] = "memory_bundle.knowledge_rag_hits"
+        writer_grounding_visibility["retrieval_gate_recovery_match_chunk_id"] = str(
+            best_policy_allowed_fallback_match.get("chunk_id", "") or ""
+        )
     hidden_knowledge_competence = _build_hidden_knowledge_competence_v1(
         user_message=user_message,
         latest_turn_constraints=constraints,
@@ -902,6 +1163,12 @@ def build_writer_context_package_v1(
             )
         )
     runtime_truth_trace = _build_runtime_truth_trace_v1(
+        user_message=user_message,
+        rag_retrieval_trace=(
+            dict(memory_bundle.rag_retrieval_trace or {})
+            if isinstance(memory_bundle.rag_retrieval_trace, dict)
+            else {}
+        ),
         rag_candidates_for_trace=rag_candidates_for_trace,
         base_rag_for_writer=base_rag_for_writer,
         semantic_card_candidate_payload_items=semantic_card_candidate_payload_items,
@@ -957,6 +1224,7 @@ def build_writer_context_package_v1(
         "writer_grounding_visibility_v1": writer_grounding_visibility,
         "writer_grounding_authority_note": build_writer_grounding_authority_note_v1(),
         "latest_turn_constraints_v1": constraints,
+        "retrieval_gate_recovery_applied": retrieval_gate_recovery_applied,
         "retrieval_context": {
             "retrieval_action": str(
                 hybrid_plan.get("retrieval_action", retrieval.get("retrieval_action", "trace_only"))

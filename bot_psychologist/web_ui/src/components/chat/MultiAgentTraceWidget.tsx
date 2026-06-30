@@ -201,6 +201,9 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
     : runtimeTraceSummary?.runtime_truth_trace_v1 && typeof runtimeTraceSummary.runtime_truth_trace_v1 === 'object'
       ? (runtimeTraceSummary.runtime_truth_trace_v1 as Record<string, unknown>)
       : null;
+  const sourceChunkMatchTrace = runtimeTruthTrace?.source_chunk_match_trace_v1 && typeof runtimeTruthTrace.source_chunk_match_trace_v1 === 'object'
+    ? (runtimeTruthTrace.source_chunk_match_trace_v1 as Record<string, unknown>)
+    : null;
   const futureGraduationNotes = trace.future_graduation_notes && typeof trace.future_graduation_notes === 'object'
     ? (trace.future_graduation_notes as Record<string, unknown>)
     : null;
@@ -461,6 +464,43 @@ export const MultiAgentTraceWidget: React.FC<MultiAgentTraceWidgetProps> = ({
                     <div><span className="text-slate-500">narrow_grounding_visible:</span> {String(Boolean(runtimeTruthTrace?.narrow_grounding_visible))}</div>
                   </div>
                 </AccordionSection>
+
+                {sourceChunkMatchTrace && (
+                  <AccordionSection title="Source chunk match proof" nested>
+                    <div className="space-y-1 text-xs">
+                      <div><span className="text-slate-500">explicit_knowledge_question:</span> {String(Boolean(sourceChunkMatchTrace.explicit_knowledge_question))}</div>
+                      <div><span className="text-slate-500">source_match_expected:</span> {String(sourceChunkMatchTrace.source_match_expected || '—')}</div>
+                      <div><span className="text-slate-500">focus_terms:</span> {Array.isArray(sourceChunkMatchTrace.focus_terms) ? sourceChunkMatchTrace.focus_terms.join(', ') || '—' : '—'}</div>
+                      <div><span className="text-slate-500">raw_source_top_k_count:</span> {String(sourceChunkMatchTrace.raw_source_top_k_count ?? '0')}</div>
+                      <div><span className="text-slate-500">runtime_candidate_top_k_count:</span> {String(sourceChunkMatchTrace.runtime_candidate_top_k_count ?? '0')}</div>
+                      <div><span className="text-slate-500">writer_payload_count:</span> {String(sourceChunkMatchTrace.writer_payload_count ?? '0')}</div>
+                      <div><span className="text-slate-500">loss_stage:</span> {String(sourceChunkMatchTrace.loss_stage || '—')}</div>
+                      <div><span className="text-slate-500">loss_reason:</span> {String(sourceChunkMatchTrace.loss_reason || '—')}</div>
+                    </div>
+
+                    {(['best_raw_match', 'best_runtime_match', 'payload_match'] as const).map((key) => {
+                      const item = sourceChunkMatchTrace[key];
+                      if (!item || typeof item !== 'object') {
+                        return null;
+                      }
+                      const record = item as Record<string, unknown>;
+                      return (
+                        <div key={key} className="mt-2 rounded-lg border border-slate-200 bg-white p-2 text-xs space-y-1">
+                          <div className="font-semibold text-slate-700">{key}</div>
+                          <div><span className="text-slate-500">chunk_id:</span> {String(record.chunk_id || '—')}</div>
+                          <div><span className="text-slate-500">source_doc:</span> {String(record.source_doc || '—')}</div>
+                          <div><span className="text-slate-500">rank:</span> {String(record.rank ?? '—')}</div>
+                          <div><span className="text-slate-500">score:</span> {String(record.score ?? '0')}</div>
+                          <div><span className="text-slate-500">near_exact_match:</span> {String(Boolean(record.near_exact_match))}</div>
+                          <div><span className="text-slate-500">matched_terms_or_phrase:</span> {Array.isArray(record.matched_terms_or_phrase) ? record.matched_terms_or_phrase.join(', ') || '—' : '—'}</div>
+                          <div><span className="text-slate-500">sent_to_writer:</span> {String(record.sent_to_writer ?? '—')}</div>
+                          <div><span className="text-slate-500">filter_reason:</span> {String(record.filter_reason || '—')}</div>
+                          <div><span className="text-slate-500">payload_position:</span> {String(record.payload_position ?? '—')}</div>
+                        </div>
+                      );
+                    })}
+                  </AccordionSection>
+                )}
 
                 <AccordionSection title="Filtered / trace-only candidates" nested>
                   {Array.isArray(runtimeTruthTrace?.filtered_out_for_writer) && (runtimeTruthTrace?.filtered_out_for_writer as unknown[]).length > 0 ? (

@@ -29,6 +29,21 @@ _KNOWLEDGE_MARKERS = (
 _PRACTICE_MARKERS = ("какие практики", "практики есть", "дай практик", "упражнения", "practice")
 _ONE_STEP_MARKERS = ("что сделать прямо сейчас", "один шаг", "первый шаг", "микрошаг", "microstep")
 _FORMAT_ONLY_MARKERS = ("markdown", "таблиц", "список", "жирн", "заголов")
+_CONCEPT_FOLLOWUP_MARKERS = (
+    "как влияет",
+    "как это влияет",
+    "почему это",
+    "что об этом",
+    "что говорится",
+    "объясни подробнее",
+    "объясни на примере",
+    "на примере",
+    "смоделируй",
+    "как связано",
+    "как применить",
+    "как использовать",
+    "хочу понять как",
+)
 _GENERIC_QUERY_STOPWORDS = {
     "что",
     "такое",
@@ -67,6 +82,19 @@ def _contains_any(text: str, markers: tuple[str, ...]) -> bool:
 def _is_short_affirmation(text: str) -> bool:
     parts = _words(text)
     return bool(parts) and len(parts) <= 4 and all(part in _AFFIRM_MARKERS for part in parts)
+
+
+def _looks_like_concept_followup(text: str) -> bool:
+    lowered = _normalize(text)
+    if not lowered:
+        return False
+    if _contains_any(lowered, _CONCEPT_FOLLOWUP_MARKERS):
+        return True
+    if "как " in lowered and any(marker in lowered for marker in ("влияет", "связано", "работает")):
+        return True
+    if "почему" in lowered and "это" in lowered:
+        return True
+    return False
 
 
 def _dedupe_terms(items: list[str]) -> list[str]:
@@ -188,6 +216,9 @@ def build_contextual_retrieval_query_composer_v1(
     planner_next_move = str(planner.get("next_move", "") or "")
     planner_answer_shape = str(planner.get("answer_shape", "") or "")
     fresh_is_greeting = bool(memory.get("fresh_chat_is_greeting_or_contact", False))
+    has_selected_knowledge = bool(memory.get("has_relevant_knowledge", False)) or int(
+        memory.get("semantic_hits_count", 0) or 0
+    ) > 0
     evidence: list[str] = []
 
     if dialogue_act == "summary_request" or answer_obligation == "summarize_current_conversation":
@@ -352,6 +383,34 @@ def build_contextual_retrieval_query_composer_v1(
             max_chars_per_chunk=700,
             reason="knowledge question needs compact KB support",
             evidence=["knowledge_question", "query_composed_from_current_message"],
+        )
+
+    if (
+        (bool(pragmatics.get("is_contextual_followup", False)) or bool(inherited_topic))
+        and has_selected_knowledge
+        and _looks_like_concept_followup(text)
+    ):
+        query, terms = _compose_query(
+            text,
+            inherited_topic,
+            offer_summary,
+            fallback_terms=["объяснение", "механизм"],
+        )
+        return _payload(
+            retrieval_need="knowledge_context",
+            retrieval_action="query_kb",
+            query_source="mixed_context",
+            composed_query=query,
+            query_terms=terms,
+            inherited_topic=inherited_topic,
+            inherited_offer_type=offer_type,
+            confidence=0.79,
+            writer_can_ignore_rag=True,
+            include_for_writer_if_found=True,
+            max_chunks_for_writer=2,
+            max_chars_per_chunk=650,
+            reason="direct_concept_followup_selected_knowledge",
+            evidence=["contextual_followup", "selected_knowledge_available", "concept_followup"],
         )
 
     if bool(pragmatics.get("is_contextual_followup", False)):

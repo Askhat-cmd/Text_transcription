@@ -1,0 +1,1843 @@
+{
+  "created_at": "2026-07-01T14:43:36.305092",
+  "backend_health": {
+    "status": "healthy",
+    "version": "0.6.1",
+    "timestamp": "2026-07-01T14:43:36.306914",
+    "data_source": "api",
+    "blocks_loaded": 247,
+    "bot_data_base_api": "available",
+    "modules": {
+      "bot_agent": true,
+      "conversation_memory": true,
+      "state_classifier": true,
+      "path_builder": true,
+      "api": true
+    }
+  },
+  "overall_verdict": "PASS",
+  "verdict_counts": {
+    "PASS": 6,
+    "PASS_WITH_WARNING": 0,
+    "BLOCKER": 0
+  },
+  "results": [
+    {
+      "scenario_id": "S-HF5-1",
+      "scenario_label": "baseline_greeting_should_not_pull_kb",
+      "session": "prd-047-36-hf5-20260701144125-greeting",
+      "turn_index": 1,
+      "query": "привет!",
+      "answer_length": 282,
+      "answer_preview": "Привет — рад(а) тебя видеть здесь. Небольшая мысль: простое «привет» помогает восстановить контакт и напомнить себе, что рядом — хоть кто‑то, кто слушает — это делает состояние чуть спокойнее и безопаснее. Как ты сейчас, хочешь сказать пару слов о себе или просто помолчать рядом?",
+      "contains_internal_language": false,
+      "retrieval_action": "suppress_rag",
+      "retrieval_need": "none",
+      "rag_suppressed_reason": "contact_or_close_turn_no_kb_needed",
+      "composer_reason": "greeting/contact/close should not retrieve KB without explicit knowledge need",
+      "composer_evidence": [
+        "noise_suppression",
+        "contact_or_close"
+      ],
+      "inherited_topic": "",
+      "grounding_reason": "greeting_or_contact",
+      "writer_payload_count": 0,
+      "writer_visible_payload_ids": [],
+      "writer_payload_status": "fallback_used",
+      "writer_payload_primary_path": "legacy_semantic_hits_fallback_v1",
+      "selected_card_status": "trace_only",
+      "selected_card_count": 0,
+      "selected_card_ids": [],
+      "selected_card_reasons": {},
+      "selected_knowledge_should_flow": false,
+      "selected_knowledge_recovery_applied": false,
+      "retrieval_gate_recovery_applied": false,
+      "no_internal_db": false,
+      "writer_can_ignore_grounding": true,
+      "semantic_cards_visible_to_writer": false,
+      "kb_visible_to_writer": false,
+      "latest_turn_constraints_v1": {},
+      "runtime_truth_trace_v1": {
+        "writer_visible_payload_count": 0,
+        "filtered_out_for_writer_count": 0,
+        "retrieved_candidates_count": 0,
+        "grounding_visibility_reason": "greeting_or_contact",
+        "payload_decision_reason": "greeting_or_contact"
+      },
+      "runtime_trace_summary_v1": {
+        "version": "runtime_trace_summary_v1",
+        "entrypoint": "multiagent_adapter",
+        "latest_turn_constraints": [],
+        "latest_turn_constraints_v1": {
+          "version": "latest_turn_constraints_v1",
+          "no_practice": false,
+          "no_breathing_only": false,
+          "simplify": false,
+          "long_term_perspective": false,
+          "no_internal_db": false,
+          "active_constraints": [],
+          "source": "none"
+        },
+        "writer_grounding_visibility_v1": {
+          "version": "writer_grounding_visibility_v1",
+          "kb_visible_to_writer": false,
+          "semantic_cards_visible_to_writer": false,
+          "reason": "greeting_or_contact",
+          "direct_kb_question": false,
+          "direct_source_request": false,
+          "explicit_knowledge_request": false,
+          "explicit_practice_request": false,
+          "candidate_chunk_types": [],
+          "allowed_grounding_types": [],
+          "narrow_practice_grounding_available": false,
+          "safety_grounding_allowed": false,
+          "no_internal_db": false,
+          "trace_only_grounding_available": false,
+          "selected_semantic_card_count": 0,
+          "selected_knowledge_should_flow": false,
+          "inherited_topic": "",
+          "writer_may_ignore_grounding": true,
+          "retrieval_action": "suppress_rag",
+          "retrieval_need": "none"
+        },
+        "kb_visible_to_writer": false,
+        "semantic_cards_visible_to_writer": false,
+        "overlay_apply_detected": false,
+        "final_directive_mode": "simple_contact",
+        "selected_answer_shape_profile": "contact_brief",
+        "answer_shape_profile_notes": [
+          "Keep the contact warm and brief.",
+          "Do not turn a greeting or self-intro into analysis or a lecture."
+        ],
+        "latest_turn_authority_v1": {
+          "latest_turn_authority_version": "latest_turn_authority_v1",
+          "current_user_request": "привет!",
+          "must_answer_source": "latest_turn",
+          "previous_must_answer_demoted": false,
+          "previous_must_answer": "none",
+          "explicit_continue_previous_detected": false,
+          "answer_target": "latest_turn",
+          "writer_contact_mode": "structured_answer",
+          "hard_constraints_active": [],
+          "kb_payload_expected": "0"
+        },
+        "explicit_practice_request": false,
+        "practice_request_runtime_note": "",
+        "practice_blocked_by_user_request": false,
+        "runtime_truth_trace_v1": {
+          "trace_version": "runtime_truth_trace_v1",
+          "retrieved_candidates_count": 0,
+          "trace_only_candidates_count": 0,
+          "filtered_out_for_writer_count": 0,
+          "writer_visible_payload_count": 0,
+          "actual_writer_payload_count": 0,
+          "writer_visible_payload_ids": [],
+          "writer_visible_payload_types": [],
+          "payload_decision_reason": "greeting_or_contact",
+          "grounding_visibility_reason": "greeting_or_contact",
+          "writer_can_ignore_grounding": true,
+          "broad_kb_visible": false,
+          "narrow_grounding_visible": false,
+          "hidden_knowledge_competence_v1": {
+            "version": "hidden_knowledge_competence_v1",
+            "public_user_mode": true,
+            "owner_debug_question_detected": false,
+            "user_facing_db_language_suppressed": true,
+            "knowledge_used_as_hidden_lens": false,
+            "raw_kb_dump_allowed": false,
+            "reason": "latest_turn"
+          },
+          "source_chunk_match_trace_v1": {
+            "enabled": true,
+            "probe_query": "привет!",
+            "raw_query": "привет!",
+            "normalized_query": "привет!",
+            "explicit_knowledge_question": false,
+            "source_match_expected": "unknown",
+            "raw_source_top_k_count": 0,
+            "runtime_candidate_top_k_count": 0,
+            "writer_payload_count": 0,
+            "focus_terms": [
+              "привет"
+            ],
+            "best_raw_match": {},
+            "best_runtime_match": {},
+            "payload_match": {},
+            "loss_stage": "unknown",
+            "loss_reason": "not_an_explicit_knowledge_question"
+          },
+          "writer_visible_payload_items": [],
+          "filtered_out_for_writer": [],
+          "trace_only_grounding": [],
+          "retrieval_query_source": "current_turn_focus_v1",
+          "legacy_fallback_scope": "compatibility",
+          "writer_kb_payload_status": "fallback_used",
+          "writer_kb_payload_primary_path": "legacy_semantic_hits_fallback_v1",
+          "retrieval_gate_recovery_applied": false,
+          "current_user_message": "привет!",
+          "dialogue_act": "greeting",
+          "answer_obligation": "continue_thread",
+          "latest_must_answer": "привет!",
+          "current_user_request": "привет!",
+          "must_answer_source": "latest_turn",
+          "previous_must_answer_demoted": false,
+          "previous_must_answer": "",
+          "explicit_continue_previous_detected": false,
+          "answer_target": "latest_turn",
+          "writer_contact_mode": "structured_answer",
+          "planner_shadow_status": "valid",
+          "planner_fallback_scope": "none",
+          "planner_owner_severity": "info",
+          "production_query_source": "current_turn_focus_v1",
+          "json_decode_error_affected_production_answer": false,
+          "production_answer_affected_by_shadow_planner": false
+        },
+        "hidden_knowledge_competence_v1": {
+          "version": "hidden_knowledge_competence_v1",
+          "public_user_mode": true,
+          "owner_debug_question_detected": false,
+          "user_facing_db_language_suppressed": true,
+          "knowledge_used_as_hidden_lens": false,
+          "raw_kb_dump_allowed": false,
+          "reason": "latest_turn"
+        },
+        "planner_shadow_status": "valid",
+        "planner_fallback_scope": "none",
+        "planner_production_query_source": "current_turn_focus_v1",
+        "planner_json_decode_error_affected_production_answer": false,
+        "warnings": [],
+        "full_trace_available": true
+      },
+      "verdict": "PASS",
+      "tags": []
+    },
+    {
+      "scenario_id": "S-HF5-2",
+      "scenario_label": "direct_concept_question",
+      "session": "prd-047-36-hf5-20260701144125-concept",
+      "turn_index": 1,
+      "query": "что такое самореализация?",
+      "answer_length": 448,
+      "answer_preview": "Самореализация — это процесс раскрытия и использования своих способностей, ценностей и внутреннего смысла жизни, чтобы чувствовать себя целостным и удовлетворённым. Главный механизм — осознанный выбор действий в согласии с тем, что для вас важно (не просто реакция на чужие ожидания). Этот механизм защищает от ощущен...",
+      "contains_internal_language": false,
+      "retrieval_action": "query_kb",
+      "retrieval_need": "knowledge_context",
+      "rag_suppressed_reason": "",
+      "composer_reason": "knowledge question needs compact KB support",
+      "composer_evidence": [
+        "knowledge_question",
+        "query_composed_from_current_message"
+      ],
+      "inherited_topic": "самореализация",
+      "grounding_reason": "direct_knowledge_question",
+      "writer_payload_count": 2,
+      "writer_visible_payload_ids": [
+        "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+        "7910da47-485f-45c6-b774-0772d5aaddec"
+      ],
+      "writer_payload_status": "structured_payload_used",
+      "writer_payload_primary_path": "writer_kb_payload_v1",
+      "selected_card_status": "selected",
+      "selected_card_count": 1,
+      "selected_card_ids": [
+        "program_imperfect_self_v1"
+      ],
+      "selected_card_reasons": {
+        "program_imperfect_self_v1": [
+          "current_turn_overlap"
+        ]
+      },
+      "selected_knowledge_should_flow": false,
+      "selected_knowledge_recovery_applied": false,
+      "retrieval_gate_recovery_applied": false,
+      "no_internal_db": false,
+      "writer_can_ignore_grounding": true,
+      "semantic_cards_visible_to_writer": true,
+      "kb_visible_to_writer": true,
+      "latest_turn_constraints_v1": {},
+      "runtime_truth_trace_v1": {
+        "writer_visible_payload_count": 2,
+        "filtered_out_for_writer_count": 2,
+        "retrieved_candidates_count": 6,
+        "grounding_visibility_reason": "direct_knowledge_question",
+        "payload_decision_reason": "structured_payload_used"
+      },
+      "runtime_trace_summary_v1": {
+        "version": "runtime_trace_summary_v1",
+        "entrypoint": "multiagent_adapter",
+        "latest_turn_constraints": [],
+        "latest_turn_constraints_v1": {
+          "version": "latest_turn_constraints_v1",
+          "no_practice": false,
+          "no_breathing_only": false,
+          "simplify": false,
+          "long_term_perspective": false,
+          "no_internal_db": false,
+          "active_constraints": [],
+          "source": "none"
+        },
+        "writer_grounding_visibility_v1": {
+          "version": "writer_grounding_visibility_v1",
+          "kb_visible_to_writer": true,
+          "semantic_cards_visible_to_writer": true,
+          "reason": "direct_knowledge_question",
+          "direct_kb_question": true,
+          "direct_source_request": false,
+          "explicit_knowledge_request": true,
+          "explicit_practice_request": false,
+          "candidate_chunk_types": [
+            "concept"
+          ],
+          "allowed_grounding_types": [],
+          "narrow_practice_grounding_available": false,
+          "safety_grounding_allowed": false,
+          "no_internal_db": false,
+          "trace_only_grounding_available": true,
+          "selected_semantic_card_count": 1,
+          "selected_knowledge_should_flow": false,
+          "inherited_topic": "самореализация",
+          "writer_may_ignore_grounding": true,
+          "retrieval_action": "query_kb",
+          "retrieval_need": "knowledge_context"
+        },
+        "kb_visible_to_writer": true,
+        "semantic_cards_visible_to_writer": true,
+        "overlay_apply_detected": false,
+        "final_directive_mode": "structured_explanation",
+        "selected_answer_shape_profile": "ordinary_explanation_compact",
+        "answer_shape_profile_notes": [
+          "Start with a direct answer in the first one or two sentences.",
+          "Name only one main mechanism in simple words.",
+          "Show what this mechanism is trying to protect or prevent.",
+          "If a next move helps, give only one question or one step.",
+          "Use at most one short list only if it truly improves clarity.",
+          "Do not turn the answer into a mini-lecture or a method catalog.",
+          "Do not mention internal DB, chunks, semantic cards, or system materials."
+        ],
+        "latest_turn_authority_v1": {
+          "latest_turn_authority_version": "latest_turn_authority_v1",
+          "current_user_request": "что такое самореализация?",
+          "must_answer_source": "latest_turn",
+          "previous_must_answer_demoted": false,
+          "previous_must_answer": "none",
+          "explicit_continue_previous_detected": false,
+          "answer_target": "latest_turn",
+          "writer_contact_mode": "structured_answer",
+          "hard_constraints_active": [],
+          "kb_payload_expected": "0"
+        },
+        "explicit_practice_request": false,
+        "practice_request_runtime_note": "",
+        "practice_blocked_by_user_request": false,
+        "runtime_truth_trace_v1": {
+          "trace_version": "runtime_truth_trace_v1",
+          "retrieved_candidates_count": 6,
+          "trace_only_candidates_count": 2,
+          "filtered_out_for_writer_count": 2,
+          "writer_visible_payload_count": 2,
+          "actual_writer_payload_count": 2,
+          "writer_visible_payload_ids": [
+            "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+            "7910da47-485f-45c6-b774-0772d5aaddec"
+          ],
+          "writer_visible_payload_types": [
+            "general_text",
+            "general_text"
+          ],
+          "payload_decision_reason": "structured_payload_used",
+          "grounding_visibility_reason": "direct_knowledge_question",
+          "writer_can_ignore_grounding": true,
+          "broad_kb_visible": true,
+          "narrow_grounding_visible": false,
+          "hidden_knowledge_competence_v1": {
+            "version": "hidden_knowledge_competence_v1",
+            "public_user_mode": true,
+            "owner_debug_question_detected": true,
+            "user_facing_db_language_suppressed": true,
+            "knowledge_used_as_hidden_lens": true,
+            "raw_kb_dump_allowed": false,
+            "reason": "owner_debug"
+          },
+          "source_chunk_match_trace_v1": {
+            "enabled": true,
+            "probe_query": "что такое самореализация?",
+            "raw_query": "самореализация",
+            "normalized_query": "что такое самореализация?",
+            "explicit_knowledge_question": true,
+            "source_match_expected": "yes",
+            "raw_source_top_k_count": 4,
+            "runtime_candidate_top_k_count": 6,
+            "writer_payload_count": 2,
+            "focus_terms": [
+              "самореализация"
+            ],
+            "best_raw_match": {
+              "chunk_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+              "source_doc": "book",
+              "rank": 1,
+              "score": 0.03893342219353575,
+              "near_exact_match": false,
+              "matched_terms_or_phrase": [],
+              "sent_to_writer": null,
+              "filter_reason": "",
+              "payload_position": null,
+              "writer_can_ignore": true,
+              "chunk_type": "general_text",
+              "origin": "trace",
+              "preview": "book Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается операционная система. Но это не Windows и не..."
+            },
+            "best_runtime_match": {
+              "chunk_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+              "source_doc": "book",
+              "rank": 1,
+              "score": 0.03893342219353575,
+              "near_exact_match": false,
+              "matched_terms_or_phrase": [],
+              "sent_to_writer": true,
+              "filter_reason": "",
+              "payload_position": null,
+              "writer_can_ignore": true,
+              "chunk_type": "",
+              "origin": "retrieval_candidate",
+              "preview": "book Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается операционная система. Но это не Windows и не..."
+            },
+            "payload_match": {
+              "chunk_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+              "source_doc": "book",
+              "rank": 1,
+              "score": 0.0,
+              "near_exact_match": false,
+              "matched_terms_or_phrase": [],
+              "sent_to_writer": true,
+              "filter_reason": "",
+              "payload_position": 1,
+              "writer_can_ignore": true,
+              "chunk_type": "general_text",
+              "origin": "retrieval",
+              "preview": "book Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается операционная система. Но это не Windows и не..."
+            },
+            "loss_stage": "raw_source",
+            "loss_reason": "no_raw_source_match_in_runtime_top_k"
+          },
+          "writer_visible_payload_items": [
+            {
+              "item_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+              "origin": "retrieval",
+              "chunk_type": "general_text",
+              "source_doc": "book",
+              "allowed_use": [
+                "direct_to_writer"
+              ],
+              "quote_policy": "paraphrase_only",
+              "sent_to_writer": true,
+              "writer_can_ignore": true,
+              "applied_as_authority": false,
+              "inclusion_reason": "selected_for_writer_payload"
+            },
+            {
+              "item_id": "7910da47-485f-45c6-b774-0772d5aaddec",
+              "origin": "retrieval",
+              "chunk_type": "general_text",
+              "source_doc": "book",
+              "allowed_use": [
+                "direct_to_writer"
+              ],
+              "quote_policy": "paraphrase_only",
+              "sent_to_writer": true,
+              "writer_can_ignore": true,
+              "applied_as_authority": false,
+              "inclusion_reason": "selected_for_writer_payload"
+            }
+          ],
+          "filtered_out_for_writer": [
+            {
+              "item_id": "semantic_card:program_imperfect_self_v1",
+              "origin": "semantic_card",
+              "chunk_type": "concept",
+              "source_doc": "Kuznica Duha v2",
+              "sent_to_writer": false,
+              "filter_reason": "direct_knowledge_question"
+            },
+            {
+              "item_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+              "origin": "memory_semantic_hit",
+              "chunk_type": "general_text",
+              "source_doc": "book",
+              "sent_to_writer": false,
+              "filter_reason": "direct_knowledge_question"
+            }
+          ],
+          "trace_only_grounding": [
+            {
+              "item_id": "semantic_card:program_imperfect_self_v1",
+              "origin": "semantic_card",
+              "chunk_type": "concept",
+              "source_doc": "Kuznica Duha v2",
+              "sent_to_writer": false,
+              "filter_reason": "direct_knowledge_question"
+            },
+            {
+              "item_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+              "origin": "memory_semantic_hit",
+              "chunk_type": "general_text",
+              "source_doc": "book",
+              "sent_to_writer": false,
+              "filter_reason": "direct_knowledge_question"
+            }
+          ],
+          "retrieval_query_source": "current_turn_focus_v1",
+          "legacy_fallback_scope": "none",
+          "writer_kb_payload_status": "structured_payload_used",
+          "writer_kb_payload_primary_path": "writer_kb_payload_v1",
+          "retrieval_gate_recovery_applied": false,
+          "current_user_message": "что такое самореализация?",
+          "dialogue_act": "knowledge_question",
+          "answer_obligation": "answer_knowledge_question",
+          "latest_must_answer": "что такое самореализация?",
+          "current_user_request": "что такое самореализация?",
+          "must_answer_source": "latest_turn",
+          "previous_must_answer_demoted": false,
+          "previous_must_answer": "",
+          "explicit_continue_previous_detected": false,
+          "answer_target": "latest_turn",
+          "writer_contact_mode": "structured_answer",
+          "planner_shadow_status": "valid",
+          "planner_fallback_scope": "none",
+          "planner_owner_severity": "info",
+          "production_query_source": "current_turn_focus_v1",
+          "json_decode_error_affected_production_answer": false,
+          "production_answer_affected_by_shadow_planner": false
+        },
+        "hidden_knowledge_competence_v1": {
+          "version": "hidden_knowledge_competence_v1",
+          "public_user_mode": true,
+          "owner_debug_question_detected": true,
+          "user_facing_db_language_suppressed": true,
+          "knowledge_used_as_hidden_lens": true,
+          "raw_kb_dump_allowed": false,
+          "reason": "owner_debug"
+        },
+        "planner_shadow_status": "valid",
+        "planner_fallback_scope": "none",
+        "planner_production_query_source": "current_turn_focus_v1",
+        "planner_json_decode_error_affected_production_answer": false,
+        "warnings": [],
+        "full_trace_available": true
+      },
+      "verdict": "PASS",
+      "tags": []
+    },
+    {
+      "scenario_id": "S-HF5-3",
+      "scenario_label": "chat12_direct_concept_followup",
+      "session": "prd-047-36-hf5-20260701144125-concept",
+      "turn_index": 2,
+      "query": "да мне хочется понять как \"программа несовершенное Я\" влияет на это",
+      "answer_length": 1181,
+      "answer_preview": "Коротко: главная вещь — программа «несовершенное Я» действует как фильтр восприятия: она автоматически читает события через ощущение «я недостаточен», искажая то, что ты видишь о себе и своих достижениях. Как это проявляется (один механизм): - Когда что‑то происходит — вместо нейтральной оценки ты сразу улавливаешь...",
+      "contains_internal_language": false,
+      "retrieval_action": "query_kb",
+      "retrieval_need": "knowledge_context",
+      "rag_suppressed_reason": "candidate_available_but_current_turn_prefers_recent_context",
+      "composer_reason": "direct_concept_followup_selected_knowledge",
+      "composer_evidence": [
+        "contextual_followup",
+        "selected_knowledge_available",
+        "concept_followup"
+      ],
+      "inherited_topic": "самореализация",
+      "grounding_reason": "direct_concept_followup",
+      "writer_payload_count": 2,
+      "writer_visible_payload_ids": [
+        "semantic_card:program_imperfect_self_v1",
+        "7f156d38-ec33-48a2-9646-83971eac3421"
+      ],
+      "writer_payload_status": "structured_payload_used",
+      "writer_payload_primary_path": "writer_kb_payload_v1",
+      "selected_card_status": "selected",
+      "selected_card_count": 3,
+      "selected_card_ids": [
+        "program_imperfect_self_v1",
+        "control_as_safety_v1",
+        "fact_vs_interpretation_v1"
+      ],
+      "selected_card_reasons": {
+        "program_imperfect_self_v1": [
+          "current_turn_overlap",
+          "topic_alias"
+        ],
+        "control_as_safety_v1": [
+          "current_turn_overlap"
+        ],
+        "fact_vs_interpretation_v1": [
+          "current_turn_overlap"
+        ]
+      },
+      "selected_knowledge_should_flow": true,
+      "selected_knowledge_recovery_applied": false,
+      "retrieval_gate_recovery_applied": true,
+      "no_internal_db": false,
+      "writer_can_ignore_grounding": true,
+      "semantic_cards_visible_to_writer": true,
+      "kb_visible_to_writer": true,
+      "latest_turn_constraints_v1": {},
+      "runtime_truth_trace_v1": {
+        "writer_visible_payload_count": 2,
+        "filtered_out_for_writer_count": 6,
+        "retrieved_candidates_count": 9,
+        "grounding_visibility_reason": "direct_concept_followup",
+        "payload_decision_reason": "structured_payload_used"
+      },
+      "runtime_trace_summary_v1": {
+        "version": "runtime_trace_summary_v1",
+        "entrypoint": "multiagent_adapter",
+        "latest_turn_constraints": [],
+        "latest_turn_constraints_v1": {
+          "version": "latest_turn_constraints_v1",
+          "no_practice": false,
+          "no_breathing_only": false,
+          "simplify": false,
+          "long_term_perspective": false,
+          "no_internal_db": false,
+          "active_constraints": [],
+          "source": "none"
+        },
+        "writer_grounding_visibility_v1": {
+          "version": "writer_grounding_visibility_v1",
+          "kb_visible_to_writer": true,
+          "semantic_cards_visible_to_writer": true,
+          "reason": "direct_concept_followup",
+          "direct_kb_question": true,
+          "direct_source_request": false,
+          "explicit_knowledge_request": false,
+          "explicit_practice_request": false,
+          "candidate_chunk_types": [
+            "concept",
+            "mechanism",
+            "diagnostic_lens"
+          ],
+          "allowed_grounding_types": [],
+          "narrow_practice_grounding_available": false,
+          "safety_grounding_allowed": false,
+          "no_internal_db": false,
+          "trace_only_grounding_available": true,
+          "selected_semantic_card_count": 3,
+          "selected_knowledge_should_flow": true,
+          "inherited_topic": "самореализация",
+          "writer_may_ignore_grounding": true,
+          "retrieval_action": "query_kb",
+          "retrieval_need": "knowledge_context",
+          "retrieval_gate_recovery_applied": true,
+          "retrieval_gate_recovery_source": "memory_bundle.knowledge_rag_hits",
+          "retrieval_gate_recovery_match_chunk_id": "ced62ddd-d52a-4008-952e-c6d3616f1bf5"
+        },
+        "kb_visible_to_writer": true,
+        "semantic_cards_visible_to_writer": true,
+        "overlay_apply_detected": false,
+        "final_directive_mode": "simple_contact",
+        "selected_answer_shape_profile": "free_writer_contact",
+        "answer_shape_profile_notes": [
+          "Answer the latest user message directly and humanly.",
+          "Use previous context only to understand what the user means now.",
+          "Do not continue the previous internal task unless the user explicitly asks for it."
+        ],
+        "latest_turn_authority_v1": {
+          "latest_turn_authority_version": "latest_turn_authority_v1",
+          "current_user_request": "да мне хочется понять как \"программа несовершенное Я\" влияет на это",
+          "must_answer_source": "latest_turn",
+          "previous_must_answer_demoted": true,
+          "previous_must_answer": "что такое самореализация?",
+          "explicit_continue_previous_detected": false,
+          "answer_target": "latest_turn",
+          "writer_contact_mode": "free_writer_contact",
+          "hard_constraints_active": [],
+          "kb_payload_expected": "0"
+        },
+        "explicit_practice_request": false,
+        "practice_request_runtime_note": "",
+        "practice_blocked_by_user_request": false,
+        "runtime_truth_trace_v1": {
+          "trace_version": "runtime_truth_trace_v1",
+          "retrieved_candidates_count": 9,
+          "trace_only_candidates_count": 6,
+          "filtered_out_for_writer_count": 6,
+          "writer_visible_payload_count": 2,
+          "actual_writer_payload_count": 2,
+          "writer_visible_payload_ids": [
+            "semantic_card:program_imperfect_self_v1",
+            "7f156d38-ec33-48a2-9646-83971eac3421"
+          ],
+          "writer_visible_payload_types": [
+            "concept",
+            "general_text"
+          ],
+          "payload_decision_reason": "structured_payload_used",
+          "grounding_visibility_reason": "direct_concept_followup",
+          "writer_can_ignore_grounding": true,
+          "broad_kb_visible": true,
+          "narrow_grounding_visible": false,
+          "hidden_knowledge_competence_v1": {
+            "version": "hidden_knowledge_competence_v1",
+            "public_user_mode": true,
+            "owner_debug_question_detected": true,
+            "user_facing_db_language_suppressed": true,
+            "knowledge_used_as_hidden_lens": true,
+            "raw_kb_dump_allowed": false,
+            "reason": "owner_debug"
+          },
+          "source_chunk_match_trace_v1": {
+            "enabled": true,
+            "probe_query": "да мне хочется понять как \"программа несовершенное Я\" влияет на это",
+            "raw_query": "программа несовершенное Я да хочется понять программа несовершенное влияет на",
+            "normalized_query": "да мне хочется понять как \"программа несовершенное я\" влияет на это",
+            "explicit_knowledge_question": true,
+            "source_match_expected": "yes",
+            "raw_source_top_k_count": 4,
+            "runtime_candidate_top_k_count": 9,
+            "writer_payload_count": 2,
+            "focus_terms": [
+              "хочется",
+              "понять",
+              "программа",
+              "несовершенное",
+              "влияет"
+            ],
+            "best_raw_match": {
+              "chunk_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+              "source_doc": "book",
+              "rank": 1,
+              "score": 0.1104597775122084,
+              "near_exact_match": false,
+              "matched_terms_or_phrase": [],
+              "sent_to_writer": null,
+              "filter_reason": "",
+              "payload_position": null,
+              "writer_can_ignore": true,
+              "chunk_type": "general_text",
+              "origin": "trace",
+              "preview": "book Ты открыл эту книгу не случайно. Скорее всего, ты уже прошёл терапию, читал умные книжки, медитировал, делал практики. И всё равно что-то внутри скребёт...."
+            },
+            "best_runtime_match": {
+              "chunk_id": "ced62ddd-d52a-4008-952e-c6d3616f1bf5",
+              "source_doc": "book",
+              "rank": 2,
+              "score": 0.0891764287072353,
+              "near_exact_match": true,
+              "matched_terms_or_phrase": [
+                "понять",
+                "программа",
+                "несовершенное"
+              ],
+              "sent_to_writer": false,
+              "filter_reason": "direct_concept_followup",
+              "payload_position": null,
+              "writer_can_ignore": true,
+              "chunk_type": "",
+              "origin": "retrieval_candidate",
+              "preview": "book Это один из самых частых запросов на сессиях: «Я хочу сразу на жёлтый. Как туда попасть быстрее?» Ответ прямой: никак. Каждый уровень — это накопленный **..."
+            },
+            "payload_match": {
+              "chunk_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+              "source_doc": "book",
+              "rank": 2,
+              "score": 0.0,
+              "near_exact_match": true,
+              "matched_terms_or_phrase": [
+                "программа",
+                "несовершенное"
+              ],
+              "sent_to_writer": true,
+              "filter_reason": "",
+              "payload_position": 2,
+              "writer_can_ignore": true,
+              "chunk_type": "general_text",
+              "origin": "retrieval",
+              "preview": "book Ты открыл эту книгу не случайно. Скорее всего, ты уже прошёл терапию, читал умные книжки, медитировал, делал практики. И всё равно что-то внутри скребёт...."
+            },
+            "loss_stage": "recovered_without_raw_source_match",
+            "loss_reason": "payload_recovered_from_runtime_candidate_without_raw_source_top_k_match"
+          },
+          "writer_visible_payload_items": [
+            {
+              "item_id": "semantic_card:program_imperfect_self_v1",
+              "origin": "semantic_card",
+              "chunk_type": "concept",
+              "source_doc": "Kuznica Duha v2",
+              "allowed_use": [
+                "direct_to_writer",
+                "internal_lens"
+              ],
+              "quote_policy": "paraphrase_only",
+              "sent_to_writer": true,
+              "writer_can_ignore": true,
+              "applied_as_authority": false,
+              "inclusion_reason": "selected_for_writer_payload"
+            },
+            {
+              "item_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+              "origin": "retrieval",
+              "chunk_type": "general_text",
+              "source_doc": "book",
+              "allowed_use": [
+                "direct_to_writer"
+              ],
+              "quote_policy": "paraphrase_only",
+              "sent_to_writer": true,
+              "writer_can_ignore": true,
+              "applied_as_authority": false,
+              "inclusion_reason": "selected_for_writer_payload"
+            }
+          ],
+          "filtered_out_for_writer": [
+            {
+              "item_id": "ced62ddd-d52a-4008-952e-c6d3616f1bf5",
+              "origin": "retrieval_candidate",
+              "chunk_type": "",
+              "source_doc": "book",
+              "sent_to_writer": false,
+              "filter_reason": "direct_concept_followup"
+            },
+            {
+              "item_id": "5b2166ea-e098-4b49-9857-274d64ec70c0",
+              "origin": "retrieval_candidate",
+              "chunk_type": "",
+              "source_doc": "book",
+              "sent_to_writer": false,
+              "filter_reason": "direct_concept_followup"
+            },
+            {
+              "item_id": "semantic_card:control_as_safety_v1",
+              "origin": "semantic_card",
+              "chunk_type": "mechanism",
+              "source_doc": "Kuznica Duha v2",
+              "sent_to_writer": false,
+              "filter_reason": "direct_concept_followup"
+            },
+            {
+              "item_id": "semantic_card:fact_vs_interpretation_v1",
+              "origin": "semantic_card",
+              "chunk_type": "diagnostic_lens",
+              "source_doc": "Kuznica Duha v2",
+              "sent_to_writer": false,
+              "filter_reason": "direct_concept_followup"
+            },
+            {
+              "item_id": "ced62ddd-d52a-4008-952e-c6d3616f1bf5",
+              "origin": "memory_semantic_hit",
+              "chunk_type": "general_text",
+              "source_doc": "book",
+              "sent_to_writer": false,
+              "filter_reason": "direct_concept_followup"
+            },
+            {
+              "item_id": "5b2166ea-e098-4b49-9857-274d64ec70c0",
+              "origin": "memory_semantic_hit",
+              "chunk_type": "general_text",
+              "source_doc": "book",
+              "sent_to_writer": false,
+              "filter_reason": "direct_concept_followup"
+            }
+          ],
+          "trace_only_grounding": [
+            {
+              "item_id": "ced62ddd-d52a-4008-952e-c6d3616f1bf5",
+              "origin": "retrieval_candidate",
+              "chunk_type": "",
+              "source_doc": "book",
+              "sent_to_writer": false,
+              "filter_reason": "direct_concept_followup"
+            },
+            {
+              "item_id": "5b2166ea-e098-4b49-9857-274d64ec70c0",
+              "origin": "retrieval_candidate",
+              "chunk_type": "",
+              "source_doc": "book",
+              "sent_to_writer": false,
+              "filter_reason": "direct_concept_followup"
+            },
+            {
+              "item_id": "semantic_card:control_as_safety_v1",
+              "origin": "semantic_card",
+              "chunk_type": "mechanism",
+              "source_doc": "Kuznica Duha v2",
+              "sent_to_writer": false,
+              "filter_reason": "direct_concept_followup"
+            },
+            {
+              "item_id": "semantic_card:fact_vs_interpretation_v1",
+              "origin": "semantic_card",
+              "chunk_type": "diagnostic_lens",
+              "source_doc": "Kuznica Duha v2",
+              "sent_to_writer": false,
+              "filter_reason": "direct_concept_followup"
+            },
+            {
+              "item_id": "ced62ddd-d52a-4008-952e-c6d3616f1bf5",
+              "origin": "memory_semantic_hit",
+              "chunk_type": "general_text",
+              "source_doc": "book",
+              "sent_to_writer": false,
+              "filter_reason": "direct_concept_followup"
+            },
+            {
+              "item_id": "5b2166ea-e098-4b49-9857-274d64ec70c0",
+              "origin": "memory_semantic_hit",
+              "chunk_type": "general_text",
+              "source_doc": "book",
+              "sent_to_writer": false,
+              "filter_reason": "direct_concept_followup"
+            }
+          ],
+          "retrieval_query_source": "current_turn_focus_v1",
+          "legacy_fallback_scope": "none",
+          "writer_kb_payload_status": "structured_payload_used",
+          "writer_kb_payload_primary_path": "writer_kb_payload_v1",
+          "retrieval_gate_recovery_applied": true,
+          "current_user_message": "да мне хочется понять как \"программа несовершенное Я\" влияет на это",
+          "dialogue_act": "unknown",
+          "answer_obligation": "answer_latest_turn",
+          "latest_must_answer": "да мне хочется понять как \"программа несовершенное Я\" влияет на это",
+          "current_user_request": "да мне хочется понять как \"программа несовершенное Я\" влияет на это",
+          "must_answer_source": "latest_turn",
+          "previous_must_answer_demoted": true,
+          "previous_must_answer": "что такое самореализация?",
+          "explicit_continue_previous_detected": false,
+          "answer_target": "latest_turn",
+          "writer_contact_mode": "free_writer_contact",
+          "planner_shadow_status": "shadow_invalid_plan",
+          "planner_fallback_scope": "shadow_only",
+          "planner_owner_severity": "info",
+          "production_query_source": "current_turn_focus_v1",
+          "json_decode_error_affected_production_answer": false,
+          "production_answer_affected_by_shadow_planner": false
+        },
+        "hidden_knowledge_competence_v1": {
+          "version": "hidden_knowledge_competence_v1",
+          "public_user_mode": true,
+          "owner_debug_question_detected": true,
+          "user_facing_db_language_suppressed": true,
+          "knowledge_used_as_hidden_lens": true,
+          "raw_kb_dump_allowed": false,
+          "reason": "owner_debug"
+        },
+        "planner_shadow_status": "shadow_invalid_plan",
+        "planner_fallback_scope": "shadow_only",
+        "planner_production_query_source": "current_turn_focus_v1",
+        "planner_json_decode_error_affected_production_answer": false,
+        "warnings": [],
+        "full_trace_available": true
+      },
+      "verdict": "PASS",
+      "tags": []
+    },
+    {
+      "scenario_id": "S-HF5-4",
+      "scenario_label": "neurostalking_followup",
+      "session": "prd-047-36-hf5-20260701144125-concept",
+      "turn_index": 3,
+      "query": "а что об этом говорится в Нейросталкинге?",
+      "answer_length": 686,
+      "answer_preview": "В Нейросталкинге это объясняют как внутреннее наблюдение за автоматическими паттернами — не как приговор и не как внешнее наблюдение, а как инструмент увидеть, как тело/мысли мгновенно читают события через «я недостаточен». Один главный механизм: внимательное замечание «голоса несовершенства» — он автоматически отби...",
+      "contains_internal_language": false,
+      "retrieval_action": "query_kb",
+      "retrieval_need": "knowledge_context",
+      "rag_suppressed_reason": "",
+      "composer_reason": "knowledge question needs compact KB support",
+      "composer_evidence": [
+        "knowledge_question",
+        "query_composed_from_current_message"
+      ],
+      "inherited_topic": "нейросталкинг",
+      "grounding_reason": "direct_concept_followup",
+      "writer_payload_count": 2,
+      "writer_visible_payload_ids": [
+        "semantic_card:neurostalking_basic_lens_v1",
+        "02967da0-f163-4b5d-a732-6630dfeb0957"
+      ],
+      "writer_payload_status": "structured_payload_used",
+      "writer_payload_primary_path": "writer_kb_payload_v1",
+      "selected_card_status": "selected",
+      "selected_card_count": 2,
+      "selected_card_ids": [
+        "neurostalking_basic_lens_v1",
+        "program_imperfect_self_v1"
+      ],
+      "selected_card_reasons": {
+        "neurostalking_basic_lens_v1": [
+          "topic_alias"
+        ],
+        "program_imperfect_self_v1": [
+          "current_turn_overlap"
+        ]
+      },
+      "selected_knowledge_should_flow": true,
+      "selected_knowledge_recovery_applied": false,
+      "retrieval_gate_recovery_applied": false,
+      "no_internal_db": false,
+      "writer_can_ignore_grounding": true,
+      "semantic_cards_visible_to_writer": true,
+      "kb_visible_to_writer": true,
+      "latest_turn_constraints_v1": {},
+      "runtime_truth_trace_v1": {
+        "writer_visible_payload_count": 2,
+        "filtered_out_for_writer_count": 1,
+        "retrieved_candidates_count": 4,
+        "grounding_visibility_reason": "direct_concept_followup",
+        "payload_decision_reason": "structured_payload_used"
+      },
+      "runtime_trace_summary_v1": {
+        "version": "runtime_trace_summary_v1",
+        "entrypoint": "multiagent_adapter",
+        "latest_turn_constraints": [],
+        "latest_turn_constraints_v1": {
+          "version": "latest_turn_constraints_v1",
+          "no_practice": false,
+          "no_breathing_only": false,
+          "simplify": false,
+          "long_term_perspective": false,
+          "no_internal_db": false,
+          "active_constraints": [],
+          "source": "none"
+        },
+        "writer_grounding_visibility_v1": {
+          "version": "writer_grounding_visibility_v1",
+          "kb_visible_to_writer": true,
+          "semantic_cards_visible_to_writer": true,
+          "reason": "direct_concept_followup",
+          "direct_kb_question": true,
+          "direct_source_request": false,
+          "explicit_knowledge_request": false,
+          "explicit_practice_request": false,
+          "candidate_chunk_types": [
+            "diagnostic_lens",
+            "concept"
+          ],
+          "allowed_grounding_types": [],
+          "narrow_practice_grounding_available": false,
+          "safety_grounding_allowed": false,
+          "no_internal_db": false,
+          "trace_only_grounding_available": true,
+          "selected_semantic_card_count": 2,
+          "selected_knowledge_should_flow": true,
+          "inherited_topic": "нейросталкинг",
+          "writer_may_ignore_grounding": true,
+          "retrieval_action": "query_kb",
+          "retrieval_need": "knowledge_context"
+        },
+        "kb_visible_to_writer": true,
+        "semantic_cards_visible_to_writer": true,
+        "overlay_apply_detected": false,
+        "final_directive_mode": "structured_explanation",
+        "selected_answer_shape_profile": "ordinary_explanation_compact",
+        "answer_shape_profile_notes": [
+          "Start with a direct answer in the first one or two sentences.",
+          "Name only one main mechanism in simple words.",
+          "Show what this mechanism is trying to protect or prevent.",
+          "If a next move helps, give only one question or one step.",
+          "Use at most one short list only if it truly improves clarity.",
+          "Do not turn the answer into a mini-lecture or a method catalog.",
+          "Do not mention internal DB, chunks, semantic cards, or system materials."
+        ],
+        "latest_turn_authority_v1": {
+          "latest_turn_authority_version": "latest_turn_authority_v1",
+          "current_user_request": "а что об этом говорится в Нейросталкинге?",
+          "must_answer_source": "latest_turn",
+          "previous_must_answer_demoted": false,
+          "previous_must_answer": "none",
+          "explicit_continue_previous_detected": false,
+          "answer_target": "latest_turn",
+          "writer_contact_mode": "structured_answer",
+          "hard_constraints_active": [],
+          "kb_payload_expected": "0"
+        },
+        "explicit_practice_request": false,
+        "practice_request_runtime_note": "",
+        "practice_blocked_by_user_request": false,
+        "runtime_truth_trace_v1": {
+          "trace_version": "runtime_truth_trace_v1",
+          "retrieved_candidates_count": 4,
+          "trace_only_candidates_count": 1,
+          "filtered_out_for_writer_count": 1,
+          "writer_visible_payload_count": 2,
+          "actual_writer_payload_count": 2,
+          "writer_visible_payload_ids": [
+            "semantic_card:neurostalking_basic_lens_v1",
+            "02967da0-f163-4b5d-a732-6630dfeb0957"
+          ],
+          "writer_visible_payload_types": [
+            "diagnostic_lens",
+            "general_text"
+          ],
+          "payload_decision_reason": "structured_payload_used",
+          "grounding_visibility_reason": "direct_concept_followup",
+          "writer_can_ignore_grounding": true,
+          "broad_kb_visible": true,
+          "narrow_grounding_visible": false,
+          "hidden_knowledge_competence_v1": {
+            "version": "hidden_knowledge_competence_v1",
+            "public_user_mode": true,
+            "owner_debug_question_detected": true,
+            "user_facing_db_language_suppressed": true,
+            "knowledge_used_as_hidden_lens": true,
+            "raw_kb_dump_allowed": false,
+            "reason": "owner_debug"
+          },
+          "source_chunk_match_trace_v1": {
+            "enabled": true,
+            "probe_query": "а что об этом говорится в Нейросталкинге?",
+            "raw_query": "об этом говорится нейросталкинге",
+            "normalized_query": "а что об этом говорится в нейросталкинге?",
+            "explicit_knowledge_question": true,
+            "source_match_expected": "yes",
+            "raw_source_top_k_count": 4,
+            "runtime_candidate_top_k_count": 4,
+            "writer_payload_count": 2,
+            "focus_terms": [
+              "говорится",
+              "нейросталкинге"
+            ],
+            "best_raw_match": {
+              "chunk_id": "02967da0-f163-4b5d-a732-6630dfeb0957",
+              "source_doc": "book",
+              "rank": 1,
+              "score": 0.07141089330838726,
+              "near_exact_match": false,
+              "matched_terms_or_phrase": [
+                "нейросталкинге"
+              ],
+              "sent_to_writer": null,
+              "filter_reason": "",
+              "payload_position": null,
+              "writer_can_ignore": true,
+              "chunk_type": "general_text",
+              "origin": "trace",
+              "preview": "book Это, пожалуй, самое часто неверно понимаемое понятие в НейроСталкинге. Услышав слово «неуязвимость», большинство людей представляют что-то вроде каменной..."
+            },
+            "best_runtime_match": {
+              "chunk_id": "02967da0-f163-4b5d-a732-6630dfeb0957",
+              "source_doc": "book",
+              "rank": 1,
+              "score": 0.07141089330838726,
+              "near_exact_match": false,
+              "matched_terms_or_phrase": [
+                "нейросталкинге"
+              ],
+              "sent_to_writer": true,
+              "filter_reason": "",
+              "payload_position": null,
+              "writer_can_ignore": true,
+              "chunk_type": "",
+              "origin": "retrieval_candidate",
+              "preview": "book Это, пожалуй, самое часто неверно понимаемое понятие в НейроСталкинге. Услышав слово «неуязвимость», большинство людей представляют что-то вроде каменной..."
+            },
+            "payload_match": {
+              "chunk_id": "02967da0-f163-4b5d-a732-6630dfeb0957",
+              "source_doc": "book",
+              "rank": 2,
+              "score": 0.0,
+              "near_exact_match": false,
+              "matched_terms_or_phrase": [
+                "нейросталкинге"
+              ],
+              "sent_to_writer": true,
+              "filter_reason": "",
+              "payload_position": 2,
+              "writer_can_ignore": true,
+              "chunk_type": "general_text",
+              "origin": "retrieval",
+              "preview": "book Это, пожалуй, самое часто неверно понимаемое понятие в НейроСталкинге. Услышав слово «неуязвимость», большинство людей представляют что-то вроде каменной..."
+            },
+            "loss_stage": "raw_source",
+            "loss_reason": "no_raw_source_match_in_runtime_top_k"
+          },
+          "writer_visible_payload_items": [
+            {
+              "item_id": "semantic_card:neurostalking_basic_lens_v1",
+              "origin": "semantic_card",
+              "chunk_type": "diagnostic_lens",
+              "source_doc": "Kuznica Duha v2",
+              "allowed_use": [
+                "direct_to_writer",
+                "internal_lens"
+              ],
+              "quote_policy": "paraphrase_only",
+              "sent_to_writer": true,
+              "writer_can_ignore": true,
+              "applied_as_authority": false,
+              "inclusion_reason": "selected_for_writer_payload"
+            },
+            {
+              "item_id": "02967da0-f163-4b5d-a732-6630dfeb0957",
+              "origin": "retrieval",
+              "chunk_type": "general_text",
+              "source_doc": "book",
+              "allowed_use": [
+                "direct_to_writer"
+              ],
+              "quote_policy": "paraphrase_only",
+              "sent_to_writer": true,
+              "writer_can_ignore": true,
+              "applied_as_authority": false,
+              "inclusion_reason": "selected_for_writer_payload"
+            }
+          ],
+          "filtered_out_for_writer": [
+            {
+              "item_id": "semantic_card:program_imperfect_self_v1",
+              "origin": "semantic_card",
+              "chunk_type": "concept",
+              "source_doc": "Kuznica Duha v2",
+              "sent_to_writer": false,
+              "filter_reason": "direct_concept_followup"
+            }
+          ],
+          "trace_only_grounding": [
+            {
+              "item_id": "semantic_card:program_imperfect_self_v1",
+              "origin": "semantic_card",
+              "chunk_type": "concept",
+              "source_doc": "Kuznica Duha v2",
+              "sent_to_writer": false,
+              "filter_reason": "direct_concept_followup"
+            }
+          ],
+          "retrieval_query_source": "current_turn_focus_v1",
+          "legacy_fallback_scope": "none",
+          "writer_kb_payload_status": "structured_payload_used",
+          "writer_kb_payload_primary_path": "writer_kb_payload_v1",
+          "retrieval_gate_recovery_applied": false,
+          "current_user_message": "а что об этом говорится в Нейросталкинге?",
+          "dialogue_act": "knowledge_question",
+          "answer_obligation": "answer_knowledge_question",
+          "latest_must_answer": "а что об этом говорится в Нейросталкинге?",
+          "current_user_request": "а что об этом говорится в Нейросталкинге?",
+          "must_answer_source": "latest_turn",
+          "previous_must_answer_demoted": false,
+          "previous_must_answer": "",
+          "explicit_continue_previous_detected": false,
+          "answer_target": "latest_turn",
+          "writer_contact_mode": "structured_answer",
+          "planner_shadow_status": "shadow_invalid_plan",
+          "planner_fallback_scope": "shadow_only",
+          "planner_owner_severity": "info",
+          "production_query_source": "current_turn_focus_v1",
+          "json_decode_error_affected_production_answer": false,
+          "production_answer_affected_by_shadow_planner": false
+        },
+        "hidden_knowledge_competence_v1": {
+          "version": "hidden_knowledge_competence_v1",
+          "public_user_mode": true,
+          "owner_debug_question_detected": true,
+          "user_facing_db_language_suppressed": true,
+          "knowledge_used_as_hidden_lens": true,
+          "raw_kb_dump_allowed": false,
+          "reason": "owner_debug"
+        },
+        "planner_shadow_status": "shadow_invalid_plan",
+        "planner_fallback_scope": "shadow_only",
+        "planner_production_query_source": "current_turn_focus_v1",
+        "planner_json_decode_error_affected_production_answer": false,
+        "warnings": [],
+        "full_trace_available": true
+      },
+      "verdict": "PASS",
+      "tags": []
+    },
+    {
+      "scenario_id": "S-HF5-5",
+      "scenario_label": "detailed_modeling_after_grounded_followup",
+      "session": "prd-047-36-hf5-20260701144125-concept",
+      "turn_index": 4,
+      "query": "Можешь смоделировать на какой нибудь жизненной ситуации более подробно объяснив каждый нюанс",
+      "answer_length": 3364,
+      "answer_preview": "Давай возьмём конкретную, повседневную ситуацию и разберём её подробно через призму «программы несовершенного Я» / нейросталкинга. Главное: один механизм — автоматическое чтение опыта как доказательства собственной неполноценности; и одна функция — защита от эмоциональной угрозы через самокритику или избегание. Ситу...",
+      "contains_internal_language": false,
+      "retrieval_action": "query_kb",
+      "retrieval_need": "knowledge_context",
+      "rag_suppressed_reason": "",
+      "composer_reason": "knowledge question needs compact KB support",
+      "composer_evidence": [
+        "knowledge_question",
+        "query_composed_from_current_message"
+      ],
+      "inherited_topic": "нейросталкинг",
+      "grounding_reason": "direct_knowledge_question",
+      "writer_payload_count": 2,
+      "writer_visible_payload_ids": [
+        "47928bce-3306-4351-862e-290b3edeea59",
+        "d12e0b29-0ff5-4720-9c06-3f6f6fb9be9d"
+      ],
+      "writer_payload_status": "structured_payload_used",
+      "writer_payload_primary_path": "writer_kb_payload_v1",
+      "selected_card_status": "suppressed",
+      "selected_card_count": 0,
+      "selected_card_ids": [],
+      "selected_card_reasons": {},
+      "selected_knowledge_should_flow": false,
+      "selected_knowledge_recovery_applied": false,
+      "retrieval_gate_recovery_applied": false,
+      "no_internal_db": false,
+      "writer_can_ignore_grounding": true,
+      "semantic_cards_visible_to_writer": true,
+      "kb_visible_to_writer": true,
+      "latest_turn_constraints_v1": {},
+      "runtime_truth_trace_v1": {
+        "writer_visible_payload_count": 2,
+        "filtered_out_for_writer_count": 1,
+        "retrieved_candidates_count": 5,
+        "grounding_visibility_reason": "direct_knowledge_question",
+        "payload_decision_reason": "structured_payload_used"
+      },
+      "runtime_trace_summary_v1": {
+        "version": "runtime_trace_summary_v1",
+        "entrypoint": "multiagent_adapter",
+        "latest_turn_constraints": [],
+        "latest_turn_constraints_v1": {
+          "version": "latest_turn_constraints_v1",
+          "no_practice": false,
+          "no_breathing_only": false,
+          "simplify": false,
+          "long_term_perspective": false,
+          "no_internal_db": false,
+          "active_constraints": [],
+          "source": "none"
+        },
+        "writer_grounding_visibility_v1": {
+          "version": "writer_grounding_visibility_v1",
+          "kb_visible_to_writer": true,
+          "semantic_cards_visible_to_writer": true,
+          "reason": "direct_knowledge_question",
+          "direct_kb_question": true,
+          "direct_source_request": false,
+          "explicit_knowledge_request": true,
+          "explicit_practice_request": false,
+          "candidate_chunk_types": [],
+          "allowed_grounding_types": [],
+          "narrow_practice_grounding_available": false,
+          "safety_grounding_allowed": false,
+          "no_internal_db": false,
+          "trace_only_grounding_available": true,
+          "selected_semantic_card_count": 0,
+          "selected_knowledge_should_flow": false,
+          "inherited_topic": "нейросталкинг",
+          "writer_may_ignore_grounding": true,
+          "retrieval_action": "query_kb",
+          "retrieval_need": "knowledge_context"
+        },
+        "kb_visible_to_writer": true,
+        "semantic_cards_visible_to_writer": true,
+        "overlay_apply_detected": false,
+        "final_directive_mode": "structured_explanation",
+        "selected_answer_shape_profile": "adaptive_current_pipeline",
+        "answer_shape_profile_notes": [
+          "Follow the current answer obligation and stay direct."
+        ],
+        "latest_turn_authority_v1": {
+          "latest_turn_authority_version": "latest_turn_authority_v1",
+          "current_user_request": "Можешь смоделировать на какой нибудь жизненной ситуации более подробно объяснив каждый нюанс",
+          "must_answer_source": "explicit_continue_previous",
+          "previous_must_answer_demoted": false,
+          "previous_must_answer": "none",
+          "explicit_continue_previous_detected": true,
+          "answer_target": "previous_open_loop",
+          "writer_contact_mode": "structured_answer",
+          "hard_constraints_active": [],
+          "kb_payload_expected": "0"
+        },
+        "explicit_practice_request": false,
+        "practice_request_runtime_note": "",
+        "practice_blocked_by_user_request": false,
+        "runtime_truth_trace_v1": {
+          "trace_version": "runtime_truth_trace_v1",
+          "retrieved_candidates_count": 5,
+          "trace_only_candidates_count": 1,
+          "filtered_out_for_writer_count": 1,
+          "writer_visible_payload_count": 2,
+          "actual_writer_payload_count": 2,
+          "writer_visible_payload_ids": [
+            "47928bce-3306-4351-862e-290b3edeea59",
+            "d12e0b29-0ff5-4720-9c06-3f6f6fb9be9d"
+          ],
+          "writer_visible_payload_types": [
+            "general_text",
+            "general_text"
+          ],
+          "payload_decision_reason": "structured_payload_used",
+          "grounding_visibility_reason": "direct_knowledge_question",
+          "writer_can_ignore_grounding": true,
+          "broad_kb_visible": true,
+          "narrow_grounding_visible": false,
+          "hidden_knowledge_competence_v1": {
+            "version": "hidden_knowledge_competence_v1",
+            "public_user_mode": true,
+            "owner_debug_question_detected": true,
+            "user_facing_db_language_suppressed": true,
+            "knowledge_used_as_hidden_lens": true,
+            "raw_kb_dump_allowed": false,
+            "reason": "owner_debug"
+          },
+          "source_chunk_match_trace_v1": {
+            "enabled": true,
+            "probe_query": "Можешь смоделировать на какой нибудь жизненной ситуации более подробно объяснив каждый нюанс",
+            "raw_query": "можешь смоделировать какой нибудь жизненной ситуации более подробно",
+            "normalized_query": "можешь смоделировать на какой нибудь жизненной ситуации более подробно объяснив каждый нюанс",
+            "explicit_knowledge_question": true,
+            "source_match_expected": "yes",
+            "raw_source_top_k_count": 4,
+            "runtime_candidate_top_k_count": 5,
+            "writer_payload_count": 2,
+            "focus_terms": [
+              "можешь",
+              "смоделировать",
+              "какой",
+              "нибудь",
+              "жизненной",
+              "ситуации",
+              "более",
+              "подробно",
+              "объяснив",
+              "каждый",
+              "нюанс"
+            ],
+            "best_raw_match": {
+              "chunk_id": "d12e0b29-0ff5-4720-9c06-3f6f6fb9be9d",
+              "source_doc": "book",
+              "rank": 2,
+              "score": 0.09666419099935297,
+              "near_exact_match": false,
+              "matched_terms_or_phrase": [
+                "каждый"
+              ],
+              "sent_to_writer": null,
+              "filter_reason": "",
+              "payload_position": null,
+              "writer_can_ignore": true,
+              "chunk_type": "general_text",
+              "origin": "trace",
+              "preview": "book **Цель:** заметить, в каких ситуациях «нижние уровни» перехватывают управление — и составить личную карту триггеров. **Время:** 5 минут вечером. Неделю по..."
+            },
+            "best_runtime_match": {
+              "chunk_id": "d12e0b29-0ff5-4720-9c06-3f6f6fb9be9d",
+              "source_doc": "book",
+              "rank": 2,
+              "score": 0.09666419099935297,
+              "near_exact_match": true,
+              "matched_terms_or_phrase": [
+                "какой",
+                "ситуации",
+                "более",
+                "каждый"
+              ],
+              "sent_to_writer": true,
+              "filter_reason": "",
+              "payload_position": null,
+              "writer_can_ignore": true,
+              "chunk_type": "",
+              "origin": "retrieval_candidate",
+              "preview": "book **Цель:** заметить, в каких ситуациях «нижние уровни» перехватывают управление — и составить личную карту триггеров. **Время:** 5 минут вечером. Неделю по..."
+            },
+            "payload_match": {
+              "chunk_id": "d12e0b29-0ff5-4720-9c06-3f6f6fb9be9d",
+              "source_doc": "book",
+              "rank": 2,
+              "score": 0.0,
+              "near_exact_match": true,
+              "matched_terms_or_phrase": [
+                "какой",
+                "ситуации",
+                "более",
+                "каждый"
+              ],
+              "sent_to_writer": true,
+              "filter_reason": "",
+              "payload_position": 2,
+              "writer_can_ignore": true,
+              "chunk_type": "general_text",
+              "origin": "retrieval",
+              "preview": "book **Цель:** заметить, в каких ситуациях «нижние уровни» перехватывают управление — и составить личную карту триггеров. **Время:** 5 минут вечером. Неделю по..."
+            },
+            "loss_stage": "recovered_without_raw_source_match",
+            "loss_reason": "payload_recovered_from_runtime_candidate_without_raw_source_top_k_match"
+          },
+          "writer_visible_payload_items": [
+            {
+              "item_id": "47928bce-3306-4351-862e-290b3edeea59",
+              "origin": "retrieval",
+              "chunk_type": "general_text",
+              "source_doc": "book",
+              "allowed_use": [
+                "direct_to_writer"
+              ],
+              "quote_policy": "paraphrase_only",
+              "sent_to_writer": true,
+              "writer_can_ignore": true,
+              "applied_as_authority": false,
+              "inclusion_reason": "selected_for_writer_payload"
+            },
+            {
+              "item_id": "d12e0b29-0ff5-4720-9c06-3f6f6fb9be9d",
+              "origin": "retrieval",
+              "chunk_type": "general_text",
+              "source_doc": "book",
+              "allowed_use": [
+                "direct_to_writer"
+              ],
+              "quote_policy": "paraphrase_only",
+              "sent_to_writer": true,
+              "writer_can_ignore": true,
+              "applied_as_authority": false,
+              "inclusion_reason": "selected_for_writer_payload"
+            }
+          ],
+          "filtered_out_for_writer": [
+            {
+              "item_id": "029c5523-f014-40b4-86a8-66480ecd0304",
+              "origin": "memory_semantic_hit",
+              "chunk_type": "general_text",
+              "source_doc": "book",
+              "sent_to_writer": false,
+              "filter_reason": "direct_knowledge_question"
+            }
+          ],
+          "trace_only_grounding": [
+            {
+              "item_id": "029c5523-f014-40b4-86a8-66480ecd0304",
+              "origin": "memory_semantic_hit",
+              "chunk_type": "general_text",
+              "source_doc": "book",
+              "sent_to_writer": false,
+              "filter_reason": "direct_knowledge_question"
+            }
+          ],
+          "retrieval_query_source": "current_turn_focus_v1",
+          "legacy_fallback_scope": "none",
+          "writer_kb_payload_status": "structured_payload_used",
+          "writer_kb_payload_primary_path": "writer_kb_payload_v1",
+          "retrieval_gate_recovery_applied": false,
+          "current_user_message": "Можешь смоделировать на какой нибудь жизненной ситуации более подробно объяснив каждый нюанс",
+          "dialogue_act": "knowledge_question",
+          "answer_obligation": "answer_knowledge_question",
+          "latest_must_answer": "Можешь смоделировать на какой нибудь жизненной ситуации более подробно объяснив каждый нюанс",
+          "current_user_request": "Можешь смоделировать на какой нибудь жизненной ситуации более подробно объяснив каждый нюанс",
+          "must_answer_source": "explicit_continue_previous",
+          "previous_must_answer_demoted": false,
+          "previous_must_answer": "",
+          "explicit_continue_previous_detected": true,
+          "answer_target": "previous_open_loop",
+          "writer_contact_mode": "structured_answer",
+          "planner_shadow_status": "valid",
+          "planner_fallback_scope": "none",
+          "planner_owner_severity": "info",
+          "production_query_source": "current_turn_focus_v1",
+          "json_decode_error_affected_production_answer": false,
+          "production_answer_affected_by_shadow_planner": false
+        },
+        "hidden_knowledge_competence_v1": {
+          "version": "hidden_knowledge_competence_v1",
+          "public_user_mode": true,
+          "owner_debug_question_detected": true,
+          "user_facing_db_language_suppressed": true,
+          "knowledge_used_as_hidden_lens": true,
+          "raw_kb_dump_allowed": false,
+          "reason": "owner_debug"
+        },
+        "planner_shadow_status": "valid",
+        "planner_fallback_scope": "none",
+        "planner_production_query_source": "current_turn_focus_v1",
+        "planner_json_decode_error_affected_production_answer": false,
+        "warnings": [],
+        "full_trace_available": true
+      },
+      "verdict": "PASS",
+      "tags": []
+    },
+    {
+      "scenario_id": "S-HF5-6",
+      "scenario_label": "no_internal_db_boundary_wins",
+      "session": "prd-047-36-hf5-20260701144125-boundary",
+      "turn_index": 2,
+      "query": "Ответь без внутренней БД и без Нейросталкинга. Просто по-человечески: как программа несовершенное Я влияет на самореализацию?",
+      "answer_length": 1023,
+      "answer_preview": "Несовершенное Я — это часть тебя, где живут автоматические принципы, страхи, привычные убеждения и привычные реакции. Оно влияет на самореализацию главным образом через фильтр: какие цели ты себе позволяешь, как интерпретируешь успех и какие шаги считаешь допустимыми. Главный механизм — самоограничение через внутрен...",
+      "contains_internal_language": false,
+      "retrieval_action": "query_kb",
+      "retrieval_need": "knowledge_context",
+      "rag_suppressed_reason": "",
+      "composer_reason": "knowledge question needs compact KB support",
+      "composer_evidence": [
+        "knowledge_question",
+        "query_composed_from_current_message"
+      ],
+      "inherited_topic": "нейросталкинг",
+      "grounding_reason": "latest_turn_no_internal_db",
+      "writer_payload_count": 0,
+      "writer_visible_payload_ids": [],
+      "writer_payload_status": "fallback_used",
+      "writer_payload_primary_path": "legacy_semantic_hits_fallback_v1",
+      "selected_card_status": "suppressed",
+      "selected_card_count": 0,
+      "selected_card_ids": [],
+      "selected_card_reasons": {},
+      "selected_knowledge_should_flow": false,
+      "selected_knowledge_recovery_applied": false,
+      "retrieval_gate_recovery_applied": false,
+      "no_internal_db": true,
+      "writer_can_ignore_grounding": true,
+      "semantic_cards_visible_to_writer": false,
+      "kb_visible_to_writer": false,
+      "latest_turn_constraints_v1": {},
+      "runtime_truth_trace_v1": {
+        "writer_visible_payload_count": 0,
+        "filtered_out_for_writer_count": 3,
+        "retrieved_candidates_count": 3,
+        "grounding_visibility_reason": "latest_turn_no_internal_db",
+        "payload_decision_reason": "latest_turn_no_internal_db"
+      },
+      "runtime_trace_summary_v1": {
+        "version": "runtime_trace_summary_v1",
+        "entrypoint": "multiagent_adapter",
+        "latest_turn_constraints": [
+          "no_internal_db"
+        ],
+        "latest_turn_constraints_v1": {
+          "version": "latest_turn_constraints_v1",
+          "no_practice": false,
+          "no_breathing_only": false,
+          "simplify": false,
+          "long_term_perspective": false,
+          "no_internal_db": true,
+          "active_constraints": [
+            "no_internal_db"
+          ],
+          "source": "latest_user_turn_explicit_text"
+        },
+        "writer_grounding_visibility_v1": {
+          "version": "writer_grounding_visibility_v1",
+          "kb_visible_to_writer": false,
+          "semantic_cards_visible_to_writer": false,
+          "reason": "latest_turn_no_internal_db",
+          "direct_kb_question": true,
+          "direct_source_request": false,
+          "explicit_knowledge_request": false,
+          "explicit_practice_request": false,
+          "candidate_chunk_types": [],
+          "allowed_grounding_types": [],
+          "narrow_practice_grounding_available": false,
+          "safety_grounding_allowed": false,
+          "no_internal_db": true,
+          "trace_only_grounding_available": false,
+          "selected_semantic_card_count": 0,
+          "selected_knowledge_should_flow": false,
+          "inherited_topic": "нейросталкинг",
+          "writer_may_ignore_grounding": true,
+          "retrieval_action": "query_kb",
+          "retrieval_need": "knowledge_context"
+        },
+        "kb_visible_to_writer": false,
+        "semantic_cards_visible_to_writer": false,
+        "overlay_apply_detected": false,
+        "final_directive_mode": "answer_without_internal_db_grounding",
+        "selected_answer_shape_profile": "no_internal_db_compact",
+        "answer_shape_profile_notes": [
+          "Answer in your own words without internal DB or source framing.",
+          "Keep one clear meaning and avoid lecture mode.",
+          "Do not mention the base, chunks, semantic cards, or uploaded materials."
+        ],
+        "latest_turn_authority_v1": {
+          "latest_turn_authority_version": "latest_turn_authority_v1",
+          "current_user_request": "Ответь без внутренней БД и без Нейросталкинга. Просто по-человечески: как программа несовершенное Я влияет на самореализацию?",
+          "must_answer_source": "latest_turn",
+          "previous_must_answer_demoted": false,
+          "previous_must_answer": "none",
+          "explicit_continue_previous_detected": false,
+          "answer_target": "latest_turn",
+          "writer_contact_mode": "structured_answer",
+          "hard_constraints_active": [
+            "no_internal_db"
+          ],
+          "kb_payload_expected": "0"
+        },
+        "explicit_practice_request": false,
+        "practice_request_runtime_note": "",
+        "practice_blocked_by_user_request": false,
+        "runtime_truth_trace_v1": {
+          "trace_version": "runtime_truth_trace_v1",
+          "retrieved_candidates_count": 3,
+          "trace_only_candidates_count": 3,
+          "filtered_out_for_writer_count": 3,
+          "writer_visible_payload_count": 0,
+          "actual_writer_payload_count": 0,
+          "writer_visible_payload_ids": [],
+          "writer_visible_payload_types": [],
+          "payload_decision_reason": "latest_turn_no_internal_db",
+          "grounding_visibility_reason": "latest_turn_no_internal_db",
+          "writer_can_ignore_grounding": true,
+          "broad_kb_visible": false,
+          "narrow_grounding_visible": false,
+          "hidden_knowledge_competence_v1": {
+            "version": "hidden_knowledge_competence_v1",
+            "public_user_mode": true,
+            "owner_debug_question_detected": true,
+            "user_facing_db_language_suppressed": true,
+            "knowledge_used_as_hidden_lens": true,
+            "raw_kb_dump_allowed": false,
+            "reason": "no_internal_db"
+          },
+          "source_chunk_match_trace_v1": {
+            "enabled": true,
+            "probe_query": "Ответь без внутренней БД и без Нейросталкинга. Просто по-человечески: как программа несовершенное Я влияет на самореализацию?",
+            "raw_query": "ответь без внутренней бд нейросталкинга просто по-человечески программа несовершенное влияет на самореализацию",
+            "normalized_query": "ответь без внутренней бд и без нейросталкинга. просто по-человечески: как программа несовершенное я влияет на самореализацию?",
+            "explicit_knowledge_question": true,
+            "source_match_expected": "yes",
+            "raw_source_top_k_count": 4,
+            "runtime_candidate_top_k_count": 3,
+            "writer_payload_count": 0,
+            "focus_terms": [
+              "ответь",
+              "внутренней",
+              "нейросталкинга",
+              "просто",
+              "человечески",
+              "программа",
+              "несовершенное",
+              "влияет",
+              "самореализацию"
+            ],
+            "best_raw_match": {
+              "chunk_id": "f68050f9-d789-4d8b-b5b1-d6302ddfb88e",
+              "source_doc": "book",
+              "rank": 1,
+              "score": 0.12720668880630198,
+              "near_exact_match": false,
+              "matched_terms_or_phrase": [
+                "просто"
+              ],
+              "sent_to_writer": null,
+              "filter_reason": "",
+              "payload_position": null,
+              "writer_can_ignore": true,
+              "chunk_type": "general_text",
+              "origin": "trace",
+              "preview": "book **Шаг 1: Триггер** Что-то случается — начальник делает замечание, партнёр не отвечает, кто-то посмотрел не так. Само по себе — просто факт. Нейтральное со..."
+            },
+            "best_runtime_match": {
+              "chunk_id": "f68050f9-d789-4d8b-b5b1-d6302ddfb88e",
+              "source_doc": "book",
+              "rank": 1,
+              "score": 0.12720668880630198,
+              "near_exact_match": false,
+              "matched_terms_or_phrase": [
+                "просто"
+              ],
+              "sent_to_writer": false,
+              "filter_reason": "latest_turn_no_internal_db",
+              "payload_position": null,
+              "writer_can_ignore": true,
+              "chunk_type": "general_text",
+              "origin": "memory_semantic_hit",
+              "preview": "book **Шаг 1: Триггер** Что-то случается — начальник делает замечание, партнёр не отвечает, кто-то посмотрел не так. Само по себе — просто факт. Нейтральное со..."
+            },
+            "payload_match": {},
+            "loss_stage": "gate",
+            "loss_reason": "latest_turn_no_internal_db"
+          },
+          "writer_visible_payload_items": [],
+          "filtered_out_for_writer": [
+            {
+              "item_id": "f68050f9-d789-4d8b-b5b1-d6302ddfb88e",
+              "origin": "memory_semantic_hit",
+              "chunk_type": "general_text",
+              "source_doc": "book",
+              "sent_to_writer": false,
+              "filter_reason": "latest_turn_no_internal_db"
+            },
+            {
+              "item_id": "39f6eafa-7403-4450-80b8-9b94097035b2",
+              "origin": "memory_semantic_hit",
+              "chunk_type": "general_text",
+              "source_doc": "book",
+              "sent_to_writer": false,
+              "filter_reason": "latest_turn_no_internal_db"
+            },
+            {
+              "item_id": "b0380d62-1c48-4ca4-b347-b713418dfec3",
+              "origin": "memory_semantic_hit",
+              "chunk_type": "general_text",
+              "source_doc": "book",
+              "sent_to_writer": false,
+              "filter_reason": "latest_turn_no_internal_db"
+            }
+          ],
+          "trace_only_grounding": [
+            {
+              "item_id": "f68050f9-d789-4d8b-b5b1-d6302ddfb88e",
+              "origin": "memory_semantic_hit",
+              "chunk_type": "general_text",
+              "source_doc": "book",
+              "sent_to_writer": false,
+              "filter_reason": "latest_turn_no_internal_db"
+            },
+            {
+              "item_id": "39f6eafa-7403-4450-80b8-9b94097035b2",
+              "origin": "memory_semantic_hit",
+              "chunk_type": "general_text",
+              "source_doc": "book",
+              "sent_to_writer": false,
+              "filter_reason": "latest_turn_no_internal_db"
+            },
+            {
+              "item_id": "b0380d62-1c48-4ca4-b347-b713418dfec3",
+              "origin": "memory_semantic_hit",
+              "chunk_type": "general_text",
+              "source_doc": "book",
+              "sent_to_writer": false,
+              "filter_reason": "latest_turn_no_internal_db"
+            }
+          ],
+          "retrieval_query_source": "current_turn_focus_v1",
+          "legacy_fallback_scope": "compatibility",
+          "writer_kb_payload_status": "fallback_used",
+          "writer_kb_payload_primary_path": "legacy_semantic_hits_fallback_v1",
+          "retrieval_gate_recovery_applied": false,
+          "current_user_message": "Ответь без внутренней БД и без Нейросталкинга. Просто по-человечески: как программа несовершенное Я влияет на самореализацию?",
+          "dialogue_act": "knowledge_question",
+          "answer_obligation": "answer_knowledge_question",
+          "latest_must_answer": "Ответь без внутренней БД и без Нейросталкинга. Просто по-человечески: как программа несовершенное Я влияет на самореализацию?",
+          "current_user_request": "Ответь без внутренней БД и без Нейросталкинга. Просто по-человечески: как программа несовершенное Я влияет на самореализацию?",
+          "must_answer_source": "latest_turn",
+          "previous_must_answer_demoted": false,
+          "previous_must_answer": "",
+          "explicit_continue_previous_detected": false,
+          "answer_target": "latest_turn",
+          "writer_contact_mode": "structured_answer",
+          "planner_shadow_status": "shadow_invalid_plan",
+          "planner_fallback_scope": "shadow_only",
+          "planner_owner_severity": "info",
+          "production_query_source": "current_turn_focus_v1",
+          "json_decode_error_affected_production_answer": false,
+          "production_answer_affected_by_shadow_planner": false
+        },
+        "hidden_knowledge_competence_v1": {
+          "version": "hidden_knowledge_competence_v1",
+          "public_user_mode": true,
+          "owner_debug_question_detected": true,
+          "user_facing_db_language_suppressed": true,
+          "knowledge_used_as_hidden_lens": true,
+          "raw_kb_dump_allowed": false,
+          "reason": "no_internal_db"
+        },
+        "planner_shadow_status": "shadow_invalid_plan",
+        "planner_fallback_scope": "shadow_only",
+        "planner_production_query_source": "current_turn_focus_v1",
+        "planner_json_decode_error_affected_production_answer": false,
+        "warnings": [],
+        "full_trace_available": true
+      },
+      "verdict": "PASS",
+      "tags": [
+        "no_internal_db_preserved"
+      ]
+    }
+  ]
+}

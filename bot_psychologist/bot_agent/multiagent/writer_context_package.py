@@ -98,6 +98,21 @@ _SAFETY_GROUNDING_MARKERS = (
     "суиц",
     "убить себя",
 )
+_CONCEPT_FOLLOWUP_MARKERS = (
+    "как влияет",
+    "как это влияет",
+    "почему это",
+    "что об этом",
+    "что говорится",
+    "объясни подробнее",
+    "объясни на примере",
+    "на примере",
+    "смоделируй",
+    "как связано",
+    "как применить",
+    "как использовать",
+    "хочу понять как",
+)
 _WORD_RE = re.compile(r"[a-zа-я0-9_]{3,}", re.IGNORECASE)
 
 
@@ -190,6 +205,38 @@ def _looks_like_safety_grounding_need(user_message: str) -> bool:
     return _contains_any(user_message, _SAFETY_GROUNDING_MARKERS)
 
 
+def _looks_like_concept_followup_request(user_message: str) -> bool:
+    lowered = _normalize(user_message)
+    if not lowered:
+        return False
+    if _contains_any(lowered, _CONCEPT_FOLLOWUP_MARKERS):
+        return True
+    if "как " in lowered and any(marker in lowered for marker in ("влияет", "связано", "работает")):
+        return True
+    if "почему" in lowered and "это" in lowered:
+        return True
+    return False
+
+
+def _composer_payload(retrieval_decision: dict[str, Any] | None) -> dict[str, Any]:
+    retrieval = dict(retrieval_decision or {})
+    composer = retrieval.get("composer")
+    if isinstance(composer, dict):
+        return dict(composer)
+    composer = retrieval.get("contextual_retrieval_query_composer")
+    if isinstance(composer, dict):
+        return dict(composer)
+    return {}
+
+
+def _string_list_from_any(value: Any) -> list[str]:
+    if isinstance(value, list):
+        return [str(item).strip() for item in value if str(item).strip()]
+    if isinstance(value, str) and value.strip():
+        return [value.strip()]
+    return []
+
+
 def _normalize_chunk_type(value: Any) -> str:
     return str(value or "").strip().lower()
 
@@ -261,8 +308,10 @@ def build_writer_grounding_visibility_v1(
     latest_turn_constraints: dict[str, Any] | None,
     has_grounding_candidates: bool,
     candidate_chunk_types: list[str] | None = None,
+    selected_semantic_card_count: int = 0,
 ) -> dict[str, Any]:
     retrieval = dict(retrieval_decision or {})
+    composer = _composer_payload(retrieval)
     constraints = dict(latest_turn_constraints or {})
     no_internal_db = bool(constraints.get("no_internal_db", False))
     retrieval_action = str(retrieval.get("retrieval_action", "trace_only") or "trace_only")
@@ -287,6 +336,8 @@ def build_writer_grounding_visibility_v1(
             if chunk_type in NARROW_PRACTICE_GROUNDING_TYPES
         }
     )
+    composer_evidence = {item.lower() for item in _string_list_from_any(composer.get("evidence"))}
+    inherited_topic = str(composer.get("inherited_topic", "") or "").strip()
     direct_kb_question = bool(
         direct_source_request
         or (
@@ -303,6 +354,22 @@ def build_writer_grounding_visibility_v1(
     )
     narrow_practice_grounding_available = bool(
         explicit_practice_request and narrow_practice_chunk_types
+    )
+    concept_followup = bool(
+        has_grounding_candidates
+        and (
+            bool(selected_semantic_card_count)
+            or "selected_knowledge_available" in composer_evidence
+            or bool(inherited_topic)
+        )
+        and (
+            "concept_followup" in composer_evidence
+            or str(composer.get("reason", "") or "") == "direct_concept_followup_selected_knowledge"
+            or (
+                ("contextual_followup" in composer_evidence or bool(inherited_topic))
+                and _looks_like_concept_followup_request(user_message)
+            )
+        )
     )
 
     if no_internal_db:
@@ -337,6 +404,10 @@ def build_writer_grounding_visibility_v1(
         kb_visible_to_writer = True
         semantic_cards_visible_to_writer = True
         reason = "explicit_practice_request_narrow_grounding"
+    elif concept_followup:
+        kb_visible_to_writer = True
+        semantic_cards_visible_to_writer = True
+        reason = "direct_concept_followup"
     elif direct_kb_question:
         kb_visible_to_writer = True
         semantic_cards_visible_to_writer = True
@@ -369,6 +440,9 @@ def build_writer_grounding_visibility_v1(
         "safety_grounding_allowed": safety_grounding_allowed,
         "no_internal_db": no_internal_db,
         "trace_only_grounding_available": bool(has_grounding_candidates),
+        "selected_semantic_card_count": int(selected_semantic_card_count or 0),
+        "selected_knowledge_should_flow": concept_followup,
+        "inherited_topic": inherited_topic,
         "writer_may_ignore_grounding": True,
         "retrieval_action": retrieval_action,
         "retrieval_need": retrieval_need,
@@ -930,6 +1004,7 @@ def build_writer_context_package_v1(
         latest_turn_constraints=constraints,
         has_grounding_candidates=bool(base_rag_for_writer) or bool(semantic_card_candidate_payload_items),
         candidate_chunk_types=candidate_chunk_types,
+        selected_semantic_card_count=len(semantic_card_candidate_payload_items),
     )
     fallback_focus_terms = _query_focus_terms(user_message)
     fallback_match_snapshots = [
@@ -955,6 +1030,18 @@ def build_writer_context_package_v1(
         writer_grounding_visibility["retrieval_gate_recovery_match_chunk_id"] = str(
             best_policy_allowed_fallback_match.get("chunk_id", "") or ""
         )
+    elif (
+        not no_internal_db
+        and not base_rag_for_writer
+        and bool(writer_grounding_visibility.get("selected_knowledge_should_flow", False))
+        and bool(memory_bundle_knowledge_hits)
+    ):
+        recovery_cap = 1 if semantic_card_candidate_payload_items else 2
+        base_rag_for_writer = list(memory_bundle_knowledge_hits[:recovery_cap])
+        writer_grounding_visibility = dict(writer_grounding_visibility)
+        writer_grounding_visibility["trace_only_grounding_available"] = True
+        writer_grounding_visibility["selected_knowledge_recovery_applied"] = True
+        writer_grounding_visibility["selected_knowledge_recovery_source"] = "memory_bundle.knowledge_rag_hits"
     hidden_knowledge_competence = _build_hidden_knowledge_competence_v1(
         user_message=user_message,
         latest_turn_constraints=constraints,
@@ -1080,7 +1167,15 @@ def build_writer_context_package_v1(
         semantic_cards_pilot = dict(semantic_cards_pilot)
         semantic_cards_pilot["writer_payload_enriched"] = bool(semantic_card_payload_items)
         semantic_cards_pilot["payload_items"] = list(semantic_card_payload_items)
-    rag_for_writer_for_payload = list(rag_for_writer) + semantic_card_payload_items
+    if (
+        writer_grounding_visibility.get("reason") == "direct_concept_followup"
+        and semantic_card_payload_items
+    ):
+        semantic_card_payload_items = list(semantic_card_payload_items[:1])
+    if writer_grounding_visibility.get("selected_knowledge_should_flow", False):
+        rag_for_writer_for_payload = semantic_card_payload_items + list(rag_for_writer)
+    else:
+        rag_for_writer_for_payload = list(rag_for_writer) + semantic_card_payload_items
 
     payload_config = get_writer_kb_payload_config()
     payload_resolution = feature_flags.resolve_bool("WRITER_KB_PAYLOAD_ENABLED")

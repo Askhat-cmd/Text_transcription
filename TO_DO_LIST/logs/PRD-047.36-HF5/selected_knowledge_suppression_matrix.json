@@ -1,0 +1,79 @@
+{
+  "schema_version": "prd_047_36_hf5_selected_knowledge_suppression_matrix_v1",
+  "generated_at": "2026-07-01T14:44:00",
+  "rows": [
+    {
+      "row_id": "chat12_pre_fix_failure",
+      "current_turn": "да мне хочется понять как \"программа несовершенное Я\" влияет на это",
+      "previous_topic": "самореализация",
+      "is_concept_followup": true,
+      "selected_knowledge_ids": [
+        "program_imperfect_self_v1",
+        "control_as_safety_v1",
+        "fact_vs_interpretation_v1"
+      ],
+      "selected_knowledge_reasons": {
+        "program_imperfect_self_v1": [
+          "selected semantic card during relevant concept continuation"
+        ],
+        "control_as_safety_v1": [
+          "selected semantic card during relevant concept continuation"
+        ],
+        "fact_vs_interpretation_v1": [
+          "selected semantic card during relevant concept continuation"
+        ]
+      },
+      "suppression_stage": "grounding_visibility_and_chunk_inclusion_gate",
+      "suppression_reason": "no_clear_retrieval_need",
+      "hard_blocker_present": false,
+      "writer_payload_count": 0,
+      "evidence_source": "private_chat_12_trace_summary"
+    },
+    {
+      "row_id": "hf5_live_repaired_followup",
+      "current_turn": "да мне хочется понять как \"программа несовершенное Я\" влияет на это",
+      "previous_topic": "самореализация",
+      "is_concept_followup": true,
+      "selected_knowledge_ids": [
+        "program_imperfect_self_v1",
+        "control_as_safety_v1",
+        "fact_vs_interpretation_v1"
+      ],
+      "selected_knowledge_reasons": {
+        "program_imperfect_self_v1": [
+          "current_turn_overlap",
+          "topic_alias"
+        ],
+        "control_as_safety_v1": [
+          "current_turn_overlap"
+        ],
+        "fact_vs_interpretation_v1": [
+          "current_turn_overlap"
+        ]
+      },
+      "suppression_stage": "none",
+      "suppression_reason": "",
+      "hard_blocker_present": false,
+      "writer_payload_count": 2,
+      "grounding_reason": "direct_concept_followup",
+      "retrieval_action": "query_kb",
+      "evidence_source": "live_smoke_result.s_hf5_3"
+    },
+    {
+      "row_id": "hf5_live_no_internal_db_boundary",
+      "current_turn": "Ответь без внутренней БД и без Нейросталкинга. Просто по-человечески: как программа несовершенное Я влияет на самореализацию?",
+      "previous_topic": "самореализация",
+      "is_concept_followup": true,
+      "selected_knowledge_ids": [],
+      "selected_knowledge_reasons": {},
+      "suppression_stage": "hard_boundary",
+      "suppression_reason": "latest_turn_no_internal_db",
+      "hard_blocker_present": true,
+      "writer_payload_count": 0,
+      "grounding_reason": "latest_turn_no_internal_db",
+      "retrieval_action": "query_kb",
+      "evidence_source": "live_smoke_result.s_hf5_6"
+    }
+  ]
+}
+

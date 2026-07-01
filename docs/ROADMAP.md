@@ -1,6 +1,7 @@
 ﻿# Roadmap
 
 ## Done
+- PRD-047.36-HF5: completed the selected-knowledge admission repair on the canonical current pipeline. Direct concept follow-ups with already selected relevant knowledge now promote a minimal hidden Writer package instead of collapsing into `no_clear_retrieval_need`, while greeting/contact suppression, `no_internal_db`, semantic-card advisory-only status, and public hidden-competence boundaries stay intact. Added targeted backend tests, a live smoke runner, root-cause/suppression-matrix reports, and no-mutation proof without any dictionary, alias map, new route, or DB/Chroma/source mutation.
 - PRD-047.36-HF4: completed the owner Web trace-restoration hard-blocker repair on the canonical current pipeline. Persisted streamed turns into session history under exact chat session ids, reused one resolved turn number across debug save/SSE/history, sent X-Device-Fingerprint from Web UI so backend identity stays bound to the intended browser session, preserved bot_active_chat_id through hydrate/reload instead of clearing it on empty mount, added targeted backend tests plus HF4 browser/live smoke, and restored fresh 5-turn + reload trace truth while keeping old-session-after-restart behavior explicitly labeled as expired rather than silently wrong.
 - PRD-047.36-HF3: completed narrow trace-availability / reload-hydration observability repair on the canonical current pipeline. Removed silent latest-trace fallback for explicit `turn_index` lookup, made in-memory debug lookup candidate-scoped instead of drifting across unrelated session keys, added structured `trace_availability` metadata to the debug endpoint, surfaced that state in owner/dev Web Chat as an explicit unavailable notice under assistant turns, added targeted backend/API/UI tests plus a live smoke runner, and preserved Writer/retrieval/DB/Chroma/source/SSE behavior unchanged.
 - PRD-047.36-HF1: completed narrow no-practice boundary + benign-turn acceptance + chat turn-identity repair on the canonical current pipeline. Removed forced one-step fallback when latest-turn no-practice/contact constraints forbid it, calibrated `final_answer_acceptance_gate_v1` so benign `no_stub_repair_signal` warnings remain savable when no real failed checks remain, threaded explicit `turn_number` through SSE/API/history/frontend state, bound Web trace/canvas lookup to stable turn identity, added targeted backend/API/UI tests, and preserved retry/quarantine behavior for real failed answers without adding a new runtime path or any DB/Chroma/source mutation.
@@ -92,6 +93,7 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
+- PRD-047.36-HF5 closed the selected-knowledge trace-only blocker for direct concept follow-ups in the current runtime. The remaining work is not a retrieval dictionary or another delivery hotfix; it is a shortened readiness rerun on top of the repaired HF4 + HF5 baseline.
 - PRD-047.36-HF4 closed the owner/debug trace-restoration blocker class itself. The remaining work is no longer trace persistence, session mapping, or reload hydration; it is rerunning the frozen owner readiness gate on this repaired baseline and classifying any remaining answer-behavior blockers honestly.
 - PRD-047.36-HF3 closed the silent trace-disappearance class after reload. Remaining readiness work is no longer exact-trace observability; it is rerunning the owner freeze against the repaired pipeline and honestly classifying any remaining behavior blockers.
 - PRD-047.36-HF1 closed the proven S8 blocker class and the benign-turn delivery/history mismatch inside the current runtime. The next work is not another narrow hotfix by default; it is rerunning the owner readiness freeze on the repaired pipeline to measure whether the remaining blocker set has actually collapsed.
@@ -124,7 +126,7 @@
 - No active PRD-047.12 blocker remains; unified dialogue policy v2 is accepted on the current developer-local runtime baseline.
 
 ## Next
-1. Re-run `PRD-047.36 - Owner Pilot Readiness Gate / 12 Scenario Freeze v1` on top of HF1 + HF2 + HF3 + HF4 before claiming owner-pilot freeze readiness.
+1. Run a shortened post-HF readiness gate on top of HF4 + HF5 covering trace restoration, direct concept follow-up, `no_internal_db`, `no_practice`, and one safety scenario before claiming owner-pilot freeze readiness.
 2. If the rerun still blocks, classify the next step from fresh evidence instead of adding another speculative runtime layer.
 3. Keep semantic cards advisory-only until a later PRD proves they help without recurring textbook drift or explicit no-KB conflict.
 4. Keep any broader DB-track mutation, overlay authority expansion, retrieval-ranking rewrite, live metadata apply, runtime activation, or Chroma reindex in a separate explicit governance PRD.

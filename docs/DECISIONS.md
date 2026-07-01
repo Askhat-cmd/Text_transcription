@@ -1,5 +1,27 @@
 ﻿# Architecture Decisions
 
+## ADR-094 - Selected relevant concept knowledge must outrank generic no_clear_retrieval_need when no hard blocker applies
+
+Status: accepted
+
+Date: 2026-07-01
+
+Context: PRD-047.36-HF4 restored owner trace truth, and private Chat 12 evidence then exposed a narrower runtime blocker: contextual concept follow-ups could already retrieve/select relevant knowledge and semantic cards, yet the existing grounding gate still classified the turn as `no_clear_retrieval_need`, leaving Writer payload at zero and semantic cards trace-only. The failure was not retrieval recall, not Writer style, and not DB/source coverage for the proven concept. It was a coordination defect inside the current path.
+
+Decision:
+- keep the canonical runtime path unchanged (`multiagent_adapter`);
+- keep retrieval ranking, DB/Chroma/source content, model choice, and safety policy unchanged;
+- do not add a dictionary, alias map, term-specific route, new agent, or new runtime path;
+- promote a contextual turn to a bounded `direct_concept_followup` knowledge-admission path only when:
+  - the turn is a direct concept follow-up or inherits the just-discussed concept;
+  - selected relevant knowledge already exists;
+  - no hard blocker such as `no_internal_db` applies;
+- allow a minimal Writer-visible hidden knowledge package from already available selected knowledge / `memory_bundle.knowledge_rag_hits`;
+- keep semantic cards advisory-only and Writer-can-ignore;
+- keep public answers free of DB/chunk/card/trace language.
+
+Consequences: the runtime now behaves coherently for the Chat 12 class: selected relevant concept knowledge is no longer left trace-only with `Writer Payload = 0` when no hard blocker exists. The repair stays generic and bounded inside the existing retrieval-to-Writer coordination path instead of creating a second policy system.
+
 ## ADR-093 - Fresh Web Chat trace restoration requires exact session-history persistence and reload-safe active chat restore
 
 Status: accepted

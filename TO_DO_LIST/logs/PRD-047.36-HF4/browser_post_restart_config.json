@@ -1,0 +1,11 @@
+{
+  "mode": "post_restart",
+  "api_key": "dev-key-001",
+  "backend_base_url": "http://127.0.0.1:8001",
+  "frontend_base_url": "http://localhost:3000",
+  "user_id": "hf4_user_32edf4184b",
+  "web_session_id": "hf4_web_e3bcd9403f",
+  "old_session_id": "hf4_web_e3bcd9403f",
+  "output_dir": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.36-HF4",
+  "result_path": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.36-HF4\\browser_post_restart_result.json"
+}

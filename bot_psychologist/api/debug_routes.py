@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from fastapi.responses import JSONResponse
 
 from .auth import verify_api_key, is_dev_key
+from bot_agent.storage import SessionManager
 from .models import (
     AnomalyItem,
     MemoryContextTrace,
@@ -94,6 +95,25 @@ def _derive_turn_tokens(trace: Dict[str, Any]) -> tuple[int, int, int]:
         total_value = total
 
     return prompt_value, completion_value, total_value
+
+
+def _load_session_history_turn_indices(session_id: str) -> List[int]:
+    try:
+        manager = SessionManager(str(config.BOT_DB_PATH))
+        payload = manager.load_session(session_id)
+    except Exception:
+        return []
+    if not isinstance(payload, dict):
+        return []
+
+    history_turns: List[int] = []
+    for item in payload.get("conversation_turns", []) or []:
+        if not isinstance(item, dict):
+            continue
+        turn_number = _safe_int(item.get("turn_number"))
+        if turn_number is not None and turn_number > 0:
+            history_turns.append(turn_number)
+    return sorted(set(history_turns))
 
 
 def _build_turn_diff(
@@ -452,22 +472,34 @@ async def get_multiagent_trace(
 
     available_keys = sorted(store.get_multiagent_debug_keys())
     available_turn_indices = _collect_available_turn_indices(store=store, session_ids=lookup_keys)
+    history_turn_indices = _load_session_history_turn_indices(session_id)
+    reported_turn_indices = available_turn_indices or history_turn_indices
     if not debug:
+        history_contains_requested_turn = turn_index is not None and turn_index in history_turn_indices
+        trace_expired_after_restart = bool(history_turn_indices) and not available_turn_indices
         detail = (
             "No multiagent trace found for requested turn"
             if turn_index is not None
             else "No multiagent trace found for session"
         )
-        reason_code = (
-            "requested_turn_missing"
-            if turn_index is not None
-            else "session_trace_missing"
-        )
-        reason = (
-            f"Exact trace for turn {turn_index} is unavailable for this session scope"
-            if turn_index is not None
-            else "No trace payload is available for this session scope"
-        )
+        if trace_expired_after_restart and (history_contains_requested_turn or turn_index is None):
+            reason_code = "debug_trace_expired_after_backend_restart"
+            reason = (
+                f"Debug trace for delivered turn {turn_index} is unavailable after backend restart"
+                if turn_index is not None
+                else "Debug traces for this session are unavailable after backend restart"
+            )
+        else:
+            reason_code = (
+                "requested_turn_missing"
+                if turn_index is not None
+                else "session_trace_missing"
+            )
+            reason = (
+                f"Exact trace for turn {turn_index} is unavailable for this session scope"
+                if turn_index is not None
+                else "No trace payload is available for this session scope"
+            )
         trace_availability = _build_trace_availability(
             status="unavailable",
             requested_turn_index=turn_index,
@@ -478,7 +510,7 @@ async def get_multiagent_trace(
             resolved_session_id=None,
             searched_trace_keys=lookup_keys,
             available_trace_keys=available_keys[:20],
-            available_turn_indices=available_turn_indices,
+            available_turn_indices=reported_turn_indices,
         )
         return JSONResponse(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -488,7 +520,7 @@ async def get_multiagent_trace(
                 "hint": "Trace may be stored under user_id or conversation_id key",
                 "searched_trace_keys": lookup_keys,
                 "available_trace_keys": available_keys[:20],
-                "available_turn_indices": available_turn_indices,
+                "available_turn_indices": reported_turn_indices,
                 "trace_availability": trace_availability.model_dump(),
             },
         )

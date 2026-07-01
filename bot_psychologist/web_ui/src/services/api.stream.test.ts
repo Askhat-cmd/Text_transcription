@@ -96,6 +96,7 @@ describe('APIService.streamAdaptiveAnswer', () => {
         headers: expect.objectContaining({
           'Content-Type': 'application/json',
           'X-Session-Id': expect.any(String),
+          'X-Device-Fingerprint': expect.any(String),
         }),
       })
     );

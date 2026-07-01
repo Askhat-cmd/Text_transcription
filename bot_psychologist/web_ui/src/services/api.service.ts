@@ -60,6 +60,7 @@ class APIService {
       }
       if (this.webSessionId) {
         config.headers['X-Session-Id'] = this.webSessionId;
+        config.headers['X-Device-Fingerprint'] = this.webSessionId;
       }
       return config;
     });
@@ -195,6 +196,7 @@ class APIService {
             'Content-Type': 'application/json',
             ...(this.apiKey ? { 'X-API-Key': this.apiKey } : {}),
             ...(this.webSessionId ? { 'X-Session-Id': this.webSessionId } : {}),
+            ...(this.webSessionId ? { 'X-Device-Fingerprint': this.webSessionId } : {}),
           },
           body: JSON.stringify({
             query,

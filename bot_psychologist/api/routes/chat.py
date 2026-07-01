@@ -169,17 +169,93 @@ def _save_multiagent_debug_if_present(
     result: Dict[str, Any],
     store: SessionStore,
     session_id: str,
-) -> None:
+    resolved_turn_index: Optional[int] = None,
+) -> Optional[int]:
     debug_payload = result.get("debug")
     if not isinstance(debug_payload, dict):
-        return
+        return None
     if not debug_payload.get("multiagent_enabled"):
-        return
-    turn_index = _resolve_multiagent_turn_index(result=result, store=store, session_id=session_id)
+        return None
+    turn_index = resolved_turn_index or _resolve_multiagent_turn_index(
+        result=result,
+        store=store,
+        session_id=session_id,
+    )
     payload = dict(debug_payload)
     payload["turn_index"] = turn_index
+    payload["turn_number"] = turn_index
     payload["session_id"] = session_id
     store.save_multiagent_debug(session_id=session_id, turn_index=turn_index, debug=payload)
+    return turn_index
+
+
+def _persist_stream_session_turn(
+    *,
+    session_id: str,
+    user_id: str,
+    query: str,
+    result: Dict[str, Any],
+    turn_number: int,
+) -> None:
+    if not session_id or turn_number <= 0:
+        return
+
+    metadata = result.get("metadata") if isinstance(result.get("metadata"), dict) else {}
+    state_analysis = (
+        result.get("state_analysis")
+        if isinstance(result.get("state_analysis"), dict)
+        else {}
+    )
+    recommended_mode = str(
+        metadata.get("recommended_mode")
+        or metadata.get("runtime")
+        or "ADAPTIVE"
+    )
+    timestamp = datetime.now().isoformat()
+    confidence_raw = state_analysis.get("confidence")
+    confidence: float | None
+    try:
+        confidence = float(confidence_raw) if confidence_raw is not None else None
+    except (TypeError, ValueError):
+        confidence = None
+
+    chunks_used = [
+        str(item.get("block_id") or "")
+        for item in result.get("sources", []) or []
+        if isinstance(item, dict) and str(item.get("block_id") or "").strip()
+    ]
+    turn_metadata = {
+        "streaming": True,
+        "runtime_entrypoint": metadata.get("runtime_entrypoint"),
+        "recommended_mode": metadata.get("recommended_mode"),
+        "pipeline_version": metadata.get("pipeline_version"),
+    }
+
+    session_manager = SessionManager(str(config.BOT_DB_PATH))
+    session_manager.create_session(
+        session_id=session_id,
+        user_id=user_id,
+        metadata={
+            "source": "api",
+            "owner_user_id": user_id,
+        },
+    )
+    session_manager.save_turn(
+        session_id=session_id,
+        turn_number=turn_number,
+        user_input=query,
+        bot_response=str(result.get("answer", "") or ""),
+        mode=recommended_mode,
+        timestamp=timestamp,
+        confidence=confidence,
+        chunks_used=chunks_used,
+        user_state=(
+            str(state_analysis.get("primary_state"))
+            if state_analysis.get("primary_state") is not None
+            else None
+        ),
+        turn_metadata=turn_metadata,
+    )
 
 
 @router.post(
@@ -791,13 +867,25 @@ async def ask_adaptive_question_stream(
 
             result = dict(_result_holder)
             answer = str(result.get("answer", "") or "")
-            _save_multiagent_debug_if_present(result=result, store=store, session_id=session_key)
-            await conv_service.touch_conversation(identity.conversation_id)
             resolved_turn_number = _resolve_multiagent_turn_index(
                 result=result,
                 store=store,
                 session_id=session_key,
             )
+            _save_multiagent_debug_if_present(
+                result=result,
+                store=store,
+                session_id=session_key,
+                resolved_turn_index=resolved_turn_number,
+            )
+            _persist_stream_session_turn(
+                session_id=session_key,
+                user_id=identity.user_id,
+                query=request.query,
+                result=result,
+                turn_number=resolved_turn_number,
+            )
+            await conv_service.touch_conversation(identity.conversation_id)
 
             latency_ms = int(float(result.get("processing_time_seconds", 0) or 0) * 1000)
             trace_raw_debug_trace = result.get("debug_trace")
@@ -809,6 +897,7 @@ async def ask_adaptive_question_stream(
                 if _value is not None:
                     trace[_key] = _value
             if trace is not None:
+                trace["turn_number"] = resolved_turn_number
                 trace = _build_debug_trace_compat_payload(trace)
 
             done_payload = {
@@ -824,7 +913,6 @@ async def ask_adaptive_question_stream(
 
             yield f"data: {json.dumps(done_payload, ensure_ascii=False)}\n\n"
             if request.debug and trace is not None:
-                trace["turn_number"] = resolved_turn_number
                 try:
                     trace = _append_trace_with_resolved_session(
                         store=store,

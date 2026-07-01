@@ -55,6 +55,28 @@ interface SessionGroup {
   sessions: ChatSession[];
 }
 
+const ACTIVE_CHAT_STORAGE_KEY = 'bot_active_chat_id';
+
+function getStoredActiveChatId(): string {
+  try {
+    return localStorage.getItem(ACTIVE_CHAT_STORAGE_KEY)?.trim() || '';
+  } catch {
+    return '';
+  }
+}
+
+function setStoredActiveChatId(sessionId: string): void {
+  try {
+    if (sessionId.trim()) {
+      localStorage.setItem(ACTIVE_CHAT_STORAGE_KEY, sessionId);
+      return;
+    }
+    localStorage.removeItem(ACTIVE_CHAT_STORAGE_KEY);
+  } catch {
+    // noop
+  }
+}
+
 function buildChatTitle(messages: Message[]): string {
   const firstUserMessage = messages.find((message) => message.role === 'user');
   if (!firstUserMessage) {
@@ -245,6 +267,16 @@ const ChatPage: React.FC = () => {
     activeChatIdRef.current = activeChatId;
   }, [activeChatId]);
 
+  useEffect(() => {
+    if (activeChatId.trim()) {
+      setStoredActiveChatId(activeChatId);
+      return;
+    }
+    if (!isSessionsLoading && sessions.length === 0) {
+      setStoredActiveChatId('');
+    }
+  }, [activeChatId, isSessionsLoading, sessions.length]);
+
   const loadActiveChatHistory = useCallback(async (sessionId: string) => {
     if (import.meta.env.DEV) {
       console.debug('[ChatPage] load history start', { sessionId });
@@ -327,6 +359,7 @@ const ChatPage: React.FC = () => {
 
       const sorted = sortSessionsByUpdatedAt(mapped);
       setSessions(sorted);
+      const storedActiveChatId = getStoredActiveChatId();
 
       setActiveChatId((currentActiveId) => {
         if (preferredSessionId && sorted.some((session) => session.id === preferredSessionId)) {
@@ -334,6 +367,9 @@ const ChatPage: React.FC = () => {
         }
         if (currentActiveId && sorted.some((session) => session.id === currentActiveId)) {
           return currentActiveId;
+        }
+        if (storedActiveChatId && sorted.some((session) => session.id === storedActiveChatId)) {
+          return storedActiveChatId;
         }
         return sorted[0].id;
       });

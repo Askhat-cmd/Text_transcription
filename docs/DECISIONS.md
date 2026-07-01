@@ -18,7 +18,7 @@ Decision:
 - keep old-session-after-restart unavailable behavior explicit through debug_trace_expired_after_backend_restart;
 - do not change Writer behavior, retrieval ranking, DB/Chroma/source content, model, semantic-card authority, or safety policy in this PRD.
 
-Consequences: fresh Web Chat turns now keep exact trace through delivery, history, reload, and debug lookup, while old sessions after backend restart still fail honestly with a precise expired-trace reason. The next step is not another trace hotfix; it is rerunning the owner readiness freeze on the repaired baseline.
+Consequences: fresh Web Chat turns now keep exact trace through delivery, history, reload, and debug lookup, while old sessions after backend restart still fail honestly with a precise expired-trace reason. This is sufficient for `accepted_with_warning` under PRD-047.36-HF4 because fresh chats are fully restored and the old-session limitation is explicitly labeled instead of being confused with a fresh-trace failure. The next step is not another trace hotfix; it is rerunning the owner readiness freeze on the repaired baseline.
 ## ADR-092 - Exact trace lookup must stay candidate-scoped and missing trace must be explicit in owner/dev mode
 
 Status: accepted

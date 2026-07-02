@@ -4,7 +4,8 @@
 PRD-047.39 is the first architecture-consolidation stage after the accepted PRD-047.38 automated gate. It stays inventory-first and non-runtime: no active `bot_agent/`, `api/`, or `web_ui/src/` runtime behavior, Writer prompt, retrieval ranking, safety logic, Bot_data_base, Chroma, registry, processed blocks, or source documents are changed.
 
 Current result:
-- status is `accepted_with_warnings_candidate` until main commit/push;
+- status is `accepted_with_warnings`;
+- main implementation commit: `3c9cf15faac3f0f31b49af58bad63939cfdbf78c`;
 - legacy inventory covers `14` retired/legacy candidates;
 - env/flag inventory found `103` env/config flags;
 - god-file inventory found `55` files over 500 lines under multiagent/API scope;

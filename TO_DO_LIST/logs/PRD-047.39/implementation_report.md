@@ -2,7 +2,7 @@
 
 Date: 2026-07-02
 Status: `accepted_with_warnings`
-Main commit: `pending_main_commit`
+Main commit: `3c9cf15faac3f0f31b49af58bad63939cfdbf78c`
 
 ## Scope Delivered
 - Added repo-level inventory runner: `tools/run_prd_047_39_architecture_inventory.py`.

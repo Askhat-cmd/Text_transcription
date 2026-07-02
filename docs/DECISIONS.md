@@ -6,6 +6,8 @@ Status: accepted
 
 Date: 2026-07-02
 
+Delivery: PRD-047.39 accepted with warnings in main commit `3c9cf15faac3f0f31b49af58bad63939cfdbf78c`.
+
 Context: PRD-047.38 accepted the current architecture with warnings and allowed the project to move out of the hotfix loop. The next risk is over-cleanup: deleting legacy-looking runtime code, flags, logs, or evidence without proof would make regressions harder to attribute.
 
 Decision:

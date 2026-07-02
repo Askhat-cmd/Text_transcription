@@ -305,6 +305,11 @@ class WriterContract:
             if isinstance(writer_context_package.get("writer_kb_payload_trace"), dict)
             else {}
         )
+        boundary_trace = (
+            dict(writer_context_package.get("boundary_trace_v1", {}))
+            if isinstance(writer_context_package.get("boundary_trace_v1"), dict)
+            else {}
+        )
         runtime_truth_trace = (
             dict(writer_context_package.get("runtime_truth_trace_v1", {}))
             if isinstance(writer_context_package.get("runtime_truth_trace_v1"), dict)
@@ -525,6 +530,7 @@ class WriterContract:
             "writer_kb_payload_failure_reason": writer_kb_payload_failure_reason,
             "writer_kb_payload": writer_kb_payload,
             "writer_kb_payload_trace": writer_kb_payload_trace,
+            "boundary_trace_v1": boundary_trace,
             "runtime_truth_trace_v1": runtime_truth_trace,
             "hidden_knowledge_competence_v1": hidden_knowledge_competence,
             "writer_kb_payload_trace_version": str(

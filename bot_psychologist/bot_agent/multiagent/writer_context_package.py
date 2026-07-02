@@ -10,6 +10,7 @@ from ..knowledge.semantic_card_payload_adapter import (
     build_semantic_cards_pilot_selection,
     get_semantic_cards_pilot_config,
 )
+from .boundary_trace import build_boundary_trace_v1
 from .creator_live_behavior_guard import REQUEST_TYPE_PRACTICE, detect_request_type_v1
 from .contracts.context_package import ContextAssemblyPackage
 from .contracts.memory_bundle import MemoryBundle
@@ -1284,6 +1285,14 @@ def build_writer_context_package_v1(
         narrow_practice_grounding_active=narrow_practice_grounding_active,
         fallback_reason=fallback_reason,
     )
+    boundary_trace = build_boundary_trace_v1(
+        latest_turn_constraints=constraints,
+        writer_grounding_visibility=writer_grounding_visibility,
+        writer_kb_payload_trace=writer_kb_payload_trace,
+        runtime_truth_trace=runtime_truth_trace,
+    )
+    runtime_truth_trace = dict(runtime_truth_trace)
+    runtime_truth_trace["boundary_trace_v1"] = boundary_trace
     future_graduation_notes = build_future_graduation_notes(
         payload=writer_kb_payload,
         trace=writer_kb_payload_trace,
@@ -1327,6 +1336,7 @@ def build_writer_context_package_v1(
         "writer_grounding_visibility_v1": writer_grounding_visibility,
         "writer_grounding_authority_note": build_writer_grounding_authority_note_v1(),
         "latest_turn_constraints_v1": constraints,
+        "boundary_trace_v1": boundary_trace,
         "retrieval_gate_recovery_applied": retrieval_gate_recovery_applied,
         "retrieval_context": {
             "retrieval_action": str(

@@ -96,6 +96,21 @@ def _extract_acceptance_gate(trace: dict[str, Any]) -> dict[str, Any]:
     return _safe_dict(writer.get("final_answer_acceptance_gate"))
 
 
+def _extract_boundary_trace(trace: dict[str, Any]) -> dict[str, Any]:
+    direct = _safe_dict(trace.get("boundary_trace_v1"))
+    if direct:
+        return direct
+    runtime_summary = _safe_dict(trace.get("runtime_trace_summary_v1"))
+    nested = _safe_dict(runtime_summary.get("boundary_trace_v1"))
+    if nested:
+        return nested
+    runtime_truth = _safe_dict(trace.get("runtime_truth_trace_v1"))
+    nested = _safe_dict(runtime_truth.get("boundary_trace_v1"))
+    if nested:
+        return nested
+    return {}
+
+
 def _selected_reason_map(candidate_scores: list[Any], selected_ids: list[str]) -> dict[str, list[str]]:
     selected = set(selected_ids)
     reason_map: dict[str, list[str]] = {}
@@ -180,7 +195,10 @@ def _build_turn_record(
     semantic_cards = _safe_dict(trace.get("semantic_cards_pilot"))
     retrieval = _safe_dict(trace.get("retrieval_decision"))
     composer = _safe_dict(retrieval.get("contextual_retrieval_query_composer") or retrieval.get("composer"))
+    boundary_trace = _extract_boundary_trace(trace)
     latest_turn_constraints = _safe_dict(trace.get("latest_turn_constraints_v1"))
+    if not latest_turn_constraints:
+        latest_turn_constraints = _safe_dict(_safe_dict(trace.get("runtime_trace_summary_v1")).get("latest_turn_constraints_v1"))
     runtime_summary = _safe_dict(trace.get("runtime_trace_summary_v1"))
     source_trace = _safe_dict(runtime_truth.get("source_chunk_match_trace_v1"))
     availability = _safe_dict(trace.get("trace_availability"))
@@ -213,11 +231,13 @@ def _build_turn_record(
         if runtime_truth.get("writer_visible_payload_count") is not None
         else _safe_int(payload_trace.get("payload_chunk_count"), 0)
     )
-    boundary_flags = [
-        flag
-        for flag in ("no_internal_db", "no_practice", "simplify", "contact_mode")
-        if bool(latest_turn_constraints.get(flag, False))
-    ]
+    boundary_flags = [str(item) for item in _safe_list(boundary_trace.get("boundary_flags")) if str(item).strip()]
+    if not boundary_flags:
+        boundary_flags = [
+            flag
+            for flag in ("no_internal_db", "no_practice", "simplify", "contact_mode")
+            if bool(latest_turn_constraints.get(flag, False))
+        ]
     return {
         "scenario_id": scenario_id,
         "scenario_label": scenario_label,
@@ -245,6 +265,7 @@ def _build_turn_record(
         "selected_card_ids": selected_card_ids,
         "selected_card_reasons": selected_reasons,
         "selected_card_status": str(semantic_cards.get("status", "") or ""),
+        "boundary_trace_v1": boundary_trace,
         "boundary_flags": boundary_flags,
         "latest_turn_constraints_v1": latest_turn_constraints,
         "runtime_truth_trace_v1": runtime_truth,

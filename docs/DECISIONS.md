@@ -1525,3 +1525,22 @@ Consequences:
 - Hybrid Planner shadow failures remain observable without being confused with production answer failure;
 - future cleanup should retire legacy/fallback fields only after trace taxonomy proves which ones are still active.
 
+## ADR-081 - Latest-turn boundary proof must be a stable owner/debug contract, not an inferred side effect
+
+Status: accepted
+
+Date: 2026-07-02
+
+Context: PRD-047.36-POST-HF showed that explicit `no_internal_db` and `no_practice` were already being honored in runtime behavior, but owner/debug trace could not prove that reliably because the evidence was split across `latest_turn_constraints_v1`, grounding reason strings, and nested runtime summary fields. The readiness runner then collapsed `boundary_flags` to empty even on correctly suppressed turns.
+
+Decision:
+- add a single stable `boundary_trace_v1` owner/debug contract;
+- propagate it through final directive, writer context package, runtime truth trace, runtime summary, orchestrator debug payload, and debug API response;
+- let runners and Web/owner tools read this contract first instead of reconstructing boundary state from incidental fields;
+- keep the contract read-only and owner/debug only, without changing public answer wording or adding a new runtime path.
+
+Consequences:
+- explicit latest-turn boundaries become provable end-to-end for owner/debug inspection;
+- readiness gates no longer depend on fragile field inference;
+- runtime behavior, retrieval ranking, DB/Chroma state, and semantic-card authority remain unchanged.
+

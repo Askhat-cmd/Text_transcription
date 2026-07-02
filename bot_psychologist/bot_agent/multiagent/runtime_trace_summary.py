@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from .boundary_trace import build_boundary_trace_v1
 from .latest_turn_constraints import active_latest_turn_constraint_names
 
 
@@ -254,6 +255,16 @@ def build_runtime_trace_summary_v1(
                 "hidden_knowledge_competence_v1": hidden_knowledge_competence,
             }
         )
+    boundary_trace = build_boundary_trace_v1(
+        latest_turn_constraints=latest_turn_constraints,
+        writer_grounding_visibility=writer_grounding_visibility,
+        writer_kb_payload_trace=writer_kb_payload_trace,
+        final_answer_directive=directive,
+        runtime_truth_trace=runtime_truth_trace,
+    )
+    if runtime_truth_trace:
+        runtime_truth_trace = dict(runtime_truth_trace)
+        runtime_truth_trace["boundary_trace_v1"] = boundary_trace
 
     latest_turn_authority = {
         "latest_turn_authority_version": LATEST_TURN_AUTHORITY_VERSION,
@@ -277,6 +288,7 @@ def build_runtime_trace_summary_v1(
         "entrypoint": str(entrypoint or "multiagent_adapter"),
         "latest_turn_constraints": active_constraints,
         "latest_turn_constraints_v1": latest_turn_constraints,
+        "boundary_trace_v1": boundary_trace,
         "writer_grounding_visibility_v1": writer_grounding_visibility,
         "kb_visible_to_writer": kb_visible_to_writer,
         "semantic_cards_visible_to_writer": semantic_cards_visible_to_writer,

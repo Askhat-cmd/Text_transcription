@@ -6,6 +6,7 @@ import re
 from dataclasses import dataclass
 from typing import Any
 
+from .boundary_trace import build_boundary_trace_v1
 from .dialogue_policy import (
     DIALOGUE_PROFILE_MVP_FREE,
     normalize_dialogue_profile,
@@ -96,6 +97,7 @@ class FinalAnswerDirective:
     advisory_context: dict[str, Any]
     suppressed_legacy_constraints: list[str]
     latest_turn_constraints_v1: dict[str, Any]
+    boundary_trace_v1: dict[str, Any]
     source_signals: dict[str, Any]
     conflict_resolution: dict[str, Any]
 
@@ -142,6 +144,7 @@ class FinalAnswerDirective:
             "advisory_context": dict(self.advisory_context),
             "suppressed_legacy_constraints": list(self.suppressed_legacy_constraints),
             "latest_turn_constraints_v1": dict(self.latest_turn_constraints_v1),
+            "boundary_trace_v1": dict(self.boundary_trace_v1),
             "source_signals": dict(self.source_signals),
             "conflict_resolution": dict(self.conflict_resolution),
         }
@@ -818,6 +821,12 @@ def build_final_answer_directive_v1(
         },
         suppressed_legacy_constraints=_suppressed_constraints(profile=profile, safety_active=safety_active),
         latest_turn_constraints_v1=latest_turn_constraints,
+        boundary_trace_v1=build_boundary_trace_v1(
+            latest_turn_constraints=latest_turn_constraints,
+            final_answer_directive={
+                "practice_policy": practice_policy,
+            },
+        ),
         source_signals={
             "dialogue_pragmatics": pragmatics,
             "dialogue_act_resolution": dict(policy.get("dialogue_act_resolution", {})) if isinstance(policy.get("dialogue_act_resolution"), dict) else {},

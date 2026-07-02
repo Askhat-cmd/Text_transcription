@@ -1,0 +1,782 @@
+{
+  "schema_version": "prd_047_36_hf6_boundary_trace_integrity_v1",
+  "created_at": "2026-07-02T09:25:44",
+  "backend_health_status": 200,
+  "backend_health_payload": {
+    "status": "healthy",
+    "version": "0.6.1",
+    "timestamp": "2026-07-02T09:23:58.064797",
+    "data_source": "api",
+    "blocks_loaded": 247,
+    "bot_data_base_api": "available",
+    "modules": {
+      "bot_agent": true,
+      "conversation_memory": true,
+      "state_classifier": true,
+      "path_builder": true,
+      "api": true
+    }
+  },
+  "overall_verdict": "PASS",
+  "scenarios": {
+    "G5": {
+      "verdict": "PASS",
+      "reasons": [],
+      "row": {
+        "scenario_id": "HF6-G5",
+        "session_id": "HF6-G5-4d657e6d",
+        "turn_index": 1,
+        "query": "Ответь без internal DB и без Нейросталкинга. Просто по-человечески: что такое самореализация?",
+        "answer_preview": "Самореализация — это процесс раскрытия и использования своих внутренних возможностей и ценностей так, чтобы жизнь ощущалась осмысленной и соответствовала тому, кем ты хочешь быть. Проще: это когда ты делаешь то, что важно для тебя, и ста...",
+        "answer": "Самореализация — это процесс раскрытия и использования своих внутренних возможностей и ценностей так, чтобы жизнь ощущалась осмысленной и соответствовала тому, кем ты хочешь быть. Проще: это когда ты делаешь то, что важно для тебя, и становишься более цельной версией себя.\n\nЭто не обязательно про великие достижения — иногда самореализация проходит через маленькие вещи: выбирать работу, которая даёт смысл, развивать способности, которые приносят радость, строить отношения в согласии с собой, или следовать своим принципам. Главный механизм — согласование действий с внутренними убеждениями и талантами; он защищает от ощущения пустоты и внешней «жёсткой» жизни по чужим ожиданиям.\n\nПример: человек всегда любил рисовать, но работал в бухгалтерии ради стабильности. Когда он начинает выделять время на творчество, учится и показывает работы, он чувствует больше энергии и целеустремлённости — это и есть часть самореализации.\n\nХочешь, я помогу сформулировать, какие для тебя важны ценности или что приносит ощущение смысла.",
+        "trace_available": true,
+        "trace_availability": {
+          "status": "available",
+          "requested_turn_index": 1,
+          "resolved_turn_index": 1,
+          "exact_turn_match": true,
+          "reason_code": null,
+          "reason": null,
+          "resolved_session_id": "HF6-G5-4d657e6d",
+          "searched_trace_keys": [
+            "HF6-G5-4d657e6d"
+          ],
+          "available_trace_keys": [
+            "HF6-G5-3cf28354",
+            "HF6-G5-4d657e6d",
+            "HF6-G5G6-ef68d1ce",
+            "HF6-G6-d1495a24",
+            "HF6-fresh-g5-6ade8d34",
+            "HF6-fresh-g6-3ab24730",
+            "HF6-greeting-4aa2d25c",
+            "prd-047-36-hf6-followup-d113404e"
+          ],
+          "available_turn_indices": [
+            1
+          ]
+        },
+        "boundary_trace_v1": {
+          "version": "boundary_trace_v1",
+          "latest_turn_constraints": {
+            "no_internal_db": true,
+            "no_practice": false,
+            "no_breathing_only": false,
+            "simplify": false
+          },
+          "boundary_flags": [
+            "no_internal_db"
+          ],
+          "boundary_sources": {
+            "no_internal_db": "latest_user_request",
+            "no_practice": "not_detected"
+          },
+          "applied_suppressions": {
+            "writer_kb_payload_suppressed": true,
+            "semantic_cards_writer_visible_suppressed": true,
+            "practice_suggestion_suppressed": false
+          },
+          "suppression_reasons": [
+            "latest_turn_no_internal_db",
+            "forbidden"
+          ],
+          "writer_directive_ack": {
+            "no_internal_db": true,
+            "no_practice": false
+          },
+          "writer_payload_count": 0,
+          "kb_visible_to_writer": false,
+          "semantic_cards_visible_to_writer": false,
+          "grounding_reason": "latest_turn_no_internal_db",
+          "practice_policy": "forbidden",
+          "public_violation_detected": false
+        },
+        "boundary_flags": [
+          "no_internal_db"
+        ],
+        "latest_turn_constraints": {
+          "no_internal_db": true,
+          "no_practice": false,
+          "no_breathing_only": false,
+          "simplify": false
+        },
+        "writer_payload_count": 0,
+        "semantic_cards_writer_visible": false,
+        "practice_suggestion_visible": false,
+        "suppression_reason": [
+          "latest_turn_no_internal_db",
+          "forbidden"
+        ],
+        "public_violation_detected": false,
+        "grounding_reason": "latest_turn_no_internal_db",
+        "retrieval_action": "query_kb",
+        "semantic_cards_status": "suppressed"
+      }
+    },
+    "G6": {
+      "verdict": "PASS",
+      "reasons": [],
+      "row": {
+        "scenario_id": "HF6-G6",
+        "session_id": "HF6-G6-e508e64e",
+        "turn_index": 1,
+        "query": "Объясни, почему я злюсь на себя, но без практик и упражнений.",
+        "answer_preview": "Потому что основная эмоция, которую вы пытаетесь удержать или скрыть — это уязвимость (стыд, страх, бессилие), и ваша психика превращает её в злость на себя: злость легче пережить, чем бессилие. Простой механизм: внутренний критик перево...",
+        "answer": "Потому что основная эмоция, которую вы пытаетесь удержать или скрыть — это уязвимость (стыд, страх, бессилие), и ваша психика превращает её в злость на себя: злость легче пережить, чем бессилие.  \n\nПростой механизм: внутренний критик переводит неприятное ощущение «я уязвим/я сделал ошибку» в «я плохой/я недостоин», а злость даёт ощущение контроля и дистанции. Эта злость защищает от чувства беспомощности и от страха потерять статус или самооценку — она как щит, который не пускает вглубь более болезненные ощущения.  \n\nОдин полезный следующий шаг — спросите себя прямо: «Что я боюсь почувствовать, если перестану винить себя. »",
+        "trace_available": true,
+        "trace_availability": {
+          "status": "available",
+          "requested_turn_index": 1,
+          "resolved_turn_index": 1,
+          "exact_turn_match": true,
+          "reason_code": null,
+          "reason": null,
+          "resolved_session_id": "HF6-G6-e508e64e",
+          "searched_trace_keys": [
+            "HF6-G6-e508e64e"
+          ],
+          "available_trace_keys": [
+            "HF6-G5-3cf28354",
+            "HF6-G5-4d657e6d",
+            "HF6-G5G6-ef68d1ce",
+            "HF6-G6-d1495a24",
+            "HF6-G6-e508e64e",
+            "HF6-fresh-g5-6ade8d34",
+            "HF6-fresh-g6-3ab24730",
+            "HF6-greeting-4aa2d25c",
+            "prd-047-36-hf6-followup-d113404e"
+          ],
+          "available_turn_indices": [
+            1
+          ]
+        },
+        "boundary_trace_v1": {
+          "version": "boundary_trace_v1",
+          "latest_turn_constraints": {
+            "no_internal_db": false,
+            "no_practice": true,
+            "no_breathing_only": false,
+            "simplify": false
+          },
+          "boundary_flags": [
+            "no_practice"
+          ],
+          "boundary_sources": {
+            "no_internal_db": "not_detected",
+            "no_practice": "latest_user_request"
+          },
+          "applied_suppressions": {
+            "writer_kb_payload_suppressed": false,
+            "semantic_cards_writer_visible_suppressed": false,
+            "practice_suggestion_suppressed": true
+          },
+          "suppression_reasons": [
+            "support_or_pushback_turn_trace_only",
+            "forbidden_explicit_latest_turn"
+          ],
+          "writer_directive_ack": {
+            "no_internal_db": false,
+            "no_practice": true
+          },
+          "writer_payload_count": 0,
+          "kb_visible_to_writer": false,
+          "semantic_cards_visible_to_writer": false,
+          "grounding_reason": "support_or_pushback_turn_trace_only",
+          "practice_policy": "forbidden_explicit_latest_turn",
+          "public_violation_detected": false
+        },
+        "boundary_flags": [
+          "no_practice"
+        ],
+        "latest_turn_constraints": {
+          "no_internal_db": false,
+          "no_practice": true,
+          "no_breathing_only": false,
+          "simplify": false
+        },
+        "writer_payload_count": 0,
+        "semantic_cards_writer_visible": false,
+        "practice_suggestion_visible": false,
+        "suppression_reason": [
+          "support_or_pushback_turn_trace_only",
+          "forbidden_explicit_latest_turn"
+        ],
+        "public_violation_detected": false,
+        "grounding_reason": "support_or_pushback_turn_trace_only",
+        "retrieval_action": "query_kb",
+        "semantic_cards_status": "trace_only"
+      }
+    },
+    "G5G6": {
+      "verdict": "PASS",
+      "reasons": [],
+      "row": {
+        "scenario_id": "HF6-G5G6",
+        "session_id": "HF6-G5G6-8b25a242",
+        "turn_index": 1,
+        "query": "Ответь без internal DB, без Нейросталкинга и без практик: почему я всё понимаю, но снова наступаю на те же грабли?",
+        "answer_preview": "Потому что понимание — это сознательное знание, а привычки работают на автомате: мозг/эмоции запускают старую реакцию в знакомом контексте, потому что она раньше служила защитой или давала быстрый результат. То есть ты можешь «знать» пут...",
+        "answer": "Потому что понимание — это сознательное знание, а привычки работают на автомате: мозг/эмоции запускают старую реакцию в знакомом контексте, потому что она раньше служила защитой или давала быстрый результат. То есть ты можешь «знать» путь, но в момент триггера включается старый скрипт — он экономит усилия и защищает от неопределённости, даже если итог нежелательный.\n\nГлавная мысль: повторение — не про интеллект, а про автоматизм и функцию защиты (устойчивость, предсказуемость, снижение тревоги). Частые подводные причины — сильный эмоциональный триггер, привычная среда, отсутствие чёткого плана замены поведения, и самооценочные истории («я такой/такая»), которые возвращают к старому.\n\nОдин вопрос для прояснения: в какой конкретной ситуации это случается чаще — в отношениях, на работе или с собой.",
+        "trace_available": true,
+        "trace_availability": {
+          "status": "available",
+          "requested_turn_index": 1,
+          "resolved_turn_index": 1,
+          "exact_turn_match": true,
+          "reason_code": null,
+          "reason": null,
+          "resolved_session_id": "HF6-G5G6-8b25a242",
+          "searched_trace_keys": [
+            "HF6-G5G6-8b25a242"
+          ],
+          "available_trace_keys": [
+            "HF6-G5-3cf28354",
+            "HF6-G5-4d657e6d",
+            "HF6-G5G6-8b25a242",
+            "HF6-G5G6-ef68d1ce",
+            "HF6-G6-d1495a24",
+            "HF6-G6-e508e64e",
+            "HF6-fresh-g5-6ade8d34",
+            "HF6-fresh-g6-3ab24730",
+            "HF6-greeting-4aa2d25c",
+            "prd-047-36-hf6-followup-d113404e"
+          ],
+          "available_turn_indices": [
+            1
+          ]
+        },
+        "boundary_trace_v1": {
+          "version": "boundary_trace_v1",
+          "latest_turn_constraints": {
+            "no_internal_db": true,
+            "no_practice": true,
+            "no_breathing_only": false,
+            "simplify": false
+          },
+          "boundary_flags": [
+            "no_internal_db",
+            "no_practice"
+          ],
+          "boundary_sources": {
+            "no_internal_db": "latest_user_request",
+            "no_practice": "latest_user_request"
+          },
+          "applied_suppressions": {
+            "writer_kb_payload_suppressed": true,
+            "semantic_cards_writer_visible_suppressed": true,
+            "practice_suggestion_suppressed": true
+          },
+          "suppression_reasons": [
+            "latest_turn_no_internal_db",
+            "forbidden_explicit_latest_turn"
+          ],
+          "writer_directive_ack": {
+            "no_internal_db": true,
+            "no_practice": true
+          },
+          "writer_payload_count": 0,
+          "kb_visible_to_writer": false,
+          "semantic_cards_visible_to_writer": false,
+          "grounding_reason": "latest_turn_no_internal_db",
+          "practice_policy": "forbidden_explicit_latest_turn",
+          "public_violation_detected": false
+        },
+        "boundary_flags": [
+          "no_internal_db",
+          "no_practice"
+        ],
+        "latest_turn_constraints": {
+          "no_internal_db": true,
+          "no_practice": true,
+          "no_breathing_only": false,
+          "simplify": false
+        },
+        "writer_payload_count": 0,
+        "semantic_cards_writer_visible": false,
+        "practice_suggestion_visible": false,
+        "suppression_reason": [
+          "latest_turn_no_internal_db",
+          "forbidden_explicit_latest_turn"
+        ],
+        "public_violation_detected": false,
+        "grounding_reason": "latest_turn_no_internal_db",
+        "retrieval_action": "query_kb",
+        "semantic_cards_status": "suppressed"
+      }
+    },
+    "followup": {
+      "verdict": "PASS",
+      "reasons": [],
+      "rows": [
+        {
+          "scenario_id": "HF6-control-followup",
+          "session_id": "prd-047-36-hf6-followup-49bc56b4",
+          "turn_index": 1,
+          "query": "что такое самореализация?",
+          "answer_preview": "Самореализация — это процесс раскрытия и использования своих способностей, ценностей и стремлений так, чтобы жить в соответствии с тем, кем ты действительно хочешь быть. Проще: становиться собой и делать то, что даёт смысл и ощущение пол...",
+          "answer": "Самореализация — это процесс раскрытия и использования своих способностей, ценностей и стремлений так, чтобы жить в соответствии с тем, кем ты действительно хочешь быть. Проще: становиться собой и делать то, что даёт смысл и ощущение полноты жизни.\n\nГлавный механизм — согласование действий с личными ценностями и потенциалом: поступки и выборы постепенно формируют опыт, который подтверждает, что ты растёшь в нужном направлении. Эта механика защищает от чувства пустоты и стагнации — она помогает избежать жизни «по чужим сценариям» и хронического ощущения, что время теряется.\n\nЕсли хочешь, могу помочь кратко определить, что для тебя значило бы «быть реализованным» — что было бы признаком самореализации в твоей жизни.",
+          "trace_available": true,
+          "trace_availability": {
+            "status": "available",
+            "requested_turn_index": 1,
+            "resolved_turn_index": 1,
+            "exact_turn_match": true,
+            "reason_code": null,
+            "reason": null,
+            "resolved_session_id": "prd-047-36-hf6-followup-49bc56b4",
+            "searched_trace_keys": [
+              "prd-047-36-hf6-followup-49bc56b4"
+            ],
+            "available_trace_keys": [
+              "HF6-G5-3cf28354",
+              "HF6-G5-4d657e6d",
+              "HF6-G5G6-8b25a242",
+              "HF6-G5G6-ef68d1ce",
+              "HF6-G6-d1495a24",
+              "HF6-G6-e508e64e",
+              "HF6-fresh-g5-6ade8d34",
+              "HF6-fresh-g6-3ab24730",
+              "HF6-greeting-4aa2d25c",
+              "prd-047-36-hf6-followup-49bc56b4",
+              "prd-047-36-hf6-followup-d113404e"
+            ],
+            "available_turn_indices": [
+              1
+            ]
+          },
+          "boundary_trace_v1": {
+            "version": "boundary_trace_v1",
+            "latest_turn_constraints": {
+              "no_internal_db": false,
+              "no_practice": false,
+              "no_breathing_only": false,
+              "simplify": false
+            },
+            "boundary_flags": [],
+            "boundary_sources": {
+              "no_internal_db": "not_detected",
+              "no_practice": "not_detected"
+            },
+            "applied_suppressions": {
+              "writer_kb_payload_suppressed": false,
+              "semantic_cards_writer_visible_suppressed": false,
+              "practice_suggestion_suppressed": false
+            },
+            "suppression_reasons": [
+              "direct_knowledge_question",
+              "structured_payload_used",
+              "forbidden"
+            ],
+            "writer_directive_ack": {
+              "no_internal_db": false,
+              "no_practice": false
+            },
+            "writer_payload_count": 2,
+            "kb_visible_to_writer": true,
+            "semantic_cards_visible_to_writer": true,
+            "grounding_reason": "direct_knowledge_question",
+            "practice_policy": "forbidden",
+            "public_violation_detected": false
+          },
+          "boundary_flags": [],
+          "latest_turn_constraints": {
+            "no_internal_db": false,
+            "no_practice": false,
+            "no_breathing_only": false,
+            "simplify": false
+          },
+          "writer_payload_count": 2,
+          "semantic_cards_writer_visible": true,
+          "practice_suggestion_visible": false,
+          "suppression_reason": [
+            "direct_knowledge_question",
+            "structured_payload_used",
+            "forbidden"
+          ],
+          "public_violation_detected": false,
+          "grounding_reason": "direct_knowledge_question",
+          "retrieval_action": "query_kb",
+          "semantic_cards_status": "selected"
+        },
+        {
+          "scenario_id": "HF6-control-followup",
+          "session_id": "prd-047-36-hf6-followup-49bc56b4",
+          "turn_index": 2,
+          "query": "да мне хочется понять как \"программа несовершенное Я\" влияет на это",
+          "answer_preview": "Коротко: главная механика «программы несовершенное Я» — это фильтр, который постоянно читает твой опыт как подтверждение «со мной что‑то не так», и через это меняет то, что ты делаешь. Что это делает на практике (одно‑два примера): - Реш...",
+          "answer": "Коротко: главная механика «программы несовершенное Я» — это фильтр, который постоянно читает твой опыт как подтверждение «со мной что‑то не так», и через это меняет то, что ты делаешь.\n\nЧто это делает на практике (одно‑два примера):\n- Решения и цели: ты склонен либо занижать цели, либо требовать идеала, потому что страх «не соответствую» переводит выбор в режим безопасности или прокрастинации.\n- Ощущение прогресса: даже успехи воспринимаются как случайность или недостаточные, так что самореализация теряет смысл.\n- Поведение: чаще уход в самокритику, сравнение, избегание видимости своей уязвимости — это блокирует пробу нового и развитие.\n\nЧто она защищает: от чувства отвержения и унижения. Программа держит тебя маленьким или сверхконтролирующим, потому что маленький — значит безопасный: меньше шансов быть «неподходящим» и получить отказ.\n\nОдна полезная и простая подсказка: заметить, как часто внутренний голос трактует событие как «я недостаточен» вместо нейтрального описания факта. Хотел бы сказать, где ты это чаще замечаешь — в работе, в отношениях или где-то ещё?",
+          "trace_available": true,
+          "trace_availability": {
+            "status": "available",
+            "requested_turn_index": 2,
+            "resolved_turn_index": 2,
+            "exact_turn_match": true,
+            "reason_code": null,
+            "reason": null,
+            "resolved_session_id": "prd-047-36-hf6-followup-49bc56b4",
+            "searched_trace_keys": [
+              "prd-047-36-hf6-followup-49bc56b4"
+            ],
+            "available_trace_keys": [
+              "HF6-G5-3cf28354",
+              "HF6-G5-4d657e6d",
+              "HF6-G5G6-8b25a242",
+              "HF6-G5G6-ef68d1ce",
+              "HF6-G6-d1495a24",
+              "HF6-G6-e508e64e",
+              "HF6-fresh-g5-6ade8d34",
+              "HF6-fresh-g6-3ab24730",
+              "HF6-greeting-4aa2d25c",
+              "prd-047-36-hf6-followup-49bc56b4",
+              "prd-047-36-hf6-followup-d113404e"
+            ],
+            "available_turn_indices": [
+              1,
+              2
+            ]
+          },
+          "boundary_trace_v1": {
+            "version": "boundary_trace_v1",
+            "latest_turn_constraints": {
+              "no_internal_db": false,
+              "no_practice": false,
+              "no_breathing_only": false,
+              "simplify": false
+            },
+            "boundary_flags": [],
+            "boundary_sources": {
+              "no_internal_db": "not_detected",
+              "no_practice": "not_detected"
+            },
+            "applied_suppressions": {
+              "writer_kb_payload_suppressed": false,
+              "semantic_cards_writer_visible_suppressed": false,
+              "practice_suggestion_suppressed": false
+            },
+            "suppression_reasons": [
+              "direct_concept_followup",
+              "structured_payload_used",
+              "forbidden_latest_turn_contact_mode"
+            ],
+            "writer_directive_ack": {
+              "no_internal_db": false,
+              "no_practice": false
+            },
+            "writer_payload_count": 2,
+            "kb_visible_to_writer": true,
+            "semantic_cards_visible_to_writer": true,
+            "grounding_reason": "direct_concept_followup",
+            "practice_policy": "forbidden_latest_turn_contact_mode",
+            "public_violation_detected": false
+          },
+          "boundary_flags": [],
+          "latest_turn_constraints": {
+            "no_internal_db": false,
+            "no_practice": false,
+            "no_breathing_only": false,
+            "simplify": false
+          },
+          "writer_payload_count": 2,
+          "semantic_cards_writer_visible": true,
+          "practice_suggestion_visible": false,
+          "suppression_reason": [
+            "direct_concept_followup",
+            "structured_payload_used",
+            "forbidden_latest_turn_contact_mode"
+          ],
+          "public_violation_detected": false,
+          "grounding_reason": "direct_concept_followup",
+          "retrieval_action": "query_kb",
+          "semantic_cards_status": "selected"
+        }
+      ]
+    },
+    "greeting": {
+      "verdict": "PASS",
+      "reasons": [],
+      "row": {
+        "scenario_id": "HF6-greeting",
+        "session_id": "HF6-greeting-d8513047",
+        "turn_index": 1,
+        "query": "привет",
+        "answer_preview": "Привет — рад(а) тебя видеть. Коротко: это приветствие — простой способ установить контакт и почувствовать, что с тобой кто-то рядом (оно защищает от ощущения одиночества). Хочешь чуть подробнее — как у тебя дела сейчас?",
+        "answer": "Привет — рад(а) тебя видеть. Коротко: это приветствие — простой способ установить контакт и почувствовать, что с тобой кто-то рядом (оно защищает от ощущения одиночества). Хочешь чуть подробнее — как у тебя дела сейчас?",
+        "trace_available": true,
+        "trace_availability": {
+          "status": "available",
+          "requested_turn_index": 1,
+          "resolved_turn_index": 1,
+          "exact_turn_match": true,
+          "reason_code": null,
+          "reason": null,
+          "resolved_session_id": "HF6-greeting-d8513047",
+          "searched_trace_keys": [
+            "HF6-greeting-d8513047"
+          ],
+          "available_trace_keys": [
+            "HF6-G5-3cf28354",
+            "HF6-G5-4d657e6d",
+            "HF6-G5G6-8b25a242",
+            "HF6-G5G6-ef68d1ce",
+            "HF6-G6-d1495a24",
+            "HF6-G6-e508e64e",
+            "HF6-fresh-g5-6ade8d34",
+            "HF6-fresh-g6-3ab24730",
+            "HF6-greeting-4aa2d25c",
+            "HF6-greeting-d8513047",
+            "prd-047-36-hf6-followup-49bc56b4",
+            "prd-047-36-hf6-followup-d113404e"
+          ],
+          "available_turn_indices": [
+            1
+          ]
+        },
+        "boundary_trace_v1": {
+          "version": "boundary_trace_v1",
+          "latest_turn_constraints": {
+            "no_internal_db": false,
+            "no_practice": false,
+            "no_breathing_only": false,
+            "simplify": false
+          },
+          "boundary_flags": [],
+          "boundary_sources": {
+            "no_internal_db": "not_detected",
+            "no_practice": "not_detected"
+          },
+          "applied_suppressions": {
+            "writer_kb_payload_suppressed": false,
+            "semantic_cards_writer_visible_suppressed": false,
+            "practice_suggestion_suppressed": false
+          },
+          "suppression_reasons": [
+            "greeting_or_contact",
+            "forbidden"
+          ],
+          "writer_directive_ack": {
+            "no_internal_db": false,
+            "no_practice": false
+          },
+          "writer_payload_count": 0,
+          "kb_visible_to_writer": false,
+          "semantic_cards_visible_to_writer": false,
+          "grounding_reason": "greeting_or_contact",
+          "practice_policy": "forbidden",
+          "public_violation_detected": false
+        },
+        "boundary_flags": [],
+        "latest_turn_constraints": {
+          "no_internal_db": false,
+          "no_practice": false,
+          "no_breathing_only": false,
+          "simplify": false
+        },
+        "writer_payload_count": 0,
+        "semantic_cards_writer_visible": false,
+        "practice_suggestion_visible": false,
+        "suppression_reason": [
+          "greeting_or_contact",
+          "forbidden"
+        ],
+        "public_violation_detected": false,
+        "grounding_reason": "greeting_or_contact",
+        "retrieval_action": "suppress_rag",
+        "semantic_cards_status": "trace_only"
+      }
+    },
+    "fresh_trace_after_restart": {
+      "verdict": "PASS",
+      "reasons": [],
+      "rows": [
+        {
+          "scenario_id": "HF6-fresh-g5",
+          "session_id": "HF6-fresh-g5-ea2b37ca",
+          "turn_index": 1,
+          "query": "Ответь без internal DB и без Нейросталкинга. Просто по-человечески: что такое самореализация?",
+          "answer_preview": "Самореализация — это процесс жить в соответствии со своими глубинными способностями, ценностями и стремлениями: не просто делать что-то, а делать то, что действительно откликается внутри и приносит ощущение смысла. Проще говоря — раскрыв...",
+          "answer": "Самореализация — это процесс жить в соответствии со своими глубинными способностями, ценностями и стремлениями: не просто делать что-то, а делать то, что действительно откликается внутри и приносит ощущение смысла. Проще говоря — раскрывать и применять свои таланты и выборы так, чтобы чувствовать себя цельным и полезным.\n\nЗащищающий механизм здесь — фильтр: он помогает отличать внешние ожидания и автоматические привычки от того, что по-настоящему твоё; когда он работает, ты меньше поддаёшься давлению «так надо» и больше действуешь из внутреннего согласия, что сохраняет мотивацию и снижает выгорание. Пример: человек может иметь стабильную работу, но чувствовать пустоту; самореализация приведёт его к деятельности (хобби, проекту, смене профессии), где он использует сильные стороны и ощущает смысл.\n\nХочешь, помогу сформулировать пару простых вопросов, которые прояснят, в каких сферах тебе важнее всего чувствовать самореализацию.",
+          "trace_available": true,
+          "trace_availability": {
+            "status": "available",
+            "requested_turn_index": 1,
+            "resolved_turn_index": 1,
+            "exact_turn_match": true,
+            "reason_code": null,
+            "reason": null,
+            "resolved_session_id": "HF6-fresh-g5-ea2b37ca",
+            "searched_trace_keys": [
+              "HF6-fresh-g5-ea2b37ca"
+            ],
+            "available_trace_keys": [
+              "HF6-G5-3cf28354",
+              "HF6-G5-4d657e6d",
+              "HF6-G5G6-8b25a242",
+              "HF6-G5G6-ef68d1ce",
+              "HF6-G6-d1495a24",
+              "HF6-G6-e508e64e",
+              "HF6-fresh-g5-6ade8d34",
+              "HF6-fresh-g5-ea2b37ca",
+              "HF6-fresh-g6-3ab24730",
+              "HF6-greeting-4aa2d25c",
+              "HF6-greeting-d8513047",
+              "prd-047-36-hf6-followup-49bc56b4",
+              "prd-047-36-hf6-followup-d113404e"
+            ],
+            "available_turn_indices": [
+              1
+            ]
+          },
+          "boundary_trace_v1": {
+            "version": "boundary_trace_v1",
+            "latest_turn_constraints": {
+              "no_internal_db": true,
+              "no_practice": false,
+              "no_breathing_only": false,
+              "simplify": false
+            },
+            "boundary_flags": [
+              "no_internal_db"
+            ],
+            "boundary_sources": {
+              "no_internal_db": "latest_user_request",
+              "no_practice": "not_detected"
+            },
+            "applied_suppressions": {
+              "writer_kb_payload_suppressed": true,
+              "semantic_cards_writer_visible_suppressed": true,
+              "practice_suggestion_suppressed": false
+            },
+            "suppression_reasons": [
+              "latest_turn_no_internal_db",
+              "forbidden"
+            ],
+            "writer_directive_ack": {
+              "no_internal_db": true,
+              "no_practice": false
+            },
+            "writer_payload_count": 0,
+            "kb_visible_to_writer": false,
+            "semantic_cards_visible_to_writer": false,
+            "grounding_reason": "latest_turn_no_internal_db",
+            "practice_policy": "forbidden",
+            "public_violation_detected": false
+          },
+          "boundary_flags": [
+            "no_internal_db"
+          ],
+          "latest_turn_constraints": {
+            "no_internal_db": true,
+            "no_practice": false,
+            "no_breathing_only": false,
+            "simplify": false
+          },
+          "writer_payload_count": 0,
+          "semantic_cards_writer_visible": false,
+          "practice_suggestion_visible": false,
+          "suppression_reason": [
+            "latest_turn_no_internal_db",
+            "forbidden"
+          ],
+          "public_violation_detected": false,
+          "grounding_reason": "latest_turn_no_internal_db",
+          "retrieval_action": "query_kb",
+          "semantic_cards_status": "suppressed"
+        },
+        {
+          "scenario_id": "HF6-fresh-g6",
+          "session_id": "HF6-fresh-g6-dbc5f25d",
+          "turn_index": 1,
+          "query": "Объясни, почему я злюсь на себя, но без практик и упражнений.",
+          "answer_preview": "Часто причина того, что вы злитесь на себя — внутренний автомат, который переводит болезненную уязвимость и страх (например страх быть плохим, некомпетентным или беспомощным) в ярость на самого себя. Проще: злость — это такая защита от ч...",
+          "answer": "Часто причина того, что вы злитесь на себя — внутренний автомат, который переводит болезненную уязвимость и страх (например страх быть плохим, некомпетентным или беспомощным) в ярость на самого себя.  \n\nПроще: злость — это такая защита от чувства стыда, вины или бессилия; она позволяет вам чувствовать, что с ситуацией можно что‑то сделать (наказать себя, усилить требования), вместо того чтобы опознать болезненное, некомфортное ощущение и переживать его.  \n\nЭта механика защищает от: ощущения уязвимости и потери контроля, от принятия того, что вы могли ошибиться или нуждаетесь в поддержке.  \n\nХотите привести недавний конкретный пример, когда вы разозлились на себя — посмотрим, что именно там сработало.",
+          "trace_available": true,
+          "trace_availability": {
+            "status": "available",
+            "requested_turn_index": 1,
+            "resolved_turn_index": 1,
+            "exact_turn_match": true,
+            "reason_code": null,
+            "reason": null,
+            "resolved_session_id": "HF6-fresh-g6-dbc5f25d",
+            "searched_trace_keys": [
+              "HF6-fresh-g6-dbc5f25d"
+            ],
+            "available_trace_keys": [
+              "HF6-G5-3cf28354",
+              "HF6-G5-4d657e6d",
+              "HF6-G5G6-8b25a242",
+              "HF6-G5G6-ef68d1ce",
+              "HF6-G6-d1495a24",
+              "HF6-G6-e508e64e",
+              "HF6-fresh-g5-6ade8d34",
+              "HF6-fresh-g5-ea2b37ca",
+              "HF6-fresh-g6-3ab24730",
+              "HF6-fresh-g6-dbc5f25d",
+              "HF6-greeting-4aa2d25c",
+              "HF6-greeting-d8513047",
+              "prd-047-36-hf6-followup-49bc56b4",
+              "prd-047-36-hf6-followup-d113404e"
+            ],
+            "available_turn_indices": [
+              1
+            ]
+          },
+          "boundary_trace_v1": {
+            "version": "boundary_trace_v1",
+            "latest_turn_constraints": {
+              "no_internal_db": false,
+              "no_practice": true,
+              "no_breathing_only": false,
+              "simplify": false
+            },
+            "boundary_flags": [
+              "no_practice"
+            ],
+            "boundary_sources": {
+              "no_internal_db": "not_detected",
+              "no_practice": "latest_user_request"
+            },
+            "applied_suppressions": {
+              "writer_kb_payload_suppressed": false,
+              "semantic_cards_writer_visible_suppressed": false,
+              "practice_suggestion_suppressed": true
+            },
+            "suppression_reasons": [
+              "support_or_pushback_turn_trace_only",
+              "forbidden_explicit_latest_turn"
+            ],
+            "writer_directive_ack": {
+              "no_internal_db": false,
+              "no_practice": true
+            },
+            "writer_payload_count": 0,
+            "kb_visible_to_writer": false,
+            "semantic_cards_visible_to_writer": false,
+            "grounding_reason": "support_or_pushback_turn_trace_only",
+            "practice_policy": "forbidden_explicit_latest_turn",
+            "public_violation_detected": false
+          },
+          "boundary_flags": [
+            "no_practice"
+          ],
+          "latest_turn_constraints": {
+            "no_internal_db": false,
+            "no_practice": true,
+            "no_breathing_only": false,
+            "simplify": false
+          },
+          "writer_payload_count": 0,
+          "semantic_cards_writer_visible": false,
+          "practice_suggestion_visible": false,
+          "suppression_reason": [
+            "support_or_pushback_turn_trace_only",
+            "forbidden_explicit_latest_turn"
+          ],
+          "public_violation_detected": false,
+          "grounding_reason": "support_or_pushback_turn_trace_only",
+          "retrieval_action": "query_kb",
+          "semantic_cards_status": "trace_only"
+        }
+      ]
+    }
+  }
+}

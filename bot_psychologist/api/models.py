@@ -314,6 +314,8 @@ class DebugTrace(BaseModel):
     dialogue_pragmatics: Optional[Dict[str, Any]] = None
     retrieval_decision: Optional[Dict[str, Any]] = None
     live_turn_evidence: Optional[Dict[str, Any]] = None
+    latest_turn_constraints_v1: Optional[Dict[str, Any]] = None
+    boundary_trace_v1: Optional[Dict[str, Any]] = None
 
 
 class AgentTimings(BaseModel):
@@ -521,6 +523,8 @@ class MultiAgentTraceResponse(BaseModel):
     runtime_trace_summary_v1: Optional[Dict[str, Any]] = None
     runtime_truth_trace_v1: Optional[Dict[str, Any]] = None
     live_turn_evidence: Optional[Dict[str, Any]] = None
+    latest_turn_constraints_v1: Optional[Dict[str, Any]] = None
+    boundary_trace_v1: Optional[Dict[str, Any]] = None
     trace_availability: Optional[TraceAvailability] = None
 
 

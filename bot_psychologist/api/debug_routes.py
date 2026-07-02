@@ -1045,6 +1045,16 @@ async def get_multiagent_trace(
             if isinstance(debug.get("live_turn_evidence"), dict)
             else None
         ),
+        latest_turn_constraints_v1=(
+            debug.get("latest_turn_constraints_v1")
+            if isinstance(debug.get("latest_turn_constraints_v1"), dict)
+            else None
+        ),
+        boundary_trace_v1=(
+            debug.get("boundary_trace_v1")
+            if isinstance(debug.get("boundary_trace_v1"), dict)
+            else None
+        ),
         trace_availability=_build_trace_availability(
             status="available",
             requested_turn_index=turn_index,

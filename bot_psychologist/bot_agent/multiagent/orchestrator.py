@@ -45,6 +45,7 @@ from .dialogue_policy import (
     normalize_dialogue_profile,
 )
 from .answer_obligation_resolver import build_answer_obligation_resolver_v1
+from .boundary_trace import build_boundary_trace_v1
 from .final_answer_directive import build_final_answer_directive_v1
 from .final_answer_acceptance_gate import build_final_answer_acceptance_gate_v1
 from .fresh_chat_context_policy import (
@@ -874,6 +875,20 @@ class MultiAgentOrchestrator:
             retrieval_decision=retrieval_decision,
             hybrid_retrieval_plan=hybrid_retrieval_plan,
         )
+        boundary_trace = build_boundary_trace_v1(
+            latest_turn_constraints=writer_contract.final_answer_directive.get("latest_turn_constraints_v1", {}),
+            writer_grounding_visibility=writer_debug.get("writer_grounding_visibility_v1", {}),
+            writer_kb_payload_trace=writer_debug.get("writer_kb_payload_trace", {}),
+            final_answer_directive=writer_contract.final_answer_directive,
+            runtime_truth_trace=runtime_trace_summary.get("runtime_truth_trace_v1", {}),
+            final_answer=final_answer,
+        )
+        runtime_trace_summary = dict(runtime_trace_summary)
+        runtime_trace_summary["boundary_trace_v1"] = boundary_trace
+        if isinstance(runtime_trace_summary.get("runtime_truth_trace_v1"), dict):
+            runtime_truth = dict(runtime_trace_summary.get("runtime_truth_trace_v1", {}))
+            runtime_truth["boundary_trace_v1"] = boundary_trace
+            runtime_trace_summary["runtime_truth_trace_v1"] = runtime_truth
 
         if bool(final_answer_acceptance_gate.get("can_mark_question_answered", False)):
             updated_unanswered_question_state = update_unanswered_question_state_after_answer_v1(
@@ -1202,6 +1217,12 @@ class MultiAgentOrchestrator:
                 "retrieval_decision": dict(retrieval_decision),
                 "contextual_retrieval_query_composer": dict(contextual_retrieval_query_composer),
                 "final_answer_directive": dict(final_answer_directive),
+                "latest_turn_constraints_v1": (
+                    dict(final_answer_directive.get("latest_turn_constraints_v1", {}))
+                    if isinstance(final_answer_directive.get("latest_turn_constraints_v1"), dict)
+                    else {}
+                ),
+                "boundary_trace_v1": dict(boundary_trace),
                 "runtime_trace_summary_v1": dict(runtime_trace_summary),
                 "runtime_truth_trace_v1": (
                     dict(runtime_trace_summary.get("runtime_truth_trace_v1", {}))

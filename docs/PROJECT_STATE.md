@@ -273,4 +273,10 @@ Diagnostic Center Track Status: CLOSED FOR CURRENT PHASE
 - push_status: pushed_to_origin_main
 - status: blocked
 
+## PRD-047.36-HF6 Delivery Metadata
+- prd_id: PRD-047.36-HF6
+- commit_hash: pending
+- push_status: pending_push
+- status: accepted_with_warning
+
 

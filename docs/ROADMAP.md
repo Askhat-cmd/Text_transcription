@@ -95,6 +95,7 @@
 
 ## Current / In Progress
 - PRD-047.36-HF5 closed the selected-knowledge trace-only blocker for direct concept follow-ups in the current runtime. The remaining work is not a retrieval dictionary or another delivery hotfix; it is a shortened readiness rerun on top of the repaired HF4 + HF5 baseline.
+- PRD-047.36-HF6 closed the owner/debug boundary-trace integrity blocker for explicit `no_internal_db` and `no_practice` turns. The next work is not another trace hotfix or retrieval mutation; it is rerunning the shortened post-HF readiness gate on the repaired HF4 + HF5 + HF6 baseline.
 - PRD-047.36-HF4 closed the owner/debug trace-restoration blocker class itself. The remaining work is no longer trace persistence, session mapping, or reload hydration; it is rerunning the frozen owner readiness gate on this repaired baseline and classifying any remaining answer-behavior blockers honestly.
 - PRD-047.36-POST-HF closed the rerun question itself and turned the remaining work into one narrow blocker class only: latest-turn boundary trace integrity for `no_internal_db` / `no_practice`. The next step is not cleanup/freeze yet, and not another knowledge or reload hotfix.
 - PRD-047.36-HF3 closed the silent trace-disappearance class after reload. Remaining readiness work is no longer exact-trace observability; it is rerunning the owner freeze against the repaired pipeline and honestly classifying any remaining behavior blockers.
@@ -128,7 +129,7 @@
 - No active PRD-047.12 blocker remains; unified dialogue policy v2 is accepted on the current developer-local runtime baseline.
 
 ## Next
-1. Run a shortened post-HF readiness gate on top of HF4 + HF5 covering trace restoration, direct concept follow-up, `no_internal_db`, `no_practice`, and one safety scenario before claiming owner-pilot freeze readiness.
+1. Run a shortened post-HF readiness gate on top of HF4 + HF5 + HF6 covering trace restoration, direct concept follow-up, `no_internal_db`, `no_practice`, and one safety scenario before claiming owner-pilot freeze readiness.
 2. If the rerun still blocks, classify the next step from fresh evidence instead of adding another speculative runtime layer.
 3. Keep semantic cards advisory-only until a later PRD proves they help without recurring textbook drift or explicit no-KB conflict.
 4. Keep any broader DB-track mutation, overlay authority expansion, retrieval-ranking rewrite, live metadata apply, runtime activation, or Chroma reindex in a separate explicit governance PRD.

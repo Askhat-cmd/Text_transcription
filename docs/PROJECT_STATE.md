@@ -18,7 +18,7 @@ Known accepted warnings:
 - UI trace labels / Session Trace Panel polish remain cleanup candidates.
 
 ## Current Stage
-PRD-047.37 is the current top-stage baseline: cleanup/freeze/pilot-start brief with `accepted_with_warning_candidate` status before final commit metadata. The active next mode is owner pilot evidence collection or cleanup-only hygiene, not another automatic hotfix or immediate POST-HF rerun.
+PRD-047.37 is the current top-stage baseline: cleanup/freeze/pilot-start brief with `accepted_with_warning` status. The active next mode is owner pilot evidence collection or cleanup-only hygiene, not another automatic hotfix or immediate POST-HF rerun.
 
 PRD-047.36-POST-HF completed the shortened post-HF owner readiness gate as an honest `BLOCKED` result on top of HF4 + HF5. The work stayed read-only: one new gate runner, one small contract test, reports, and docs only; no runtime behavior, Writer logic, retrieval ranking, DB/Chroma/source, or new route/agent mutation was introduced. Fresh trace/reload truth now passes again (`G1`), direct concept baseline/follow-up/Neurostalking continuity all pass (`G2/G3/G4`), greeting sanity passes (`G7`), and panic helper stays bounded with a warning on soft medical escalation wording (`G8`). The gate still blocks on boundary integrity: `G5` fails because explicit `no_internal_db` is honored in visible behavior but not surfaced as a durable trace boundary flag, and `G6` fails for the same reason on explicit `no_practice`. Delivery/memory sanity remains `pass_with_warning` because API-only sampling did not include visible chat bubble text and one quarantined panic-helper turn still diverges from saved memory without being a raw cross-turn contamination leak. Full `python -m pytest tests -q` still stops on the historical unrelated `_build_llm_prompts` import blocker. The next recommended step is one narrow repair only: `PRD-047.36-HF6 - No-Internal-DB / No-Practice Boundary Trace Integrity`.
 PRD-047.36-HF5 completed the selected-knowledge admission repair on the canonical current pipeline with `accepted_with_warning` status. The runtime still stays on `multiagent_adapter`; no retrieval-ranking rewrite, no dictionary/alias map, no new route, no new agent, and no Bot_data_base/Chroma/source mutation were introduced. `contextual_retrieval_query_composer.py` now promotes generic contextual concept follow-ups with already selected knowledge into a bounded `query_kb` / `knowledge_context` admission path, while `writer_context_package.py` now exposes `direct_concept_followup`, bounded selected-knowledge recovery from existing `memory_bundle.knowledge_rag_hits`, and payload ordering that lets one selected semantic card lead the minimal hidden Writer package instead of being re-suppressed. Live HF5 smoke passed all required scenarios: greeting kept Writer payload `0`, the repaired Chat 12 concept follow-up now yields `grounding_reason=direct_concept_followup` and Writer payload `2`, Neurostalking follow-up also stays grounded, and `no_internal_db` still suppresses payload with `latest_turn_no_internal_db`. Honest residual note: full `python -m pytest tests -q` still stops on the historical unrelated `_build_llm_prompts` import blocker. The next recommended step is a shortened post-HF readiness gate over HF4 + HF5, not a dictionary-style runtime expansion.
@@ -296,6 +296,12 @@ Diagnostic Center Track Status: CLOSED FOR CURRENT PHASE
 ## PRD-047.36-HF6 Delivery Metadata
 - prd_id: PRD-047.36-HF6
 - commit_hash: c908d33
+- push_status: pushed_to_origin_main
+- status: accepted_with_warning
+
+## PRD-047.37 Delivery Metadata
+- prd_id: PRD-047.37
+- commit_hash: 6ed92e1
 - push_status: pushed_to_origin_main
 - status: accepted_with_warning
 

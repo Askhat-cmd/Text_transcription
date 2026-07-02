@@ -1,7 +1,7 @@
 # PRD-047.37 Freeze Summary
 
 Date: 2026-07-02
-Status: `accepted_with_warning_candidate`
+Status: `accepted_with_warning`
 
 ## Owner Decision
 The owner explicitly moved the project out of the immediate hotfix loop and into Cleanup / Freeze / Pilot Start Brief. The accepted product direction is:

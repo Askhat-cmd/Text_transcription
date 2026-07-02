@@ -1,8 +1,8 @@
 # PRD-047.37 Implementation Report
 
 Date: 2026-07-02
-Status: `accepted_with_warning_candidate`
-Main commit: `pending_main_commit`
+Status: `accepted_with_warning`
+Main commit: `6ed92e1`
 
 ## Scope Delivered
 - Created PRD-047.37 task list before implementation.
@@ -45,4 +45,4 @@ No runtime behavior was changed. This PRD did not change Writer style, retrieval
 - Greeting/contact, source coverage, shadow planner noise, UI trace label polish, and source-gate doc path inconsistencies remain backlog items.
 
 ## Result
-PRD-047.37 is ready for main commit/push, then completion metadata micro-push.
+PRD-047.37 main implementation was committed and pushed to `origin/main` as `6ed92e1`. Completion metadata is recorded in the follow-up micro-push.

@@ -1,0 +1,1013 @@
+{
+  "schema_version": "prd_047_39_architecture_inventory_v1",
+  "items": [
+    {
+      "component_id": "answer_basic",
+      "kind": "retired_pipeline",
+      "candidate_paths": [
+        "bot_psychologist/bot_agent/answer_basic.py"
+      ],
+      "file_paths_referencing_it": [
+        {
+          "path": "bot_psychologist/docs/testing.md",
+          "line": 32,
+          "preview": "- `answer_question_basic(query: str)`"
+        },
+        {
+          "path": "bot_psychologist/docs/testing.md",
+          "line": 38,
+          "preview": "result = answer_question_basic(\"Что такое осознавание?\")"
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 19,
+          "preview": "\"from .answer_basic\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 24,
+          "preview": "\"answer_question_basic(\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 99,
+          "preview": "\"answer_basic.py\","
+        },
+        {
+          "path": "bot_psychologist/tests/test_full_dialogue_pipeline.py",
+          "line": 7,
+          "preview": "import bot_agent.answer_basic as answer_basic_module"
+        },
+        {
+          "path": "bot_psychologist/tests/test_full_dialogue_pipeline.py",
+          "line": 92,
+          "preview": "monkeypatch.setattr(answer_basic_module.data_loader, \"load_all_data\", lambda: None)"
+        },
+        {
+          "path": "bot_psychologist/tests/test_full_dialogue_pipeline.py",
+          "line": 94,
+          "preview": "answer_basic_module.data_loader,"
+        },
+        {
+          "path": "bot_psychologist/tests/test_full_dialogue_pipeline.py",
+          "line": 99,
+          "preview": "answer_basic_module.data_loader,"
+        },
+        {
+          "path": "bot_psychologist/tests/test_full_dialogue_pipeline.py",
+          "line": 103,
+          "preview": "monkeypatch.setattr(answer_basic_module, \"get_retriever\", lambda: _DummyRetriever())"
+        },
+        {
+          "path": "bot_psychologist/tests/test_full_dialogue_pipeline.py",
+          "line": 104,
+          "preview": "monkeypatch.setattr(answer_basic_module, \"ResponseGenerator\", _DummyResponseGenerator)"
+        },
+        {
+          "path": "bot_psychologist/tests/test_full_dialogue_pipeline.py",
+          "line": 123,
+          "preview": "result = answer_basic_module.answer_question_basic("
+        },
+        {
+          "path": "bot_psychologist/tests/test_phase1.py",
+          "line": 27,
+          "preview": "from bot_agent.answer_basic import answer_question_basic, ask"
+        },
+        {
+          "path": "bot_psychologist/tests/test_phase1.py",
+          "line": 140,
+          "preview": "result = answer_question_basic(query, debug=True)"
+        }
+      ],
+      "reference_counts": {
+        "total": 14,
+        "active_runtime": 0,
+        "test": 12,
+        "docs_or_logs": 0
+      },
+      "import_graph_status": "referenced_by_test_only",
+      "last_commit_touching_it": {
+        "bot_psychologist/bot_agent/answer_basic.py": "686301a"
+      },
+      "proposed_classification": "dead_confirmed"
+    },
+    {
+      "component_id": "answer_sag_aware",
+      "kind": "retired_pipeline",
+      "candidate_paths": [
+        "bot_psychologist/bot_agent/answer_sag_aware.py"
+      ],
+      "file_paths_referencing_it": [
+        {
+          "path": "bot_psychologist/docs/testing.md",
+          "line": 56,
+          "preview": "- `answer_question_sag_aware(query: str, user_level: str)`"
+        },
+        {
+          "path": "bot_psychologist/docs/testing.md",
+          "line": 62,
+          "preview": "result = answer_question_sag_aware("
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 20,
+          "preview": "\"from .answer_sag_aware\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 25,
+          "preview": "\"answer_question_sag_aware(\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 100,
+          "preview": "\"answer_sag_aware.py\","
+        },
+        {
+          "path": "bot_psychologist/tests/test_phase2.py",
+          "line": 113,
+          "preview": "result = answer_question_sag_aware(query, user_level=level, debug=debug)"
+        }
+      ],
+      "reference_counts": {
+        "total": 6,
+        "active_runtime": 0,
+        "test": 4,
+        "docs_or_logs": 0
+      },
+      "import_graph_status": "referenced_by_test_only",
+      "last_commit_touching_it": {
+        "bot_psychologist/bot_agent/answer_sag_aware.py": "686301a"
+      },
+      "proposed_classification": "dead_confirmed"
+    },
+    {
+      "component_id": "answer_graph_powered",
+      "kind": "retired_pipeline",
+      "candidate_paths": [
+        "bot_psychologist/bot_agent/answer_graph_powered.py"
+      ],
+      "file_paths_referencing_it": [
+        {
+          "path": "bot_psychologist/docs/testing.md",
+          "line": 82,
+          "preview": "- `answer_question_graph_powered(query: str, user_level: str)`"
+        },
+        {
+          "path": "bot_psychologist/docs/testing.md",
+          "line": 88,
+          "preview": "result = answer_question_graph_powered("
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 21,
+          "preview": "\"from .answer_graph_powered\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 26,
+          "preview": "\"answer_question_graph_powered(\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 101,
+          "preview": "\"answer_graph_powered.py\","
+        },
+        {
+          "path": "bot_psychologist/tests/test_phase3.py",
+          "line": 181,
+          "preview": "result = answer_question_graph_powered("
+        }
+      ],
+      "reference_counts": {
+        "total": 6,
+        "active_runtime": 0,
+        "test": 4,
+        "docs_or_logs": 0
+      },
+      "import_graph_status": "referenced_by_test_only",
+      "last_commit_touching_it": {
+        "bot_psychologist/bot_agent/answer_graph_powered.py": "686301a"
+      },
+      "proposed_classification": "dead_confirmed"
+    },
+    {
+      "component_id": "sd_classifier",
+      "kind": "retired_sd_module",
+      "candidate_paths": [
+        "bot_psychologist/bot_agent/sd_classifier.py"
+      ],
+      "file_paths_referencing_it": [
+        {
+          "path": "bot_psychologist/scripts/bootstrap_eval_sets.py",
+          "line": 317,
+          "preview": "from bot_agent.sd_classifier import SDClassifier"
+        },
+        {
+          "path": "bot_psychologist/scripts/bootstrap_eval_sets.py",
+          "line": 381,
+          "preview": "\"sd_classifier_accuracy_at_1\": _safe_round(sd_acc),"
+        },
+        {
+          "path": "bot_psychologist/scripts/bootstrap_eval_sets.py",
+          "line": 407,
+          "preview": "sd_cases = _extract_sd_cases(tests_dir / \"test_sd_classifier.py\")"
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 16,
+          "preview": "\"sd_filter=\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 57,
+          "preview": "\"_load_sd_prompt\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 58,
+          "preview": "\"sd_overlay\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 64,
+          "preview": "\"_load_sd_prompt\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 65,
+          "preview": "\"sd_overlay=\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 102,
+          "preview": "\"sd_classifier.py\","
+        },
+        {
+          "path": "bot_psychologist/tests/eval/baseline.json",
+          "line": 11,
+          "preview": "\"sd_classifier_accuracy_at_1\": 1.0,"
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 6,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_clean_cases\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 12,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_clean_cases\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 18,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_clean_cases\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 24,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_clean_cases\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 30,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_clean_cases\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 36,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_clean_cases\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 42,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_clean_cases\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 48,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_clean_cases\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 54,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_clean_cases\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 60,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_clean_cases\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 66,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_clean_cases\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 72,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_clean_cases\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 78,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_clean_cases\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 84,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_clean_cases\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 90,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_clean_cases\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 96,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_clean_cases\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 102,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_boundary_cases\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 108,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_boundary_cases\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 114,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_boundary_cases\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 120,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_boundary_cases\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 126,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_boundary_cases\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 136,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_not_red_intellectual_search\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 145,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_not_red_intellectual_search\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 155,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_not_red_intellectual_search\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 164,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_not_red_intellectual_search\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 173,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_not_red_intellectual_search\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 179,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_red_aggression_markers\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 185,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_red_aggression_markers\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 191,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_red_aggression_markers\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 197,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_red_aggression_markers\""
+        },
+        {
+          "path": "bot_psychologist/tests/eval/classifier_eval_set.json",
+          "line": 203,
+          "preview": "\"source\": \"test_sd_classifier.py::test_heuristic_red_aggression_markers\""
+        },
+        {
+          "path": "bot_psychologist/tests/fixtures/admin_surface_inventory_v104_phase0.json",
+          "line": 88,
+          "preview": "\"name\":  \"sd_classifier_controls\","
+        },
+        {
+          "path": "bot_psychologist/tests/fixtures/legacy_runtime_map.json",
+          "line": 33,
+          "preview": "\"sd_classifier\": ["
+        },
+        {
+          "path": "bot_psychologist/tests/fixtures/runtime_legacy_touchpoints_v102.json",
+          "line": 31,
+          "preview": "\"sd_classifier\","
+        },
+        {
+          "path": "bot_psychologist/tests/fixtures/runtime_legacy_touchpoints_v102.json",
+          "line": 54,
+          "preview": "\"sd_classifier\","
+        },
+        {
+          "path": "bot_psychologist/tests/inventory/test_streaming_runtime_divergence_inventory.py",
+          "line": 27,
+          "preview": "assert \"sd_classifier\" not in text"
+        },
+        {
+          "path": "bot_psychologist/tests/regression/test_no_legacy_prompt_overlays.py",
+          "line": 32,
+          "preview": "def test_system_prompt_override_bypasses_legacy_sd_overlay(monkeypatch) -> None:"
+        },
+        {
+          "path": "bot_psychologist/tests/test_debug_metrics_and_export.py",
+          "line": 92,
+          "preview": "{\"name\": \"sd_classifier\", \"duration_ms\": 0, \"skipped\": True},"
+        },
+        {
+          "path": "bot_psychologist/tests/test_fast_detector.py",
+          "line": 11,
+          "preview": "from bot_agent.sd_classifier import SDClassificationResult, SDClassifier"
+        },
+        {
+          "path": "bot_psychologist/tests/test_fast_detector.py",
+          "line": 39,
+          "preview": "def test_sd_classifier_uses_fast_path(monkeypatch: pytest.MonkeyPatch) -> None:"
+        },
+        {
+          "path": "bot_psychologist/tests/test_fast_detector.py",
+          "line": 73,
+          "preview": "def test_sd_classifier_respects_disable_flag(monkeypatch: pytest.MonkeyPatch) -> None:"
+        },
+        {
+          "path": "bot_psychologist/tests/unit/test_sd_runtime_disabled.py",
+          "line": 25,
+          "preview": "def test_sd_runtime_disabled_skips_sd_classifier(monkeypatch) -> None:"
+        }
+      ],
+      "reference_counts": {
+        "total": 52,
+        "active_runtime": 0,
+        "test": 49,
+        "docs_or_logs": 0
+      },
+      "import_graph_status": "referenced_by_test_only",
+      "last_commit_touching_it": {
+        "bot_psychologist/bot_agent/sd_classifier.py": "686301a"
+      },
+      "proposed_classification": "dead_confirmed"
+    },
+    {
+      "component_id": "user_level_adapter",
+      "kind": "retired_level_module",
+      "candidate_paths": [
+        "bot_psychologist/bot_agent/user_level_adapter.py"
+      ],
+      "file_paths_referencing_it": [
+        {
+          "path": "TO_DO_LIST/logs/PRD-047.13/file_classification_manifest.json",
+          "line": 8031,
+          "preview": "\"path\": \"bot_psychologist/tests/unit/test_user_level_adapter_removed.py\","
+        },
+        {
+          "path": "bot_psychologist/api/debug_routes.py",
+          "line": 45,
+          "preview": "\"user_level_adapter_applied\","
+        },
+        {
+          "path": "bot_psychologist/api/routes/common.py",
+          "line": 230,
+          "preview": "\"user_level_adapter_applied\","
+        },
+        {
+          "path": "bot_psychologist/api/routes/common.py",
+          "line": 240,
+          "preview": "\"user_level_adapter_applied\","
+        },
+        {
+          "path": "bot_psychologist/bot_agent/response/response_generator.py",
+          "line": 115,
+          "preview": "user_level_adapter=None,"
+        },
+        {
+          "path": "bot_psychologist/bot_agent/response/response_generator.py",
+          "line": 130,
+          "preview": "_ = user_level_adapter  # compatibility: accepted but intentionally ignored in Neo runtime"
+        },
+        {
+          "path": "bot_psychologist/bot_agent/response/response_generator.py",
+          "line": 215,
+          "preview": "user_level_adapter=None,"
+        },
+        {
+          "path": "bot_psychologist/bot_agent/response/response_generator.py",
+          "line": 224,
+          "preview": "_ = user_level_adapter  # compatibility: accepted but intentionally ignored in Neo runtime"
+        },
+        {
+          "path": "bot_psychologist/docs/archive/legacy_migration/post_purge_remaining_review_modules_prd042.md",
+          "line": 12,
+          "preview": "| `bot_agent/user_level_types.py` | Используется `path_builder` и тестами типов | `bot_agent/path_builder.py`, `tests/unit/test_user_level_adapter_removed.py` | Active helper depen"
+        },
+        {
+          "path": "bot_psychologist/tests/api/test_multiagent_metadata_contract.py",
+          "line": 50,
+          "preview": "\"user_level_adapter_applied\": True,"
+        },
+        {
+          "path": "bot_psychologist/tests/api/test_multiagent_metadata_contract.py",
+          "line": 66,
+          "preview": "\"user_level_adapter_applied\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_live_metadata_contract_after_purge.py",
+          "line": 38,
+          "preview": "\"user_level_adapter_applied\": False,"
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_live_metadata_contract_after_purge.py",
+          "line": 72,
+          "preview": "\"user_level_adapter_applied\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 62,
+          "preview": "\"filter_blocks_by_level\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 103,
+          "preview": "\"user_level_adapter.py\","
+        },
+        {
+          "path": "bot_psychologist/tests/fixtures/legacy_runtime_map.json",
+          "line": 40,
+          "preview": "\"user_level_adapter\": ["
+        },
+        {
+          "path": "bot_psychologist/tests/fixtures/runtime_legacy_touchpoints_v102.json",
+          "line": 47,
+          "preview": "\"user_level_adapter\""
+        },
+        {
+          "path": "bot_psychologist/tests/fixtures/runtime_legacy_touchpoints_v102.json",
+          "line": 55,
+          "preview": "\"user_level_adapter\","
+        },
+        {
+          "path": "bot_psychologist/tests/fixtures/runtime_legacy_touchpoints_v102.json",
+          "line": 70,
+          "preview": "\"user_level_adapter_applied\""
+        },
+        {
+          "path": "bot_psychologist/tests/integration/test_pipeline_without_level_adapter.py",
+          "line": 30,
+          "preview": "\"user_level_adapter_applied\": False,"
+        },
+        {
+          "path": "bot_psychologist/tests/integration/test_pipeline_without_level_adapter.py",
+          "line": 60,
+          "preview": "assert \"user_level_adapter_applied\" not in body[\"metadata\"]"
+        },
+        {
+          "path": "bot_psychologist/tests/inventory/test_no_active_legacy_trace_metadata_keys.py",
+          "line": 39,
+          "preview": "\"user_level_adapter_applied\","
+        },
+        {
+          "path": "bot_psychologist/tests/inventory/test_streaming_runtime_divergence_inventory.py",
+          "line": 34,
+          "preview": "assert \"user_level_adapter_applied\" in text"
+        },
+        {
+          "path": "bot_psychologist/tests/regression/test_no_sd_required_by_response_flow.py",
+          "line": 31,
+          "preview": "user_level_adapter=None,"
+        },
+        {
+          "path": "bot_psychologist/tests/regression/test_no_user_level_runtime_metadata.py",
+          "line": 69,
+          "preview": "\"user_level_adapter_applied\": False,"
+        },
+        {
+          "path": "bot_psychologist/tests/regression/test_no_user_level_runtime_metadata.py",
+          "line": 73,
+          "preview": "\"user_level_adapter_applied\": False,"
+        },
+        {
+          "path": "bot_psychologist/tests/regression/test_no_user_level_runtime_metadata.py",
+          "line": 106,
+          "preview": "assert \"user_level_adapter_applied\" not in metadata"
+        },
+        {
+          "path": "bot_psychologist/tests/regression/test_no_user_level_runtime_metadata.py",
+          "line": 115,
+          "preview": "assert \"user_level_adapter_applied\" not in trace"
+        },
+        {
+          "path": "bot_psychologist/tests/test_path_builder.py",
+          "line": 62,
+          "preview": "user_level_adapter=object(),"
+        },
+        {
+          "path": "bot_psychologist/tests/test_response_generator.py",
+          "line": 55,
+          "preview": "user_level_adapter=object(),  # backward-compatible arg; ignored in Neo runtime"
+        },
+        {
+          "path": "bot_psychologist/tests/unit/test_user_level_adapter_removed.py",
+          "line": 12,
+          "preview": "def test_user_level_adapter_not_used_in_adaptive_runtime() -> None:"
+        }
+      ],
+      "reference_counts": {
+        "total": 31,
+        "active_runtime": 7,
+        "test": 22,
+        "docs_or_logs": 1
+      },
+      "import_graph_status": "referenced_by_active_path",
+      "last_commit_touching_it": {
+        "bot_psychologist/bot_agent/user_level_adapter.py": "686301a"
+      },
+      "proposed_classification": "unclear_needs_trace"
+    },
+    {
+      "component_id": "prompt_sd_green",
+      "kind": "retired_prompt",
+      "candidate_paths": [
+        "bot_psychologist/bot_agent/prompt_sd_green.md",
+        "bot_psychologist/bot_agent/legacy/prompts/prompt_sd_green.md"
+      ],
+      "file_paths_referencing_it": [
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 35,
+          "preview": "\"prompt_sd_green\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 46,
+          "preview": "\"prompt_sd_green\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 80,
+          "preview": "\"prompt_sd_green.md\","
+        }
+      ],
+      "reference_counts": {
+        "total": 3,
+        "active_runtime": 0,
+        "test": 3,
+        "docs_or_logs": 0
+      },
+      "import_graph_status": "referenced_by_test_only",
+      "last_commit_touching_it": {
+        "bot_psychologist/bot_agent/prompt_sd_green.md": "a99459d",
+        "bot_psychologist/bot_agent/legacy/prompts/prompt_sd_green.md": "b7642e4"
+      },
+      "proposed_classification": "dead_confirmed"
+    },
+    {
+      "component_id": "prompt_sd_blue",
+      "kind": "retired_prompt",
+      "candidate_paths": [
+        "bot_psychologist/bot_agent/prompt_sd_blue.md",
+        "bot_psychologist/bot_agent/legacy/prompts/prompt_sd_blue.md"
+      ],
+      "file_paths_referencing_it": [
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 36,
+          "preview": "\"prompt_sd_blue\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 47,
+          "preview": "\"prompt_sd_blue\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 81,
+          "preview": "\"prompt_sd_blue.md\","
+        }
+      ],
+      "reference_counts": {
+        "total": 3,
+        "active_runtime": 0,
+        "test": 3,
+        "docs_or_logs": 0
+      },
+      "import_graph_status": "referenced_by_test_only",
+      "last_commit_touching_it": {
+        "bot_psychologist/bot_agent/prompt_sd_blue.md": "a99459d",
+        "bot_psychologist/bot_agent/legacy/prompts/prompt_sd_blue.md": "b7642e4"
+      },
+      "proposed_classification": "dead_confirmed"
+    },
+    {
+      "component_id": "prompt_sd_red",
+      "kind": "retired_prompt",
+      "candidate_paths": [
+        "bot_psychologist/bot_agent/prompt_sd_red.md",
+        "bot_psychologist/bot_agent/legacy/prompts/prompt_sd_red.md"
+      ],
+      "file_paths_referencing_it": [
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 37,
+          "preview": "\"prompt_sd_red\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 48,
+          "preview": "\"prompt_sd_red\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 82,
+          "preview": "\"prompt_sd_red.md\","
+        }
+      ],
+      "reference_counts": {
+        "total": 3,
+        "active_runtime": 0,
+        "test": 3,
+        "docs_or_logs": 0
+      },
+      "import_graph_status": "referenced_by_test_only",
+      "last_commit_touching_it": {
+        "bot_psychologist/bot_agent/prompt_sd_red.md": "a99459d",
+        "bot_psychologist/bot_agent/legacy/prompts/prompt_sd_red.md": "b7642e4"
+      },
+      "proposed_classification": "dead_confirmed"
+    },
+    {
+      "component_id": "prompt_sd_orange",
+      "kind": "retired_prompt",
+      "candidate_paths": [
+        "bot_psychologist/bot_agent/prompt_sd_orange.md",
+        "bot_psychologist/bot_agent/legacy/prompts/prompt_sd_orange.md"
+      ],
+      "file_paths_referencing_it": [
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 38,
+          "preview": "\"prompt_sd_orange\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 49,
+          "preview": "\"prompt_sd_orange\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 83,
+          "preview": "\"prompt_sd_orange.md\","
+        }
+      ],
+      "reference_counts": {
+        "total": 3,
+        "active_runtime": 0,
+        "test": 3,
+        "docs_or_logs": 0
+      },
+      "import_graph_status": "referenced_by_test_only",
+      "last_commit_touching_it": {
+        "bot_psychologist/bot_agent/prompt_sd_orange.md": "a99459d",
+        "bot_psychologist/bot_agent/legacy/prompts/prompt_sd_orange.md": "b7642e4"
+      },
+      "proposed_classification": "dead_confirmed"
+    },
+    {
+      "component_id": "prompt_sd_yellow",
+      "kind": "retired_prompt",
+      "candidate_paths": [
+        "bot_psychologist/bot_agent/prompt_sd_yellow.md",
+        "bot_psychologist/bot_agent/legacy/prompts/prompt_sd_yellow.md"
+      ],
+      "file_paths_referencing_it": [
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 39,
+          "preview": "\"prompt_sd_yellow\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 50,
+          "preview": "\"prompt_sd_yellow\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 84,
+          "preview": "\"prompt_sd_yellow.md\","
+        }
+      ],
+      "reference_counts": {
+        "total": 3,
+        "active_runtime": 0,
+        "test": 3,
+        "docs_or_logs": 0
+      },
+      "import_graph_status": "referenced_by_test_only",
+      "last_commit_touching_it": {
+        "bot_psychologist/bot_agent/prompt_sd_yellow.md": "a99459d",
+        "bot_psychologist/bot_agent/legacy/prompts/prompt_sd_yellow.md": "b7642e4"
+      },
+      "proposed_classification": "dead_confirmed"
+    },
+    {
+      "component_id": "prompt_sd_purple",
+      "kind": "retired_prompt",
+      "candidate_paths": [
+        "bot_psychologist/bot_agent/prompt_sd_purple.md",
+        "bot_psychologist/bot_agent/legacy/prompts/prompt_sd_purple.md"
+      ],
+      "file_paths_referencing_it": [
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 40,
+          "preview": "\"prompt_sd_purple\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 51,
+          "preview": "\"prompt_sd_purple\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 85,
+          "preview": "\"prompt_sd_purple.md\","
+        }
+      ],
+      "reference_counts": {
+        "total": 3,
+        "active_runtime": 0,
+        "test": 3,
+        "docs_or_logs": 0
+      },
+      "import_graph_status": "referenced_by_test_only",
+      "last_commit_touching_it": {
+        "bot_psychologist/bot_agent/prompt_sd_purple.md": "a99459d",
+        "bot_psychologist/bot_agent/legacy/prompts/prompt_sd_purple.md": "b7642e4"
+      },
+      "proposed_classification": "dead_confirmed"
+    },
+    {
+      "component_id": "prompt_system_level_beginner",
+      "kind": "retired_prompt",
+      "candidate_paths": [
+        "bot_psychologist/bot_agent/prompt_system_level_beginner.md",
+        "bot_psychologist/bot_agent/legacy/prompts/prompt_system_level_beginner.md"
+      ],
+      "file_paths_referencing_it": [
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 30,
+          "preview": "\"prompt_system_level_beginner\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 41,
+          "preview": "\"prompt_system_level_beginner\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 52,
+          "preview": "\"prompt_system_level_beginner\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 86,
+          "preview": "\"prompt_system_level_beginner.md\","
+        },
+        {
+          "path": "bot_psychologist/tests/fixtures/admin_surface_inventory_v104_phase0.json",
+          "line": 119,
+          "preview": "\"\\\"prompt_system_level_beginner\\\"\","
+        }
+      ],
+      "reference_counts": {
+        "total": 5,
+        "active_runtime": 0,
+        "test": 5,
+        "docs_or_logs": 0
+      },
+      "import_graph_status": "referenced_by_test_only",
+      "last_commit_touching_it": {
+        "bot_psychologist/bot_agent/prompt_system_level_beginner.md": "a99459d",
+        "bot_psychologist/bot_agent/legacy/prompts/prompt_system_level_beginner.md": "b7642e4"
+      },
+      "proposed_classification": "dead_confirmed"
+    },
+    {
+      "component_id": "prompt_system_level_intermediate",
+      "kind": "retired_prompt",
+      "candidate_paths": [
+        "bot_psychologist/bot_agent/prompt_system_level_intermediate.md",
+        "bot_psychologist/bot_agent/legacy/prompts/prompt_system_level_intermediate.md"
+      ],
+      "file_paths_referencing_it": [
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 31,
+          "preview": "\"prompt_system_level_intermediate\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 42,
+          "preview": "\"prompt_system_level_intermediate\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 53,
+          "preview": "\"prompt_system_level_intermediate\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 87,
+          "preview": "\"prompt_system_level_intermediate.md\","
+        },
+        {
+          "path": "bot_psychologist/tests/fixtures/admin_surface_inventory_v104_phase0.json",
+          "line": 120,
+          "preview": "\"\\\"prompt_system_level_intermediate\\\"\","
+        }
+      ],
+      "reference_counts": {
+        "total": 5,
+        "active_runtime": 0,
+        "test": 5,
+        "docs_or_logs": 0
+      },
+      "import_graph_status": "referenced_by_test_only",
+      "last_commit_touching_it": {
+        "bot_psychologist/bot_agent/prompt_system_level_intermediate.md": "a99459d",
+        "bot_psychologist/bot_agent/legacy/prompts/prompt_system_level_intermediate.md": "b7642e4"
+      },
+      "proposed_classification": "dead_confirmed"
+    },
+    {
+      "component_id": "prompt_system_level_advanced",
+      "kind": "retired_prompt",
+      "candidate_paths": [
+        "bot_psychologist/bot_agent/prompt_system_level_advanced.md",
+        "bot_psychologist/bot_agent/legacy/prompts/prompt_system_level_advanced.md"
+      ],
+      "file_paths_referencing_it": [
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 32,
+          "preview": "\"prompt_system_level_advanced\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 43,
+          "preview": "\"prompt_system_level_advanced\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 54,
+          "preview": "\"prompt_system_level_advanced\","
+        },
+        {
+          "path": "bot_psychologist/tests/contract/test_no_legacy.py",
+          "line": 88,
+          "preview": "\"prompt_system_level_advanced.md\","
+        },
+        {
+          "path": "bot_psychologist/tests/fixtures/admin_surface_inventory_v104_phase0.json",
+          "line": 121,
+          "preview": "\"\\\"prompt_system_level_advanced\\\"\""
+        }
+      ],
+      "reference_counts": {
+        "total": 5,
+        "active_runtime": 0,
+        "test": 5,
+        "docs_or_logs": 0
+      },
+      "import_graph_status": "referenced_by_test_only",
+      "last_commit_touching_it": {
+        "bot_psychologist/bot_agent/prompt_system_level_advanced.md": "a99459d",
+        "bot_psychologist/bot_agent/legacy/prompts/prompt_system_level_advanced.md": "b7642e4"
+      },
+      "proposed_classification": "dead_confirmed"
+    }
+  ]
+}

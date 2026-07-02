@@ -1,5 +1,21 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
+## PRD-047.39 Architecture Consolidation Inventory
+PRD-047.39 is the first architecture-consolidation stage after the accepted PRD-047.38 automated gate. It stays inventory-first and non-runtime: no active `bot_agent/`, `api/`, or `web_ui/src/` runtime behavior, Writer prompt, retrieval ranking, safety logic, Bot_data_base, Chroma, registry, processed blocks, or source documents are changed.
+
+Current result:
+- status is `accepted_with_warnings_candidate` until main commit/push;
+- legacy inventory covers `14` retired/legacy candidates;
+- env/flag inventory found `103` env/config flags;
+- god-file inventory found `55` files over 500 lines under multiagent/API scope;
+- fully merged remote branches deleted: `bot-psychologist`, `feature/sd-integration`, `refactor/simplify-retrieval-pipeline`;
+- `TO_DO_LIST/backups` is removed from Git tracking only and ignored; local backup files remain on disk;
+- logs tracking manifest classifies `424` markdown evidence files as keep, `532` raw artifact candidates as deferred, and does not untrack markdown evidence;
+- dead `_build_llm_prompts` regression is quarantined under `_retired` and no longer collected by pytest;
+- PRD-047.38 S7 warning remains backlog only, not repaired here.
+
+The accepted warning is deliberate: raw-log untrack is deferred because the manifest contains `532` candidates and requires a separate owner-confirmed follow-up to avoid losing context continuity.
+
 ## PRD-047.38 Automated Owner Pilot Evidence Gate
 PRD-047.38 replaces the manual owner pass over the 12 pilot scenarios with a read-only automated evidence gate. It does not tune answer intelligence/style and does not mutate runtime behavior, Writer prompts, retrieval ranking, Bot_data_base, Chroma, registry, processed blocks, source documents, routes, agents, or persistent trace storage. The gate runs S1-S11 through the current backend/session/trace path and S12 through the existing HF4 browser/restart/reload smoke automation, then emits sanitized PASS/WARNING/BLOCKER reports only.
 
@@ -33,7 +49,7 @@ Known accepted warnings:
 - UI trace labels / Session Trace Panel polish remain cleanup candidates.
 
 ## Current Stage
-PRD-047.38 is the current top-stage evidence gate: automated owner-pilot architecture/script invariants are `ACCEPTED_WITH_WARNINGS` with no blockers and one S7 warning. The active next mode is architecture consolidation / cleanup planning over the frozen baseline, not another automatic answer-quality hotfix, DB rewrite, reindex, or new runtime path.
+PRD-047.39 is the current top-stage consolidation inventory: architecture debt is mapped, safe repo hygiene is partly executed, and raw-log untrack is intentionally deferred behind the manifest. The next mode is a narrow follow-up PRD, not broad cleanup or behavior tuning.
 
 PRD-047.36-POST-HF completed the shortened post-HF owner readiness gate as an honest `BLOCKED` result on top of HF4 + HF5. The work stayed read-only: one new gate runner, one small contract test, reports, and docs only; no runtime behavior, Writer logic, retrieval ranking, DB/Chroma/source, or new route/agent mutation was introduced. Fresh trace/reload truth now passes again (`G1`), direct concept baseline/follow-up/Neurostalking continuity all pass (`G2/G3/G4`), greeting sanity passes (`G7`), and panic helper stays bounded with a warning on soft medical escalation wording (`G8`). The gate still blocks on boundary integrity: `G5` fails because explicit `no_internal_db` is honored in visible behavior but not surfaced as a durable trace boundary flag, and `G6` fails for the same reason on explicit `no_practice`. Delivery/memory sanity remains `pass_with_warning` because API-only sampling did not include visible chat bubble text and one quarantined panic-helper turn still diverges from saved memory without being a raw cross-turn contamination leak. Full `python -m pytest tests -q` still stops on the historical unrelated `_build_llm_prompts` import blocker. The next recommended step is one narrow repair only: `PRD-047.36-HF6 - No-Internal-DB / No-Practice Boundary Trace Integrity`.
 PRD-047.36-HF5 completed the selected-knowledge admission repair on the canonical current pipeline with `accepted_with_warning` status. The runtime still stays on `multiagent_adapter`; no retrieval-ranking rewrite, no dictionary/alias map, no new route, no new agent, and no Bot_data_base/Chroma/source mutation were introduced. `contextual_retrieval_query_composer.py` now promotes generic contextual concept follow-ups with already selected knowledge into a bounded `query_kb` / `knowledge_context` admission path, while `writer_context_package.py` now exposes `direct_concept_followup`, bounded selected-knowledge recovery from existing `memory_bundle.knowledge_rag_hits`, and payload ordering that lets one selected semantic card lead the minimal hidden Writer package instead of being re-suppressed. Live HF5 smoke passed all required scenarios: greeting kept Writer payload `0`, the repaired Chat 12 concept follow-up now yields `grounding_reason=direct_concept_followup` and Writer payload `2`, Neurostalking follow-up also stays grounded, and `no_internal_db` still suppresses payload with `latest_turn_no_internal_db`. Honest residual note: full `python -m pytest tests -q` still stops on the historical unrelated `_build_llm_prompts` import blocker. The next recommended step is a shortened post-HF readiness gate over HF4 + HF5, not a dictionary-style runtime expansion.

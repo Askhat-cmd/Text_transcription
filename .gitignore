@@ -173,6 +173,10 @@ tests_v*_after.txt
 # PRD audit artifacts
 !TO_DO_LIST/
 !TO_DO_LIST/**
+TO_DO_LIST/backups/
+TO_DO_LIST/logs/*/raw/
+TO_DO_LIST/logs/*/live_turn_exports/
+TO_DO_LIST/logs/*/prompt_canvases/
 TO_DO_LIST/context/СКРИНЫ ВЕБ АДМИНКИ/
 TO_DO_LIST/context/ЧАТ_С_БОТОМ_3.txt
 TO_DO_LIST/context/ЧАТ_С_БОТОМ_4.txt

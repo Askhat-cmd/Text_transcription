@@ -1,5 +1,23 @@
 ﻿# Architecture Decisions
 
+## ADR-097 - Consolidation starts with inventory and manifest-first hygiene, not runtime deletion
+
+Status: accepted
+
+Date: 2026-07-02
+
+Context: PRD-047.38 accepted the current architecture with warnings and allowed the project to move out of the hotfix loop. The next risk is over-cleanup: deleting legacy-looking runtime code, flags, logs, or evidence without proof would make regressions harder to attribute.
+
+Decision:
+- PRD-047.39 is inventory-first: legacy code, env flags, god-files, logs, and git hygiene are classified before runtime deletion;
+- active runtime code, Writer prompt, retrieval ranking, safety logic, DB/Chroma/source, and S7 behavior stay unchanged;
+- fully merged remote branches and tracked backup artifacts may be removed from Git tracking because they are non-runtime and reversible from hashes/local files;
+- markdown evidence in `TO_DO_LIST/logs` stays tracked;
+- raw log untrack requires manifest-first classification and remains deferred unless explicitly approved from that manifest;
+- dead runtime removal, flag consolidation, god-file splitting, admin UI dedup, and safety polish each require separate PRDs with their own gates.
+
+Consequences: consolidation now has an evidence map and safe repo hygiene without mixing classification and runtime deletion. The project avoids another broad cleanup cycle that could hide regressions or break architect-session context continuity.
+
 ## ADR-096 - Owner pilot architecture gate is automated before consolidation
 
 Status: accepted

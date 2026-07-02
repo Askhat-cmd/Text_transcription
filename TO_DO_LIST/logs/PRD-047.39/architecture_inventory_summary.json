@@ -1,0 +1,47 @@
+{
+  "schema_version": "prd_047_39_architecture_inventory_v1",
+  "legacy_items": 14,
+  "env_flags": 103,
+  "god_files": 55,
+  "logs_summary": {
+    "evidence_of_record": {
+      "count": 424,
+      "bytes": 1652825
+    },
+    "light_evidence_keep": {
+      "count": 1602,
+      "bytes": 13147309
+    },
+    "raw_artifact": {
+      "count": 532,
+      "bytes": 66293206
+    },
+    "review_needed": {
+      "count": 19,
+      "bytes": 2370606
+    }
+  },
+  "safe_branch_delete_candidates": [
+    "bot-psychologist",
+    "feature/sd-integration",
+    "refactor/simplify-retrieval-pipeline"
+  ],
+  "tracked_backups_count": 277,
+  "tracked_backups_count_after_hygiene": 0,
+  "raw_log_candidate_count": 532,
+  "raw_log_untrack_status": "deferred_manifest_only",
+  "deleted_remote_branches": [
+    {
+      "branch": "bot-psychologist",
+      "recovery_commit": "257426880d4fa2682e1ccd8e543ee2dae51b7b1f"
+    },
+    {
+      "branch": "feature/sd-integration",
+      "recovery_commit": "d7acc336e5ccea15945f971aad124e5ace3ec0ec"
+    },
+    {
+      "branch": "refactor/simplify-retrieval-pipeline",
+      "recovery_commit": "632920cc857127a16c423ae6010effedcf219216"
+    }
+  ]
+}

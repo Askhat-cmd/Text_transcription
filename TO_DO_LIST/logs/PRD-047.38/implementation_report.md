@@ -2,7 +2,7 @@
 
 Date: 2026-07-02
 Status: `accepted_with_warnings`
-Main commit: `pending_main_commit`
+Main commit: `915be5b`
 
 ## Scope Delivered
 - Added read-only automated owner pilot gate runner:
@@ -40,4 +40,4 @@ No runtime intelligence/style, Writer prompt, retrieval ranking, DB/Chroma/sourc
 Committed reports contain sanitized previews, counts, hashes, trace summaries, flags, verdicts, and reasons only. Raw private chat logs, raw traces, screenshots, and browser helper artifacts are not committed.
 
 ## Result
-PRD-047.38 is ready for main commit/push, then completion metadata micro-push.
+PRD-047.38 main implementation was committed and pushed in `915be5b`; completion metadata is delivered by the follow-up micro-push.

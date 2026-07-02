@@ -4,6 +4,7 @@
 PRD-047.38 replaces the manual owner pass over the 12 pilot scenarios with a read-only automated evidence gate. It does not tune answer intelligence/style and does not mutate runtime behavior, Writer prompts, retrieval ranking, Bot_data_base, Chroma, registry, processed blocks, source documents, routes, agents, or persistent trace storage. The gate runs S1-S11 through the current backend/session/trace path and S12 through the existing HF4 browser/restart/reload smoke automation, then emits sanitized PASS/WARNING/BLOCKER reports only.
 
 Current evidence result:
+- main implementation commit: `915be5b`;
 - overall verdict is `ACCEPTED_WITH_WARNINGS`;
 - `12/12` scenarios executed;
 - blockers: `0`;

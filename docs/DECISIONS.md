@@ -1,5 +1,22 @@
 ﻿# Architecture Decisions
 
+## ADR-095 - Owner proceeds to cleanup/freeze despite accepted warnings
+
+Status: accepted
+
+Date: 2026-07-02
+
+Context: HF4 restored fresh Web Chat trace/reload truth, HF5 restored direct concept follow-up selected-knowledge admission, and HF6 restored stable boundary proof for `no_internal_db` and `no_practice`. Remaining issues are real but bounded: old in-memory traces can expire after backend restart, greeting/contact wording may be too therapeutic, source exact-match coverage can be weak, shadow planner debug output may be noisy, and full pytest still has historical unrelated `_build_llm_prompts` debt.
+
+Decision:
+- stop the immediate hotfix loop by default;
+- accept the current recovered runtime as a frozen owner-pilot baseline with warnings;
+- document invariants, warnings, cleanup candidates, pilot scenarios, rollback rules, and transfer brief in PRD-047.37;
+- do not use PRD-047.37 to change runtime behavior, Writer style, retrieval ranking, Bot_data_base, Chroma, registry, source documents, semantic-card authority, persistent trace storage, or route/agent architecture;
+- create a future hotfix only if pilot evidence proves a hard blocker against the frozen invariants.
+
+Consequences: the project now moves from hotfix recovery to owner pilot evidence and managed cleanup backlog. Known warnings are visible and accepted rather than hidden; the next architect should use `pilot_start_brief.md` and `invariants_register.md` as the baseline, not restart old debates or add speculative runtime layers.
+
 ## ADR-094 - Selected relevant concept knowledge must outrank generic no_clear_retrieval_need when no hard blocker applies
 
 Status: accepted

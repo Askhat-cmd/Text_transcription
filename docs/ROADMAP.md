@@ -1,6 +1,10 @@
 ﻿# Roadmap
 
+## Current Direction
+PRD-047.37 freezes the current recovered baseline and changes the mode from repeated hotfixing to owner pilot evidence plus managed cleanup backlog. The next default step is Owner Pilot Start using `TO_DO_LIST/logs/PRD-047.37/pilot_start_brief.md`; new hotfixes should be created only from pilot-proven blockers.
+
 ## Done
+- PRD-047.37: completed Cleanup / Freeze / Pilot Start Brief as a documentation/freeze PRD. Captured the accepted HF4/HF5/HF6 baseline, invariant register, known warnings backlog, cleanup/retirement candidates, pilot-start brief, transfer brief, blocker register, sanity-check decision, no-mutation proof, tests, and docs sync without runtime behavior, Writer, retrieval, DB/Chroma/source, route, agent, or persistent trace-store mutation.
 - PRD-047.36-POST-HF: completed the shortened owner readiness gate on top of HF4 + HF5 as a read-only evidence pass. Reused HF4 browser/reload truth, added a dedicated post-HF gate runner plus contract test, exported machine-readable gate matrix and focused trace/knowledge/boundary/delivery reports, and confirmed that the repaired knowledge path is no longer the blocker. Final outcome is honest `BLOCKED`: `G1/G2/G3/G4/G7` pass, `G8` stays `pass_with_warning`, but `G5` and `G6` still fail because `no_internal_db` / `no_practice` are not surfaced as durable trace boundary flags even when visible answers look bounded.
 - PRD-047.36-HF5: completed the selected-knowledge admission repair on the canonical current pipeline. Direct concept follow-ups with already selected relevant knowledge now promote a minimal hidden Writer package instead of collapsing into `no_clear_retrieval_need`, while greeting/contact suppression, `no_internal_db`, semantic-card advisory-only status, and public hidden-competence boundaries stay intact. Added targeted backend tests, a live smoke runner, root-cause/suppression-matrix reports, and no-mutation proof without any dictionary, alias map, new route, or DB/Chroma/source mutation.
 - PRD-047.36-HF4: completed the owner Web trace-restoration hard-blocker repair on the canonical current pipeline. Persisted streamed turns into session history under exact chat session ids, reused one resolved turn number across debug save/SSE/history, sent X-Device-Fingerprint from Web UI so backend identity stays bound to the intended browser session, preserved bot_active_chat_id through hydrate/reload instead of clearing it on empty mount, added targeted backend tests plus HF4 browser/live smoke, and restored fresh 5-turn + reload trace truth while keeping old-session-after-restart behavior explicitly labeled as expired rather than silently wrong.
@@ -129,10 +133,10 @@
 - No active PRD-047.12 blocker remains; unified dialogue policy v2 is accepted on the current developer-local runtime baseline.
 
 ## Next
-1. Run a shortened post-HF readiness gate on top of HF4 + HF5 + HF6 covering trace restoration, direct concept follow-up, `no_internal_db`, `no_practice`, and one safety scenario before claiming owner-pilot freeze readiness.
-2. If the rerun still blocks, classify the next step from fresh evidence instead of adding another speculative runtime layer.
-3. Keep semantic cards advisory-only until a later PRD proves they help without recurring textbook drift or explicit no-KB conflict.
-4. Keep any broader DB-track mutation, overlay authority expansion, retrieval-ranking rewrite, live metadata apply, runtime activation, or Chroma reindex in a separate explicit governance PRD.
+1. Start owner pilot with the 12-scenario checklist in `TO_DO_LIST/logs/PRD-047.37/pilot_start_brief.md`.
+2. Treat remaining greeting/source/trace-label/shadow-planner issues as warnings unless pilot evidence proves a blocker.
+3. If pilot is acceptable, run Cleanup Pass 1 for docs/logs/trace labels/legacy report hygiene.
+4. Keep any DB/chunk preparation, overlay authority expansion, retrieval-ranking rewrite, live metadata apply, runtime activation, or Chroma reindex in a separate explicit governance PRD.
 
 ## Later
 - Operational hardening for governed limited runtime.

@@ -1,5 +1,19 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
+## PRD-047.38 Automated Owner Pilot Evidence Gate
+PRD-047.38 replaces the manual owner pass over the 12 pilot scenarios with a read-only automated evidence gate. It does not tune answer intelligence/style and does not mutate runtime behavior, Writer prompts, retrieval ranking, Bot_data_base, Chroma, registry, processed blocks, source documents, routes, agents, or persistent trace storage. The gate runs S1-S11 through the current backend/session/trace path and S12 through the existing HF4 browser/restart/reload smoke automation, then emits sanitized PASS/WARNING/BLOCKER reports only.
+
+Current evidence result:
+- overall verdict is `ACCEPTED_WITH_WARNINGS`;
+- `12/12` scenarios executed;
+- blockers: `0`;
+- warnings: `1`, limited to `S7 panic_medical_escalation_boundary_soft`;
+- S1-S11 exact traces were available;
+- S12 fresh post-restart reload trace passed with `2` exact trace turns and `0` unavailable cards after reload;
+- raw private chat logs, raw traces, screenshots, provider payloads, DB/cache files, and helper browser artifacts are not committed.
+
+Architectural consequence: the project can move to architecture consolidation / cleanup planning with the warning register visible. Remaining answer-style or bot-smartness tuning is explicitly deferred and should not be folded into cleanup unless a future PRD opens that scope.
+
 ## PRD-047.37 Freeze Baseline
 PRD-047.37 moves the project out of the immediate hotfix loop and into a frozen owner-pilot baseline with documented warnings and cleanup backlog. The canonical runtime remains `multiagent_adapter / multiagent_v1`; Writer remains final answer author; `writer_kb_payload_v1` remains the knowledge-to-Writer path; owner/debug trace remains observability rather than public answer content; semantic cards remain advisory-only and Writer-can-ignore. No runtime behavior, Writer style, retrieval ranking, Bot_data_base, Chroma, registry, processed blocks, source documents, or new route/agent path is changed by this PRD.
 
@@ -18,7 +32,7 @@ Known accepted warnings:
 - UI trace labels / Session Trace Panel polish remain cleanup candidates.
 
 ## Current Stage
-PRD-047.37 is the current top-stage baseline: cleanup/freeze/pilot-start brief with `accepted_with_warning` status. The active next mode is owner pilot evidence collection or cleanup-only hygiene, not another automatic hotfix or immediate POST-HF rerun.
+PRD-047.38 is the current top-stage evidence gate: automated owner-pilot architecture/script invariants are `ACCEPTED_WITH_WARNINGS` with no blockers and one S7 warning. The active next mode is architecture consolidation / cleanup planning over the frozen baseline, not another automatic answer-quality hotfix, DB rewrite, reindex, or new runtime path.
 
 PRD-047.36-POST-HF completed the shortened post-HF owner readiness gate as an honest `BLOCKED` result on top of HF4 + HF5. The work stayed read-only: one new gate runner, one small contract test, reports, and docs only; no runtime behavior, Writer logic, retrieval ranking, DB/Chroma/source, or new route/agent mutation was introduced. Fresh trace/reload truth now passes again (`G1`), direct concept baseline/follow-up/Neurostalking continuity all pass (`G2/G3/G4`), greeting sanity passes (`G7`), and panic helper stays bounded with a warning on soft medical escalation wording (`G8`). The gate still blocks on boundary integrity: `G5` fails because explicit `no_internal_db` is honored in visible behavior but not surfaced as a durable trace boundary flag, and `G6` fails for the same reason on explicit `no_practice`. Delivery/memory sanity remains `pass_with_warning` because API-only sampling did not include visible chat bubble text and one quarantined panic-helper turn still diverges from saved memory without being a raw cross-turn contamination leak. Full `python -m pytest tests -q` still stops on the historical unrelated `_build_llm_prompts` import blocker. The next recommended step is one narrow repair only: `PRD-047.36-HF6 - No-Internal-DB / No-Practice Boundary Trace Integrity`.
 PRD-047.36-HF5 completed the selected-knowledge admission repair on the canonical current pipeline with `accepted_with_warning` status. The runtime still stays on `multiagent_adapter`; no retrieval-ranking rewrite, no dictionary/alias map, no new route, no new agent, and no Bot_data_base/Chroma/source mutation were introduced. `contextual_retrieval_query_composer.py` now promotes generic contextual concept follow-ups with already selected knowledge into a bounded `query_kb` / `knowledge_context` admission path, while `writer_context_package.py` now exposes `direct_concept_followup`, bounded selected-knowledge recovery from existing `memory_bundle.knowledge_rag_hits`, and payload ordering that lets one selected semantic card lead the minimal hidden Writer package instead of being re-suppressed. Live HF5 smoke passed all required scenarios: greeting kept Writer payload `0`, the repaired Chat 12 concept follow-up now yields `grounding_reason=direct_concept_followup` and Writer payload `2`, Neurostalking follow-up also stays grounded, and `no_internal_db` still suppresses payload with `latest_turn_no_internal_db`. Honest residual note: full `python -m pytest tests -q` still stops on the historical unrelated `_build_llm_prompts` import blocker. The next recommended step is a shortened post-HF readiness gate over HF4 + HF5, not a dictionary-style runtime expansion.

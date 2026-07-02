@@ -1,5 +1,23 @@
 ﻿# Architecture Decisions
 
+## ADR-096 - Owner pilot architecture gate is automated before consolidation
+
+Status: accepted
+
+Date: 2026-07-02
+
+Context: PRD-047.37 froze the recovered baseline and produced a 12-scenario owner pilot brief, but the owner explicitly did not want to manually run and classify all 12 scenarios. Moving straight to cleanup without evidence would risk freezing a hidden trace/session/boundary regression as the new normal.
+
+Decision:
+- replace manual 12-scenario owner-pilot classification with a read-only automated evidence gate in PRD-047.38;
+- grade only architecture/script invariants as PASS / WARNING / BLOCKER / INCONCLUSIVE;
+- do not grade product polish, answer depth, preferred style, or bot smartness as blockers in this gate;
+- reuse existing backend/session/trace/HF4 smoke tooling instead of adding a new runtime path, route, agent, or production mechanism;
+- commit only sanitized reports with previews, counts, hashes, flags, and trace summaries;
+- keep raw private logs, raw traces, screenshots, provider payloads, DB/cache artifacts, and helper browser artifacts out of Git.
+
+Consequences: the project can move toward architecture consolidation on an audited baseline if the automated gate has no blockers. Any future answer-quality or DB/source improvements must be opened by a separate PRD rather than hidden inside consolidation cleanup.
+
 ## ADR-095 - Owner proceeds to cleanup/freeze despite accepted warnings
 
 Status: accepted

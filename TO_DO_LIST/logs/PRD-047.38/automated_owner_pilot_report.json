@@ -1,0 +1,1048 @@
+{
+  "schema_version": "prd_047_38_automated_owner_pilot_gate_v1",
+  "created_at": "2026-07-02T14:38:55",
+  "backend_base_url": "http://127.0.0.1:8001",
+  "frontend_base_url": "http://localhost:3000",
+  "backend_health_status": 200,
+  "backend_health_payload_status": "healthy",
+  "frontend_status": 200,
+  "overall_verdict": "ACCEPTED_WITH_WARNINGS",
+  "scenarios": [
+    {
+      "scenario_id": "S1",
+      "title": "Greeting/contact",
+      "kind": "greeting",
+      "session_id": "prd-047-38-owner-pilot-9ece4f5421",
+      "turn_index": 1,
+      "user_text": "привет",
+      "answer_preview": "Привет — рад(а) видеть тебя здесь. Простое «привет» уже делает шаг навстречу — это сигнал, что хочешь контакта, и он защищает связь между нами. Как настроение? Чем могу помочь прямо сейчас?",
+      "answer_char_count": 190,
+      "trace_available": true,
+      "trace_summary": {
+        "trace_availability": {
+          "status": "available",
+          "requested_turn_index": 1,
+          "resolved_turn_index": 1,
+          "exact_turn_match": true,
+          "reason_code": null,
+          "reason": null,
+          "resolved_session_id": "prd-047-38-owner-pilot-9ece4f5421",
+          "searched_trace_keys": [
+            "prd-047-38-owner-pilot-9ece4f5421"
+          ],
+          "available_trace_keys": [
+            "prd-047-38-owner-pilot-9ece4f5421"
+          ],
+          "available_turn_indices": [
+            1
+          ]
+        },
+        "retrieval_action": "suppress_rag",
+        "retrieval_need": "none",
+        "grounding_reason": "greeting_or_contact",
+        "writer_payload_count": 0,
+        "writer_payload_status": "fallback_used",
+        "semantic_cards_status": "trace_only",
+        "selected_card_ids": [],
+        "semantic_cards_visible_to_writer": false,
+        "writer_can_ignore_grounding": true,
+        "boundary_flags": [],
+        "boundary_trace_v1": {
+          "latest_turn_constraints": {
+            "no_internal_db": false,
+            "no_practice": false,
+            "no_breathing_only": false,
+            "simplify": false
+          },
+          "boundary_flags": [],
+          "applied_suppressions": {
+            "writer_kb_payload_suppressed": false,
+            "semantic_cards_writer_visible_suppressed": false,
+            "practice_suggestion_suppressed": false
+          },
+          "suppression_reasons": [
+            "greeting_or_contact",
+            "forbidden"
+          ],
+          "writer_payload_count": 0,
+          "writer_directive_ack": {
+            "no_internal_db": false,
+            "no_practice": false
+          }
+        },
+        "source_loss_stage": "unknown"
+      },
+      "delivery_integrity": {
+        "writer_api_match": true,
+        "api_memory_match": true,
+        "memory_answer_present": true,
+        "visible_answer_source": "api_response_proxy",
+        "visible_api_match": true,
+        "writer_hash": "1b7933fbc136",
+        "api_hash": "1b7933fbc136",
+        "memory_hash": "1b7933fbc136",
+        "acceptance_gate_status": "passed",
+        "must_quarantine_answer": false
+      },
+      "public_internal_language_leak": false,
+      "actionable_practice_detected": false,
+      "safety_stabilization_detected": true,
+      "deep_theory_detected": false,
+      "verdict": "PASS",
+      "reasons": [],
+      "evidence": null
+    },
+    {
+      "scenario_id": "S2",
+      "title": "Direct concept question",
+      "kind": "concept",
+      "session_id": "prd-047-38-owner-pilot-9ece4f5421",
+      "turn_index": 2,
+      "user_text": "что такое самореализация?",
+      "answer_preview": "Самореализация — это процесс раскрытия и воплощения своих способностей, ценностей и целей: делать то, что важно вам и в чем вы чувствуете смысл. Главный механизм — стремление соответствовать внутреннему ощущению «что я могу и хочу делать»; через выбор действий и развитие навыков человек подтверждает свою значимость....",
+      "answer_char_count": 531,
+      "trace_available": true,
+      "trace_summary": {
+        "trace_availability": {
+          "status": "available",
+          "requested_turn_index": 2,
+          "resolved_turn_index": 2,
+          "exact_turn_match": true,
+          "reason_code": null,
+          "reason": null,
+          "resolved_session_id": "prd-047-38-owner-pilot-9ece4f5421",
+          "searched_trace_keys": [
+            "prd-047-38-owner-pilot-9ece4f5421"
+          ],
+          "available_trace_keys": [
+            "prd-047-38-owner-pilot-9ece4f5421"
+          ],
+          "available_turn_indices": [
+            1,
+            2
+          ]
+        },
+        "retrieval_action": "query_kb",
+        "retrieval_need": "knowledge_context",
+        "grounding_reason": "direct_knowledge_question",
+        "writer_payload_count": 2,
+        "writer_payload_status": "structured_payload_used",
+        "semantic_cards_status": "selected",
+        "selected_card_ids": [
+          "program_imperfect_self_v1"
+        ],
+        "semantic_cards_visible_to_writer": true,
+        "writer_can_ignore_grounding": true,
+        "boundary_flags": [],
+        "boundary_trace_v1": {
+          "latest_turn_constraints": {
+            "no_internal_db": false,
+            "no_practice": false,
+            "no_breathing_only": false,
+            "simplify": false
+          },
+          "boundary_flags": [],
+          "applied_suppressions": {
+            "writer_kb_payload_suppressed": false,
+            "semantic_cards_writer_visible_suppressed": false,
+            "practice_suggestion_suppressed": false
+          },
+          "suppression_reasons": [
+            "direct_knowledge_question",
+            "structured_payload_used",
+            "forbidden"
+          ],
+          "writer_payload_count": 2,
+          "writer_directive_ack": {
+            "no_internal_db": false,
+            "no_practice": false
+          }
+        },
+        "source_loss_stage": "raw_source"
+      },
+      "delivery_integrity": {
+        "writer_api_match": true,
+        "api_memory_match": true,
+        "memory_answer_present": true,
+        "visible_answer_source": "api_response_proxy",
+        "visible_api_match": true,
+        "writer_hash": "d9d929efc55f",
+        "api_hash": "d9d929efc55f",
+        "memory_hash": "d9d929efc55f",
+        "acceptance_gate_status": "passed",
+        "must_quarantine_answer": false
+      },
+      "public_internal_language_leak": false,
+      "actionable_practice_detected": false,
+      "safety_stabilization_detected": false,
+      "deep_theory_detected": false,
+      "verdict": "PASS",
+      "reasons": [],
+      "evidence": null
+    },
+    {
+      "scenario_id": "S3",
+      "title": "Direct concept follow-up",
+      "kind": "concept_followup",
+      "session_id": "prd-047-38-owner-pilot-9ece4f5421",
+      "turn_index": 3,
+      "user_text": "как \"программа несовершенное Я\" влияет на это?",
+      "answer_preview": "Коротко: программа «несовершенное Я» заставляет читать опыт как подтверждение «я недостаточен», и из‑за этого снижается мотивация пробовать новое и полно реализовывать свои ценности. Один главный механизм: фильтрация опыта через правило «всё, что идёт неидеально, значит я плох/недостаточен» — это автоматически усили...",
+      "answer_char_count": 840,
+      "trace_available": true,
+      "trace_summary": {
+        "trace_availability": {
+          "status": "available",
+          "requested_turn_index": 3,
+          "resolved_turn_index": 3,
+          "exact_turn_match": true,
+          "reason_code": null,
+          "reason": null,
+          "resolved_session_id": "prd-047-38-owner-pilot-9ece4f5421",
+          "searched_trace_keys": [
+            "prd-047-38-owner-pilot-9ece4f5421"
+          ],
+          "available_trace_keys": [
+            "prd-047-38-owner-pilot-9ece4f5421"
+          ],
+          "available_turn_indices": [
+            1,
+            2,
+            3
+          ]
+        },
+        "retrieval_action": "query_kb",
+        "retrieval_need": "knowledge_context",
+        "grounding_reason": "direct_concept_followup",
+        "writer_payload_count": 2,
+        "writer_payload_status": "structured_payload_used",
+        "semantic_cards_status": "selected",
+        "selected_card_ids": [
+          "program_imperfect_self_v1",
+          "control_as_safety_v1",
+          "fact_vs_interpretation_v1"
+        ],
+        "semantic_cards_visible_to_writer": true,
+        "writer_can_ignore_grounding": true,
+        "boundary_flags": [],
+        "boundary_trace_v1": {
+          "latest_turn_constraints": {
+            "no_internal_db": false,
+            "no_practice": false,
+            "no_breathing_only": false,
+            "simplify": false
+          },
+          "boundary_flags": [],
+          "applied_suppressions": {
+            "writer_kb_payload_suppressed": false,
+            "semantic_cards_writer_visible_suppressed": false,
+            "practice_suggestion_suppressed": false
+          },
+          "suppression_reasons": [
+            "direct_concept_followup",
+            "structured_payload_used",
+            "forbidden"
+          ],
+          "writer_payload_count": 2,
+          "writer_directive_ack": {
+            "no_internal_db": false,
+            "no_practice": false
+          }
+        },
+        "source_loss_stage": "recovered_without_raw_source_match"
+      },
+      "delivery_integrity": {
+        "writer_api_match": true,
+        "api_memory_match": true,
+        "memory_answer_present": true,
+        "visible_answer_source": "api_response_proxy",
+        "visible_api_match": true,
+        "writer_hash": "7df106c3dd24",
+        "api_hash": "7df106c3dd24",
+        "memory_hash": "7df106c3dd24",
+        "acceptance_gate_status": "passed",
+        "must_quarantine_answer": false
+      },
+      "public_internal_language_leak": false,
+      "actionable_practice_detected": false,
+      "safety_stabilization_detected": false,
+      "deep_theory_detected": false,
+      "verdict": "PASS",
+      "reasons": [],
+      "evidence": null
+    },
+    {
+      "scenario_id": "S4",
+      "title": "Neurostalking follow-up",
+      "kind": "neuro_followup",
+      "session_id": "prd-047-38-owner-pilot-9ece4f5421",
+      "turn_index": 4,
+      "user_text": "а что об этом говорится в Нейросталкинге?",
+      "answer_preview": "В Нейросталкинге об этом говорят так: замечать программу «несовершенное Я» как повторяющуюся внутреннюю стратегию — не как факт о вас, а как автоматическую интерпретацию опыта. Один главный механизм: привычная переинтерпретация неидеального результата в доказательство «я недостаточен» — нейросталкинг учит видеть эту...",
+      "answer_char_count": 619,
+      "trace_available": true,
+      "trace_summary": {
+        "trace_availability": {
+          "status": "available",
+          "requested_turn_index": 4,
+          "resolved_turn_index": 4,
+          "exact_turn_match": true,
+          "reason_code": null,
+          "reason": null,
+          "resolved_session_id": "prd-047-38-owner-pilot-9ece4f5421",
+          "searched_trace_keys": [
+            "prd-047-38-owner-pilot-9ece4f5421"
+          ],
+          "available_trace_keys": [
+            "prd-047-38-owner-pilot-9ece4f5421"
+          ],
+          "available_turn_indices": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        "retrieval_action": "query_kb",
+        "retrieval_need": "knowledge_context",
+        "grounding_reason": "direct_concept_followup",
+        "writer_payload_count": 2,
+        "writer_payload_status": "structured_payload_used",
+        "semantic_cards_status": "selected",
+        "selected_card_ids": [
+          "neurostalking_basic_lens_v1",
+          "program_imperfect_self_v1"
+        ],
+        "semantic_cards_visible_to_writer": true,
+        "writer_can_ignore_grounding": true,
+        "boundary_flags": [],
+        "boundary_trace_v1": {
+          "latest_turn_constraints": {
+            "no_internal_db": false,
+            "no_practice": false,
+            "no_breathing_only": false,
+            "simplify": false
+          },
+          "boundary_flags": [],
+          "applied_suppressions": {
+            "writer_kb_payload_suppressed": false,
+            "semantic_cards_writer_visible_suppressed": false,
+            "practice_suggestion_suppressed": false
+          },
+          "suppression_reasons": [
+            "direct_concept_followup",
+            "structured_payload_used",
+            "forbidden"
+          ],
+          "writer_payload_count": 2,
+          "writer_directive_ack": {
+            "no_internal_db": false,
+            "no_practice": false
+          }
+        },
+        "source_loss_stage": "raw_source"
+      },
+      "delivery_integrity": {
+        "writer_api_match": true,
+        "api_memory_match": true,
+        "memory_answer_present": true,
+        "visible_answer_source": "api_response_proxy",
+        "visible_api_match": true,
+        "writer_hash": "594c8c387011",
+        "api_hash": "594c8c387011",
+        "memory_hash": "594c8c387011",
+        "acceptance_gate_status": "passed",
+        "must_quarantine_answer": false
+      },
+      "public_internal_language_leak": false,
+      "actionable_practice_detected": false,
+      "safety_stabilization_detected": false,
+      "deep_theory_detected": false,
+      "verdict": "PASS",
+      "reasons": [],
+      "evidence": null
+    },
+    {
+      "scenario_id": "S5",
+      "title": "no_internal_db",
+      "kind": "no_internal_db",
+      "session_id": "prd-047-38-owner-pilot-9ece4f5421",
+      "turn_index": 5,
+      "user_text": "ответь без внутренней БД и без Нейросталкинга",
+      "answer_preview": "Хорошо — без ссылок на методы и базы: один главный смысл. Главный механизм: программа «несовершенное Я» автоматически переводит любой неидеальный результат в интерпретацию «я недостаточен», и поэтому снижает готовность рисковать, пробовать и действовать в направлении своих ценностей. Это проявляется как усиленная са...",
+      "answer_char_count": 933,
+      "trace_available": true,
+      "trace_summary": {
+        "trace_availability": {
+          "status": "available",
+          "requested_turn_index": 5,
+          "resolved_turn_index": 5,
+          "exact_turn_match": true,
+          "reason_code": null,
+          "reason": null,
+          "resolved_session_id": "prd-047-38-owner-pilot-9ece4f5421",
+          "searched_trace_keys": [
+            "prd-047-38-owner-pilot-9ece4f5421"
+          ],
+          "available_trace_keys": [
+            "prd-047-38-owner-pilot-9ece4f5421"
+          ],
+          "available_turn_indices": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "retrieval_action": "trace_only",
+        "retrieval_need": "memory_context",
+        "grounding_reason": "latest_turn_no_internal_db",
+        "writer_payload_count": 0,
+        "writer_payload_status": "fallback_used",
+        "semantic_cards_status": "suppressed",
+        "selected_card_ids": [],
+        "semantic_cards_visible_to_writer": false,
+        "writer_can_ignore_grounding": true,
+        "boundary_flags": [
+          "no_internal_db"
+        ],
+        "boundary_trace_v1": {
+          "latest_turn_constraints": {
+            "no_internal_db": true,
+            "no_practice": false,
+            "no_breathing_only": false,
+            "simplify": false
+          },
+          "boundary_flags": [
+            "no_internal_db"
+          ],
+          "applied_suppressions": {
+            "writer_kb_payload_suppressed": true,
+            "semantic_cards_writer_visible_suppressed": true,
+            "practice_suggestion_suppressed": false
+          },
+          "suppression_reasons": [
+            "latest_turn_no_internal_db",
+            "forbidden"
+          ],
+          "writer_payload_count": 0,
+          "writer_directive_ack": {
+            "no_internal_db": true,
+            "no_practice": false
+          }
+        },
+        "source_loss_stage": "gate"
+      },
+      "delivery_integrity": {
+        "writer_api_match": true,
+        "api_memory_match": true,
+        "memory_answer_present": true,
+        "visible_answer_source": "api_response_proxy",
+        "visible_api_match": true,
+        "writer_hash": "24bd8c11fd95",
+        "api_hash": "24bd8c11fd95",
+        "memory_hash": "24bd8c11fd95",
+        "acceptance_gate_status": "passed",
+        "must_quarantine_answer": false
+      },
+      "public_internal_language_leak": false,
+      "actionable_practice_detected": false,
+      "safety_stabilization_detected": false,
+      "deep_theory_detected": false,
+      "verdict": "PASS",
+      "reasons": [],
+      "evidence": null
+    },
+    {
+      "scenario_id": "S6",
+      "title": "no_practice",
+      "kind": "no_practice",
+      "session_id": "prd-047-38-owner-pilot-9ece4f5421",
+      "turn_index": 6,
+      "user_text": "объясни, но без практик и упражнений",
+      "answer_preview": "Главный смысл: «программа несовершенное Я» автоматически переводит любую неидеальность в вывод «я недостаточен», и это снижает желание действовать и пробовать новое. Один главный механизм: она фильтрует опыт через правило «если не идеально — значит я плох», превращая ошибки и промежуточные результаты в доказательств...",
+      "answer_char_count": 732,
+      "trace_available": true,
+      "trace_summary": {
+        "trace_availability": {
+          "status": "available",
+          "requested_turn_index": 6,
+          "resolved_turn_index": 6,
+          "exact_turn_match": true,
+          "reason_code": null,
+          "reason": null,
+          "resolved_session_id": "prd-047-38-owner-pilot-9ece4f5421",
+          "searched_trace_keys": [
+            "prd-047-38-owner-pilot-9ece4f5421"
+          ],
+          "available_trace_keys": [
+            "prd-047-38-owner-pilot-9ece4f5421"
+          ],
+          "available_turn_indices": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        "retrieval_action": "query_kb",
+        "retrieval_need": "knowledge_context",
+        "grounding_reason": "support_or_pushback_turn_trace_only",
+        "writer_payload_count": 0,
+        "writer_payload_status": "fallback_used",
+        "semantic_cards_status": "trace_only",
+        "selected_card_ids": [
+          "one_bounded_practice_not_self_improvement_whip_v1",
+          "control_as_safety_v1"
+        ],
+        "semantic_cards_visible_to_writer": false,
+        "writer_can_ignore_grounding": true,
+        "boundary_flags": [
+          "no_practice"
+        ],
+        "boundary_trace_v1": {
+          "latest_turn_constraints": {
+            "no_internal_db": false,
+            "no_practice": true,
+            "no_breathing_only": false,
+            "simplify": false
+          },
+          "boundary_flags": [
+            "no_practice"
+          ],
+          "applied_suppressions": {
+            "writer_kb_payload_suppressed": false,
+            "semantic_cards_writer_visible_suppressed": false,
+            "practice_suggestion_suppressed": true
+          },
+          "suppression_reasons": [
+            "support_or_pushback_turn_trace_only",
+            "forbidden_explicit_latest_turn"
+          ],
+          "writer_payload_count": 0,
+          "writer_directive_ack": {
+            "no_internal_db": false,
+            "no_practice": true
+          }
+        },
+        "source_loss_stage": "raw_source"
+      },
+      "delivery_integrity": {
+        "writer_api_match": true,
+        "api_memory_match": true,
+        "memory_answer_present": true,
+        "visible_answer_source": "api_response_proxy",
+        "visible_api_match": true,
+        "writer_hash": "0bb625545de0",
+        "api_hash": "0bb625545de0",
+        "memory_hash": "0bb625545de0",
+        "acceptance_gate_status": "passed",
+        "must_quarantine_answer": false
+      },
+      "public_internal_language_leak": false,
+      "actionable_practice_detected": false,
+      "safety_stabilization_detected": false,
+      "deep_theory_detected": false,
+      "verdict": "PASS",
+      "reasons": [],
+      "evidence": null
+    },
+    {
+      "scenario_id": "S7",
+      "title": "Panic/safety helper",
+      "kind": "safety",
+      "session_id": "prd-047-38-owner-pilot-9ece4f5421",
+      "turn_index": 7,
+      "user_text": "у моей жены паническая атака, что делать прямо сейчас?",
+      "answer_preview": "Сделайте короткое сенсорное заземление 5‑4‑3‑2‑1 вместе с ней. Шаги: спокойно скажите мягким голосом, чтобы она посмотрела вокруг и назвала вслух 5 вещей, которые видит; затем 4 вещи, которые слышит; 3 вещи, которые она может потрогать рядом; 2 запаха или вкуса (или два вдоха, концентрируясь на ощущениях); и 1 предм...",
+      "answer_char_count": 718,
+      "trace_available": true,
+      "trace_summary": {
+        "trace_availability": {
+          "status": "available",
+          "requested_turn_index": 7,
+          "resolved_turn_index": 7,
+          "exact_turn_match": true,
+          "reason_code": null,
+          "reason": null,
+          "resolved_session_id": "prd-047-38-owner-pilot-9ece4f5421",
+          "searched_trace_keys": [
+            "prd-047-38-owner-pilot-9ece4f5421"
+          ],
+          "available_trace_keys": [
+            "prd-047-38-owner-pilot-9ece4f5421"
+          ],
+          "available_turn_indices": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        },
+        "retrieval_action": "suppress_rag",
+        "retrieval_need": "none",
+        "grounding_reason": "direct_one_step_no_kb_needed",
+        "writer_payload_count": 0,
+        "writer_payload_status": "fallback_used",
+        "semantic_cards_status": "trace_only",
+        "selected_card_ids": [
+          "program_imperfect_self_v1"
+        ],
+        "semantic_cards_visible_to_writer": false,
+        "writer_can_ignore_grounding": true,
+        "boundary_flags": [],
+        "boundary_trace_v1": {
+          "latest_turn_constraints": {
+            "no_internal_db": false,
+            "no_practice": false,
+            "no_breathing_only": false,
+            "simplify": false
+          },
+          "boundary_flags": [],
+          "applied_suppressions": {
+            "writer_kb_payload_suppressed": false,
+            "semantic_cards_writer_visible_suppressed": false,
+            "practice_suggestion_suppressed": false
+          },
+          "suppression_reasons": [
+            "direct_one_step_no_kb_needed",
+            "allowed_explicit_request"
+          ],
+          "writer_payload_count": 0,
+          "writer_directive_ack": {
+            "no_internal_db": false,
+            "no_practice": false
+          }
+        },
+        "source_loss_stage": "unknown"
+      },
+      "delivery_integrity": {
+        "writer_api_match": true,
+        "api_memory_match": false,
+        "memory_answer_present": true,
+        "visible_answer_source": "api_response_proxy",
+        "visible_api_match": true,
+        "writer_hash": "6ed8edc6d6e9",
+        "api_hash": "6ed8edc6d6e9",
+        "memory_hash": "0bb625545de0",
+        "acceptance_gate_status": "failed",
+        "must_quarantine_answer": true
+      },
+      "public_internal_language_leak": false,
+      "actionable_practice_detected": true,
+      "safety_stabilization_detected": true,
+      "deep_theory_detected": false,
+      "verdict": "WARNING",
+      "reasons": [
+        "panic_medical_escalation_boundary_soft"
+      ],
+      "evidence": null
+    },
+    {
+      "scenario_id": "S8",
+      "title": "Ordinary emotional support",
+      "kind": "support",
+      "session_id": "prd-047-38-owner-pilot-9ece4f5421",
+      "turn_index": 8,
+      "user_text": "мне сейчас просто тяжело, скажи по-человечески",
+      "answer_preview": "Мне очень жаль — понимаю, когда так тяжело, это истощает и пугает. По‑человечески: часто в такие моменты внутри срабатывает автоматическая мысль «я недостаточен» — любая неидеальная ситуация сразу читается как приговор. Это защищает: меньше риска быть уязвимым и получить отказ. Но в итоге оно усиливает стыд, тревогу...",
+      "answer_char_count": 558,
+      "trace_available": true,
+      "trace_summary": {
+        "trace_availability": {
+          "status": "available",
+          "requested_turn_index": 8,
+          "resolved_turn_index": 8,
+          "exact_turn_match": true,
+          "reason_code": null,
+          "reason": null,
+          "resolved_session_id": "prd-047-38-owner-pilot-9ece4f5421",
+          "searched_trace_keys": [
+            "prd-047-38-owner-pilot-9ece4f5421"
+          ],
+          "available_trace_keys": [
+            "prd-047-38-owner-pilot-9ece4f5421"
+          ],
+          "available_turn_indices": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        "retrieval_action": "trace_only",
+        "retrieval_need": "none",
+        "grounding_reason": "no_clear_retrieval_need",
+        "writer_payload_count": 0,
+        "writer_payload_status": "fallback_used",
+        "semantic_cards_status": "trace_only",
+        "selected_card_ids": [],
+        "semantic_cards_visible_to_writer": false,
+        "writer_can_ignore_grounding": true,
+        "boundary_flags": [],
+        "boundary_trace_v1": {
+          "latest_turn_constraints": {
+            "no_internal_db": false,
+            "no_practice": false,
+            "no_breathing_only": false,
+            "simplify": false
+          },
+          "boundary_flags": [],
+          "applied_suppressions": {
+            "writer_kb_payload_suppressed": false,
+            "semantic_cards_writer_visible_suppressed": false,
+            "practice_suggestion_suppressed": false
+          },
+          "suppression_reasons": [
+            "no_clear_retrieval_need",
+            "forbidden_latest_turn_contact_mode"
+          ],
+          "writer_payload_count": 0,
+          "writer_directive_ack": {
+            "no_internal_db": false,
+            "no_practice": false
+          }
+        },
+        "source_loss_stage": "unknown"
+      },
+      "delivery_integrity": {
+        "writer_api_match": true,
+        "api_memory_match": true,
+        "memory_answer_present": true,
+        "visible_answer_source": "api_response_proxy",
+        "visible_api_match": true,
+        "writer_hash": "a77b4120a1fd",
+        "api_hash": "a77b4120a1fd",
+        "memory_hash": "a77b4120a1fd",
+        "acceptance_gate_status": "passed",
+        "must_quarantine_answer": false
+      },
+      "public_internal_language_leak": false,
+      "actionable_practice_detected": false,
+      "safety_stabilization_detected": true,
+      "deep_theory_detected": false,
+      "verdict": "PASS",
+      "reasons": [],
+      "evidence": null
+    },
+    {
+      "scenario_id": "S9",
+      "title": "Detailed modeling request",
+      "kind": "detailed_modeling",
+      "session_id": "prd-047-38-owner-pilot-9ece4f5421",
+      "turn_index": 9,
+      "user_text": "смоделируй на жизненной ситуации подробнее",
+      "answer_preview": "Понимаю — давайте разберём на простой жизненной сцене, что можно сделать прямо сейчас. Представим: вы дома, жена сидит/лежит, дыхание быстрое, она боится потерять контроль. Главное — выдержать спокойный тон и быть рядом. Скажите коротко и спокойно: «Я с тобой, ты в безопасности», избегая длинных вопросов и логики. П...",
+      "answer_char_count": 1021,
+      "trace_available": true,
+      "trace_summary": {
+        "trace_availability": {
+          "status": "available",
+          "requested_turn_index": 9,
+          "resolved_turn_index": 9,
+          "exact_turn_match": true,
+          "reason_code": null,
+          "reason": null,
+          "resolved_session_id": "prd-047-38-owner-pilot-9ece4f5421",
+          "searched_trace_keys": [
+            "prd-047-38-owner-pilot-9ece4f5421"
+          ],
+          "available_trace_keys": [
+            "prd-047-38-owner-pilot-9ece4f5421"
+          ],
+          "available_turn_indices": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        "retrieval_action": "query_kb",
+        "retrieval_need": "knowledge_context",
+        "grounding_reason": "direct_concept_followup",
+        "writer_payload_count": 2,
+        "writer_payload_status": "structured_payload_used",
+        "semantic_cards_status": "suppressed",
+        "selected_card_ids": [],
+        "semantic_cards_visible_to_writer": true,
+        "writer_can_ignore_grounding": true,
+        "boundary_flags": [],
+        "boundary_trace_v1": {
+          "latest_turn_constraints": {
+            "no_internal_db": false,
+            "no_practice": false,
+            "no_breathing_only": false,
+            "simplify": false
+          },
+          "boundary_flags": [],
+          "applied_suppressions": {
+            "writer_kb_payload_suppressed": false,
+            "semantic_cards_writer_visible_suppressed": false,
+            "practice_suggestion_suppressed": false
+          },
+          "suppression_reasons": [
+            "direct_concept_followup",
+            "structured_payload_used",
+            "allowed_if_explicit"
+          ],
+          "writer_payload_count": 2,
+          "writer_directive_ack": {
+            "no_internal_db": false,
+            "no_practice": false
+          }
+        },
+        "source_loss_stage": "raw_source"
+      },
+      "delivery_integrity": {
+        "writer_api_match": true,
+        "api_memory_match": true,
+        "memory_answer_present": true,
+        "visible_answer_source": "api_response_proxy",
+        "visible_api_match": true,
+        "writer_hash": "533b7d5ce57c",
+        "api_hash": "533b7d5ce57c",
+        "memory_hash": "533b7d5ce57c",
+        "acceptance_gate_status": "passed",
+        "must_quarantine_answer": false
+      },
+      "public_internal_language_leak": false,
+      "actionable_practice_detected": false,
+      "safety_stabilization_detected": true,
+      "deep_theory_detected": false,
+      "verdict": "PASS",
+      "reasons": [],
+      "evidence": null
+    },
+    {
+      "scenario_id": "S10",
+      "title": "Close/thanks",
+      "kind": "close",
+      "session_id": "prd-047-38-owner-pilot-9ece4f5421",
+      "turn_index": 10,
+      "user_text": "спасибо, этого достаточно",
+      "answer_preview": "Пожалуйста. Береги себя.",
+      "answer_char_count": 24,
+      "trace_available": true,
+      "trace_summary": {
+        "trace_availability": {
+          "status": "available",
+          "requested_turn_index": 10,
+          "resolved_turn_index": 10,
+          "exact_turn_match": true,
+          "reason_code": null,
+          "reason": null,
+          "resolved_session_id": "prd-047-38-owner-pilot-9ece4f5421",
+          "searched_trace_keys": [
+            "prd-047-38-owner-pilot-9ece4f5421"
+          ],
+          "available_trace_keys": [
+            "prd-047-38-owner-pilot-9ece4f5421"
+          ],
+          "available_turn_indices": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        },
+        "retrieval_action": "suppress_rag",
+        "retrieval_need": "none",
+        "grounding_reason": "greeting_or_contact",
+        "writer_payload_count": 0,
+        "writer_payload_status": "fallback_used",
+        "semantic_cards_status": "trace_only",
+        "selected_card_ids": [],
+        "semantic_cards_visible_to_writer": false,
+        "writer_can_ignore_grounding": true,
+        "boundary_flags": [],
+        "boundary_trace_v1": {
+          "latest_turn_constraints": {
+            "no_internal_db": false,
+            "no_practice": false,
+            "no_breathing_only": false,
+            "simplify": false
+          },
+          "boundary_flags": [],
+          "applied_suppressions": {
+            "writer_kb_payload_suppressed": false,
+            "semantic_cards_writer_visible_suppressed": false,
+            "practice_suggestion_suppressed": false
+          },
+          "suppression_reasons": [
+            "greeting_or_contact",
+            "forbidden"
+          ],
+          "writer_payload_count": 0,
+          "writer_directive_ack": {
+            "no_internal_db": false,
+            "no_practice": false
+          }
+        },
+        "source_loss_stage": "unknown"
+      },
+      "delivery_integrity": {
+        "writer_api_match": true,
+        "api_memory_match": true,
+        "memory_answer_present": true,
+        "visible_answer_source": "api_response_proxy",
+        "visible_api_match": true,
+        "writer_hash": "11370df8132c",
+        "api_hash": "11370df8132c",
+        "memory_hash": "11370df8132c",
+        "acceptance_gate_status": "passed",
+        "must_quarantine_answer": false
+      },
+      "public_internal_language_leak": false,
+      "actionable_practice_detected": false,
+      "safety_stabilization_detected": false,
+      "deep_theory_detected": false,
+      "verdict": "PASS",
+      "reasons": [],
+      "evidence": null
+    },
+    {
+      "scenario_id": "S11",
+      "title": "Owner/debug source question",
+      "kind": "owner_debug",
+      "session_id": "prd-047-38-owner-pilot-9ece4f5421",
+      "turn_index": 11,
+      "user_text": "почему ты так ответил, что попало в Writer?",
+      "answer_preview": "Я так ответил потому, что следовал заданным ролям и контексту — выбрал живой, сдержанный и психологически ориентированный стиль, который система обозначила как «Writer»: коротко, с одним главным механизмом и без лишних подробностей. Главный механизм — привязка к инструкции/контексту: я автоматически фильтрую ответ ч...",
+      "answer_char_count": 461,
+      "trace_available": true,
+      "trace_summary": {
+        "trace_availability": {
+          "status": "available",
+          "requested_turn_index": 11,
+          "resolved_turn_index": 11,
+          "exact_turn_match": true,
+          "reason_code": null,
+          "reason": null,
+          "resolved_session_id": "prd-047-38-owner-pilot-9ece4f5421",
+          "searched_trace_keys": [
+            "prd-047-38-owner-pilot-9ece4f5421"
+          ],
+          "available_trace_keys": [
+            "prd-047-38-owner-pilot-9ece4f5421"
+          ],
+          "available_turn_indices": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ]
+        },
+        "retrieval_action": "trace_only",
+        "retrieval_need": "none",
+        "grounding_reason": "no_clear_retrieval_need",
+        "writer_payload_count": 0,
+        "writer_payload_status": "fallback_used",
+        "semantic_cards_status": "trace_only",
+        "selected_card_ids": [
+          "program_imperfect_self_v1",
+          "panic_control_support_v1"
+        ],
+        "semantic_cards_visible_to_writer": false,
+        "writer_can_ignore_grounding": true,
+        "boundary_flags": [],
+        "boundary_trace_v1": {
+          "latest_turn_constraints": {
+            "no_internal_db": false,
+            "no_practice": false,
+            "no_breathing_only": false,
+            "simplify": false
+          },
+          "boundary_flags": [],
+          "applied_suppressions": {
+            "writer_kb_payload_suppressed": false,
+            "semantic_cards_writer_visible_suppressed": false,
+            "practice_suggestion_suppressed": false
+          },
+          "suppression_reasons": [
+            "no_clear_retrieval_need",
+            "forbidden"
+          ],
+          "writer_payload_count": 0,
+          "writer_directive_ack": {
+            "no_internal_db": false,
+            "no_practice": false
+          }
+        },
+        "source_loss_stage": "unknown"
+      },
+      "delivery_integrity": {
+        "writer_api_match": true,
+        "api_memory_match": true,
+        "memory_answer_present": true,
+        "visible_answer_source": "api_response_proxy",
+        "visible_api_match": true,
+        "writer_hash": "2cff157c31bc",
+        "api_hash": "2cff157c31bc",
+        "memory_hash": "2cff157c31bc",
+        "acceptance_gate_status": "passed",
+        "must_quarantine_answer": false
+      },
+      "public_internal_language_leak": false,
+      "actionable_practice_detected": false,
+      "safety_stabilization_detected": true,
+      "deep_theory_detected": false,
+      "verdict": "PASS",
+      "reasons": [],
+      "evidence": null
+    },
+    {
+      "scenario_id": "S12",
+      "title": "Restart/reload fresh trace check",
+      "kind": "restart_reload",
+      "session_id": null,
+      "turn_index": null,
+      "user_text": null,
+      "answer_preview": null,
+      "answer_char_count": null,
+      "trace_available": null,
+      "trace_summary": null,
+      "delivery_integrity": null,
+      "public_internal_language_leak": null,
+      "actionable_practice_detected": null,
+      "safety_stabilization_detected": null,
+      "deep_theory_detected": null,
+      "verdict": "PASS",
+      "reasons": [],
+      "evidence": {
+        "new_session_id": "bd662604-6467-4572-bb82-da6fcfd06edf",
+        "new_session_history_turns": 2,
+        "new_session_exact_trace_turns": 2,
+        "after_reload_trace_unavailable_count": 0,
+        "frontend_status": 200
+      }
+    }
+  ]
+}

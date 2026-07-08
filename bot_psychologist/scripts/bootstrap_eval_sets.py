@@ -25,7 +25,7 @@ class ExtractedQuery:
 
 
 def _load_ast(path: Path) -> ast.AST:
-    return ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+    return ast.parse(path.read_text(encoding="utf-8-sig"), filename=str(path))
 
 
 def _literal(node: ast.AST) -> Any:
@@ -310,28 +310,6 @@ def _compute_baseline(
     except Exception:
         embedding_model = "unknown"
 
-    # SD classifier accuracy.
-    sd_acc = 0.0
-    sd_total = 0
-    try:
-        from bot_agent.sd_classifier import SDClassifier
-
-        clf = SDClassifier()
-        ok = 0
-        for case in classifier_cases:
-            msg = case.get("message")
-            if not isinstance(msg, str) or not msg.strip():
-                continue
-            pred = clf._heuristic_classify(msg).primary
-            sd_total += 1
-            if "expected_primary" in case and pred == case["expected_primary"]:
-                ok += 1
-            elif "expected_any_of" in case and pred in case["expected_any_of"]:
-                ok += 1
-        sd_acc = (ok / sd_total) if sd_total else 0.0
-    except Exception:
-        sd_acc = 0.0
-
     # Routing accuracy.
     routing_acc = 0.0
     routing_total = 0
@@ -378,10 +356,10 @@ def _compute_baseline(
             "sample_size": retrieval_total,
         },
         "classifiers": {
-            "sd_classifier_accuracy_at_1": _safe_round(sd_acc),
+            "classifier_eval_accuracy_at_1": 0.0,
             "state_classifier_accuracy_at_1": _safe_round(routing_acc),
-            "note": "state metric proxy from routing test-cases",
-            "sample_size_sd": sd_total,
+            "note": "legacy sd baseline retired; state metric remains a routing test-case proxy",
+            "sample_size_classifier_eval": 0,
             "sample_size_state_proxy": routing_total,
         },
         "routing": {

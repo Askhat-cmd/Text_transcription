@@ -89,7 +89,7 @@ def test_traces_compact_format_strips_heavy_fields() -> None:
             "executed_rag_query": "executed hi",
             "pipeline_stages": [
                 {"name": "state_classifier", "duration_ms": 10, "skipped": False},
-                {"name": "sd_classifier", "duration_ms": 0, "skipped": True},
+                {"name": "legacy_stage_stub", "duration_ms": 0, "skipped": True},
             ],
             "llm_calls": [
                 {

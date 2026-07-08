@@ -2,6 +2,21 @@
 
 Главный источник курса проекта: `docs/MASTER_STRATEGIC_PLAN_NEO_MindBot_v4_RU.md`.
 
+## PRD-047.40 Dead Pipeline Removal
+PRD-047.40 is the first bounded removal pass after the PRD-047.39 inventory. It stays cleanup-only: no active runtime behavior, Writer prompt/model, retrieval ranking, safety logic, Bot_data_base, Chroma, registry, processed blocks, or source documents are changed.
+
+Current result:
+- status is `accepted_with_warning`;
+- Stage A main commit: `417113b` untracked exactly `532` manifest-approved raw log artifacts from Git while keeping them on disk and preserving markdown evidence tracking;
+- Stage B main commit: `b954a52` removed `5` dead legacy-bound test files and the matching `5` `pytest.ini` ignore lines;
+- the positive replacement contract is now `bot_psychologist/tests/contract/test_dead_code_removed.py`;
+- best-effort secondary cleanup removed stale `sd_classifier` debug/bootstrap leftovers without reopening legacy runtime paths;
+- full regression moved from `309 failed / 1742 passed / 1006 warnings` to `308 failed / 1743 passed / 1006 warnings`, so no new PRD-local regression class was introduced;
+- live smoke before/after stayed healthy with `200` post/trace results and `forbidden_trace_keys_present=false`;
+- `user_level_adapter` verdict is `active`: active runtime/API compat surfaces still accept or expose the legacy name as a no-op/metadata compatibility shape, so removal is deferred to a separate PRD.
+
+Architectural consequence: the project has now completed both the manifest-first raw-log untrack and the first dead-pipeline retirement slice without touching behavior. The next default work is separate and narrower: env-flag consolidation (`PRD-047.41`), global test-suite health (`PRD-047.45`), or a dedicated follow-up for remaining `user_level_adapter` compatibility shims.
+
 ## PRD-047.39 Architecture Consolidation Inventory
 PRD-047.39 is the first architecture-consolidation stage after the accepted PRD-047.38 automated gate. It stays inventory-first and non-runtime: no active `bot_agent/`, `api/`, or `web_ui/src/` runtime behavior, Writer prompt, retrieval ranking, safety logic, Bot_data_base, Chroma, registry, processed blocks, or source documents are changed.
 

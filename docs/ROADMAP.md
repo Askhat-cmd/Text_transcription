@@ -1,9 +1,10 @@
 ﻿# Roadmap
 
 ## Current Direction
-PRD-047.39 starts architecture consolidation with inventory and safe repo hygiene only. The next default step is a narrow follow-up PRD from the generated roadmap: dead pipeline removal for `dead_confirmed` candidates, flag consolidation, god-file decomposition, admin UI dedup, or a separate raw-log untrack approval step. New hotfixes should be created only from automated-gate blockers or explicitly scoped future PRDs, not from style preference tuning.
+PRD-047.40 completed the first manifest-first removal pass of the consolidation program without changing runtime behavior. The next default step is a separate narrow PRD such as env-flag consolidation (`PRD-047.41`), global test-suite health (`PRD-047.45`), or a dedicated compatibility-shim cleanup PRD for `user_level_adapter`; new hotfixes should still come only from proven blockers, not style preference tuning.
 
 ## Done
+- PRD-047.40: completed dead pipeline removal with warning (`417113b` + `b954a52`). Untracked exactly `532` manifest-approved raw artifacts from Git while keeping them on disk, preserved markdown evidence, removed `5` dead legacy-bound tests and the matching `5` `pytest.ini` ignores, replaced the old negative legacy contract with `test_dead_code_removed.py`, cleaned stale `sd_classifier` debug/bootstrap leftovers, and recorded `user_level_adapter` as still `active` compat surface rather than deleting it blindly.
 - PRD-047.39: completed architecture consolidation inventory and safe git hygiene with warnings (`3c9cf15`). Added a repo-level runner, produced legacy/env/god-file/logs/git-hygiene reports, deleted three fully merged remote branches, untracked `TO_DO_LIST/backups` from Git while preserving local files, added ignore rules for backups and future raw artifacts, quarantined the dead `_build_llm_prompts` regression, and kept runtime behavior, Writer, retrieval, safety, DB/Chroma/source, and markdown evidence unchanged. Raw log untrack remains deferred from the manifest.
 - PRD-047.38: completed the automated owner pilot evidence gate as read-only tooling. Added a runner over the 12 pilot scenarios, reused existing trace/session/HF4 reload-smoke utilities, generated sanitized JSON/Markdown evidence, proved `0` blockers with one accepted warning on S7 panic escalation boundary softness, added targeted grading tests, and preserved runtime behavior, Writer, retrieval, DB/Chroma/source, routes, agents, and raw private logs unchanged.
 - PRD-047.37: completed Cleanup / Freeze / Pilot Start Brief as a documentation/freeze PRD. Captured the accepted HF4/HF5/HF6 baseline, invariant register, known warnings backlog, cleanup/retirement candidates, pilot-start brief, transfer brief, blocker register, sanity-check decision, no-mutation proof, tests, and docs sync without runtime behavior, Writer, retrieval, DB/Chroma/source, route, agent, or persistent trace-store mutation.
@@ -100,7 +101,8 @@ PRD-047.39 starts architecture consolidation with inventory and safe repo hygien
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
-- PRD-047.39 closed the first consolidation-entry step: architecture debt is now classified rather than guessed. Remaining work is split into future gated PRDs; raw log untrack is manifest-ready but deferred, and S7 safety polish remains backlog outside this cleanup stage.
+- PRD-047.40 closed the first actual removal step: manifest-approved raw artifacts are out of Git, dead legacy-bound tests are physically gone, and the remaining work is now split more cleanly into separate follow-ups for env flags, global suite debt, and active compatibility shims.
+- PRD-047.39 closed the first consolidation-entry step: architecture debt is now classified rather than guessed. Remaining work is split into future gated PRDs; raw log untrack is no longer deferred, while S7 safety polish remains backlog outside this cleanup stage.
 - PRD-047.38 closed the owner-pilot evidence collection question by automating the 12-scenario architecture/script gate. Remaining work is architecture consolidation and cleanup; answer-depth/style polish, DB/source preparation, or new runtime mechanisms stay out of scope unless a future PRD explicitly opens them.
 - PRD-047.36-HF5 closed the selected-knowledge trace-only blocker for direct concept follow-ups in the current runtime. The remaining work is not a retrieval dictionary or another delivery hotfix; it is a shortened readiness rerun on top of the repaired HF4 + HF5 baseline.
 - PRD-047.36-HF6 closed the owner/debug boundary-trace integrity blocker for explicit `no_internal_db` and `no_practice` turns. The next work is not another trace hotfix or retrieval mutation; it is rerunning the shortened post-HF readiness gate on the repaired HF4 + HF5 + HF6 baseline.
@@ -137,10 +139,10 @@ PRD-047.39 starts architecture consolidation with inventory and safe repo hygien
 - No active PRD-047.12 blocker remains; unified dialogue policy v2 is accepted on the current developer-local runtime baseline.
 
 ## Next
-1. Start owner pilot with the 12-scenario checklist in `TO_DO_LIST/logs/PRD-047.37/pilot_start_brief.md`.
-2. Treat remaining greeting/source/trace-label/shadow-planner issues as warnings unless pilot evidence proves a blocker.
-3. If pilot is acceptable, run Cleanup Pass 1 for docs/logs/trace labels/legacy report hygiene.
-4. Keep any DB/chunk preparation, overlay authority expansion, retrieval-ranking rewrite, live metadata apply, runtime activation, or Chroma reindex in a separate explicit governance PRD.
+1. Start `PRD-047.41` only if the goal is env/config flag consolidation; do not fold that work into dead-pipeline cleanup retroactively.
+2. Open `PRD-047.45` for the remaining global test-suite debt instead of treating unrelated collection/runtime failures as fallout from PRD-047.40.
+3. Refresh stale documentation such as `bot_psychologist/docs/testing.md` in a docs-only follow-up.
+4. If the project wants to delete the remaining `user_level_adapter` compat shapes, do it in a dedicated PRD that updates API/debug metadata contracts together.
 
 ## Later
 - Operational hardening for governed limited runtime.

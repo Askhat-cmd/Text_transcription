@@ -1599,3 +1599,21 @@ Consequences:
 - readiness gates no longer depend on fragile field inference;
 - runtime behavior, retrieval ranking, DB/Chroma state, and semantic-card authority remain unchanged.
 
+## ADR-098 - Removal cleanup stays manifest-first, proof-first, and behavior-neutral
+
+Status: accepted
+
+Date: 2026-07-08
+
+Delivery: PRD-047.40 accepted with warning across main commits `417113b` and `b954a52`.
+
+Context: PRD-047.39 classified two cleanup classes but deliberately deferred execution: `532` raw log artifacts were still tracked in Git, and several dead legacy-bound tests still existed physically even though the runtime import graph no longer used the underlying modules. The main risk was over-cleanup: deleting evidence from disk, removing files without executable-import proof, or collapsing compatibility shims without runtime trace evidence.
+
+Decision:
+- manifest-approved raw artifacts may be removed from Git tracking only, not deleted from disk, and markdown evidence must remain tracked;
+- dead legacy-bound tests may be physically removed only after repo-wide executable-import proof and matching `pytest.ini` ignore cleanup;
+- cleanup verification must use positive proof (`test_dead_code_removed.py`), before/after regression evidence, and before/after live smoke rather than only negative assertions;
+- `user_level_adapter` may be classified during cleanup, but if active compat surfaces still exist in runtime or API metadata, deletion is deferred to a separate PRD;
+- cleanup PRDs must remain behavior-neutral unless a later PRD explicitly opens runtime mutation.
+
+Consequences: the consolidation program can now remove dead baggage without destroying evidence or blurring runtime behavior changes into cleanup work. Future deletion of remaining compatibility shims or unrelated test-suite debt must come through their own narrowly scoped PRDs.

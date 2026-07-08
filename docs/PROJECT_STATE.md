@@ -1,5 +1,7 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
+Главный источник курса проекта: `docs/MASTER_STRATEGIC_PLAN_NEO_MindBot_v4_RU.md`.
+
 ## PRD-047.39 Architecture Consolidation Inventory
 PRD-047.39 is the first architecture-consolidation stage after the accepted PRD-047.38 automated gate. It stays inventory-first and non-runtime: no active `bot_agent/`, `api/`, or `web_ui/src/` runtime behavior, Writer prompt, retrieval ranking, safety logic, Bot_data_base, Chroma, registry, processed blocks, or source documents are changed.
 

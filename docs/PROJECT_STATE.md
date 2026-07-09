@@ -2,6 +2,26 @@
 
 Главный источник курса проекта: `docs/MASTER_STRATEGIC_PLAN_NEO_MindBot_v4_RU.md`.
 
+## PRD-047.41 Flag Consolidation
+PRD-047.41 completed the consolidation follow-up after PRD-047.40 and stayed bounded to effective-config truth, secret masking, bucket-A env freeze, and docs/tooling hygiene. It did not change Writer prompt/model behavior, retrieval ranking, safety logic, Bot_data_base, Chroma, registry data, processed blocks, or source documents.
+
+Current result:
+- status is `accepted_with_warning`;
+- built one authoritative `effective_config_registry_v1` over all `103` inventoried env flags;
+- introduced explicit statuses `secret`, `active_tunable`, `frozen_constant`, and `retirement_candidate_deferred`;
+- secret-proof now covers `10` credential-like flags and exports only `{"is_set": bool}` without raw values;
+- bucket A converted `41` truly frozen env reads into literal constants with the same effective defaults;
+- bucket B reclassified `19` already-editable env flags into `active_tunable` with no UI/runtime edit removal;
+- the env-backed editable alignment is now explicit and tested as `35 == 35`;
+- existing admin runtime payload stayed stable before/after once volatile restart-only fields were normalized, while the new `effective_config` block became the canonical explanatory surface;
+- `LEGACY_PIPELINE_ENABLED` is intentionally deferred as `retirement_candidate_deferred` until a later admin-dedup / compatibility cleanup PRD;
+- root-level helper `tools/` was removed and its remaining runner content moved into `TO_DO_LIST/tools`;
+- `.gitignore` was corrected, `bot_psychologist/docs/testing.md` was updated to stop documenting deleted Phase 1/2/3 scripts, and the master plan Part 4 was advanced to the post-PRD-047.40 state.
+
+Accepted warning:
+- the full `pytest bot_psychologist/tests` capture before and after both hit the same 10-minute timeout budget, so regression evidence is honest but partial;
+- one unrelated pre-existing UI string test (`tests/ui/test_runtime_tab_shows_effective_runtime_truth.py`) still fails outside the PRD-047.41 contract surface and remains candidate debt for a separate suite-health / docs/UI cleanup follow-up.
+
 ## PRD-047.40 Dead Pipeline Removal
 PRD-047.40 is the first bounded removal pass after the PRD-047.39 inventory. It stays cleanup-only: no active runtime behavior, Writer prompt/model, retrieval ranking, safety logic, Bot_data_base, Chroma, registry, processed blocks, or source documents are changed.
 
@@ -67,7 +87,7 @@ Known accepted warnings:
 - UI trace labels / Session Trace Panel polish remain cleanup candidates.
 
 ## Current Stage
-PRD-047.39 is the current top-stage consolidation inventory: architecture debt is mapped, safe repo hygiene is partly executed, and raw-log untrack is intentionally deferred behind the manifest. The next mode is a narrow follow-up PRD, not broad cleanup or behavior tuning.
+PRD-047.41 is the current top-stage consolidation follow-up: the env/config surface now has one authoritative registry, secret export rules are explicit, and the first safe bucket of frozen env reads is removed from live configuration without changing effective runtime behavior. The next mode is not another broad cleanup pass; it is either the next bounded consolidation PRD (`PRD-047.42` god-file decomposition), a separate global suite-health audit (`PRD-047.45`), or a later compatibility/admin cleanup for deferred surfaces such as `LEGACY_PIPELINE_ENABLED` and `user_level_adapter` compat shapes.
 
 PRD-047.36-POST-HF completed the shortened post-HF owner readiness gate as an honest `BLOCKED` result on top of HF4 + HF5. The work stayed read-only: one new gate runner, one small contract test, reports, and docs only; no runtime behavior, Writer logic, retrieval ranking, DB/Chroma/source, or new route/agent mutation was introduced. Fresh trace/reload truth now passes again (`G1`), direct concept baseline/follow-up/Neurostalking continuity all pass (`G2/G3/G4`), greeting sanity passes (`G7`), and panic helper stays bounded with a warning on soft medical escalation wording (`G8`). The gate still blocks on boundary integrity: `G5` fails because explicit `no_internal_db` is honored in visible behavior but not surfaced as a durable trace boundary flag, and `G6` fails for the same reason on explicit `no_practice`. Delivery/memory sanity remains `pass_with_warning` because API-only sampling did not include visible chat bubble text and one quarantined panic-helper turn still diverges from saved memory without being a raw cross-turn contamination leak. Full `python -m pytest tests -q` still stops on the historical unrelated `_build_llm_prompts` import blocker. The next recommended step is one narrow repair only: `PRD-047.36-HF6 - No-Internal-DB / No-Practice Boundary Trace Integrity`.
 PRD-047.36-HF5 completed the selected-knowledge admission repair on the canonical current pipeline with `accepted_with_warning` status. The runtime still stays on `multiagent_adapter`; no retrieval-ranking rewrite, no dictionary/alias map, no new route, no new agent, and no Bot_data_base/Chroma/source mutation were introduced. `contextual_retrieval_query_composer.py` now promotes generic contextual concept follow-ups with already selected knowledge into a bounded `query_kb` / `knowledge_context` admission path, while `writer_context_package.py` now exposes `direct_concept_followup`, bounded selected-knowledge recovery from existing `memory_bundle.knowledge_rag_hits`, and payload ordering that lets one selected semantic card lead the minimal hidden Writer package instead of being re-suppressed. Live HF5 smoke passed all required scenarios: greeting kept Writer payload `0`, the repaired Chat 12 concept follow-up now yields `grounding_reason=direct_concept_followup` and Writer payload `2`, Neurostalking follow-up also stays grounded, and `no_internal_db` still suppresses payload with `latest_turn_no_internal_db`. Honest residual note: full `python -m pytest tests -q` still stops on the historical unrelated `_build_llm_prompts` import blocker. The next recommended step is a shortened post-HF readiness gate over HF4 + HF5, not a dictionary-style runtime expansion.
@@ -354,4 +374,4 @@ Diagnostic Center Track Status: CLOSED FOR CURRENT PHASE
 - push_status: pushed_to_origin_main
 - status: accepted_with_warning
 
-
+Controlled rollout planning completed in `PRD-046.1.30` (plan-only): no provider execution, no normal-user activation, no production mutation; next execution gated by `PRD-046.1.31`.

@@ -8,6 +8,13 @@ from typing import Optional
 
 
 _ALLOWED_MODES = {"mock", "disabled", "polling", "webhook", "live"}
+TELEGRAM_ENABLED_DEFAULT = False
+TELEGRAM_MODE_DEFAULT = "mock"
+TELEGRAM_WEBHOOK_URL_DEFAULT: Optional[str] = None
+TELEGRAM_POLLING_TIMEOUT_DEFAULT = 30
+TELEGRAM_POLLING_RETRY_DELAY_DEFAULT = 5.0
+TELEGRAM_POLLING_MAX_RETRY_DELAY_DEFAULT = 60.0
+TELEGRAM_ALLOWED_UPDATES_DEFAULT: tuple[str, ...] = ("message",)
 
 
 def _parse_bool(value: str | None, default: bool) -> bool:
@@ -55,25 +62,21 @@ class TelegramAdapterSettings:
 
     @classmethod
     def from_env(cls) -> "TelegramAdapterSettings":
-        enabled = _parse_bool(os.getenv("TELEGRAM_ENABLED"), False)
-        mode = (os.getenv("TELEGRAM_MODE") or "mock").strip().lower()
+        # PRD-047.41: frozen constants until Telegram deployment gets its own PRD.
+        enabled = TELEGRAM_ENABLED_DEFAULT
+        mode = TELEGRAM_MODE_DEFAULT
         if mode not in _ALLOWED_MODES:
             mode = "mock"
-        if mode == "live":
-            # Legacy alias from previous revisions.
-            mode = "polling"
         bot_token = (os.getenv("TELEGRAM_BOT_TOKEN") or "").strip() or None
-        webhook_url = (os.getenv("TELEGRAM_WEBHOOK_URL") or "").strip() or None
+        webhook_url = TELEGRAM_WEBHOOK_URL_DEFAULT
         webhook_secret = (os.getenv("TELEGRAM_WEBHOOK_SECRET") or "").strip() or None
-        polling_timeout = max(5, _parse_int(os.getenv("TELEGRAM_POLLING_TIMEOUT"), 30))
-        polling_retry_delay = max(
-            0.5, _parse_float(os.getenv("TELEGRAM_POLLING_RETRY_DELAY"), 5.0)
-        )
+        polling_timeout = max(5, TELEGRAM_POLLING_TIMEOUT_DEFAULT)
+        polling_retry_delay = max(0.5, TELEGRAM_POLLING_RETRY_DELAY_DEFAULT)
         polling_max_retry_delay = max(
             polling_retry_delay,
-            _parse_float(os.getenv("TELEGRAM_POLLING_MAX_RETRY_DELAY"), 60.0),
+            TELEGRAM_POLLING_MAX_RETRY_DELAY_DEFAULT,
         )
-        allowed_updates = _parse_allowed_updates(os.getenv("TELEGRAM_ALLOWED_UPDATES"))
+        allowed_updates = list(TELEGRAM_ALLOWED_UPDATES_DEFAULT)
         return cls(
             enabled=enabled,
             mode=mode,

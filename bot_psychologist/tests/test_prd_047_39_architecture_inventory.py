@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-RUNNER_PATH = REPO_ROOT / "tools" / "run_prd_047_39_architecture_inventory.py"
+RUNNER_PATH = REPO_ROOT / "TO_DO_LIST" / "tools" / "run_prd_047_39_architecture_inventory.py"
 
 
 def _load_runner():

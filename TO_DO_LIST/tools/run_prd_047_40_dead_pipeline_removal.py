@@ -14,9 +14,9 @@ from typing import Any
 from uuid import uuid4
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-ROOT_TOOLS = REPO_ROOT / "tools"
-if str(ROOT_TOOLS) not in sys.path:
-    sys.path.insert(0, str(ROOT_TOOLS))
+TODO_TOOLS = REPO_ROOT / "TO_DO_LIST" / "tools"
+if str(TODO_TOOLS) not in sys.path:
+    sys.path.insert(0, str(TODO_TOOLS))
 
 from run_prd_047_39_architecture_inventory import build_logs_tracking_manifest
 

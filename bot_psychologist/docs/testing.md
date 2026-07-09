@@ -10,97 +10,24 @@
 
 ## Description and Purpose (Описание и назначение)
 
-**Назначение документа**: Описать процесс тестирования всех Phase проекта Bot Psychologist.
+**Назначение документа**: Описать процесс тестирования актуальных runtime/API/Web UI сценариев проекта Bot Psychologist.
 
 **Для кого**: Разработчики, QA инженеры.
 
 **Что содержит**:
-- Тестирование Phase 1-4
-- Тестирование API (Phase 5)
-- Тестирование Web UI (Phase 6)
-- Примеры тестов
+- Актуальные runtime/API тесты
+- Тестирование Web UI
+- Примеры интеграционных и компонентных проверок
 
 ---
 
-## Phase 1-4 Testing (Тестирование Phase 1-4)
+## Runtime Testing (Актуальное runtime-тестирование)
 
-### Phase 1: Базовый QA
+Прежние standalone-тесты `test_phase1.py`, `test_phase2.py` и `test_phase3.py`
+удалены в PRD-047.40 вместе с мёртвым legacy pipeline. Ниже оставлены только
+актуальные примеры для действующего runtime.
 
-**Файл**: `tests/test_phase1.py`
-
-**Тестируемые функции**:
-- `answer_question_basic(query: str)`
-
-**Пример теста**:
-```python
-from bot_agent import answer_question_basic
-
-result = answer_question_basic("Что такое осознавание?")
-assert result["status"] == "success"
-assert len(result["answer"]) > 0
-assert len(result["sources"]) > 0
-```
-
-**Запуск**:
-```bash
-python tests/test_phase1.py
-```
-
----
-
-### Legacy (): SAG-aware QA
-
-**Файл**: `tests/test_phase2.py` (   ,  active runtime)
-
-**Тестируемые функции**:
-- `answer_question_sag_aware(query: str, user_level: str)`
-
-**Пример теста**:
-```python
-from bot_agent import answer_question_sag_aware
-
-result = answer_question_sag_aware(
-    "Как развить осознавание?",
-    user_level="beginner"
-)
-assert result["status"] == "success"
-assert result["user_level"] == "beginner"
-```
-
-**Запуск**:
-```bash
-python tests/test_phase2.py
-```
-
----
-
-### Phase 3: Knowledge Graph Powered QA
-
-**Файл**: `tests/test_phase3.py`
-
-**Тестируемые функции**:
-- `answer_question_graph_powered(query: str, user_level: str)`
-
-**Пример теста**:
-```python
-from bot_agent import answer_question_graph_powered
-
-result = answer_question_graph_powered(
-    "Какие практики помогают развить осознавание?",
-    user_level="intermediate"
-)
-assert result["status"] == "success"
-assert "practices" in result.get("metadata", {})
-```
-
-**Запуск**:
-```bash
-python tests/test_phase3.py
-```
-
----
-
-### Phase 4: Adaptive QA
+### Adaptive QA
 
 **Файл**: `tests/test_phase4.py`
 

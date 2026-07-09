@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import os
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from enum import Enum
@@ -24,6 +23,8 @@ class DiagnosticCenterMode(str, Enum):
 ALLOWED_MODES = [mode.value for mode in DiagnosticCenterMode]
 DEFAULT_MODE = DiagnosticCenterMode.CREATOR_ONLY.value
 CONTROL_SCHEMA_VERSION = "diagnostic_center_control_v1"
+DIAGNOSTIC_CENTER_CREATOR_USER_ID_DEFAULT = "creator"
+DIAGNOSTIC_CENTER_DEVELOPER_USER_IDS_DEFAULT = ""
 
 
 def _now_iso() -> str:
@@ -75,11 +76,11 @@ def _sanitize_allowlist(raw: Any) -> list[str]:
 
 
 def _default_creator_user_id() -> str:
-    return os.getenv("DIAGNOSTIC_CENTER_CREATOR_USER_ID", "creator")
+    return DIAGNOSTIC_CENTER_CREATOR_USER_ID_DEFAULT
 
 
 def _default_developer_user_ids() -> list[str]:
-    env_value = _safe_str(os.getenv("DIAGNOSTIC_CENTER_DEVELOPER_USER_IDS", ""), "")
+    env_value = _safe_str(DIAGNOSTIC_CENTER_DEVELOPER_USER_IDS_DEFAULT, "")
     if not env_value:
         return [_default_creator_user_id()]
     return _sanitize_allowlist(env_value)

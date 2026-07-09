@@ -39,7 +39,7 @@ class Config:
     PROJECT_ROOT = Path(__file__).parent.parent
     BOT_AGENT_ROOT = Path(__file__).parent
 
-    DATA_ROOT = Path(os.getenv("DATA_ROOT", "../voice_bot_pipeline/data"))
+    DATA_ROOT = Path("../voice_bot_pipeline/data")
     if not DATA_ROOT.is_absolute():
         DATA_ROOT = PROJECT_ROOT / DATA_ROOT
 
@@ -85,14 +85,14 @@ class Config:
     RETRIEVAL_TOP_K = int(os.getenv("RETRIEVAL_TOP_K", "5"))
     TOP_K_BLOCKS = RETRIEVAL_TOP_K
     MIN_RELEVANCE_SCORE = float(os.getenv("MIN_RELEVANCE_SCORE", "0.1"))
-    AUTHOR_BLEND_MODE: str = os.getenv("AUTHOR_BLEND_MODE", "all")
+    AUTHOR_BLEND_MODE: str = "all"
     CONFIDENCE_CAP_HIGH = int(os.getenv("CONFIDENCE_CAP_HIGH", "7"))
     CONFIDENCE_CAP_MEDIUM = int(os.getenv("CONFIDENCE_CAP_MEDIUM", "5"))
     CONFIDENCE_CAP_LOW = int(os.getenv("CONFIDENCE_CAP_LOW", "3"))
     CONFIDENCE_CAP_ZERO = int(os.getenv("CONFIDENCE_CAP_ZERO", "0"))
 
     # === LLM ===
-    LLM_MODEL = os.getenv("PRIMARY_MODEL", "gpt-4o-mini")
+    LLM_MODEL = "gpt-4o-mini"
     CLASSIFIER_MODEL = os.getenv("CLASSIFIER_MODEL", "gpt-4o-mini")
     LLM_TEMPERATURE = 0.7
     LLM_MAX_TOKENS = 2000
@@ -160,7 +160,7 @@ class Config:
     DECISION_GATE_LLM_ROUTER_ENABLED: bool = os.getenv(
         "DECISION_GATE_LLM_ROUTER_ENABLED", "True"
     ).lower() == "true"
-    PROMPT_MODE_OVERRIDES_SD: bool = os.getenv("PROMPT_MODE_OVERRIDES_SD", "True").lower() == "true"
+    PROMPT_MODE_OVERRIDES_SD: bool = True
 
     # === Conversation memory ===
     CONVERSATION_HISTORY_DEPTH = int(os.getenv("CONVERSATION_HISTORY_DEPTH", "3"))
@@ -172,48 +172,46 @@ class Config:
     SEMANTIC_SEARCH_TOP_K = int(os.getenv("SEMANTIC_SEARCH_TOP_K", "3"))
     SEMANTIC_MIN_SIMILARITY = float(os.getenv("SEMANTIC_MIN_SIMILARITY", "0.6"))
     SEMANTIC_MAX_CHARS = int(os.getenv("SEMANTIC_MAX_CHARS", "1000"))
-    EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "intfloat/multilingual-e5-base")
-    EMBEDDING_DEVICE = os.getenv("EMBEDDING_DEVICE", "auto")
+    EMBEDDING_MODEL = "intfloat/multilingual-e5-base"
+    EMBEDDING_DEVICE = "auto"
 
     # === Voyage rerank ===
     VOYAGE_API_KEY = os.getenv("VOYAGE_API_KEY")
     VOYAGE_MODEL = os.getenv("VOYAGE_MODEL", "rerank-2")
     VOYAGE_TOP_K = int(os.getenv("VOYAGE_TOP_K", "5"))
     VOYAGE_ENABLED = os.getenv("VOYAGE_ENABLED", "False").lower() == "true"
-    RERANKER_ENABLED = os.getenv("RERANKER_ENABLED", "False").lower() == "true"
-    RERANKER_CONFIDENCE_THRESHOLD = float(os.getenv("RERANKER_CONFIDENCE_THRESHOLD", "0.35"))
-    RERANKER_MODE_WHITELIST = os.getenv("RERANKER_MODE_WHITELIST", "THINKING,INTERVENTION")
-    RERANKER_BLOCK_THRESHOLD = int(os.getenv("RERANKER_BLOCK_THRESHOLD", "8"))
+    RERANKER_ENABLED = False
+    RERANKER_CONFIDENCE_THRESHOLD = 0.35
+    RERANKER_MODE_WHITELIST = "THINKING,INTERVENTION"
+    RERANKER_BLOCK_THRESHOLD = 8
 
     # === Conversation summary ===
     ENABLE_CONVERSATION_SUMMARY = os.getenv("ENABLE_CONVERSATION_SUMMARY", "True").lower() == "true"
     SUMMARY_UPDATE_INTERVAL = int(os.getenv("SUMMARY_UPDATE_INTERVAL", "3"))
-    SUMMARY_WINDOW_SIZE = int(os.getenv("SUMMARY_WINDOW_SIZE", "5"))
-    RECENT_WINDOW = int(os.getenv("RECENT_WINDOW", "4"))
+    SUMMARY_WINDOW_SIZE = 5
+    RECENT_WINDOW = 4
     SUMMARY_MAX_CHARS = int(os.getenv("SUMMARY_MAX_CHARS", "300"))
-    SUMMARIZER_MODEL = os.getenv("SUMMARIZER_MODEL", "gpt-4o-mini")
-    SUMMARIZER_REASONING_EFFORT = os.getenv("SUMMARIZER_REASONING_EFFORT", "low")
-    SUMMARIZER_MIN_TURNS = int(os.getenv("SUMMARIZER_MIN_TURNS", "3"))
-    SUMMARIZER_FALLBACK_ON_EMPTY = os.getenv("SUMMARIZER_FALLBACK_ON_EMPTY", "True").lower() == "true"
-    SUMMARIZER_FALLBACK_RETRIES = int(os.getenv("SUMMARIZER_FALLBACK_RETRIES", "2"))
+    SUMMARIZER_MODEL = "gpt-4o-mini"
+    SUMMARIZER_REASONING_EFFORT = "low"
+    SUMMARIZER_MIN_TURNS = 3
+    SUMMARIZER_FALLBACK_ON_EMPTY = True
+    SUMMARIZER_FALLBACK_RETRIES = 2
 
     # === Async turn LLM summary (PRD-045.6.3) ===
-    TURN_LLM_SUMMARY_ENABLED = os.getenv("TURN_LLM_SUMMARY_ENABLED", "False").lower() == "true"
-    TURN_LLM_SUMMARY_USE_IN_CONTEXT = (
-        os.getenv("TURN_LLM_SUMMARY_USE_IN_CONTEXT", "True").lower() == "true"
-    )
-    TURN_LLM_SUMMARY_PROVIDER = os.getenv("TURN_LLM_SUMMARY_PROVIDER", "disabled")
-    TURN_LLM_SUMMARY_MODEL = os.getenv("TURN_LLM_SUMMARY_MODEL", "gpt-4o-mini")
-    TURN_LLM_SUMMARY_MAX_INPUT_CHARS = int(os.getenv("TURN_LLM_SUMMARY_MAX_INPUT_CHARS", "6000"))
-    TURN_LLM_SUMMARY_MAX_SUMMARY_CHARS = int(os.getenv("TURN_LLM_SUMMARY_MAX_SUMMARY_CHARS", "700"))
-    TURN_LLM_SUMMARY_MAX_PENDING_PER_RUN = int(os.getenv("TURN_LLM_SUMMARY_MAX_PENDING_PER_RUN", "10"))
-    TURN_LLM_SUMMARY_TIMEOUT_SECONDS = float(os.getenv("TURN_LLM_SUMMARY_TIMEOUT_SECONDS", "20"))
-    TURN_LLM_SUMMARY_MAX_RETRIES = int(os.getenv("TURN_LLM_SUMMARY_MAX_RETRIES", "1"))
-    TURN_LLM_SUMMARY_DEBUG_PREVIEW_CHARS = int(os.getenv("TURN_LLM_SUMMARY_DEBUG_PREVIEW_CHARS", "160"))
+    TURN_LLM_SUMMARY_ENABLED = False
+    TURN_LLM_SUMMARY_USE_IN_CONTEXT = True
+    TURN_LLM_SUMMARY_PROVIDER = "disabled"
+    TURN_LLM_SUMMARY_MODEL = "gpt-4o-mini"
+    TURN_LLM_SUMMARY_MAX_INPUT_CHARS = 6000
+    TURN_LLM_SUMMARY_MAX_SUMMARY_CHARS = 700
+    TURN_LLM_SUMMARY_MAX_PENDING_PER_RUN = 10
+    TURN_LLM_SUMMARY_TIMEOUT_SECONDS = 20.0
+    TURN_LLM_SUMMARY_MAX_RETRIES = 1
+    TURN_LLM_SUMMARY_DEBUG_PREVIEW_CHARS = 160
 
     # === Session storage ===
     ENABLE_SESSION_STORAGE = os.getenv("ENABLE_SESSION_STORAGE", "True").lower() == "true"
-    BOT_DB_PATH = Path(os.getenv("BOT_DB_PATH", "data/bot_sessions.db"))
+    BOT_DB_PATH = Path("data/bot_sessions.db")
     if not BOT_DB_PATH.is_absolute():
         BOT_DB_PATH = PROJECT_ROOT / BOT_DB_PATH
     SESSION_RETENTION_DAYS = int(os.getenv("SESSION_RETENTION_DAYS", "90"))
@@ -221,7 +219,7 @@ class Config:
     AUTO_CLEANUP_ENABLED = os.getenv("AUTO_CLEANUP_ENABLED", "True").lower() == "true"
 
     # === Debug/logging ===
-    DEBUG = os.getenv("DEBUG", "False").lower() == "true"
+    DEBUG = False
     LOG_DIR = PROJECT_ROOT / "logs" / "bot_agent"
     LLM_PAYLOAD_INCLUDE_FULL_CONTENT = os.getenv(
         "LLM_PAYLOAD_INCLUDE_FULL_CONTENT",

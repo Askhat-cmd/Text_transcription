@@ -3,8 +3,8 @@
 **Проект:** Bot Psychologist / Neo MindBot
 **Репозиторий:** `Askhat-cmd/Text_transcription`
 **Локальный путь владельца:** `C:\My_practice\Text_transcription`
-**Дата:** 2026-07-03
-**Версия:** v4.1 — единый мастер-план (14 правок MP-1..MP-14 по аудиту Fable R08)
+**Дата:** 2026-07-09
+**Версия:** v4.2 — единый мастер-план (14 правок MP-1..MP-14 по аудиту Fable R08 + обновление курса после PRD-047.40)
 **Что это:** самодостаточный документ, по которому любой архитектор в новом
 чате, на любом этапе, может продолжить ведение проекта без дополнительного
 контекста. Сшивает три ранее раздельных источника в одну временную ось:
@@ -139,19 +139,33 @@ Architect не принимает "всё прошло" на слово — то
 
 ```text
 Эпоха: 1 (Консолидация).
-Последний принятый PRD: PRD-047.39 (ACCEPTED_WITH_WARNINGS,
-  commits 3c9cf15 / 0fb34ab).
-Следующий PRD: PRD-047.40 — Dead Pipeline Removal.
+Последний принятый PRD: PRD-047.40 (ACCEPTED_WITH_WARNINGS,
+  commits 417113b / b954a52 / c5bbd21).
+Следующий PRD: PRD-047.41 — Flag Consolidation.
 Шлюз в Эпоху 2: НЕ пройден (Эпоха 1 не закрыта; ратификация не проведена).
 
 Корпус законов Fable: получен полностью (R01-R07), НЕ ратифицирован.
   Ратификация не блокирует Эпоху 1, блокирует старт Эпохи 2.
 
+PRD-047.40 закрыт:
+- raw-log untrack (532/532, 0 пересечений с evidence) — выполнено;
+- 5 dead legacy-bound test-файлов удалены, pytest.ini чист от
+  соответствующих --ignore, test_no_legacy.py -> test_dead_code_removed.py;
+- user_level_adapter -> вердикт active (compat_shim_active по таксономии
+  PRD-047.39: no-op параметр + denylist-фильтрация в
+  api/routes/common.py, реальной логики не исполняет). Третьего
+  состояния больше нет.
+
 Отложено сознательно (не потеряно):
-- user_level_adapter (unclear_needs_trace): трассировка выполняется в рамках
-  отчёта PRD-047.40 (без удаления); по итогу компонент получает один из двух
-  статусов — dead_confirmed (кандидат следующего cleanup-PRD) или active
-  (документируется в PROJECT_STATE). Третье состояние закрывается этим же PRD.
+- user_level_adapter compat-поверхности (parameter + denylist entries) ->
+  отдельный будущий PRD, если/когда потребуется физическое удаление.
+- docs/testing.md всё ещё документирует удалённые Phase 1/2/3 скрипты ->
+  doc-only follow-up, найдено Executor'ом в PRD-047.40, не исправлено
+  намеренно (не scope этого PRD).
+- 1 недетерминированный тест-перевёртыш между before/after regression
+  PRD-047.40 (tests/unit/test_user_level_adapter_removed.py, в изоляции
+  проходит 2/2) -> кандидат для PRD-047.45 (Test Suite Health Audit),
+  не регрессия этого PRD.
 - S7 panic_medical_escalation_boundary_soft -> фаза safety, после обеих эпох.
 - Черновик PRD "Panic/Medical Escalation" существует в outputs, SHELVED.
 - Trace-поля, admin-панель, целевые пользователи, продвижение, скорость
@@ -169,6 +183,9 @@ Architect не принимает "всё прошло" на слово — то
 журнале §4 (дата, что, почему). Молчаливых правок тела не существует.
 
 Журнал поправок:
+- 2026-07-08 v4.1 -> v4.2: PRD-047.40 (Dead Pipeline Removal) принят
+  ACCEPTED_WITH_WARNINGS. Обновлён статус курса, закрыт user_level_adapter
+  unclear_needs_trace -> active, зафиксированы 3 отложенных follow-up.
 - 2026-07-03 v4.0 -> v4.1: применены 14 правок MP-1..MP-14 по аудиту Fable
   R08 (закон-карта, канон чек-листа R07, дверь-как-свойства, ставки телом,
   буфер warnings, швы Эпохи 1, атрибуция философии, старшинство и этот журнал).

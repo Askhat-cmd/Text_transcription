@@ -91,7 +91,7 @@ class GrepHit:
 
 
 def _repo_root_from_file() -> Path:
-    return Path(__file__).resolve().parents[1]
+    return Path(__file__).resolve().parents[2]
 
 
 def _run_git(repo_root: Path, args: list[str], check: bool = False) -> subprocess.CompletedProcess[str]:

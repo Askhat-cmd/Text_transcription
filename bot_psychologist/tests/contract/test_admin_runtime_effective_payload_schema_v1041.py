@@ -45,6 +45,7 @@ def test_admin_runtime_effective_payload_shape(admin_client):
     assert "diagnostics" in payload
     assert "routing" in payload
     assert "validation" in payload
+    assert "effective_config" in payload
     assert "trace" in payload
     assert payload["trace"]["developer_trace_supported"] is True
     assert payload["trace"]["developer_trace_enabled"] is True
@@ -59,6 +60,8 @@ def test_admin_runtime_effective_payload_shape(admin_client):
     assert payload["dialogue_policy"]["planner_authority"] in {"guided", "advisory"}
     assert isinstance(payload["dialogue_policy"]["human_like_answer_policy"], dict)
     assert isinstance(payload["dialogue_policy"]["constraint_resolution"], dict)
+    assert payload["effective_config"]["schema_version"] == "effective_config_registry_v1"
+    assert payload["effective_config"]["flag_count"] == 103
 
     assert "config_validation_status" in payload["validation"]
     assert isinstance(payload["validation"]["config_validation_status"]["valid"], bool)

@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import os
 import re
 import urllib.error
 import urllib.request
@@ -228,7 +227,8 @@ def probe_runtime(admin_base_url: str, web_ui_base_url: str) -> dict[str, Any]:
 
 def build_creator_identity_gate(*, creator_user_id: str | None = None) -> dict[str, Any]:
     explicit = str(creator_user_id or "").strip()
-    env_value = str(os.getenv("DIAGNOSTIC_CENTER_CREATOR_USER_ID", "")).strip()
+    # PRD-047.41: creator identity env override is frozen out of runtime config.
+    env_value = ""
 
     if explicit:
         value = explicit

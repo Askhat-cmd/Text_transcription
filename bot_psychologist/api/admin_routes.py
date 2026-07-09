@@ -51,6 +51,10 @@ from bot_agent.diagnostic_center_control import (
     build_diagnostic_center_effective_payload,
     reset_diagnostic_center_control_state,
 )
+from bot_agent.effective_config_registry import (
+    build_compat_env_flags_snapshot,
+    build_effective_config_payload,
+)
 from bot_agent.multiagent.agents.agent_llm_config import (
     ALLOWED_MODELS,
     get_all_agent_models,
@@ -85,11 +89,7 @@ _AGENT_PROMPT_MAP = {
 
 
 def _env_flags_snapshot() -> dict[str, str]:
-    return {
-        "MULTIAGENT_ENABLED": os.getenv("MULTIAGENT_ENABLED", "off"),
-        "LEGACY_PIPELINE_ENABLED": os.getenv("LEGACY_PIPELINE_ENABLED", "off"),
-        "NEO_MINDBOT_ENABLED": os.getenv("NEO_MINDBOT_ENABLED", "off"),
-    }
+    return build_compat_env_flags_snapshot()
 
 
 def _is_truthy_env(value: str | None) -> bool:
@@ -416,9 +416,6 @@ def _compute_agent_metrics() -> list[dict[str, Any]]:
 
 
 def _get_thread_storage_dir() -> Path:
-    raw = os.getenv("THREAD_STORAGE_DIR")
-    if raw:
-        return Path(raw).expanduser().resolve()
     storage_dir = getattr(thread_storage, "_dir", None)
     if storage_dir is not None:
         return Path(storage_dir).expanduser().resolve()
@@ -675,6 +672,7 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
     writer_kb_payload_resolution = feature_flags.resolve_bool("WRITER_KB_PAYLOAD_ENABLED")
     semantic_cards_runtime = build_semantic_cards_runtime_status()
     env_flags = _env_flags_snapshot()
+    effective_config = build_effective_config_payload()
     runtime_warnings = _deprecated_runtime_warnings(env_flags)
     validation = validate_runtime_config(config)
     # session_id retained only for route-level backward compatibility.
@@ -742,6 +740,7 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
                 "errors": list(validation.errors),
             },
         },
+        "effective_config": effective_config,
         "trace": {
             "available": True,
             "developer_trace_supported": True,

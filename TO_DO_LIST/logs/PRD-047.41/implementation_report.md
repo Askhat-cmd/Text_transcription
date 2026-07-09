@@ -1,0 +1,22 @@
+# PRD-047.41 Implementation Report
+
+- Verdict: `accepted_with_warning`.
+- Authoritative registry delivered: `effective_config_registry_v1`.
+- Inventoried flag coverage: `103/103`.
+- Status distribution:
+  - `secret`: `10`
+  - `active_tunable`: `51`
+  - `frozen_constant`: `41`
+  - `retirement_candidate_deferred`: `1`
+- Bucket A conversion: `41` frozen env reads converted to literal constants with the same effective defaults.
+- Bucket B owner decision `(a)` applied: `19` already-editable flags reclassified to `active_tunable` without admin-UI removal.
+- Editable alignment proof: env-backed `admin_hot_editable=true` entries equal `35`, matching env-backed `EDITABLE_CONFIG` coverage.
+- Secret export proof: all `10` secret-like flags expose only `{"is_set": bool}`.
+- Admin runtime integration: `effective_config` is now emitted from the existing runtime effective payload path.
+- Tooling hygiene: root `tools/` removed; remaining helper runners moved under `TO_DO_LIST/tools`.
+- Extra hygiene fixes: erroneous `.gitignore` lines removed; `bot_psychologist/docs/testing.md` no longer references deleted Phase 1/2/3 scripts.
+- Focused verification: `28 passed` on registry/admin/config contract subset.
+- Additional focused subset: `9 passed, 1 failed`; the lone failure is the unrelated pre-existing UI string assertion in `tests/ui/test_runtime_tab_shows_effective_runtime_truth.py`.
+- Full regression capture: before/after logs recorded, both full-suite runs hit the same timeout budget (`124`) and therefore remain partial-but-honest evidence.
+- Live smoke/effective-payload diff: stable once restart-only volatile fields are normalized; intended delta is the new `effective_config` explanatory surface.
+- Deferred item kept explicit: `LEGACY_PIPELINE_ENABLED` remains `retirement_candidate_deferred` pending a separate admin/compat cleanup PRD.

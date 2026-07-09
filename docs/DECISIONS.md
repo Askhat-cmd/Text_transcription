@@ -1,5 +1,24 @@
 ﻿# Architecture Decisions
 
+## ADR-099 - Effective config truth is centralized, secrets are masked, and frozen env reads become constants only with proof
+
+Status: accepted
+
+Date: 2026-07-09
+
+Context: PRD-047.39 inventoried `103` env/config flags and classified them into three coarse buckets, but that inventory still treated credential-like flags too similarly to ordinary tunables and left the runtime without one authoritative effective-config registry. PRD-047.40 then removed dead pipeline baggage, making it safer to consolidate config truth next. The main risks were leaking secret values into admin/debug payloads, silently changing runtime behavior while freezing env reads, or creating a second parallel config source of truth.
+
+Decision:
+- create one authoritative `effective_config_registry_v1` that covers all `103` inventoried flags;
+- introduce an explicit `secret` status and export secret-like flags only as `{"is_set": bool}` rather than raw values;
+- keep the registry integrated into the existing admin runtime effective payload path instead of creating a parallel truth surface;
+- convert only the proven-frozen bucket-A env reads into literal constants with the same defaults;
+- reclassify the already-editable bucket-B flags to `active_tunable` so registry labels match actual admin-editable behavior;
+- defer `LEGACY_PIPELINE_ENABLED` as `retirement_candidate_deferred` until a separate admin/compat cleanup PRD rather than deleting diagnostic surfaces opportunistically;
+- keep Writer behavior, retrieval, safety, DB/Chroma/source content, and runtime-path topology unchanged.
+
+Consequences: config truth is now easier to audit and safer to expose in owner/admin surfaces. Secret leakage risk is reduced, registry labels match actual editable behavior, and the consolidation program can continue with narrower follow-ups instead of another broad config rewrite.
+
 ## ADR-097 - Consolidation starts with inventory and manifest-first hygiene, not runtime deletion
 
 Status: accepted

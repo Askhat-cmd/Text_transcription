@@ -1,9 +1,10 @@
 ﻿# Roadmap
 
 ## Current Direction
-PRD-047.40 completed the first manifest-first removal pass of the consolidation program without changing runtime behavior. The next default step is a separate narrow PRD such as env-flag consolidation (`PRD-047.41`), global test-suite health (`PRD-047.45`), or a dedicated compatibility-shim cleanup PRD for `user_level_adapter`; new hotfixes should still come only from proven blockers, not style preference tuning.
+PRD-047.41 completed the env/config truth-consolidation slice of Epoch 1 without changing effective runtime behavior. The next default step is another bounded consolidation PRD such as god-file decomposition (`PRD-047.42`), global test-suite health (`PRD-047.45`), or a dedicated admin/compat cleanup PRD for deferred surfaces like `LEGACY_PIPELINE_ENABLED` and `user_level_adapter`; new hotfixes should still come only from proven blockers, not style preference tuning.
 
 ## Done
+- PRD-047.41: completed flag consolidation with warning. Added one authoritative `effective_config_registry_v1` across `103` flags, introduced explicit `secret` masking for `10` credential-like env flags, converted `41` truly frozen bucket-A env reads into constants with the same defaults, reclassified `19` already-editable bucket-B flags into `active_tunable`, integrated the registry into admin runtime truth, moved root helper tooling into `TO_DO_LIST/tools`, corrected `.gitignore`, updated testing docs, and preserved Writer/retrieval/safety/DB/Chroma/source/runtime-path behavior unchanged. Honest warning remains because full-suite regression capture still times out on pre-existing global debt and one unrelated UI string test still fails outside this PRD surface.
 - PRD-047.40: completed dead pipeline removal with warning (`417113b` + `b954a52`). Untracked exactly `532` manifest-approved raw artifacts from Git while keeping them on disk, preserved markdown evidence, removed `5` dead legacy-bound tests and the matching `5` `pytest.ini` ignores, replaced the old negative legacy contract with `test_dead_code_removed.py`, cleaned stale `sd_classifier` debug/bootstrap leftovers, and recorded `user_level_adapter` as still `active` compat surface rather than deleting it blindly.
 - PRD-047.39: completed architecture consolidation inventory and safe git hygiene with warnings (`3c9cf15`). Added a repo-level runner, produced legacy/env/god-file/logs/git-hygiene reports, deleted three fully merged remote branches, untracked `TO_DO_LIST/backups` from Git while preserving local files, added ignore rules for backups and future raw artifacts, quarantined the dead `_build_llm_prompts` regression, and kept runtime behavior, Writer, retrieval, safety, DB/Chroma/source, and markdown evidence unchanged. Raw log untrack remains deferred from the manifest.
 - PRD-047.38: completed the automated owner pilot evidence gate as read-only tooling. Added a runner over the 12 pilot scenarios, reused existing trace/session/HF4 reload-smoke utilities, generated sanitized JSON/Markdown evidence, proved `0` blockers with one accepted warning on S7 panic escalation boundary softness, added targeted grading tests, and preserved runtime behavior, Writer, retrieval, DB/Chroma/source, routes, agents, and raw private logs unchanged.
@@ -101,6 +102,7 @@ PRD-047.40 completed the first manifest-first removal pass of the consolidation 
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
+- PRD-047.41 closed the env/config truth-consolidation question for the current consolidation epoch: registry truth, secret masking, frozen-constant conversion, and helper-tool relocation are now explicit. The remaining work is not more flag surgery by default; it is either deferred compat/admin cleanup (`LEGACY_PIPELINE_ENABLED`, `user_level_adapter`), god-file decomposition, or separate suite-health work.
 - PRD-047.40 closed the first actual removal step: manifest-approved raw artifacts are out of Git, dead legacy-bound tests are physically gone, and the remaining work is now split more cleanly into separate follow-ups for env flags, global suite debt, and active compatibility shims.
 - PRD-047.39 closed the first consolidation-entry step: architecture debt is now classified rather than guessed. Remaining work is split into future gated PRDs; raw log untrack is no longer deferred, while S7 safety polish remains backlog outside this cleanup stage.
 - PRD-047.38 closed the owner-pilot evidence collection question by automating the 12-scenario architecture/script gate. Remaining work is architecture consolidation and cleanup; answer-depth/style polish, DB/source preparation, or new runtime mechanisms stay out of scope unless a future PRD explicitly opens them.
@@ -139,10 +141,10 @@ PRD-047.40 completed the first manifest-first removal pass of the consolidation 
 - No active PRD-047.12 blocker remains; unified dialogue policy v2 is accepted on the current developer-local runtime baseline.
 
 ## Next
-1. Start `PRD-047.41` only if the goal is env/config flag consolidation; do not fold that work into dead-pipeline cleanup retroactively.
-2. Open `PRD-047.45` for the remaining global test-suite debt instead of treating unrelated collection/runtime failures as fallout from PRD-047.40.
-3. Refresh stale documentation such as `bot_psychologist/docs/testing.md` in a docs-only follow-up.
-4. If the project wants to delete the remaining `user_level_adapter` compat shapes, do it in a dedicated PRD that updates API/debug metadata contracts together.
+1. Start `PRD-047.42` only if the goal is bounded god-file decomposition; do not mix it with deferred admin/compat cleanup.
+2. Open `PRD-047.45` for the remaining global test-suite debt instead of treating unrelated collection/runtime failures as fallout from PRD-047.41.
+3. If the project wants to delete `LEGACY_PIPELINE_ENABLED` or the remaining `user_level_adapter` compat shapes, do it in a dedicated PRD that updates admin/debug metadata contracts together.
+4. Keep future config cleanup narrow: the next safe slice after this PRD is the non-env `EDITABLE_CONFIG` subset, not another broad env rewrite.
 
 ## Later
 - Operational hardening for governed limited runtime.

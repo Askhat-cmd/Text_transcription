@@ -1638,3 +1638,20 @@ Decision:
 - cleanup PRDs must remain behavior-neutral unless a later PRD explicitly opens runtime mutation.
 
 Consequences: the consolidation program can now remove dead baggage without destroying evidence or blurring runtime behavior changes into cleanup work. Future deletion of remaining compatibility shims or unrelated test-suite debt must come through their own narrowly scoped PRDs.
+## ADR-100 - God-file decomposition must start with exact boundary mapping and snapshot guards, not direct code moves
+
+Status: accepted
+
+Date: 2026-07-09
+
+Context: PRD-047.39 classified god files as a real consolidation risk, and PRD-047.41 removed enough config uncertainty to inspect the biggest remaining files safely. The next danger was to start moving code inside `writer_agent.py`, `admin_routes.py`, or `writer_contract.py` based only on size and intuition, which would blur hidden contracts and make later regressions hard to attribute.
+
+Decision:
+- run a mapping-only Stage 1 before any decomposition mutates source files;
+- map exact line ranges and responsibilities for `writer_agent.py`, `admin_routes.py`, and `writer_contract.py`;
+- mark `legacy_compat` fragments explicitly rather than folding them silently into new modules;
+- capture representative read-only snapshot contracts for `WriterContract.to_prompt_context`, `WriterAgent._resolve_runtime_settings`, `WriterAgent._enforce_answer_compliance`, and selected `admin_routes` handlers before moving code;
+- keep the `19` production `diagnostic_center_*` files out of this PRD and defer them to a separate `PRD-047.42b` because their gate-heavy structure and caller graph form a different split problem;
+- prohibit source mutation, signature changes, runtime-path changes, Writer/retrieval/safety/DB/Chroma/source mutation, and “fix while reading” opportunism in this stage.
+
+Consequences: the repository now has an evidence-backed cut map for the three highest-priority non-diagnostic-center god files. Future decomposition can move one mapped slice at a time with snapshot guards instead of guessing hidden contracts from file length alone.

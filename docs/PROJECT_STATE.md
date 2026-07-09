@@ -2,6 +2,19 @@
 
 Главный источник курса проекта: `docs/MASTER_STRATEGIC_PLAN_NEO_MindBot_v4_RU.md`.
 
+## PRD-047.42 God File Boundary Mapping
+PRD-047.42 completed the Stage-1 god-file boundary mapping pass for the three highest-priority non-diagnostic-center files: `writer_agent.py`, `admin_routes.py`, and `writer_contract.py`. The work stayed strictly read-only on production sources: no code moved, no signatures changed, no Writer prompt/model behavior changed, and no retrieval/safety/DB/Chroma/registry/runtime-path mutation was introduced.
+
+Current result:
+- status is `accepted`;
+- exact line-range boundary maps were produced for all three target files;
+- `legacy_compat` fragments are now explicitly marked instead of being guessed from filename size alone;
+- representative snapshot contracts passed `8/8` across `WriterContract.to_prompt_context`, `WriterAgent._resolve_runtime_settings`, `WriterAgent._enforce_answer_compliance`, and selected `admin_routes` HTTP handlers;
+- external importer/dependency inventory is now recorded for all three files;
+- no-mutation proof confirms zero diffs in the original target files;
+- `19` production `diagnostic_center_*` files remain explicitly deferred to future `PRD-047.42b`;
+- the output of this PRD is a decomposition map, not a decomposition commit.
+
 ## PRD-047.41 Flag Consolidation
 PRD-047.41 completed the consolidation follow-up after PRD-047.40 and stayed bounded to effective-config truth, secret masking, bucket-A env freeze, and docs/tooling hygiene. It did not change Writer prompt/model behavior, retrieval ranking, safety logic, Bot_data_base, Chroma, registry data, processed blocks, or source documents.
 
@@ -89,7 +102,7 @@ Known accepted warnings:
 - UI trace labels / Session Trace Panel polish remain cleanup candidates.
 
 ## Current Stage
-PRD-047.41 is the current top-stage consolidation follow-up: the env/config surface now has one authoritative registry, secret export rules are explicit, and the first safe bucket of frozen env reads is removed from live configuration without changing effective runtime behavior. The next mode is not another broad cleanup pass; it is either the next bounded consolidation PRD (`PRD-047.42` god-file decomposition), a separate global suite-health audit (`PRD-047.45`), or a later compatibility/admin cleanup for deferred surfaces such as `LEGACY_PIPELINE_ENABLED` and `user_level_adapter` compat shapes.
+PRD-047.42 is the current top-stage consolidation mapping result: the repo now has exact Stage-1 split maps for `writer_agent.py`, `admin_routes.py`, and `writer_contract.py`, plus green snapshot contracts and no-mutation proof. The next mode is not blind refactoring; it is either the deferred boundary-mapping follow-up for `19` production `diagnostic_center_*` files (`PRD-047.42b`), a bounded decomposition PRD that moves one mapped slice at a time, or a separate global suite-health audit (`PRD-047.45`).
 
 PRD-047.36-POST-HF completed the shortened post-HF owner readiness gate as an honest `BLOCKED` result on top of HF4 + HF5. The work stayed read-only: one new gate runner, one small contract test, reports, and docs only; no runtime behavior, Writer logic, retrieval ranking, DB/Chroma/source, or new route/agent mutation was introduced. Fresh trace/reload truth now passes again (`G1`), direct concept baseline/follow-up/Neurostalking continuity all pass (`G2/G3/G4`), greeting sanity passes (`G7`), and panic helper stays bounded with a warning on soft medical escalation wording (`G8`). The gate still blocks on boundary integrity: `G5` fails because explicit `no_internal_db` is honored in visible behavior but not surfaced as a durable trace boundary flag, and `G6` fails for the same reason on explicit `no_practice`. Delivery/memory sanity remains `pass_with_warning` because API-only sampling did not include visible chat bubble text and one quarantined panic-helper turn still diverges from saved memory without being a raw cross-turn contamination leak. Full `python -m pytest tests -q` still stops on the historical unrelated `_build_llm_prompts` import blocker. The next recommended step is one narrow repair only: `PRD-047.36-HF6 - No-Internal-DB / No-Practice Boundary Trace Integrity`.
 PRD-047.36-HF5 completed the selected-knowledge admission repair on the canonical current pipeline with `accepted_with_warning` status. The runtime still stays on `multiagent_adapter`; no retrieval-ranking rewrite, no dictionary/alias map, no new route, no new agent, and no Bot_data_base/Chroma/source mutation were introduced. `contextual_retrieval_query_composer.py` now promotes generic contextual concept follow-ups with already selected knowledge into a bounded `query_kb` / `knowledge_context` admission path, while `writer_context_package.py` now exposes `direct_concept_followup`, bounded selected-knowledge recovery from existing `memory_bundle.knowledge_rag_hits`, and payload ordering that lets one selected semantic card lead the minimal hidden Writer package instead of being re-suppressed. Live HF5 smoke passed all required scenarios: greeting kept Writer payload `0`, the repaired Chat 12 concept follow-up now yields `grounding_reason=direct_concept_followup` and Writer payload `2`, Neurostalking follow-up also stays grounded, and `no_internal_db` still suppresses payload with `latest_turn_no_internal_db`. Honest residual note: full `python -m pytest tests -q` still stops on the historical unrelated `_build_llm_prompts` import blocker. The next recommended step is a shortened post-HF readiness gate over HF4 + HF5, not a dictionary-style runtime expansion.

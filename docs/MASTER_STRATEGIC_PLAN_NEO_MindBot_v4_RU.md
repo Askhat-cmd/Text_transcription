@@ -4,7 +4,7 @@
 **Репозиторий:** `Askhat-cmd/Text_transcription`
 **Локальный путь владельца:** `C:\My_practice\Text_transcription`
 **Дата:** 2026-07-09
-**Версия:** v4.2 — единый мастер-план (14 правок MP-1..MP-14 по аудиту Fable R08 + обновление курса после PRD-047.40)
+**Версия:** v4.3 — единый мастер-план (14 правок MP-1..MP-14 по аудиту Fable R08 + обновление курса после PRD-047.41)
 **Что это:** самодостаточный документ, по которому любой архитектор в новом
 чате, на любом этапе, может продолжить ведение проекта без дополнительного
 контекста. Сшивает три ранее раздельных источника в одну временную ось:
@@ -139,37 +139,49 @@ Architect не принимает "всё прошло" на слово — то
 
 ```text
 Эпоха: 1 (Консолидация).
-Последний принятый PRD: PRD-047.40 (ACCEPTED_WITH_WARNINGS,
-  commits 417113b / b954a52 / c5bbd21).
-Следующий PRD: PRD-047.41 — Flag Consolidation.
+Последний принятый PRD: PRD-047.41 (ACCEPTED_WITH_WARNINGS,
+  commits 3211322 / 93a4903 / 1b84e90).
+Следующий PRD: PRD-047.42 — God-File Decomposition.
 Шлюз в Эпоху 2: НЕ пройден (Эпоха 1 не закрыта; ратификация не проведена).
 
 Корпус законов Fable: получен полностью (R01-R07), НЕ ратифицирован.
   Ратификация не блокирует Эпоху 1, блокирует старт Эпохи 2.
 
-PRD-047.40 закрыт:
-- raw-log untrack (532/532, 0 пересечений с evidence) — выполнено;
-- 5 dead legacy-bound test-файлов удалены, pytest.ini чист от
-  соответствующих --ignore, test_no_legacy.py -> test_dead_code_removed.py;
-- user_level_adapter -> вердикт active (compat_shim_active по таксономии
-  PRD-047.39: no-op параметр + denylist-фильтрация в
-  api/routes/common.py, реальной логики не исполняет). Третьего
-  состояния больше нет.
+PRD-047.41 закрыт:
+- effective_config_registry_v1 построен на все 103 флага: 10 secret
+  (только is_set, значение никогда не экспортируется — проверено
+  прямым тестом с подставленным значением), 41 frozen -> constant
+  (эффективные значения не изменились), 19 переклассифицированы в
+  active_tunable по решению владельца (a) без изменений в admin UI,
+  16 active уже были в реестре, 1 (LEGACY_PIPELINE_ENABLED) остаётся
+  retirement_candidate_deferred.
+- admin runtime effective payload идентичен до/после (кроме нового
+  explanatory-поля effective_config, что и требовалось).
+- Housekeeping: .gitignore и docs/testing.md подчищены; root tools/
+  перенесён в TO_DO_LIST/tools.
 
 Отложено сознательно (не потеряно):
-- user_level_adapter compat-поверхности (parameter + denylist entries) ->
-  отдельный будущий PRD, если/когда потребуется физическое удаление.
-- docs/testing.md всё ещё документирует удалённые Phase 1/2/3 скрипты ->
-  doc-only follow-up, найдено Executor'ом в PRD-047.40, не исправлено
-  намеренно (не scope этого PRD).
-- 1 недетерминированный тест-перевёртыш между before/after regression
-  PRD-047.40 (tests/unit/test_user_level_adapter_removed.py, в изоляции
-  проходит 2/2) -> кандидат для PRD-047.45 (Test Suite Health Audit),
-  не регрессия этого PRD.
-- S7 panic_medical_escalation_boundary_soft -> фаза safety, после обеих эпох.
-- Черновик PRD "Panic/Medical Escalation" существует в outputs, SHELVED.
-- Trace-поля, admin-панель, целевые пользователи, продвижение, скорость
-  ответа -> тактический/отложенный уровень, не сейчас.
+- LEGACY_PIPELINE_ENABLED (retirement_candidate_deferred) -> удаление
+  диагностической warning-строки в admin_routes.py откладывается до
+  PRD-047.43 (Admin UI Dedup), решение архитектора, владелец не
+  возражал.
+- Полный full-regression прогон PRD-047.41 дважды упёрся в тот же
+  suite-wide timeout, что и раньше -> кандидат для PRD-047.45 (Test
+  Suite Health Audit), не регрессия этого PRD; узкий целевой набор
+  тестов (registry/admin/config) прошёл полностью и отдельно проверен
+  архитектором вручную.
+- 1 недетерминированный тест-перевёртыш из PRD-047.40
+  (tests/unit/test_user_level_adapter_removed.py) -> тот же кандидат
+  для PRD-047.45.
+- Ложная тревога 2026-07-09: повторный локальный прогон устаревшего
+  gate-скрипта PRD-046.1.30 (diagnostic_center_controlled_rollout_planning)
+  показал "blocked" из-за бритой строковой проверки на точное
+  совпадение "PRD-046.1.29" в docs/PROJECT_STATE.md — документ с тех
+  пор легитимно переписывался. Ложные локальные файлы возвращены к
+  состоянию GitHub, skip-worktree снят, working tree чист. Реальной
+  проблемы в PRD-046.1.30/31/32 не было.
+- docs/testing.md, S7, Panic/Medical Escalation, trace-поля и т.д. —
+  без изменений.
 ```
 
 **Правило обновления:** после каждого принятого PRD Architect переписывает
@@ -183,6 +195,11 @@ PRD-047.40 закрыт:
 журнале §4 (дата, что, почему). Молчаливых правок тела не существует.
 
 Журнал поправок:
+- 2026-07-09 v4.2 -> v4.3: PRD-047.41 (Flag Consolidation) принят
+  ACCEPTED_WITH_WARNINGS. effective_config_registry_v1 построен на
+  103/103 флага, secret-защита подтверждена, bucket A/B закрыты,
+  LEGACY_PIPELINE_ENABLED отложен до PRD-047.43. Зафиксирован и закрыт
+  ложный алярм от устаревшего gate-скрипта PRD-046.1.30.
 - 2026-07-08 v4.1 -> v4.2: PRD-047.40 (Dead Pipeline Removal) принят
   ACCEPTED_WITH_WARNINGS. Обновлён статус курса, закрыт user_level_adapter
   unclear_needs_trace -> active, зафиксированы 3 отложенных follow-up.

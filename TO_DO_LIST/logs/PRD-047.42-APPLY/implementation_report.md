@@ -3,8 +3,8 @@
 - PRD: `PRD-047.42-APPLY`
 - scope: `admin_routes.py` decomposition only
 - status: `accepted_with_warning`
-- main_commit: `pending`
-- push_status: `pending`
+- main_commit: `9822277`
+- push_status: `pushed_to_origin_main`
 
 ## Summary
 

@@ -1,5 +1,25 @@
 ﻿# Architecture Decisions
 
+## ADR-101 - admin_routes decomposition stays behind a thin aggregator and exhaustive route snapshots
+
+Status: accepted
+
+Date: 2026-07-09
+
+Delivery: PRD-047.42-APPLY accepted with warning in main commit `9822277`.
+
+Context: PRD-047.42 produced an exact split map for `bot_psychologist/api/admin_routes.py`, but moving code out of the 2144-line file still carried two concrete risks: breaking the one external import contract used by `api/main.py`, or silently changing FastAPI route matching/behavior by altering registration order or import-time side effects.
+
+Decision:
+- realize the accepted map as `10` focused backend modules under `bot_psychologist/api/`;
+- reduce `admin_routes.py` to a thin aggregator that still exports `admin_router` and `admin_router_v1`;
+- preserve route registration order by importing the route-bearing modules in the original boundary-map sequence;
+- prove behavior with exhaustive before/after snapshots over every registered admin route, not only representative handlers;
+- normalize only volatile environment noise inside snapshots, such as backend start time, backend pid, and machine-local absolute data/thread/db paths;
+- keep `api/main.py`, `writer_agent.py`, and `writer_contract.py` untouched in this PRD.
+
+Consequences: the first real god-file apply step now has strong behavioral proof with `77/77` route cases and `0` differences. Remaining UI assertion debt is explicitly treated as pre-existing baseline noise unless a future PRD proves backend behavior drift.
+
 ## ADR-099 - Effective config truth is centralized, secrets are masked, and frozen env reads become constants only with proof
 
 Status: accepted

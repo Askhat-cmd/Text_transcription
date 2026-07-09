@@ -1,9 +1,10 @@
 ﻿# Roadmap
 
 ## Current Direction
-PRD-047.42 completed the mapping-only precursor for god-file decomposition without changing effective runtime behavior. The next default step is not a blind big-bang split: it is either the explicitly deferred `PRD-047.42b` mapping pass for the `19` production `diagnostic_center_*` files, a bounded decomposition PRD that moves one mapped block at a time, or a separate global test-suite health PRD (`PRD-047.45`) if the project wants to reduce suite debt first.
+PRD-047.42-APPLY completed the first bounded decomposition apply step on `admin_routes.py` with exhaustive route-snapshot equivalence proof. The next default step remains narrow rather than broad: either `PRD-047.42-APPLY-2` for `writer_agent.py`, the explicitly deferred `PRD-047.42b` mapping pass for the `19` production `diagnostic_center_*` files, or a separate global test-suite health PRD (`PRD-047.45`) if the project wants to reduce unrelated suite debt first.
 
 ## Done
+- PRD-047.42-APPLY: completed the first real god-file decomposition apply step with accepted-with-warning status. Realized the accepted `admin_routes.py` boundary map as `10` focused backend modules plus a thin aggregator, preserved the public `main.py` import contract and route registration order, added full-route snapshot support over `77` registered admin routes, proved before/after response identity with `0` differences, kept `writer_agent.py` and `writer_contract.py` untouched, and recorded the remaining `5` UI string failures as pre-existing baseline noise rather than regressions from the split.
 - PRD-047.42: completed god-file boundary mapping with accepted status. Added a read-only runner under `TO_DO_LIST/tools`, produced exact line-range responsibility maps for `writer_agent.py`, `admin_routes.py`, and `writer_contract.py`, marked `legacy_compat` fragments explicitly, generated proposed module-structure and external-dependency reports, added representative snapshot contract tests (`8 passed`), and proved zero mutation in the original three source files. The `19` production `diagnostic_center_*` files remain deferred to future `PRD-047.42b`.
 - PRD-047.41: completed flag consolidation with warning. Added one authoritative `effective_config_registry_v1` across `103` flags, introduced explicit `secret` masking for `10` credential-like env flags, converted `41` truly frozen bucket-A env reads into constants with the same defaults, reclassified `19` already-editable bucket-B flags into `active_tunable`, integrated the registry into admin runtime truth, moved root helper tooling into `TO_DO_LIST/tools`, corrected `.gitignore`, updated testing docs, and preserved Writer/retrieval/safety/DB/Chroma/source/runtime-path behavior unchanged. Honest warning remains because full-suite regression capture still times out on pre-existing global debt and one unrelated UI string test still fails outside this PRD surface.
 - PRD-047.40: completed dead pipeline removal with warning (`417113b` + `b954a52`). Untracked exactly `532` manifest-approved raw artifacts from Git while keeping them on disk, preserved markdown evidence, removed `5` dead legacy-bound tests and the matching `5` `pytest.ini` ignores, replaced the old negative legacy contract with `test_dead_code_removed.py`, cleaned stale `sd_classifier` debug/bootstrap leftovers, and recorded `user_level_adapter` as still `active` compat surface rather than deleting it blindly.
@@ -103,6 +104,7 @@ PRD-047.42 completed the mapping-only precursor for god-file decomposition witho
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
+- PRD-047.42-APPLY closed the “can we actually cut one mapped file without behavior drift?” question for `admin_routes.py`. The remaining work is intentionally split: the project may continue to `writer_agent.py` in `PRD-047.42-APPLY-2`, map the `19` production `diagnostic_center_*` files in `PRD-047.42b`, or pause the decomposition track and address unrelated suite debt in `PRD-047.45`.
 - PRD-047.42 closed the “where can we safely cut first?” question for the three highest-priority non-diagnostic-center god files. The remaining work is intentionally split: the project may either map the `19` production `diagnostic_center_*` files in `PRD-047.42b`, or start a separate decomposition PRD using the freshly recorded boundaries and snapshot contracts.
 - PRD-047.41 closed the env/config truth-consolidation question for the current consolidation epoch: registry truth, secret masking, frozen-constant conversion, and helper-tool relocation are now explicit. The remaining work is not more flag surgery by default; it is either deferred compat/admin cleanup (`LEGACY_PIPELINE_ENABLED`, `user_level_adapter`), god-file decomposition, or separate suite-health work.
 - PRD-047.40 closed the first actual removal step: manifest-approved raw artifacts are out of Git, dead legacy-bound tests are physically gone, and the remaining work is now split more cleanly into separate follow-ups for env flags, global suite debt, and active compatibility shims.
@@ -143,9 +145,9 @@ PRD-047.42 completed the mapping-only precursor for god-file decomposition witho
 - No active PRD-047.12 blocker remains; unified dialogue policy v2 is accepted on the current developer-local runtime baseline.
 
 ## Next
-1. Start `PRD-047.42b` if the goal is to map the deferred `19` production `diagnostic_center_*` files before any decomposition work touches them.
-2. If decomposition should start now, do it as a bounded follow-up that moves one mapped block at a time and reuses the PRD-047.42 snapshot contracts as guardrails.
-3. Open `PRD-047.45` for the remaining global test-suite debt instead of treating unrelated suite failures as fallout from PRD-047.42.
+1. Start `PRD-047.42-APPLY-2` if the goal is to continue the god-file apply track on `writer_agent.py` with the same one-slice-at-a-time and snapshot-first discipline.
+2. Start `PRD-047.42b` instead if the goal is to finish the deferred Stage-1 mapping for the `19` production `diagnostic_center_*` files before touching them.
+3. Open `PRD-047.45` for the remaining global test-suite debt instead of treating unchanged UI string failures as fallout from PRD-047.42-APPLY.
 4. Keep deferred compat/admin cleanup separate: `LEGACY_PIPELINE_ENABLED` and `user_level_adapter` still belong to their own cleanup PRD, not to god-file decomposition.
 
 ## Later

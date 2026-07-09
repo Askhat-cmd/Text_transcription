@@ -6,6 +6,8 @@
 PRD-047.42 completed the Stage-1 god-file boundary mapping pass for the three highest-priority non-diagnostic-center files: `writer_agent.py`, `admin_routes.py`, and `writer_contract.py`. The work stayed strictly read-only on production sources: no code moved, no signatures changed, no Writer prompt/model behavior changed, and no retrieval/safety/DB/Chroma/registry/runtime-path mutation was introduced.
 
 Current result:
+- main implementation commit: `d62fa43`;
+- push status: `pushed_to_origin_main`;
 - status is `accepted`;
 - exact line-range boundary maps were produced for all three target files;
 - `legacy_compat` fragments are now explicitly marked instead of being guessed from filename size alone;

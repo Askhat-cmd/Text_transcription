@@ -1644,6 +1644,8 @@ Status: accepted
 
 Date: 2026-07-09
 
+Delivery: PRD-047.42 accepted in main commit `d62fa43`.
+
 Context: PRD-047.39 classified god files as a real consolidation risk, and PRD-047.41 removed enough config uncertainty to inspect the biggest remaining files safely. The next danger was to start moving code inside `writer_agent.py`, `admin_routes.py`, or `writer_contract.py` based only on size and intuition, which would blur hidden contracts and make later regressions hard to attribute.
 
 Decision:

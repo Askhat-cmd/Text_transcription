@@ -33,6 +33,12 @@ from ..contracts.writer_contract import WriterContract
 from ..writer_kb_payload import format_writer_kb_payload_for_prompt
 from .agent_llm_client import create_agent_completion
 from .agent_llm_config import get_model_for_agent, get_temperature_for_agent
+from .writer_agent_constants import (
+    _contains_any,
+    _extract_literal_markdown_echo_request,
+    _to_float,
+    _to_int,
+)
 from .writer_agent_prompts import (
     WRITER_SYSTEM,
     WRITER_SYSTEM_MVP_FREE_DIALOGUE,
@@ -65,16 +71,6 @@ _RU_NAME_PATTERNS = (
 _EN_NAME_PATTERNS = (
     re.compile(r"\bmy\s+name\s+is\s+([A-Z][A-Za-z\-]{1,30})", re.IGNORECASE),
     re.compile(r"\bi\s+am\s+([A-Z][A-Za-z\-]{1,30})", re.IGNORECASE),
-)
-_LITERAL_MARKDOWN_ECHO_PATTERNS = (
-    re.compile(
-        r"(?:верни\s+без\s+объяснений\s+и\s+без\s+изменений\s+следующий\s+markdown(?:-блок)?\s*:)(.+)",
-        re.IGNORECASE | re.DOTALL,
-    ),
-    re.compile(
-        r"(?:return\s+the\s+following\s+markdown\s+block\s+without\s+changes\s*:)(.+)",
-        re.IGNORECASE | re.DOTALL,
-    ),
 )
 _PRACTICE_MARKERS = (
     "практик",
@@ -132,41 +128,6 @@ _LOW_RESOURCE_NO_PRACTICE_MARKERS = (
     "не нужны практики",
     "побудь со мной коротко",
 )
-
-
-def _extract_literal_markdown_echo_request(user_message: str) -> str:
-    text = str(user_message or "").strip()
-    if not text:
-        return ""
-    for pattern in _LITERAL_MARKDOWN_ECHO_PATTERNS:
-        match = pattern.search(text)
-        if not match:
-            continue
-        candidate = str(match.group(1) or "").strip()
-        if not candidate:
-            return ""
-        if any(marker in candidate for marker in ("**", "- ", "* ", "1.", "##", "```")):
-            return candidate
-    return ""
-
-
-def _to_int(value: str, default: int) -> int:
-    try:
-        return int(value)
-    except (TypeError, ValueError):
-        return default
-
-
-def _to_float(value: str, default: float) -> float:
-    try:
-        return float(value)
-    except (TypeError, ValueError):
-        return default
-
-
-def _contains_any(text: str, markers: tuple[str, ...]) -> bool:
-    lowered = str(text or "").lower()
-    return any(marker in lowered for marker in markers)
 
 
 class WriterAgent:

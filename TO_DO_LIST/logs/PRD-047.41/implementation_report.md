@@ -1,6 +1,8 @@
 # PRD-047.41 Implementation Report
 
 - Verdict: `accepted_with_warning`.
+- Main implementation commit: `3211322`.
+- Push status: `pushed_to_origin_main`.
 - Authoritative registry delivered: `effective_config_registry_v1`.
 - Inventoried flag coverage: `103/103`.
 - Status distribution:

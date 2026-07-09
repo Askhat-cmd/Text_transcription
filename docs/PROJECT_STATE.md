@@ -6,6 +6,8 @@
 PRD-047.41 completed the consolidation follow-up after PRD-047.40 and stayed bounded to effective-config truth, secret masking, bucket-A env freeze, and docs/tooling hygiene. It did not change Writer prompt/model behavior, retrieval ranking, safety logic, Bot_data_base, Chroma, registry data, processed blocks, or source documents.
 
 Current result:
+- main implementation commit: `3211322`;
+- push status: `pushed_to_origin_main`;
 - status is `accepted_with_warning`;
 - built one authoritative `effective_config_registry_v1` over all `103` inventoried env flags;
 - introduced explicit statuses `secret`, `active_tunable`, `frozen_constant`, and `retirement_candidate_deferred`;

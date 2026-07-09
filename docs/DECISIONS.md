@@ -6,6 +6,8 @@ Status: accepted
 
 Date: 2026-07-09
 
+Delivery: PRD-047.41 accepted with warning in main commit `3211322`.
+
 Context: PRD-047.39 inventoried `103` env/config flags and classified them into three coarse buckets, but that inventory still treated credential-like flags too similarly to ordinary tunables and left the runtime without one authoritative effective-config registry. PRD-047.40 then removed dead pipeline baggage, making it safer to consolidate config truth next. The main risks were leaking secret values into admin/debug payloads, silently changing runtime behavior while freezing env reads, or creating a second parallel config source of truth.
 
 Decision:

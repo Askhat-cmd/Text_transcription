@@ -4,8 +4,10 @@
 **Репозиторий:** `Askhat-cmd/Text_transcription`
 **Локальный путь пользователя:** `C:\My_practice\Text_transcription`
 **Дата:** 2026-07-09
-**Статус:** draft / ready for IDE-agent implementation
+**Статус:** ACCEPTED / implemented in main
 **Основание:** PRD-047.42-APPLY принят (`ACCEPTED`) — admin_routes.py разрезан чисто. Master Plan §5.3, Stage 2b.
+
+**Completion metadata:** `main_commit=1051e68`, `push_status=pushed_to_origin_main`, `baseline_before=1 failed, 39 passed`, `after_with_direct_helper_tests=1 failed, 44 passed`, `preserved_failure=test_semantic_hits_limit_to_two`
 
 ---
 

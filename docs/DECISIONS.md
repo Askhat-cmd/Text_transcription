@@ -1,5 +1,25 @@
 ﻿# Architecture Decisions
 
+## ADR-102 - writer_agent decomposition starts with pure module-level helpers before any self-bound method moves
+
+Status: accepted
+
+Date: 2026-07-09
+
+Delivery: PRD-047.42-APPLY-2 accepted in main commit `1051e68`.
+
+Context: PRD-047.42 mapped `writer_agent.py` as the next major god-file risk after `admin_routes.py`, but unlike `admin_routes.py` it is a tightly coupled class-centered file. A broad first cut would blur behavior ownership across mutable agent state, runtime settings, prompt assembly, LLM IO, and compliance repair logic. The safest available edge was the tiny group of module-level pure helpers already defined outside `WriterAgent`.
+
+Decision:
+- begin the `writer_agent.py` apply track with the already-pure module-level helpers only;
+- extract `_extract_literal_markdown_echo_request`, `_to_int`, `_to_float`, and `_contains_any` into a dedicated helper module;
+- allow the dependent `_LITERAL_MARKDOWN_ECHO_PATTERNS` constant to move unchanged with the markdown-echo helper so the signatures and call sites stay stable;
+- keep every `WriterAgent` method body unchanged in this slice;
+- require before/after focused writer-suite evidence and direct tests for the extracted helpers;
+- treat any unchanged baseline failure as inherited noise, not decomposition regression, if the failure set remains identical before vs after.
+
+Consequences: the project now has a proven slice-first apply pattern for `writer_agent.py` without touching mutable method logic. Future decomposition should continue with pure/static helpers before moving `self`-bound methods, and leave `_call_llm` plus `_enforce_answer_compliance` for the end of the chain.
+
 ## ADR-101 - admin_routes decomposition stays behind a thin aggregator and exhaustive route snapshots
 
 Status: accepted

@@ -2,6 +2,18 @@
 
 Главный источник курса проекта: `docs/MASTER_STRATEGIC_PLAN_NEO_MindBot_v4_RU.md`.
 
+## PRD-047.42-APPLY-2 writer_agent slice 1
+PRD-047.42-APPLY-2 completed the first bounded `writer_agent.py` apply slice and stayed strictly inside the Stage-1 map accepted in PRD-047.42. The work moved only four already-pure module-level helpers into a dedicated helper module, preserved all in-file call names, left every `WriterAgent` method body untouched, and added direct tests for the extracted helpers.
+
+Current result:
+- main implementation commit: `1051e68`;
+- push status: `pushed_to_origin_main`;
+- status is `accepted`;
+- extracted helpers are `_extract_literal_markdown_echo_request`, `_to_int`, `_to_float`, and `_contains_any`;
+- the supporting `_LITERAL_MARKDOWN_ECHO_PATTERNS` constant moved unchanged with the markdown-echo helper to avoid circular import pressure;
+- `writer_contract.py`, `admin_routes.py`, and all `10` admin decomposition modules remained byte-identical under SHA-256 proof;
+- the focused baseline stayed behavior-equivalent before vs after: the same single pre-existing failure remained (`test_semantic_hits_limit_to_two`), while new direct helper coverage passed `5/5`.
+
 ## PRD-047.42-APPLY admin_routes decomposition
 PRD-047.42-APPLY completed the first real Stage-2 god-file decomposition slice and stayed strictly bounded to `bot_psychologist/api/admin_routes.py`. The work moved the mapped admin surface into `10` focused modules plus a thin aggregator, while preserving the external `main.py` import contract, route registration order, and backend behavior.
 
@@ -121,7 +133,7 @@ Known accepted warnings:
 - UI trace labels / Session Trace Panel polish remain cleanup candidates.
 
 ## Current Stage
-PRD-047.42-APPLY has now completed the first bounded apply step: `admin_routes.py` is decomposed under snapshot-equivalence proof, while `writer_agent.py` and `writer_contract.py` remain untouched. The next mode is still bounded, not broad refactoring: either `PRD-047.42-APPLY-2` for `writer_agent.py`, `PRD-047.42b` for the deferred `19` production `diagnostic_center_*` mappings, or a separate global suite-health audit (`PRD-047.45`).
+PRD-047.42-APPLY-2 has now completed the first bounded `writer_agent.py` extraction slice under focused before/after evidence. `admin_routes.py` remains decomposed and stable, `writer_contract.py` remains untouched, and the next mode stays narrow: continue `writer_agent.py` with another pure/static slice, switch to the deferred `PRD-047.42b` mapping pass for the `19` production `diagnostic_center_*` files, or pause decomposition and address unrelated suite-wide debt in `PRD-047.45`.
 
 PRD-047.36-POST-HF completed the shortened post-HF owner readiness gate as an honest `BLOCKED` result on top of HF4 + HF5. The work stayed read-only: one new gate runner, one small contract test, reports, and docs only; no runtime behavior, Writer logic, retrieval ranking, DB/Chroma/source, or new route/agent mutation was introduced. Fresh trace/reload truth now passes again (`G1`), direct concept baseline/follow-up/Neurostalking continuity all pass (`G2/G3/G4`), greeting sanity passes (`G7`), and panic helper stays bounded with a warning on soft medical escalation wording (`G8`). The gate still blocks on boundary integrity: `G5` fails because explicit `no_internal_db` is honored in visible behavior but not surfaced as a durable trace boundary flag, and `G6` fails for the same reason on explicit `no_practice`. Delivery/memory sanity remains `pass_with_warning` because API-only sampling did not include visible chat bubble text and one quarantined panic-helper turn still diverges from saved memory without being a raw cross-turn contamination leak. Full `python -m pytest tests -q` still stops on the historical unrelated `_build_llm_prompts` import blocker. The next recommended step is one narrow repair only: `PRD-047.36-HF6 - No-Internal-DB / No-Practice Boundary Trace Integrity`.
 PRD-047.36-HF5 completed the selected-knowledge admission repair on the canonical current pipeline with `accepted_with_warning` status. The runtime still stays on `multiagent_adapter`; no retrieval-ranking rewrite, no dictionary/alias map, no new route, no new agent, and no Bot_data_base/Chroma/source mutation were introduced. `contextual_retrieval_query_composer.py` now promotes generic contextual concept follow-ups with already selected knowledge into a bounded `query_kb` / `knowledge_context` admission path, while `writer_context_package.py` now exposes `direct_concept_followup`, bounded selected-knowledge recovery from existing `memory_bundle.knowledge_rag_hits`, and payload ordering that lets one selected semantic card lead the minimal hidden Writer package instead of being re-suppressed. Live HF5 smoke passed all required scenarios: greeting kept Writer payload `0`, the repaired Chat 12 concept follow-up now yields `grounding_reason=direct_concept_followup` and Writer payload `2`, Neurostalking follow-up also stays grounded, and `no_internal_db` still suppresses payload with `latest_turn_no_internal_db`. Honest residual note: full `python -m pytest tests -q` still stops on the historical unrelated `_build_llm_prompts` import blocker. The next recommended step is a shortened post-HF readiness gate over HF4 + HF5, not a dictionary-style runtime expansion.

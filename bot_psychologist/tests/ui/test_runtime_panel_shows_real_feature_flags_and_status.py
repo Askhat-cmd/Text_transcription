@@ -5,7 +5,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 ADMIN_PANEL_PATH = REPO_ROOT / "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx"
-ROUTES_PATH = REPO_ROOT / "bot_psychologist/api/admin_routes.py"
+ROUTES_PATH = REPO_ROOT / "bot_psychologist/api/admin_config_routes.py"
 
 
 def _read(path: Path) -> str:

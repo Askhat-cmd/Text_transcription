@@ -5,7 +5,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 ADMIN_PANEL_PATH = REPO_ROOT / "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx"
-ADMIN_ROUTES_PATH = REPO_ROOT / "bot_psychologist/api/admin_routes.py"
+ADMIN_RUNTIME_PATH = REPO_ROOT / "bot_psychologist/api/admin_runtime_effective_payload.py"
 
 
 def _read(path: Path) -> str:
@@ -13,7 +13,7 @@ def _read(path: Path) -> str:
 
 
 def test_runtime_effective_payload_exposes_unified_dialogue_policy_fields() -> None:
-    text = _read(ADMIN_ROUTES_PATH)
+    text = _read(ADMIN_RUNTIME_PATH)
     function_body = text.split("def _build_runtime_effective_payload", 1)[1].split("def ", 1)[0]
     assert '"version": str(effective_dialogue_policy.get("version", UNIFIED_DIALOGUE_POLICY_VERSION))' in function_body
     assert '"profile_preset": str(effective_dialogue_policy.get("profile_preset", profile_preset))' in function_body

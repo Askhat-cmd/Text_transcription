@@ -1,8 +1,8 @@
 # PRD-047.42-APPLY-8 Implementation Report
 
 - PRD: `PRD-047.42-APPLY-8`
-- Status: `accepted_pending_delivery_metadata`
-- Delivery: `main_commit_pending`
+- Status: `accepted`
+- Delivery: `main_commit=e615581`
 
 ## Scope Delivered
 

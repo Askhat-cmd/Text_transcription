@@ -6,7 +6,9 @@
 PRD-047.42-APPLY-8 closes a narrow structural-test debt exposed right after the first real `_call_llm` slice. The broken contract was not signaling behavior drift in `WriterAgent`; it was re-parsing the live `_call_llm` structure and comparing it to expectations frozen before the first slice. The fix freezes the accepted APPLY-6 variable inventory from commit `e5f5f32` into a dedicated JSON fixture, rewrites only `test_variable_inventory_contains_expected_spine_variables` to read that baseline, and extends the APPLY-6 runner with an optional `source_text` path for historical analysis without changing the default live analysis path.
 
 Current result:
-- status is `accepted_pending_delivery_metadata`;
+- main implementation commit: `e615581`;
+- push status: `pushed_to_origin_main`;
+- status is `accepted`;
 - new frozen fixture is `bot_psychologist/tests/contract/fixtures/prd_047_42_apply_6_variable_inventory_baseline.json`;
 - fixture provenance explicitly records `source_commit=e5f5f32`;
 - `test_prd_047_42_apply_6_call_llm_boundary_mapping.py` is green again at `4/4`;

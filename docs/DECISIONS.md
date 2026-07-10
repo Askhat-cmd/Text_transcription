@@ -6,7 +6,7 @@ Status: accepted
 
 Date: 2026-07-10
 
-Delivery: PRD-047.42-APPLY-8 implementation completed in workspace; delivery metadata pending follow-up commit sync.
+Delivery: PRD-047.42-APPLY-8 accepted in main commit `e615581`.
 
 Context: PRD-047.42-APPLY-6 added a local-variable inventory over the original `804`-line `_call_llm` shape and PRD-047.42-APPLY-7 then performed the first real extraction inside that method. The accepted behavior stayed stable under the dedicated `_call_llm` snapshot gate, but one APPLY-6 contract test broke anyway because it recalculated inventory from the live post-slice method and compared the result to expectations that belonged to the accepted pre-slice structure. That kind of contract would fail again on every future `_call_llm` slice even when runtime behavior stayed unchanged.
 

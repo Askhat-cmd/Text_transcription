@@ -4,8 +4,8 @@
 **Репозиторий:** `Askhat-cmd/Text_transcription`
 **Локальный путь владельца:** `C:\My_practice\Text_transcription`
 **Дата:** 2026-07-09
-**Версия:** v4.10 — единый мастер-план (14 правок MP-1..MP-14 по аудиту Fable R08
-+ обновление курса после PRD-047.42-APPLY-5 + красная линия против случайного
+**Версия:** v4.12 — единый мастер-план (14 правок MP-1..MP-14 по аудиту Fable R08
++ обновление курса после PRD-047.42-APPLY-7 + красная линия против случайного
 перезапуска PRD-инструментов)
 **Что это:** самодостаточный документ, по которому любой архитектор в новом
 чате, на любом этапе, может продолжить ведение проекта без дополнительного
@@ -153,48 +153,60 @@ Architect не принимает "всё прошло" на слово — то
 
 ```text
 Эпоха: 1 (Консолидация).
-Последний принятый PRD: PRD-047.42-APPLY-5 (ACCEPTED, commits a419ead /
-  ba60882).
-Следующий PRD: PRD-047.42-APPLY-6 — God-File Decomposition
-  (writer_agent.py, начало разбора _call_llm — 803 строки, самый
-  крупный и разнородный оставшийся метод; резать несколькими под-
-  срезами, не одним PRD).
+Последний принятый PRD: PRD-047.42-APPLY-7 (ACCEPTED_WITH_WARNINGS,
+  commits 9249f04 / ba0451b).
+Следующий PRD: PRD-047.42-APPLY-8 — два варианта, решить в начале
+  новой сессии: (a) починить/переписать устаревший тест
+  test_variable_inventory_contains_expected_spine_variables (PRD-047.42-
+  APPLY-6), он заново прогоняет анализатор структуры и не переживёт
+  дальнейшую резку _call_llm без обновления; (b) продолжить резку
+  следующего чистого кластера _call_llm по карте APPLY-6
+  (request_detectors_and_mvp_override_block, 333-406, 74 строки).
+  Рекомендация архитектора: сначала (a), маленький PRD, иначе долг
+  накопится по мере резки остальных кластеров.
 Шлюз в Эпоху 2: НЕ пройден (Эпоха 1 не закрыта; ратификация не проведена).
 
 Корпус законов Fable: получен полностью (R01-R07), НЕ ратифицирован.
   Ратификация не блокирует Эпоху 1, блокирует старт Эпохи 2.
 
-PRD-047.42-APPLY-5 закрыт (Stage 2e, writer_agent.py slice 4):
-- write() + _resolve_runtime_settings вынесены в
-  WriterAgentLifecycleMixin (writer_agent_lifecycle_mixin.py);
-- WriterAgent(WriterAgentLifecycleMixin, WriterAgentFallbackStateMixin)
-  — порядок наследования зафиксирован явно;
-- находка: скрытая зависимость от monkeypatch-шва в контрактном тесте
-  PRD-047.42 (writer_agent_module.get_temperature_for_agent) — починена
-  прокси-методом WriterAgent._get_temperature_for_agent, старый тест
-  проверен архитектором лично, 8/8 зелёный;
-- снимок всех 4 путей write() (safety+успех, safety+исключение,
-  обычный+пусто, обычный+исключение) — до/после идентичен;
-- все ранее принятые файлы (3 mixin'а, writer_contract.py,
-  admin_routes.py + 10 admin-модулей) доказанно не задеты;
+PRD-047.42-APPLY-7 закрыт (Stage 2g, _call_llm slice 1):
+- 2 чистых кластера (knowledge_practice_kernel_inputs,
+  dialogue_policy_and_context_budget, ~78 строк, 19 переменных)
+  вынесены в writer_agent_call_llm_slice1.py как typed dataclass
+  (CallLLMSlice1Inputs) + функция-извлекатель;
+- в _call_llm — явная распаковка датакласса в те же локальные имена
+  (не locals(), проверено архитектором построчно);
+- practice_gate верно оставлен внутренним (local_only по карте);
+- call_llm_snapshot (3 сценария) идентичен до/после побайтово —
+  проверено архитектором независимо;
+- все ранее принятые файлы (slice 1-4, writer_contract.py,
+  admin_routes.py + 10 admin-модулей) доказанно не задеты (hash-proof,
+  архитектор сверил все);
 - 1 pre-existing тест-fail (test_semantic_hits_limit_to_two) — не
   регрессия.
 
-writer_agent.py итог на сегодня: 4 среза вынесено (constants, fallback
-  helpers, fallback state mixin, lifecycle mixin). Осталось в основном
-  классе: _call_llm (803 строки), _enforce_answer_compliance (608
-  строк), _enforce_mvp_free_dialogue_compliance (~224 строки).
+WARNING (найдено архитектором, не было в отчёте Исполнителя):
+  tests/contract/test_prd_047_42_apply_6_call_llm_boundary_mapping.py::
+  test_variable_inventory_contains_expected_spine_variables СЛОМАН
+  этим PRD — но не как поведенческая регрессия, а потому что тест
+  заново прогоняет анализатор структуры _call_llm вместо сверки с
+  замороженным снимком. По мере резки структура меняется закономерно,
+  тест этого не переживёт. Нужно либо переписать его на сверку с
+  фиксированным baseline, либо явно ограничить его applicability до
+  "снято после APPLY-6, не актуально после начала резки". Не блокирует
+  принятие PRD-047.42-APPLY-7 (реальное поведение доказано снимком
+  write(), не этим тестом), но ДОЛЖНО быть решено до следующей резки,
+  иначе будет копиться такой же долг на каждом следующем срезе.
+
+writer_agent.py итог: _call_llm 804 строки -> ~726 строк (после первой
+  резки), 9 из 11 кластеров карты ещё внутри.
 
 Отложено сознательно (не потеряно):
-- _call_llm — рекомендация Исполнителя (next_recommendation.md
-  PRD-047.42-APPLY-5) совпала с архитектором: резать под-срезами,
-  начиная с самых изолированных частей (pure/default-seeding/
-  форматирование), провайдер-диспатч и парсинг ответа — отдельно,
-  позже.
+- Резка оставшихся кластеров _call_llm — по одному, самые сложные
+  (WRITER_USER_TEMPLATE render, 389 строк) — в конце.
 - _enforce_answer_compliance, _enforce_mvp_free_dialogue_compliance —
   вне scope, пока _call_llm не перестанет быть giant-методом.
-- writer_contract.py (979 строк, to_prompt_context — самый рискованный
-  узел проекта) -> отдельная серия PRD после writer_agent.py.
+- writer_contract.py (979 строк, to_prompt_context) -> после writer_agent.py.
 - 19 production diagnostic_center_* файлов -> PRD-047.42b.
 - LEGACY_PIPELINE_ENABLED (retirement_candidate_deferred) -> PRD-047.43.
 - Полный full-regression suite-wide timeout -> кандидат для PRD-047.45.
@@ -213,6 +225,13 @@ writer_agent.py итог на сегодня: 4 среза вынесено (con
 журнале §4 (дата, что, почему). Молчаливых правок тела не существует.
 
 Журнал поправок:
+- 2026-07-10 v4.11 -> v4.12: PRD-047.42-APPLY-7 (_call_llm slice 1,
+  2 чистых кластера, typed dataclass) принят ACCEPTED_WITH_WARNINGS.
+  Поведение доказано идентичным (snapshot 3 сценариев). Найден
+  структурно устаревающий тест из PRD-047.42-APPLY-6 (переписывается
+  первым в новой сессии). Урок: контрактные тесты для boundary-mapping
+  PRD должны сверяться с замороженным снимком, а не пересчитывать
+  структуру заново — иначе не переживут последующую резку.
 - 2026-07-10 v4.8 -> v4.9: PRD-047.42-APPLY-4 (writer_agent.py slice 3,
   mixin, 8 self-методов + 3 константы) принят ACCEPTED. Четвёртый
   успешный срез god-файла подряд, второй раз укрупнённым шагом. Дальше —

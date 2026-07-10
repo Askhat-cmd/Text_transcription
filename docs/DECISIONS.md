@@ -1,5 +1,24 @@
 # Architecture Decisions
 
+## ADR-108 - Boundary-mapping structural contracts must freeze historical baselines instead of re-parsing live giant-method shape
+
+Status: accepted
+
+Date: 2026-07-10
+
+Delivery: PRD-047.42-APPLY-8 implementation completed in workspace; delivery metadata pending follow-up commit sync.
+
+Context: PRD-047.42-APPLY-6 added a local-variable inventory over the original `804`-line `_call_llm` shape and PRD-047.42-APPLY-7 then performed the first real extraction inside that method. The accepted behavior stayed stable under the dedicated `_call_llm` snapshot gate, but one APPLY-6 contract test broke anyway because it recalculated inventory from the live post-slice method and compared the result to expectations that belonged to the accepted pre-slice structure. That kind of contract would fail again on every future `_call_llm` slice even when runtime behavior stayed unchanged.
+
+Decision:
+- freeze the accepted APPLY-6 variable inventory from commit `e5f5f32` into a dedicated JSON fixture with explicit provenance;
+- keep the APPLY-6 runner capable of live analysis, but add an optional `source_text` path so the same analyzer can be used against historical file text without rewriting production logs;
+- rewrite only the stale structural test to compare against the frozen baseline fixture rather than recomputing expectations from the current live `_call_llm`;
+- preserve byte-identical default behavior of `build_variable_inventory()` when `source_text` is not provided;
+- treat boundary-mapping contracts as historical evidence contracts once real decomposition starts, unless a later PRD explicitly remaps and re-freezes them.
+
+Consequences: future `_call_llm` slices can continue without accumulating false red tests from accepted old maps. Live analyzer output remains useful for new reports, while frozen contracts remain tied to the exact accepted structural baseline they are meant to protect.
+
 ## ADR-107 - First `_call_llm` code moves must use explicit local-namespace extraction, not helper side effects
 
 Status: accepted

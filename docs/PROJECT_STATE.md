@@ -2,6 +2,19 @@
 
 Главный источник курса проекта: `docs/MASTER_STRATEGIC_PLAN_NEO_MindBot_v4_RU.md`.
 
+## PRD-047.42-APPLY-8 frozen variable-inventory baseline
+PRD-047.42-APPLY-8 closes a narrow structural-test debt exposed right after the first real `_call_llm` slice. The broken contract was not signaling behavior drift in `WriterAgent`; it was re-parsing the live `_call_llm` structure and comparing it to expectations frozen before the first slice. The fix freezes the accepted APPLY-6 variable inventory from commit `e5f5f32` into a dedicated JSON fixture, rewrites only `test_variable_inventory_contains_expected_spine_variables` to read that baseline, and extends the APPLY-6 runner with an optional `source_text` path for historical analysis without changing the default live analysis path.
+
+Current result:
+- status is `accepted_pending_delivery_metadata`;
+- new frozen fixture is `bot_psychologist/tests/contract/fixtures/prd_047_42_apply_6_variable_inventory_baseline.json`;
+- fixture provenance explicitly records `source_commit=e5f5f32`;
+- `test_prd_047_42_apply_6_call_llm_boundary_mapping.py` is green again at `4/4`;
+- the APPLY-7 contract runner remains green at `2/2`;
+- live `build_variable_inventory()` output on the current `writer_agent.py` is byte-identical before vs after this PRD when called without `source_text`;
+- protected production files remain untouched under diff proof, including `writer_agent.py`, all extracted writer helper/mixin files, `writer_contract.py`, and the `admin_routes` split modules;
+- the focused writer subset still carries the same single pre-existing failure `test_semantic_hits_limit_to_two`, which remains out of scope and unchanged.
+
 ## PRD-047.42-APPLY-7 _call_llm slice 1
 PRD-047.42-APPLY-7 completed the first real extraction inside `WriterAgent._call_llm` and stayed strictly inside the two pure, no-`self.last_debug` clusters mapped by PRD-047.42-APPLY-6. The work moved the adjacent `knowledge_practice_kernel_inputs` and `dialogue_policy_and_context_budget` clusters out of the inline method body, preserved the same downstream local variable names through explicit unpacking, and left provider dispatch, response parsing, prompt rendering, and all state-coupled debug-writing clusters untouched.
 

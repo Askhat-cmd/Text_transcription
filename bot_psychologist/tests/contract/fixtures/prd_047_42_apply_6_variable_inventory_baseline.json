@@ -1,0 +1,1243 @@
+{
+  "schema_version": "prd_047_42_apply_6_variable_inventory_baseline_v1",
+  "provenance": {
+    "source_commit": "e5f5f32",
+    "source_path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+    "captured_for_prd": "PRD-047.42-APPLY-8",
+    "description": "Frozen variable inventory baseline from accepted PRD-047.42-APPLY-6 state before the first _call_llm slice."
+  },
+  "inventory": [
+    {
+      "name": "client",
+      "line": 141,
+      "end_line": 141,
+      "cluster": "client_and_ctx_default_seeding",
+      "depends_on": [
+        "self"
+      ],
+      "scope": "provider_dispatch_input",
+      "later_uses": [
+        142,
+        903
+      ]
+    },
+    {
+      "name": "ctx",
+      "line": 145,
+      "end_line": 145,
+      "cluster": "client_and_ctx_default_seeding",
+      "depends_on": [
+        "contract"
+      ],
+      "scope": "writer_prompt_input",
+      "later_uses": [
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192,
+        193,
+        194,
+        195,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208,
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        217,
+        218,
+        219,
+        220,
+        221,
+        222,
+        223,
+        224,
+        225,
+        226,
+        227,
+        228,
+        229,
+        230,
+        231,
+        232,
+        233,
+        234,
+        235,
+        236,
+        237,
+        238,
+        239,
+        240,
+        241,
+        242,
+        243,
+        244,
+        245,
+        246,
+        247,
+        248,
+        249,
+        250,
+        251,
+        252,
+        253,
+        254,
+        451,
+        452,
+        455,
+        456,
+        458,
+        459,
+        460,
+        461,
+        462,
+        882,
+        893,
+        257,
+        256,
+        262,
+        261,
+        285,
+        284,
+        290,
+        289,
+        306,
+        305,
+        319,
+        321,
+        408,
+        428,
+        427,
+        433,
+        432,
+        438,
+        437,
+        443,
+        442,
+        448,
+        447,
+        457,
+        885,
+        887,
+        889,
+        269,
+        463,
+        464,
+        465,
+        466,
+        467,
+        468,
+        469,
+        492,
+        495,
+        503,
+        504,
+        525,
+        528,
+        542,
+        545,
+        547,
+        655,
+        659,
+        673,
+        723,
+        295,
+        300,
+        328,
+        420,
+        419,
+        423,
+        472,
+        473,
+        474,
+        475,
+        476,
+        478,
+        479,
+        481,
+        482,
+        483,
+        484,
+        485,
+        486,
+        487,
+        488,
+        489,
+        490,
+        491,
+        507,
+        534,
+        536,
+        539,
+        549,
+        553,
+        555,
+        558,
+        562,
+        565,
+        571,
+        577,
+        580,
+        584,
+        587,
+        590,
+        593,
+        605,
+        608,
+        611,
+        614,
+        617,
+        620,
+        624,
+        632,
+        635,
+        639,
+        643,
+        649,
+        652,
+        656,
+        657,
+        662,
+        668,
+        669,
+        676,
+        679,
+        682,
+        685,
+        691,
+        694,
+        697,
+        700,
+        714,
+        715,
+        716,
+        721,
+        729,
+        735,
+        738,
+        750,
+        752,
+        755,
+        756,
+        757,
+        759,
+        762,
+        767,
+        768,
+        770,
+        820,
+        411,
+        493,
+        494,
+        496,
+        497,
+        470,
+        471,
+        477,
+        480,
+        505,
+        510,
+        548,
+        550,
+        568,
+        574,
+        596,
+        599,
+        602,
+        623,
+        626,
+        629,
+        646,
+        654,
+        664,
+        665,
+        666,
+        667,
+        671,
+        674,
+        688,
+        704,
+        717,
+        719,
+        726,
+        732,
+        742,
+        745,
+        748,
+        765,
+        707,
+        711,
+        826
+      ]
+    },
+    {
+      "name": "knowledge_answer",
+      "line": 255,
+      "end_line": 259,
+      "cluster": "knowledge_practice_kernel_inputs",
+      "depends_on": [
+        "isinstance",
+        "dict",
+        "ctx"
+      ],
+      "scope": "writer_prompt_input",
+      "later_uses": [
+        265,
+        266,
+        513,
+        519,
+        512,
+        514
+      ]
+    },
+    {
+      "name": "practice_gate",
+      "line": 260,
+      "end_line": 264,
+      "cluster": "knowledge_practice_kernel_inputs",
+      "depends_on": [
+        "isinstance",
+        "dict",
+        "ctx"
+      ],
+      "scope": "local_only",
+      "later_uses": [
+        267
+      ]
+    },
+    {
+      "name": "knowledge_answer_first",
+      "line": 265,
+      "end_line": 265,
+      "cluster": "knowledge_practice_kernel_inputs",
+      "depends_on": [
+        "bool",
+        "knowledge_answer"
+      ],
+      "scope": "writer_prompt_input",
+      "later_uses": [
+        280,
+        515
+      ]
+    },
+    {
+      "name": "do_not_ask_definition",
+      "line": 266,
+      "end_line": 266,
+      "cluster": "knowledge_practice_kernel_inputs",
+      "depends_on": [
+        "bool",
+        "knowledge_answer"
+      ],
+      "scope": "writer_prompt_input",
+      "later_uses": [
+        275,
+        516
+      ]
+    },
+    {
+      "name": "practice_allowed",
+      "line": 267,
+      "end_line": 267,
+      "cluster": "knowledge_practice_kernel_inputs",
+      "depends_on": [
+        "bool",
+        "practice_gate"
+      ],
+      "scope": "writer_prompt_input",
+      "later_uses": [
+        270,
+        517
+      ]
+    },
+    {
+      "name": "practice_ban_instruction",
+      "line": 268,
+      "end_line": 272,
+      "cluster": "knowledge_practice_kernel_inputs",
+      "depends_on": [
+        "practice_allowed",
+        "str",
+        "ctx"
+      ],
+      "scope": "writer_prompt_input",
+      "later_uses": [
+        521
+      ]
+    },
+    {
+      "name": "known_concept_clarification_ban",
+      "line": 273,
+      "end_line": 277,
+      "cluster": "knowledge_practice_kernel_inputs",
+      "depends_on": [
+        "do_not_ask_definition"
+      ],
+      "scope": "writer_prompt_input",
+      "later_uses": [
+        522
+      ]
+    },
+    {
+      "name": "external_surveillance_frame_ban",
+      "line": 278,
+      "end_line": 282,
+      "cluster": "knowledge_practice_kernel_inputs",
+      "depends_on": [
+        "knowledge_answer_first"
+      ],
+      "scope": "writer_prompt_input",
+      "later_uses": [
+        523
+      ]
+    },
+    {
+      "name": "philosophy_kernel",
+      "line": 283,
+      "end_line": 287,
+      "cluster": "knowledge_practice_kernel_inputs",
+      "depends_on": [
+        "isinstance",
+        "dict",
+        "ctx"
+      ],
+      "scope": "writer_prompt_input",
+      "later_uses": [
+        525,
+        530
+      ]
+    },
+    {
+      "name": "writer_freedom_contract",
+      "line": 288,
+      "end_line": 292,
+      "cluster": "knowledge_practice_kernel_inputs",
+      "depends_on": [
+        "isinstance",
+        "dict",
+        "ctx"
+      ],
+      "scope": "writer_prompt_input",
+      "later_uses": [
+        542,
+        545,
+        547
+      ]
+    },
+    {
+      "name": "selected_lenses",
+      "line": 293,
+      "end_line": 297,
+      "cluster": "knowledge_practice_kernel_inputs",
+      "depends_on": [
+        "str",
+        "item",
+        "list",
+        "ctx"
+      ],
+      "scope": "writer_prompt_input",
+      "later_uses": [
+        533
+      ]
+    },
+    {
+      "name": "freedom_hard_boundaries",
+      "line": 298,
+      "end_line": 302,
+      "cluster": "knowledge_practice_kernel_inputs",
+      "depends_on": [
+        "str",
+        "item",
+        "list",
+        "ctx"
+      ],
+      "scope": "writer_prompt_input",
+      "later_uses": [
+        551
+      ]
+    },
+    {
+      "name": "dialogue_policy_payload",
+      "line": 304,
+      "end_line": 308,
+      "cluster": "dialogue_policy_and_context_budget",
+      "depends_on": [
+        "isinstance",
+        "dict",
+        "ctx"
+      ],
+      "scope": "local_only",
+      "later_uses": [
+        321,
+        311,
+        310,
+        316,
+        315,
+        324,
+        335,
+        334,
+        339,
+        342,
+        345,
+        348,
+        351,
+        354,
+        357,
+        360,
+        363,
+        387,
+        366,
+        398
+      ]
+    },
+    {
+      "name": "human_like_answer_policy",
+      "line": 309,
+      "end_line": 313,
+      "cluster": "dialogue_policy_and_context_budget",
+      "depends_on": [
+        "isinstance",
+        "dict",
+        "dialogue_policy_payload"
+      ],
+      "scope": "writer_prompt_input",
+      "later_uses": [
+        875,
+        774,
+        777,
+        799,
+        802,
+        805,
+        817,
+        772,
+        780,
+        783,
+        786,
+        789,
+        792,
+        796,
+        808,
+        811,
+        814
+      ]
+    },
+    {
+      "name": "constraint_resolution",
+      "line": 314,
+      "end_line": 318,
+      "cluster": "dialogue_policy_and_context_budget",
+      "depends_on": [
+        "isinstance",
+        "dict",
+        "dialogue_policy_payload"
+      ],
+      "scope": "writer_prompt_input",
+      "later_uses": [
+        374,
+        832,
+        835,
+        839
+      ]
+    },
+    {
+      "name": "user_message",
+      "line": 319,
+      "end_line": 319,
+      "cluster": "dialogue_policy_and_context_budget",
+      "depends_on": [
+        "str",
+        "ctx"
+      ],
+      "scope": "local_only",
+      "later_uses": [
+        340,
+        343,
+        346,
+        349,
+        352,
+        355,
+        358,
+        361,
+        364
+      ]
+    },
+    {
+      "name": "dialogue_profile",
+      "line": 320,
+      "end_line": 322,
+      "cluster": "dialogue_policy_and_context_budget",
+      "depends_on": [
+        "normalize_dialogue_profile",
+        "dialogue_policy_payload",
+        "ctx"
+      ],
+      "scope": "writer_prompt_input",
+      "later_uses": [
+        901,
+        390,
+        329,
+        893,
+        894,
+        897,
+        325,
+        324,
+        466,
+        832,
+        832
+      ]
+    },
+    {
+      "name": "context_budget_chars",
+      "line": 323,
+      "end_line": 326,
+      "cluster": "dialogue_policy_and_context_budget",
+      "depends_on": [
+        "int",
+        "context_budget_for_profile",
+        "dialogue_profile",
+        "dialogue_policy_payload"
+      ],
+      "scope": "local_only",
+      "later_uses": [
+        330
+      ]
+    },
+    {
+      "name": "context_meta",
+      "line": 327,
+      "end_line": 331,
+      "cluster": "dialogue_policy_and_context_budget",
+      "depends_on": [
+        "format_conversation_context_for_writer_with_meta",
+        "dialogue_profile",
+        "context_budget_chars",
+        "str",
+        "ctx"
+      ],
+      "scope": "writer_prompt_input",
+      "later_uses": [
+        867,
+        866,
+        869,
+        872,
+        499,
+        501,
+        502,
+        500
+      ]
+    },
+    {
+      "name": "formatted_context",
+      "line": 327,
+      "end_line": 331,
+      "cluster": "dialogue_policy_and_context_budget",
+      "depends_on": [
+        "format_conversation_context_for_writer_with_meta",
+        "dialogue_profile",
+        "context_budget_chars",
+        "str",
+        "ctx"
+      ],
+      "scope": "writer_prompt_input",
+      "later_uses": [
+        498
+      ]
+    },
+    {
+      "name": "mvp_overrides_payload",
+      "line": 333,
+      "end_line": 337,
+      "cluster": "request_detectors_and_mvp_override_block",
+      "depends_on": [
+        "isinstance",
+        "dict",
+        "dialogue_policy_payload"
+      ],
+      "scope": "local_only",
+      "later_uses": [
+        398,
+        394,
+        395,
+        396,
+        397
+      ]
+    },
+    {
+      "name": "practice_overview_requested",
+      "line": 338,
+      "end_line": 340,
+      "cluster": "request_detectors_and_mvp_override_block",
+      "depends_on": [
+        "bool",
+        "detect_practice_overview_request",
+        "user_message",
+        "dialogue_policy_payload"
+      ],
+      "scope": "local_only",
+      "later_uses": [
+        378,
+        397
+      ]
+    },
+    {
+      "name": "examples_requested",
+      "line": 341,
+      "end_line": 343,
+      "cluster": "request_detectors_and_mvp_override_block",
+      "depends_on": [
+        "bool",
+        "detect_examples_request",
+        "user_message",
+        "dialogue_policy_payload"
+      ],
+      "scope": "local_only",
+      "later_uses": [
+        379
+      ]
+    },
+    {
+      "name": "numbered_list_requested",
+      "line": 344,
+      "end_line": 346,
+      "cluster": "request_detectors_and_mvp_override_block",
+      "depends_on": [
+        "bool",
+        "detect_numbered_list_request",
+        "user_message",
+        "dialogue_policy_payload"
+      ],
+      "scope": "local_only",
+      "later_uses": [
+        380
+      ]
+    },
+    {
+      "name": "expansion_requested",
+      "line": 347,
+      "end_line": 349,
+      "cluster": "request_detectors_and_mvp_override_block",
+      "depends_on": [
+        "bool",
+        "detect_expansion_request",
+        "user_message",
+        "dialogue_policy_payload"
+      ],
+      "scope": "local_only",
+      "later_uses": [
+        381
+      ]
+    },
+    {
+      "name": "explicit_answer_need",
+      "line": 350,
+      "end_line": 352,
+      "cluster": "request_detectors_and_mvp_override_block",
+      "depends_on": [
+        "bool",
+        "detect_explicit_answer_need",
+        "user_message",
+        "dialogue_policy_payload"
+      ],
+      "scope": "local_only",
+      "later_uses": [
+        382,
+        877,
+        400
+      ]
+    },
+    {
+      "name": "direct_concrete_request",
+      "line": 353,
+      "end_line": 355,
+      "cluster": "request_detectors_and_mvp_override_block",
+      "depends_on": [
+        "bool",
+        "detect_direct_concrete_request",
+        "user_message",
+        "dialogue_policy_payload"
+      ],
+      "scope": "local_only",
+      "later_uses": [
+        383,
+        401
+      ]
+    },
+    {
+      "name": "summary_request",
+      "line": 356,
+      "end_line": 358,
+      "cluster": "request_detectors_and_mvp_override_block",
+      "depends_on": [
+        "bool",
+        "detect_summary_request",
+        "user_message",
+        "dialogue_policy_payload"
+      ],
+      "scope": "local_only",
+      "later_uses": [
+        384,
+        402
+      ]
+    },
+    {
+      "name": "sarcasm_or_negative_feedback",
+      "line": 359,
+      "end_line": 361,
+      "cluster": "request_detectors_and_mvp_override_block",
+      "depends_on": [
+        "bool",
+        "detect_sarcasm_or_negative_feedback",
+        "user_message",
+        "dialogue_policy_payload"
+      ],
+      "scope": "local_only",
+      "later_uses": [
+        385,
+        879,
+        370,
+        403
+      ]
+    },
+    {
+      "name": "application_request",
+      "line": 362,
+      "end_line": 364,
+      "cluster": "request_detectors_and_mvp_override_block",
+      "depends_on": [
+        "bool",
+        "detect_application_request",
+        "user_message",
+        "dialogue_policy_payload"
+      ],
+      "scope": "local_only",
+      "later_uses": [
+        386
+      ]
+    },
+    {
+      "name": "repair_user_dissatisfaction",
+      "line": 365,
+      "end_line": 371,
+      "cluster": "request_detectors_and_mvp_override_block",
+      "depends_on": [
+        "bool",
+        "sarcasm_or_negative_feedback",
+        "dict",
+        "dialogue_policy_payload"
+      ],
+      "scope": "writer_prompt_input",
+      "later_uses": [
+        878,
+        794
+      ]
+    },
+    {
+      "name": "overruled_constraints",
+      "line": 372,
+      "end_line": 376,
+      "cluster": "request_detectors_and_mvp_override_block",
+      "depends_on": [
+        "str",
+        "item",
+        "list",
+        "constraint_resolution"
+      ],
+      "scope": "writer_prompt_input",
+      "later_uses": [
+        880,
+        837
+      ]
+    },
+    {
+      "name": "rich_user_request",
+      "line": 377,
+      "end_line": 388,
+      "cluster": "request_detectors_and_mvp_override_block",
+      "depends_on": [
+        "practice_overview_requested",
+        "examples_requested",
+        "numbered_list_requested",
+        "expansion_requested",
+        "explicit_answer_need",
+        "direct_concrete_request",
+        "summary_request",
+        "sarcasm_or_negative_feedback",
+        "application_request",
+        "bool",
+        "dialogue_policy_payload"
+      ],
+      "scope": "local_only",
+      "later_uses": [
+        399
+      ]
+    },
+    {
+      "name": "mvp_override_block",
+      "line": 389,
+      "end_line": 389,
+      "cluster": "request_detectors_and_mvp_override_block",
+      "depends_on": [],
+      "scope": "writer_prompt_input",
+      "later_uses": [
+        841
+      ]
+    },
+    {
+      "name": "writer_kb_payload_fallback_reason",
+      "line": 407,
+      "end_line": 414,
+      "cluster": "writer_kb_payload_and_trace_capture",
+      "depends_on": [
+        "str",
+        "ctx",
+        "bool"
+      ],
+      "scope": "local_only",
+      "later_uses": [
+        415,
+        424
+      ]
+    },
+    {
+      "name": "writer_kb_payload_text",
+      "line": 417,
+      "end_line": 425,
+      "cluster": "writer_kb_payload_and_trace_capture",
+      "depends_on": [
+        "format_writer_kb_payload_for_prompt",
+        "writer_kb_payload_fallback_reason",
+        "list",
+        "isinstance",
+        "dict",
+        "ctx"
+      ],
+      "scope": "writer_prompt_input",
+      "later_uses": [
+        511
+      ]
+    },
+    {
+      "name": "user_prompt",
+      "line": 454,
+      "end_line": 842,
+      "cluster": "writer_user_template_render_core",
+      "depends_on": [
+        "WRITER_USER_TEMPLATE",
+        "formatted_context",
+        "writer_kb_payload_text",
+        "practice_ban_instruction",
+        "known_concept_clarification_ban",
+        "external_surveillance_frame_ban",
+        "mvp_override_block",
+        "ctx",
+        "str",
+        "float",
+        "int",
+        "dialogue_profile",
+        "self",
+        "selected_lenses",
+        "freedom_hard_boundaries",
+        "overruled_constraints",
+        "knowledge_answer_first",
+        "do_not_ask_definition",
+        "practice_allowed",
+        "bool",
+        "context_meta",
+        "knowledge_answer",
+        "philosophy_kernel",
+        "writer_freedom_contract",
+        "item",
+        "human_like_answer_policy",
+        "repair_user_dissatisfaction",
+        "constraint_resolution",
+        "list"
+      ],
+      "scope": "provider_dispatch_input",
+      "later_uses": [
+        861,
+        860,
+        907
+      ]
+    },
+    {
+      "name": "prompt_section",
+      "line": 843,
+      "end_line": 847,
+      "cluster": "prompt_constraint_append_and_debug_bookkeeping",
+      "depends_on": [
+        "prompt_constraint_decision",
+        "format_prompt_constraint_section_v1"
+      ],
+      "scope": "writer_prompt_input",
+      "later_uses": [
+        859,
+        863,
+        865,
+        860
+      ]
+    },
+    {
+      "name": "activation_mode",
+      "line": 848,
+      "end_line": 852,
+      "cluster": "prompt_constraint_append_and_debug_bookkeeping",
+      "depends_on": [
+        "isinstance",
+        "prompt_constraint_decision",
+        "dict",
+        "str"
+      ],
+      "scope": "local_only",
+      "later_uses": [
+        862
+      ]
+    },
+    {
+      "name": "blocked_reasons",
+      "line": 853,
+      "end_line": 858,
+      "cluster": "prompt_constraint_append_and_debug_bookkeeping",
+      "depends_on": [
+        "list",
+        "isinstance",
+        "prompt_constraint_decision",
+        "dict"
+      ],
+      "scope": "local_only",
+      "later_uses": [
+        864
+      ]
+    },
+    {
+      "name": "start_ts",
+      "line": 892,
+      "end_line": 892,
+      "cluster": "runtime_settings_and_system_prompt_selection",
+      "depends_on": [
+        "time"
+      ],
+      "scope": "response_parse_input",
+      "later_uses": [
+        920
+      ]
+    },
+    {
+      "name": "dialogue_profile",
+      "line": 893,
+      "end_line": 893,
+      "cluster": "runtime_settings_and_system_prompt_selection",
+      "depends_on": [
+        "normalize_dialogue_profile",
+        "ctx"
+      ],
+      "scope": "local_only",
+      "later_uses": [
+        901,
+        894,
+        897
+      ]
+    },
+    {
+      "name": "runtime_settings",
+      "line": 894,
+      "end_line": 894,
+      "cluster": "runtime_settings_and_system_prompt_selection",
+      "depends_on": [
+        "self",
+        "dialogue_profile"
+      ],
+      "scope": "provider_dispatch_input",
+      "later_uses": [
+        923,
+        925,
+        926,
+        927,
+        904,
+        909,
+        910,
+        911
+      ]
+    },
+    {
+      "name": "system_prompt",
+      "line": 895,
+      "end_line": 899,
+      "cluster": "runtime_settings_and_system_prompt_selection",
+      "depends_on": [
+        "WRITER_SYSTEM_MVP_FREE_DIALOGUE",
+        "WRITER_SYSTEM",
+        "dialogue_profile",
+        "DIALOGUE_PROFILE_MVP_FREE"
+      ],
+      "scope": "provider_dispatch_input",
+      "later_uses": [
+        900,
+        906
+      ]
+    },
+    {
+      "name": "result",
+      "line": 902,
+      "end_line": 912,
+      "cluster": "provider_dispatch",
+      "depends_on": [
+        "create_agent_completion",
+        "client",
+        "runtime_settings",
+        "system_prompt",
+        "user_prompt"
+      ],
+      "scope": "response_parse_input",
+      "later_uses": [
+        913,
+        915,
+        916,
+        917,
+        924
+      ]
+    },
+    {
+      "name": "llm_response",
+      "line": 913,
+      "end_line": 913,
+      "cluster": "response_unpack_cost_and_return",
+      "depends_on": [
+        "result"
+      ],
+      "scope": "response_parse_input",
+      "later_uses": [
+        938,
+        928
+      ]
+    },
+    {
+      "name": "tokens_completion",
+      "line": 914,
+      "end_line": 918,
+      "cluster": "response_unpack_cost_and_return",
+      "depends_on": [
+        "result"
+      ],
+      "scope": "response_parse_input",
+      "later_uses": [
+        919,
+        930
+      ]
+    },
+    {
+      "name": "tokens_prompt",
+      "line": 914,
+      "end_line": 918,
+      "cluster": "response_unpack_cost_and_return",
+      "depends_on": [
+        "result"
+      ],
+      "scope": "response_parse_input",
+      "later_uses": [
+        919,
+        929
+      ]
+    },
+    {
+      "name": "tokens_total",
+      "line": 914,
+      "end_line": 918,
+      "cluster": "response_unpack_cost_and_return",
+      "depends_on": [
+        "result"
+      ],
+      "scope": "response_parse_input",
+      "later_uses": [
+        931
+      ]
+    },
+    {
+      "name": "estimated_cost",
+      "line": 919,
+      "end_line": 919,
+      "cluster": "response_unpack_cost_and_return",
+      "depends_on": [
+        "self",
+        "tokens_prompt",
+        "tokens_completion"
+      ],
+      "scope": "response_parse_input",
+      "later_uses": [
+        932
+      ]
+    },
+    {
+      "name": "duration_ms",
+      "line": 920,
+      "end_line": 920,
+      "cluster": "response_unpack_cost_and_return",
+      "depends_on": [
+        "int",
+        "start_ts",
+        "time"
+      ],
+      "scope": "response_parse_input",
+      "later_uses": [
+        933
+      ]
+    }
+  ]
+}

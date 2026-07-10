@@ -11,6 +11,8 @@ if str(REPO_ROOT) not in sys.path:
 
 from TO_DO_LIST.tools import run_prd_047_42_apply_6_call_llm_boundary_mapping as runner
 
+FIXTURE_PATH = Path(__file__).resolve().parent / "fixtures" / "prd_047_42_apply_6_variable_inventory_baseline.json"
+
 
 def test_boundary_sections_cover_call_llm_without_gaps() -> None:
     sections = runner.BOUNDARY_SECTIONS
@@ -25,7 +27,8 @@ def test_boundary_sections_cover_call_llm_without_gaps() -> None:
 
 
 def test_variable_inventory_contains_expected_spine_variables() -> None:
-    inventory = runner.build_variable_inventory()
+    payload = json.loads(FIXTURE_PATH.read_text(encoding="utf-8"))
+    inventory = payload["inventory"]
     names = {item["name"]: item for item in inventory}
 
     assert names["ctx"]["cluster"] == "client_and_ctx_default_seeding"

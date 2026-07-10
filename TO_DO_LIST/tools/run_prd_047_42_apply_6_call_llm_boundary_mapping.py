@@ -174,8 +174,9 @@ def _read_writer_lines() -> list[str]:
     return WRITER_AGENT_PATH.read_text(encoding="utf-8-sig").splitlines()
 
 
-def _extract_call_llm_node() -> ast.AsyncFunctionDef:
-    tree = ast.parse(WRITER_AGENT_PATH.read_text(encoding="utf-8-sig"))
+def _extract_call_llm_node(source_text: str | None = None) -> ast.AsyncFunctionDef:
+    text = source_text.lstrip("\ufeff") if source_text is not None else WRITER_AGENT_PATH.read_text(encoding="utf-8-sig")
+    tree = ast.parse(text)
     for node in tree.body:
         if isinstance(node, ast.ClassDef) and node.name == "WriterAgent":
             for child in node.body:
@@ -222,8 +223,8 @@ def _usage_sites(fn: ast.AsyncFunctionDef) -> dict[str, list[int]]:
     return usage
 
 
-def build_variable_inventory() -> list[dict[str, Any]]:
-    fn = _extract_call_llm_node()
+def build_variable_inventory(source_text: str | None = None) -> list[dict[str, Any]]:
+    fn = _extract_call_llm_node(source_text=source_text)
     usage = _usage_sites(fn)
     entries: list[dict[str, Any]] = []
     for stmt in fn.body:

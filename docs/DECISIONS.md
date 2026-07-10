@@ -6,7 +6,7 @@ Status: accepted
 
 Date: 2026-07-10
 
-Delivery: PRD-047.42-APPLY-9 implementation prepared; delivery metadata pending main commit sync.
+Delivery: PRD-047.42-APPLY-9 accepted in main commit `0d9e6bb`.
 
 Context: PRD-047.42-APPLY-6 mapped `request_detectors_and_mvp_override_block` as one pre-provider cluster inside `_call_llm`, and PRD-047.42-APPLY-9 then used the accepted map plus a live grep review to confirm that only `5` of the cluster's `14` local names actually flow into the remaining prompt-render path. The other `9` names exist only to compute `rich_user_request` and the final `mvp_override_block`. Exporting all `14` values would technically work, but it would widen the giant-method surface, make future slices noisier, and dilute the point of the dependency map.
 

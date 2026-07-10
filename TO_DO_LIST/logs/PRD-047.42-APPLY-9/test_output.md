@@ -19,8 +19,8 @@
 - `py_compile`: passed
 - `no_mutation_proof.md`: `0 changed paths` across all protected previously accepted files
 
-## Honest Contract Note
+## Clean-Tree Contract Rerun
 
-- The historical APPLY-6 contract file contains a `no_mutation` assertion that intentionally reads live git diff state.
-- While `writer_agent.py` is modified in the working tree during implementation, that specific test file is expected to fail even when runtime behavior is unchanged.
-- The required final rerun of `test_prd_047_42_apply_6_call_llm_boundary_mapping.py` should therefore happen after the main implementation commit, when the working tree is clean again.
+- `test_prd_047_42_apply_6_call_llm_boundary_mapping.py` + `test_prd_047_42_apply_7_call_llm_slice1.py` + `test_prd_047_42_apply_9_call_llm_slice2.py`: `8 passed`
+- `contract_after_clean_tree.txt` is the authoritative post-commit rerun artifact.
+- This rerun matters because the historical APPLY-6 contract contains a `no_mutation` assertion that intentionally reads live git diff state.

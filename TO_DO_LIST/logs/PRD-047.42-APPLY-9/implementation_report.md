@@ -1,8 +1,8 @@
 # PRD-047.42-APPLY-9 Implementation Report
 
 - PRD: `PRD-047.42-APPLY-9`
-- Status: `accepted_pending_delivery_metadata`
-- Delivery: `main_commit_pending`
+- Status: `accepted`
+- Delivery: `main_commit=0d9e6bb`
 
 ## Scope Delivered
 
@@ -11,6 +11,7 @@
 - Replaced current live lines `275-348` in `_call_llm` with one helper call plus explicit variable unpacking using the same downstream local names.
 - Added direct unit tests for the new helper module.
 - Added a normalized snapshot runner for byte-stable before/after `_call_llm` evidence.
+- Verified the clean-tree historical contract rerun passes `8/8` across APPLY-6 + APPLY-7 + APPLY-9 after the main implementation commit removed live diff noise from the old `no_mutation` assertion.
 
 ## Honest Boundary
 

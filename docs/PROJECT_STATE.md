@@ -6,16 +6,16 @@
 PRD-047.42-APPLY-9 resumes the real `_call_llm` decomposition track after the APPLY-8 test-debt repair and stays strictly inside one mapped pre-provider cluster: `request_detectors_and_mvp_override_block`. The work moves only the current live lines `275-348` out of `WriterAgent._call_llm`, keeps the same downstream local variable names through explicit unpacking, preserves the same byte-identical three-scenario `_call_llm` snapshot, and leaves provider dispatch, response parsing, `writer_kb_payload_and_trace_capture`, `writer_contract.py`, and all admin decomposition files untouched.
 
 Current result:
-- main implementation commit: `pending_main_commit`;
-- push status: `pending`;
-- status is `accepted_pending_delivery_metadata`;
+- main implementation commit: `0d9e6bb`;
+- push status: `pushed_to_origin_main`;
+- status is `accepted`;
 - new helper module is `writer_agent_call_llm_slice2.py`;
 - exported slice-2 surface is intentionally limited to `5` cross-cluster values: `explicit_answer_need`, `sarcasm_or_negative_feedback`, `repair_user_dissatisfaction`, `overruled_constraints`, and `mvp_override_block`;
 - the `9` detector/intermediate names confirmed as `local_only` by the accepted APPLY-6 dependency map stay internal to the helper and do not widen `_call_llm` namespace;
 - required before/after `_call_llm` snapshot is byte-identical across `safe_guided_direct`, `mvp_free_overview`, and `mvp_free_rich_request`;
 - protected previously accepted files remain unchanged under diff/hash proof, including slice-1 helper, all writer mixins/helpers from earlier PRDs, `writer_contract.py`, and the `admin_routes` split modules;
 - the focused writer subset still carries the same single pre-existing failure `test_semantic_hits_limit_to_two`, which remains out of scope and unchanged;
-- the old APPLY-6 contract file is expected to be re-run once the working tree is clean, because its `no_mutation` assertion intentionally observes git diff state.
+- the clean-tree historical contract rerun now passes `8/8` across APPLY-6 + APPLY-7 + APPLY-9 once the main implementation commit removed the working diff seen by the old `no_mutation` assertion.
 
 ## PRD-047.42-APPLY-8 frozen variable-inventory baseline
 PRD-047.42-APPLY-8 closes a narrow structural-test debt exposed right after the first real `_call_llm` slice. The broken contract was not signaling behavior drift in `WriterAgent`; it was re-parsing the live `_call_llm` structure and comparing it to expectations frozen before the first slice. The fix freezes the accepted APPLY-6 variable inventory from commit `e5f5f32` into a dedicated JSON fixture, rewrites only `test_variable_inventory_contains_expected_spine_variables` to read that baseline, and extends the APPLY-6 runner with an optional `source_text` path for historical analysis without changing the default live analysis path.

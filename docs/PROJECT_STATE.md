@@ -6,9 +6,9 @@
 PRD-047.42-APPLY-5 completed the fourth bounded `writer_agent.py` apply slice and stayed strictly inside the mapped lifecycle spine from PRD-047.42. The work moved `_resolve_runtime_settings()` and the public `write()` entrypoint into a dedicated `WriterAgentLifecycleMixin`, preserved `__init__` / `_resolve_model` in the main class, kept `write()` behavior byte-for-byte stable on the required four-path snapshot gate, and left the remaining giant writer methods untouched.
 
 Current result:
-- main implementation commit: `pending_delivery`;
-- push status: `pending`;
-- status is `accepted_pending_delivery_metadata`;
+- main implementation commit: `a419ead`;
+- push status: `pushed_to_origin_main`;
+- status is `accepted`;
 - extracted lifecycle methods are `_resolve_runtime_settings` and `write`;
 - `WriterAgent` now inherits as `WriterAgent(WriterAgentLifecycleMixin, WriterAgentFallbackStateMixin)`;
 - explicit MRO order is deliberate: lifecycle comes first because `write()` is the public entrypoint and depends on slice-3 fallback helpers through `self`;

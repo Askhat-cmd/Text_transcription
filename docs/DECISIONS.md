@@ -6,7 +6,7 @@ Status: accepted
 
 Date: 2026-07-10
 
-Delivery: PRD-047.42-APPLY-5 accepted in main commit `pending`.
+Delivery: PRD-047.42-APPLY-5 accepted in main commit `a419ead`.
 
 Context: after slices 1-3, `writer_agent.py` had already shed pure helpers, static fallback helpers, and the first self-bound fallback/state cluster, but the next smallest meaningful slice was no longer a utility edge. The remaining target pair, `_resolve_runtime_settings()` plus the public async `write()` entrypoint, forms the lifecycle spine of the class: it decides runtime temperature/max-tokens, branches through `safety_active`, calls `_call_llm`, falls back on failure/empty output, and routes the final text through answer-compliance repair. Rewriting this pair into free functions or widening the slice to include giant methods would raise behavior risk unnecessarily. A second constraint also appeared: accepted tests still monkeypatch `bot_agent.multiagent.agents.writer_agent.get_temperature_for_agent`, so moving temperature resolution blindly would break a real compatibility seam even though runtime behavior itself would stay the same.
 

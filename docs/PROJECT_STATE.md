@@ -2,6 +2,22 @@
 
 Главный источник курса проекта: `docs/MASTER_STRATEGIC_PLAN_NEO_MindBot_v4_RU.md`.
 
+## PRD-047.42-APPLY-5 writer_agent slice 4
+PRD-047.42-APPLY-5 completed the fourth bounded `writer_agent.py` apply slice and stayed strictly inside the mapped lifecycle spine from PRD-047.42. The work moved `_resolve_runtime_settings()` and the public `write()` entrypoint into a dedicated `WriterAgentLifecycleMixin`, preserved `__init__` / `_resolve_model` in the main class, kept `write()` behavior byte-for-byte stable on the required four-path snapshot gate, and left the remaining giant writer methods untouched.
+
+Current result:
+- main implementation commit: `pending_delivery`;
+- push status: `pending`;
+- status is `accepted_pending_delivery_metadata`;
+- extracted lifecycle methods are `_resolve_runtime_settings` and `write`;
+- `WriterAgent` now inherits as `WriterAgent(WriterAgentLifecycleMixin, WriterAgentFallbackStateMixin)`;
+- explicit MRO order is deliberate: lifecycle comes first because `write()` is the public entrypoint and depends on slice-3 fallback helpers through `self`;
+- added thin `_get_temperature_for_agent()` compat wrapper so existing monkeypatch-based contract tests against `bot_agent.multiagent.agents.writer_agent` keep working after the move;
+- required write-path before/after snapshot is identical across `safety_success`, `safety_exception`, `normal_empty`, and `normal_exception`;
+- `writer_agent_constants.py`, `writer_agent_fallback_helpers.py`, `writer_agent_fallback_state_mixin.py`, `writer_contract.py`, `admin_routes.py`, and all `10` admin decomposition modules remained byte-identical under diff/blob-hash proof;
+- the focused baseline stayed behavior-equivalent before vs after: the same single pre-existing failure remained (`test_semantic_hits_limit_to_two`), while new direct lifecycle coverage passed and the after-set ended at `1 failed, 53 passed, 58 warnings`;
+- additional external/contract verification over orchestrator/trace/knowledge-answer/boundary-map callers passed `24/24`.
+
 ## PRD-047.42-APPLY-4 writer_agent slice 3
 PRD-047.42-APPLY-4 completed the third bounded `writer_agent.py` apply slice and stayed strictly inside the mapped self-bound fallback/state surface from PRD-047.42. The work moved eight `self`-bound methods plus three local constants into a dedicated `WriterAgentFallbackStateMixin`, preserved existing call sites through normal inheritance, and kept the remaining giant writer methods untouched.
 
@@ -159,7 +175,7 @@ Known accepted warnings:
 - UI trace labels / Session Trace Panel polish remain cleanup candidates.
 
 ## Current Stage
-PRD-047.42-APPLY-4 has now completed the smallest self-bound fallback/name-continuity slice under focused before/after evidence. `admin_routes.py` remains decomposed and stable, `writer_contract.py` remains untouched, and the next mode stays narrow: either continue `writer_agent.py` with `write()` / `_resolve_runtime_settings()` before the giant methods, switch to the deferred `PRD-047.42b` mapping pass for the `19` production `diagnostic_center_*` files, or pause decomposition and address unrelated suite-wide debt in `PRD-047.45`.
+PRD-047.42-APPLY-5 has now extracted the lifecycle spine of `writer_agent.py` under focused before/after evidence. `admin_routes.py` remains decomposed and stable, `writer_contract.py` remains untouched, and the next mode stays narrow: either continue `writer_agent.py` into `_call_llm` as the next bounded sub-slice, switch to the deferred `PRD-047.42b` mapping pass for the `19` production `diagnostic_center_*` files, or pause decomposition and address unrelated suite-wide debt in `PRD-047.45`.
 
 PRD-047.36-POST-HF completed the shortened post-HF owner readiness gate as an honest `BLOCKED` result on top of HF4 + HF5. The work stayed read-only: one new gate runner, one small contract test, reports, and docs only; no runtime behavior, Writer logic, retrieval ranking, DB/Chroma/source, or new route/agent mutation was introduced. Fresh trace/reload truth now passes again (`G1`), direct concept baseline/follow-up/Neurostalking continuity all pass (`G2/G3/G4`), greeting sanity passes (`G7`), and panic helper stays bounded with a warning on soft medical escalation wording (`G8`). The gate still blocks on boundary integrity: `G5` fails because explicit `no_internal_db` is honored in visible behavior but not surfaced as a durable trace boundary flag, and `G6` fails for the same reason on explicit `no_practice`. Delivery/memory sanity remains `pass_with_warning` because API-only sampling did not include visible chat bubble text and one quarantined panic-helper turn still diverges from saved memory without being a raw cross-turn contamination leak. Full `python -m pytest tests -q` still stops on the historical unrelated `_build_llm_prompts` import blocker. The next recommended step is one narrow repair only: `PRD-047.36-HF6 - No-Internal-DB / No-Practice Boundary Trace Integrity`.
 PRD-047.36-HF5 completed the selected-knowledge admission repair on the canonical current pipeline with `accepted_with_warning` status. The runtime still stays on `multiagent_adapter`; no retrieval-ranking rewrite, no dictionary/alias map, no new route, no new agent, and no Bot_data_base/Chroma/source mutation were introduced. `contextual_retrieval_query_composer.py` now promotes generic contextual concept follow-ups with already selected knowledge into a bounded `query_kb` / `knowledge_context` admission path, while `writer_context_package.py` now exposes `direct_concept_followup`, bounded selected-knowledge recovery from existing `memory_bundle.knowledge_rag_hits`, and payload ordering that lets one selected semantic card lead the minimal hidden Writer package instead of being re-suppressed. Live HF5 smoke passed all required scenarios: greeting kept Writer payload `0`, the repaired Chat 12 concept follow-up now yields `grounding_reason=direct_concept_followup` and Writer payload `2`, Neurostalking follow-up also stays grounded, and `no_internal_db` still suppresses payload with `latest_turn_no_internal_db`. Honest residual note: full `python -m pytest tests -q` still stops on the historical unrelated `_build_llm_prompts` import blocker. The next recommended step is a shortened post-HF readiness gate over HF4 + HF5, not a dictionary-style runtime expansion.

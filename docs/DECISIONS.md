@@ -1,5 +1,24 @@
-﻿# Architecture Decisions
+# Architecture Decisions
 
+## ADR-105 - writer_agent lifecycle spine moves by mixin, preserving the public write-path and legacy temperature monkeypatch seam
+
+Status: accepted
+
+Date: 2026-07-10
+
+Delivery: PRD-047.42-APPLY-5 accepted in main commit `pending`.
+
+Context: after slices 1-3, `writer_agent.py` had already shed pure helpers, static fallback helpers, and the first self-bound fallback/state cluster, but the next smallest meaningful slice was no longer a utility edge. The remaining target pair, `_resolve_runtime_settings()` plus the public async `write()` entrypoint, forms the lifecycle spine of the class: it decides runtime temperature/max-tokens, branches through `safety_active`, calls `_call_llm`, falls back on failure/empty output, and routes the final text through answer-compliance repair. Rewriting this pair into free functions or widening the slice to include giant methods would raise behavior risk unnecessarily. A second constraint also appeared: accepted tests still monkeypatch `bot_agent.multiagent.agents.writer_agent.get_temperature_for_agent`, so moving temperature resolution blindly would break a real compatibility seam even though runtime behavior itself would stay the same.
+
+Decision:
+- move `_resolve_runtime_settings()` and `write()` together into a dedicated `WriterAgentLifecycleMixin`;
+- make `WriterAgent` inherit as `WriterAgent(WriterAgentLifecycleMixin, WriterAgentFallbackStateMixin)` so the public entrypoint resolves from the lifecycle mixin first while still calling the already-extracted fallback/state helpers through normal `self` lookup;
+- keep `__init__` and `_resolve_model()` in the main class because they are tiny identity/setup methods, not lifecycle orchestration worth isolating in this PRD;
+- keep `_call_llm`, `_enforce_answer_compliance`, and `_enforce_mvp_free_dialogue_compliance` in the main class and out of scope;
+- add a thin `_get_temperature_for_agent()` wrapper on `WriterAgent` so the old monkeypatch surface remains available after `_resolve_runtime_settings()` moves out of the class body;
+- prove the move with before/after snapshots over the four required `write()` paths: `safety_success`, `safety_exception`, `normal_empty`, and `normal_exception`.
+
+Consequences: the fourth `writer_agent.py` slice removes the class lifecycle spine from the god-file without changing public write-path behavior, while preserving both existing inheritance-based fallback dispatch and the accepted temperature monkeypatch seam. Future decomposition should now target `_call_llm` as the largest remaining active mixed-responsibility block before touching `writer_contract.to_prompt_context`.
 ## ADR-104 - self-bound writer_agent fallback/state helpers move by mixin, not by free-function rewrite
 
 Status: accepted
@@ -1736,3 +1755,22 @@ Decision:
 - prohibit source mutation, signature changes, runtime-path changes, Writer/retrieval/safety/DB/Chroma/source mutation, and “fix while reading” opportunism in this stage.
 
 Consequences: the repository now has an evidence-backed cut map for the three highest-priority non-diagnostic-center god files. Future decomposition can move one mapped slice at a time with snapshot guards instead of guessing hidden contracts from file length alone.
+## ADR-105 - writer_agent lifecycle spine moves to a dedicated mixin before `_call_llm`, while module monkeypatch surface stays stable
+
+Status: accepted
+
+Date: 2026-07-10
+
+Delivery: PRD-047.42-APPLY-5 implementation completed in workspace; delivery metadata pending follow-up commit sync.
+
+Context: PRD-047.42-APPLY-4 already removed the self-bound fallback/state cluster from `writer_agent.py`, leaving the next smallest mapped slice as the lifecycle spine: `_resolve_runtime_settings()` and the public `write()` entrypoint. This slice is riskier than previous ones because `write()` is the only public answer-generation door of `WriterAgent`, owns the safety-active fallback branch, and calls `_call_llm`, `_enforce_answer_compliance`, and the already extracted fallback helpers. At the same time, accepted contract tests still monkeypatch `bot_agent.multiagent.agents.writer_agent.get_temperature_for_agent`, so a naive move could preserve behavior but still break the established test/compat surface.
+
+Decision:
+- move `_resolve_runtime_settings()` and `write()` into a dedicated `WriterAgentLifecycleMixin`;
+- make `WriterAgent` inherit in explicit order: `WriterAgent(WriterAgentLifecycleMixin, WriterAgentFallbackStateMixin)`;
+- keep `__init__` and `_resolve_model()` in the main class;
+- preserve the old module monkeypatch surface by adding a thin `WriterAgent._get_temperature_for_agent()` wrapper, and let the moved runtime-settings method call that wrapper through `self`;
+- prove behavior with four before/after write-path snapshots: safety success, safety exception, normal empty result, and normal exception;
+- keep `_call_llm`, `_enforce_answer_compliance`, `_enforce_mvp_free_dialogue_compliance`, `writer_contract.py`, and all admin decomposition files out of scope.
+
+Consequences: the public lifecycle entrypoint is now outside the main god-file without changing answer behavior or breaking accepted monkeypatch-based contract tests. The next decomposition step should target `_call_llm` as its own sub-series rather than trying to combine it with compliance or contract-prompt assembly.

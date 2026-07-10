@@ -1,0 +1,53 @@
+{
+  "schema_version": "prd_047_42_apply_5_write_snapshot_v1",
+  "cases": [
+    {
+      "case": "safety_success",
+      "returned_text": "SAFE_OK",
+      "fallback_used": false,
+      "error": null,
+      "dialogue_profile": "safe_guided",
+      "model": "snapshot-model",
+      "temperature": 0.7,
+      "max_tokens": 600,
+      "timeout": 30.0,
+      "system_prompt_kind": "safe_guided"
+    },
+    {
+      "case": "safety_exception",
+      "returned_text": "Я здесь. Ты не один. Сделай медленный вдох — я рядом.",
+      "fallback_used": true,
+      "error": "SAFE_BOOM",
+      "dialogue_profile": "safe_guided",
+      "model": "snapshot-model",
+      "temperature": 0.7,
+      "max_tokens": 600,
+      "timeout": 30.0,
+      "system_prompt_kind": "safe_guided"
+    },
+    {
+      "case": "normal_empty",
+      "returned_text": "STATIC_FALLBACK",
+      "fallback_used": true,
+      "error": null,
+      "dialogue_profile": "safe_guided",
+      "model": "snapshot-model",
+      "temperature": 0.7,
+      "max_tokens": 600,
+      "timeout": 30.0,
+      "system_prompt_kind": "safe_guided"
+    },
+    {
+      "case": "normal_exception",
+      "returned_text": "STATIC_FALLBACK",
+      "fallback_used": true,
+      "error": "NORMAL_BOOM",
+      "dialogue_profile": "safe_guided",
+      "model": "snapshot-model",
+      "temperature": 0.7,
+      "max_tokens": 600,
+      "timeout": 30.0,
+      "system_prompt_kind": "safe_guided"
+    }
+  ]
+}

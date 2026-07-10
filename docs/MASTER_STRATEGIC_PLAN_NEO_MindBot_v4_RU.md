@@ -4,8 +4,8 @@
 **Репозиторий:** `Askhat-cmd/Text_transcription`
 **Локальный путь владельца:** `C:\My_practice\Text_transcription`
 **Дата:** 2026-07-09
-**Версия:** v4.6 — единый мастер-план (14 правок MP-1..MP-14 по аудиту Fable R08
-+ обновление курса после PRD-047.42-APPLY + красная линия против случайного
+**Версия:** v4.7 — единый мастер-план (14 правок MP-1..MP-14 по аудиту Fable R08
++ обновление курса после PRD-047.42-APPLY-2 + красная линия против случайного
 перезапуска PRD-инструментов)
 **Что это:** самодостаточный документ, по которому любой архитектор в новом
 чате, на любом этапе, может продолжить ведение проекта без дополнительного
@@ -153,39 +153,42 @@ Architect не принимает "всё прошло" на слово — то
 
 ```text
 Эпоха: 1 (Консолидация).
-Последний принятый PRD: PRD-047.42-APPLY (ACCEPTED, commits через
-  92547a9..be02771, 10 коммитов по модулю + completion metadata).
-Следующий PRD: PRD-047.42-APPLY-2 — God-File Decomposition
-  (writer_agent.py, по карте PRD-047.42, следующий по риску после
-  admin_routes.py).
+Последний принятый PRD: PRD-047.42-APPLY-2 (ACCEPTED, commits 1051e68 /
+  258c79f).
+Следующий PRD: PRD-047.42-APPLY-3 — God-File Decomposition
+  (writer_agent.py, slice 2: static-методы блока fallbacks, следующий
+  по нарастанию риска).
 Шлюз в Эпоху 2: НЕ пройден (Эпоха 1 не закрыта; ратификация не проведена).
 
 Корпус законов Fable: получен полностью (R01-R07), НЕ ратифицирован.
   Ратификация не блокирует Эпоху 1, блокирует старт Эпохи 2.
 
-PRD-047.42-APPLY закрыт (Stage 2a, admin_routes.py):
-- admin_routes.py разрезан на 10 модулей по карте PRD-047.42, сам файл
-  стал тонким агрегатором (2144 -> 21 строка);
-- порядок регистрации route'ов сохранён явным порядком импортов
-  (комментарий в коде фиксирует это как контракт);
-- api/main.py:244 (from .admin_routes import admin_router,
-  admin_router_v1) не изменён — проверено архитектором напрямую;
-- полный (не выборочный) snapshot по 77 route-кейсам до/после — 0
-  расхождений, сверено архитектором вручную;
-- writer_agent.py и writer_contract.py доказанно не затронуты (git
-  hash-object идентичен на всех проверках с PRD-047.42);
-- 5 pre-existing UI string-assertion падений (frontend .tsx текст,
-  не связано с backend-роутингом) идентичны до/после — не регрессия.
+PRD-047.42-APPLY-2 закрыт (Stage 2b, writer_agent.py slice 1):
+- 4 чистые pure-функции (_extract_literal_markdown_echo_request,
+  _to_int, _to_float, _contains_any, 125 строк) вынесены в новый
+  bot_agent/multiagent/agents/writer_agent_constants.py;
+- writer_agent.py импортирует их, вызовы внутри не изменены;
+- прямые unit-тесты добавлены на все 4 функции (edge cases: пустая
+  строка/None/некорректный формат);
+- writer_contract.py и все 11 файлов admin-декомпозиции (admin_routes.py
+  + 10 модулей) доказанно не задеты (hash-proof, архитектор сверил);
+- 1 pre-existing тест-fail (test_semantic_hits_limit_to_two) —
+  подтверждено архитектором на состоянии ДО этого PRD тоже, не
+  регрессия.
 
 Отложено сознательно (не потеряно):
-- writer_agent.py (2188 строк, следующий по риску) -> PRD-047.42-APPLY-2.
+- Оставшиеся 9 блоков карты writer_agent.py (PRD-047.42) режутся по
+  одному, по нарастанию риска: сначала static-методы блока fallbacks
+  (не требуют self), потом методы с self, в самом конце — два
+  сросшихся giant-метода (_call_llm 803 строки, _enforce_answer_
+  compliance 608 строк) -> PRD-047.42-APPLY-3 и далее.
 - writer_contract.py (979 строк, to_prompt_context — самый рискованный
-  узел проекта) -> PRD-047.42-APPLY-3, последним, максимально
-  консервативно.
+  узел проекта) -> отдельная серия PRD после writer_agent.py.
 - 19 production diagnostic_center_* файлов -> PRD-047.42b.
 - LEGACY_PIPELINE_ENABLED (retirement_candidate_deferred) -> PRD-047.43.
 - Полный full-regression suite-wide timeout и 1 недетерминированный
-  тест-перевёртыш -> кандидаты для PRD-047.45.
+  тест-перевёртыш (не путать с test_semantic_hits_limit_to_two выше,
+  это другой, из PRD-047.40) -> кандидаты для PRD-047.45.
 - docs/testing.md, S7, Panic/Medical Escalation, trace-поля и т.д. —
   без изменений.
 ```
@@ -201,6 +204,10 @@ PRD-047.42-APPLY закрыт (Stage 2a, admin_routes.py):
 журнале §4 (дата, что, почему). Молчаливых правок тела не существует.
 
 Журнал поправок:
+- 2026-07-09 v4.6 -> v4.7: PRD-047.42-APPLY-2 (writer_agent.py slice 1,
+  4 pure-функции) принят ACCEPTED. Второй успешный срез god-файла:
+  0 изменений в writer_contract.py и всех 11 admin-файлах, 1 тест-fail
+  подтверждён как pre-existing, не регрессия.
 - 2026-07-09 v4.5 -> v4.6: PRD-047.42-APPLY (admin_routes.py
   decomposition, Stage 2a) принят ACCEPTED. Первая реальная резка
   god-файла завершена чисто: 10 модулей, 0 расхождений на полном

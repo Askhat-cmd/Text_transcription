@@ -2,6 +2,21 @@
 
 Главный источник курса проекта: `docs/MASTER_STRATEGIC_PLAN_NEO_MindBot_v4_RU.md`.
 
+## PRD-047.42-APPLY-6 _call_llm boundary mapping
+PRD-047.42-APPLY-6 completed a read-only boundary-mapping pass over `WriterAgent._call_llm` and stayed strictly inside the Stage-2 decomposition track for `writer_agent.py`. It did not move any production code. Instead, it produced an exact internal map for the remaining `804`-line giant method, classified stateful vs helper-friendly clusters, captured a 3-scenario `_call_llm` snapshot baseline with mocked provider dispatch, and proved zero diffs across the protected production files.
+
+Current result:
+- main implementation commit: `pending_delivery`;
+- push status: `pending`;
+- status is `accepted_pending_delivery_metadata`;
+- `_call_llm` is now mapped into `11` contiguous clusters from client/bootstrap through provider dispatch and response parse;
+- the true provider boundary is confirmed at lines `902-912`, while the heaviest remaining pre-provider responsibility is still `WRITER_USER_TEMPLATE.format(...)` at `454-842`;
+- the earliest clearly state-coupled preparation cluster begins at `407-453`, where prompt preparation starts writing into `self.last_debug`;
+- a full local-variable dependency inventory was generated for `_call_llm`, including scope classification (`writer_prompt_input`, `provider_dispatch_input`, `local_only`);
+- snapshot baseline now covers `safe_guided_direct`, `mvp_free_overview`, and `mvp_free_rich_request` with mocked `create_agent_completion` and full `self.last_debug` export;
+- protected files stayed byte-identical under diff/blob-hash proof, including `writer_agent.py`, all four extracted writer helper/mixin files, `writer_contract.py`, `admin_routes.py`, and the `10` admin decomposition modules;
+- the next recommended real cut is not provider dispatch first, but the smallest pre-provider extraction edge around runtime/system-prompt selection plus selected pure/default-formatting helpers.
+
 ## PRD-047.42-APPLY-5 writer_agent slice 4
 PRD-047.42-APPLY-5 completed the fourth bounded `writer_agent.py` apply slice and stayed strictly inside the mapped lifecycle spine from PRD-047.42. The work moved `_resolve_runtime_settings()` and the public `write()` entrypoint into a dedicated `WriterAgentLifecycleMixin`, preserved `__init__` / `_resolve_model` in the main class, kept `write()` behavior byte-for-byte stable on the required four-path snapshot gate, and left the remaining giant writer methods untouched.
 

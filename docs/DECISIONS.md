@@ -1,5 +1,25 @@
 # Architecture Decisions
 
+## ADR-106 - _call_llm must be remapped read-only before any further decomposition because its preparation block is a giant sequential state graph, not a named helper set
+
+Status: accepted
+
+Date: 2026-07-10
+
+Delivery: PRD-047.42-APPLY-6 accepted pending delivery metadata.
+
+Context: after PRD-047.42-APPLY-5, the remaining `writer_agent.py` core was no longer a set of easy lifecycle or fallback edges. The largest active method, `_call_llm`, still spanned `804` lines and mixed ctx default seeding, knowledge/practice/freedom normalization, context-budget shaping, rich-request detectors, writer-kb formatting, prompt rendering, prompt-constraint append, runtime/system-prompt selection, provider dispatch, and result/debug parsing in one flat sequence. Unlike `admin_routes.py`, it did not already decompose into clearly named sub-functions. A blind APPLY PRD here would risk moving the wrong chunk first or underestimating the number of hidden local-variable and `self.last_debug` dependencies.
+
+Decision:
+- treat `_call_llm` as a new Stage-2 mapping target before any further apply step;
+- keep PRD-047.42-APPLY-6 strictly read-only on production code;
+- build an exact internal boundary map for `_call_llm`, not only a rough “before provider / provider / after provider” split;
+- inventory local variables by assignment line, dependency names, and downstream scope (`writer_prompt_input`, `provider_dispatch_input`, `local_only`);
+- explicitly mark clusters that mutate `self.last_debug`, because those are not pure helper candidates without returning debug patches or moving stateful helpers;
+- capture a mocked-provider `_call_llm` snapshot baseline over three realistic scenarios so APPLY-7 has behavior evidence before cutting anything.
+
+Consequences: future `_call_llm` decomposition is now gated by a real map instead of intuition. The next safe apply step should start from the smallest pre-provider extraction edge identified by the map, while provider dispatch and response parsing stay separate until the preparation block is no longer one giant mixed responsibility chain.
+
 ## ADR-105 - writer_agent lifecycle spine moves by mixin, preserving the public write-path and legacy temperature monkeypatch seam
 
 Status: accepted

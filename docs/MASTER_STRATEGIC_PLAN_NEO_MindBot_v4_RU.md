@@ -4,8 +4,8 @@
 **Репозиторий:** `Askhat-cmd/Text_transcription`
 **Локальный путь владельца:** `C:\My_practice\Text_transcription`
 **Дата:** 2026-07-09
-**Версия:** v4.7 — единый мастер-план (14 правок MP-1..MP-14 по аудиту Fable R08
-+ обновление курса после PRD-047.42-APPLY-2 + красная линия против случайного
+**Версия:** v4.8 — единый мастер-план (14 правок MP-1..MP-14 по аудиту Fable R08
++ обновление курса после PRD-047.42-APPLY-3 + красная линия против случайного
 перезапуска PRD-инструментов)
 **Что это:** самодостаточный документ, по которому любой архитектор в новом
 чате, на любом этапе, может продолжить ведение проекта без дополнительного
@@ -153,42 +153,48 @@ Architect не принимает "всё прошло" на слово — то
 
 ```text
 Эпоха: 1 (Консолидация).
-Последний принятый PRD: PRD-047.42-APPLY-2 (ACCEPTED, commits 1051e68 /
-  258c79f).
-Следующий PRD: PRD-047.42-APPLY-3 — God-File Decomposition
-  (writer_agent.py, slice 2: static-методы блока fallbacks, следующий
-  по нарастанию риска).
+Последний принятый PRD: PRD-047.42-APPLY-3 (ACCEPTED, commits b918b44 /
+  0bdb297).
+Следующий PRD: PRD-047.42-APPLY-4 — God-File Decomposition
+  (writer_agent.py slice 3, mixin-паттерн, 8 self-методов + 3 константы
+  сразу одним PRD — владелец подтвердил укрупнение шагов там, где
+  механика переноса объективно безопасна).
 Шлюз в Эпоху 2: НЕ пройден (Эпоха 1 не закрыта; ратификация не проведена).
 
 Корпус законов Fable: получен полностью (R01-R07), НЕ ратифицирован.
   Ратификация не блокирует Эпоху 1, блокирует старт Эпохи 2.
 
-PRD-047.42-APPLY-2 закрыт (Stage 2b, writer_agent.py slice 1):
-- 4 чистые pure-функции (_extract_literal_markdown_echo_request,
-  _to_int, _to_float, _contains_any, 125 строк) вынесены в новый
-  bot_agent/multiagent/agents/writer_agent_constants.py;
-- writer_agent.py импортирует их, вызовы внутри не изменены;
-- прямые unit-тесты добавлены на все 4 функции (edge cases: пустая
-  строка/None/некорректный формат);
-- writer_contract.py и все 11 файлов admin-декомпозиции (admin_routes.py
-  + 10 модулей) доказанно не задеты (hash-proof, архитектор сверил);
-- 1 pre-existing тест-fail (test_semantic_hits_limit_to_two) —
-  подтверждено архитектором на состоянии ДО этого PRD тоже, не
-  регрессия.
+PRD-047.42-APPLY-3 закрыт (Stage 2c, writer_agent.py slice 2):
+- 8 static-методов (_build_gentle_close_reply, _build_no_practice_
+  fallback_text, _strip_optional_followup_invitation, _detect_language,
+  _format_hits, _format_diagnostic_summary, _static_fallback,
+  _normalize_name) вынесены в writer_agent_fallback_helpers.py;
+- в WriterAgent оставлены тонкие @staticmethod-делегаты — вызывающие
+  места (self.xxx()/WriterAgent.xxx()) не тронуты, архитектор проверил
+  тела делегатов лично;
+- прямые unit-тесты добавлены на все 8;
+- writer_agent_constants.py (slice 1), writer_contract.py, admin_routes.py
+  + все 10 admin-модулей доказанно не задеты (hash-proof + diff,
+  архитектор сверил);
+- 1 pre-existing тест-fail (test_semantic_hits_limit_to_two) — тот же,
+  что и раньше, не регрессия.
+
+Решение владельца (2026-07-10): укрупнять шаги декомпозиции там, где
+механика переноса объективно безопасна независимо от числа единиц
+переноса (пример — mixin-перенос class-методов, не зависит от их
+количества). Держать мелкий шаг там, где риск растёт с размером
+(giant-методы _call_llm, to_prompt_context).
 
 Отложено сознательно (не потеряно):
-- Оставшиеся 9 блоков карты writer_agent.py (PRD-047.42) режутся по
-  одному, по нарастанию риска: сначала static-методы блока fallbacks
-  (не требуют self), потом методы с self, в самом конце — два
-  сросшихся giant-метода (_call_llm 803 строки, _enforce_answer_
-  compliance 608 строк) -> PRD-047.42-APPLY-3 и далее.
+- writer_agent.py: write(), _resolve_runtime_settings, _call_llm (803
+  строки), _enforce_answer_compliance (608 строк), _enforce_mvp_free_
+  dialogue_compliance -> следующие срезы, PRD-047.42-APPLY-4 и далее.
 - writer_contract.py (979 строк, to_prompt_context — самый рискованный
   узел проекта) -> отдельная серия PRD после writer_agent.py.
-- 19 production diagnostic_center_* файлов -> PRD-047.42b.
+- 19 production diagnostic_center_* файлов -> PRD-047.42b (кандидат на
+  укрупнение — похожи на admin_routes.py по независимости кусков).
 - LEGACY_PIPELINE_ENABLED (retirement_candidate_deferred) -> PRD-047.43.
-- Полный full-regression suite-wide timeout и 1 недетерминированный
-  тест-перевёртыш (не путать с test_semantic_hits_limit_to_two выше,
-  это другой, из PRD-047.40) -> кандидаты для PRD-047.45.
+- Полный full-regression suite-wide timeout -> кандидат для PRD-047.45.
 - docs/testing.md, S7, Panic/Medical Escalation, trace-поля и т.д. —
   без изменений.
 ```
@@ -204,6 +210,10 @@ PRD-047.42-APPLY-2 закрыт (Stage 2b, writer_agent.py slice 1):
 журнале §4 (дата, что, почему). Молчаливых правок тела не существует.
 
 Журнал поправок:
+- 2026-07-10 v4.7 -> v4.8: PRD-047.42-APPLY-3 (writer_agent.py slice 2,
+  8 static-методов) принят ACCEPTED. Третий успешный срез god-файла.
+  Владелец подтвердил укрупнение шагов декомпозиции там, где безопасно
+  (mixin-перенос class-методов) — зафиксировано как рабочий принцип.
 - 2026-07-09 v4.6 -> v4.7: PRD-047.42-APPLY-2 (writer_agent.py slice 1,
   4 pure-функции) принят ACCEPTED. Второй успешный срез god-файла:
   0 изменений в writer_contract.py и всех 11 admin-файлах, 1 тест-fail

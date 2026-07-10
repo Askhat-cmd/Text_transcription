@@ -1,5 +1,24 @@
 ﻿# Architecture Decisions
 
+## ADR-103 - writer_agent static fallback helpers move out behind thin delegates before self-bound fallback methods
+
+Status: accepted
+
+Date: 2026-07-10
+
+Delivery: PRD-047.42-APPLY-3 accepted in main commit `b918b44`.
+
+Context: PRD-047.42-APPLY-2 already removed the pure module-level edge of `writer_agent.py`, but the next safe slice still had a call-surface wrinkle: the remaining target helpers were formally `@staticmethod`, yet existing code still called part of them through `self._...`, and tests also referenced `WriterAgent._detect_language(...)` directly. A full call-site rewrite would increase PRD-local risk for no architectural gain.
+
+Decision:
+- move the bodies of the eight static fallback/helper methods into `writer_agent_fallback_helpers.py`;
+- preserve the `WriterAgent` class-level API with thin `@staticmethod` delegates;
+- keep internal `self._...` and class-level test call sites unchanged in this slice;
+- keep `writer_agent_constants.py`, `writer_contract.py`, and the admin decomposition files out of scope;
+- continue the writer-agent decomposition track from pure/static helpers toward small self-bound methods before touching `_call_llm` or `_enforce_answer_compliance`.
+
+Consequences: the physical god-file reduction continues, but the behavioral surface remains low-risk and locally reviewable. Future slices can now focus on the smallest remaining self-bound fallback/name-continuity methods rather than re-litigating the static helper surface.
+
 ## ADR-102 - writer_agent decomposition starts with pure module-level helpers before any self-bound method moves
 
 Status: accepted

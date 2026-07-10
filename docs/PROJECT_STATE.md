@@ -6,9 +6,9 @@
 PRD-047.42-APPLY-7 completed the first real extraction inside `WriterAgent._call_llm` and stayed strictly inside the two pure, no-`self.last_debug` clusters mapped by PRD-047.42-APPLY-6. The work moved the adjacent `knowledge_practice_kernel_inputs` and `dialogue_policy_and_context_budget` clusters out of the inline method body, preserved the same downstream local variable names through explicit unpacking, and left provider dispatch, response parsing, prompt rendering, and all state-coupled debug-writing clusters untouched.
 
 Current result:
-- main implementation commit: `pending`;
-- push status: `pending`;
-- status is `accepted_pending_delivery_metadata`;
+- main implementation commit: `9249f04`;
+- push status: `pushed_to_origin_main`;
+- status is `accepted`;
 - new helper module is `writer_agent_call_llm_slice1.py`;
 - the extracted helper surface is one explicit function returning one typed dataclass, not two separate helpers and not a `locals().update()` trick;
 - `practice_gate` deliberately stays local inside the helper because the accepted dependency map marked it `local_only`;

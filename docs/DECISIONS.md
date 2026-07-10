@@ -6,7 +6,7 @@ Status: accepted
 
 Date: 2026-07-10
 
-Delivery: PRD-047.42-APPLY-7 implementation completed in workspace; delivery metadata pending follow-up commit sync.
+Delivery: PRD-047.42-APPLY-7 accepted in main commit `9249f04`.
 
 Context: PRD-047.42-APPLY-6 mapped `_call_llm` into `11` clusters and showed that the first safe code-move target was not provider dispatch but two adjacent ctx-only preparation clusters. Unlike earlier `writer_agent.py` slices, these clusters did not correspond to standalone class or module helpers already present in the file. They were local-variable builders embedded directly inside `_call_llm`, and their outputs were consumed later by the giant `WRITER_USER_TEMPLATE.format(...)` block plus the following detector cluster. A careless extraction approach such as `locals().update(...)`, implicit dict unpacking into the local namespace, or helper side effects would make future review and regression analysis much harder.
 

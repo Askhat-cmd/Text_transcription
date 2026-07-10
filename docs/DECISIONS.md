@@ -1,5 +1,25 @@
 # Architecture Decisions
 
+## ADR-107 - First `_call_llm` code moves must use explicit local-namespace extraction, not helper side effects
+
+Status: accepted
+
+Date: 2026-07-10
+
+Delivery: PRD-047.42-APPLY-7 implementation completed in workspace; delivery metadata pending follow-up commit sync.
+
+Context: PRD-047.42-APPLY-6 mapped `_call_llm` into `11` clusters and showed that the first safe code-move target was not provider dispatch but two adjacent ctx-only preparation clusters. Unlike earlier `writer_agent.py` slices, these clusters did not correspond to standalone class or module helpers already present in the file. They were local-variable builders embedded directly inside `_call_llm`, and their outputs were consumed later by the giant `WRITER_USER_TEMPLATE.format(...)` block plus the following detector cluster. A careless extraction approach such as `locals().update(...)`, implicit dict unpacking into the local namespace, or helper side effects would make future review and regression analysis much harder.
+
+Decision:
+- extract the first `_call_llm` slice into one explicit module-level helper plus one typed return object;
+- keep the extraction pure and ctx-only, with no `self.last_debug` writes and no hidden state mutation;
+- return named fields explicitly and unpack them back into the same downstream local variable names inside `_call_llm`;
+- do not use `locals().update()`, `globals()`, or any implicit namespace injection trick;
+- keep `practice_gate` local inside the helper because the accepted dependency graph classified it as `local_only`;
+- leave provider dispatch, response parsing, prompt rendering, and all state-coupled debug-writing clusters for later dedicated slices.
+
+Consequences: `_call_llm` can now be decomposed incrementally without giving up reviewability. Future apply slices should follow the same rule inside giant methods: explicit helper boundaries, explicit return objects, explicit local unpacking, and no namespace magic.
+
 ## ADR-106 - _call_llm must be remapped read-only before any further decomposition because its preparation block is a giant sequential state graph, not a named helper set
 
 Status: accepted

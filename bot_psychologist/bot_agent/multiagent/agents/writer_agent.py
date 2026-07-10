@@ -12,7 +12,6 @@ from ...feature_flags import feature_flags
 from ..active_line import starts_with_mechanical_revoicing
 from ..dialogue_policy import (
     DIALOGUE_PROFILE_MVP_FREE,
-    context_budget_for_profile,
     detect_application_request,
     detect_direct_concrete_request,
     detect_explicit_answer_need,
@@ -23,7 +22,6 @@ from ..dialogue_policy import (
     detect_repair_and_expand_request,
     detect_sarcasm_or_negative_feedback,
     detect_summary_request,
-    format_conversation_context_for_writer_with_meta,
     normalize_dialogue_profile,
 )
 from ..concrete_answer_fit import evaluate_concrete_answer_fit
@@ -49,6 +47,7 @@ from .writer_agent_fallback_helpers import (
 )
 from .writer_agent_fallback_state_mixin import WriterAgentFallbackStateMixin
 from .writer_agent_lifecycle_mixin import WriterAgentLifecycleMixin
+from .writer_agent_call_llm_slice1 import _extract_call_llm_slice1_inputs
 from .writer_agent_prompts import (
     WRITER_SYSTEM,
     WRITER_SYSTEM_MVP_FREE_DIALOGUE,
@@ -252,83 +251,26 @@ class WriterAgent(WriterAgentLifecycleMixin, WriterAgentFallbackStateMixin):
         ctx.setdefault("writer_kb_payload_trace", {})
         ctx.setdefault("writer_kb_payload_trace_version", "writer_kb_payload_trace_v1")
         ctx.setdefault("writer_kb_payload_future_graduation_notes", {})
-        knowledge_answer = (
-            dict(ctx.get("knowledge_answer", {}))
-            if isinstance(ctx.get("knowledge_answer"), dict)
-            else {}
-        )
-        practice_gate = (
-            dict(ctx.get("practice_gate", {}))
-            if isinstance(ctx.get("practice_gate"), dict)
-            else {}
-        )
-        knowledge_answer_first = bool(knowledge_answer.get("should_answer_directly", False))
-        do_not_ask_definition = bool(knowledge_answer.get("should_answer_directly", False))
-        practice_allowed = bool(practice_gate.get("practice_allowed", True))
-        practice_ban_instruction = (
-            str(ctx.get("writer_visible_practice_instruction", "") or "no_exercise_but_answer_normally")
-            if not practice_allowed
-            else "false"
-        )
-        known_concept_clarification_ban = (
-            "true: do_not_ask_user_to_define_or_choose_known_concept_variant"
-            if do_not_ask_definition
-            else "false"
-        )
-        external_surveillance_frame_ban = (
-            "true: avoid_external_surveillance_biofeedback_eeg_frame_for_internal_concept_answer"
-            if knowledge_answer_first
-            else "false"
-        )
-        philosophy_kernel = (
-            dict(ctx.get("philosophy_kernel", {}))
-            if isinstance(ctx.get("philosophy_kernel"), dict)
-            else {}
-        )
-        writer_freedom_contract = (
-            dict(ctx.get("writer_freedom_contract", {}))
-            if isinstance(ctx.get("writer_freedom_contract"), dict)
-            else {}
-        )
-        selected_lenses = [
-            str(item)
-            for item in list(ctx.get("philosophy_kernel_selected_lenses", []) or [])
-            if str(item).strip()
-        ]
-        freedom_hard_boundaries = [
-            str(item)
-            for item in list(ctx.get("writer_freedom_hard_boundaries", []) or [])
-            if str(item).strip()
-        ]
-
-        dialogue_policy_payload = (
-            dict(ctx.get("dialogue_policy", {}))
-            if isinstance(ctx.get("dialogue_policy"), dict)
-            else {}
-        )
-        human_like_answer_policy = (
-            dict(dialogue_policy_payload.get("human_like_answer_policy", {}))
-            if isinstance(dialogue_policy_payload.get("human_like_answer_policy"), dict)
-            else {}
-        )
-        constraint_resolution = (
-            dict(dialogue_policy_payload.get("constraint_resolution", {}))
-            if isinstance(dialogue_policy_payload.get("constraint_resolution"), dict)
-            else {}
-        )
-        user_message = str(ctx.get("user_message", "") or "")
-        dialogue_profile = normalize_dialogue_profile(
-            dialogue_policy_payload.get("profile", ctx.get("dialogue_profile", "safe_guided"))
-        )
-        context_budget_chars = int(
-            dialogue_policy_payload.get("context_budget_chars", context_budget_for_profile(dialogue_profile))
-            or context_budget_for_profile(dialogue_profile)
-        )
-        formatted_context, context_meta = format_conversation_context_for_writer_with_meta(
-            conversation_context=str(ctx.get("conversation_context", "") or ""),
-            profile=dialogue_profile,
-            budget_chars=context_budget_chars,
-        )
+        slice1_inputs = _extract_call_llm_slice1_inputs(ctx)
+        knowledge_answer = slice1_inputs.knowledge_answer
+        knowledge_answer_first = slice1_inputs.knowledge_answer_first
+        do_not_ask_definition = slice1_inputs.do_not_ask_definition
+        practice_allowed = slice1_inputs.practice_allowed
+        practice_ban_instruction = slice1_inputs.practice_ban_instruction
+        known_concept_clarification_ban = slice1_inputs.known_concept_clarification_ban
+        external_surveillance_frame_ban = slice1_inputs.external_surveillance_frame_ban
+        philosophy_kernel = slice1_inputs.philosophy_kernel
+        writer_freedom_contract = slice1_inputs.writer_freedom_contract
+        selected_lenses = slice1_inputs.selected_lenses
+        freedom_hard_boundaries = slice1_inputs.freedom_hard_boundaries
+        dialogue_policy_payload = slice1_inputs.dialogue_policy_payload
+        human_like_answer_policy = slice1_inputs.human_like_answer_policy
+        constraint_resolution = slice1_inputs.constraint_resolution
+        user_message = slice1_inputs.user_message
+        dialogue_profile = slice1_inputs.dialogue_profile
+        context_budget_chars = slice1_inputs.context_budget_chars
+        formatted_context = slice1_inputs.formatted_context
+        context_meta = slice1_inputs.context_meta
 
         mvp_overrides_payload = (
             dict(dialogue_policy_payload.get("mvp_overrides", {}))

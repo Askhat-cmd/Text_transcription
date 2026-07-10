@@ -1,8 +1,8 @@
 # PRD-047.42-APPLY-6 Implementation Report
 
 - PRD: `PRD-047.42-APPLY-6`
-- Status: `accepted_pending_delivery_metadata`
-- Delivery: `main_commit_pending`
+- Status: `accepted`
+- Delivery: `main commit e5f5f32 pushed to origin/main; completion metadata synchronized`
 
 ## Scope Delivered
 

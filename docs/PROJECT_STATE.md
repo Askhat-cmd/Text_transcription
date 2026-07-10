@@ -6,9 +6,9 @@
 PRD-047.42-APPLY-6 completed a read-only boundary-mapping pass over `WriterAgent._call_llm` and stayed strictly inside the Stage-2 decomposition track for `writer_agent.py`. It did not move any production code. Instead, it produced an exact internal map for the remaining `804`-line giant method, classified stateful vs helper-friendly clusters, captured a 3-scenario `_call_llm` snapshot baseline with mocked provider dispatch, and proved zero diffs across the protected production files.
 
 Current result:
-- main implementation commit: `pending_delivery`;
-- push status: `pending`;
-- status is `accepted_pending_delivery_metadata`;
+- main implementation commit: `e5f5f32`;
+- push status: `pushed_to_origin_main`;
+- status is `accepted`;
 - `_call_llm` is now mapped into `11` contiguous clusters from client/bootstrap through provider dispatch and response parse;
 - the true provider boundary is confirmed at lines `902-912`, while the heaviest remaining pre-provider responsibility is still `WRITER_USER_TEMPLATE.format(...)` at `454-842`;
 - the earliest clearly state-coupled preparation cluster begins at `407-453`, where prompt preparation starts writing into `self.last_debug`;

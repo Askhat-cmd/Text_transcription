@@ -6,7 +6,7 @@ Status: accepted
 
 Date: 2026-07-10
 
-Delivery: PRD-047.42-APPLY-6 accepted pending delivery metadata.
+Delivery: PRD-047.42-APPLY-6 accepted in main commit `e5f5f32`.
 
 Context: after PRD-047.42-APPLY-5, the remaining `writer_agent.py` core was no longer a set of easy lifecycle or fallback edges. The largest active method, `_call_llm`, still spanned `804` lines and mixed ctx default seeding, knowledge/practice/freedom normalization, context-budget shaping, rich-request detectors, writer-kb formatting, prompt rendering, prompt-constraint append, runtime/system-prompt selection, provider dispatch, and result/debug parsing in one flat sequence. Unlike `admin_routes.py`, it did not already decompose into clearly named sub-functions. A blind APPLY PRD here would risk moving the wrong chunk first or underestimating the number of hidden local-variable and `self.last_debug` dependencies.
 

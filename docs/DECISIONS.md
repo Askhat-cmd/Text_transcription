@@ -1,5 +1,25 @@
 ﻿# Architecture Decisions
 
+## ADR-104 - self-bound writer_agent fallback/state helpers move by mixin, not by free-function rewrite
+
+Status: accepted
+
+Date: 2026-07-10
+
+Delivery: PRD-047.42-APPLY-4 accepted in main commit `fadd43f`.
+
+Context: PRD-047.42-APPLY-3 already removed the pure and static fallback edge of `writer_agent.py`, but the next smallest mapped slice was different in kind. The remaining target methods mutated `self.last_debug`, cached `self._client`, called each other through `self`, and still depended on class-owned fallback delegates plus `_resolve_model()`. Rewriting them into free functions would have forced broader call-site churn and increased the risk of accidental behavior drift for no architectural gain.
+
+Decision:
+- move the eight self-bound fallback/state methods into a dedicated `WriterAgentFallbackStateMixin`;
+- move the three constants used only by those methods with them: `_COST_PER_1K_TOKENS`, `_RU_NAME_PATTERNS`, and `_EN_NAME_PATTERNS`;
+- make `WriterAgent` inherit from the mixin instead of wrapping every call site or changing method signatures;
+- keep `_resolve_model()` in the main class and let the mixin call it through normal inheritance lookup;
+- keep slice-2 fallback delegates in `WriterAgent` because the moved methods still use them through `self`;
+- keep `_PRACTICE_MARKERS` owned by `writer_agent.py` and expose it through a class attribute bridge rather than broadening this slice.
+
+Consequences: the decomposition track can now cut real `self`-bound logic without changing the visible `WriterAgent` API. Future slices should continue with the smallest remaining non-giant class methods before touching `_call_llm`, `_enforce_answer_compliance`, or `writer_contract.to_prompt_context`.
+
 ## ADR-103 - writer_agent static fallback helpers move out behind thin delegates before self-bound fallback methods
 
 Status: accepted

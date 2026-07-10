@@ -2,7 +2,9 @@
 
 - PRD: `PRD-047.42-APPLY-4`
 - Scope: `writer_agent.py` slice 3, mixin-based extraction of self-bound fallback/state helpers
-- Status: `accepted_pending_delivery_metadata`
+- Status: `accepted`
+- Commit: `fadd43f`
+- Push status: `pushed_to_origin_main`
 
 ## What Changed
 - Added `writer_agent_fallback_state_mixin.py` with `WriterAgentFallbackStateMixin`.

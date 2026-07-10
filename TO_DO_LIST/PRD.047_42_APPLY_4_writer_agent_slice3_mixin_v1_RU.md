@@ -4,7 +4,9 @@
 **Репозиторий:** `Askhat-cmd/Text_transcription`
 **Локальный путь пользователя:** `C:\My_practice\Text_transcription`
 **Дата:** 2026-07-10
-**Статус:** draft / ready for IDE-agent implementation
+**Статус:** ACCEPTED / implemented
+**Implementation commit:** `fadd43f`
+**Completion metadata:** synced in follow-up delivery commit
 **Основание:** PRD-047.42-APPLY-3 принят (`ACCEPTED`) — slice 2 (8 static-методов) вынесен чисто. Master Plan §5.3, Stage 2d. Владелец подтвердил: укрупнять шаги там, где риск объективно позволяет (2026-07-10).
 
 ---

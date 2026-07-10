@@ -1,5 +1,24 @@
 # Architecture Decisions
 
+## ADR-109 - `_call_llm` extraction helpers may export only true cross-cluster values; `local_only` detector workspace stays internal
+
+Status: accepted
+
+Date: 2026-07-10
+
+Delivery: PRD-047.42-APPLY-9 implementation prepared; delivery metadata pending main commit sync.
+
+Context: PRD-047.42-APPLY-6 mapped `request_detectors_and_mvp_override_block` as one pre-provider cluster inside `_call_llm`, and PRD-047.42-APPLY-9 then used the accepted map plus a live grep review to confirm that only `5` of the cluster's `14` local names actually flow into the remaining prompt-render path. The other `9` names exist only to compute `rich_user_request` and the final `mvp_override_block`. Exporting all `14` values would technically work, but it would widen the giant-method surface, make future slices noisier, and dilute the point of the dependency map.
+
+Decision:
+- keep the second `_call_llm` slice as one explicit helper plus one typed return object;
+- export only the `5` names that cross the cluster boundary: `explicit_answer_need`, `sarcasm_or_negative_feedback`, `repair_user_dissatisfaction`, `overruled_constraints`, and `mvp_override_block`;
+- keep the `9` detector/intermediate names internal to the helper because the accepted map classifies them as `local_only`;
+- preserve the same explicit unpacking rule from ADR-107: no `locals().update()`, no dict-to-namespace tricks, and no helper side effects;
+- treat “does this name actually leave the cluster?” as a required review question for every later `_call_llm` slice, especially before the project reaches the stateful `self.last_debug` clusters.
+
+Consequences: later decomposition steps inside `_call_llm` now have a tighter rule than “move code out”: every slice must minimize the exported namespace to only the names that truly survive beyond the cut. That keeps the remaining giant method reviewable and prevents temporary detector/workspace variables from becoming accidental long-lived contracts.
+
 ## ADR-108 - Boundary-mapping structural contracts must freeze historical baselines instead of re-parsing live giant-method shape
 
 Status: accepted

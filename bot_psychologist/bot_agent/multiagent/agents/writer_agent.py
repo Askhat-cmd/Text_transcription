@@ -55,6 +55,9 @@ from .writer_agent_call_llm_slice4 import (
 from .writer_agent_call_llm_slice5 import (
     _extract_call_llm_slice5_kb_payload_and_philosophy,
 )
+from .writer_agent_call_llm_slice6 import (
+    _extract_call_llm_slice6_final_answer_directive_and_legacy,
+)
 from .writer_agent_prompts import (
     WRITER_SYSTEM,
     WRITER_SYSTEM_MVP_FREE_DIALOGUE,
@@ -310,6 +313,9 @@ class WriterAgent(WriterAgentLifecycleMixin, WriterAgentFallbackStateMixin):
             selected_lenses,
             freedom_hard_boundaries,
         )
+        slice6_inputs = _extract_call_llm_slice6_final_answer_directive_and_legacy(
+            ctx
+        )
 
         user_prompt = WRITER_USER_TEMPLATE.format(
             user_message=ctx["user_message"],
@@ -389,72 +395,28 @@ class WriterAgent(WriterAgentLifecycleMixin, WriterAgentFallbackStateMixin):
             writer_question_limit=slice5_inputs.writer_question_limit,
             practice_requires_gate=slice5_inputs.practice_requires_gate,
             writer_freedom_hard_boundaries=slice5_inputs.writer_freedom_hard_boundaries,
-            final_answer_directive_json=str(ctx.get("final_answer_directive_json", "{}") or "{}"),
-            writer_visible_final_answer_directive_json=str(
-                ctx.get("writer_visible_final_answer_directive_json", "{}") or "{}"
-            ),
-            final_answer_directive_version=str(
-                ctx.get("final_answer_directive_version", "final_answer_directive_v1")
-                or "final_answer_directive_v1"
-            ),
-            final_answer_current_user_request=str(
-                ctx.get("final_answer_current_user_request", "") or ""
-            ),
-            final_answer_must_answer_source=str(
-                ctx.get("final_answer_must_answer_source", "latest_turn") or "latest_turn"
-            ),
-            final_answer_previous_must_answer_demoted=str(
-                bool(ctx.get("final_answer_previous_must_answer_demoted", False))
-            ).lower(),
-            final_answer_previous_must_answer=str(
-                ctx.get("final_answer_previous_must_answer", "") or "none"
-            ),
-            final_answer_explicit_continue_previous_detected=str(
-                bool(ctx.get("final_answer_explicit_continue_previous_detected", False))
-            ).lower(),
-            final_answer_answer_target=str(
-                ctx.get("final_answer_answer_target", "latest_turn") or "latest_turn"
-            ),
-            final_answer_writer_contact_mode=str(
-                ctx.get("final_answer_writer_contact_mode", "structured_answer")
-                or "structured_answer"
-            ),
-            final_answer_diagnostic_center_role=str(
-                ctx.get("final_answer_diagnostic_center_role", "guided_legacy") or "guided_legacy"
-            ),
-            final_answer_planner_role=str(
-                ctx.get("final_answer_planner_role", "guided_legacy") or "guided_legacy"
-            ),
-            final_answer_active_line_role=str(
-                ctx.get("final_answer_active_line_role", "guided_legacy") or "guided_legacy"
-            ),
-            final_answer_diagnostic_card_role=str(
-                ctx.get("final_answer_diagnostic_card_role", "guided_legacy") or "guided_legacy"
-            ),
-            writer_first_prompt_assembly_enabled=str(
-                bool(ctx.get("writer_first_prompt_assembly_enabled", False))
-            ).lower(),
-            legacy_blocks_visible_to_writer=str(
-                bool(ctx.get("legacy_blocks_visible_to_writer", True))
-            ).lower(),
-            legacy_blocks_source_signals_only=str(
-                bool(ctx.get("legacy_blocks_source_signals_only", False))
-            ).lower(),
-            legacy_constraints_suppressed_csv=str(
-                ctx.get("legacy_constraints_suppressed_csv", "none") or "none"
-            ),
-            writer_visible_advisory_summary=str(
-                ctx.get("writer_visible_advisory_summary", "") or "нет"
-            ),
-            writer_visible_practice_note=str(
-                ctx.get("writer_visible_practice_note", "") or "нет"
-            ),
-            writer_grounding_authority_note=str(
-                ctx.get("writer_grounding_authority_note", "") or "none"
-            ),
-            writer_grounding_visibility_json=str(
-                ctx.get("writer_grounding_visibility_json", "{}") or "{}"
-            ),
+            final_answer_directive_json=slice6_inputs.final_answer_directive_json,
+            writer_visible_final_answer_directive_json=slice6_inputs.writer_visible_final_answer_directive_json,
+            final_answer_directive_version=slice6_inputs.final_answer_directive_version,
+            final_answer_current_user_request=slice6_inputs.final_answer_current_user_request,
+            final_answer_must_answer_source=slice6_inputs.final_answer_must_answer_source,
+            final_answer_previous_must_answer_demoted=slice6_inputs.final_answer_previous_must_answer_demoted,
+            final_answer_previous_must_answer=slice6_inputs.final_answer_previous_must_answer,
+            final_answer_explicit_continue_previous_detected=slice6_inputs.final_answer_explicit_continue_previous_detected,
+            final_answer_answer_target=slice6_inputs.final_answer_answer_target,
+            final_answer_writer_contact_mode=slice6_inputs.final_answer_writer_contact_mode,
+            final_answer_diagnostic_center_role=slice6_inputs.final_answer_diagnostic_center_role,
+            final_answer_planner_role=slice6_inputs.final_answer_planner_role,
+            final_answer_active_line_role=slice6_inputs.final_answer_active_line_role,
+            final_answer_diagnostic_card_role=slice6_inputs.final_answer_diagnostic_card_role,
+            writer_first_prompt_assembly_enabled=slice6_inputs.writer_first_prompt_assembly_enabled,
+            legacy_blocks_visible_to_writer=slice6_inputs.legacy_blocks_visible_to_writer,
+            legacy_blocks_source_signals_only=slice6_inputs.legacy_blocks_source_signals_only,
+            legacy_constraints_suppressed_csv=slice6_inputs.legacy_constraints_suppressed_csv,
+            writer_visible_advisory_summary=slice6_inputs.writer_visible_advisory_summary,
+            writer_visible_practice_note=slice6_inputs.writer_visible_practice_note,
+            writer_grounding_authority_note=slice6_inputs.writer_grounding_authority_note,
+            writer_grounding_visibility_json=slice6_inputs.writer_grounding_visibility_json,
             fresh_chat_context_policy_version=str(
                 ctx.get("fresh_chat_context_policy_version", "fresh_chat_context_policy_v1")
                 or "fresh_chat_context_policy_v1"

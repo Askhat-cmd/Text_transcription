@@ -1,5 +1,25 @@
 # Architecture Decisions
 
+## ADR-111 - `WRITER_USER_TEMPLATE.format(...)` stays one render call while argument families move behind explicit typed builders
+
+Status: accepted
+
+Date: 2026-07-13
+
+Delivery: PRD-047.42-APPLY-11 accepted in main commit `0c35d2f`.
+
+Context: after PRD-047.42-APPLY-10, the next largest remaining `_call_llm` responsibility was no longer a sequential helper-like block but the giant `WRITER_USER_TEMPLATE.format(...)` render call itself. That render is one Python call with roughly `170` named arguments, not a series of statements, so trying to “cut the render” the same way as slice1/2/3 would either split the template call itself or force hidden prompt-assembly rewrites. The first low-risk families inside that render were the five argument groups built mostly from direct `ctx.get(..., default)` normalization and one deterministic diagnostic summary formatter.
+
+Decision:
+- keep `WRITER_USER_TEMPLATE.format(...)` as one single render call;
+- move selected argument families out by extracting the value computation into one helper plus one typed dataclass, not by splitting the render call or rewriting the template text;
+- keep each kwarg name in the render call explicit as `slice4_inputs.<field>` rather than using dict unpacking or `locals()` tricks;
+- preserve `conversation_context=formatted_context` inline at its original position because it is intentionally outside the extracted families;
+- preserve the intentional raw behavior of `writer_move_instruction_summary=ctx.get(...) or "нет"` without adding a new `str()` wrapper;
+- require byte-identical before/after proof not only for `llm_response` and full `last_debug`, but also for the exact `user_prompt` text line-by-line, because this is the first PRD that changes where prompt argument values are assembled.
+
+Consequences: the project now has a proven decomposition pattern for the giant render spine without changing the prompt template itself. Future render-slice PRDs should continue by moving coherent argument families behind explicit typed builders while leaving the single render call intact until the render spine becomes small enough that a different decomposition style is justified.
+
 ## ADR-110 - First state-coupled `_call_llm` extraction returns a debug patch and applies it once at the call site
 
 Status: accepted

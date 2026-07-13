@@ -1,8 +1,8 @@
 # PRD-047.42-APPLY-11 Implementation Report
 
 - PRD: `PRD-047.42-APPLY-11`
-- Status: `accepted_pending_delivery_metadata`
-- Delivery: `main_commit_pending`
+- Status: `accepted`
+- Delivery: `main_commit=0c35d2f`, `push=pushed_to_origin_main`
 
 ## Scope Delivered
 
@@ -11,6 +11,7 @@
 - Replaced the current live prompt-argument block with one helper call plus explicit `slice4_inputs.<field>` references.
 - Kept `conversation_context=formatted_context` inline and untouched.
 - Added direct helper tests and a runner that proves full-snapshot plus exact `user_prompt` equivalence.
+- Clean-tree historical contract rerun passed `13/13` across APPLY-6 + APPLY-7 + APPLY-9 + APPLY-10 + APPLY-11.
 
 ## Honest Boundary
 

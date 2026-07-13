@@ -2,6 +2,22 @@
 
 Главный источник курса проекта: `docs/MASTER_STRATEGIC_PLAN_NEO_MindBot_v4_RU.md`.
 
+## PRD-047.42-APPLY-11 _call_llm slice 4
+PRD-047.42-APPLY-11 starts the `WRITER_USER_TEMPLATE.format(...)` decomposition track without splitting the render call itself. The work moves the first `39` argument expressions out of inline prompt assembly into `writer_agent_call_llm_slice4.py`, keeps the same single `WRITER_USER_TEMPLATE.format(...)` call, preserves `conversation_context=formatted_context` inline, and proves byte-identical behavior on the accepted 3-scenario `_call_llm` snapshot including exact `user_prompt` text and full `last_debug`.
+
+Current result:
+- main implementation commit: `0c35d2f`;
+- push status: `pushed_to_origin_main`;
+- status is `accepted`;
+- new helper module is `writer_agent_call_llm_slice4.py`;
+- extracted surface is one typed dataclass carrying the first `39` prompt-argument fields from the five accepted families: unified dialogue policy, dialogue act/offer state, dialogue style/answer obligation, diagnostic card/writer move, and context budget/profile;
+- `writer_move_instruction_summary` intentionally remains raw `ctx.get(...) or "нет"` without a new `str()` wrapper;
+- the accepted before/after snapshot is byte-identical across all `3` scenarios, and the dedicated `user_prompt_equivalence.md` report proves line-by-line and hash-level identity of the exact prompt text sent to the LLM;
+- direct slice-4 helper tests passed `3/3`;
+- new runner contract tests passed `3/3`;
+- clean-tree historical contract rerun passed `13/13` across APPLY-6 + APPLY-7 + APPLY-9 + APPLY-10 + APPLY-11;
+- protected previously accepted files remained unchanged under diff/hash proof, including slice-1/slice-2/slice-3 helpers, writer mixins, `writer_contract.py`, and the `admin_routes` split modules.
+
 ## PRD-047.42-APPLY-10 _call_llm slice 3
 PRD-047.42-APPLY-10 completes the first state-coupled extraction inside `WriterAgent._call_llm` after the pure ctx-only slices and the APPLY-8 stale-test repair. The work moves only the mapped `writer_kb_payload_and_trace_capture` cluster into `writer_agent_call_llm_slice3.py`, returns exactly two cross-boundary outputs (`writer_kb_payload_text` and `last_debug_patch`), preserves the same downstream prompt input, and proves that one `self.last_debug.update(...)` call yields a byte-identical full debug surface compared to the previous seven inline assignments.
 

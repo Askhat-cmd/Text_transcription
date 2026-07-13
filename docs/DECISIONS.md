@@ -1,5 +1,24 @@
 # Architecture Decisions
 
+## ADR-112 - Render-family extraction must leave pure passthrough kwargs inline instead of forcing them through new dataclass fields
+
+Status: accepted
+
+Date: 2026-07-13
+
+Delivery: PRD-047.42-APPLY-12 accepted in main commit `3d3abe8`.
+
+Context: after PRD-047.42-APPLY-11 proved that the giant `WRITER_USER_TEMPLATE.format(...)` call can be decomposed by moving coherent argument families behind one typed builder, the next pair of mapped families (`writer_kb_payload_and_knowledge_answer` + `philosophy_kernel_and_writer_freedom`) contained a mixed surface. Most kwargs were still computed expressions worth moving, but four of them were already fully computed upstream values with no transformation at all: `writer_kb_payload_text`, `practice_ban_instruction`, `known_concept_clarification_ban`, and `external_surveillance_frame_ban`. Forcing those passthroughs into another dataclass would not reduce coupling or complexity; it would only add a second copy layer and make the render call noisier without changing semantics.
+
+Decision:
+- keep extracting computed render families through one helper plus one typed dataclass;
+- keep pure passthrough kwargs inline at their original positions inside `WRITER_USER_TEMPLATE.format(...)` when they do not add new computation, normalization, or branching;
+- require the PRD to name those passthrough fields explicitly so the inline exception is intentional, not accidental drift;
+- preserve the same explicit `sliceX_inputs.<field>` render style for the extracted computed values and keep `locals()` / dict-unpack tricks prohibited;
+- continue proving byte-identical `user_prompt`, full `last_debug`, and full snapshot behavior after the mixed extraction.
+
+Consequences: the render-decomposition series now has a sharper rule than “move everything in the selected range.” Computed families move; pure passthroughs stay inline unless a later PRD has a stronger reason. That keeps the builder surface minimal and prevents pointless indirection while the giant render call is still being reduced slice by slice.
+
 ## ADR-111 - `WRITER_USER_TEMPLATE.format(...)` stays one render call while argument families move behind explicit typed builders
 
 Status: accepted

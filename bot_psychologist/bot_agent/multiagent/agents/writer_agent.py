@@ -52,6 +52,9 @@ from .writer_agent_call_llm_slice3 import _extract_call_llm_slice3_kb_payload_an
 from .writer_agent_call_llm_slice4 import (
     _extract_call_llm_slice4_policy_and_dialogue_state,
 )
+from .writer_agent_call_llm_slice5 import (
+    _extract_call_llm_slice5_kb_payload_and_philosophy,
+)
 from .writer_agent_prompts import (
     WRITER_SYSTEM,
     WRITER_SYSTEM_MVP_FREE_DIALOGUE,
@@ -296,6 +299,17 @@ class WriterAgent(WriterAgentLifecycleMixin, WriterAgentFallbackStateMixin):
             context_meta,
             dialogue_profile,
         )
+        slice5_inputs = _extract_call_llm_slice5_kb_payload_and_philosophy(
+            ctx,
+            knowledge_answer,
+            knowledge_answer_first,
+            do_not_ask_definition,
+            practice_allowed,
+            philosophy_kernel,
+            writer_freedom_contract,
+            selected_lenses,
+            freedom_hard_boundaries,
+        )
 
         user_prompt = WRITER_USER_TEMPLATE.format(
             user_message=ctx["user_message"],
@@ -348,54 +362,33 @@ class WriterAgent(WriterAgentLifecycleMixin, WriterAgentFallbackStateMixin):
             older_context_omitted_chars=slice4_inputs.older_context_omitted_chars,
             user_profile_patterns=slice4_inputs.user_profile_patterns,
             user_profile_values=slice4_inputs.user_profile_values,
-            writer_kb_payload_enabled=str(bool(ctx.get("writer_kb_payload_enabled", False))).lower(),
-            writer_kb_payload_trace_version=str(
-                ctx.get("writer_kb_payload_trace_version", "writer_kb_payload_trace_v1")
-                or "writer_kb_payload_trace_v1"
-            ),
-            writer_kb_payload_failed=str(bool(ctx.get("writer_kb_payload_failed", False))).lower(),
+            writer_kb_payload_enabled=slice5_inputs.writer_kb_payload_enabled,
+            writer_kb_payload_trace_version=slice5_inputs.writer_kb_payload_trace_version,
+            writer_kb_payload_failed=slice5_inputs.writer_kb_payload_failed,
             writer_kb_payload_text=writer_kb_payload_text,
-            knowledge_answer_needed=str(bool(knowledge_answer.get("needed", False))).lower(),
-            knowledge_answer_concept=str(knowledge_answer.get("concept", "") or "none"),
-            knowledge_answer_kb_grounding=str(bool(knowledge_answer.get("kb_grounding_available", False))).lower(),
-            knowledge_answer_first=str(knowledge_answer_first).lower(),
-            do_not_ask_user_to_define_term_before_answering=str(do_not_ask_definition).lower(),
-            practice_allowed=str(practice_allowed).lower(),
-            knowledge_answer_writer_instruction=str(
-                knowledge_answer.get("writer_instruction", "none") or "none"
-            ),
+            knowledge_answer_needed=slice5_inputs.knowledge_answer_needed,
+            knowledge_answer_concept=slice5_inputs.knowledge_answer_concept,
+            knowledge_answer_kb_grounding=slice5_inputs.knowledge_answer_kb_grounding,
+            knowledge_answer_first=slice5_inputs.knowledge_answer_first,
+            do_not_ask_user_to_define_term_before_answering=slice5_inputs.do_not_ask_user_to_define_term_before_answering,
+            practice_allowed=slice5_inputs.practice_allowed,
+            knowledge_answer_writer_instruction=slice5_inputs.knowledge_answer_writer_instruction,
             practice_ban_instruction=practice_ban_instruction,
             known_concept_clarification_ban=known_concept_clarification_ban,
             external_surveillance_frame_ban=external_surveillance_frame_ban,
-            philosophy_kernel_version=str(
-                ctx.get("philosophy_kernel_version", philosophy_kernel.get("kernel_version", ""))
-            ),
-            philosophy_kernel_quote_policy=str(
-                ctx.get(
-                    "philosophy_kernel_quote_policy",
-                    philosophy_kernel.get("quote_policy", "internal_lens_not_citation"),
-                )
-            ),
-            philosophy_kernel_selected_lenses=", ".join(selected_lenses) or "none",
-            philosophy_kernel_prompt_block=str(ctx.get("philosophy_kernel_prompt_block", "") or "none"),
-            philosophy_kernel_prompt_compactness=str(
-                ctx.get("philosophy_kernel_prompt_compactness", {}) or {}
-            ),
-            writer_freedom_prompt_block=str(
-                ctx.get("writer_freedom_prompt_block", "") or "none"
-            ),
-            writer_freedom_contract_version=str(
-                ctx.get("writer_freedom_contract_version", writer_freedom_contract.get("version", ""))
-            ),
-            writer_freedom_level=str(
-                ctx.get("writer_freedom_level", writer_freedom_contract.get("freedom_level", "guided"))
-            ),
-            writer_mode_hint=str(ctx.get("writer_mode_hint", writer_freedom_contract.get("mode_hint", ""))),
-            mode_is_hint_not_cage=str(bool(ctx.get("mode_is_hint_not_cage", True))).lower(),
-            writer_question_limit=int(ctx.get("writer_question_limit", 1) or 1),
-            practice_requires_gate=str(bool(ctx.get("practice_requires_gate", True))).lower(),
-            writer_freedom_hard_boundaries=", ".join(freedom_hard_boundaries)
-            or "no_diagnosis,no_unsolicited_practice",
+            philosophy_kernel_version=slice5_inputs.philosophy_kernel_version,
+            philosophy_kernel_quote_policy=slice5_inputs.philosophy_kernel_quote_policy,
+            philosophy_kernel_selected_lenses=slice5_inputs.philosophy_kernel_selected_lenses,
+            philosophy_kernel_prompt_block=slice5_inputs.philosophy_kernel_prompt_block,
+            philosophy_kernel_prompt_compactness=slice5_inputs.philosophy_kernel_prompt_compactness,
+            writer_freedom_prompt_block=slice5_inputs.writer_freedom_prompt_block,
+            writer_freedom_contract_version=slice5_inputs.writer_freedom_contract_version,
+            writer_freedom_level=slice5_inputs.writer_freedom_level,
+            writer_mode_hint=slice5_inputs.writer_mode_hint,
+            mode_is_hint_not_cage=slice5_inputs.mode_is_hint_not_cage,
+            writer_question_limit=slice5_inputs.writer_question_limit,
+            practice_requires_gate=slice5_inputs.practice_requires_gate,
+            writer_freedom_hard_boundaries=slice5_inputs.writer_freedom_hard_boundaries,
             final_answer_directive_json=str(ctx.get("final_answer_directive_json", "{}") or "{}"),
             writer_visible_final_answer_directive_json=str(
                 ctx.get("writer_visible_final_answer_directive_json", "{}") or "{}"

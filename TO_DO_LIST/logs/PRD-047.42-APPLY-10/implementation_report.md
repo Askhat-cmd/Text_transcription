@@ -1,8 +1,8 @@
 # PRD-047.42-APPLY-10 Implementation Report
 
 - PRD: `PRD-047.42-APPLY-10`
-- Status: `accepted_pending_delivery_metadata`
-- Delivery: `main_commit_pending`
+- Status: `accepted`
+- Delivery: `main_commit=f726aa1`, `main_push=pushed_to_origin_main`
 
 ## Scope Delivered
 

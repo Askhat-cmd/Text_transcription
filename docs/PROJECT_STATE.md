@@ -6,9 +6,9 @@
 PRD-047.42-APPLY-10 completes the first state-coupled extraction inside `WriterAgent._call_llm` after the pure ctx-only slices and the APPLY-8 stale-test repair. The work moves only the mapped `writer_kb_payload_and_trace_capture` cluster into `writer_agent_call_llm_slice3.py`, returns exactly two cross-boundary outputs (`writer_kb_payload_text` and `last_debug_patch`), preserves the same downstream prompt input, and proves that one `self.last_debug.update(...)` call yields a byte-identical full debug surface compared to the previous seven inline assignments.
 
 Current result:
-- main implementation commit: `pending`;
-- push status: `pending`;
-- status is `accepted_pending_delivery_metadata`;
+- main implementation commit: `f726aa1`;
+- push status: `pushed_to_origin_main`;
+- status is `accepted`;
 - new helper module is `writer_agent_call_llm_slice3.py`;
 - the accepted 3-scenario `_call_llm` snapshot is byte-identical before vs after, including full `last_debug` for every scenario rather than only `llm_response`;
 - direct slice-3 helper tests passed `3/3`;

@@ -1,5 +1,25 @@
 # Architecture Decisions
 
+## ADR-110 - First state-coupled `_call_llm` extraction returns a debug patch and applies it once at the call site
+
+Status: accepted
+
+Date: 2026-07-13
+
+Delivery: PRD-047.42-APPLY-10 implementation completed in workspace; delivery metadata pending follow-up commit sync.
+
+Context: PRD-047.42-APPLY-6 mapped `writer_kb_payload_and_trace_capture` as the first pre-provider `_call_llm` cluster that is not pure: it computes prompt input and also writes seven keys into `self.last_debug`. PRD-047.42-APPLY-7 and APPLY-9 had already proven the pure-helper pattern for ctx-only slices, but that pattern cannot be copied verbatim here because the helper must not mutate `self` directly and the project still needs proof that the resulting debug surface is byte-identical.
+
+Decision:
+- move the cluster into a dedicated helper module `writer_agent_call_llm_slice3.py`;
+- keep the helper pure and return one typed object with exactly two outputs: `writer_kb_payload_text` and `last_debug_patch`;
+- keep `writer_kb_payload_fallback_reason` internal to the helper because it is local-only and does not cross the cluster boundary;
+- apply the patch in `_call_llm` with one explicit `self.last_debug.update(slice3_inputs.last_debug_patch)` call rather than seven inline assignments;
+- preserve the original key order inside the returned patch for review readability;
+- require byte-identical before/after snapshot proof on the full `last_debug`, not only on `llm_response`.
+
+Consequences: the decomposition track now has a proven pattern for state-coupled pre-provider `_call_llm` slices without widening helper side effects or exporting unnecessary local variables. Later debug-writing clusters can reuse this boundary style, while larger render/provider/response clusters remain separate decisions.
+
 ## ADR-109 - `_call_llm` extraction helpers may export only true cross-cluster values; `local_only` detector workspace stays internal
 
 Status: accepted

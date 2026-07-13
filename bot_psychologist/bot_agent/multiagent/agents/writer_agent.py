@@ -28,7 +28,6 @@ from ..concrete_answer_fit import evaluate_concrete_answer_fit
 from ..stale_stub_detector import detect_stale_stub
 from ..prompt_constraint_section import format_prompt_constraint_section_v1
 from ..contracts.writer_contract import WriterContract
-from ..writer_kb_payload import format_writer_kb_payload_for_prompt
 from .agent_llm_client import create_agent_completion
 from .agent_llm_config import get_model_for_agent, get_temperature_for_agent
 from .writer_agent_constants import (
@@ -49,6 +48,7 @@ from .writer_agent_fallback_state_mixin import WriterAgentFallbackStateMixin
 from .writer_agent_lifecycle_mixin import WriterAgentLifecycleMixin
 from .writer_agent_call_llm_slice1 import _extract_call_llm_slice1_inputs
 from .writer_agent_call_llm_slice2 import _extract_call_llm_slice2_request_detectors
+from .writer_agent_call_llm_slice3 import _extract_call_llm_slice3_kb_payload_and_trace
 from .writer_agent_prompts import (
     WRITER_SYSTEM,
     WRITER_SYSTEM_MVP_FREE_DIALOGUE,
@@ -285,52 +285,9 @@ class WriterAgent(WriterAgentLifecycleMixin, WriterAgentFallbackStateMixin):
         overruled_constraints = slice2_inputs.overruled_constraints
         mvp_override_block = slice2_inputs.mvp_override_block
 
-        writer_kb_payload_fallback_reason = str(
-            ctx.get("writer_kb_payload_failure_reason", "")
-            or (
-                "writer_kb_payload_disabled"
-                if not bool(ctx.get("writer_kb_payload_enabled", False))
-                else "writer_kb_payload_empty_or_failed"
-            )
-        )
-        if writer_kb_payload_fallback_reason == "builder_failure":
-            writer_kb_payload_fallback_reason = "writer_kb_payload_empty_or_failed"
-        writer_kb_payload_text = format_writer_kb_payload_for_prompt(
-            payload=(
-                dict(ctx.get("writer_kb_payload", {}))
-                if isinstance(ctx.get("writer_kb_payload"), dict)
-                else {}
-            ),
-            legacy_hits=list(ctx.get("semantic_hits", []) or []),
-            fallback_reason=writer_kb_payload_fallback_reason,
-        )
-        self.last_debug["writer_kb_payload_trace"] = (
-            dict(ctx.get("writer_kb_payload_trace", {}))
-            if isinstance(ctx.get("writer_kb_payload_trace"), dict)
-            else {}
-        )
-        self.last_debug["runtime_truth_trace_v1"] = (
-            dict(ctx.get("runtime_truth_trace_v1", {}))
-            if isinstance(ctx.get("runtime_truth_trace_v1"), dict)
-            else {}
-        )
-        self.last_debug["writer_kb_payload_future_graduation_notes"] = (
-            dict(ctx.get("writer_kb_payload_future_graduation_notes", {}))
-            if isinstance(ctx.get("writer_kb_payload_future_graduation_notes"), dict)
-            else {}
-        )
-        self.last_debug["semantic_cards_pilot"] = (
-            dict(ctx.get("semantic_cards_pilot", {}))
-            if isinstance(ctx.get("semantic_cards_pilot"), dict)
-            else {}
-        )
-        self.last_debug["writer_grounding_visibility_v1"] = (
-            dict(ctx.get("writer_grounding_visibility_v1", {}))
-            if isinstance(ctx.get("writer_grounding_visibility_v1"), dict)
-            else {}
-        )
-        self.last_debug["writer_kb_payload_enabled"] = bool(ctx.get("writer_kb_payload_enabled", False))
-        self.last_debug["writer_kb_payload_failed"] = bool(ctx.get("writer_kb_payload_failed", False))
+        slice3_inputs = _extract_call_llm_slice3_kb_payload_and_trace(ctx)
+        writer_kb_payload_text = slice3_inputs.writer_kb_payload_text
+        self.last_debug.update(slice3_inputs.last_debug_patch)
 
         user_prompt = WRITER_USER_TEMPLATE.format(
             user_message=ctx["user_message"],

@@ -2,6 +2,22 @@
 
 Главный источник курса проекта: `docs/MASTER_STRATEGIC_PLAN_NEO_MindBot_v4_RU.md`.
 
+## PRD-047.42-APPLY-10 _call_llm slice 3
+PRD-047.42-APPLY-10 completes the first state-coupled extraction inside `WriterAgent._call_llm` after the pure ctx-only slices and the APPLY-8 stale-test repair. The work moves only the mapped `writer_kb_payload_and_trace_capture` cluster into `writer_agent_call_llm_slice3.py`, returns exactly two cross-boundary outputs (`writer_kb_payload_text` and `last_debug_patch`), preserves the same downstream prompt input, and proves that one `self.last_debug.update(...)` call yields a byte-identical full debug surface compared to the previous seven inline assignments.
+
+Current result:
+- main implementation commit: `pending`;
+- push status: `pending`;
+- status is `accepted_pending_delivery_metadata`;
+- new helper module is `writer_agent_call_llm_slice3.py`;
+- the accepted 3-scenario `_call_llm` snapshot is byte-identical before vs after, including full `last_debug` for every scenario rather than only `llm_response`;
+- direct slice-3 helper tests passed `3/3`;
+- new runner contract tests passed `2/2`;
+- clean-tree historical rerun over APPLY-6 + APPLY-7 + APPLY-9 contracts passed `8/8`;
+- targeted writer KB payload integration tests passed `3/3`;
+- protected previously accepted files remained unchanged under diff/hash proof, including slice-1/slice-2 helpers, writer mixins, `writer_contract.py`, and the `admin_routes` split modules;
+- the known focused baseline failure `test_semantic_hits_limit_to_two` remains pre-existing and out of scope.
+
 ## PRD-047.42-APPLY-9 _call_llm slice 2
 PRD-047.42-APPLY-9 resumes the real `_call_llm` decomposition track after the APPLY-8 test-debt repair and stays strictly inside one mapped pre-provider cluster: `request_detectors_and_mvp_override_block`. The work moves only the current live lines `275-348` out of `WriterAgent._call_llm`, keeps the same downstream local variable names through explicit unpacking, preserves the same byte-identical three-scenario `_call_llm` snapshot, and leaves provider dispatch, response parsing, `writer_kb_payload_and_trace_capture`, `writer_contract.py`, and all admin decomposition files untouched.
 

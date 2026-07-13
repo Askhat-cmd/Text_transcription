@@ -2,6 +2,22 @@
 
 Главный источник курса проекта: `docs/MASTER_STRATEGIC_PLAN_NEO_MindBot_v4_RU.md`.
 
+## PRD-047.42-APPLY-14 _call_llm slice 7
+PRD-047.42-APPLY-14 continues the `WRITER_USER_TEMPLATE.format(...)` decomposition track by moving the next two fully ctx-driven argument families out of inline prompt assembly: `fresh_chat_and_context_package` plus `active_line`. The work keeps the same single render call, has no passthrough exceptions in this slice, and proves byte-identical behavior on the accepted 3-scenario `_call_llm` snapshot including exact `user_prompt` text and full `last_debug`.
+
+Current result:
+- main implementation commit: `d0c2a93`;
+- push status: `pushed_to_origin_main`;
+- status is `accepted`;
+- new helper module is `writer_agent_call_llm_slice7.py`;
+- extracted surface is one typed dataclass carrying the `25` computed prompt-argument values from the two accepted families;
+- every moved field remains a direct copy of the original `ctx.get(..., literal_default)` family, including integer coercion, bool normalization, and empty-string fallback behavior;
+- the accepted before/after snapshot is byte-identical across all `3` scenarios, and `user_prompt_equivalence.md` proves line-by-line and SHA1-level identity of the exact prompt text sent to the LLM;
+- direct slice-7 helper tests passed `3/3`;
+- new runner contract tests passed `3/3`;
+- clean-tree historical contract rerun passed `22/22` across APPLY-6 + APPLY-7 + APPLY-9 + APPLY-10 + APPLY-11 + APPLY-12 + APPLY-13 + APPLY-14;
+- protected previously accepted files remained unchanged under diff/hash proof, including slice-1/slice-2/slice-3/slice-4/slice-5/slice-6 helpers, writer mixins, `writer_contract.py`, and the `admin_routes` split modules.
+
 ## PRD-047.42-APPLY-13 _call_llm slice 6
 PRD-047.42-APPLY-13 continues the `WRITER_USER_TEMPLATE.format(...)` decomposition track by moving the next two fully ctx-driven argument families out of inline prompt assembly: `final_answer_directive` plus `legacy_and_grounding_visibility`. The work keeps the same single render call, has no passthrough exceptions in this slice, and proves byte-identical behavior on the accepted 3-scenario `_call_llm` snapshot including exact `user_prompt` text and full `last_debug`.
 

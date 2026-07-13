@@ -1,5 +1,24 @@
 # Architecture Decisions
 
+## ADR-114 - The next fully ctx-driven render pair moves as one helper surface when every kwarg remains a direct ctx-only expression
+
+Status: accepted
+
+Date: 2026-07-13
+
+Delivery: PRD-047.42-APPLY-14 accepted in main commit `d0c2a93`.
+
+Context: after PRD-047.42-APPLY-13, the next mapped `WRITER_USER_TEMPLATE.format(...)` pair was `fresh_chat_and_context_package + active_line`. Like APPLY-13, every selected kwarg in this pair was still a direct `ctx.get(..., literal_default)` normalization with no dependency on other local `_call_llm` variables, helper outputs, or stateful debug writes. Unlike APPLY-12, there were no upstream-computed passthrough values worth keeping inline. The accepted extraction therefore had the same architectural shape as APPLY-13, but with a larger `25`-field surface and a slightly wider mix of bool/int/string normalization cases.
+
+Decision:
+- move the entire `fresh_chat_and_context_package + active_line` pair behind one helper plus one typed dataclass;
+- keep the helper pure and `ctx`-only, with no `self`, no `last_debug` writes, and no additional helper inputs;
+- preserve the same explicit `slice7_inputs.<field>` render style inside `WRITER_USER_TEMPLATE.format(...)`;
+- keep every extracted field as an exact copy of the original inline expression, including integer coercion, bool-to-lower-string normalization, and empty-string fallback behavior;
+- continue requiring byte-identical before/after proof for the full snapshot, full `last_debug`, and exact `user_prompt`, plus a clean-tree historical rerun of all prior APPLY-6..14 contracts.
+
+Consequences: the render-decomposition series now has a second proven example of a fully ctx-driven family pair that moves as one complete helper surface with zero passthrough carve-outs. Future render slices should keep using the same rule whenever every selected kwarg is still a direct ctx-only expression and no upstream-computed passthrough values exist.
+
 ## ADR-113 - Fully ctx-driven render families move together with no passthrough carve-outs
 
 Status: accepted

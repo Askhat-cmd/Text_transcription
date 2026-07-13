@@ -1,5 +1,24 @@
 # Architecture Decisions
 
+## ADR-113 - Fully ctx-driven render families move together with no passthrough carve-outs
+
+Status: accepted
+
+Date: 2026-07-13
+
+Delivery: PRD-047.42-APPLY-13 accepted in main commit `3291a40`.
+
+Context: after PRD-047.42-APPLY-12, the next mapped `WRITER_USER_TEMPLATE.format(...)` pair was `final_answer_directive + legacy_and_grounding_visibility`. Unlike APPLY-12, where four fields were already-computed passthrough values that stayed inline on purpose, every field in this slice was the same shape: direct `ctx.get(..., literal_default)` normalization with optional bool-to-lower-string conversion. None of the `22` kwargs depended on other local variables, helper outputs, or intermediate objects. Keeping some inline “just because they are simple” would have created a false exception with no architectural benefit.
+
+Decision:
+- move the entire fully ctx-driven family pair into one helper plus one typed dataclass;
+- do not invent passthrough carve-outs when there is no upstream-computed value to preserve inline;
+- preserve the same explicit `slice6_inputs.<field>` render style inside `WRITER_USER_TEMPLATE.format(...)`;
+- keep the helper pure and limited to copying the original inline expressions exactly, including literal defaults, `or` fallback semantics, and bool normalization;
+- continue requiring byte-identical before/after proof for the full snapshot, full `last_debug`, and exact `user_prompt`.
+
+Consequences: the decomposition series now has two distinct rules for render-family moves. Mixed families may keep true passthrough kwargs inline by explicit decision (ADR-112), while fully ctx-driven families should move as one complete helper surface with no artificial inline leftovers. That keeps the render spine predictable and avoids accidental inconsistency between neighboring PRDs.
+
 ## ADR-112 - Render-family extraction must leave pure passthrough kwargs inline instead of forcing them through new dataclass fields
 
 Status: accepted

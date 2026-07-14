@@ -61,6 +61,9 @@ from .writer_agent_call_llm_slice6 import (
 from .writer_agent_call_llm_slice7 import (
     _extract_call_llm_slice7_fresh_chat_and_active_line,
 )
+from .writer_agent_call_llm_slice8 import (
+    _extract_call_llm_slice8_response_planner_and_dialogue_pragmatics,
+)
 from .writer_agent_prompts import (
     WRITER_SYSTEM,
     WRITER_SYSTEM_MVP_FREE_DIALOGUE,
@@ -320,6 +323,9 @@ class WriterAgent(WriterAgentLifecycleMixin, WriterAgentFallbackStateMixin):
             ctx
         )
         slice7_inputs = _extract_call_llm_slice7_fresh_chat_and_active_line(ctx)
+        slice8_inputs = (
+            _extract_call_llm_slice8_response_planner_and_dialogue_pragmatics(ctx)
+        )
 
         user_prompt = WRITER_USER_TEMPLATE.format(
             user_message=ctx["user_message"],
@@ -446,84 +452,36 @@ class WriterAgent(WriterAgentLifecycleMixin, WriterAgentFallbackStateMixin):
             active_line_revoicing_style=slice7_inputs.active_line_revoicing_style,
             active_line_repair_mode=slice7_inputs.active_line_repair_mode,
             active_line_practice_suppression_active=slice7_inputs.active_line_practice_suppression_active,
-            response_planner_version=str(ctx.get("response_planner_version", "response_planner_v1")),
-            response_planner_enabled=str(bool(ctx.get("response_planner_enabled", False))).lower(),
-            response_planner_next_move=str(
-                ctx.get("response_planner_next_move", "continue_active_line") or "continue_active_line"
-            ),
-            response_planner_answer_shape=str(
-                ctx.get("response_planner_answer_shape", "compact_direct") or "compact_direct"
-            ),
-            response_planner_response_depth=str(
-                ctx.get("response_planner_response_depth", "short") or "short"
-            ),
-            response_planner_target_micro_shift=str(
-                ctx.get("response_planner_target_micro_shift", "") or ""
-            ),
-            response_planner_should_answer_directly=str(
-                bool(ctx.get("response_planner_should_answer_directly", False))
-            ).lower(),
-            response_planner_question_policy=str(
-                ctx.get("response_planner_question_policy", "none") or "none"
-            ),
-            response_planner_practice_policy=str(
-                ctx.get("response_planner_practice_policy", "forbidden") or "forbidden"
-            ),
-            response_planner_revoicing_policy=str(
-                ctx.get("response_planner_revoicing_policy", "suppressed") or "suppressed"
-            ),
-            response_planner_continuity_policy=str(
-                ctx.get("response_planner_continuity_policy", "continue_active_line")
-                or "continue_active_line"
-            ),
-            response_planner_safety_priority=str(
-                bool(ctx.get("response_planner_safety_priority", False))
-            ).lower(),
-            response_planner_must_include=", ".join(
-                [str(item) for item in list(ctx.get("response_planner_must_include", []) or []) if str(item).strip()]
-            )
-            or "none",
-            response_planner_must_avoid=", ".join(
-                [str(item) for item in list(ctx.get("response_planner_must_avoid", []) or []) if str(item).strip()]
-            )
-            or "none",
-            response_planner_confidence=float(ctx.get("response_planner_confidence", 0.0) or 0.0),
-            response_planner_rationale=str(ctx.get("response_planner_rationale", "") or ""),
-            dialogue_profile=str(ctx.get("dialogue_profile", "safe_guided") or "safe_guided"),
-            dialogue_expansion_requested=str(bool(ctx.get("dialogue_expansion_requested", False))).lower(),
-            dialogue_repair_and_expand_requested=str(
-                bool(ctx.get("dialogue_repair_and_expand_requested", False))
-            ).lower(),
-            dialogue_active_concept=str(ctx.get("dialogue_active_concept", "") or ""),
-            dialogue_pragmatics_version=str(
-                ctx.get("dialogue_pragmatics_version", "dialogue_pragmatics_v1")
-            ),
-            dialogue_pragmatics_short_utterance=str(
-                bool(ctx.get("dialogue_pragmatics_short_utterance", False))
-            ).lower(),
-            dialogue_pragmatics_short_type=str(
-                ctx.get("dialogue_pragmatics_short_type", "not_short") or "not_short"
-            ),
-            dialogue_pragmatics_is_contextual_followup=str(
-                bool(ctx.get("dialogue_pragmatics_is_contextual_followup", False))
-            ).lower(),
-            dialogue_pragmatics_offer_type=str(
-                ctx.get("dialogue_pragmatics_offer_type", "unknown") or "unknown"
-            ),
-            dialogue_pragmatics_inherited_intent=str(
-                ctx.get("dialogue_pragmatics_inherited_intent", "continue_previous_offer")
-                or "continue_previous_offer"
-            ),
-            dialogue_pragmatics_should_answer_directly=str(
-                bool(ctx.get("dialogue_pragmatics_should_answer_directly", False))
-            ).lower(),
-            dialogue_pragmatics_should_not_ask_confirmation_again=str(
-                bool(ctx.get("dialogue_pragmatics_should_not_ask_confirmation_again", False))
-            ).lower(),
-            dialogue_pragmatics_repair_user_dissatisfaction=str(
-                bool(ctx.get("dialogue_pragmatics_repair_user_dissatisfaction", False))
-            ).lower(),
-            dialogue_pragmatics_reason=str(ctx.get("dialogue_pragmatics_reason", "none") or "none"),
+            response_planner_version=slice8_inputs.response_planner_version,
+            response_planner_enabled=slice8_inputs.response_planner_enabled,
+            response_planner_next_move=slice8_inputs.response_planner_next_move,
+            response_planner_answer_shape=slice8_inputs.response_planner_answer_shape,
+            response_planner_response_depth=slice8_inputs.response_planner_response_depth,
+            response_planner_target_micro_shift=slice8_inputs.response_planner_target_micro_shift,
+            response_planner_should_answer_directly=slice8_inputs.response_planner_should_answer_directly,
+            response_planner_question_policy=slice8_inputs.response_planner_question_policy,
+            response_planner_practice_policy=slice8_inputs.response_planner_practice_policy,
+            response_planner_revoicing_policy=slice8_inputs.response_planner_revoicing_policy,
+            response_planner_continuity_policy=slice8_inputs.response_planner_continuity_policy,
+            response_planner_safety_priority=slice8_inputs.response_planner_safety_priority,
+            response_planner_must_include=slice8_inputs.response_planner_must_include,
+            response_planner_must_avoid=slice8_inputs.response_planner_must_avoid,
+            response_planner_confidence=slice8_inputs.response_planner_confidence,
+            response_planner_rationale=slice8_inputs.response_planner_rationale,
+            dialogue_profile=slice8_inputs.dialogue_profile,
+            dialogue_expansion_requested=slice8_inputs.dialogue_expansion_requested,
+            dialogue_repair_and_expand_requested=slice8_inputs.dialogue_repair_and_expand_requested,
+            dialogue_active_concept=slice8_inputs.dialogue_active_concept,
+            dialogue_pragmatics_version=slice8_inputs.dialogue_pragmatics_version,
+            dialogue_pragmatics_short_utterance=slice8_inputs.dialogue_pragmatics_short_utterance,
+            dialogue_pragmatics_short_type=slice8_inputs.dialogue_pragmatics_short_type,
+            dialogue_pragmatics_is_contextual_followup=slice8_inputs.dialogue_pragmatics_is_contextual_followup,
+            dialogue_pragmatics_offer_type=slice8_inputs.dialogue_pragmatics_offer_type,
+            dialogue_pragmatics_inherited_intent=slice8_inputs.dialogue_pragmatics_inherited_intent,
+            dialogue_pragmatics_should_answer_directly=slice8_inputs.dialogue_pragmatics_should_answer_directly,
+            dialogue_pragmatics_should_not_ask_confirmation_again=slice8_inputs.dialogue_pragmatics_should_not_ask_confirmation_again,
+            dialogue_pragmatics_repair_user_dissatisfaction=slice8_inputs.dialogue_pragmatics_repair_user_dissatisfaction,
+            dialogue_pragmatics_reason=slice8_inputs.dialogue_pragmatics_reason,
             retrieval_decision_version=str(
                 ctx.get("retrieval_decision_version", "contextual_retrieval_gating_v1")
                 or "contextual_retrieval_gating_v1"

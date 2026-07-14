@@ -2,6 +2,22 @@
 
 Главный источник курса проекта: `docs/MASTER_STRATEGIC_PLAN_NEO_MindBot_v4_RU.md`.
 
+## PRD-047.42-APPLY-15 _call_llm slice 8
+PRD-047.42-APPLY-15 continues the `WRITER_USER_TEMPLATE.format(...)` decomposition track by moving the next two fully ctx-driven argument families out of inline prompt assembly: `response_planner` plus `dialogue_profile_and_pragmatics`. The work keeps the same single render call, preserves the intentionally separate `dialogue_profile` `ctx.get(...)` expression instead of collapsing it into the earlier local variable, and proves byte-identical behavior on the accepted 3-scenario `_call_llm` snapshot including exact `user_prompt` text and full `last_debug`.
+
+Current result:
+- main implementation commit: `pending`;
+- push status: `pending`;
+- status is `accepted_pending_delivery_metadata`;
+- new helper module is `writer_agent_call_llm_slice8.py`;
+- extracted surface is one typed dataclass carrying the `30` computed prompt-argument values from the two accepted families;
+- every moved field remains a direct copy of the original `ctx.get(..., literal_default)` family, including list-to-csv normalization, float coercion, and the intentionally fresh `dialogue_profile` `ctx.get(...)` expression inside this slice;
+- the accepted before/after snapshot is byte-identical across all `3` scenarios, and `user_prompt_equivalence.md` proves line-by-line and SHA1-level identity of the exact prompt text sent to the LLM;
+- direct slice-8 helper tests passed `3/3`;
+- new runner contract tests passed `3/3`;
+- the known focused baseline failure `test_semantic_hits_limit_to_two` remains pre-existing and unchanged;
+- protected previously accepted files remained unchanged under diff/hash proof, including slice-1/slice-2/slice-3/slice-4/slice-5/slice-6/slice-7 helpers, writer mixins, `writer_contract.py`, and the `admin_routes` split modules.
+
 ## PRD-047.42-APPLY-14 _call_llm slice 7
 PRD-047.42-APPLY-14 continues the `WRITER_USER_TEMPLATE.format(...)` decomposition track by moving the next two fully ctx-driven argument families out of inline prompt assembly: `fresh_chat_and_context_package` plus `active_line`. The work keeps the same single render call, has no passthrough exceptions in this slice, and proves byte-identical behavior on the accepted 3-scenario `_call_llm` snapshot including exact `user_prompt` text and full `last_debug`.
 

@@ -1,5 +1,24 @@
 # Architecture Decisions
 
+## ADR-115 - Preserve the duplicate-looking `dialogue_profile` render input as its own ctx read when the original inline expression did not reuse the earlier local variable
+
+Status: accepted
+
+Date: 2026-07-14
+
+Delivery: PRD-047.42-APPLY-15 accepted pending main delivery metadata.
+
+Context: after PRD-047.42-APPLY-14, the next mapped `WRITER_USER_TEMPLATE.format(...)` pair was `response_planner + dialogue_profile_and_pragmatics`. One field inside that pair looked deceptively simplifiable: `dialogue_profile=str(ctx.get("dialogue_profile", "safe_guided") or "safe_guided")`. Earlier in `_call_llm`, a same-named local variable already exists and is used by other slices. Replacing the render kwarg with that earlier local variable would likely produce the same value in normal cases, but it would still change the formal dependency surface and hide the fact that the original render kwarg was its own direct `ctx.get(...)` expression.
+
+Decision:
+- move the full `response_planner + dialogue_profile_and_pragmatics` pair behind one helper plus one typed dataclass;
+- preserve the `dialogue_profile` render kwarg as a fresh helper-local `ctx.get("dialogue_profile", "safe_guided") or "safe_guided"` expression;
+- do not collapse that field onto the earlier local variable named `dialogue_profile`, even though the values normally coincide;
+- keep the rest of the slice as exact copies of the original inline `ctx.get(..., literal_default)` expressions, including bool normalization, list-to-csv formatting, and float coercion;
+- continue requiring byte-identical before/after proof for the full snapshot, full `last_debug`, and exact `user_prompt`.
+
+Consequences: the render-decomposition series now has an explicit rule for duplicate-looking names: if the original inline render expression performed its own `ctx.get(...)`, the extracted helper keeps that direct read instead of opportunistically reusing an earlier local. This preserves traceable semantics and keeps later refactors from silently changing the dependency graph under the prompt render surface.
+
 ## ADR-114 - The next fully ctx-driven render pair moves as one helper surface when every kwarg remains a direct ctx-only expression
 
 Status: accepted

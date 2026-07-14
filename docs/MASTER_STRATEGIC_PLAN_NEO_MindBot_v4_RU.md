@@ -4,7 +4,7 @@
 **Репозиторий:** `Askhat-cmd/Text_transcription`
 **Локальный путь владельца:** `C:\My_practice\Text_transcription`
 **Дата:** 2026-07-09
-**Версия:** v4.18 — единый мастер-план (14 правок MP-1..MP-14 по аудиту Fable R08
+**Версия:** v4.19 — единый мастер-план (14 правок MP-1..MP-14 по аудиту Fable R08
 + обновление курса после PRD-047.42-APPLY-14 + красная линия против случайного
  перезапуска PRD-инструментов; исправление — Часть 4 была на версии после
  APPLY-8, актуализирована до APPLY-10)
@@ -153,12 +153,18 @@ Architect не принимает "всё прошло" на слово — то
 # ЧАСТЬ 4 — ГДЕ МЫ СЕЙЧАС  ← ЕДИНСТВЕННЫЙ ОБНОВЛЯЕМЫЙ РАЗДЕЛ
 
 Эпоха: 1 (Консолидация).
-Последний принятый PRD: PRD-047.42-APPLY-14 (ACCEPTED, commits
-  d0c2a93 / 2ee3789). Верифицировано архитектором независимо через
+Последний принятый PRD: PRD-047.42-APPLY-15 (ACCEPTED, commits
+  04bac53 / b020ec4). Верифицировано архитектором независимо через
   GitHub, включая пересчёт snapshot и SHA1 user_prompt.
-Следующий PRD: PRD-047.42-APPLY-15 — пятая пара семей
-  WRITER_USER_TEMPLATE.format(): response_planner + dialogue_profile_
-  and_pragmatics (30 аргументов). Границы: строки 449-526 (78 строк).
+Следующий PRD: PRD-047.42-APPLY-16 — ШЕСТАЯ, ПОСЛЕДНЯЯ пара/тройка
+  семей WRITER_USER_TEMPLATE.format(): retrieval_decision +
+  human_like_answer_policy + final_answer_shape_and_constraint_
+  resolution. Границы на конец сессии: строки 485-575 (91 строка,
+  пересчитать заново перед стартом — писалось для сессии, где
+  writer_agent.py = 1543 строки). Это последний PRD всей серии
+  APPLY-11..16 — после него весь WRITER_USER_TEMPLATE.format()
+  закрыт, roadmap-файл WRITER_USER_TEMPLATE_decomposition_roadmap_v1_RU.md
+  можно считать выполненным.
 Шлюз в Эпоху 2: НЕ пройден.
 
 Корпус законов Fable: получен полностью (R01-R07), НЕ ратифицирован.
@@ -170,26 +176,29 @@ Architect не принимает "всё прошло" на слово — то
   ОТДЕЛЬНЫЙ трек ПОСЛЕ реализации Эпохи 2 "умности" — не пересматривать
   без явного нового решения владельца.
 
-PRD-047.42-APPLY-14 закрыт (Stage 2m, четвёртый срез декомпозиции
+PRD-047.42-APPLY-15 закрыт (Stage 2n, пятый срез декомпозиции
   WRITER_USER_TEMPLATE.format()):
-- семьи fresh_chat_and_context_package + active_line (25 kwargs,
-  границы 420-473) вынесены в writer_agent_call_llm_slice7.py;
-- все 25 значений — чистые ctx.get(key, литеральный_дефолт), helper
-  принимает только ctx, без исключений-пробросов в этом срезе;
-- snapshot + SHA1 user_prompt подтверждены архитектором независимо;
-- все защищённые файлы (включая slice1-6) — hash-proof сверен,
+- семьи response_planner + dialogue_profile_and_pragmatics (30 kwargs,
+  границы 449-526) вынесены в writer_agent_call_llm_slice8.py;
+- найдена и корректно сохранена ловушка: kwarg dialogue_profile в этом
+  срезе — самостоятельный ctx.get(), НЕ ссылка на одноимённую
+  локальную переменную из slice1 — Исполнитель перенёс дословно, не
+  "упростил" самовольно;
+- snapshot + SHA1 user_prompt подтверждены архитектором независимо для
+  всех трёх сценариев (единственная замеченная разница — служебная
+  метка generated_at_utc, не реальный контент, тот же паттерн что и в
+  APPLY-9);
+- все защищённые файлы (включая slice1-7) — hash-proof сверен,
   расхождений нет;
-- широкий прогон — 19 pre-existing падений, тот же фон (198 passed).
+- широкий прогон — 19 pre-existing падений, тот же фон (201 passed).
 
 Отложено сознательно (не потеряно):
-- Резка оставшихся 7 семей WRITER_USER_TEMPLATE.format(). Следующая
-  пара — response_planner + dialogue_profile_and_pragmatics
-  (PRD-047.42-APPLY-15). После неё — retrieval_decision + human_like_
-  answer_policy + final_answer_shape_and_constraint_resolution
-  (PRD-047.42-APPLY-16, закрывает всю серию).
+- Последний срез WRITER_USER_TEMPLATE.format() — PRD-047.42-APPLY-16
+  (см. "Следующий PRD" выше).
 - После полного закрытия серии — prompt_constraint_append_and_debug_
   bookkeeping, runtime_settings_and_system_prompt_selection,
-  provider_dispatch, response_unpack_cost_and_return.
+  provider_dispatch, response_unpack_cost_and_return (4 кластера,
+  граница каждого пересчитывается перед своим PRD).
 - core_required_fields — вне серии, отдельное решение позже.
 - thread_manager.py, orchestrator.py, api/debug_routes.py,
   writer_context_package.py — отдельный трек, после Эпохи 2 (см.
@@ -206,11 +215,12 @@ PRD-047.42-APPLY-14 закрыт (Stage 2m, четвёртый срез деко
 
 Журнал правок (новая строка поверх существующих):
 
-- 2026-07-13 v4.17 -> v4.18: PRD-047.42-APPLY-14 принят ACCEPTED.
-  Четвёртый срез серии decomposition WRITER_USER_TEMPLATE.format() —
-  25 аргументов, все чистые ctx.get() без исключений-пробросов.
-  Двухшаговая инструкция передачи Части 4 Исполнителю (текст отдельно,
-  строка журнала отдельно) сработала корректно — история журнала цела.
+- 2026-07-13 v4.18 -> v4.19: PRD-047.42-APPLY-15 принят ACCEPTED.
+  Пятый срез серии decomposition WRITER_USER_TEMPLATE.format() — 30
+  аргументов. Обнаружена и сохранена namesake-ловушка (dialogue_profile
+  kwarg = независимый ctx.get(), не ссылка на одноимённую переменную).
+  После следующего PRD (APPLY-16) вся серия декомпозиции
+  WRITER_USER_TEMPLATE.format() будет закрыта.
 
 
 - 2026-07-13 v4.16 -> v4.17: PRD-047.42-APPLY-13 принят ACCEPTED.

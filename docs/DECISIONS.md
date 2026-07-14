@@ -6,7 +6,7 @@ Status: accepted
 
 Date: 2026-07-14
 
-Delivery: PRD-047.42-APPLY-15 accepted pending main delivery metadata.
+Delivery: PRD-047.42-APPLY-15 accepted in main commit `04bac53`.
 
 Context: after PRD-047.42-APPLY-14, the next mapped `WRITER_USER_TEMPLATE.format(...)` pair was `response_planner + dialogue_profile_and_pragmatics`. One field inside that pair looked deceptively simplifiable: `dialogue_profile=str(ctx.get("dialogue_profile", "safe_guided") or "safe_guided")`. Earlier in `_call_llm`, a same-named local variable already exists and is used by other slices. Replacing the render kwarg with that earlier local variable would likely produce the same value in normal cases, but it would still change the formal dependency surface and hide the fact that the original render kwarg was its own direct `ctx.get(...)` expression.
 

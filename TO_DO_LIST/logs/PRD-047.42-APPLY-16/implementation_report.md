@@ -1,8 +1,8 @@
 # PRD-047.42-APPLY-16 Implementation Report
 
 - PRD: `PRD-047.42-APPLY-16`
-- Status: `accepted_pending_delivery_metadata`
-- Delivery: `main_commit_pending`
+- Status: `accepted_with_warnings`
+- Delivery: `main implementation commit c57807e; pushed_to_origin_main`
 
 ## Scope Delivered
 
@@ -12,6 +12,7 @@
 - Kept `mvp_free_dialogue_overrides=mvp_override_block` inline as the mandated pure passthrough that closes the render series without widening the helper surface.
 - Added direct unit tests and a runner that proves full-snapshot plus exact `user_prompt` equivalence.
 - Closed the full `WRITER_USER_TEMPLATE.format(...)` extraction roadmap from APPLY-11 through APPLY-16; only passthrough/core-required-field remnants remain inside the render call.
+- Clean-tree historical contract rerun passed `28/28` across APPLY-6 + APPLY-7 + APPLY-9 + APPLY-10 + APPLY-11 + APPLY-12 + APPLY-13 + APPLY-14 + APPLY-15 + APPLY-16.
 
 ## Honest Boundary
 

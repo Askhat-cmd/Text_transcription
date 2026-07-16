@@ -1,5 +1,24 @@
 # Architecture Decisions
 
+## ADR-116 - Close the `WRITER_USER_TEMPLATE.format(...)` extraction series by preserving formal local dependencies and leaving pure passthroughs inline
+
+Status: accepted
+
+Date: 2026-07-16
+
+Delivery: PRD-047.42-APPLY-16 accepted with warnings in main commit `c57807e`.
+
+Context: after PRD-047.42-APPLY-15, the remaining mapped render families inside `_call_llm` were `retrieval_decision`, `human_like_answer_policy`, and `final_answer_shape_and_constraint_resolution`. This final slice looked mechanically similar to the earlier render-family extractions, but it carried two opposite-looking semantics that were easy to accidentally "simplify" in the wrong direction. First, `constraint_resolution_profile` was not a direct ctx lookup: it defaulted from the earlier normalized local variable `dialogue_profile`, so preserving the original dependency graph required passing that local value into the helper and reusing it as the fallback. Second, the immediately following `mvp_free_dialogue_overrides=mvp_override_block` kwarg still had no computation at all, so moving it into the helper would have widened the dataclass surface without reducing render complexity. The accepted slice therefore had to preserve a local-variable dependency on one side and a pure passthrough exception on the other, while also closing the full `WRITER_USER_TEMPLATE.format(...)` decomposition roadmap.
+
+Decision:
+- move the full final mapped render families behind one helper plus one typed dataclass in `writer_agent_call_llm_slice9.py`;
+- pass the already-normalized local `dialogue_profile` into the helper explicitly and keep `constraint_resolution_profile` defaulting from that local value rather than from a fresh `ctx.get(...)`;
+- pass through `human_like_answer_policy`, `repair_user_dissatisfaction`, `constraint_resolution`, and `overruled_constraints` only because the original inline expressions formally depended on them;
+- keep `mvp_free_dialogue_overrides=mvp_override_block` inline in the render call because it remains a pure passthrough with no transformation or branching;
+- continue requiring byte-identical before/after proof for the full snapshot, full `last_debug`, and exact `user_prompt`.
+
+Consequences: the accepted render-series endpoint is now explicit. Every mapped computed `WRITER_USER_TEMPLATE.format(...)` family lives behind a typed helper, while remaining inline kwargs are either deliberate passthroughs or out-of-series core-required fields. Future `_call_llm` PRDs can now move past render-family slicing into the post-render clusters (`prompt_constraint_append_and_debug_bookkeeping`, runtime settings, provider dispatch, and response unpack/return) without reopening the closed render decomposition surface.
+
 ## ADR-115 - Preserve the duplicate-looking `dialogue_profile` render input as its own ctx read when the original inline expression did not reuse the earlier local variable
 
 Status: accepted

@@ -2,6 +2,22 @@
 
 Главный источник курса проекта: `docs/MASTER_STRATEGIC_PLAN_NEO_MindBot_v4_RU.md`.
 
+## PRD-047.42-APPLY-16 _call_llm slice 9
+PRD-047.42-APPLY-16 closes the `WRITER_USER_TEMPLATE.format(...)` decomposition roadmap inside `_call_llm` by moving the final mapped render families out of inline prompt assembly: `retrieval_decision`, `human_like_answer_policy`, and `final_answer_shape_and_constraint_resolution`. The work keeps the same single render call, preserves the mirrored semantic trap where `constraint_resolution_profile` must default from the already-normalized local `dialogue_profile` instead of a fresh `ctx.get(...)`, leaves `mvp_free_dialogue_overrides=mvp_override_block` inline as the final pure passthrough, and proves byte-identical behavior on the accepted 3-scenario `_call_llm` snapshot including exact `user_prompt` text and full `last_debug`.
+
+Current result:
+- main implementation commit: `c57807e`;
+- push status: `pushed_to_origin_main`;
+- status is `accepted_with_warnings`;
+- new helper module is `writer_agent_call_llm_slice9.py`;
+- extracted surface is one typed dataclass carrying the final `33` computed prompt-argument values from the remaining mapped render families;
+- the accepted before/after snapshot is byte-identical across all `3` scenarios, and `user_prompt_equivalence.md` proves line-by-line and SHA1-level identity of the exact prompt text sent to the LLM;
+- direct slice-9 helper tests passed `3/3`;
+- new runner contract tests passed `3/3`;
+- clean-tree historical contract rerun passed `28/28` across APPLY-6 + APPLY-7 + APPLY-9 + APPLY-10 + APPLY-11 + APPLY-12 + APPLY-13 + APPLY-14 + APPLY-15 + APPLY-16;
+- the broad writer subset currently reports `12 failed, 211 passed, 346 warnings` with `PYTHONPATH=bot_psychologist`; this wider suite background is recorded as an honest warning and not as slice-9 prompt-render regression evidence;
+- protected previously accepted files remained unchanged under diff/hash proof, including slice-1 through slice-8 helpers, writer mixins, `writer_contract.py`, and the `admin_routes` split modules.
+
 ## PRD-047.42-APPLY-15 _call_llm slice 8
 PRD-047.42-APPLY-15 continues the `WRITER_USER_TEMPLATE.format(...)` decomposition track by moving the next two fully ctx-driven argument families out of inline prompt assembly: `response_planner` plus `dialogue_profile_and_pragmatics`. The work keeps the same single render call, preserves the intentionally separate `dialogue_profile` `ctx.get(...)` expression instead of collapsing it into the earlier local variable, and proves byte-identical behavior on the accepted 3-scenario `_call_llm` snapshot including exact `user_prompt` text and full `last_debug`.
 

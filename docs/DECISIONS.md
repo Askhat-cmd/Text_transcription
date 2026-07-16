@@ -6,7 +6,7 @@ Status: accepted
 
 Date: 2026-07-16
 
-Delivery: PRD-047.42-APPLY-20 accepted pending delivery metadata.
+Delivery: PRD-047.42-APPLY-20 accepted in main implementation commit `ce37f03`.
 
 Context: PRD-047.42-APPLY-19 finished the last movable `_call_llm` cluster, which made `_enforce_answer_compliance(...)` the next giant writer method on the Thin Spine Recovery path. Unlike the prompt-render slices, this method is an order-sensitive cascade of many sequential `if` rules that all read and mutate the same `text` value. A direct move without a map would hide the real contract: rule order itself is behavior, and later rules see `text` already altered by earlier ones. At the same time, the project already has evidence that self-attested “good enough coverage” is a structural risk, so the next PRD had to optimize for honest gaps rather than pretty numbers.
 

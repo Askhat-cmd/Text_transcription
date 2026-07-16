@@ -6,9 +6,9 @@
 PRD-047.42-APPLY-20 turns the next giant writer method into an evidence-backed decomposition target without moving any production code. The work maps `WriterAgent._enforce_answer_compliance(...)` as a `610`-line ordered rule cascade, proves deterministic behavior on named `(response_text, contract)` cases, and records honest coverage gaps before any future apply slice touches the method.
 
 Current result:
-- main implementation commit: `pending`;
-- push status: `pending`;
-- status is `accepted_pending_delivery_metadata`;
+- main implementation commit: `ce37f03`;
+- push status: `pushed_to_origin_main`;
+- status is `accepted`;
 - new runner is `TO_DO_LIST/tools/run_prd_047_42_apply_20_enforce_compliance_mapping.py`;
 - boundary map records `75` ordered rules with exact line spans, early-return markers, and locals-read lists;
 - snapshot harness covers `17` deterministic cases and reproduces identical output on double build with `generated_at_utc == NORMALIZED_TIMESTAMP`;

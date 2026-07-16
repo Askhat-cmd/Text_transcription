@@ -1,5 +1,25 @@
 # Architecture Decisions
 
+## ADR-121 - The first `_enforce_answer_compliance` apply slice must be the total prelude window, not the first partially covered rule family
+
+Status: accepted
+
+Date: 2026-07-16
+
+Delivery: PRD-047.42-APPLY-21 accepted with warning pending delivery metadata.
+
+Context: PRD-047.42-APPLY-20 proved that `_enforce_answer_compliance(...)` is not one coherent block but a `75`-rule ordered cascade with only `22` covered rules in the accepted harness. After that map, there were two tempting follow-ups: start cutting the earliest real rule family immediately, or first extract the always-executed prelude that prepares the rule inputs. The second path looked less glamorous, but it carried one decisive advantage: the prelude runs in all `17` accepted APPLY-20 cases and ends before the first uncovered early-return family. That means a snapshot can fully prove its behavior, unlike a rule-family slice that would immediately inherit the map's `53` uncovered-rule debt.
+
+Decision:
+- make the first real `_enforce_answer_compliance` code move the whole prelude window from `ctx = contract.to_prompt_context()` through `gate_failed_checks`, and nothing below `R02`;
+- keep `text` and `R01` inline above the helper call, because they sit outside the mapped prelude boundary;
+- keep `R02` and everything below untouched, including `legacy_constraints_suppressed`, because those belong to later rule-family PRDs;
+- represent the moved surface as one frozen dataclass with the exact `44` locals in assignment order plus one ordered `last_debug_patch`;
+- replace all in-range `self.last_debug[...] = ...` writes with patch accumulation only after grep proves there are no in-range `self.last_debug` reads;
+- require byte-identical before/after snapshots over the same `17` APPLY-20 cases and explicit proof that prior APPLY-20 log artifacts remain unchanged.
+
+Consequences: the `_enforce_answer_compliance` decomposition track now begins with a fully covered structural slice instead of a partially covered semantic slice. Future PRDs can debate coverage extension versus first rule-family extraction from a smaller parent method and a proven helper seam, rather than from a still-monolithic prelude-plus-rules block.
+
 ## ADR-120 - `_enforce_answer_compliance` decomposition must begin with an honest boundary map and rule-coverage log, not a first code move
 
 Status: accepted

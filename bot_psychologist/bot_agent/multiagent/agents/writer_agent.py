@@ -12,27 +12,17 @@ from ...feature_flags import feature_flags
 from ..active_line import starts_with_mechanical_revoicing
 from ..dialogue_policy import (
     DIALOGUE_PROFILE_MVP_FREE,
-    detect_application_request,
-    detect_direct_concrete_request,
-    detect_explicit_answer_need,
     detect_examples_request,
-    detect_expansion_request,
     detect_numbered_list_request,
     detect_practice_overview_request,
-    detect_repair_and_expand_request,
-    detect_sarcasm_or_negative_feedback,
-    detect_summary_request,
-    normalize_dialogue_profile,
 )
 from ..concrete_answer_fit import evaluate_concrete_answer_fit
 from ..stale_stub_detector import detect_stale_stub
 from ..contracts.writer_contract import WriterContract
 from .agent_llm_client import create_agent_completion
 from .agent_llm_config import get_model_for_agent, get_temperature_for_agent
-from .writer_agent_constants import (
-    _contains_any,
-    _extract_literal_markdown_echo_request,
-)
+from .writer_agent_constants import _contains_any
+from .writer_agent_enforce_slice1 import _extract_enforce_slice1_prelude
 from .writer_agent_fallback_helpers import (
     _build_gentle_close_reply as _fallback_build_gentle_close_reply,
     _build_no_practice_fallback_text as _fallback_build_no_practice_fallback_text,
@@ -584,126 +574,52 @@ class WriterAgent(WriterAgentLifecycleMixin, WriterAgentFallbackStateMixin):
         if not text:
             return text
 
-        ctx = contract.to_prompt_context()
-        user_message = str(ctx.get("user_message", "") or "")
-        lowered_user = user_message.lower()
-        literal_markdown_echo = _extract_literal_markdown_echo_request(user_message)
-        dialogue_profile = normalize_dialogue_profile(ctx.get("dialogue_profile", "safe_guided"))
-        expansion_requested = bool(ctx.get("dialogue_expansion_requested", False)) or detect_expansion_request(user_message)
-        repair_and_expand_requested = bool(
-            ctx.get("dialogue_repair_and_expand_requested", False)
-        ) or detect_repair_and_expand_request(user_message)
-        knowledge_answer = dict(ctx.get("knowledge_answer", {})) if isinstance(ctx.get("knowledge_answer"), dict) else {}
-        practice_gate = dict(ctx.get("practice_gate", {})) if isinstance(ctx.get("practice_gate"), dict) else {}
-        practice_allowed = bool(practice_gate.get("practice_allowed", True))
-        should_answer_directly = bool(knowledge_answer.get("should_answer_directly", False))
-        is_greeting = bool(practice_gate.get("is_greeting", False))
-        concept = str(knowledge_answer.get("concept", "") or "").strip().lower()
-        active_line = dict(ctx.get("active_line", {})) if isinstance(ctx.get("active_line"), dict) else {}
-        active_line_intent = str(active_line.get("user_intent", "unknown") or "unknown")
-        active_line_repair_mode = str(active_line.get("repair_mode", "") or "")
-        active_line_revoicing_allowed = bool(active_line.get("revoicing_allowed", True))
-        active_line_should_offer_practice = bool(active_line.get("should_offer_practice", practice_allowed))
-        active_line_practice_suppression = bool(active_line.get("practice_suppression_active", False))
-        response_planner = dict(ctx.get("response_planner", {})) if isinstance(ctx.get("response_planner"), dict) else {}
-        planner_next_move = str(response_planner.get("next_move", "continue_active_line") or "continue_active_line")
-        planner_answer_shape = str(response_planner.get("answer_shape", "compact_direct") or "compact_direct")
-        planner_question_policy = str(response_planner.get("question_policy", "none") or "none")
-        planner_practice_policy = str(response_planner.get("practice_policy", "forbidden") or "forbidden")
-        planner_safety_priority = bool(response_planner.get("safety_priority", False))
-        dialogue_policy_payload = dict(ctx.get("dialogue_policy", {})) if isinstance(ctx.get("dialogue_policy"), dict) else {}
-        dialogue_pragmatics_payload = (
-            dict(ctx.get("dialogue_pragmatics", {}))
-            if isinstance(ctx.get("dialogue_pragmatics"), dict)
-            else {}
-        )
-        explicit_answer_need = bool(
-            dialogue_policy_payload.get("explicit_answer_need", False)
-        ) or detect_explicit_answer_need(user_message)
-        direct_concrete_request = bool(
-            dialogue_policy_payload.get("direct_concrete_request", False)
-        ) or detect_direct_concrete_request(user_message)
-        summary_request = bool(
-            dialogue_policy_payload.get("summary_request", False)
-        ) or detect_summary_request(user_message)
-        sarcasm_or_negative_feedback = bool(
-            dialogue_policy_payload.get("sarcasm_or_negative_feedback", False)
-        ) or detect_sarcasm_or_negative_feedback(user_message)
-        application_request = bool(
-            dialogue_policy_payload.get("application_request", False)
-        ) or detect_application_request(user_message)
-        human_like_answer_policy = (
-            dict(dialogue_policy_payload.get("human_like_answer_policy", {}))
-            if isinstance(dialogue_policy_payload.get("human_like_answer_policy"), dict)
-            else {}
-        )
-        constraint_resolution = (
-            dict(dialogue_policy_payload.get("constraint_resolution", {}))
-            if isinstance(dialogue_policy_payload.get("constraint_resolution"), dict)
-            else {}
-        )
-        practice_overview_requested = bool(
-            dialogue_policy_payload.get("practice_overview_requested", False)
-            or planner_next_move == "answer_practice_overview"
-            or planner_answer_shape == "practice_catalog_explanation"
-        )
-        pragmatics_contextual_followup = bool(
-            dialogue_pragmatics_payload.get("is_contextual_followup", False)
-        )
-        pragmatics_offer_type = str(
-            dialogue_pragmatics_payload.get("previous_assistant_offer_type", "unknown") or "unknown"
-        )
-        pragmatics_should_not_reconfirm = bool(
-            dialogue_pragmatics_payload.get("should_not_ask_confirmation_again", False)
-        )
-        pragmatics_repair_dissatisfaction = bool(
-            dialogue_pragmatics_payload.get("repair_user_dissatisfaction", False)
-        )
-        lowered_text = text.lower()
-        self.last_debug["compliance_planner_next_move"] = planner_next_move
-        self.last_debug["compliance_planner_answer_shape"] = planner_answer_shape
-        self.last_debug["compliance_planner_question_policy"] = planner_question_policy
-        self.last_debug["compliance_response_planner_present"] = bool(response_planner)
-        self.last_debug["human_like_answer_policy_enabled"] = bool(
-            human_like_answer_policy.get("enabled", False)
-        )
-        self.last_debug["explicit_answer_need"] = bool(explicit_answer_need)
-        self.last_debug["repair_user_dissatisfaction"] = bool(
-            sarcasm_or_negative_feedback
-            or bool(
-                dict(dialogue_policy_payload.get("mvp_overrides", {})).get(
-                    "repair_user_dissatisfaction",
-                    False,
-                )
-            )
-        )
-        self.last_debug["sarcasm_or_negative_feedback"] = bool(sarcasm_or_negative_feedback)
-        self.last_debug["overruled_constraints"] = [
-            str(item)
-            for item in list(constraint_resolution.get("overruled_constraints", []) or [])
-            if str(item).strip()
-        ]
-        final_answer_directive = (
-            dict(ctx.get("final_answer_directive", {}))
-            if isinstance(ctx.get("final_answer_directive"), dict)
-            else {}
-        )
-        writer_contact_mode = str(
-            ctx.get("final_answer_writer_contact_mode")
-            or final_answer_directive.get("writer_contact_mode", "")
-            or ""
-        )
-        self.last_debug["final_answer_directive"] = final_answer_directive
-        gate_feedback = (
-            dict(final_answer_directive.get("acceptance_gate_feedback", {}))
-            if isinstance(final_answer_directive.get("acceptance_gate_feedback"), dict)
-            else {}
-        )
-        gate_failed_checks = {
-            str(item)
-            for item in list(gate_feedback.get("failed_checks", []) or [])
-            if str(item).strip()
-        }
+        slice1_prelude = _extract_enforce_slice1_prelude(contract, text=text)
+        ctx = slice1_prelude.ctx
+        user_message = slice1_prelude.user_message
+        lowered_user = slice1_prelude.lowered_user
+        literal_markdown_echo = slice1_prelude.literal_markdown_echo
+        dialogue_profile = slice1_prelude.dialogue_profile
+        expansion_requested = slice1_prelude.expansion_requested
+        repair_and_expand_requested = slice1_prelude.repair_and_expand_requested
+        knowledge_answer = slice1_prelude.knowledge_answer
+        practice_gate = slice1_prelude.practice_gate
+        practice_allowed = slice1_prelude.practice_allowed
+        should_answer_directly = slice1_prelude.should_answer_directly
+        is_greeting = slice1_prelude.is_greeting
+        concept = slice1_prelude.concept
+        active_line = slice1_prelude.active_line
+        active_line_intent = slice1_prelude.active_line_intent
+        active_line_repair_mode = slice1_prelude.active_line_repair_mode
+        active_line_revoicing_allowed = slice1_prelude.active_line_revoicing_allowed
+        active_line_should_offer_practice = slice1_prelude.active_line_should_offer_practice
+        active_line_practice_suppression = slice1_prelude.active_line_practice_suppression
+        response_planner = slice1_prelude.response_planner
+        planner_next_move = slice1_prelude.planner_next_move
+        planner_answer_shape = slice1_prelude.planner_answer_shape
+        planner_question_policy = slice1_prelude.planner_question_policy
+        planner_practice_policy = slice1_prelude.planner_practice_policy
+        planner_safety_priority = slice1_prelude.planner_safety_priority
+        dialogue_policy_payload = slice1_prelude.dialogue_policy_payload
+        dialogue_pragmatics_payload = slice1_prelude.dialogue_pragmatics_payload
+        explicit_answer_need = slice1_prelude.explicit_answer_need
+        direct_concrete_request = slice1_prelude.direct_concrete_request
+        summary_request = slice1_prelude.summary_request
+        sarcasm_or_negative_feedback = slice1_prelude.sarcasm_or_negative_feedback
+        application_request = slice1_prelude.application_request
+        human_like_answer_policy = slice1_prelude.human_like_answer_policy
+        constraint_resolution = slice1_prelude.constraint_resolution
+        practice_overview_requested = slice1_prelude.practice_overview_requested
+        pragmatics_contextual_followup = slice1_prelude.pragmatics_contextual_followup
+        pragmatics_offer_type = slice1_prelude.pragmatics_offer_type
+        pragmatics_should_not_reconfirm = slice1_prelude.pragmatics_should_not_reconfirm
+        pragmatics_repair_dissatisfaction = slice1_prelude.pragmatics_repair_dissatisfaction
+        lowered_text = slice1_prelude.lowered_text
+        final_answer_directive = slice1_prelude.final_answer_directive
+        writer_contact_mode = slice1_prelude.writer_contact_mode
+        gate_feedback = slice1_prelude.gate_feedback
+        gate_failed_checks = slice1_prelude.gate_failed_checks
+        self.last_debug.update(slice1_prelude.last_debug_patch)
         if (
             "greeting_answered_with_mechanism_explanation" in gate_failed_checks
             and _contains_any(lowered_user, ("здравств", "привет", "добрый день", "добрый вечер"))

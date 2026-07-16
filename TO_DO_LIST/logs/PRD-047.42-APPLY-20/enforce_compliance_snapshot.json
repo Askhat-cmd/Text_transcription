@@ -1,0 +1,906 @@
+{
+  "schema_version": "prd_047_42_apply_20_enforce_compliance_snapshot_v1",
+  "generated_at_utc": "normalized_for_prd_047_42_apply_20",
+  "metadata": {
+    "rule_count": 75,
+    "case_count": 17,
+    "covered_rule_count": 22,
+    "uncovered_rule_count": 53,
+    "target_method": "WriterAgent._enforce_answer_compliance"
+  },
+  "cases": [
+    {
+      "case": "empty_text_passthrough",
+      "note": "Covers the initial empty-text return.",
+      "input": {
+        "response_text": "",
+        "contract_summary": {
+          "user_message": "объясни по-человечески, что такое нейросталкинг, без практик",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "answer_knowledge_question",
+          "planner_next_move": "answer_known_concept",
+          "planner_answer_shape": "compact_direct",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "",
+      "output_sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+      "final_answer_shape": null,
+      "retry_signal_reason": null,
+      "triggered_rules": [
+        "R01"
+      ]
+    },
+    {
+      "case": "greeting_gate_feedback_repair",
+      "note": "Early greeting repair branch before the main cascade.",
+      "input": {
+        "response_text": "Главный механизм в том, что автоматический контроль заранее забирает ресурс.",
+        "contract_summary": {
+          "user_message": "Привет! Как перестать наступать на одни и те же грабли?",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "continue_thread",
+          "planner_next_move": "deepen_mechanism",
+          "planner_answer_shape": "mechanism_explanation",
+          "planner_question_policy": "optional_none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Привет. Такое обычно повторяется, когда в похожих ситуациях снова включается один и тот же автоматический способ справляться, даже если он уже не помогает. Это не про слабость, а про привычную защитную реакцию.",
+      "output_sha1": "01a1270fd959e78c40c3ca6d972d26cf59aaa3e1",
+      "final_answer_shape": "contact_brief",
+      "retry_signal_reason": null,
+      "triggered_rules": [
+        "R02"
+      ]
+    },
+    {
+      "case": "close_gently_obligation",
+      "note": "Obligation-specific gentle close repair.",
+      "input": {
+        "response_text": "Пожалуйста. Если хочешь, в следующий раз можем продолжить и разобрать это глубже?",
+        "contract_summary": {
+          "user_message": "Спасибо, мне пока хватит.",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "close_gently",
+          "planner_next_move": "continue_active_line",
+          "planner_answer_shape": "expanded_explanation",
+          "planner_question_policy": "optional_none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Пожалуйста. Береги себя.",
+      "output_sha1": "17d38cc58167a954042181168e3d297797c19aa5",
+      "final_answer_shape": "gentle_close",
+      "retry_signal_reason": null,
+      "triggered_rules": [
+        "R03"
+      ]
+    },
+    {
+      "case": "bounded_practice_be_strong",
+      "note": "Exercises the bounded-practice repair path and the nested 'будь сильным' branch.",
+      "input": {
+        "response_text": "Сначала сделай три шага и потом задай себе вопрос, как ты держишься?",
+        "contract_summary": {
+          "user_message": "Когда включается драйвер «будь сильным», дай одну короткую практику.",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "provide_one_bounded_practice",
+          "planner_next_move": "give_direct_step",
+          "planner_answer_shape": "one_step",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "required",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Одна короткая практика: в момент, когда включается «Будь сильным», заметь, где тело напрягается, и тихо назови про себя: «сейчас я снова держусь через силу». На этом остановись, ничего не исправляя.",
+      "output_sha1": "33433a4b4f6a7b4810a57f21f1da5e78b40c1b92",
+      "final_answer_shape": "one_short_practice",
+      "retry_signal_reason": null,
+      "triggered_rules": [
+        "R04",
+        "R05",
+        "R06"
+      ]
+    },
+    {
+      "case": "literal_markdown_echo",
+      "note": "Literal markdown echo repair.",
+      "input": {
+        "response_text": "Я слышу тебя. Расскажи больше, если хочешь.",
+        "contract_summary": {
+          "user_message": "Верни без объяснений и без изменений следующий markdown-блок: **Жирный заголовок**\n\nПервый абзац.\n\n- Пункт один\n- Пункт два",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "answer_knowledge_question",
+          "planner_next_move": "answer_known_concept",
+          "planner_answer_shape": "compact_direct",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "**Жирный заголовок**\n\nПервый абзац.\n\n- Пункт один\n- Пункт два",
+      "output_sha1": "2a56f78692417e2c755d39b547124d60d833d6a0",
+      "final_answer_shape": "literal_markdown_echo",
+      "retry_signal_reason": null,
+      "triggered_rules": [
+        "R07",
+        "R08"
+      ]
+    },
+    {
+      "case": "repair_last_question_neurostalking",
+      "note": "Repair-and-answer-last-question obligation.",
+      "input": {
+        "response_text": "Ладно, тогда уточню иначе.",
+        "contract_summary": {
+          "user_message": "ты не ответил мне на вопрос",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "repair_and_answer_last_question",
+          "planner_next_move": "answer_known_concept",
+          "planner_answer_shape": "compact_direct",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Ладно, тогда уточню иначе.",
+      "output_sha1": "775d772ff059420914d8f7490578924a844e124e",
+      "final_answer_shape": "repair_answer_last_question_repair_deferred_to_gate",
+      "retry_signal_reason": "repair_answer_last_question_repair",
+      "triggered_rules": [
+        "R11",
+        "R12"
+      ]
+    },
+    {
+      "case": "mvp_free_branch_handoff",
+      "note": "Covers the profile handoff into `_enforce_mvp_free_dialogue_compliance`.",
+      "input": {
+        "response_text": "Понял — тебе тяжело, и это нормально. Не нужно сейчас ничего исправлять или заставлять себя.\n\nЕсли захочешь дальше — можем вместе придумать один маленький шаг, когда тебе станет легче.",
+        "contract_summary": {
+          "user_message": "Всё, не хочу сейчас практику. Мне тяжело, просто скажи по-человечески.",
+          "dialogue_profile": "mvp_free_dialogue",
+          "answer_obligation": "answer_latest_turn",
+          "planner_next_move": "give_direct_step",
+          "planner_answer_shape": "one_step",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Понял — тебе тяжело, и это нормально. Не нужно сейчас ничего исправлять или заставлять себя",
+      "output_sha1": "19b973c833a29b61434391f0f437d0457966e976",
+      "final_answer_shape": "sanitized_direct_no_forced_practice",
+      "retry_signal_reason": null,
+      "triggered_rules": [
+        "R17"
+      ]
+    },
+    {
+      "case": "low_resource_short_contact",
+      "note": "Low-resource no-practice compression.",
+      "input": {
+        "response_text": "Давай разберем это подробно? Сначала можно сделать шаг.",
+        "contract_summary": {
+          "user_message": "Я устал, без анализа, просто поддержи.",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "answer_knowledge_question",
+          "planner_next_move": "answer_known_concept",
+          "planner_answer_shape": "compact_direct",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Я рядом. Сейчас не нужно ничего разбирать. Можно просто немного снизить внутреннее давление.",
+      "output_sha1": "fddb481ce3a9a84d3ae56760c94b346a6f583b2e",
+      "final_answer_shape": null,
+      "retry_signal_reason": null,
+      "triggered_rules": [
+        "R15",
+        "R19",
+        "R20"
+      ]
+    },
+    {
+      "case": "thanks_close_no_more_steps",
+      "note": "Active-line thanks-close short-circuit.",
+      "input": {
+        "response_text": "Пожалуйста. Давай сделаем еще один шаг.",
+        "contract_summary": {
+          "user_message": "Спасибо, этого пока хватит.",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "answer_knowledge_question",
+          "planner_next_move": "answer_known_concept",
+          "planner_answer_shape": "compact_direct",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "thanks_close",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Пожалуйста. Рад, что стало чуть яснее.",
+      "output_sha1": "ceac7df97b9998b9ebfe313c2fb5c052026a0956",
+      "final_answer_shape": null,
+      "retry_signal_reason": null,
+      "triggered_rules": [
+        "R15",
+        "R21"
+      ]
+    },
+    {
+      "case": "safety_priority_question_strip",
+      "note": "Planner safety-priority branch for non-MVP profile.",
+      "input": {
+        "response_text": "Я рядом. Что сейчас помогает тебе держаться?",
+        "contract_summary": {
+          "user_message": "объясни по-человечески, что такое нейросталкинг, без практик",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "answer_knowledge_question",
+          "planner_next_move": "answer_known_concept",
+          "planner_answer_shape": "compact_direct",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Я рядом. Что сейчас помогает тебе держаться?",
+      "output_sha1": "37bc7c514dbc91d6027d0917f7a62efe3619141f",
+      "final_answer_shape": "knowledge_direct_answer_repair_deferred_to_gate",
+      "retry_signal_reason": "knowledge_direct_answer_repair",
+      "triggered_rules": [
+        "R15",
+        "R16"
+      ]
+    },
+    {
+      "case": "clarify_one_point_insert_question",
+      "note": "Clarify-one-point rule with zero questions in text.",
+      "input": {
+        "response_text": "Похоже, это сильно сжимает тебя.",
+        "contract_summary": {
+          "user_message": "Не понимаю, что со мной в этот момент.",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "answer_knowledge_question",
+          "planner_next_move": "clarify_one_point",
+          "planner_answer_shape": "clarify_one_point",
+          "planner_question_policy": "optional_none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Если выбрать один узел прямо сейчас, что больше всего сжимает тебя в этой ситуации?",
+      "output_sha1": "10469f5ce5a46a8cea43c0a2816b1bd9bf4cbcfa",
+      "final_answer_shape": null,
+      "retry_signal_reason": null,
+      "triggered_rules": [
+        "R15",
+        "R29",
+        "R30"
+      ]
+    },
+    {
+      "case": "user_repair_signal_retry",
+      "note": "User repair signal should defer to no-stub retry.",
+      "input": {
+        "response_text": "Хорошо, тогда пойдем дальше.",
+        "contract_summary": {
+          "user_message": "Ты ушел не туда, вернись к сути и не предлагай практику.",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "answer_knowledge_question",
+          "planner_next_move": "answer_known_concept",
+          "planner_answer_shape": "compact_direct",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Хорошо, тогда пойдем дальше.",
+      "output_sha1": "2154e1e06588d732298ef3b230ad126bd337dd51",
+      "final_answer_shape": "user_repair_signal_deferred_to_gate",
+      "retry_signal_reason": "user_repair_signal",
+      "triggered_rules": [
+        "R15",
+        "R33"
+      ]
+    },
+    {
+      "case": "known_concept_neurostalking_repair",
+      "note": "Known-concept repair path before question-policy cascade.",
+      "input": {
+        "response_text": "Это внешнее слежение и биофидбек. О каком варианте ты говоришь?",
+        "contract_summary": {
+          "user_message": "что такое нейросталкинг?",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "answer_knowledge_question",
+          "planner_next_move": "answer_known_concept",
+          "planner_answer_shape": "compact_direct",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Это внешнее слежение и биофидбек. О каком варианте ты говоришь?",
+      "output_sha1": "f55b1a5bcab2ec8dc0c7271256d2ac7fb1e4cb9b",
+      "final_answer_shape": "knowledge_direct_answer_repair_deferred_to_gate",
+      "retry_signal_reason": "knowledge_direct_answer_repair",
+      "triggered_rules": [
+        "R15",
+        "R16"
+      ]
+    },
+    {
+      "case": "question_policy_none_known_concept",
+      "note": "Question-policy none path with known-concept repair tail.",
+      "input": {
+        "response_text": "Нейросталкинг — это внутреннее наблюдение за автоматическими реакциями?",
+        "contract_summary": {
+          "user_message": "что такое нейросталкинг?",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "answer_knowledge_question",
+          "planner_next_move": "answer_known_concept",
+          "planner_answer_shape": "compact_direct",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Нейросталкинг — это внутреннее наблюдение за автоматическими реакциями?",
+      "output_sha1": "88365bad0ff6a3556a0cd9fc60d115200fef46c6",
+      "final_answer_shape": "knowledge_direct_answer_repair_deferred_to_gate",
+      "retry_signal_reason": "knowledge_direct_answer_repair",
+      "triggered_rules": [
+        "R15",
+        "R16"
+      ]
+    },
+    {
+      "case": "template_leakage_practice_forbidden",
+      "note": "Planner practice-forbidden with unsolicited practice in answer text.",
+      "input": {
+        "response_text": "Попробуй сделать вдох и потом задай себе вопрос, как ты сейчас.",
+        "contract_summary": {
+          "user_message": "объясни по-человечески без практик",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "answer_knowledge_question",
+          "planner_next_move": "continue_active_line",
+          "planner_answer_shape": "compact_direct",
+          "planner_question_policy": "optional_none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Попробуй сделать вдох и потом задай себе вопрос, как ты сейчас.",
+      "output_sha1": "429db064196932409b75fe900e1275f168df23d1",
+      "final_answer_shape": "template_repair_deferred_to_gate",
+      "retry_signal_reason": null,
+      "triggered_rules": [
+        "R15",
+        "R55"
+      ]
+    },
+    {
+      "case": "active_line_revoicing_trim",
+      "note": "Mechanical revoicing tail branch.",
+      "input": {
+        "response_text": "Тебе сейчас тяжело. Попробуй заметить, что именно сжимает тебя в теле.",
+        "contract_summary": {
+          "user_message": "Скажи прямо, без перефразирования.",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "answer_knowledge_question",
+          "planner_next_move": "continue_active_line",
+          "planner_answer_shape": "compact_direct",
+          "planner_question_policy": "optional_none",
+          "planner_practice_policy": "optional",
+          "active_line_intent": "continue_thread",
+          "practice_allowed": true
+        }
+      },
+      "output_text": "Тебе сейчас тяжело. Попробуй заметить, что именно сжимает тебя в теле.",
+      "output_sha1": "a9bf3f0f15dc3af0255acf3e777c6e31a4196a56",
+      "final_answer_shape": null,
+      "retry_signal_reason": null,
+      "triggered_rules": [
+        "R15"
+      ]
+    },
+    {
+      "case": "tail_known_concept_self_realization",
+      "note": "Tail known-concept branch for self-realization.",
+      "input": {
+        "response_text": "Самореализация — это когда ты раскрываешь свои задатки и двигаешься к своему пути.",
+        "contract_summary": {
+          "user_message": "что такое самореализация?",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "answer_knowledge_question",
+          "planner_next_move": "answer_known_concept",
+          "planner_answer_shape": "compact_direct",
+          "planner_question_policy": "optional_none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Самореализация — это когда ты раскрываешь свои задатки и двигаешься к своему пути.",
+      "output_sha1": "7fd6d63583905bad16e86889cb85c39b57ec406d",
+      "final_answer_shape": "known_concept_self_realization_repair_deferred_to_gate",
+      "retry_signal_reason": "known_concept_self_realization_repair",
+      "triggered_rules": [
+        "R15",
+        "R72",
+        "R75"
+      ]
+    }
+  ],
+  "coverage": {
+    "R01": [
+      "empty_text_passthrough"
+    ],
+    "R02": [
+      "greeting_gate_feedback_repair"
+    ],
+    "R03": [
+      "close_gently_obligation"
+    ],
+    "R04": [
+      "bounded_practice_be_strong"
+    ],
+    "R05": [
+      "bounded_practice_be_strong"
+    ],
+    "R06": [
+      "bounded_practice_be_strong"
+    ],
+    "R07": [
+      "literal_markdown_echo"
+    ],
+    "R08": [
+      "literal_markdown_echo"
+    ],
+    "R09": [],
+    "R10": [],
+    "R11": [
+      "repair_last_question_neurostalking"
+    ],
+    "R12": [
+      "repair_last_question_neurostalking"
+    ],
+    "R13": [],
+    "R14": [],
+    "R15": [
+      "low_resource_short_contact",
+      "thanks_close_no_more_steps",
+      "safety_priority_question_strip",
+      "clarify_one_point_insert_question",
+      "user_repair_signal_retry",
+      "known_concept_neurostalking_repair",
+      "question_policy_none_known_concept",
+      "template_leakage_practice_forbidden",
+      "active_line_revoicing_trim",
+      "tail_known_concept_self_realization"
+    ],
+    "R16": [
+      "safety_priority_question_strip",
+      "known_concept_neurostalking_repair",
+      "question_policy_none_known_concept"
+    ],
+    "R17": [
+      "mvp_free_branch_handoff"
+    ],
+    "R18": [],
+    "R19": [
+      "low_resource_short_contact"
+    ],
+    "R20": [
+      "low_resource_short_contact"
+    ],
+    "R21": [
+      "thanks_close_no_more_steps"
+    ],
+    "R22": [],
+    "R23": [],
+    "R24": [],
+    "R25": [],
+    "R26": [],
+    "R27": [],
+    "R28": [],
+    "R29": [
+      "clarify_one_point_insert_question"
+    ],
+    "R30": [
+      "clarify_one_point_insert_question"
+    ],
+    "R31": [],
+    "R32": [],
+    "R33": [
+      "user_repair_signal_retry"
+    ],
+    "R34": [],
+    "R35": [],
+    "R36": [],
+    "R37": [],
+    "R38": [],
+    "R39": [],
+    "R40": [],
+    "R41": [],
+    "R42": [],
+    "R43": [],
+    "R44": [],
+    "R45": [],
+    "R46": [],
+    "R47": [],
+    "R48": [],
+    "R49": [],
+    "R50": [],
+    "R51": [],
+    "R52": [],
+    "R53": [],
+    "R54": [],
+    "R55": [
+      "template_leakage_practice_forbidden"
+    ],
+    "R56": [],
+    "R57": [],
+    "R58": [],
+    "R59": [],
+    "R60": [],
+    "R61": [],
+    "R62": [],
+    "R63": [],
+    "R64": [],
+    "R65": [],
+    "R66": [],
+    "R67": [],
+    "R68": [],
+    "R69": [],
+    "R70": [],
+    "R71": [],
+    "R72": [
+      "tail_known_concept_self_realization"
+    ],
+    "R73": [],
+    "R74": [],
+    "R75": [
+      "tail_known_concept_self_realization"
+    ]
+  },
+  "uncovered_rules": [
+    {
+      "rule": "R09",
+      "lines": "826-834",
+      "condition": "answer_obligation == 'acknowledge_style_preference_then_answer' and ('расскажи больше' in lowered_text or len(text) < 140)",
+      "reason": "requires a more specific compound contract/text state than the current deterministic case set"
+    },
+    {
+      "rule": "R10",
+      "lines": "829-834",
+      "condition": "concept_question",
+      "reason": "needs exact concept-oriented user message and matching planner obligation"
+    },
+    {
+      "rule": "R13",
+      "lines": "847-862",
+      "condition": "answer_obligation == 'answer_last_offer' and (any((marker in lowered_text for marker in ('подтверди', 'если хочешь', 'могу так сделать'))) or any((marker in lowered_text for marker in ('предлагаю такой план', 'хотите,...",
+      "reason": "needs last-offer memory state plus exact repeated-offer wording"
+    },
+    {
+      "rule": "R14",
+      "lines": "857-862",
+      "condition": "any((color in offer_repair_context for color in ('красн', 'оранж', 'зелен')))",
+      "reason": "needs last-offer memory state plus exact repeated-offer wording"
+    },
+    {
+      "rule": "R18",
+      "lines": "914-918",
+      "condition": "not practice_allowed and (not should_answer_directly) and (is_greeting or has_unsolicited_practice)",
+      "reason": "needs practice markers plus matching policy state"
+    },
+    {
+      "rule": "R22",
+      "lines": "931-932",
+      "condition": "planner_safety_priority and has_question",
+      "reason": "requires a more specific compound contract/text state than the current deterministic case set"
+    },
+    {
+      "rule": "R23",
+      "lines": "934-935",
+      "condition": "planner_next_move == 'give_short_support' or planner_answer_shape == 'short_support'",
+      "reason": "requires a more specific compound contract/text state than the current deterministic case set"
+    },
+    {
+      "rule": "R24",
+      "lines": "937-938",
+      "condition": "planner_next_move == 'give_short_support' and (len(text) > 260 or has_question or has_unsolicited_practice)",
+      "reason": "needs practice markers plus matching policy state"
+    },
+    {
+      "rule": "R25",
+      "lines": "940-941",
+      "condition": "planner_next_move == 'stabilize_safety' and (len(text) > 320 or has_question)",
+      "reason": "needs safety-priority planner profile with exact long/question shape"
+    },
+    {
+      "rule": "R26",
+      "lines": "943-947",
+      "condition": "planner_next_move == 'stabilize_safety' and _contains_any(lowered_text, ('механизм', 'прогнозирован', 'контрол', 'паттерн', 'драйвер', 'до начала действия'))",
+      "reason": "needs safety-priority planner profile with exact long/question shape"
+    },
+    {
+      "rule": "R27",
+      "lines": "949-954",
+      "condition": "planner_next_move == 'close_gently' and (has_question or has_unsolicited_practice or _contains_any(lowered_text, ('новый шаг', 'давай продолжим', 'в следующий раз разберем')))",
+      "reason": "needs practice markers plus matching policy state"
+    },
+    {
+      "rule": "R28",
+      "lines": "956-960",
+      "condition": "planner_next_move == 'give_short_support' and _contains_any(lowered_text, ('механизм', 'теория', 'стратегия', 'прогнозирован', 'контрол', 'паттерн'))",
+      "reason": "requires a more specific compound contract/text state than the current deterministic case set"
+    },
+    {
+      "rule": "R31",
+      "lines": "966-968",
+      "condition": "question_count > 1",
+      "reason": "requires a more specific compound contract/text state than the current deterministic case set"
+    },
+    {
+      "rule": "R32",
+      "lines": "969-970",
+      "condition": "len(text) > 320",
+      "reason": "requires a more specific compound contract/text state than the current deterministic case set"
+    },
+    {
+      "rule": "R34",
+      "lines": "981-999",
+      "condition": "should_answer_directly and (asks_define_known_term or has_external_surveillance_frame)",
+      "reason": "requires a more specific compound contract/text state than the current deterministic case set"
+    },
+    {
+      "rule": "R35",
+      "lines": "982-987",
+      "condition": "'самореализац' in lowered_user and ('коррелир' in lowered_user or 'связан' in lowered_user)",
+      "reason": "needs dedicated self-realization concept fixture"
+    },
+    {
+      "rule": "R36",
+      "lines": "988-993",
+      "condition": "concept == 'нейросталкинг'",
+      "reason": "needs exact concept-oriented user message and matching planner obligation"
+    },
+    {
+      "rule": "R37",
+      "lines": "994-999",
+      "condition": "concept == 'самореализация'",
+      "reason": "needs dedicated self-realization concept fixture"
+    },
+    {
+      "rule": "R38",
+      "lines": "1001-1026",
+      "condition": "planner_question_policy == 'none' and has_question",
+      "reason": "requires a more specific compound contract/text state than the current deterministic case set"
+    },
+    {
+      "rule": "R39",
+      "lines": "1002-1008",
+      "condition": "planner_next_move == 'give_direct_step' or planner_answer_shape == 'one_step'",
+      "reason": "needs exact one-step planner state and text shape to reach this nested branch"
+    },
+    {
+      "rule": "R40",
+      "lines": "1009-1010",
+      "condition": "planner_next_move == 'give_short_support' or planner_answer_shape == 'short_support'",
+      "reason": "requires a more specific compound contract/text state than the current deterministic case set"
+    },
+    {
+      "rule": "R41",
+      "lines": "1011-1012",
+      "condition": "planner_next_move == 'stabilize_safety' or planner_answer_shape == 'safety_grounding'",
+      "reason": "needs safety-priority planner profile with exact long/question shape"
+    },
+    {
+      "rule": "R42",
+      "lines": "1013-1025",
+      "condition": "planner_next_move == 'answer_known_concept'",
+      "reason": "needs exact concept-oriented user message and matching planner obligation"
+    },
+    {
+      "rule": "R43",
+      "lines": "1014-1019",
+      "condition": "'самореализац' in lowered_user and 'нейросталкинг' in lowered_user",
+      "reason": "needs dedicated self-realization concept fixture"
+    },
+    {
+      "rule": "R44",
+      "lines": "1020-1025",
+      "condition": "'нейросталкинг' in lowered_user",
+      "reason": "needs exact concept-oriented user message and matching planner obligation"
+    },
+    {
+      "rule": "R45",
+      "lines": "1027-1043",
+      "condition": "planner_question_policy == 'none' and _contains_any(lowered_text, ('что именно', 'почему', 'как ты', 'можешь ли', 'хочешь'))",
+      "reason": "requires a more specific compound contract/text state than the current deterministic case set"
+    },
+    {
+      "rule": "R46",
+      "lines": "1030-1036",
+      "condition": "planner_next_move == 'give_direct_step' or planner_answer_shape == 'one_step'",
+      "reason": "needs exact one-step planner state and text shape to reach this nested branch"
+    },
+    {
+      "rule": "R47",
+      "lines": "1037-1038",
+      "condition": "planner_next_move == 'give_short_support'",
+      "reason": "requires a more specific compound contract/text state than the current deterministic case set"
+    },
+    {
+      "rule": "R48",
+      "lines": "1039-1040",
+      "condition": "planner_next_move == 'stabilize_safety'",
+      "reason": "needs safety-priority planner profile with exact long/question shape"
+    },
+    {
+      "rule": "R49",
+      "lines": "1041-1042",
+      "condition": "planner_next_move == 'close_gently'",
+      "reason": "requires a more specific compound contract/text state than the current deterministic case set"
+    },
+    {
+      "rule": "R50",
+      "lines": "1044-1057",
+      "condition": "planner_question_policy == 'none'",
+      "reason": "requires a more specific compound contract/text state than the current deterministic case set"
+    },
+    {
+      "rule": "R51",
+      "lines": "1045-1051",
+      "condition": "planner_next_move == 'give_direct_step' or planner_answer_shape == 'one_step'",
+      "reason": "needs exact one-step planner state and text shape to reach this nested branch"
+    },
+    {
+      "rule": "R52",
+      "lines": "1052-1057",
+      "condition": "planner_next_move == 'deepen_mechanism' or planner_answer_shape == 'mechanism_explanation'",
+      "reason": "requires a more specific compound contract/text state than the current deterministic case set"
+    },
+    {
+      "rule": "R53",
+      "lines": "1059-1066",
+      "condition": "planner_next_move == 'repair_misalignment'",
+      "reason": "requires a more specific compound contract/text state than the current deterministic case set"
+    },
+    {
+      "rule": "R54",
+      "lines": "1061-1066",
+      "condition": "has_question or has_repair_forbidden or len(text) > 480",
+      "reason": "requires a more specific compound contract/text state than the current deterministic case set"
+    },
+    {
+      "rule": "R56",
+      "lines": "1073-1082",
+      "condition": "(planner_next_move == 'deepen_mechanism' or user_mechanism_request) and (planner_question_policy == 'none' or user_requests_no_question) and (len(text) > 700 or has_question or has_unsolicited_practice or user_request...",
+      "reason": "needs practice markers plus matching policy state"
+    },
+    {
+      "rule": "R57",
+      "lines": "1084-1090",
+      "condition": "planner_answer_shape == 'one_step' or planner_next_move == 'give_direct_step'",
+      "reason": "needs exact one-step planner state and text shape to reach this nested branch"
+    },
+    {
+      "rule": "R58",
+      "lines": "1092-1131",
+      "condition": "planner_answer_shape == 'one_step' or user_step_request or active_line_intent == 'ask_for_direct_step'",
+      "reason": "needs exact one-step planner state and text shape to reach this nested branch"
+    },
+    {
+      "rule": "R59",
+      "lines": "1094-1097",
+      "condition": "list_like",
+      "reason": "requires a more specific compound contract/text state than the current deterministic case set"
+    },
+    {
+      "rule": "R60",
+      "lines": "1096-1097",
+      "condition": "first_item",
+      "reason": "requires a more specific compound contract/text state than the current deterministic case set"
+    },
+    {
+      "rule": "R61",
+      "lines": "1099-1105",
+      "condition": "len(sentence_parts) > 2",
+      "reason": "requires a more specific compound contract/text state than the current deterministic case set"
+    },
+    {
+      "rule": "R62",
+      "lines": "1106-1123",
+      "condition": "planner_question_policy == 'none' and _contains_any(lowered_text, ('хочешь', 'хочется', 'можешь', 'уточни', 'попробу', 'какой', 'что выбрать'))",
+      "reason": "requires a more specific compound contract/text state than the current deterministic case set"
+    },
+    {
+      "rule": "R63",
+      "lines": "1125-1131",
+      "condition": "not has_step_marker",
+      "reason": "requires a more specific compound contract/text state than the current deterministic case set"
+    },
+    {
+      "rule": "R64",
+      "lines": "1133-1152",
+      "condition": "active_line_practice_suppression and (not active_line_should_offer_practice) and has_unsolicited_practice",
+      "reason": "needs last-offer memory state plus exact repeated-offer wording"
+    },
+    {
+      "rule": "R65",
+      "lines": "1134-1135",
+      "condition": "planner_next_move == 'stabilize_safety' or planner_answer_shape == 'safety_grounding'",
+      "reason": "needs safety-priority planner profile with exact long/question shape"
+    },
+    {
+      "rule": "R66",
+      "lines": "1136-1141",
+      "condition": "active_line_intent == 'correction_of_bot' or active_line_repair_mode",
+      "reason": "requires a more specific compound contract/text state than the current deterministic case set"
+    },
+    {
+      "rule": "R67",
+      "lines": "1142-1147",
+      "condition": "active_line_intent == 'understand_mechanism'",
+      "reason": "requires a more specific compound contract/text state than the current deterministic case set"
+    },
+    {
+      "rule": "R68",
+      "lines": "1154-1169",
+      "condition": "not active_line_revoicing_allowed and starts_with_mechanical_revoicing(text)",
+      "reason": "needs mechanical revoicing output plus active-line settings"
+    },
+    {
+      "rule": "R69",
+      "lines": "1155-1160",
+      "condition": "active_line_intent == 'correction_of_bot' or active_line_repair_mode",
+      "reason": "requires a more specific compound contract/text state than the current deterministic case set"
+    },
+    {
+      "rule": "R70",
+      "lines": "1161-1166",
+      "condition": "active_line_intent == 'understand_mechanism'",
+      "reason": "requires a more specific compound contract/text state than the current deterministic case set"
+    },
+    {
+      "rule": "R71",
+      "lines": "1168-1169",
+      "condition": "len(parts) == 2 and parts[1].strip()",
+      "reason": "requires a more specific compound contract/text state than the current deterministic case set"
+    },
+    {
+      "rule": "R73",
+      "lines": "1172-1177",
+      "condition": "'самореализац' in lowered_user and 'нейросталкинг' in lowered_user",
+      "reason": "needs dedicated self-realization concept fixture"
+    },
+    {
+      "rule": "R74",
+      "lines": "1178-1183",
+      "condition": "'нейросталкинг' in lowered_user",
+      "reason": "needs exact concept-oriented user message and matching planner obligation"
+    }
+  ]
+}

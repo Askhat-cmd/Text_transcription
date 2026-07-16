@@ -1,5 +1,26 @@
 # Architecture Decisions
 
+## ADR-120 - `_enforce_answer_compliance` decomposition must begin with an honest boundary map and rule-coverage log, not a first code move
+
+Status: accepted
+
+Date: 2026-07-16
+
+Delivery: PRD-047.42-APPLY-20 accepted pending delivery metadata.
+
+Context: PRD-047.42-APPLY-19 finished the last movable `_call_llm` cluster, which made `_enforce_answer_compliance(...)` the next giant writer method on the Thin Spine Recovery path. Unlike the prompt-render slices, this method is an order-sensitive cascade of many sequential `if` rules that all read and mutate the same `text` value. A direct move without a map would hide the real contract: rule order itself is behavior, and later rules see `text` already altered by earlier ones. At the same time, the project already has evidence that self-attested “good enough coverage” is a structural risk, so the next PRD had to optimize for honest gaps rather than pretty numbers.
+
+Decision:
+- run a mapping-only PRD before any `_enforce_answer_compliance` code transfer;
+- treat the method as a numbered ordered rule cascade, not just as one large semantic block;
+- require the map to record exact line ranges, condition summaries, action summaries, early-return flags, and locals-read lists for every rule;
+- build deterministic `(response_text, contract) -> output_text` snapshots on real `WriterContract` fixtures without touching the production method;
+- compute coverage through in-memory tracing only, and publish an explicit uncovered-rules section with reasons;
+- keep `_enforce_mvp_free_dialogue_compliance` out of the mapping scope except for the handoff line inside the parent method;
+- treat zero production diffs across the whole protected writer surface as a hard acceptance condition.
+
+Consequences: future `_enforce_answer_compliance` apply slices can now move one continuous family of rules at a time against a frozen map and snapshot harness instead of guessing hidden contracts from line count. The accepted next default step is a small non-MVP family first, while the MVP handoff and late active-line/revoicing tail remain explicitly deferred until the parent method is smaller.
+
 ## ADR-119 - Final `_call_llm` response tail extraction must preserve the shared `time.perf_counter()` seam and the bound `_estimate_cost` keyword call exactly
 
 Status: accepted

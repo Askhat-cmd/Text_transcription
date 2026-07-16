@@ -2,6 +2,23 @@
 
 Главный источник курса проекта: `docs/MASTER_STRATEGIC_PLAN_NEO_MindBot_v4_RU.md`.
 
+## PRD-047.42-APPLY-20 _enforce_answer_compliance boundary mapping
+PRD-047.42-APPLY-20 turns the next giant writer method into an evidence-backed decomposition target without moving any production code. The work maps `WriterAgent._enforce_answer_compliance(...)` as a `610`-line ordered rule cascade, proves deterministic behavior on named `(response_text, contract)` cases, and records honest coverage gaps before any future apply slice touches the method.
+
+Current result:
+- main implementation commit: `pending`;
+- push status: `pending`;
+- status is `accepted_pending_delivery_metadata`;
+- new runner is `TO_DO_LIST/tools/run_prd_047_42_apply_20_enforce_compliance_mapping.py`;
+- boundary map records `75` ordered rules with exact line spans, early-return markers, and locals-read lists;
+- snapshot harness covers `17` deterministic cases and reproduces identical output on double build with `generated_at_utc == NORMALIZED_TIMESTAMP`;
+- coverage log records `22` covered rules and `53` uncovered rules explicitly, with reasons instead of papering them over;
+- clean-tree historical contract rerun across APPLY-6 + APPLY-7 + APPLY-9 + APPLY-10 + APPLY-11 + APPLY-12 + APPLY-13 + APPLY-14 + APPLY-15 + APPLY-16 + APPLY-17 + APPLY-18 + APPLY-19 + APPLY-20 passed `40/40`;
+- the PRD-required isolated clean-worktree `pytest tests/ -k writer -q` baseline reports `19 failed, 213 passed, 2010 deselected, 190 warnings`;
+- `no_mutation_proof.md` reports `0` changed protected paths across the canonical `17` protected files plus `writer_agent_call_llm_slice12.py` and whole `writer_agent.py`;
+- `git diff --name-only -- bot_psychologist/bot_agent` is empty, so the mapping PRD kept the runtime surface untouched exactly as required;
+- default next step is `PRD-047.42-APPLY-21`: first decomposition slice for one continuous non-MVP `_enforce_answer_compliance` rule family.
+
 ## PRD-047.42-APPLY-19 _call_llm slice 12
 PRD-047.42-APPLY-19 closes the last movable `_call_llm` cluster after the accepted APPLY-18 owner decision that `provider_dispatch` must stay inline. The work moves only the `response_unpack_cost_and_return` tail out of the inline method body, preserving the exact `result.text` identity, the tuple-unpack of `tokens_*`, the single keyword call into the protected `_estimate_cost` method, the module-level `time.perf_counter()` timing seam that the snapshot harness monkeypatches, and the ordered `13`-key `last_debug` patch.
 

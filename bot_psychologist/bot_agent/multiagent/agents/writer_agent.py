@@ -72,6 +72,9 @@ from .writer_agent_call_llm_slice10 import (
 from .writer_agent_call_llm_slice11 import (
     _apply_call_llm_slice11_runtime_settings_and_system_prompt,
 )
+from .writer_agent_call_llm_slice12 import (
+    _apply_call_llm_slice12_response_unpack_cost_and_bookkeeping,
+)
 from .writer_agent_prompts import (
     WRITER_USER_TEMPLATE,
 )
@@ -566,31 +569,14 @@ class WriterAgent(WriterAgentLifecycleMixin, WriterAgentFallbackStateMixin):
             max_tokens=runtime_settings["max_tokens"],
             timeout=runtime_settings["timeout"],
         )
-        llm_response = result.text
-        tokens_prompt, tokens_completion, tokens_total = (
-            result.tokens_prompt,
-            result.tokens_completion,
-            result.tokens_total,
+        slice12_result = _apply_call_llm_slice12_response_unpack_cost_and_bookkeeping(
+            result=result,
+            runtime_settings=runtime_settings,
+            start_ts=start_ts,
+            estimate_cost=self._estimate_cost,
         )
-        estimated_cost = self._estimate_cost(tokens_prompt=tokens_prompt, tokens_completion=tokens_completion)
-        duration_ms = int((time.perf_counter() - start_ts) * 1000)
-        self.last_debug.update(
-            {
-                "model": runtime_settings["model"],
-                "api_mode": result.api_mode,
-                "temperature": runtime_settings["temperature"],
-                "max_tokens": runtime_settings["max_tokens"],
-                "timeout": runtime_settings["timeout"],
-                "llm_response": llm_response,
-                "tokens_prompt": tokens_prompt,
-                "tokens_completion": tokens_completion,
-                "tokens_total": tokens_total,
-                "estimated_cost_usd": estimated_cost,
-                "duration_ms": duration_ms,
-                "error": None,
-                "fallback_used": False,
-            }
-        )
+        llm_response = slice12_result.llm_response
+        self.last_debug.update(slice12_result.last_debug_patch)
         return llm_response
 
     def _enforce_answer_compliance(self, response_text: str, contract: WriterContract) -> str:

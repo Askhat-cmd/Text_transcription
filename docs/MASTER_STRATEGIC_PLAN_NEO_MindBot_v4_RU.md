@@ -4,7 +4,7 @@
 **Репозиторий:** `Askhat-cmd/Text_transcription`
 **Локальный путь владельца:** `C:\My_practice\Text_transcription`
 **Дата:** 2026-07-09
-**Версия:** v4.19 — единый мастер-план (14 правок MP-1..MP-14 по аудиту Fable R08
+**Версия:** v4.20 — единый мастер-план (14 правок MP-1..MP-14 по аудиту Fable R08
 + обновление курса после PRD-047.42-APPLY-14 + красная линия против случайного
  перезапуска PRD-инструментов; исправление — Часть 4 была на версии после
  APPLY-8, актуализирована до APPLY-10)
@@ -153,19 +153,31 @@ Architect не принимает "всё прошло" на слово — то
 # ЧАСТЬ 4 — ГДЕ МЫ СЕЙЧАС  ← ЕДИНСТВЕННЫЙ ОБНОВЛЯЕМЫЙ РАЗДЕЛ
 
 Эпоха: 1 (Консолидация).
-Последний принятый PRD: PRD-047.42-APPLY-15 (ACCEPTED, commits
-  04bac53 / b020ec4). Верифицировано архитектором независимо через
-  GitHub, включая пересчёт snapshot и SHA1 user_prompt.
-Следующий PRD: PRD-047.42-APPLY-16 — ШЕСТАЯ, ПОСЛЕДНЯЯ пара/тройка
-  семей WRITER_USER_TEMPLATE.format(): retrieval_decision +
-  human_like_answer_policy + final_answer_shape_and_constraint_
-  resolution. Границы на конец сессии: строки 485-575 (91 строка,
-  пересчитать заново перед стартом — писалось для сессии, где
-  writer_agent.py = 1543 строки). Это последний PRD всей серии
-  APPLY-11..16 — после него весь WRITER_USER_TEMPLATE.format()
-  закрыт, roadmap-файл WRITER_USER_TEMPLATE_decomposition_roadmap_v1_RU.md
-  можно считать выполненным.
-Шлюз в Эпоху 2: НЕ пройден.
+Последний принятый PRD: PRD-047.42-APPLY-16 (ACCEPTED, commits
+  c57807e3 / 9469465d; плюс отдельный коммит 34b1d5ce — восстановление
+  случайно стёртой записи журнала v4.17 -> v4.18). Верифицировано
+  архитектором независимо через GitHub: пересчёт snapshot из живого
+  кода, SHA1 user_prompt по всем трём сценариям, 116 passed по всем
+  12 контрактным файлам серии 047.42, идентичность списков 19
+  фоновых падений до/после на одном и том же окружении.
+
+СЕРИЯ APPLY-11..16 ЗАКРЫТА ПОЛНОСТЬЮ. Декомпозиция
+  WRITER_USER_TEMPLATE.format() завершена (slice4..slice9, суммарно
+  ~176 kwargs шестью PRD). Roadmap-файл
+  WRITER_USER_TEMPLATE_decomposition_roadmap_v1_RU.md — выполнен.
+  В format()-вызове остались только core_required_fields (отдельное
+  решение, вне серии) и чистые пробросы локальных переменных
+  (не выносятся по прецеденту APPLY-12).
+
+Следующий PRD: первый из 4 оставшихся кластеров _call_llm по карте
+  APPLY-6 — prompt_constraint_append_and_debug_bookkeeping.
+  Ориентир на конец сессии: начинается сразу после format()-вызова
+  (~строка 531 при writer_agent.py = 1497 строк). Границы
+  ОБЯЗАТЕЛЬНО пересчитать заново перед стартом PRD.
+  Затем по одному PRD: runtime_settings_and_system_prompt_selection,
+  provider_dispatch, response_unpack_cost_and_return.
+Шлюз в Эпоху 2: НЕ пройден. Работаем по Сценарию А
+  (владелец-решение #2 от 2026-07-14).
 
 Корпус законов Fable: получен полностью (R01-R07), НЕ ратифицирован.
 
@@ -176,35 +188,62 @@ Architect не принимает "всё прошло" на слово — то
   ОТДЕЛЬНЫЙ трек ПОСЛЕ реализации Эпохи 2 "умности" — не пересматривать
   без явного нового решения владельца.
 
-PRD-047.42-APPLY-15 закрыт (Stage 2n, пятый срез декомпозиции
-  WRITER_USER_TEMPLATE.format()):
-- семьи response_planner + dialogue_profile_and_pragmatics (30 kwargs,
-  границы 449-526) вынесены в writer_agent_call_llm_slice8.py;
-- найдена и корректно сохранена ловушка: kwarg dialogue_profile в этом
-  срезе — самостоятельный ctx.get(), НЕ ссылка на одноимённую
-  локальную переменную из slice1 — Исполнитель перенёс дословно, не
-  "упростил" самовольно;
-- snapshot + SHA1 user_prompt подтверждены архитектором независимо для
-  всех трёх сценариев (единственная замеченная разница — служебная
-  метка generated_at_utc, не реальный контент, тот же паттерн что и в
-  APPLY-9);
-- все защищённые файлы (включая slice1-7) — hash-proof сверен,
-  расхождений нет;
-- широкий прогон — 19 pre-existing падений, тот же фон (201 passed).
+ВЛАДЕЛЕЦ-РЕШЕНИЕ #2 (2026-07-14, действует): цель текущей рабочей
+  линии — Сценарий А (полностью привести в порядок writer_agent.py:
+  4 оставшихся кластера _call_llm, затем картирование и, вероятно,
+  декомпозиция _enforce_answer_compliance (610 строк) и
+  _enforce_mvp_free_dialogue_compliance (225 строк)). Буквальный DoD
+  §5.6 в конце этой линии закрыт НЕ будет — расхождение сознательное,
+  зафиксированное, не blocker.
+
+PRD-047.42-APPLY-16 закрыт (Stage 2o, шестой и последний срез
+  декомпозиции WRITER_USER_TEMPLATE.format()):
+- семьи retrieval_decision (10) + human_like_answer_policy (17) +
+  final_answer_shape_and_constraint_resolution (6) = 33 kwargs
+  (границы 485-574) вынесены в writer_agent_call_llm_slice9.py;
+- зеркальная namesake-ловушка сохранена корректно: в
+  constraint_resolution_profile локальная переменная dialogue_profile
+  передана в helper ПАРАМЕТРОМ и осталась дефолтом (противоположное
+  решение ловушке APPLY-15, где то же имя было независимым ctx.get());
+- mvp_free_dialogue_overrides=mvp_override_block оставлен inline как
+  чистый проброс (прецедент APPLY-12);
+- writer_agent.py: 1543 -> 1497 строк;
+- snapshot + SHA1 user_prompt подтверждены архитектором независимо
+  (пересчёт из живого кода, все 3 сценария, SHA1 совпали и с цепочкой
+  APPLY-15 — контент промпта не менялся);
+- замечание к точности отчётности (не blocker): формулировка
+  "byte identical" в user_prompt_equivalence.md неточна — закоммиченные
+  before/after различаются служебной меткой generated_at_utc
+  (хронический перенос метки между PRD, тот же паттерн что в APPLY-9
+  и APPLY-15); содержательно payload идентичен, проверено;
+- широкий прогон: канонический вызов pytest tests/ -k writer -q даёт
+  ровно 19 pre-existing падений, списки идентичны до/после
+  (проверено diff'ом на одном окружении). Цифра "12 failed" из отчёта
+  Исполнителя — артефакт неканонического запуска с PYTHONPATH,
+  не регрессия.
+
+ПРОЦЕССНОЕ ПРОИСШЕСТВИЕ (2026-07-16, закрыто): обновление Части 4 до
+  v4.19 (коммит 249b9723) случайно стёрло запись журнала
+  v4.17 -> v4.18 (APPLY-14) — двухблочный формат не защитил на этот
+  раз. Обнаружено независимой проверкой архитектора, восстановлено
+  коммитом 34b1d5ce. Усиление: в инструкцию передачи добавлен
+  обязательный финальный шаг "git diff + глазами убедиться, что из
+  журнала не исчезло ни одной старой записи" перед пушем.
+
+Защищённые файлы: 14 из transfer brief v3 + writer_agent_call_llm_
+  slice9.py (hash f69c7217137ddc23ea1c09e7ba6dd9a1886d0249) = 15.
 
 Отложено сознательно (не потеряно):
-- Последний срез WRITER_USER_TEMPLATE.format() — PRD-047.42-APPLY-16
-  (см. "Следующий PRD" выше).
-- После полного закрытия серии — prompt_constraint_append_and_debug_
-  bookkeeping, runtime_settings_and_system_prompt_selection,
-  provider_dispatch, response_unpack_cost_and_return (4 кластера,
-  граница каждого пересчитывается перед своим PRD).
-- core_required_fields — вне серии, отдельное решение позже.
+- 4 кластера _call_llm (см. "Следующий PRD" выше) — по одному PRD,
+  границы пересчитывать перед каждым.
+- core_required_fields (10 обязательных ctx[...] без дефолтов) — вне
+  серии, отдельное решение после кластеров.
+- _enforce_answer_compliance (610 строк) и _enforce_mvp_free_dialogue_
+  compliance (225 строк) — сначала boundary mapping отдельным PRD,
+  после закрытия кластеров _call_llm.
 - thread_manager.py, orchestrator.py, api/debug_routes.py,
   writer_context_package.py — отдельный трек, после Эпохи 2 (см.
   владелец-решение выше).
-- _enforce_answer_compliance, _enforce_mvp_free_dialogue_compliance —
-  вне scope, пока _call_llm не перестанет быть giant-методом.
 - writer_contract.py (979 строк) — под порогом ~1200, отдельное
   решение, не автоматический кандидат.
 - diagnostic_center_* файлов (по факту не менее 27, docs говорят 19) ->
@@ -214,6 +253,16 @@ PRD-047.42-APPLY-15 закрыт (Stage 2n, пятый срез декомпоз
 - docs/testing.md, S7, Panic/Medical Escalation, трейс-поля — без изменений.
 
 Журнал правок (новая строка поверх существующих):
+
+- 2026-07-16 v4.19 -> v4.20: PRD-047.42-APPLY-16 принят ACCEPTED.
+  Шестой, последний срез — СЕРИЯ ДЕКОМПОЗИЦИИ WRITER_USER_TEMPLATE.
+  format() ЗАКРЫТА ПОЛНОСТЬЮ (slice4..slice9, ~176 kwargs). Зеркальная
+  namesake-ловушка dialogue_profile сохранена корректно (локальная
+  переменная параметром — противоположно APPLY-15). Попутно: обнаружена
+  и восстановлена (34b1d5ce) запись журнала v4.17 -> v4.18, случайно
+  стёртая при обновлении до v4.19; в процедуру передачи добавлен
+  обязательный финальный diff-контроль журнала. Следующий шаг —
+  кластер prompt_constraint_append_and_debug_bookkeeping.
 
 - 2026-07-13 v4.18 -> v4.19: PRD-047.42-APPLY-15 принят ACCEPTED.
   Пятый срез серии decomposition WRITER_USER_TEMPLATE.format() — 30

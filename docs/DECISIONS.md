@@ -6,7 +6,7 @@ Status: accepted
 
 Date: 2026-07-16
 
-Delivery: PRD-047.42-APPLY-21 accepted with warning pending delivery metadata.
+Delivery: PRD-047.42-APPLY-21 accepted with warning in main implementation commit `37a2c2f`.
 
 Context: PRD-047.42-APPLY-20 proved that `_enforce_answer_compliance(...)` is not one coherent block but a `75`-rule ordered cascade with only `22` covered rules in the accepted harness. After that map, there were two tempting follow-ups: start cutting the earliest real rule family immediately, or first extract the always-executed prelude that prepares the rule inputs. The second path looked less glamorous, but it carried one decisive advantage: the prelude runs in all `17` accepted APPLY-20 cases and ends before the first uncovered early-return family. That means a snapshot can fully prove its behavior, unlike a rule-family slice that would immediately inherit the map's `53` uncovered-rule debt.
 

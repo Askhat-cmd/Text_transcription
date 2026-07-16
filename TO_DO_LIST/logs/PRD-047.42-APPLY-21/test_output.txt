@@ -1,0 +1,54 @@
+PRD-047.42-APPLY-21 test output summary
+Generated on: 2026-07-16
+
+1. Focused direct helper tests
+Command:
+python -m pytest bot_psychologist/tests/multiagent/test_writer_agent_enforce_slice1.py -q
+Result:
+2 passed in 0.33s
+
+2. Focused APPLY-21 contract tests
+Command:
+python -m pytest bot_psychologist/tests/contract/test_prd_047_42_apply_21_enforce_slice1.py -q
+Result:
+2 passed in 1.16s
+
+3. Syntax compilation
+Command:
+python -m py_compile bot_psychologist/bot_agent/multiagent/agents/writer_agent.py bot_psychologist/bot_agent/multiagent/agents/writer_agent_enforce_slice1.py TO_DO_LIST/tools/run_prd_047_42_apply_21_enforce_slice1.py bot_psychologist/tests/multiagent/test_writer_agent_enforce_slice1.py bot_psychologist/tests/contract/test_prd_047_42_apply_21_enforce_slice1.py
+Result:
+passed
+
+4. Clean-tree historical contract rerun
+Environment:
+temporary detached worktree from commit 37a2c2f
+Command:
+python -m pytest <all test_prd_047_42_apply_*.py files> -q
+Result:
+122 passed, 1 warning in 16.12s
+
+5. Canonical isolated writer baseline
+Environment:
+temporary detached worktree from commit 37a2c2f
+Workdir:
+bot_psychologist
+Command:
+python -m pytest tests/ -k writer -q
+Result:
+19 failed, 215 passed, 2015 deselected, 190 warnings in 61.88s
+
+6. Owner workspace writer baseline
+Environment:
+owner workspace with local runtime/test environment
+Workdir:
+bot_psychologist
+Command:
+python -m pytest tests/ -k writer -q
+Result:
+14 failed, 220 passed, 2015 deselected, 346 warnings in 145.47s
+
+Interpretation:
+- APPLY-21-specific focused tests are green.
+- Historical APPLY-6..21 contract rerun is green on clean tree.
+- The PRD-required isolated clean-worktree writer baseline reproduces exactly 19 known failures.
+- The owner workspace still shows the separate 14-failure environment-specific baseline; this is recorded as an honest warning, not as an APPLY-21 regression.

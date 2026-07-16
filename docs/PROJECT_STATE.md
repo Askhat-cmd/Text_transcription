@@ -6,9 +6,9 @@
 PRD-047.42-APPLY-21 starts the first real code transfer inside `WriterAgent._enforce_answer_compliance(...)` after the accepted APPLY-20 map. The extracted surface is intentionally the full always-executed prelude window before `R02`: one continuous `120`-line block that builds `44` locals from the contract/context and writes the first `10` ordered `last_debug` fields, but does not yet enter any rule family with early returns. This keeps the first apply slice behaviorally total over the existing `17`-case harness instead of pretending that the uncovered `53/75` rule gap is already solved.
 
 Current result:
-- main implementation commit: `pending_main_commit`;
-- push status: `pending`;
-- status is `accepted_with_warning_pending_delivery_metadata`;
+- main implementation commit: `37a2c2f`;
+- push status: `pushed_to_origin_main`;
+- status is `accepted_with_warning`;
 - new helper module is `bot_psychologist/bot_agent/multiagent/agents/writer_agent_enforce_slice1.py`;
 - extracted surface is one frozen dataclass `EnforceSlice1PreludeResult` with exactly `44` locals in assignment order plus one ordered `last_debug_patch`;
 - `_enforce_answer_compliance(...)` keeps `text` + `R01` inline above the helper call, keeps `R02` and everything below untouched, replaces the prelude with one helper call, explicit unpack of all `44` locals, and one `self.last_debug.update(...)`;
@@ -16,7 +16,9 @@ Current result:
 - dedicated APPLY-21 runner reuses the APPLY-20 `17`-case harness by import, builds a historical-before snapshot from commit `ab7ec52`, and proves byte-identical before/after output plus identical `last_debug` key ordering;
 - `grep_proof.md` confirms that historical lines `587-706` contain `10` `self.last_debug[...] = ...` writes and no in-range reads, and confirms zero remaining direct uses in `writer_agent.py` for the removed local detector imports;
 - `no_mutation_proof.md` reports `0` changed protected paths across the accepted writer helper/mixin/call-llm surface and `0` changed paths under the accepted APPLY-20 log folder;
-- honest warning remains until final clean-tree delivery metadata is written: the owner workspace canonical writer run still shows the known environment-specific `14` failures instead of the isolated `19`-failure baseline, so final delivery records both numbers explicitly rather than flattening them into one false certainty.
+- clean-tree historical contract rerun across APPLY-6 + APPLY-7 + APPLY-8 + APPLY-9 + APPLY-10 + APPLY-11 + APPLY-12 + APPLY-13 + APPLY-14 + APPLY-15 + APPLY-16 + APPLY-17 + APPLY-18 + APPLY-19 + APPLY-20 + APPLY-21 passed `122/122`;
+- the PRD-required isolated clean-worktree `pytest tests/ -k writer -q` baseline reports `19 failed, 215 passed, 2015 deselected, 190 warnings`;
+- honest warning remains because the owner workspace canonical writer run still shows the known environment-specific `14 failed, 220 passed, 2015 deselected, 346 warnings`, so final delivery records both numbers explicitly rather than flattening them into one false certainty.
 
 ## PRD-047.42-APPLY-20 _enforce_answer_compliance boundary mapping
 PRD-047.42-APPLY-20 turns the next giant writer method into an evidence-backed decomposition target without moving any production code. The work maps `WriterAgent._enforce_answer_compliance(...)` as a `610`-line ordered rule cascade, proves deterministic behavior on named `(response_text, contract)` cases, and records honest coverage gaps before any future apply slice touches the method.

@@ -6,7 +6,7 @@ Status: accepted
 
 Date: 2026-07-16
 
-Delivery: PRD-047.42-APPLY-18 implementation completed in workspace; delivery metadata pending follow-up commit sync.
+Delivery: PRD-047.42-APPLY-18 accepted with warning in main commit `076d916`.
 
 Context: after PRD-047.42-APPLY-17, the next `_call_llm` cluster was only `9` lines long, but it controlled three core runtime decisions immediately before provider dispatch: it re-normalized `dialogue_profile`, called `_resolve_runtime_settings`, and selected the final `system_prompt`. This cluster carried two new decomposition risks. First, it introduced the third distinct `dialogue_profile` namesake rule in the APPLY-15/16/18 sequence: here the old local value is used as the default input, then overwritten by the normalized result. Second, it was the first cluster in the writer decomposition series to depend on a protected `self` method owned by `writer_agent_lifecycle_mixin.py`. Copying that method or converting the call to a positional/indirect pattern would have violated the PRD boundary.
 

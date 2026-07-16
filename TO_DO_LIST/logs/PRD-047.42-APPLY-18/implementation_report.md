@@ -2,7 +2,7 @@
 
 - PRD: `PRD-047.42-APPLY-18`
 - Status: `accepted_with_warning`
-- Delivery: `main_commit_pending`
+- Delivery: `main_commit=076d916`, `main_push=pushed_to_origin_main`
 
 ## Scope Delivered
 
@@ -29,4 +29,4 @@
 - `no_mutation_proof.md` reports `0 changed paths` across the `16` protected files, including unchanged `writer_agent_lifecycle_mixin.py` and `writer_agent_prompts.py`.
 - zero-match grep confirmed that `WRITER_SYSTEM` and `WRITER_SYSTEM_MVP_FREE_DIALOGUE` have no remaining direct usage in `writer_agent.py` after extraction.
 - clean isolated broad writer rerun reproduced the required `19` known pre-existing failures.
-- clean-tree historical APPLY-6..18 contract rerun is deferred to the post-commit clean-tree verification pass because APPLY-6 self-checks its own no-mutation proof and sees the main workspace diff before the implementation commit exists.
+- clean-tree historical APPLY-6..18 contract rerun passed `34/34` after the main implementation commit.

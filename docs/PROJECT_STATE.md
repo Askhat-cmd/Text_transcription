@@ -6,8 +6,8 @@
 PRD-047.42-APPLY-18 continues the post-render `_call_llm` decomposition phase after APPLY-17 by moving the `runtime_settings_and_system_prompt_selection` cluster out of the inline method body. The work preserves the third `dialogue_profile` namesake rule in the series: the helper receives the old local profile as the default input, normalizes the ctx override if present, returns the new value, and `_call_llm` rebinds the local variable explicitly before provider dispatch. It also preserves the first bound-method dependency in the decomposition track by passing `self._resolve_runtime_settings` into the helper as a callable rather than copying or mutating the lifecycle mixin.
 
 Current result:
-- main implementation commit: `pending`;
-- push status: `pending`;
+- main implementation commit: `076d916`;
+- push status: `pushed_to_origin_main`;
 - status is `accepted_with_warning`;
 - new helper module is `writer_agent_call_llm_slice11.py`;
 - extracted surface is one frozen dataclass carrying reassigned `dialogue_profile`, resolved `runtime_settings`, selected `system_prompt`, and one ordered `2`-key `last_debug_patch`;
@@ -16,6 +16,7 @@ Current result:
 - accepted before/after `_call_llm` snapshot is byte-identical across all `3` scenarios, and `user_prompt_equivalence.md` proves line-by-line and SHA1-level identity of the exact prompt text sent to the LLM;
 - `no_mutation_proof.md` reports `0` changed protected paths across the `16` protected files, explicitly including unchanged `writer_agent_lifecycle_mixin.py` and `writer_agent_prompts.py`;
 - zero-match grep confirmed that `WRITER_SYSTEM` and `WRITER_SYSTEM_MVP_FREE_DIALOGUE` no longer have direct usage in `writer_agent.py`, so only those names were removed from its imports while `WRITER_USER_TEMPLATE` stayed;
+- clean-tree historical contract rerun passed `34/34` across APPLY-6 + APPLY-7 + APPLY-9 + APPLY-10 + APPLY-11 + APPLY-12 + APPLY-13 + APPLY-14 + APPLY-15 + APPLY-16 + APPLY-17 + APPLY-18;
 - the PRD-required broad writer baseline is reproduced on a clean isolated worktree with the APPLY-18 files copied in (`19 failed, 210 passed, 2007 deselected, 190 warnings`);
 - the owner workspace itself currently reports `14 failed, 215 passed, 2007 deselected, 346 warnings` for the same canonical command because `5` environment-sensitive writer tests pass under the full local sibling-workspace context, so this PRD is recorded with an honest environment warning rather than as a prompt/decomposition regression.
 

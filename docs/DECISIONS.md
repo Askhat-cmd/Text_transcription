@@ -6,7 +6,7 @@ Status: accepted
 
 Date: 2026-07-16
 
-Delivery: PRD-047.42-APPLY-17 implementation completed in workspace; delivery metadata pending follow-up commit sync.
+Delivery: PRD-047.42-APPLY-17 accepted with warning in main commit `364aff9`.
 
 Context: after PRD-047.42-APPLY-16 closed the full `WRITER_USER_TEMPLATE.format(...)` argument-family roadmap, the next `_call_llm` cluster was no longer prompt-argument assembly but the post-render block that conditionally appends `prompt_section` to `user_prompt` and then writes `18` ordered bookkeeping keys into `self.last_debug`. This slice is structurally different from both the ctx-only render helpers and the earlier `writer_kb_payload_and_trace_capture` extraction. It is the only remaining post-render cluster that still mutates the exact prompt text before provider dispatch, and the accepted snapshot harness does not naturally hit the append branch because all three baseline scenarios keep `prompt_constraint_decision=None`. The cluster also contains a deliberate-looking asymmetry: `prompt_section` is built whenever `prompt_constraint_decision is not None`, while `activation_mode` and `blocked_reasons` are only read when the object is actually a `dict`.
 

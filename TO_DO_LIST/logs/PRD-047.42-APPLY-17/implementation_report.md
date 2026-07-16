@@ -2,7 +2,7 @@
 
 - PRD: `PRD-047.42-APPLY-17`
 - Status: `accepted_with_warning`
-- Delivery: `main_commit_pending`
+- Delivery: `main_commit=364aff9`, `main_push=pushed_to_origin_main`
 
 ## Scope Delivered
 
@@ -29,4 +29,4 @@
 - `no_mutation_proof.md` reports `0 changed paths` across the `25` protected files.
 - `rg -n "format_prompt_constraint_section_v1" bot_psychologist/bot_agent/multiagent/agents/writer_agent.py` returned no matches after extraction, so the direct import was removed legitimately.
 - clean isolated broad writer rerun reproduced the required `19` known pre-existing failures.
-- clean-tree historical APPLY-6..17 contract rerun is deferred to the post-commit clean-tree verification pass because APPLY-6 self-checks its own no-mutation proof and sees the main workspace diff before the implementation commit exists.
+- clean-tree historical APPLY-6..17 contract rerun passed `31/31` after the main implementation commit.

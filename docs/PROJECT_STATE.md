@@ -6,8 +6,8 @@
 PRD-047.42-APPLY-17 starts the post-`WRITER_USER_TEMPLATE.format(...)` decomposition phase inside `_call_llm` by moving the `prompt_constraint_append_and_debug_bookkeeping` cluster out of the inline method body. The work preserves the only remaining prompt-mutating branch after render, keeps the exact ordered `18`-key `last_debug` patch, preserves the deliberate asymmetry between `prompt_constraint_decision is not None` and `isinstance(prompt_constraint_decision, dict)`, and proves byte-identical behavior on the accepted 3-scenario `_call_llm` snapshot plus explicit direct coverage of the append branch that the snapshot harness never hits.
 
 Current result:
-- main implementation commit: `pending`;
-- push status: `pending`;
+- main implementation commit: `364aff9`;
+- push status: `pushed_to_origin_main`;
 - status is `accepted_with_warning`;
 - new helper module is `writer_agent_call_llm_slice10.py`;
 - extracted surface is one frozen dataclass carrying the final `user_prompt` and one ordered `last_debug_patch`;
@@ -15,6 +15,7 @@ Current result:
 - new runner contract tests passed `3/3`;
 - accepted before/after `_call_llm` snapshot is byte-identical across all `3` scenarios, and `user_prompt_equivalence.md` proves line-by-line and SHA1-level identity of the exact prompt text sent to the LLM;
 - `no_mutation_proof.md` reports `0` changed protected paths, and the old direct `format_prompt_constraint_section_v1` import was removed only after a zero-match grep confirmed that `writer_agent.py` no longer uses it directly;
+- clean-tree historical contract rerun passed `31/31` across APPLY-6 + APPLY-7 + APPLY-9 + APPLY-10 + APPLY-11 + APPLY-12 + APPLY-13 + APPLY-14 + APPLY-15 + APPLY-16 + APPLY-17;
 - the PRD-required broad writer baseline is reproduced on a clean isolated worktree with the APPLY-17 files copied in (`19 failed, 207 passed, 2004 deselected, 190 warnings`);
 - the owner workspace itself currently reports `14 failed, 212 passed, 2004 deselected, 346 warnings` for the same canonical command because `5` environment-sensitive writer tests pass under the full local sibling-workspace context, so this PRD is recorded with an honest environment warning rather than as a prompt/decomposition regression.
 

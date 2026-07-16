@@ -2,7 +2,7 @@
 
 - PRD: `PRD-047.42-APPLY-19`
 - Status: `accepted_with_warning`
-- Delivery: `main_commit_pending`
+- Delivery: `main implementation commit 4d92228 pushed to origin/main`
 
 ## Scope Delivered
 
@@ -14,6 +14,7 @@
 ## Honest Boundary
 
 - This PRD does not change prompts, provider dispatch, `_enforce_*` methods, `writer_agent_fallback_state_mixin.py`, `writer_agent_lifecycle_mixin.py`, `writer_contract.py`, or the admin decomposition files.
-- The owner workspace canonical broad writer subset currently reports `14 failed, 218 passed, 2010 deselected, 346 warnings`; this is recorded as an honest environment warning rather than as slice-12 prompt/runtime drift.
-- The clean-tree historical APPLY-6..19 contract rerun is intentionally deferred to post-main-commit delivery metadata because the APPLY-6 `no_mutation` runner contract expects `0 changed paths` and therefore fails on an active uncommitted writer slice by design.
+- The clean-tree historical APPLY-6..19 contract rerun passed `37/37` after the main implementation commit landed on `main`.
+- The canonical isolated clean-worktree broad writer subset reports `19 failed, 213 passed, 2010 deselected, 190 warnings`; this is the accepted baseline and not slice-12 prompt/runtime drift.
+- The owner workspace canonical broad writer subset reports `14 failed, 218 passed, 2010 deselected, 346 warnings`; this is recorded as an honest environment warning rather than as slice-12 prompt/runtime drift.
 - After accepted delivery of this PRD, `_call_llm` is considered structurally complete and the next default track becomes boundary mapping for `_enforce_answer_compliance`.

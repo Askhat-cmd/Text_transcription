@@ -6,8 +6,8 @@
 PRD-047.42-APPLY-19 closes the last movable `_call_llm` cluster after the accepted APPLY-18 owner decision that `provider_dispatch` must stay inline. The work moves only the `response_unpack_cost_and_return` tail out of the inline method body, preserving the exact `result.text` identity, the tuple-unpack of `tokens_*`, the single keyword call into the protected `_estimate_cost` method, the module-level `time.perf_counter()` timing seam that the snapshot harness monkeypatches, and the ordered `13`-key `last_debug` patch.
 
 Current result:
-- main implementation commit: `pending`;
-- push status: `pending`;
+- main implementation commit: `4d92228`;
+- push status: `pushed_to_origin_main`;
 - status is `accepted_with_warning`;
 - new helper module is `writer_agent_call_llm_slice12.py`;
 - extracted surface is one frozen dataclass carrying the original `llm_response` object plus one ordered `13`-key `last_debug_patch`;
@@ -16,8 +16,9 @@ Current result:
 - accepted before/after `_call_llm` snapshot is byte-identical against the accepted APPLY-18 baseline across all `3` scenarios, and `user_prompt_equivalence.md` proves line-by-line and SHA1-level identity of the exact prompt text sent to the LLM;
 - `no_mutation_proof.md` reports `0` changed protected paths across the `17` protected files, explicitly including unchanged `writer_agent_fallback_state_mixin.py`;
 - `_call_llm` now keeps only helper calls, the single `WRITER_USER_TEMPLATE.format(...)` render, the inline `await create_agent_completion(...)` preserved by owner decision #3, and the final `return llm_response`;
-- the clean-tree historical contract rerun across APPLY-6..19 is intentionally deferred to post-main-commit delivery metadata because the old APPLY-6 runner asserts `0 changed paths` and therefore fails on a live uncommitted writer slice by construction;
-- the owner workspace itself currently reports `14 failed, 218 passed, 2010 deselected, 346 warnings` for the canonical `pytest tests/ -k writer -q` command, so this PRD is recorded with an honest environment warning rather than as a response-tail regression.
+- the clean-tree historical contract rerun across APPLY-6..19 passed `37/37` after the main implementation commit landed on `main`;
+- the PRD-required isolated clean-worktree `pytest tests/ -k writer -q` baseline reports `19 failed, 213 passed, 2010 deselected, 190 warnings`;
+- the owner workspace itself currently reports `14 failed, 218 passed, 2010 deselected, 346 warnings` for the same canonical command, so this PRD is recorded with an honest environment warning rather than as a response-tail regression.
 
 ## PRD-047.42-APPLY-18 _call_llm slice 11
 PRD-047.42-APPLY-18 continues the post-render `_call_llm` decomposition phase after APPLY-17 by moving the `runtime_settings_and_system_prompt_selection` cluster out of the inline method body. The work preserves the third `dialogue_profile` namesake rule in the series: the helper receives the old local profile as the default input, normalizes the ctx override if present, returns the new value, and `_call_llm` rebinds the local variable explicitly before provider dispatch. It also preserves the first bound-method dependency in the decomposition track by passing `self._resolve_runtime_settings` into the helper as a callable rather than copying or mutating the lifecycle mixin.

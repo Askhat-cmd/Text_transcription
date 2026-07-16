@@ -6,7 +6,7 @@ Status: accepted
 
 Date: 2026-07-16
 
-Delivery: PRD-047.42-APPLY-19 accepted with warning; main implementation commit pending.
+Delivery: PRD-047.42-APPLY-19 accepted with warning in main implementation commit `4d92228`.
 
 Context: after PRD-047.42-APPLY-18, the only movable `_call_llm` code left after the owner’s provider-dispatch decision was the response tail: unpack `result.text`, unpack `tokens_*`, call `_estimate_cost`, compute `duration_ms`, and assemble the ordered `13`-key `last_debug` patch. This cluster carries two subtle runtime seams that the earlier slices did not. First, the accepted snapshot harness monkeypatches `writer_agent_module.time.perf_counter` on the shared module object, so replacing the tail with `from time import perf_counter` or adding extra timer calls would silently break deterministic `duration_ms=123`. Second, `_estimate_cost` lives in the protected `writer_agent_fallback_state_mixin.py`, so the helper must not copy that logic or widen `self` into the helper surface; it must receive the bound method and invoke it once with the original keyword-call shape.
 

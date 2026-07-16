@@ -64,6 +64,9 @@ from .writer_agent_call_llm_slice7 import (
 from .writer_agent_call_llm_slice8 import (
     _extract_call_llm_slice8_response_planner_and_dialogue_pragmatics,
 )
+from .writer_agent_call_llm_slice9 import (
+    _extract_call_llm_slice9_retrieval_human_like_and_final_shape,
+)
 from .writer_agent_prompts import (
     WRITER_SYSTEM,
     WRITER_SYSTEM_MVP_FREE_DIALOGUE,
@@ -326,6 +329,14 @@ class WriterAgent(WriterAgentLifecycleMixin, WriterAgentFallbackStateMixin):
         slice8_inputs = (
             _extract_call_llm_slice8_response_planner_and_dialogue_pragmatics(ctx)
         )
+        slice9_inputs = _extract_call_llm_slice9_retrieval_human_like_and_final_shape(
+            ctx,
+            human_like_answer_policy=human_like_answer_policy,
+            repair_user_dissatisfaction=repair_user_dissatisfaction,
+            constraint_resolution=constraint_resolution,
+            dialogue_profile=dialogue_profile,
+            overruled_constraints=overruled_constraints,
+        )
 
         user_prompt = WRITER_USER_TEMPLATE.format(
             user_message=ctx["user_message"],
@@ -482,96 +493,39 @@ class WriterAgent(WriterAgentLifecycleMixin, WriterAgentFallbackStateMixin):
             dialogue_pragmatics_should_not_ask_confirmation_again=slice8_inputs.dialogue_pragmatics_should_not_ask_confirmation_again,
             dialogue_pragmatics_repair_user_dissatisfaction=slice8_inputs.dialogue_pragmatics_repair_user_dissatisfaction,
             dialogue_pragmatics_reason=slice8_inputs.dialogue_pragmatics_reason,
-            retrieval_decision_version=str(
-                ctx.get("retrieval_decision_version", "contextual_retrieval_gating_v1")
-                or "contextual_retrieval_gating_v1"
-            ),
-            retrieval_action=str(ctx.get("retrieval_action", "none") or "none"),
-            retrieval_rag_candidates_count=int(ctx.get("retrieval_rag_candidates_count", 0) or 0),
-            retrieval_rag_included_count=int(ctx.get("retrieval_rag_included_count", 0) or 0),
-            retrieval_rag_included_reason=str(
-                ctx.get("retrieval_rag_included_reason", "") or ""
-            ),
-            retrieval_rag_suppressed_reason=str(
-                ctx.get("retrieval_rag_suppressed_reason", "") or ""
-            ),
-            retrieval_writer_can_ignore_rag=str(
-                bool(ctx.get("retrieval_writer_can_ignore_rag", True))
-            ).lower(),
-            retrieval_rag_relevance=str(ctx.get("retrieval_rag_relevance", "unknown") or "unknown"),
-            retrieval_inherited_topic=str(ctx.get("retrieval_inherited_topic", "") or ""),
-            retrieval_inherited_offer_type=str(
-                ctx.get("retrieval_inherited_offer_type", "unknown") or "unknown"
-            ),
-            human_like_enabled=str(bool(human_like_answer_policy.get("enabled", False))).lower(),
-            human_like_answer_style=str(
-                human_like_answer_policy.get("answer_style", "guided_compact") or "guided_compact"
-            ),
-            human_like_default_depth=str(
-                human_like_answer_policy.get("default_depth", "short_to_medium") or "short_to_medium"
-            ),
-            human_like_question_is_optional=str(
-                bool(human_like_answer_policy.get("question_is_optional", False))
-            ).lower(),
-            human_like_do_not_force_question=str(
-                bool(human_like_answer_policy.get("do_not_force_question_at_end", False))
-            ).lower(),
-            human_like_do_not_force_practice=str(
-                bool(human_like_answer_policy.get("do_not_force_practice_frame", False))
-            ).lower(),
-            human_like_flexible_length_allowed=str(
-                bool(human_like_answer_policy.get("do_not_force_max_sentences", False))
-            ).lower(),
-            human_like_respect_user_requested_format=str(
-                bool(human_like_answer_policy.get("respect_user_requested_format", False))
-            ).lower(),
-            human_like_repair_user_dissatisfaction=str(bool(repair_user_dissatisfaction)).lower(),
-            human_like_direct_answer_repair=str(
-                bool(human_like_answer_policy.get("direct_answer_repair_when_user_complains", False))
-            ).lower(),
-            human_like_support_answer_compactness=str(
-                human_like_answer_policy.get("support_answer_compactness", "adaptive") or "adaptive"
-            ),
-            human_like_preferred_shape=str(
-                human_like_answer_policy.get("preferred_shape", "adaptive") or "adaptive"
-            ),
-            human_like_target_length_chars=str(
-                human_like_answer_policy.get("target_length_chars", "") or ""
-            ),
-            human_like_avoid_mechanism_heavy_default=str(
-                bool(human_like_answer_policy.get("avoid_mechanism_heavy_default", False))
-            ).lower(),
-            human_like_prefer_direct_answer_first=str(
-                bool(human_like_answer_policy.get("prefer_direct_answer_first", False))
-            ).lower(),
-            human_like_prefer_single_main_mechanism=str(
-                bool(human_like_answer_policy.get("prefer_single_main_mechanism", False))
-            ).lower(),
-            human_like_max_list_items=str(
-                int(human_like_answer_policy.get("max_list_items", 0) or 0)
-            ),
-            final_answer_shape_profile=str(
-                ctx.get("final_answer_shape_profile", "adaptive_current_pipeline")
-                or "adaptive_current_pipeline"
-            ),
-            final_answer_shape_profile_notes_block=(
-                "\n".join(
-                    f"- {str(item).strip()}"
-                    for item in list(ctx.get("final_answer_shape_profile_notes", []) or [])
-                    if str(item).strip()
-                )
-                or "- Follow the current answer obligation and stay direct."
-            ),
-            constraint_resolution_profile=str(
-                constraint_resolution.get("profile", dialogue_profile) or dialogue_profile
-            ),
-            constraint_resolution_planner_authority=str(
-                constraint_resolution.get("planner_authority", "guided") or "guided"
-            ),
-            constraint_resolution_overruled=", ".join(overruled_constraints) or "none",
-            constraint_resolution_reason=str(
-                constraint_resolution.get("overrule_reason", "none") or "none"
-            ),
+            retrieval_decision_version=slice9_inputs.retrieval_decision_version,
+            retrieval_action=slice9_inputs.retrieval_action,
+            retrieval_rag_candidates_count=slice9_inputs.retrieval_rag_candidates_count,
+            retrieval_rag_included_count=slice9_inputs.retrieval_rag_included_count,
+            retrieval_rag_included_reason=slice9_inputs.retrieval_rag_included_reason,
+            retrieval_rag_suppressed_reason=slice9_inputs.retrieval_rag_suppressed_reason,
+            retrieval_writer_can_ignore_rag=slice9_inputs.retrieval_writer_can_ignore_rag,
+            retrieval_rag_relevance=slice9_inputs.retrieval_rag_relevance,
+            retrieval_inherited_topic=slice9_inputs.retrieval_inherited_topic,
+            retrieval_inherited_offer_type=slice9_inputs.retrieval_inherited_offer_type,
+            human_like_enabled=slice9_inputs.human_like_enabled,
+            human_like_answer_style=slice9_inputs.human_like_answer_style,
+            human_like_default_depth=slice9_inputs.human_like_default_depth,
+            human_like_question_is_optional=slice9_inputs.human_like_question_is_optional,
+            human_like_do_not_force_question=slice9_inputs.human_like_do_not_force_question,
+            human_like_do_not_force_practice=slice9_inputs.human_like_do_not_force_practice,
+            human_like_flexible_length_allowed=slice9_inputs.human_like_flexible_length_allowed,
+            human_like_respect_user_requested_format=slice9_inputs.human_like_respect_user_requested_format,
+            human_like_repair_user_dissatisfaction=slice9_inputs.human_like_repair_user_dissatisfaction,
+            human_like_direct_answer_repair=slice9_inputs.human_like_direct_answer_repair,
+            human_like_support_answer_compactness=slice9_inputs.human_like_support_answer_compactness,
+            human_like_preferred_shape=slice9_inputs.human_like_preferred_shape,
+            human_like_target_length_chars=slice9_inputs.human_like_target_length_chars,
+            human_like_avoid_mechanism_heavy_default=slice9_inputs.human_like_avoid_mechanism_heavy_default,
+            human_like_prefer_direct_answer_first=slice9_inputs.human_like_prefer_direct_answer_first,
+            human_like_prefer_single_main_mechanism=slice9_inputs.human_like_prefer_single_main_mechanism,
+            human_like_max_list_items=slice9_inputs.human_like_max_list_items,
+            final_answer_shape_profile=slice9_inputs.final_answer_shape_profile,
+            final_answer_shape_profile_notes_block=slice9_inputs.final_answer_shape_profile_notes_block,
+            constraint_resolution_profile=slice9_inputs.constraint_resolution_profile,
+            constraint_resolution_planner_authority=slice9_inputs.constraint_resolution_planner_authority,
+            constraint_resolution_overruled=slice9_inputs.constraint_resolution_overruled,
+            constraint_resolution_reason=slice9_inputs.constraint_resolution_reason,
             mvp_free_dialogue_overrides=mvp_override_block,
         )
         prompt_section = (

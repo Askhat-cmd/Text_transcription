@@ -1,5 +1,25 @@
 # Architecture Decisions
 
+## ADR-117 - Post-render `_call_llm` prompt-constraint extraction must return one ordered debug patch and preserve the original append/asymmetry semantics verbatim
+
+Status: accepted
+
+Date: 2026-07-16
+
+Delivery: PRD-047.42-APPLY-17 implementation completed in workspace; delivery metadata pending follow-up commit sync.
+
+Context: after PRD-047.42-APPLY-16 closed the full `WRITER_USER_TEMPLATE.format(...)` argument-family roadmap, the next `_call_llm` cluster was no longer prompt-argument assembly but the post-render block that conditionally appends `prompt_section` to `user_prompt` and then writes `18` ordered bookkeeping keys into `self.last_debug`. This slice is structurally different from both the ctx-only render helpers and the earlier `writer_kb_payload_and_trace_capture` extraction. It is the only remaining post-render cluster that still mutates the exact prompt text before provider dispatch, and the accepted snapshot harness does not naturally hit the append branch because all three baseline scenarios keep `prompt_constraint_decision=None`. The cluster also contains a deliberate-looking asymmetry: `prompt_section` is built whenever `prompt_constraint_decision is not None`, while `activation_mode` and `blocked_reasons` are only read when the object is actually a `dict`.
+
+Decision:
+- move the whole post-render cluster behind one helper plus one frozen dataclass in `writer_agent_call_llm_slice10.py`;
+- return exactly two cross-boundary outputs: the final `user_prompt` and one `last_debug_patch` dict;
+- apply the patch once through `self.last_debug.update(...)` at the call site instead of multiple inline writes;
+- preserve the exact insertion order of all `18` debug keys inside the patch so snapshot JSON remains byte-stable without `sort_keys`;
+- preserve the original `prompt_constraint_decision is not None` vs `isinstance(prompt_constraint_decision, dict)` asymmetry verbatim rather than "simplifying" it during extraction;
+- require direct tests for both the no-append and append branches, because the accepted snapshot harness only proves the no-append path.
+
+Consequences: the `_call_llm` decomposition track now has a second proven state-coupled pattern besides the slice-3 trace-capture helper: when a cluster mutates both prompt text and debug state, the helper returns the exact prompt result plus one ordered debug patch, and the class applies that patch once. Future post-render/runtime/provider slices should preserve the same discipline: no hidden `self` mutation inside helpers, no reordered debug bookkeeping, and no opportunistic cleanup of legacy-looking asymmetries unless a separate PRD explicitly opens that behavior.
+
 ## ADR-116 - Close the `WRITER_USER_TEMPLATE.format(...)` extraction series by preserving formal local dependencies and leaving pure passthroughs inline
 
 Status: accepted

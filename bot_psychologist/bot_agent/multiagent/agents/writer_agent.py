@@ -26,7 +26,6 @@ from ..dialogue_policy import (
 )
 from ..concrete_answer_fit import evaluate_concrete_answer_fit
 from ..stale_stub_detector import detect_stale_stub
-from ..prompt_constraint_section import format_prompt_constraint_section_v1
 from ..contracts.writer_contract import WriterContract
 from .agent_llm_client import create_agent_completion
 from .agent_llm_config import get_model_for_agent, get_temperature_for_agent
@@ -66,6 +65,9 @@ from .writer_agent_call_llm_slice8 import (
 )
 from .writer_agent_call_llm_slice9 import (
     _extract_call_llm_slice9_retrieval_human_like_and_final_shape,
+)
+from .writer_agent_call_llm_slice10 import (
+    _apply_call_llm_slice10_prompt_constraint_and_debug_bookkeeping,
 )
 from .writer_agent_prompts import (
     WRITER_SYSTEM,
@@ -528,54 +530,19 @@ class WriterAgent(WriterAgentLifecycleMixin, WriterAgentFallbackStateMixin):
             constraint_resolution_reason=slice9_inputs.constraint_resolution_reason,
             mvp_free_dialogue_overrides=mvp_override_block,
         )
-        prompt_section = (
-            format_prompt_constraint_section_v1(prompt_constraint_decision)
-            if prompt_constraint_decision is not None
-            else ""
+        slice10_result = _apply_call_llm_slice10_prompt_constraint_and_debug_bookkeeping(
+            ctx,
+            user_prompt=user_prompt,
+            prompt_constraint_decision=prompt_constraint_decision,
+            context_meta=context_meta,
+            human_like_answer_policy=human_like_answer_policy,
+            explicit_answer_need=explicit_answer_need,
+            repair_user_dissatisfaction=repair_user_dissatisfaction,
+            sarcasm_or_negative_feedback=sarcasm_or_negative_feedback,
+            overruled_constraints=overruled_constraints,
         )
-        activation_mode = (
-            str(prompt_constraint_decision.get("activation_mode", "disabled"))
-            if isinstance(prompt_constraint_decision, dict)
-            else "disabled"
-        )
-        blocked_reasons = (
-            list(prompt_constraint_decision.get("blocked_reasons", []))
-            if isinstance(prompt_constraint_decision, dict)
-            and isinstance(prompt_constraint_decision.get("blocked_reasons", []), list)
-            else []
-        )
-        if prompt_section:
-            user_prompt = f"{user_prompt}\n\n{prompt_section}"
-        self.last_debug["user_prompt"] = user_prompt
-        self.last_debug["prompt_constraint_pilot_activation_mode"] = activation_mode
-        self.last_debug["prompt_constraint_pilot_applied"] = bool(prompt_section)
-        self.last_debug["prompt_constraint_pilot_blocked_reasons"] = blocked_reasons
-        self.last_debug["prompt_constraint_pilot_prompt_section_chars"] = len(prompt_section)
-        self.last_debug["context_budget_chars"] = int(context_meta.get("context_budget_chars", 0) or 0)
-        self.last_debug["context_truncated"] = bool(context_meta.get("context_truncated", False))
-        self.last_debug["preserved_recent_turns_count"] = int(
-            context_meta.get("preserved_recent_turns_count", 0) or 0
-        )
-        self.last_debug["older_context_omitted_chars"] = int(
-            context_meta.get("older_context_omitted_chars", 0) or 0
-        )
-        self.last_debug["human_like_answer_policy_enabled"] = bool(
-            human_like_answer_policy.get("enabled", False)
-        )
-        self.last_debug["explicit_answer_need"] = bool(explicit_answer_need)
-        self.last_debug["repair_user_dissatisfaction"] = bool(repair_user_dissatisfaction)
-        self.last_debug["sarcasm_or_negative_feedback"] = bool(sarcasm_or_negative_feedback)
-        self.last_debug["overruled_constraints"] = overruled_constraints
-        self.last_debug["dialogue_pragmatics_contextual_followup"] = bool(
-            ctx.get("dialogue_pragmatics_is_contextual_followup", False)
-        )
-        self.last_debug["dialogue_pragmatics_offer_type"] = str(
-            ctx.get("dialogue_pragmatics_offer_type", "unknown") or "unknown"
-        )
-        self.last_debug["retrieval_action"] = str(ctx.get("retrieval_action", "none") or "none")
-        self.last_debug["retrieval_rag_included_count"] = int(
-            ctx.get("retrieval_rag_included_count", 0) or 0
-        )
+        user_prompt = slice10_result.user_prompt
+        self.last_debug.update(slice10_result.last_debug_patch)
 
         start_ts = time.perf_counter()
         dialogue_profile = normalize_dialogue_profile(ctx.get("dialogue_profile", dialogue_profile))

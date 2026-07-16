@@ -2,6 +2,22 @@
 
 Главный источник курса проекта: `docs/MASTER_STRATEGIC_PLAN_NEO_MindBot_v4_RU.md`.
 
+## PRD-047.42-APPLY-17 _call_llm slice 10
+PRD-047.42-APPLY-17 starts the post-`WRITER_USER_TEMPLATE.format(...)` decomposition phase inside `_call_llm` by moving the `prompt_constraint_append_and_debug_bookkeeping` cluster out of the inline method body. The work preserves the only remaining prompt-mutating branch after render, keeps the exact ordered `18`-key `last_debug` patch, preserves the deliberate asymmetry between `prompt_constraint_decision is not None` and `isinstance(prompt_constraint_decision, dict)`, and proves byte-identical behavior on the accepted 3-scenario `_call_llm` snapshot plus explicit direct coverage of the append branch that the snapshot harness never hits.
+
+Current result:
+- main implementation commit: `pending`;
+- push status: `pending`;
+- status is `accepted_with_warning`;
+- new helper module is `writer_agent_call_llm_slice10.py`;
+- extracted surface is one frozen dataclass carrying the final `user_prompt` and one ordered `last_debug_patch`;
+- direct slice-10 helper tests passed `3/3`, including both prompt-section branches and the exact `18`-key insertion order assertion;
+- new runner contract tests passed `3/3`;
+- accepted before/after `_call_llm` snapshot is byte-identical across all `3` scenarios, and `user_prompt_equivalence.md` proves line-by-line and SHA1-level identity of the exact prompt text sent to the LLM;
+- `no_mutation_proof.md` reports `0` changed protected paths, and the old direct `format_prompt_constraint_section_v1` import was removed only after a zero-match grep confirmed that `writer_agent.py` no longer uses it directly;
+- the PRD-required broad writer baseline is reproduced on a clean isolated worktree with the APPLY-17 files copied in (`19 failed, 207 passed, 2004 deselected, 190 warnings`);
+- the owner workspace itself currently reports `14 failed, 212 passed, 2004 deselected, 346 warnings` for the same canonical command because `5` environment-sensitive writer tests pass under the full local sibling-workspace context, so this PRD is recorded with an honest environment warning rather than as a prompt/decomposition regression.
+
 ## PRD-047.42-APPLY-16 _call_llm slice 9
 PRD-047.42-APPLY-16 closes the `WRITER_USER_TEMPLATE.format(...)` decomposition roadmap inside `_call_llm` by moving the final mapped render families out of inline prompt assembly: `retrieval_decision`, `human_like_answer_policy`, and `final_answer_shape_and_constraint_resolution`. The work keeps the same single render call, preserves the mirrored semantic trap where `constraint_resolution_profile` must default from the already-normalized local `dialogue_profile` instead of a fresh `ctx.get(...)`, leaves `mvp_free_dialogue_overrides=mvp_override_block` inline as the final pure passthrough, and proves byte-identical behavior on the accepted 3-scenario `_call_llm` snapshot including exact `user_prompt` text and full `last_debug`.
 

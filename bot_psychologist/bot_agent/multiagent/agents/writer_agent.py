@@ -69,9 +69,10 @@ from .writer_agent_call_llm_slice9 import (
 from .writer_agent_call_llm_slice10 import (
     _apply_call_llm_slice10_prompt_constraint_and_debug_bookkeeping,
 )
+from .writer_agent_call_llm_slice11 import (
+    _apply_call_llm_slice11_runtime_settings_and_system_prompt,
+)
 from .writer_agent_prompts import (
-    WRITER_SYSTEM,
-    WRITER_SYSTEM_MVP_FREE_DIALOGUE,
     WRITER_USER_TEMPLATE,
 )
 
@@ -545,15 +546,15 @@ class WriterAgent(WriterAgentLifecycleMixin, WriterAgentFallbackStateMixin):
         self.last_debug.update(slice10_result.last_debug_patch)
 
         start_ts = time.perf_counter()
-        dialogue_profile = normalize_dialogue_profile(ctx.get("dialogue_profile", dialogue_profile))
-        runtime_settings = self._resolve_runtime_settings(dialogue_profile=dialogue_profile)
-        system_prompt = (
-            WRITER_SYSTEM_MVP_FREE_DIALOGUE
-            if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE
-            else WRITER_SYSTEM
+        slice11_result = _apply_call_llm_slice11_runtime_settings_and_system_prompt(
+            ctx,
+            dialogue_profile=dialogue_profile,
+            resolve_runtime_settings=self._resolve_runtime_settings,
         )
-        self.last_debug["system_prompt"] = system_prompt
-        self.last_debug["dialogue_profile"] = dialogue_profile
+        dialogue_profile = slice11_result.dialogue_profile
+        runtime_settings = slice11_result.runtime_settings
+        system_prompt = slice11_result.system_prompt
+        self.last_debug.update(slice11_result.last_debug_patch)
         result = await create_agent_completion(
             client=client,
             model=runtime_settings["model"],

@@ -2,6 +2,23 @@
 
 Главный источник курса проекта: `docs/MASTER_STRATEGIC_PLAN_NEO_MindBot_v4_RU.md`.
 
+## PRD-047.42-APPLY-18 _call_llm slice 11
+PRD-047.42-APPLY-18 continues the post-render `_call_llm` decomposition phase after APPLY-17 by moving the `runtime_settings_and_system_prompt_selection` cluster out of the inline method body. The work preserves the third `dialogue_profile` namesake rule in the series: the helper receives the old local profile as the default input, normalizes the ctx override if present, returns the new value, and `_call_llm` rebinds the local variable explicitly before provider dispatch. It also preserves the first bound-method dependency in the decomposition track by passing `self._resolve_runtime_settings` into the helper as a callable rather than copying or mutating the lifecycle mixin.
+
+Current result:
+- main implementation commit: `pending`;
+- push status: `pending`;
+- status is `accepted_with_warning`;
+- new helper module is `writer_agent_call_llm_slice11.py`;
+- extracted surface is one frozen dataclass carrying reassigned `dialogue_profile`, resolved `runtime_settings`, selected `system_prompt`, and one ordered `2`-key `last_debug_patch`;
+- direct slice-11 helper tests passed `3/3`, including default-vs-ctx profile precedence, both `system_prompt` branches, exact keyword-call semantics into `resolve_runtime_settings`, and exact `["system_prompt", "dialogue_profile"]` patch order;
+- new runner contract tests passed `3/3`;
+- accepted before/after `_call_llm` snapshot is byte-identical across all `3` scenarios, and `user_prompt_equivalence.md` proves line-by-line and SHA1-level identity of the exact prompt text sent to the LLM;
+- `no_mutation_proof.md` reports `0` changed protected paths across the `16` protected files, explicitly including unchanged `writer_agent_lifecycle_mixin.py` and `writer_agent_prompts.py`;
+- zero-match grep confirmed that `WRITER_SYSTEM` and `WRITER_SYSTEM_MVP_FREE_DIALOGUE` no longer have direct usage in `writer_agent.py`, so only those names were removed from its imports while `WRITER_USER_TEMPLATE` stayed;
+- the PRD-required broad writer baseline is reproduced on a clean isolated worktree with the APPLY-18 files copied in (`19 failed, 210 passed, 2007 deselected, 190 warnings`);
+- the owner workspace itself currently reports `14 failed, 215 passed, 2007 deselected, 346 warnings` for the same canonical command because `5` environment-sensitive writer tests pass under the full local sibling-workspace context, so this PRD is recorded with an honest environment warning rather than as a prompt/decomposition regression.
+
 ## PRD-047.42-APPLY-17 _call_llm slice 10
 PRD-047.42-APPLY-17 starts the post-`WRITER_USER_TEMPLATE.format(...)` decomposition phase inside `_call_llm` by moving the `prompt_constraint_append_and_debug_bookkeeping` cluster out of the inline method body. The work preserves the only remaining prompt-mutating branch after render, keeps the exact ordered `18`-key `last_debug` patch, preserves the deliberate asymmetry between `prompt_constraint_decision is not None` and `isinstance(prompt_constraint_decision, dict)`, and proves byte-identical behavior on the accepted 3-scenario `_call_llm` snapshot plus explicit direct coverage of the append branch that the snapshot harness never hits.
 

@@ -1,5 +1,25 @@
 # Architecture Decisions
 
+## ADR-118 - Runtime-settings / system-prompt extraction must preserve `dialogue_profile` reassignment semantics and pass lifecycle resolution as a callable boundary
+
+Status: accepted
+
+Date: 2026-07-16
+
+Delivery: PRD-047.42-APPLY-18 implementation completed in workspace; delivery metadata pending follow-up commit sync.
+
+Context: after PRD-047.42-APPLY-17, the next `_call_llm` cluster was only `9` lines long, but it controlled three core runtime decisions immediately before provider dispatch: it re-normalized `dialogue_profile`, called `_resolve_runtime_settings`, and selected the final `system_prompt`. This cluster carried two new decomposition risks. First, it introduced the third distinct `dialogue_profile` namesake rule in the APPLY-15/16/18 sequence: here the old local value is used as the default input, then overwritten by the normalized result. Second, it was the first cluster in the writer decomposition series to depend on a protected `self` method owned by `writer_agent_lifecycle_mixin.py`. Copying that method or converting the call to a positional/indirect pattern would have violated the PRD boundary.
+
+Decision:
+- move the whole `runtime_settings_and_system_prompt_selection` cluster behind one helper plus one frozen dataclass in `writer_agent_call_llm_slice11.py`;
+- pass the current local `dialogue_profile` into the helper explicitly, normalize the ctx override inside the helper, and return the new value so `_call_llm` rebinds the local variable explicitly after the call;
+- pass `self._resolve_runtime_settings` into the helper as a bound callable rather than copying lifecycle logic or introducing `self` inside the helper;
+- preserve the original keyword call shape `resolve_runtime_settings(dialogue_profile=...)` and feed it the new normalized profile, not the stale incoming one;
+- preserve the exact two-key debug patch order `system_prompt`, then `dialogue_profile`;
+- remove `WRITER_SYSTEM` and `WRITER_SYSTEM_MVP_FREE_DIALOGUE` from `writer_agent.py` only after zero-match grep confirms that the helper became their only remaining user there.
+
+Consequences: the `_call_llm` decomposition track now has an explicit rule for clusters that both rebind an existing local name and depend on a protected class method: model them as pure helpers plus a callable parameter, then rebind the returned local value at the call site. Future provider-dispatch and response-tail slices can now proceed without reopening runtime-selection semantics or touching the lifecycle mixin itself.
+
 ## ADR-117 - Post-render `_call_llm` prompt-constraint extraction must return one ordered debug patch and preserve the original append/asymmetry semantics verbatim
 
 Status: accepted

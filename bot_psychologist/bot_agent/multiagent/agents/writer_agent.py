@@ -23,6 +23,7 @@ from .agent_llm_config import get_model_for_agent, get_temperature_for_agent
 from .writer_agent_constants import _contains_any
 from .writer_agent_enforce_slice1 import _extract_enforce_slice1_prelude
 from .writer_agent_enforce_slice2 import _extract_enforce_slice2_second_prelude_and_close_gently
+from .writer_agent_enforce_slice3 import _classify_enforce_slice3_bounded_practice
 from .writer_agent_fallback_helpers import (
     _build_gentle_close_reply as _fallback_build_gentle_close_reply,
     _build_no_practice_fallback_text as _fallback_build_no_practice_fallback_text,
@@ -663,35 +664,26 @@ class WriterAgent(WriterAgentLifecycleMixin, WriterAgentFallbackStateMixin):
         user_mechanism_request = slice2_result.user_mechanism_request
         answer_fit = slice2_result.answer_fit
 
-        if answer_obligation == "provide_one_bounded_practice":
-            practice_anchor_present = _contains_any(
-                lowered_text,
-                ("будь сильным", "драйвер", "сильн", "напряж", "сдерж"),
+        slice3_result = _classify_enforce_slice3_bounded_practice(
+            text=text,
+            lowered_user=lowered_user,
+            lowered_text=lowered_text,
+            answer_obligation=answer_obligation,
+        )
+        if slice3_result.outcome == "be_strong":
+            self._set_final_answer_shape_debug("one_short_practice")
+            return (
+                "Одна короткая практика: в момент, когда включается «Будь сильным», "
+                "заметь, где тело напрягается, и тихо назови про себя: "
+                "«сейчас я снова держусь через силу». На этом остановись, ничего не исправляя."
             )
-            practice_step_present = _contains_any(
-                lowered_text,
-                ("сделай", "заметь", "отметь", "поймай", "назови", "остановись", "выдох"),
+        if slice3_result.outcome == "defer_repair":
+            return self._defer_no_stub_repair(
+                signal="bounded_practice_repair",
+                text=text,
+                must_answer=user_message,
             )
-            practice_multistep = len(re.findall(r"(?m)^\s*(?:[-*•]|\d+[.)])\s+", text)) > 1
-            if (
-                "?" in text
-                or len(text.strip()) > 900
-                or practice_multistep
-                or not practice_step_present
-                or not practice_anchor_present
-            ):
-                if "будь сильным" in lowered_user:
-                    self._set_final_answer_shape_debug("one_short_practice")
-                    return (
-                        "Одна короткая практика: в момент, когда включается «Будь сильным», "
-                        "заметь, где тело напрягается, и тихо назови про себя: "
-                        "«сейчас я снова держусь через силу». На этом остановись, ничего не исправляя."
-                    )
-                return self._defer_no_stub_repair(
-                    signal="bounded_practice_repair",
-                    text=text,
-                    must_answer=user_message,
-                )
+        if slice3_result.outcome == "strip_followup":
             self._set_final_answer_shape_debug("one_short_practice")
             return self._strip_optional_followup_invitation(text) or text
 

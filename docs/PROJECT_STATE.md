@@ -2,6 +2,25 @@
 
 Главный источник курса проекта: `docs/MASTER_STRATEGIC_PLAN_NEO_MindBot_v4_RU.md`.
 
+## PRD-047.42-APPLY-26 _enforce_answer_compliance slice 5 Block A classifier
+PRD-047.42-APPLY-26 follows the architect's direct technical decision that `mvp_free_branch_handoff` (a single delegating `self._enforce_mvp_free_dialogue_compliance(...)` call with no internal logic or `last_debug` writes) stays inline, by analogy with owner decision #3 on `provider_dispatch` - closing family 3 of the APPLY-20 map without a PRD. Reconnaissance of the remaining 278-line method tail found a natural split at the "known concept answer-first path" comment: Block A (66 lines, clean, zero `last_debug` writes, one terminal self-call) and Block B (212 lines, unreconnoitered, contains the method's only remaining `last_debug` write). This PRD extracts Block A whole.
+
+Current result:
+- main implementation commit: `ad12bf8`;
+- push status: `pushed_to_origin_main`;
+- status is `accepted`;
+- new helper module is `bot_psychologist/bot_agent/multiagent/agents/writer_agent_enforce_slice5.py`;
+- extracted surface is one frozen dataclass `EnforceSlice5Result` with a `Literal` outcome field (fifteen values) plus an optional computed `return_text` - a pure classifier with zero `self` access;
+- `_enforce_answer_compliance(...)` keeps the single `self._defer_no_stub_repair` call (for `user_repair_signal`) inline, dispatching on `slice5_result.outcome`; every literal response text is preserved verbatim, including intentional duplication across outcomes that historically shared one return string;
+- `clarify_one_point_multi_questions` computes `return_text` inside the helper (first question-terminated segment of `text`), matching the original inline computation exactly;
+- boundaries matched the PRD's stated `756-821` exactly against live HEAD, with `822` (Block B's opening comment) confirmed untouched immediately below - no re-verification discrepancy;
+- direct helper tests cover all fifteen outcomes, `return_text` computation across multiple inputs, and an explicit proof that `give_short_support_primary` always wins over `give_short_support_len_or_flags`/`give_short_support_markers` - two outcomes that share the exact same gating predicate as `primary` (a strict OR-superset), making them structurally unreachable through the cascade; this is a preserved dead-code quirk from the original, not a defect introduced by decomposition;
+- dedicated APPLY-26 runner reuses the APPLY-20 `17`-case harness by import, builds a historical-before snapshot from commit `787b7f0d`, and proves byte-identical before/after output plus identical `last_debug` key ordering;
+- `no_mutation_proof.md` reports `0` changed protected paths across the `22` canonical protected files (the accepted `21` plus `writer_agent_enforce_slice4.py`) and `0` changed paths under the accepted APPLY-20..25 log folders;
+- clean-tree historical contract rerun across APPLY-6..APPLY-26 is fully green at `134/134` (the APPLY-20 `rule_count` self-test stays green because APPLY-25 already retired its hard equality assertion);
+- the PRD-required isolated clean-worktree `pytest tests/ -k writer -q` baseline reports `19 failed, 260 passed, 2027 deselected, 190 warnings` - the same known failure set as prior PRDs;
+- the owner workspace canonical writer run shows the known environment-specific `14 failed, 265 passed, 2027 deselected, 346 warnings` - an already-documented, unrelated warning.
+
 ## PRD-047.42-APPLY-25 hygiene micro-PRD - retire live rule-count invariant
 PRD-047.42-APPLY-25 resolves the honest finding recorded in APPLY-24: `test_prd_047_42_apply_20_enforce_compliance_mapping.py::test_rule_count_matches_boundary_map_inventory` live-walks the AST of `_enforce_answer_compliance` and asserted a hard `== 75`, an assumption that classifier-style decomposition (APPLY-23/24) permanently and legitimately breaks with every batched slice that collapses nested `if` cascades into flat dispatch checks.
 

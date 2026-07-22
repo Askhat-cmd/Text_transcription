@@ -1,5 +1,22 @@
 # Architecture Decisions
 
+## ADR-125 - A single delegating self-call with no internal logic or `last_debug` writes stays inline; extracting it would be structure without benefit
+
+Status: accepted
+
+Date: 2026-07-16
+
+Delivery: PRD-047.42-APPLY-26 accepted in main implementation commit `ad12bf8`.
+
+Context: after family 2 of `_enforce_answer_compliance` closed (APPLY-23/24), the next boundary in the APPLY-20 map was family 3, `mvp_free_branch_handoff`: `if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE: return self._enforce_mvp_free_dialogue_compliance(...)`. This is a direct structural analogue of `provider_dispatch` in `_call_llm`, which owner decision #3 already settled as staying inline - a single delegating call with no internal branching and no `last_debug` writes of its own gains nothing from being moved into a helper module; law Z-3 (do not multiply structure for its own sake) applies directly.
+
+Decision:
+- treat `mvp_free_branch_handoff` as resolved by direct precedent, without requiring a fresh owner decision or a dedicated PRD - the architect has standing authority for technical decisions that are direct applications of an already-accepted pattern within the existing strategy, reserving owner decisions for genuinely new tradeoffs;
+- record the resolution in the master plan (v4.29) as closing family 3 of the APPLY-20 map with zero code change;
+- proceed directly to reconnaissance of the remaining method tail (278 lines) to find the next real extraction boundary, which produced the Block A / Block B split (Block A: 66 lines, clean; Block B: 212 lines, unreconnoitered, containing the method's only remaining `last_debug` write) - the object of this PRD's actual extraction work.
+
+Consequences: not every boundary in a decomposition map requires a PRD. When reconnaissance finds a delegating call with no internal complexity, and a directly-applicable precedent already exists in the project's own history, the architect can resolve it as a documented technical decision and move directly to the next PRD-worthy boundary, keeping the decomposition track's pace matched to where the actual complexity is instead of manufacturing a PRD for a non-decision.
+
 ## ADR-124 - Batching whole rule families into one PRD is safe once reconnaissance confirms no hidden cross-rule complexity; a static AST-based self-test from an earlier PRD is not a veto over that decision
 
 Status: accepted

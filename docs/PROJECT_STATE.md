@@ -2,6 +2,20 @@
 
 Главный источник курса проекта: `docs/MASTER_STRATEGIC_PLAN_NEO_MindBot_v4_RU.md`.
 
+## PRD-047.42-APPLY-25 hygiene micro-PRD - retire live rule-count invariant
+PRD-047.42-APPLY-25 resolves the honest finding recorded in APPLY-24: `test_prd_047_42_apply_20_enforce_compliance_mapping.py::test_rule_count_matches_boundary_map_inventory` live-walks the AST of `_enforce_answer_compliance` and asserted a hard `== 75`, an assumption that classifier-style decomposition (APPLY-23/24) permanently and legitimately breaks with every batched slice that collapses nested `if` cascades into flat dispatch checks.
+
+Current result:
+- main implementation commit: `b2c4c48`;
+- push status: `pushed_to_origin_main`;
+- status is `accepted`;
+- retired exactly one assertion (`assert len(rules) == 75`) and added a docstring explaining the expected drift, referencing this doc's v4.28 update and the APPLY-24 implementation report;
+- kept the self-consistency assertion (`payload["metadata"]["rule_count"] == len(rules)`) and the `>= 40` sanity floor - both retain diagnostic value;
+- left the other two test functions in the file, all production code, and every `TO_DO_LIST/logs/PRD-047.42-APPLY-20/` artifact completely untouched (`0`-diff proof in `no_mutation_proof.md`);
+- the entire PRD diff is scoped to exactly one file;
+- clean-tree historical contract rerun across APPLY-6..APPLY-25 is now `131/131` green (up from `130 passed, 1 failed` before this PRD);
+- the canonical isolated writer baseline is unchanged at `19 failed, 240 passed, 2024 deselected, 190 warnings`, and the owner workspace baseline is unchanged at `14 failed, 245 passed, 2024 deselected, 346 warnings` - both identical to APPLY-24's numbers, confirming zero side effects beyond the one retired assertion.
+
 ## PRD-047.42-APPLY-24 _enforce_answer_compliance slice 4 R07-R16 batched obligation-repair classifier
 PRD-047.42-APPLY-24 closes family 2 (`obligation_specific_repairs_before_profile_split`) of `_enforce_answer_compliance` in full, batching `R07-R16` (five independent rules) into one PRD per the owner's pace decision recorded in the v4.27 master plan update: families without reconnaissance-confirmed hidden complexity are cut whole, not rule-by-rule; the small-step law (Z-4) applies only where reconnaissance confirms real risk, as it did for `R03`/`R04`.
 

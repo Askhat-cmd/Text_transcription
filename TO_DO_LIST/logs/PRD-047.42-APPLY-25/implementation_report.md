@@ -1,8 +1,8 @@
 # PRD-047.42-APPLY-25 Implementation Report
 
 - PRD: `PRD-047.42-APPLY-25`
-- Status: `accepted_pending_delivery_metadata`
-- Delivery: `main_commit_pending`
+- Status: `accepted`
+- Delivery: `main_commit=b2c4c48`, `push_status=pushed_to_origin_main`
 - Type: hygiene micro-PRD (one assertion, one test file)
 
 ## Scope Delivered
@@ -21,6 +21,7 @@
 
 - Focused file run (`test_prd_047_42_apply_20_enforce_compliance_mapping.py`): `3 passed`.
 - Full contract suite (`test_prd_047_42_apply_*.py`, owner workspace, dirty tree containing only this PRD's own change): `131 passed, 1 warning` - up from `130 passed, 1 failed` before this PRD, confirming the previously honestly-documented APPLY-24 finding is now fully resolved.
-- Canonical isolated writer baseline: unchanged at `19 failed` with the same known failing set (this test was never part of `-k writer` selection, so the count could not and did not move).
-- Owner workspace writer baseline: unchanged at `14 failed, 245 passed, 2024 deselected, 346 warnings` - identical to APPLY-24's recorded numbers, confirming zero side effects outside the one touched assertion.
+- Clean-tree historical contract rerun (temporary detached worktree from commit `b2c4c48`): `131 passed, 1 warning` - fully green, no exceptions.
+- Canonical isolated writer baseline (same worktree): `19 failed, 240 passed, 2024 deselected, 190 warnings` - identical to APPLY-24's recorded numbers; this test was never part of `-k writer` selection, so the count could not and did not move.
+- Owner workspace writer baseline: `14 failed, 245 passed, 2024 deselected, 346 warnings` - identical to APPLY-24's recorded numbers, confirming zero side effects outside the one touched assertion.
 - `no_mutation_proof.md`: `0` changed protected paths across the `21` canonical protected files; `0` changed paths under `TO_DO_LIST/logs/PRD-047.42-APPLY-20/`; full PRD diff scope is exactly one file.

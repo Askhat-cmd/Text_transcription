@@ -24,6 +24,7 @@ from .writer_agent_constants import _contains_any
 from .writer_agent_enforce_slice1 import _extract_enforce_slice1_prelude
 from .writer_agent_enforce_slice2 import _extract_enforce_slice2_second_prelude_and_close_gently
 from .writer_agent_enforce_slice3 import _classify_enforce_slice3_bounded_practice
+from .writer_agent_enforce_slice4 import _classify_enforce_slice4_obligation_repairs_and_echo
 from .writer_agent_fallback_helpers import (
     _build_gentle_close_reply as _fallback_build_gentle_close_reply,
     _build_no_practice_fallback_text as _fallback_build_no_practice_fallback_text,
@@ -687,61 +688,31 @@ class WriterAgent(WriterAgentLifecycleMixin, WriterAgentFallbackStateMixin):
             self._set_final_answer_shape_debug("one_short_practice")
             return self._strip_optional_followup_invitation(text) or text
 
-        if literal_markdown_echo:
-            normalized_requested = literal_markdown_echo.strip()
-            normalized_response = text.strip()
-            if normalized_response != normalized_requested:
-                self.last_debug["format_request_repair_applied"] = True
-                self.last_debug["final_answer_shape"] = "literal_markdown_echo"
-                return normalized_requested
-
-        if answer_obligation == "acknowledge_style_preference_then_answer" and (
-            "расскажи больше" in lowered_text or len(text) < 140
-        ):
-            if concept_question:
-                return self._defer_no_stub_repair(
-                    signal="style_preference_direct_answer_repair",
-                    text=text,
-                    must_answer="known_concept_question",
-                )
-
-        if answer_obligation == "repair_and_answer_last_question" and (
-            "сейчас полезнее прямое объяснение механизма" in lowered_text or len(text) < 180
-        ):
-            target = last_direct_question or user_message
-            if "нейросталкинг" in target.lower():
-                return self._defer_no_stub_repair(
-                    signal="repair_answer_last_question_repair",
-                    text=text,
-                    must_answer=target,
-                )
-
-        if answer_obligation == "answer_last_offer" and (
-            any(marker in lowered_text for marker in ("подтверди", "если хочешь", "могу так сделать"))
-            or any(marker in lowered_text for marker in ("предлагаю такой план", "хотите, чтобы", "сначала"))
-            or "после подтверждения" in lowered_text
-            or ("могу так сделать" in last_offer_summary.lower() and len(text) < 500)
-            or (
-                any(color in offer_repair_context for color in ("красн", "оранж", "зелен"))
-                and not all(color in lowered_text for color in ("красн", "оранж", "зелен"))
+        slice4_result = _classify_enforce_slice4_obligation_repairs_and_echo(
+            text=text,
+            user_message=user_message,
+            lowered_text=lowered_text,
+            answer_obligation=answer_obligation,
+            literal_markdown_echo=literal_markdown_echo,
+            concept_question=concept_question,
+            last_direct_question=last_direct_question,
+            last_offer_summary=last_offer_summary,
+            offer_repair_context=offer_repair_context,
+        )
+        if slice4_result.outcome == "literal_markdown_echo_mismatch":
+            self.last_debug.update(slice4_result.last_debug_patch)
+            return slice4_result.return_text
+        if slice4_result.outcome in {
+            "acknowledge_style_preference_repair",
+            "repair_and_answer_last_question_repair",
+            "answer_last_offer_repair",
+            "answer_knowledge_or_direct_repair",
+        }:
+            return self._defer_no_stub_repair(
+                signal=slice4_result.defer_signal,
+                text=text,
+                must_answer=slice4_result.defer_must_answer,
             )
-        ):
-            if any(color in offer_repair_context for color in ("красн", "оранж", "зелен")):
-                return self._defer_no_stub_repair(
-                    signal="answer_last_offer_repair",
-                    text=text,
-                    must_answer=last_offer_summary or last_direct_question or "last_assistant_offer",
-                )
-
-        if answer_obligation in {"answer_knowledge_question", "answer_direct_question"} and (
-            "сейчас полезнее прямое объяснение механизма" in lowered_text or len(text) < 140
-        ):
-            if concept_question:
-                return self._defer_no_stub_repair(
-                    signal="knowledge_direct_answer_repair",
-                    text=text,
-                    must_answer="known_concept_question",
-                )
 
         if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE:
             return self._enforce_mvp_free_dialogue_compliance(

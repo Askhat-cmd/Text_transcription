@@ -16,13 +16,13 @@ from ..dialogue_policy import (
     detect_numbered_list_request,
     detect_practice_overview_request,
 )
-from ..concrete_answer_fit import evaluate_concrete_answer_fit
 from ..stale_stub_detector import detect_stale_stub
 from ..contracts.writer_contract import WriterContract
 from .agent_llm_client import create_agent_completion
 from .agent_llm_config import get_model_for_agent, get_temperature_for_agent
 from .writer_agent_constants import _contains_any
 from .writer_agent_enforce_slice1 import _extract_enforce_slice1_prelude
+from .writer_agent_enforce_slice2 import _extract_enforce_slice2_second_prelude_and_close_gently
 from .writer_agent_fallback_helpers import (
     _build_gentle_close_reply as _fallback_build_gentle_close_reply,
     _build_no_practice_fallback_text as _fallback_build_no_practice_fallback_text,
@@ -625,79 +625,43 @@ class WriterAgent(WriterAgentLifecycleMixin, WriterAgentFallbackStateMixin):
             and _contains_any(lowered_user, ("здравств", "привет", "добрый день", "добрый вечер"))
         ):
             return self._repair_greeting_without_mechanism_lecture(user_message=user_message)
-        self.last_debug["legacy_constraints_suppressed"] = [
-            str(item)
-            for item in list(ctx.get("legacy_constraints_suppressed", []) or [])
-            if str(item).strip()
-        ]
-        self.last_debug["question_forced"] = bool(
-            planner_question_policy not in {"none", "optional_none"}
-        )
-        self.last_debug["practice_forced"] = bool(
-            planner_practice_policy in {"required", "one_step_required"}
-        )
-        self.last_debug["microstep_forced"] = False
-        answer_obligation = str(
-            ctx.get("answer_obligation")
-            or dict(ctx.get("final_answer_directive", {})).get("answer_obligation", "")
-            or ""
-        )
-        last_direct_question = str(ctx.get("unanswered_question_summary", "") or "")
-        last_offer_summary = str(ctx.get("last_assistant_offer_summary", "") or "")
-        offer_repair_context = f"{last_offer_summary} {last_direct_question}".lower()
-        concept_question = "нейросталкинг" in lowered_user
-
-        has_unsolicited_practice = any(marker in lowered_text for marker in _PRACTICE_MARKERS)
-        has_question = "?" in text
-        asks_define_known_term = any(marker in lowered_text for marker in _KNOWN_CONCEPT_CLARIFICATION_MARKERS)
-        has_external_surveillance_frame = any(marker in lowered_text for marker in _EXTERNAL_SURVEILLANCE_MARKERS)
-        user_requests_no_question = _contains_any(
-            lowered_user, ("без вопросов", "не задавай вопросов", "ответь без вопроса", "без вопроса")
-        )
-        user_requests_no_practice = _contains_any(
-            lowered_user,
-            (
-                "без практик",
-                "без перехода в практик",
-                "не давай практик",
-                "без упражн",
-                "не хочу практик",
-                "не хочу упражн",
-            ),
-        )
-        user_repair_signal = _contains_any(
-            lowered_user, ("ушел не туда", "вернись к сути", "снова предлагаешь практику", "я просил разбор механизма")
-        )
-        user_step_request = _contains_any(
-            lowered_user, ("один шаг", "что сделать прямо сейчас", "что делать прямо сейчас", "дай шаг", "хочу действие")
-        )
-        self.last_debug["microstep_forced"] = bool(
-            planner_answer_shape == "one_step" and not user_step_request
-        )
-        canned_step_disallowed = bool(
-            planner_practice_policy == "forbidden"
-            or user_requests_no_practice
-            or (writer_contact_mode == "free_writer_contact" and not user_step_request)
-        )
-        self.last_debug["canned_step_disallowed"] = canned_step_disallowed
-        if answer_obligation == "close_gently" and (
-            has_question
-            or has_unsolicited_practice
-            or _contains_any(lowered_text, ("если хочешь", "если захочешь", "давай продолжим", "следующий шаг"))
-        ):
-            self._set_final_answer_shape_debug("gentle_close")
-            return self._build_gentle_close_reply()
-        user_mechanism_request = _contains_any(
-            lowered_user, ("механизм", "почему застреваю", "как это работает", "разбор")
-        )
-        answer_fit = evaluate_concrete_answer_fit(
-            user_message=user_message,
-            answer_text=text,
+        slice2_result = _extract_enforce_slice2_second_prelude_and_close_gently(
+            ctx,
+            text=text,
+            lowered_user=lowered_user,
+            lowered_text=lowered_text,
+            planner_question_policy=planner_question_policy,
+            planner_practice_policy=planner_practice_policy,
+            planner_answer_shape=planner_answer_shape,
+            writer_contact_mode=writer_contact_mode,
             direct_concrete_request=direct_concrete_request,
             application_request=application_request,
             explicit_answer_need=explicit_answer_need,
+            user_message=user_message,
+            practice_markers=_PRACTICE_MARKERS,
+            known_concept_clarification_markers=_KNOWN_CONCEPT_CLARIFICATION_MARKERS,
+            external_surveillance_markers=_EXTERNAL_SURVEILLANCE_MARKERS,
         )
-        self.last_debug["answer_fit_evaluator"] = dict(answer_fit)
+        self.last_debug.update(slice2_result.last_debug_patch)
+        if slice2_result.close_gently_triggered:
+            self._set_final_answer_shape_debug("gentle_close")
+            return self._build_gentle_close_reply()
+        answer_obligation = slice2_result.answer_obligation
+        last_direct_question = slice2_result.last_direct_question
+        last_offer_summary = slice2_result.last_offer_summary
+        offer_repair_context = slice2_result.offer_repair_context
+        concept_question = slice2_result.concept_question
+        has_unsolicited_practice = slice2_result.has_unsolicited_practice
+        has_question = slice2_result.has_question
+        asks_define_known_term = slice2_result.asks_define_known_term
+        has_external_surveillance_frame = slice2_result.has_external_surveillance_frame
+        user_requests_no_question = slice2_result.user_requests_no_question
+        user_requests_no_practice = slice2_result.user_requests_no_practice
+        user_repair_signal = slice2_result.user_repair_signal
+        user_step_request = slice2_result.user_step_request
+        canned_step_disallowed = slice2_result.canned_step_disallowed
+        user_mechanism_request = slice2_result.user_mechanism_request
+        answer_fit = slice2_result.answer_fit
 
         if answer_obligation == "provide_one_bounded_practice":
             practice_anchor_present = _contains_any(

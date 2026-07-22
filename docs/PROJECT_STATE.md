@@ -2,6 +2,27 @@
 
 Главный источник курса проекта: `docs/MASTER_STRATEGIC_PLAN_NEO_MindBot_v4_RU.md`.
 
+## PRD-047.42-APPLY-22 _enforce_answer_compliance slice 2 second prelude + close_gently
+PRD-047.42-APPLY-22 closes family 1 (`intake_and_obligation_prelude`, `R01-R03`) of `_enforce_answer_compliance` after APPLY-21's verification found that the APPLY-20 map had underestimated the family's true width: a hidden second wave of `~16` locals sits between `R02` and `R03`, with `R03` (`close_gently`) physically nested inside it rather than after it. This is the project's first extracted window containing an early return with code after it that must not run when the return fires, so it introduces a new mechanic (d: extract-and-maybe-return) instead of the simple dataclass mechanic (c) used everywhere else.
+
+Current result:
+- main implementation commit: `c01b96c`;
+- push status: `pushed_to_origin_main`;
+- status is `accepted_with_warning`;
+- new helper module is `bot_psychologist/bot_agent/multiagent/agents/writer_agent_enforce_slice2.py`;
+- extracted surface is one frozen dataclass `EnforceSlice2SecondPreludeResult` with a `close_gently_triggered: bool` flag, an ordered `last_debug_patch`, and locals that are `Optional` and valid only when the flag is `False`;
+- `_enforce_answer_compliance(...)` keeps `R02` (`623-627`) and `R04` (`702+`) untouched immediately above/below the helper call, calls `self.last_debug.update(slice2_result.last_debug_patch)` first, and only afterward - strictly in that order - calls `self._set_final_answer_shape_debug("gentle_close")` and `return self._build_gentle_close_reply()` when `close_gently_triggered` is `True`, preserving the historical `self.last_debug` key order (`final_answer_shape` sixth, not first);
+- the helper never receives `self._set_final_answer_shape_debug` or `self._build_gentle_close_reply` in any form, by design, to avoid corrupting that key order;
+- the three module-level marker tuples (`_PRACTICE_MARKERS`, `_KNOWN_CONCEPT_CLARIFICATION_MARKERS`, `_EXTERNAL_SURVEILLANCE_MARKERS`) are passed into the helper as parameters instead of being relocated, avoiding a circular import (law Z-3);
+- the now-unused `evaluate_concrete_answer_fit` import was removed from `writer_agent.py` because its only call site moved into the helper;
+- direct helper tests cover both patch branches (`5` keys on the `close_gently` branch, `6` otherwise, exact order), an integration test proving `final_answer_shape` lands sixth (not first) in the true branch, and a marker-parameter substitution test;
+- dedicated APPLY-22 runner reuses the APPLY-20 `17`-case harness by import, builds a historical-before snapshot from commit `f730754e`, and proves byte-identical before/after output plus identical `last_debug` key ordering;
+- `grep_proof.md` confirms the historical `628-700` window is assignment-only for `self.last_debug` and confirms zero remaining direct uses of the removed `evaluate_concrete_answer_fit` import in `writer_agent.py`;
+- `no_mutation_proof.md` reports `0` changed protected paths across the `19` canonical protected files (the accepted `18` plus `writer_agent_enforce_slice1.py`) and `0` changed paths under the accepted APPLY-20/APPLY-21 log folders;
+- clean-tree historical contract rerun across APPLY-6..APPLY-22 passed `125/125`;
+- the PRD-required isolated clean-worktree `pytest tests/ -k writer -q` baseline reports `19 failed, 220 passed, 2018 deselected, 190 warnings` - the same known failure set as APPLY-20/APPLY-21;
+- honest warning remains because the owner workspace canonical writer run still shows the known environment-specific `14 failed, 225 passed, 2018 deselected, 346 warnings`, so final delivery records both numbers explicitly rather than flattening them into one false certainty.
+
 ## PRD-047.42-APPLY-21 _enforce_answer_compliance slice 1 prelude
 PRD-047.42-APPLY-21 starts the first real code transfer inside `WriterAgent._enforce_answer_compliance(...)` after the accepted APPLY-20 map. The extracted surface is intentionally the full always-executed prelude window before `R02`: one continuous `120`-line block that builds `44` locals from the contract/context and writes the first `10` ordered `last_debug` fields, but does not yet enter any rule family with early returns. This keeps the first apply slice behaviorally total over the existing `17`-case harness instead of pretending that the uncovered `53/75` rule gap is already solved.
 

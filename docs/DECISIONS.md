@@ -1,5 +1,24 @@
 # Architecture Decisions
 
+## ADR-122 - A helper with an early return inside it must never own the self-call that follows the return, when key order in a shared debug dict depends on call sequence
+
+Status: accepted
+
+Date: 2026-07-16
+
+Delivery: PRD-047.42-APPLY-22 accepted with warning in main implementation commit `c01b96c`.
+
+Context: APPLY-21's independent verification found that the APPLY-20 map underestimated family 1 of `_enforce_answer_compliance`: between `R02` and `R03` there is a hidden second wave of ~16 locals, and `R03` (`close_gently`) is physically nested inside that wave rather than after it, with two additional self-method dependencies (`_set_final_answer_shape_debug`, `_build_gentle_close_reply`). This is the first case in the whole `_call_llm`/`_enforce_answer_compliance` decomposition series where the extracted window contains an early return with code after it that must not execute when the return fires — the simple dataclass-extraction mechanic (mechanic c) used everywhere so far cannot express that a set of locals is only valid conditionally. `json.dumps` without `sort_keys` also means the order of `self.last_debug[...]` writes is part of the byte-identical contract, so any self-callable executed by the helper on the early-return path would write its key before the caller applies the earlier keys, corrupting the required order (`final_answer_shape` must land sixth, not first, in the `close_gently` branch).
+
+Decision:
+- introduce mechanic (d) - "extract-and-maybe-return": the helper returns a frozen dataclass with `last_debug_patch`, a `close_gently_triggered: bool` flag, and locals that are `Optional` and only valid when the flag is `False`;
+- the helper never receives or calls `self._set_final_answer_shape_debug` or `self._build_gentle_close_reply` in any form; those calls, and the `return`, stay in `writer_agent.py`;
+- the caller applies `self.last_debug.update(slice2_result.last_debug_patch)` first, and only afterward, if `close_gently_triggered`, calls `_set_final_answer_shape_debug` and returns `_build_gentle_close_reply()` - in that exact order;
+- the patch itself is branch-specific: 5 keys on the early-return branch (no `final_answer_shape`, no `answer_fit_evaluator`, because those lines are physically unreached in the original), 6 keys otherwise;
+- the three module-level marker tuples stay module-level in `writer_agent.py` and are passed into the helper as parameters, rather than relocating them into `writer_agent_constants.py`, to avoid a circular import for one PRD (law Z-3).
+
+Consequences: the project now has a proven, tested pattern for extracting any future window that contains an early return with post-return code that must stay in the caller. Future rule-family slices with early returns can reuse mechanic (d) directly instead of re-deriving it, and the direct test suite for this PRD includes an explicit regression guard (the integration test asserting `final_answer_shape` lands sixth, not first) that any future refactor of this seam must keep green.
+
 ## ADR-121 - The first `_enforce_answer_compliance` apply slice must be the total prelude window, not the first partially covered rule family
 
 Status: accepted

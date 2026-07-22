@@ -1,8 +1,8 @@
 # PRD-047.42-APPLY-22 Implementation Report
 
 - PRD: `PRD-047.42-APPLY-22`
-- Status: `accepted_pending_delivery_metadata`
-- Delivery: `main_commit_pending`
+- Status: `accepted_with_warning`
+- Delivery: `main_commit=c01b96c`, `push_status=pushed_to_origin_main`
 
 ## Scope Delivered
 
@@ -19,3 +19,15 @@
 
 - This PRD closes family 1 (`intake_and_obligation_prelude`, `R01-R03`) of `_enforce_answer_compliance`: `text`/`R01` inline, slice1 (first prelude), `R02` inline, slice2 (second prelude + `R03`).
 - Rule families `R04+` remain untouched; boundaries for the next family must be re-verified against the live HEAD rather than trusted from the APPLY-20 map, per the boundary-underestimation finding recorded in the v4.25 master plan update.
+
+## Verification Summary
+
+- Direct helper tests: `5 passed`
+- APPLY-22 contract tests: `3 passed`
+- Historical clean-tree rerun `APPLY-6..22`: `125 passed, 1 warning`
+- Canonical isolated writer baseline: `19 failed, 220 passed, 2018 deselected, 190 warnings`
+- Owner workspace canonical writer run: `14 failed, 225 passed, 2018 deselected, 346 warnings`
+
+## Honest Warning
+
+- The accepted canonical clean-worktree proof reproduces the PRD-required known failure count (`19`), same failing set as APPLY-20/APPLY-21; pass/deselect counts rose only by the newly added APPLY-22 tests. The owner workspace still reports the separate environment-specific `14`-failure writer baseline (same known set as APPLY-21). This is recorded as a delivery warning, not as a regression in the extracted second-prelude/`close_gently` surface.

@@ -1,5 +1,23 @@
 # Architecture Decisions
 
+## ADR-124 - Batching whole rule families into one PRD is safe once reconnaissance confirms no hidden cross-rule complexity; a static AST-based self-test from an earlier PRD is not a veto over that decision
+
+Status: accepted
+
+Date: 2026-07-16
+
+Delivery: PRD-047.42-APPLY-24 accepted with warning in main implementation commit `fa935d5`.
+
+Context: after APPLY-23 closed `R04` as a single-rule slice under law Z-4 (small steps where risk grows with size), the owner made an explicit pace decision (recorded in the v4.27 master plan update): rule families without reconnaissance-confirmed hidden complexity - competing `last_debug` writes between neighboring rules, or nested self-dependencies with byte-order risk - should be cut whole, in one PRD, rather than rule-by-rule. Architect reconnaissance of `R07-R16` found exactly that clean case: five independent rules with no shared locals and only one `last_debug` write in the entire span (fully self-contained inside `literal_markdown_echo`). Batching them into one 6-outcome classifier, exactly as APPLY-24's PRD specified, collapsed 10 physical `if` nodes (5 rule-pairs, each an outer plus inner condition) into 2 dispatch `if` statements in `writer_agent.py`. This broke `test_prd_047_42_apply_20_enforce_compliance_mapping.py::test_rule_count_matches_boundary_map_inventory`, an APPLY-20 self-test that live-walks the AST of `_enforce_answer_compliance` and asserts exactly `75` `if` nodes - an assumption that implicitly required every future slice to preserve physical `if` count 1:1, which no one had stated as a constraint and which batched extraction cannot satisfy by design.
+
+Decision:
+- honor the owner's pace decision literally: implement the PRD's specified batched classifier code verbatim, without artificially preserving `if` count to keep an old self-test green;
+- do not modify `test_prd_047_42_apply_20_enforce_compliance_mapping.py` or any other prior PRD's test file to accommodate a later PRD's design - the project's protected-file/no-mutation discipline exists precisely to keep historical PRD artifacts honest, and silently patching an old assertion to match new behavior would defeat that purpose as surely as leaving it broken silently would;
+- instead, treat this as a discovered, explained, non-regressive side effect: prove no behavior changed via 17/17 byte-identical before/after snapshots and an unchanged canonical isolated failure count (`19`, same named failures), then record the specific test, the exact arithmetic explanation (`75 - 8 = 67`), and the proof of non-regression in the implementation report, execution-tasks file, and project docs;
+- record delivery as `accepted_with_warning`, the same status tier already used for the unrelated owner-workspace `14`-failure environment discrepancy - a real, explained, non-blocking finding, not a silent gap and not a PRD-blocking defect.
+
+Consequences: future batched-family PRDs should expect and preflight this same class of drift in APPLY-20's live-AST self-test whenever a slice consolidates multiple rules' dispatch logic, and should apply the same honest-non-regression proof (snapshot equivalence plus canonical failure-count stability) rather than treating a dropped `if`-count as a blocker. The `BLOCKED` criteria in these PRDs already anticipate this by naming only snapshot drift, patch-order changes, and protected-file/log mutation as hard blockers - not an old self-test's static assumption breaking for an explained, structural reason.
+
 ## ADR-123 - A self-contained rule with no cross-rule `last_debug` competition should use the simplest mechanic that proves purity, not the most general one already on hand
 
 Status: accepted

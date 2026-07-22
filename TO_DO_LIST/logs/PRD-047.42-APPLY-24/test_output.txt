@@ -1,0 +1,87 @@
+PRD-047.42-APPLY-24 test output summary
+Generated on: 2026-07-22
+
+1. Focused direct helper tests
+Command:
+python -m pytest bot_psychologist/tests/multiagent/test_writer_agent_enforce_slice4.py -q
+Result:
+12 passed
+
+2. Focused APPLY-24 contract tests
+Command:
+python -m pytest bot_psychologist/tests/contract/test_prd_047_42_apply_24_enforce_slice4.py -q
+Result:
+3 passed
+
+3. Syntax compilation
+Command:
+python -m py_compile bot_psychologist/bot_agent/multiagent/agents/writer_agent.py bot_psychologist/bot_agent/multiagent/agents/writer_agent_enforce_slice4.py TO_DO_LIST/tools/run_prd_047_42_apply_24_enforce_slice4.py bot_psychologist/tests/multiagent/test_writer_agent_enforce_slice4.py bot_psychologist/tests/contract/test_prd_047_42_apply_24_enforce_slice4.py
+Result:
+passed
+
+4. Clean-tree historical contract rerun
+Environment:
+temporary detached worktree from commit fa935d5
+Command:
+python -m pytest bot_psychologist/tests/contract/test_prd_047_42_apply_*.py -q
+Result:
+130 passed, 1 failed, 1 warning in 20.26s
+
+HONEST FINDING (not a regression, see below):
+FAILED bot_psychologist/tests/contract/test_prd_047_42_apply_20_enforce_compliance_mapping.py::test_rule_count_matches_boundary_map_inventory
+  AssertionError: assert 67 == 75
+  This APPLY-20 self-test walks the live AST of _enforce_answer_compliance and
+  counts physical `if` nodes (not a frozen snapshot). Before this PRD, rules
+  R07-R16 were 5 independent rule-pairs = 10 physical `if` nodes (outer
+  condition + inner condition each). This PRD's Step 3 (executed verbatim
+  from the PRD) batches all 10 into exactly 2 dispatch `if` statements in
+  writer_agent.py (`if slice4_result.outcome == "literal_markdown_echo_mismatch":`
+  and `if slice4_result.outcome in {...}:`). 75 - 8 = 67, which is exactly the
+  observed drop. This is a structural consequence of the PRD's own specified
+  batched-classifier design (owner's pace decision, v4.27), not an
+  implementation defect. Proven non-regressive by: (a) before/after snapshot
+  byte-identity across all 17 harness cases (test 6 below), and (b) the
+  canonical isolated writer baseline reproducing the exact same known 19
+  failures with no new ones (test 5 below). The APPLY-20 test file itself was
+  NOT modified, per the project's red line against touching prior PRD tests.
+
+5. Canonical isolated writer baseline
+Environment:
+temporary detached worktree from commit fa935d5
+Workdir:
+bot_psychologist
+Command:
+python -m pytest tests/ -k writer -q
+Result:
+19 failed, 240 passed, 2024 deselected, 190 warnings in 69.41s
+
+6. Owner workspace writer baseline
+Environment:
+owner workspace with local runtime/test environment
+Workdir:
+bot_psychologist
+Command:
+python -m pytest tests/ -k writer -q
+Result:
+14 failed, 245 passed, 2024 deselected, 346 warnings in 135.68s
+
+7. Snapshot equivalence (direct check)
+Command:
+python -c "... build_before_snapshot() == build_after_snapshot() ..."
+Result:
+snapshot_byte_identical=True, all_last_debug_keys_match=True, case_count=17
+
+Interpretation:
+- APPLY-24-specific focused tests are green (12 direct + 3 contract).
+- Historical APPLY-6..24 contract rerun on clean tree: 130 passed, 1 failed -
+  the single failure is the honest, explained, non-regressive APPLY-20
+  rule-count self-test drift documented above. All other historical PRD
+  contract tests (including APPLY-20's other tests, and APPLY-21/22/23) stay
+  green.
+- The PRD-required isolated clean-worktree writer baseline reproduces exactly
+  the known 19 failures (same failing set as APPLY-20/21/22/23; pass/deselect
+  counts rose only by the newly added APPLY-24 tests: +12 passed matched by
+  `-k writer`, +3 deselected not matched).
+- The owner workspace still shows the separate 14-failure environment-specific
+  baseline (same known set as APPLY-21/22/23); this is recorded as an honest
+  warning, not as an APPLY-24 regression.

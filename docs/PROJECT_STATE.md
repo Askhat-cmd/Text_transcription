@@ -2,6 +2,25 @@
 
 Главный источник курса проекта: `docs/MASTER_STRATEGIC_PLAN_NEO_MindBot_v4_RU.md`.
 
+## PRD-047.42-APPLY-24 _enforce_answer_compliance slice 4 R07-R16 batched obligation-repair classifier
+PRD-047.42-APPLY-24 closes family 2 (`obligation_specific_repairs_before_profile_split`) of `_enforce_answer_compliance` in full, batching `R07-R16` (five independent rules) into one PRD per the owner's pace decision recorded in the v4.27 master plan update: families without reconnaissance-confirmed hidden complexity are cut whole, not rule-by-rule; the small-step law (Z-4) applies only where reconnaissance confirms real risk, as it did for `R03`/`R04`.
+
+Current result:
+- main implementation commit: `fa935d5`;
+- push status: `pushed_to_origin_main`;
+- status is `accepted_with_warning`;
+- new helper module is `bot_psychologist/bot_agent/multiagent/agents/writer_agent_enforce_slice4.py`;
+- extracted surface is one frozen dataclass `EnforceSlice4Result` with a `Literal` outcome field (six values: `not_matched`, `literal_markdown_echo_mismatch`, `acknowledge_style_preference_repair`, `repair_and_answer_last_question_repair`, `answer_last_offer_repair`, `answer_knowledge_or_direct_repair`) plus optional `last_debug_patch`/`return_text`/`defer_signal`/`defer_must_answer` fields - a pure classifier with zero `self` access;
+- `_enforce_answer_compliance(...)` keeps the single `self._defer_no_stub_repair` call inline in `writer_agent.py`, dispatched once with `signal`/`must_answer` from the classifier result; for `literal_markdown_echo_mismatch` the caller applies the ordered 2-key `last_debug_patch` (`format_request_repair_applied` first, `final_answer_shape` second) before returning `return_text` - the only `last_debug` write in the whole family, preserved in original order;
+- boundaries matched the PRD's stated `690-745` exactly against live HEAD, with `746` (the MVP-free handoff) confirmed untouched immediately below - no re-verification discrepancy this time, unlike APPLY-23;
+- direct helper tests cover all six outcomes individually, exact patch key order for the echo-mismatch outcome, correct `target` computation (and its fallback to `user_message`) for the repair-and-answer-last-question outcome, and a purity/idempotency check plus a source-scan confirming zero `self.` references in the helper module;
+- dedicated APPLY-24 runner reuses the APPLY-20 `17`-case harness by import, builds a historical-before snapshot from commit `b39ed432`, and proves byte-identical before/after output plus identical `last_debug` key ordering;
+- `no_mutation_proof.md` reports `0` changed protected paths across the `21` canonical protected files (the accepted `20` plus `writer_agent_enforce_slice3.py`) and `0` changed paths under the accepted APPLY-20/21/22/23 log folders;
+- clean-tree historical contract rerun across APPLY-6..APPLY-24 reports `130 passed, 1 failed`; the single failure is an honestly-documented non-regression (see warning below);
+- the PRD-required isolated clean-worktree `pytest tests/ -k writer -q` baseline reports `19 failed, 240 passed, 2024 deselected, 190 warnings` - the same known failure set as APPLY-20/21/22/23;
+- honest warning #1: `test_prd_047_42_apply_20_enforce_compliance_mapping.py::test_rule_count_matches_boundary_map_inventory` now reports `67` instead of `75` `if`-nodes, because this APPLY-20 self-test live-walks the AST of `_enforce_answer_compliance` (not a frozen snapshot) and this PRD's batched classifier collapsed `10` physical `if` nodes (5 independent rule-pairs) into `2` dispatch `if` statements - `75 - 8 = 67` matches exactly. Proven non-regressive by 17/17 byte-identical before/after snapshots and an unchanged canonical failure list; the APPLY-20 test file itself was left untouched per the project's red line against modifying prior PRD tests;
+- honest warning #2: the owner workspace canonical writer run still shows the known environment-specific `14 failed, 245 passed, 2024 deselected, 346 warnings` - a separate, already-documented warning unrelated to this PRD's surface.
+
 ## PRD-047.42-APPLY-23 _enforce_answer_compliance slice 3 R04 bounded practice classifier
 PRD-047.42-APPLY-23 starts family 2 (`obligation_specific_repairs_before_profile_split`) of `_enforce_answer_compliance` after architect reconnaissance found it cleaner than family 1: six self-contained `if`/`return` rules with no shared local-variable preparation between them. Per law Z-4 (small steps where risk grows with size), family 2 is cut rule-by-rule rather than in one PRD; this PRD extracts only `R04` (`provide_one_bounded_practice`).
 

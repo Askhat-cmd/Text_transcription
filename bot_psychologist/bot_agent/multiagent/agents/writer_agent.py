@@ -25,6 +25,7 @@ from .writer_agent_enforce_slice1 import _extract_enforce_slice1_prelude
 from .writer_agent_enforce_slice2 import _extract_enforce_slice2_second_prelude_and_close_gently
 from .writer_agent_enforce_slice3 import _classify_enforce_slice3_bounded_practice
 from .writer_agent_enforce_slice4 import _classify_enforce_slice4_obligation_repairs_and_echo
+from .writer_agent_enforce_slice5 import _classify_enforce_slice5_block_a
 from .writer_agent_fallback_helpers import (
     _build_gentle_close_reply as _fallback_build_gentle_close_reply,
     _build_no_practice_fallback_text as _fallback_build_no_practice_fallback_text,
@@ -753,66 +754,47 @@ class WriterAgent(WriterAgentLifecycleMixin, WriterAgentFallbackStateMixin):
                 canned_step_disallowed=canned_step_disallowed,
             )
 
-        # Greeting path: remove unsolicited practice when gate forbids it.
-        if not practice_allowed and not should_answer_directly and (is_greeting or has_unsolicited_practice):
+        slice5_result = _classify_enforce_slice5_block_a(
+            text=text,
+            user_message=user_message,
+            lowered_user=lowered_user,
+            lowered_text=lowered_text,
+            practice_allowed=practice_allowed,
+            should_answer_directly=should_answer_directly,
+            is_greeting=is_greeting,
+            has_unsolicited_practice=has_unsolicited_practice,
+            has_question=has_question,
+            active_line_intent=active_line_intent,
+            planner_safety_priority=planner_safety_priority,
+            planner_next_move=planner_next_move,
+            planner_answer_shape=planner_answer_shape,
+            user_repair_signal=user_repair_signal,
+            low_resource_no_practice_markers=_LOW_RESOURCE_NO_PRACTICE_MARKERS,
+        )
+        if slice5_result.outcome == "greeting_path":
             return (
                 "Привет. Рад знакомству. "
                 "Можем спокойно начать: принеси любой вопрос или тему, которую хочешь разобрать."
             )
-
-        # Low-resource contact: keep response short and do not insert practice instructions.
-        if _contains_any(lowered_user, _LOW_RESOURCE_NO_PRACTICE_MARKERS):
-            if has_unsolicited_practice or len(text) > 280 or "?" in text:
-                return "Я рядом. Сейчас не нужно ничего разбирать. Можно просто немного снизить внутреннее давление."
-
-        if active_line_intent == "thanks_close" and (
-            has_unsolicited_practice
-            or _contains_any(lowered_text, ("шаг", "давай сделаем", "предложу еще"))
-        ):
+        if slice5_result.outcome in {"low_resource_no_practice", "give_short_support_primary", "give_short_support_markers"}:
+            return "Я рядом. Сейчас не нужно ничего разбирать. Можно просто немного снизить внутреннее давление."
+        if slice5_result.outcome in {"thanks_close", "close_gently"}:
             return "Пожалуйста. Рад, что стало чуть яснее."
-
-        if planner_safety_priority and has_question:
+        if slice5_result.outcome == "safety_priority_has_question":
             return "Я рядом. Сейчас важнее чуть стабилизироваться и снизить внутреннюю перегрузку."
-
-        if planner_next_move == "give_short_support" or planner_answer_shape == "short_support":
-            return "Я рядом. Сейчас не нужно ничего разбирать. Можно просто немного снизить внутреннее давление."
-
-        if planner_next_move == "give_short_support" and (len(text) > 260 or has_question or has_unsolicited_practice):
+        if slice5_result.outcome == "give_short_support_len_or_flags":
             return "Я рядом. Сейчас не нужно всё разбирать. Можно просто немного снизить внутреннее давление."
-
-        if planner_next_move == "stabilize_safety" and (len(text) > 320 or has_question):
+        if slice5_result.outcome == "stabilize_safety_len_or_question":
             return "Я рядом. Сейчас важнее короткая опора здесь-и-сейчас, без перегруза."
-
-        if planner_next_move == "stabilize_safety" and _contains_any(
-            lowered_text,
-            ("механизм", "прогнозирован", "контрол", "паттерн", "драйвер", "до начала действия"),
-        ):
+        if slice5_result.outcome == "stabilize_safety_markers":
             return "Я рядом. Сейчас важнее чуть стабилизироваться и снизить внутреннюю перегрузку. Без разбора, только опора здесь-и-сейчас."
-
-        if planner_next_move == "close_gently" and (
-            has_question
-            or has_unsolicited_practice
-            or _contains_any(lowered_text, ("новый шаг", "давай продолжим", "в следующий раз разберем"))
-        ):
-            return "Пожалуйста. Рад, что стало чуть яснее."
-
-        if planner_next_move == "give_short_support" and _contains_any(
-            lowered_text,
-            ("механизм", "теория", "стратегия", "прогнозирован", "контрол", "паттерн"),
-        ):
-            return "Я рядом. Сейчас не нужно ничего разбирать. Можно просто немного снизить внутреннее давление."
-
-        if planner_next_move == "clarify_one_point":
-            question_count = text.count("?")
-            if question_count == 0:
-                return "Если выбрать один узел прямо сейчас, что больше всего сжимает тебя в этой ситуации?"
-            if question_count > 1:
-                first = text.split("?")[0].strip()
-                return (first + "?").strip()
-            if len(text) > 320:
-                return "Похоже, это сильно выматывает. Если взять один конкретный эпизод, где это ощущается острее всего?"
-
-        if user_repair_signal:
+        if slice5_result.outcome == "clarify_one_point_zero_questions":
+            return "Если выбрать один узел прямо сейчас, что больше всего сжимает тебя в этой ситуации?"
+        if slice5_result.outcome == "clarify_one_point_multi_questions":
+            return slice5_result.return_text
+        if slice5_result.outcome == "clarify_one_point_long":
+            return "Похоже, это сильно выматывает. Если взять один конкретный эпизод, где это ощущается острее всего?"
+        if slice5_result.outcome == "user_repair_signal":
             return self._defer_no_stub_repair(
                 signal="user_repair_signal",
                 text=text,

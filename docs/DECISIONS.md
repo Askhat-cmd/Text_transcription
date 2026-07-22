@@ -1,5 +1,23 @@
 # Architecture Decisions
 
+## ADR-123 - A self-contained rule with no cross-rule `last_debug` competition should use the simplest mechanic that proves purity, not the most general one already on hand
+
+Status: accepted
+
+Date: 2026-07-16
+
+Delivery: PRD-047.42-APPLY-23 accepted with warning in main implementation commit `d7ef669`.
+
+Context: after APPLY-22 closed family 1 with the new mechanic (d) for a window containing a competing early return, architect reconnaissance of family 2 (`obligation_specific_repairs_before_profile_split`) found it structurally cleaner: six self-contained `if`/`return` rules with no shared local-variable preparation between them, unlike family 1's hidden second wave of locals. `R04` (`provide_one_bounded_practice`) uses three `self`-calls internally, but all three stay inside one self-contained rule with no later rule reading or overwriting the same `last_debug` keys - the exact condition that made mechanic (d)'s ordering trap necessary in APPLY-22 does not exist here. Reusing mechanic (d) anyway (a boolean flag plus an ordered patch plus optional locals) would have added machinery this rule does not need, and law Z-4 (small steps where risk grows with size) already meant family 2 could not be cut in one PRD regardless.
+
+Decision:
+- extract `R04` as a pure classifier: the helper takes only plain values (`text`, `lowered_user`, `lowered_text`, `answer_obligation`) and returns a frozen dataclass with a single `Literal` outcome field (`not_matched`, `be_strong`, `defer_repair`, `strip_followup`);
+- the helper never touches `self` and never writes `last_debug` - all three `self`-calls (`_set_final_answer_shape_debug`, `_defer_no_stub_repair`, `_strip_optional_followup_invitation`) and the literal `be_strong` response text stay inline in `writer_agent.py`, dispatched by the caller on `outcome`;
+- direct tests must cover all four outcomes individually plus an explicit purity/idempotency check (same inputs twice yield the same result) and a source-scan proving the helper module contains no `self.` or `last_debug` reference;
+- future rule-family slices default to this classifier mechanic; escalate to the full mechanic (d) from APPLY-22 only when reconnaissance finds actual cross-rule `last_debug` competition, not preemptively.
+
+Consequences: the project now has two proven extraction mechanics for `_enforce_answer_compliance` rule families - the classifier (this PRD, for self-contained rules) and extract-and-maybe-return (APPLY-22, for rules with competing early-return ordering) - and an explicit rule for choosing between them based on reconnaissance findings rather than defaulting to the most general tool already available.
+
 ## ADR-122 - A helper with an early return inside it must never own the self-call that follows the return, when key order in a shared debug dict depends on call sequence
 
 Status: accepted

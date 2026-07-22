@@ -1,8 +1,8 @@
 # PRD-047.42-APPLY-23 Implementation Report
 
 - PRD: `PRD-047.42-APPLY-23`
-- Status: `accepted_pending_delivery_metadata`
-- Delivery: `main_commit_pending`
+- Status: `accepted_with_warning`
+- Delivery: `main_commit=d7ef669`, `push_status=pushed_to_origin_main`
 
 ## Scope Delivered
 
@@ -17,3 +17,15 @@
 ## Honest Boundary
 
 - This PRD closes only `R04` of family 2 (`obligation_specific_repairs_before_profile_split`). `R07-R16` (the literal markdown echo plus four obligation-specific repair rules) remain untouched and are the next candidate slice, per law Z-4 (small steps where risk grows with size).
+
+## Verification Summary
+
+- Direct helper tests: `8 passed`
+- APPLY-23 contract tests: `3 passed`
+- Historical clean-tree rerun `APPLY-6..23`: `128 passed, 1 warning`
+- Canonical isolated writer baseline: `19 failed, 228 passed, 2021 deselected, 190 warnings`
+- Owner workspace canonical writer run: `14 failed, 233 passed, 2021 deselected, 346 warnings`
+
+## Honest Warning
+
+- The accepted canonical clean-worktree proof reproduces the PRD-required known failure count (`19`), same failing set as APPLY-20/21/22; pass/deselect counts rose only by the newly added APPLY-23 tests. The owner workspace still reports the separate environment-specific `14`-failure writer baseline (same known set as APPLY-21/22). This is recorded as a delivery warning, not as a regression in the extracted R04 classifier surface.

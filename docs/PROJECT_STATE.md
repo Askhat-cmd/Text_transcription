@@ -2,6 +2,26 @@
 
 Главный источник курса проекта: `docs/MASTER_STRATEGIC_PLAN_NEO_MindBot_v4_RU.md`.
 
+## PRD-047.42-APPLY-23 _enforce_answer_compliance slice 3 R04 bounded practice classifier
+PRD-047.42-APPLY-23 starts family 2 (`obligation_specific_repairs_before_profile_split`) of `_enforce_answer_compliance` after architect reconnaissance found it cleaner than family 1: six self-contained `if`/`return` rules with no shared local-variable preparation between them. Per law Z-4 (small steps where risk grows with size), family 2 is cut rule-by-rule rather than in one PRD; this PRD extracts only `R04` (`provide_one_bounded_practice`).
+
+Current result:
+- main implementation commit: `d7ef669`;
+- push status: `pushed_to_origin_main`;
+- status is `accepted_with_warning`;
+- new helper module is `bot_psychologist/bot_agent/multiagent/agents/writer_agent_enforce_slice3.py`;
+- extracted surface is one frozen dataclass `EnforceSlice3BoundedPracticeResult` with a single `outcome` field (`Literal["not_matched", "be_strong", "defer_repair", "strip_followup"]`) - a pure classifier with zero `self` access and zero `last_debug` writes, since `R04` has no competing writes from neighboring rules (unlike APPLY-22's `close_gently`);
+- `_enforce_answer_compliance(...)` keeps all three `self`-calls (`_set_final_answer_shape_debug`, `_defer_no_stub_repair`, `_strip_optional_followup_invitation`) and the literal `be_strong` response text inline in `writer_agent.py`, dispatching on `slice3_result.outcome`;
+- boundary re-verification: the PRD's approximate line reference (`666-692`) was stale by 4 lines against live HEAD because the `be_strong` literal response is split across 3 string literals in current formatting; the actual span is `666-696`, confirmed to match the PRD's Step 2/3 code verbatim, so this was recorded as an honest correction rather than a STOP;
+- grep confirms `practice_anchor_present`, `practice_step_present`, and `practice_multistep` are never read outside the extracted window;
+- `R07` (`if literal_markdown_echo:`, historically line 698) stays untouched immediately below the helper call;
+- direct helper tests cover all four classifier outcomes plus a purity/idempotency check and a source-scan confirming zero `self.`/`last_debug` references in the helper module;
+- dedicated APPLY-23 runner reuses the APPLY-20 `17`-case harness by import, builds a historical-before snapshot from commit `ff9489c2`, and proves byte-identical before/after output plus identical `last_debug` key ordering;
+- `no_mutation_proof.md` reports `0` changed protected paths across the `20` canonical protected files (the accepted `19` plus `writer_agent_enforce_slice2.py`) and `0` changed paths under the accepted APPLY-20/21/22 log folders;
+- clean-tree historical contract rerun across APPLY-6..APPLY-23 passed `128/128`;
+- the PRD-required isolated clean-worktree `pytest tests/ -k writer -q` baseline reports `19 failed, 228 passed, 2021 deselected, 190 warnings` - the same known failure set as APPLY-20/21/22;
+- honest warning remains because the owner workspace canonical writer run still shows the known environment-specific `14 failed, 233 passed, 2021 deselected, 346 warnings`.
+
 ## PRD-047.42-APPLY-22 _enforce_answer_compliance slice 2 second prelude + close_gently
 PRD-047.42-APPLY-22 closes family 1 (`intake_and_obligation_prelude`, `R01-R03`) of `_enforce_answer_compliance` after APPLY-21's verification found that the APPLY-20 map had underestimated the family's true width: a hidden second wave of `~16` locals sits between `R02` and `R03`, with `R03` (`close_gently`) physically nested inside it rather than after it. This is the project's first extracted window containing an early return with code after it that must not run when the return fires, so it introduces a new mechanic (d: extract-and-maybe-return) instead of the simple dataclass mechanic (c) used everywhere else.
 

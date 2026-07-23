@@ -1,8 +1,8 @@
 # PRD-047.42-APPLY-28 Implementation Report
 
 - PRD: `PRD-047.42-APPLY-28`
-- Status: `accepted_pending_delivery_metadata`
-- Delivery: `main_commit_pending`
+- Status: `accepted`
+- Delivery: `main_commit=2ee0c71`, `push_status=pushed_to_origin_main`
 
 ## Scope Delivered
 
@@ -20,3 +20,13 @@
 ## Honest Boundary
 
 - This PRD closes Block B in full. The entire `_enforce_answer_compliance` method (`576-1000` at this HEAD) is now fully decomposed. The next boundary is a different method entirely: `_enforce_mvp_free_dialogue_compliance`, which has not been mapped at all and needs its own from-scratch reconnaissance.
+
+## Verification Summary
+
+- Direct helper tests: `24 passed`
+- APPLY-28 contract tests: `2 passed`
+- Historical clean-tree rerun `APPLY-6..28`: `139 passed, 1 warning` - fully green
+- Canonical isolated writer baseline: `19 failed, 310 passed, 2032 deselected, 190 warnings`
+- Owner workspace canonical writer run: `14 failed, 315 passed, 2032 deselected, 346 warnings`
+- Group 9 edge case (`list_like=True`, `first_item=None`) confirmed to fall through to the `sentence_parts` check rather than exiting the group or raising, matching Особенность 1 exactly.
+- Historical line 1000 confirmed to be exactly `return text` (the method's unconditional end), untouched, via `grep_proof.md`.

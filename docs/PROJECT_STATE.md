@@ -2,6 +2,29 @@
 
 Главный источник курса проекта: `docs/MASTER_STRATEGIC_PLAN_NEO_MindBot_v4_RU.md`.
 
+## PRD-047.42-APPLY-28 _enforce_answer_compliance slice 7 Block B Part 2 - method fully decomposed
+PRD-047.42-APPLY-28 closes Block B in full, completing the entire `_enforce_answer_compliance` decomposition that began at PRD-047.42-APPLY-21. Groups 7-12 (the second and last part of Block B) contain the single most structurally complex cluster in the whole method (group 9: 4 internal locals, 4 return points, a novel nested "maybe-return inside maybe-return" sub-pattern) but, unlike Part 1, contain zero direct `last_debug` writes.
+
+Current result:
+- main implementation commit: `2ee0c71`;
+- push status: `pushed_to_origin_main`;
+- status is `accepted`;
+- new helper module is `bot_psychologist/bot_agent/multiagent/agents/writer_agent_enforce_slice7.py`;
+- extracted surface is one frozen dataclass `EnforceBlockBPart2Result` with a `Literal` outcome field (17 tags: 16 significant outcomes plus `not_matched`) and an optional computed `return_text` - a pure classifier with zero `self` access;
+- group 9's novel sub-pattern is preserved exactly: `if list_like:` wraps `if first_item:` with no `else` at either level, so `list_like=True` with `first_item=None` (a bare list marker with no content after it) falls through to the `sentence_parts` check instead of exiting the group - verified with a dedicated edge-case test (`text="-\n"`);
+- `not_matched` has no dispatch branch at all on the call site - control falls through directly into the pre-existing unconditional `return text` (the literal end of the method), confirmed untouched;
+- the module-level (non-`self`) `starts_with_mechanical_revoicing` function is called directly inside the helper via the same import path as `writer_agent.py` (`from ..active_line import starts_with_mechanical_revoicing`) - no circular import;
+- all `self`-methods (`_defer_no_stub_repair`, `_resolve_one_step_or_no_practice_fallback`) stay exclusively on the call site; four distinct "one-step-like" classifier tags that dispatch to the same `self`-call with identical arguments are merged only at the call site, not inside the classifier;
+- `first_item_extraction_g9` and `revoicing_strip_g11` compute `return_text` inside the helper, matching the original inline computations exactly;
+- boundaries matched the PRD's stated `883-999` exactly against live HEAD, with line 1000 (`return text`, the method's physical end) confirmed untouched;
+- direct helper tests cover all 16 significant outcomes, `not_matched` with correct final dispatch, the group 9 edge case, `return_text` computation for both computed outcomes, and a group 8 vs. group 9 priority-resolution case;
+- dedicated APPLY-28 runner reuses the APPLY-20 `17`-case harness by import, builds a historical-before snapshot from commit `c4a447a7`, and proves byte-identical before/after output plus identical `last_debug` key ordering;
+- `no_mutation_proof.md` reports `0` changed protected paths across the `24` canonical protected files (the accepted `23` plus `writer_agent_enforce_slice6.py`) and `0` changed paths under the accepted APPLY-20..27 log folders;
+- clean-tree historical contract rerun across APPLY-6..APPLY-28 is fully green at `139/139`;
+- the PRD-required isolated clean-worktree `pytest tests/ -k writer -q` baseline reports `19 failed, 310 passed, 2032 deselected, 190 warnings` - the same known failure set as prior PRDs;
+- the owner workspace canonical writer run shows the known environment-specific `14 failed, 315 passed, 2032 deselected, 346 warnings` - an already-documented, unrelated warning.
+- **Milestone: `_enforce_answer_compliance` (the largest method in `writer_agent.py`) is now fully decomposed across slices 1-7 (APPLY-21, 22, 23, 24, 26, 27, 28) plus one technical decision (`mvp_free_branch_handoff` stays inline) and one hygiene micro-PRD (APPLY-25).** The next boundary is a different method entirely, `_enforce_mvp_free_dialogue_compliance`, which has never been mapped.
+
 ## PRD-047.42-APPLY-27 _enforce_answer_compliance slice 6 Block B Part 1 classifier
 PRD-047.42-APPLY-27 extracts the first half of Block B (the last unreconnoitered stretch of `_enforce_answer_compliance`), following the architect's split decision: Block B (212 lines) is ~3.2x longer than Block A and mixes two extraction mechanics (some groups always return - classifier; some groups may fall through - mechanic (d) from APPLY-22) plus the method's only remaining direct `last_debug` write, so it was cut into two PRDs at the natural structural boundary after group 6.
 

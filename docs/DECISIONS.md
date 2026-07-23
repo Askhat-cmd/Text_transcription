@@ -1,5 +1,22 @@
 # Architecture Decisions
 
+## ADR-127 - A nested maybe-return-inside-maybe-return group must preserve both levels' fall-through exactly; collapsing to a single condition changes behavior on the null-match edge case
+
+Status: accepted
+
+Date: 2026-07-23
+
+Delivery: PRD-047.42-APPLY-28 accepted in main implementation commit `2ee0c71`.
+
+Context: reconnaissance of Block B Part 2 found a sub-pattern not seen anywhere else in the `_enforce_answer_compliance` decomposition series: group 9 contains `if list_like: ... if first_item: return ...` with no `else` at either level. A naive simplification - collapsing the two checks into one condition, or using `elif`/early-return shortcuts - would change behavior on the specific edge case where `list_like` is `True` (the text starts with a list marker) but `first_item` is `None` (nothing follows the marker, so the capture-group regex does not match). In the original, that case falls through silently to the `sentence_parts` check below, as if `list_like` had been `False`; a naive rewrite could instead exit the group early or raise, silently changing behavior for a real (if narrow) input shape.
+
+Decision:
+- reproduce the nested-if-without-else structure literally inside the classifier, exactly as it appears in the original, rather than flattening it into a single boolean expression;
+- require a dedicated edge-case test (`text="-\n"`, `list_like=True`, `first_item=None`) asserting the outcome is never `first_item_extraction_g9` and instead lands in one of the subsequent group-9 checks - proving the fall-through survives extraction;
+- run a pre-implementation differential fuzz test specifically targeting this edge case (in addition to the general 40,000-combination fuzz pass already used for the rest of the slice) before handing the PRD to the executor, given this was the first occurrence of this sub-pattern in the series and therefore carried the highest risk of an unnoticed behavior change.
+
+Consequences: the project now has a named, tested pattern for "maybe-return nested inside maybe-return" that future slices can reuse without re-deriving the reasoning, and a concrete example (this ADR plus the associated test) of why syntactic simplification during extraction is a correctness risk, not just a style choice, whenever the original code's control flow depends on partial matches falling through rather than terminating. This PRD also closes the `_enforce_answer_compliance` decomposition begun at APPLY-21: the method is now fully covered by extracted classifiers/helpers across seven slices, one technical "stays inline" decision (`mvp_free_branch_handoff`, ADR-125), and one hygiene micro-PRD (APPLY-25, ADR-124's subject). The next boundary-mapping target, `_enforce_mvp_free_dialogue_compliance`, has never been mapped and should not inherit assumptions from this method's structure.
+
 ## ADR-126 - When a block mixes always-return and maybe-fall-through groups plus is far longer than the previous batched slice, split it at the natural structural seam instead of forcing one PRD or one mechanic
 
 Status: accepted

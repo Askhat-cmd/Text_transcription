@@ -28,6 +28,7 @@ from .writer_agent_enforce_slice4 import _classify_enforce_slice4_obligation_rep
 from .writer_agent_enforce_slice5 import _classify_enforce_slice5_block_a
 from .writer_agent_enforce_slice6 import _classify_enforce_block_b_part1
 from .writer_agent_enforce_slice7 import _classify_enforce_block_b_part2
+from .writer_agent_mvp_slice1 import _classify_mvp_part1
 from .writer_agent_fallback_helpers import (
     _build_gentle_close_reply as _fallback_build_gentle_close_reply,
     _build_no_practice_fallback_text as _fallback_build_no_practice_fallback_text,
@@ -1016,114 +1017,104 @@ class WriterAgent(WriterAgentLifecycleMixin, WriterAgentFallbackStateMixin):
         canned_step_disallowed: bool,
     ) -> str:
         offer_repair_context = f"{last_offer_summary} {last_direct_question}".lower()
-        if pragmatics_repair_dissatisfaction:
-            target = (last_direct_question or user_message).strip()
-            target_lower = target.lower()
-            if answer_obligation == "repair_and_answer_last_question" and "нейросталкинг" in target_lower:
-                return self._defer_no_stub_repair(
-                    signal="mvp_repair_answer_last_question",
-                    text=text,
-                    must_answer=target,
-                )
+        mvp1_result = _classify_mvp_part1(
+            text=text,
+            lowered_text=lowered_text,
+            user_message=user_message,
+            answer_obligation=answer_obligation,
+            last_offer_summary=last_offer_summary,
+            last_direct_question=last_direct_question,
+            pragmatics_repair_dissatisfaction=pragmatics_repair_dissatisfaction,
+            pragmatics_contextual_followup=pragmatics_contextual_followup,
+            pragmatics_should_not_reconfirm=pragmatics_should_not_reconfirm,
+            pragmatics_offer_type=pragmatics_offer_type,
+            planner_safety_priority=planner_safety_priority,
+            planner_next_move=planner_next_move,
+            planner_answer_shape=planner_answer_shape,
+            has_question=has_question,
+            canned_step_disallowed=canned_step_disallowed,
+            user_step_request=user_step_request,
+            summary_request=summary_request,
+            sarcasm_or_negative_feedback=sarcasm_or_negative_feedback,
+            direct_concrete_request=direct_concrete_request,
+            explicit_answer_need=explicit_answer_need,
+            planner_question_policy=planner_question_policy,
+            planner_practice_policy=planner_practice_policy,
+            has_unsolicited_practice=has_unsolicited_practice,
+            application_request=application_request,
+            practice_overview_requested=practice_overview_requested,
+            answer_fit=answer_fit,
+        )
+        text = mvp1_result.updated_text
+        lowered_text = mvp1_result.updated_lowered_text
+        if mvp1_result.outcome == "repair_answer_last_question":
+            return self._defer_no_stub_repair(
+                signal="mvp_repair_answer_last_question",
+                text=text,
+                must_answer=mvp1_result.computed_target,
+            )
+        if mvp1_result.outcome == "repair_user_dissatisfaction":
             return self._defer_no_stub_repair(
                 signal="mvp_repair_user_dissatisfaction",
                 text=text,
-                must_answer=target or user_message,
+                must_answer=mvp1_result.computed_target,
             )
-
-        if pragmatics_contextual_followup and pragmatics_should_not_reconfirm:
-            if "хочешь" in lowered_text and "?" in text:
-                text = re.sub(r"\s*\?+\s*", ". ", text).strip()
-                lowered_text = text.lower()
-            if "сфокусируюсь на разборе" in lowered_text or "без практик по умолчанию" in lowered_text:
-                if pragmatics_offer_type in {"short_phrase", "one_step", "practice_observation"}:
-                    return self._defer_no_stub_repair(
-                        signal="mvp_contextual_followup_short_phrase",
-                        text=text,
-                        must_answer=last_offer_summary or user_message,
-                    )
-                if pragmatics_offer_type in {"example", "application", "explanation"}:
-                    return self._defer_no_stub_repair(
-                        signal="mvp_contextual_followup_example",
-                        text=text,
-                        must_answer=last_offer_summary or user_message,
-                    )
-                return self._defer_no_stub_repair(
-                    signal="mvp_contextual_followup_direct",
-                    text=text,
-                    must_answer=last_offer_summary or user_message,
-                )
-
-        if planner_safety_priority or planner_next_move == "stabilize_safety" or planner_answer_shape == "safety_grounding":
-            if has_question or len(text) > 380:
-                self._set_final_answer_shape_debug("safety_grounding")
-                return "Я рядом. Сейчас важнее немного стабилизироваться и снизить перегруз, без лишнего давления."
+        if mvp1_result.outcome == "contextual_followup_short_phrase":
+            return self._defer_no_stub_repair(
+                signal="mvp_contextual_followup_short_phrase",
+                text=text,
+                must_answer=last_offer_summary or user_message,
+            )
+        if mvp1_result.outcome == "contextual_followup_example":
+            return self._defer_no_stub_repair(
+                signal="mvp_contextual_followup_example",
+                text=text,
+                must_answer=last_offer_summary or user_message,
+            )
+        if mvp1_result.outcome == "contextual_followup_direct":
+            return self._defer_no_stub_repair(
+                signal="mvp_contextual_followup_direct",
+                text=text,
+                must_answer=last_offer_summary or user_message,
+            )
+        if mvp1_result.outcome in {"safety_grounding_literal", "safety_grounding_passthrough"}:
             self._set_final_answer_shape_debug("safety_grounding")
-            return text
-
-        if canned_step_disallowed and (planner_answer_shape == "one_step" or planner_next_move == "give_direct_step"):
+            return mvp1_result.return_text
+        if mvp1_result.outcome == "sanitized_direct_no_forced_practice":
             self._set_final_answer_shape_debug("sanitized_direct_no_forced_practice")
             return self._strip_optional_followup_invitation(text) or text
-
-        if planner_answer_shape == "one_step" or user_step_request:
+        if mvp1_result.outcome == "one_step":
             return self._resolve_one_step_or_no_practice_fallback(
                 text=text,
                 user_message=user_message,
                 lowered_user=lowered_user,
                 canned_step_disallowed=canned_step_disallowed,
             )
-
-        if summary_request:
+        if mvp1_result.outcome == "structured_summary":
             self._set_final_answer_shape_debug("structured_summary")
             return self._strip_optional_followup_invitation(text) or text
-
-        if sarcasm_or_negative_feedback:
+        if mvp1_result.outcome == "sarcasm_negative_feedback_repair":
             return self._defer_no_stub_repair(
                 signal="mvp_sarcasm_negative_feedback_repair",
                 text=text,
                 must_answer=user_message,
             )
-
-        if direct_concrete_request:
+        if mvp1_result.outcome == "direct_concrete_request_repair":
             return self._defer_no_stub_repair(
                 signal="mvp_direct_concrete_request_repair",
                 text=text,
                 must_answer=user_message,
             )
-
-        if explicit_answer_need and has_question and planner_question_policy in {"none", "optional_none"}:
+        if mvp1_result.outcome == "direct_no_forced_question":
             self._set_final_answer_shape_debug("direct_no_forced_question")
-            return re.sub(r"\s*\?+\s*", ". ", text).strip()
-
-        if planner_practice_policy == "forbidden" and has_unsolicited_practice and not user_step_request:
-            stale_stub = detect_stale_stub(text)
-            preserve_direct_answer = (
-                answer_obligation
-                in {
-                    "acknowledge_style_preference_then_answer",
-                    "answer_direct_question",
-                    "answer_knowledge_question",
-                    "provide_one_bounded_practice",
-                    "answer_last_offer",
-                    "repair_and_answer_last_question",
-                }
-                or application_request
-                or practice_overview_requested
-            )
-            if preserve_direct_answer and not bool(stale_stub.get("detected", False)) and len(text.strip()) >= 220:
-                sanitized_text = self._strip_optional_followup_invitation(text)
-                if sanitized_text:
-                    self._set_final_answer_shape_debug("sanitized_direct_no_forced_practice")
-                    return sanitized_text
-            if bool(answer_fit.get("needs_repair", False)) or bool(answer_fit.get("concrete_need", False)) or application_request:
-                self.last_debug["answer_fit_repair_applied"] = True
-                self.last_debug["template_leakage_repair_deferred_to_gate"] = True
-                self._set_final_answer_shape_debug("template_repair_deferred_to_gate")
-                return self._strip_optional_followup_invitation(text) or text
-            self.last_debug["answer_fit_repair_applied"] = True
-            self.last_debug["template_leakage_repair_deferred_to_gate"] = True
+            return mvp1_result.return_text
+        if mvp1_result.outcome == "practice_forbidden_sanitized":
+            self._set_final_answer_shape_debug("sanitized_direct_no_forced_practice")
+            return mvp1_result.return_text
+        if mvp1_result.outcome in {"practice_forbidden_repair_needed", "practice_forbidden_repair_default"}:
+            self.last_debug.update(mvp1_result.last_debug_patch)
             self._set_final_answer_shape_debug("template_repair_deferred_to_gate")
-            return self._strip_optional_followup_invitation(text) or text
+            return mvp1_result.return_text
 
         if practice_overview_requested or planner_answer_shape == "practice_catalog_explanation":
             list_items = re.findall(r"(?m)^\s*(?:[-*•]|\d+[.)])\s+", text)

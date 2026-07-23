@@ -1,5 +1,22 @@
 # Architecture Decisions
 
+## ADR-128 - An in-place text mutation that survives a non-returning group must be carried through the classifier result unconditionally, reassigned by the caller before the outcome is even checked
+
+Status: accepted
+
+Date: 2026-07-23
+
+Delivery: PRD-047.42-APPLY-29 accepted in main implementation commit `27861f4`.
+
+Context: reconnaissance of `_enforce_mvp_free_dialogue_compliance` (a method with no structural relationship to the just-completed `_enforce_answer_compliance`, mapped from scratch) found a pattern not seen anywhere in the prior method's seven slices: group B (`pragmatics_contextual_followup`) rewrites `text` and `lowered_text` in place via `re.sub(...)`, and if the group does not return, that mutation is not local - it is visible to every subsequent group in the method, because they all read the same `text`/`lowered_text` locals. A classifier extraction that only returned early-exit values (as every prior slice did) would silently lose this mutation whenever the group falls through without matching a return condition.
+
+Decision:
+- the classifier result (`MvpPart1Result`) always carries `updated_text` and `updated_lowered_text`, populated on every return path regardless of `outcome` - including `not_matched`;
+- the caller in `writer_agent.py` reassigns `text = mvp1_result.updated_text` and `lowered_text = mvp1_result.updated_lowered_text` immediately after the classifier call, before any `if mvp1_result.outcome == ...` check - so the mutation is live for every subsequent group in the method (including the not-yet-extracted groups K-P that will become APPLY-30);
+- this is cheap and safe even for outcomes where no mutation occurred (the fields are simply echoed back unchanged), so there is no need for a separate "was it mutated" flag.
+
+Consequences: this is now the reference pattern for any future slice, in either method, where a group can mutate a shared local and let execution continue past it. It also means `_enforce_mvp_free_dialogue_compliance`'s Part 2 (APPLY-30) must accept `text`/`lowered_text` as already having potentially been rewritten by Part 1 - the classifiers are not independent of each other's mutations, unlike every case in the `_enforce_answer_compliance` decomposition where each slice's locals were self-contained.
+
 ## ADR-127 - A nested maybe-return-inside-maybe-return group must preserve both levels' fall-through exactly; collapsing to a single condition changes behavior on the null-match edge case
 
 Status: accepted

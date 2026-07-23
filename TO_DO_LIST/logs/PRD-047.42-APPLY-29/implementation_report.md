@@ -1,8 +1,8 @@
 # PRD-047.42-APPLY-29 Implementation Report
 
 - PRD: `PRD-047.42-APPLY-29`
-- Status: `accepted_pending_delivery_metadata`
-- Delivery: `main_commit_pending`
+- Status: `accepted`
+- Delivery: `main_commit=27861f4`, `push_status=pushed_to_origin_main`
 
 ## Scope Delivered
 
@@ -19,3 +19,13 @@
 ## Honest Boundary
 
 - This PRD closes Part 1 (groups A-J, `1019-1126`) of `_enforce_mvp_free_dialogue_compliance`. Groups K-P plus the method's final unconditional fallback remain inline in `writer_agent.py` and are the next boundary (APPLY-30), whose exact line numbers must be re-verified against live HEAD after this PRD merges, per the PRD's own explicit instruction.
+
+## Verification Summary
+
+- Direct helper tests: `24 passed`
+- APPLY-29 contract tests: `2 passed`
+- Historical clean-tree rerun `APPLY-6..29`: `141 passed, 1 warning` - fully green
+- Canonical isolated writer baseline: `19 failed, 334 passed, 2034 deselected, 190 warnings`
+- Owner workspace canonical writer run: `14 failed, 339 passed, 2034 deselected, 346 warnings`
+- Group B mutation confirmed to carry through even when the group falls through without returning (`text="хочешь узнать больше?"` -> `updated_text="хочешь узнать больше."`, `outcome="not_matched"`).
+- `offer_repair_context` (line 1018) confirmed to have zero reads anywhere in the method, matching the PRD's documented dead-code finding.

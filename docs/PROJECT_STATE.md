@@ -2,6 +2,29 @@
 
 Главный источник курса проекта: `docs/MASTER_STRATEGIC_PLAN_NEO_MindBot_v4_RU.md`.
 
+## PRD-047.42-APPLY-29 _enforce_mvp_free_dialogue_compliance slice 1 Part 1
+PRD-047.42-APPLY-29 opens decomposition of the second (and last) large method in `writer_agent.py`: `_enforce_mvp_free_dialogue_compliance`, a ~225-line method with a completely different signature (explicit keyword parameters, not `(self, response_text, contract)`) that was mapped from scratch in this session - no assumptions carried over from `_enforce_answer_compliance`'s decomposition. Reconnaissance found two things not seen in the prior method: dead code (`offer_repair_context`, computed and never read) and a group that mutates `text`/`lowered_text` in place and lets the mutation survive past the group if it doesn't return.
+
+Current result:
+- main implementation commit: `27861f4`;
+- push status: `pushed_to_origin_main`;
+- status is `accepted`;
+- new helper module is `bot_psychologist/bot_agent/multiagent/agents/writer_agent_mvp_slice1.py`;
+- extracted surface is one frozen dataclass `MvpPart1Result` with a `Literal` outcome field (17 tags: 16 significant outcomes plus `not_matched`), always-populated `updated_text`/`updated_lowered_text`, and optional `return_text`/`computed_target`/`last_debug_patch` - a pure classifier with zero `self` access;
+- group B's in-place mutation of `text`/`lowered_text` is carried through as `updated_text`/`updated_lowered_text`, unconditionally returned regardless of outcome; the caller reassigns both immediately after the classifier call, before checking `outcome` - the first occurrence of this pattern in either method's decomposition;
+- group A's computed `target` (last direct question or user message) is returned as `computed_target` and used for `must_answer` on the call site;
+- group J's two physically distinct branches that write an identical `last_debug` pair under different conditions (`practice_forbidden_repair_needed`, `practice_forbidden_repair_default`) stay as two distinct classifier tags, merged only at the call site's shared dispatch branch;
+- `offer_repair_context` (line 1018) is confirmed dead code (zero reads anywhere in the method) and is deliberately not carried into the helper, documented rather than fixed;
+- all `self`-methods (`_defer_no_stub_repair`, `_resolve_one_step_or_no_practice_fallback`, `_set_final_answer_shape_debug`, `_strip_optional_followup_invitation`) stay exclusively on the call site; `detect_stale_stub` (module-level, non-`self`) is called directly inside the helper;
+- boundaries matched the PRD's stated `1019-1126` exactly against live HEAD;
+- direct helper tests cover all 16 significant outcomes, `not_matched`, the group B mutation-carry behavior, and `computed_target` for both group A branches;
+- dedicated APPLY-29 runner reuses the APPLY-20 `17`-case harness by import, builds a historical-before snapshot from commit `05c9de9`, and proves byte-identical before/after output plus identical `last_debug` key ordering;
+- `no_mutation_proof.md` reports `0` changed protected paths across the `25` canonical protected files (the accepted `24` plus `writer_agent_enforce_slice7.py`) and `0` changed paths under the accepted APPLY-20..28 log folders;
+- clean-tree historical contract rerun across APPLY-6..APPLY-29 is fully green at `141/141`;
+- the PRD-required isolated clean-worktree `pytest tests/ -k writer -q` baseline reports `19 failed, 334 passed, 2034 deselected, 190 warnings` - the same known failure set as prior PRDs;
+- the owner workspace canonical writer run shows the known environment-specific `14 failed, 339 passed, 2034 deselected, 346 warnings` - an already-documented, unrelated warning.
+- Honest boundary: this PRD closes only Part 1 (groups A-J). Groups K-P plus the method's final unconditional fallback remain inline and are the next boundary (APPLY-30), whose line numbers must be re-verified against live HEAD after this PRD merged.
+
 ## PRD-047.42-APPLY-28 _enforce_answer_compliance slice 7 Block B Part 2 - method fully decomposed
 PRD-047.42-APPLY-28 closes Block B in full, completing the entire `_enforce_answer_compliance` decomposition that began at PRD-047.42-APPLY-21. Groups 7-12 (the second and last part of Block B) contain the single most structurally complex cluster in the whole method (group 9: 4 internal locals, 4 return points, a novel nested "maybe-return inside maybe-return" sub-pattern) but, unlike Part 1, contain zero direct `last_debug` writes.
 

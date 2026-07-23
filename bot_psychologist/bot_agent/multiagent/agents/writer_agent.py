@@ -27,6 +27,7 @@ from .writer_agent_enforce_slice3 import _classify_enforce_slice3_bounded_practi
 from .writer_agent_enforce_slice4 import _classify_enforce_slice4_obligation_repairs_and_echo
 from .writer_agent_enforce_slice5 import _classify_enforce_slice5_block_a
 from .writer_agent_enforce_slice6 import _classify_enforce_block_b_part1
+from .writer_agent_enforce_slice7 import _classify_enforce_block_b_part2
 from .writer_agent_fallback_helpers import (
     _build_gentle_close_reply as _fallback_build_gentle_close_reply,
     _build_no_practice_fallback_text as _fallback_build_no_practice_fallback_text,
@@ -880,123 +881,99 @@ class WriterAgent(WriterAgentLifecycleMixin, WriterAgentFallbackStateMixin):
             self._set_final_answer_shape_debug("template_repair_deferred_to_gate")
             return self._strip_optional_followup_invitation(text) or text
 
-        if (
-            (planner_next_move == "deepen_mechanism" or user_mechanism_request)
-            and (planner_question_policy == "none" or user_requests_no_question)
-            and (len(text) > 700 or has_question or has_unsolicited_practice or user_requests_no_practice)
-        ):
+        block_b_part2_result = _classify_enforce_block_b_part2(
+            text=text,
+            user_message=user_message,
+            lowered_user=lowered_user,
+            lowered_text=lowered_text,
+            planner_next_move=planner_next_move,
+            planner_question_policy=planner_question_policy,
+            planner_answer_shape=planner_answer_shape,
+            planner_practice_policy=planner_practice_policy,
+            user_mechanism_request=user_mechanism_request,
+            user_requests_no_question=user_requests_no_question,
+            user_requests_no_practice=user_requests_no_practice,
+            has_question=has_question,
+            has_unsolicited_practice=has_unsolicited_practice,
+            user_step_request=user_step_request,
+            active_line_intent=active_line_intent,
+            active_line_practice_suppression=active_line_practice_suppression,
+            active_line_should_offer_practice=active_line_should_offer_practice,
+            active_line_repair_mode=active_line_repair_mode,
+            active_line_revoicing_allowed=active_line_revoicing_allowed,
+        )
+        if block_b_part2_result.outcome == "mechanism_explanation_repair_g7":
             return self._defer_no_stub_repair(
                 signal="mechanism_explanation_repair",
                 text=text,
                 must_answer=user_message,
             )
-
-        if planner_answer_shape == "one_step" or planner_next_move == "give_direct_step":
+        if block_b_part2_result.outcome in {
+            "one_step_g8",
+            "sentence_parts_one_step_g9",
+            "question_marker_one_step_g9",
+            "no_step_marker_one_step_g9",
+        }:
             return self._resolve_one_step_or_no_practice_fallback(
                 text=text,
                 user_message=user_message,
                 lowered_user=lowered_user,
                 canned_step_disallowed=canned_step_disallowed,
             )
-
-        if planner_answer_shape == "one_step" or user_step_request or active_line_intent == "ask_for_direct_step":
-            list_like = bool(re.search(r"(^|\n)\s*(?:[-*•]|\d+[.)])\s+", text))
-            if list_like:
-                first_item = re.search(r"(?:[-*•]|\d+[.)])\s+(.+)", text)
-                if first_item:
-                    return first_item.group(1).strip()
-            sentence_parts = [part.strip() for part in re.split(r"(?<=[.!?])\s+", text) if part.strip()]
-            if len(sentence_parts) > 2:
-                return self._resolve_one_step_or_no_practice_fallback(
-                    text=text,
-                    user_message=user_message,
-                    lowered_user=lowered_user,
-                    canned_step_disallowed=canned_step_disallowed,
-                )
-            if planner_question_policy == "none" and _contains_any(
-                lowered_text,
-                (
-                    "хочешь",
-                    "хочется",
-                    "можешь",
-                    "уточни",
-                    "попробу",
-                    "какой",
-                    "что выбрать",
-                ),
-            ):
-                return self._resolve_one_step_or_no_practice_fallback(
-                    text=text,
-                    user_message=user_message,
-                    lowered_user=lowered_user,
-                    canned_step_disallowed=canned_step_disallowed,
-                )
-            has_step_marker = _contains_any(lowered_text, ("сделай", "начни", "открой", "выбери", "напиши", "шаг"))
-            if not has_step_marker:
-                return self._resolve_one_step_or_no_practice_fallback(
-                    text=text,
-                    user_message=user_message,
-                    lowered_user=lowered_user,
-                    canned_step_disallowed=canned_step_disallowed,
-                )
-
-        if active_line_practice_suppression and not active_line_should_offer_practice and has_unsolicited_practice:
-            if planner_next_move == "stabilize_safety" or planner_answer_shape == "safety_grounding":
-                return "Я рядом. Сейчас важнее чуть стабилизироваться и снизить внутреннюю перегрузку. Без разбора, только опора здесь-и-сейчас."
-            if active_line_intent == "correction_of_bot" or active_line_repair_mode:
-                return self._defer_no_stub_repair(
-                    signal="active_line_correction_repair",
-                    text=text,
-                    must_answer=user_message,
-                )
-            if active_line_intent == "understand_mechanism":
-                return self._defer_no_stub_repair(
-                    signal="active_line_mechanism_repair",
-                    text=text,
-                    must_answer=user_message,
-                )
+        if block_b_part2_result.outcome == "first_item_extraction_g9":
+            return block_b_part2_result.return_text
+        if block_b_part2_result.outcome == "safety_grounding_g10":
+            return "Я рядом. Сейчас важнее чуть стабилизироваться и снизить внутреннюю перегрузку. Без разбора, только опора здесь-и-сейчас."
+        if block_b_part2_result.outcome == "active_line_correction_repair_g10":
+            return self._defer_no_stub_repair(
+                signal="active_line_correction_repair",
+                text=text,
+                must_answer=user_message,
+            )
+        if block_b_part2_result.outcome == "active_line_mechanism_repair_g10":
+            return self._defer_no_stub_repair(
+                signal="active_line_mechanism_repair",
+                text=text,
+                must_answer=user_message,
+            )
+        if block_b_part2_result.outcome == "practice_suppression_meaning_repair_g10":
             return self._defer_no_stub_repair(
                 signal="practice_suppression_meaning_repair",
                 text=text,
                 must_answer=user_message,
             )
-
-        if not active_line_revoicing_allowed and starts_with_mechanical_revoicing(text):
-            if active_line_intent == "correction_of_bot" or active_line_repair_mode:
-                return self._defer_no_stub_repair(
-                    signal="active_line_revoicing_correction_repair",
-                    text=text,
-                    must_answer=user_message,
-                )
-            if active_line_intent == "understand_mechanism":
-                return self._defer_no_stub_repair(
-                    signal="active_line_revoicing_mechanism_repair",
-                    text=text,
-                    must_answer=user_message,
-                )
-            parts = re.split(r"(?<=[.!?])\s+", text, maxsplit=1)
-            if len(parts) == 2 and parts[1].strip():
-                return parts[1].strip()
-
-        if planner_next_move == "answer_known_concept" and planner_practice_policy == "forbidden":
-            if "самореализац" in lowered_user and "нейросталкинг" in lowered_user:
-                return self._defer_no_stub_repair(
-                    signal="known_concept_correlation_repair",
-                    text=text,
-                    must_answer=user_message,
-                )
-            if "нейросталкинг" in lowered_user:
-                return self._defer_no_stub_repair(
-                    signal="known_concept_neurostalking_repair",
-                    text=text,
-                    must_answer=user_message,
-                )
-            if "самореализац" in lowered_user:
-                return self._defer_no_stub_repair(
-                    signal="known_concept_self_realization_repair",
-                    text=text,
-                    must_answer=user_message,
-                )
+        if block_b_part2_result.outcome == "active_line_revoicing_correction_repair_g11":
+            return self._defer_no_stub_repair(
+                signal="active_line_revoicing_correction_repair",
+                text=text,
+                must_answer=user_message,
+            )
+        if block_b_part2_result.outcome == "active_line_revoicing_mechanism_repair_g11":
+            return self._defer_no_stub_repair(
+                signal="active_line_revoicing_mechanism_repair",
+                text=text,
+                must_answer=user_message,
+            )
+        if block_b_part2_result.outcome == "revoicing_strip_g11":
+            return block_b_part2_result.return_text
+        if block_b_part2_result.outcome == "known_concept_correlation_repair_g12":
+            return self._defer_no_stub_repair(
+                signal="known_concept_correlation_repair",
+                text=text,
+                must_answer=user_message,
+            )
+        if block_b_part2_result.outcome == "known_concept_neurostalking_repair_g12":
+            return self._defer_no_stub_repair(
+                signal="known_concept_neurostalking_repair",
+                text=text,
+                must_answer=user_message,
+            )
+        if block_b_part2_result.outcome == "known_concept_self_realization_repair_g12":
+            return self._defer_no_stub_repair(
+                signal="known_concept_self_realization_repair",
+                text=text,
+                must_answer=user_message,
+            )
         return text
 
     def _enforce_mvp_free_dialogue_compliance(

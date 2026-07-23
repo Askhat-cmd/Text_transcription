@@ -1,0 +1,1483 @@
+{
+  "schema_version": "prd_047_42_apply_27_enforce_slice6_snapshot_v1",
+  "generated_at_utc": "normalized_for_prd_047_42_apply_27",
+  "metadata": {
+    "case_count": 17,
+    "historical_head": "2dfc9dfb",
+    "field_count": 3,
+    "outcome_count": 19
+  },
+  "cases": [
+    {
+      "case": "empty_text_passthrough",
+      "note": "Covers the initial empty-text return.",
+      "input": {
+        "response_text": "",
+        "contract_summary": {
+          "user_message": "объясни по-человечески, что такое нейросталкинг, без практик",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "answer_knowledge_question",
+          "planner_next_move": "answer_known_concept",
+          "planner_answer_shape": "compact_direct",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "",
+      "output_sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+      "last_debug": {},
+      "last_debug_keys": [],
+      "final_answer_shape": null,
+      "retry_signal_reason": null
+    },
+    {
+      "case": "greeting_gate_feedback_repair",
+      "note": "Early greeting repair branch before the main cascade.",
+      "input": {
+        "response_text": "Главный механизм в том, что автоматический контроль заранее забирает ресурс.",
+        "contract_summary": {
+          "user_message": "Привет! Как перестать наступать на одни и те же грабли?",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "continue_thread",
+          "planner_next_move": "deepen_mechanism",
+          "planner_answer_shape": "mechanism_explanation",
+          "planner_question_policy": "optional_none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Привет. Такое обычно повторяется, когда в похожих ситуациях снова включается один и тот же автоматический способ справляться, даже если он уже не помогает. Это не про слабость, а про привычную защитную реакцию.",
+      "output_sha1": "01a1270fd959e78c40c3ca6d972d26cf59aaa3e1",
+      "last_debug": {
+        "compliance_planner_next_move": "deepen_mechanism",
+        "compliance_planner_answer_shape": "mechanism_explanation",
+        "compliance_planner_question_policy": "optional_none",
+        "compliance_response_planner_present": true,
+        "human_like_answer_policy_enabled": false,
+        "explicit_answer_need": true,
+        "repair_user_dissatisfaction": false,
+        "sarcasm_or_negative_feedback": false,
+        "overruled_constraints": [],
+        "final_answer_directive": {
+          "version": "final_answer_directive_v1",
+          "current_user_request": "объясни по-человечески, что такое нейросталкинг, без практик",
+          "must_answer_source": "latest_turn",
+          "answer_target": "latest_turn",
+          "writer_contact_mode": "structured_answer",
+          "no_practice_unless_requested": true,
+          "latest_turn_constraints_v1": {
+            "active_constraints": [
+              "no_practice"
+            ]
+          },
+          "acceptance_gate_feedback": {
+            "failed_checks": [
+              "greeting_answered_with_mechanism_explanation"
+            ]
+          }
+        },
+        "final_answer_shape": "contact_brief"
+      },
+      "last_debug_keys": [
+        "compliance_planner_next_move",
+        "compliance_planner_answer_shape",
+        "compliance_planner_question_policy",
+        "compliance_response_planner_present",
+        "human_like_answer_policy_enabled",
+        "explicit_answer_need",
+        "repair_user_dissatisfaction",
+        "sarcasm_or_negative_feedback",
+        "overruled_constraints",
+        "final_answer_directive",
+        "final_answer_shape"
+      ],
+      "final_answer_shape": "contact_brief",
+      "retry_signal_reason": null
+    },
+    {
+      "case": "close_gently_obligation",
+      "note": "Obligation-specific gentle close repair.",
+      "input": {
+        "response_text": "Пожалуйста. Если хочешь, в следующий раз можем продолжить и разобрать это глубже?",
+        "contract_summary": {
+          "user_message": "Спасибо, мне пока хватит.",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "close_gently",
+          "planner_next_move": "continue_active_line",
+          "planner_answer_shape": "expanded_explanation",
+          "planner_question_policy": "optional_none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Пожалуйста. Береги себя.",
+      "output_sha1": "17d38cc58167a954042181168e3d297797c19aa5",
+      "last_debug": {
+        "compliance_planner_next_move": "continue_active_line",
+        "compliance_planner_answer_shape": "expanded_explanation",
+        "compliance_planner_question_policy": "optional_none",
+        "compliance_response_planner_present": true,
+        "human_like_answer_policy_enabled": false,
+        "explicit_answer_need": true,
+        "repair_user_dissatisfaction": false,
+        "sarcasm_or_negative_feedback": false,
+        "overruled_constraints": [],
+        "final_answer_directive": {
+          "version": "final_answer_directive_v1",
+          "current_user_request": "объясни по-человечески, что такое нейросталкинг, без практик",
+          "must_answer_source": "latest_turn",
+          "answer_target": "latest_turn",
+          "writer_contact_mode": "structured_answer",
+          "no_practice_unless_requested": true,
+          "latest_turn_constraints_v1": {
+            "active_constraints": [
+              "no_practice"
+            ]
+          }
+        },
+        "legacy_constraints_suppressed": [],
+        "question_forced": false,
+        "practice_forced": false,
+        "microstep_forced": false,
+        "canned_step_disallowed": true,
+        "final_answer_shape": "gentle_close"
+      },
+      "last_debug_keys": [
+        "compliance_planner_next_move",
+        "compliance_planner_answer_shape",
+        "compliance_planner_question_policy",
+        "compliance_response_planner_present",
+        "human_like_answer_policy_enabled",
+        "explicit_answer_need",
+        "repair_user_dissatisfaction",
+        "sarcasm_or_negative_feedback",
+        "overruled_constraints",
+        "final_answer_directive",
+        "legacy_constraints_suppressed",
+        "question_forced",
+        "practice_forced",
+        "microstep_forced",
+        "canned_step_disallowed",
+        "final_answer_shape"
+      ],
+      "final_answer_shape": "gentle_close",
+      "retry_signal_reason": null
+    },
+    {
+      "case": "bounded_practice_be_strong",
+      "note": "Exercises the bounded-practice repair path and the nested 'будь сильным' branch.",
+      "input": {
+        "response_text": "Сначала сделай три шага и потом задай себе вопрос, как ты держишься?",
+        "contract_summary": {
+          "user_message": "Когда включается драйвер «будь сильным», дай одну короткую практику.",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "provide_one_bounded_practice",
+          "planner_next_move": "give_direct_step",
+          "planner_answer_shape": "one_step",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "required",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Одна короткая практика: в момент, когда включается «Будь сильным», заметь, где тело напрягается, и тихо назови про себя: «сейчас я снова держусь через силу». На этом остановись, ничего не исправляя.",
+      "output_sha1": "33433a4b4f6a7b4810a57f21f1da5e78b40c1b92",
+      "last_debug": {
+        "compliance_planner_next_move": "give_direct_step",
+        "compliance_planner_answer_shape": "one_step",
+        "compliance_planner_question_policy": "none",
+        "compliance_response_planner_present": true,
+        "human_like_answer_policy_enabled": false,
+        "explicit_answer_need": true,
+        "repair_user_dissatisfaction": false,
+        "sarcasm_or_negative_feedback": false,
+        "overruled_constraints": [],
+        "final_answer_directive": {
+          "version": "final_answer_directive_v1",
+          "current_user_request": "объясни по-человечески, что такое нейросталкинг, без практик",
+          "must_answer_source": "latest_turn",
+          "answer_target": "latest_turn",
+          "writer_contact_mode": "structured_answer",
+          "no_practice_unless_requested": true,
+          "latest_turn_constraints_v1": {
+            "active_constraints": [
+              "no_practice"
+            ]
+          }
+        },
+        "legacy_constraints_suppressed": [],
+        "question_forced": false,
+        "practice_forced": true,
+        "microstep_forced": true,
+        "canned_step_disallowed": false,
+        "answer_fit_evaluator": {
+          "version": "concrete_answer_fit_v1",
+          "concrete_need": false,
+          "formulaic_opening_detected": false,
+          "context_anchor": "Когда включается драйвер «будь сильным»",
+          "user_anchor_labels": [],
+          "answer_anchor_hits": [],
+          "answer_mentions_context_anchor": false,
+          "structured_answer": false,
+          "answer_long_enough": false,
+          "explicit_one_practice_request": true,
+          "practice_request_not_fulfilled": true,
+          "panic_control_support_question": false,
+          "support_answer_too_textbook": false,
+          "fit_status": "fail",
+          "needs_repair": true
+        },
+        "final_answer_shape": "one_short_practice"
+      },
+      "last_debug_keys": [
+        "compliance_planner_next_move",
+        "compliance_planner_answer_shape",
+        "compliance_planner_question_policy",
+        "compliance_response_planner_present",
+        "human_like_answer_policy_enabled",
+        "explicit_answer_need",
+        "repair_user_dissatisfaction",
+        "sarcasm_or_negative_feedback",
+        "overruled_constraints",
+        "final_answer_directive",
+        "legacy_constraints_suppressed",
+        "question_forced",
+        "practice_forced",
+        "microstep_forced",
+        "canned_step_disallowed",
+        "answer_fit_evaluator",
+        "final_answer_shape"
+      ],
+      "final_answer_shape": "one_short_practice",
+      "retry_signal_reason": null
+    },
+    {
+      "case": "literal_markdown_echo",
+      "note": "Literal markdown echo repair.",
+      "input": {
+        "response_text": "Я слышу тебя. Расскажи больше, если хочешь.",
+        "contract_summary": {
+          "user_message": "Верни без объяснений и без изменений следующий markdown-блок: **Жирный заголовок**\n\nПервый абзац.\n\n- Пункт один\n- Пункт два",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "answer_knowledge_question",
+          "planner_next_move": "answer_known_concept",
+          "planner_answer_shape": "compact_direct",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "**Жирный заголовок**\n\nПервый абзац.\n\n- Пункт один\n- Пункт два",
+      "output_sha1": "2a56f78692417e2c755d39b547124d60d833d6a0",
+      "last_debug": {
+        "compliance_planner_next_move": "answer_known_concept",
+        "compliance_planner_answer_shape": "compact_direct",
+        "compliance_planner_question_policy": "none",
+        "compliance_response_planner_present": true,
+        "human_like_answer_policy_enabled": false,
+        "explicit_answer_need": true,
+        "repair_user_dissatisfaction": false,
+        "sarcasm_or_negative_feedback": false,
+        "overruled_constraints": [],
+        "final_answer_directive": {
+          "version": "final_answer_directive_v1",
+          "current_user_request": "объясни по-человечески, что такое нейросталкинг, без практик",
+          "must_answer_source": "latest_turn",
+          "answer_target": "latest_turn",
+          "writer_contact_mode": "structured_answer",
+          "no_practice_unless_requested": true,
+          "latest_turn_constraints_v1": {
+            "active_constraints": [
+              "no_practice"
+            ]
+          }
+        },
+        "legacy_constraints_suppressed": [],
+        "question_forced": false,
+        "practice_forced": false,
+        "microstep_forced": false,
+        "canned_step_disallowed": true,
+        "answer_fit_evaluator": {
+          "version": "concrete_answer_fit_v1",
+          "concrete_need": false,
+          "formulaic_opening_detected": false,
+          "context_anchor": "",
+          "user_anchor_labels": [],
+          "answer_anchor_hits": [],
+          "answer_mentions_context_anchor": false,
+          "structured_answer": false,
+          "answer_long_enough": false,
+          "explicit_one_practice_request": false,
+          "practice_request_not_fulfilled": false,
+          "panic_control_support_question": false,
+          "support_answer_too_textbook": false,
+          "fit_status": "pass",
+          "needs_repair": false
+        },
+        "format_request_repair_applied": true,
+        "final_answer_shape": "literal_markdown_echo"
+      },
+      "last_debug_keys": [
+        "compliance_planner_next_move",
+        "compliance_planner_answer_shape",
+        "compliance_planner_question_policy",
+        "compliance_response_planner_present",
+        "human_like_answer_policy_enabled",
+        "explicit_answer_need",
+        "repair_user_dissatisfaction",
+        "sarcasm_or_negative_feedback",
+        "overruled_constraints",
+        "final_answer_directive",
+        "legacy_constraints_suppressed",
+        "question_forced",
+        "practice_forced",
+        "microstep_forced",
+        "canned_step_disallowed",
+        "answer_fit_evaluator",
+        "format_request_repair_applied",
+        "final_answer_shape"
+      ],
+      "final_answer_shape": "literal_markdown_echo",
+      "retry_signal_reason": null
+    },
+    {
+      "case": "repair_last_question_neurostalking",
+      "note": "Repair-and-answer-last-question obligation.",
+      "input": {
+        "response_text": "Ладно, тогда уточню иначе.",
+        "contract_summary": {
+          "user_message": "ты не ответил мне на вопрос",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "repair_and_answer_last_question",
+          "planner_next_move": "answer_known_concept",
+          "planner_answer_shape": "compact_direct",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Ладно, тогда уточню иначе.",
+      "output_sha1": "775d772ff059420914d8f7490578924a844e124e",
+      "last_debug": {
+        "compliance_planner_next_move": "answer_known_concept",
+        "compliance_planner_answer_shape": "compact_direct",
+        "compliance_planner_question_policy": "none",
+        "compliance_response_planner_present": true,
+        "human_like_answer_policy_enabled": false,
+        "explicit_answer_need": true,
+        "repair_user_dissatisfaction": true,
+        "sarcasm_or_negative_feedback": true,
+        "overruled_constraints": [],
+        "final_answer_directive": {
+          "version": "final_answer_directive_v1",
+          "current_user_request": "объясни по-человечески, что такое нейросталкинг, без практик",
+          "must_answer_source": "latest_turn",
+          "answer_target": "latest_turn",
+          "writer_contact_mode": "structured_answer",
+          "no_practice_unless_requested": true,
+          "latest_turn_constraints_v1": {
+            "active_constraints": [
+              "no_practice"
+            ]
+          }
+        },
+        "legacy_constraints_suppressed": [],
+        "question_forced": false,
+        "practice_forced": false,
+        "microstep_forced": false,
+        "canned_step_disallowed": true,
+        "answer_fit_evaluator": {
+          "version": "concrete_answer_fit_v1",
+          "concrete_need": false,
+          "formulaic_opening_detected": false,
+          "context_anchor": "",
+          "user_anchor_labels": [],
+          "answer_anchor_hits": [],
+          "answer_mentions_context_anchor": false,
+          "structured_answer": false,
+          "answer_long_enough": false,
+          "explicit_one_practice_request": false,
+          "practice_request_not_fulfilled": false,
+          "panic_control_support_question": false,
+          "support_answer_too_textbook": false,
+          "fit_status": "pass",
+          "needs_repair": false
+        },
+        "final_answer_shape": "repair_answer_last_question_repair_deferred_to_gate",
+        "compliance_failed_checks": [
+          "no_stub_repair_signal"
+        ],
+        "no_stub_repair_signal": {
+          "version": "no_stub_repair_signal_v1",
+          "reason": "repair_answer_last_question_repair",
+          "recommended_action": "writer_retry",
+          "must_answer": "что такое нейросталкинг?",
+          "user_facing_replacement_created": false
+        },
+        "retry_recommended": true
+      },
+      "last_debug_keys": [
+        "compliance_planner_next_move",
+        "compliance_planner_answer_shape",
+        "compliance_planner_question_policy",
+        "compliance_response_planner_present",
+        "human_like_answer_policy_enabled",
+        "explicit_answer_need",
+        "repair_user_dissatisfaction",
+        "sarcasm_or_negative_feedback",
+        "overruled_constraints",
+        "final_answer_directive",
+        "legacy_constraints_suppressed",
+        "question_forced",
+        "practice_forced",
+        "microstep_forced",
+        "canned_step_disallowed",
+        "answer_fit_evaluator",
+        "final_answer_shape",
+        "compliance_failed_checks",
+        "no_stub_repair_signal",
+        "retry_recommended"
+      ],
+      "final_answer_shape": "repair_answer_last_question_repair_deferred_to_gate",
+      "retry_signal_reason": "repair_answer_last_question_repair"
+    },
+    {
+      "case": "mvp_free_branch_handoff",
+      "note": "Covers the profile handoff into `_enforce_mvp_free_dialogue_compliance`.",
+      "input": {
+        "response_text": "Понял — тебе тяжело, и это нормально. Не нужно сейчас ничего исправлять или заставлять себя.\n\nЕсли захочешь дальше — можем вместе придумать один маленький шаг, когда тебе станет легче.",
+        "contract_summary": {
+          "user_message": "Всё, не хочу сейчас практику. Мне тяжело, просто скажи по-человечески.",
+          "dialogue_profile": "mvp_free_dialogue",
+          "answer_obligation": "answer_latest_turn",
+          "planner_next_move": "give_direct_step",
+          "planner_answer_shape": "one_step",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Понял — тебе тяжело, и это нормально. Не нужно сейчас ничего исправлять или заставлять себя",
+      "output_sha1": "19b973c833a29b61434391f0f437d0457966e976",
+      "last_debug": {
+        "compliance_planner_next_move": "give_direct_step",
+        "compliance_planner_answer_shape": "one_step",
+        "compliance_planner_question_policy": "none",
+        "compliance_response_planner_present": true,
+        "human_like_answer_policy_enabled": false,
+        "explicit_answer_need": true,
+        "repair_user_dissatisfaction": false,
+        "sarcasm_or_negative_feedback": false,
+        "overruled_constraints": [],
+        "final_answer_directive": {
+          "version": "final_answer_directive_v1",
+          "current_user_request": "объясни по-человечески, что такое нейросталкинг, без практик",
+          "must_answer_source": "latest_turn",
+          "answer_target": "latest_turn",
+          "writer_contact_mode": "structured_answer",
+          "no_practice_unless_requested": true,
+          "latest_turn_constraints_v1": {
+            "active_constraints": [
+              "no_practice"
+            ]
+          }
+        },
+        "legacy_constraints_suppressed": [],
+        "question_forced": false,
+        "practice_forced": false,
+        "microstep_forced": true,
+        "canned_step_disallowed": true,
+        "answer_fit_evaluator": {
+          "version": "concrete_answer_fit_v1",
+          "concrete_need": false,
+          "formulaic_opening_detected": false,
+          "context_anchor": "",
+          "user_anchor_labels": [],
+          "answer_anchor_hits": [],
+          "answer_mentions_context_anchor": false,
+          "structured_answer": false,
+          "answer_long_enough": true,
+          "explicit_one_practice_request": false,
+          "practice_request_not_fulfilled": false,
+          "panic_control_support_question": false,
+          "support_answer_too_textbook": false,
+          "fit_status": "pass",
+          "needs_repair": false
+        },
+        "final_answer_shape": "sanitized_direct_no_forced_practice"
+      },
+      "last_debug_keys": [
+        "compliance_planner_next_move",
+        "compliance_planner_answer_shape",
+        "compliance_planner_question_policy",
+        "compliance_response_planner_present",
+        "human_like_answer_policy_enabled",
+        "explicit_answer_need",
+        "repair_user_dissatisfaction",
+        "sarcasm_or_negative_feedback",
+        "overruled_constraints",
+        "final_answer_directive",
+        "legacy_constraints_suppressed",
+        "question_forced",
+        "practice_forced",
+        "microstep_forced",
+        "canned_step_disallowed",
+        "answer_fit_evaluator",
+        "final_answer_shape"
+      ],
+      "final_answer_shape": "sanitized_direct_no_forced_practice",
+      "retry_signal_reason": null
+    },
+    {
+      "case": "low_resource_short_contact",
+      "note": "Low-resource no-practice compression.",
+      "input": {
+        "response_text": "Давай разберем это подробно? Сначала можно сделать шаг.",
+        "contract_summary": {
+          "user_message": "Я устал, без анализа, просто поддержи.",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "answer_knowledge_question",
+          "planner_next_move": "answer_known_concept",
+          "planner_answer_shape": "compact_direct",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Я рядом. Сейчас не нужно ничего разбирать. Можно просто немного снизить внутреннее давление.",
+      "output_sha1": "fddb481ce3a9a84d3ae56760c94b346a6f583b2e",
+      "last_debug": {
+        "compliance_planner_next_move": "answer_known_concept",
+        "compliance_planner_answer_shape": "compact_direct",
+        "compliance_planner_question_policy": "none",
+        "compliance_response_planner_present": true,
+        "human_like_answer_policy_enabled": false,
+        "explicit_answer_need": true,
+        "repair_user_dissatisfaction": false,
+        "sarcasm_or_negative_feedback": false,
+        "overruled_constraints": [],
+        "final_answer_directive": {
+          "version": "final_answer_directive_v1",
+          "current_user_request": "объясни по-человечески, что такое нейросталкинг, без практик",
+          "must_answer_source": "latest_turn",
+          "answer_target": "latest_turn",
+          "writer_contact_mode": "structured_answer",
+          "no_practice_unless_requested": true,
+          "latest_turn_constraints_v1": {
+            "active_constraints": [
+              "no_practice"
+            ]
+          }
+        },
+        "legacy_constraints_suppressed": [],
+        "question_forced": false,
+        "practice_forced": false,
+        "microstep_forced": false,
+        "canned_step_disallowed": true,
+        "answer_fit_evaluator": {
+          "version": "concrete_answer_fit_v1",
+          "concrete_need": false,
+          "formulaic_opening_detected": false,
+          "context_anchor": "",
+          "user_anchor_labels": [],
+          "answer_anchor_hits": [],
+          "answer_mentions_context_anchor": false,
+          "structured_answer": false,
+          "answer_long_enough": false,
+          "explicit_one_practice_request": false,
+          "practice_request_not_fulfilled": false,
+          "panic_control_support_question": false,
+          "support_answer_too_textbook": false,
+          "fit_status": "pass",
+          "needs_repair": false
+        }
+      },
+      "last_debug_keys": [
+        "compliance_planner_next_move",
+        "compliance_planner_answer_shape",
+        "compliance_planner_question_policy",
+        "compliance_response_planner_present",
+        "human_like_answer_policy_enabled",
+        "explicit_answer_need",
+        "repair_user_dissatisfaction",
+        "sarcasm_or_negative_feedback",
+        "overruled_constraints",
+        "final_answer_directive",
+        "legacy_constraints_suppressed",
+        "question_forced",
+        "practice_forced",
+        "microstep_forced",
+        "canned_step_disallowed",
+        "answer_fit_evaluator"
+      ],
+      "final_answer_shape": null,
+      "retry_signal_reason": null
+    },
+    {
+      "case": "thanks_close_no_more_steps",
+      "note": "Active-line thanks-close short-circuit.",
+      "input": {
+        "response_text": "Пожалуйста. Давай сделаем еще один шаг.",
+        "contract_summary": {
+          "user_message": "Спасибо, этого пока хватит.",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "answer_knowledge_question",
+          "planner_next_move": "answer_known_concept",
+          "planner_answer_shape": "compact_direct",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "thanks_close",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Пожалуйста. Рад, что стало чуть яснее.",
+      "output_sha1": "ceac7df97b9998b9ebfe313c2fb5c052026a0956",
+      "last_debug": {
+        "compliance_planner_next_move": "answer_known_concept",
+        "compliance_planner_answer_shape": "compact_direct",
+        "compliance_planner_question_policy": "none",
+        "compliance_response_planner_present": true,
+        "human_like_answer_policy_enabled": false,
+        "explicit_answer_need": true,
+        "repair_user_dissatisfaction": false,
+        "sarcasm_or_negative_feedback": false,
+        "overruled_constraints": [],
+        "final_answer_directive": {
+          "version": "final_answer_directive_v1",
+          "current_user_request": "объясни по-человечески, что такое нейросталкинг, без практик",
+          "must_answer_source": "latest_turn",
+          "answer_target": "latest_turn",
+          "writer_contact_mode": "structured_answer",
+          "no_practice_unless_requested": true,
+          "latest_turn_constraints_v1": {
+            "active_constraints": [
+              "no_practice"
+            ]
+          }
+        },
+        "legacy_constraints_suppressed": [],
+        "question_forced": false,
+        "practice_forced": false,
+        "microstep_forced": false,
+        "canned_step_disallowed": true,
+        "answer_fit_evaluator": {
+          "version": "concrete_answer_fit_v1",
+          "concrete_need": false,
+          "formulaic_opening_detected": false,
+          "context_anchor": "",
+          "user_anchor_labels": [],
+          "answer_anchor_hits": [],
+          "answer_mentions_context_anchor": false,
+          "structured_answer": false,
+          "answer_long_enough": false,
+          "explicit_one_practice_request": false,
+          "practice_request_not_fulfilled": false,
+          "panic_control_support_question": false,
+          "support_answer_too_textbook": false,
+          "fit_status": "pass",
+          "needs_repair": false
+        }
+      },
+      "last_debug_keys": [
+        "compliance_planner_next_move",
+        "compliance_planner_answer_shape",
+        "compliance_planner_question_policy",
+        "compliance_response_planner_present",
+        "human_like_answer_policy_enabled",
+        "explicit_answer_need",
+        "repair_user_dissatisfaction",
+        "sarcasm_or_negative_feedback",
+        "overruled_constraints",
+        "final_answer_directive",
+        "legacy_constraints_suppressed",
+        "question_forced",
+        "practice_forced",
+        "microstep_forced",
+        "canned_step_disallowed",
+        "answer_fit_evaluator"
+      ],
+      "final_answer_shape": null,
+      "retry_signal_reason": null
+    },
+    {
+      "case": "safety_priority_question_strip",
+      "note": "Planner safety-priority branch for non-MVP profile.",
+      "input": {
+        "response_text": "Я рядом. Что сейчас помогает тебе держаться?",
+        "contract_summary": {
+          "user_message": "объясни по-человечески, что такое нейросталкинг, без практик",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "answer_knowledge_question",
+          "planner_next_move": "answer_known_concept",
+          "planner_answer_shape": "compact_direct",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Я рядом. Что сейчас помогает тебе держаться?",
+      "output_sha1": "37bc7c514dbc91d6027d0917f7a62efe3619141f",
+      "last_debug": {
+        "compliance_planner_next_move": "answer_known_concept",
+        "compliance_planner_answer_shape": "compact_direct",
+        "compliance_planner_question_policy": "none",
+        "compliance_response_planner_present": true,
+        "human_like_answer_policy_enabled": false,
+        "explicit_answer_need": true,
+        "repair_user_dissatisfaction": false,
+        "sarcasm_or_negative_feedback": false,
+        "overruled_constraints": [],
+        "final_answer_directive": {
+          "version": "final_answer_directive_v1",
+          "current_user_request": "объясни по-человечески, что такое нейросталкинг, без практик",
+          "must_answer_source": "latest_turn",
+          "answer_target": "latest_turn",
+          "writer_contact_mode": "structured_answer",
+          "no_practice_unless_requested": true,
+          "latest_turn_constraints_v1": {
+            "active_constraints": [
+              "no_practice"
+            ]
+          }
+        },
+        "legacy_constraints_suppressed": [],
+        "question_forced": false,
+        "practice_forced": false,
+        "microstep_forced": false,
+        "canned_step_disallowed": true,
+        "answer_fit_evaluator": {
+          "version": "concrete_answer_fit_v1",
+          "concrete_need": true,
+          "formulaic_opening_detected": false,
+          "context_anchor": "",
+          "user_anchor_labels": [],
+          "answer_anchor_hits": [],
+          "answer_mentions_context_anchor": false,
+          "structured_answer": false,
+          "answer_long_enough": false,
+          "explicit_one_practice_request": false,
+          "practice_request_not_fulfilled": false,
+          "panic_control_support_question": false,
+          "support_answer_too_textbook": false,
+          "fit_status": "fail",
+          "needs_repair": true
+        },
+        "final_answer_shape": "knowledge_direct_answer_repair_deferred_to_gate",
+        "compliance_failed_checks": [
+          "no_stub_repair_signal"
+        ],
+        "no_stub_repair_signal": {
+          "version": "no_stub_repair_signal_v1",
+          "reason": "knowledge_direct_answer_repair",
+          "recommended_action": "writer_retry",
+          "must_answer": "known_concept_question",
+          "user_facing_replacement_created": false
+        },
+        "retry_recommended": true
+      },
+      "last_debug_keys": [
+        "compliance_planner_next_move",
+        "compliance_planner_answer_shape",
+        "compliance_planner_question_policy",
+        "compliance_response_planner_present",
+        "human_like_answer_policy_enabled",
+        "explicit_answer_need",
+        "repair_user_dissatisfaction",
+        "sarcasm_or_negative_feedback",
+        "overruled_constraints",
+        "final_answer_directive",
+        "legacy_constraints_suppressed",
+        "question_forced",
+        "practice_forced",
+        "microstep_forced",
+        "canned_step_disallowed",
+        "answer_fit_evaluator",
+        "final_answer_shape",
+        "compliance_failed_checks",
+        "no_stub_repair_signal",
+        "retry_recommended"
+      ],
+      "final_answer_shape": "knowledge_direct_answer_repair_deferred_to_gate",
+      "retry_signal_reason": "knowledge_direct_answer_repair"
+    },
+    {
+      "case": "clarify_one_point_insert_question",
+      "note": "Clarify-one-point rule with zero questions in text.",
+      "input": {
+        "response_text": "Похоже, это сильно сжимает тебя.",
+        "contract_summary": {
+          "user_message": "Не понимаю, что со мной в этот момент.",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "answer_knowledge_question",
+          "planner_next_move": "clarify_one_point",
+          "planner_answer_shape": "clarify_one_point",
+          "planner_question_policy": "optional_none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Если выбрать один узел прямо сейчас, что больше всего сжимает тебя в этой ситуации?",
+      "output_sha1": "10469f5ce5a46a8cea43c0a2816b1bd9bf4cbcfa",
+      "last_debug": {
+        "compliance_planner_next_move": "clarify_one_point",
+        "compliance_planner_answer_shape": "clarify_one_point",
+        "compliance_planner_question_policy": "optional_none",
+        "compliance_response_planner_present": true,
+        "human_like_answer_policy_enabled": false,
+        "explicit_answer_need": true,
+        "repair_user_dissatisfaction": false,
+        "sarcasm_or_negative_feedback": false,
+        "overruled_constraints": [],
+        "final_answer_directive": {
+          "version": "final_answer_directive_v1",
+          "current_user_request": "объясни по-человечески, что такое нейросталкинг, без практик",
+          "must_answer_source": "latest_turn",
+          "answer_target": "latest_turn",
+          "writer_contact_mode": "structured_answer",
+          "no_practice_unless_requested": true,
+          "latest_turn_constraints_v1": {
+            "active_constraints": [
+              "no_practice"
+            ]
+          }
+        },
+        "legacy_constraints_suppressed": [],
+        "question_forced": false,
+        "practice_forced": false,
+        "microstep_forced": false,
+        "canned_step_disallowed": true,
+        "answer_fit_evaluator": {
+          "version": "concrete_answer_fit_v1",
+          "concrete_need": false,
+          "formulaic_opening_detected": false,
+          "context_anchor": "",
+          "user_anchor_labels": [],
+          "answer_anchor_hits": [],
+          "answer_mentions_context_anchor": false,
+          "structured_answer": false,
+          "answer_long_enough": false,
+          "explicit_one_practice_request": false,
+          "practice_request_not_fulfilled": false,
+          "panic_control_support_question": false,
+          "support_answer_too_textbook": false,
+          "fit_status": "pass",
+          "needs_repair": false
+        }
+      },
+      "last_debug_keys": [
+        "compliance_planner_next_move",
+        "compliance_planner_answer_shape",
+        "compliance_planner_question_policy",
+        "compliance_response_planner_present",
+        "human_like_answer_policy_enabled",
+        "explicit_answer_need",
+        "repair_user_dissatisfaction",
+        "sarcasm_or_negative_feedback",
+        "overruled_constraints",
+        "final_answer_directive",
+        "legacy_constraints_suppressed",
+        "question_forced",
+        "practice_forced",
+        "microstep_forced",
+        "canned_step_disallowed",
+        "answer_fit_evaluator"
+      ],
+      "final_answer_shape": null,
+      "retry_signal_reason": null
+    },
+    {
+      "case": "user_repair_signal_retry",
+      "note": "User repair signal should defer to no-stub retry.",
+      "input": {
+        "response_text": "Хорошо, тогда пойдем дальше.",
+        "contract_summary": {
+          "user_message": "Ты ушел не туда, вернись к сути и не предлагай практику.",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "answer_knowledge_question",
+          "planner_next_move": "answer_known_concept",
+          "planner_answer_shape": "compact_direct",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Хорошо, тогда пойдем дальше.",
+      "output_sha1": "2154e1e06588d732298ef3b230ad126bd337dd51",
+      "last_debug": {
+        "compliance_planner_next_move": "answer_known_concept",
+        "compliance_planner_answer_shape": "compact_direct",
+        "compliance_planner_question_policy": "none",
+        "compliance_response_planner_present": true,
+        "human_like_answer_policy_enabled": false,
+        "explicit_answer_need": true,
+        "repair_user_dissatisfaction": false,
+        "sarcasm_or_negative_feedback": false,
+        "overruled_constraints": [],
+        "final_answer_directive": {
+          "version": "final_answer_directive_v1",
+          "current_user_request": "объясни по-человечески, что такое нейросталкинг, без практик",
+          "must_answer_source": "latest_turn",
+          "answer_target": "latest_turn",
+          "writer_contact_mode": "structured_answer",
+          "no_practice_unless_requested": true,
+          "latest_turn_constraints_v1": {
+            "active_constraints": [
+              "no_practice"
+            ]
+          }
+        },
+        "legacy_constraints_suppressed": [],
+        "question_forced": false,
+        "practice_forced": false,
+        "microstep_forced": false,
+        "canned_step_disallowed": true,
+        "answer_fit_evaluator": {
+          "version": "concrete_answer_fit_v1",
+          "concrete_need": false,
+          "formulaic_opening_detected": false,
+          "context_anchor": "",
+          "user_anchor_labels": [],
+          "answer_anchor_hits": [],
+          "answer_mentions_context_anchor": false,
+          "structured_answer": false,
+          "answer_long_enough": false,
+          "explicit_one_practice_request": false,
+          "practice_request_not_fulfilled": false,
+          "panic_control_support_question": false,
+          "support_answer_too_textbook": false,
+          "fit_status": "pass",
+          "needs_repair": false
+        },
+        "final_answer_shape": "user_repair_signal_deferred_to_gate",
+        "compliance_failed_checks": [
+          "no_stub_repair_signal"
+        ],
+        "no_stub_repair_signal": {
+          "version": "no_stub_repair_signal_v1",
+          "reason": "user_repair_signal",
+          "recommended_action": "writer_retry",
+          "must_answer": "Ты ушел не туда, вернись к сути и не предлагай практику.",
+          "user_facing_replacement_created": false
+        },
+        "retry_recommended": true
+      },
+      "last_debug_keys": [
+        "compliance_planner_next_move",
+        "compliance_planner_answer_shape",
+        "compliance_planner_question_policy",
+        "compliance_response_planner_present",
+        "human_like_answer_policy_enabled",
+        "explicit_answer_need",
+        "repair_user_dissatisfaction",
+        "sarcasm_or_negative_feedback",
+        "overruled_constraints",
+        "final_answer_directive",
+        "legacy_constraints_suppressed",
+        "question_forced",
+        "practice_forced",
+        "microstep_forced",
+        "canned_step_disallowed",
+        "answer_fit_evaluator",
+        "final_answer_shape",
+        "compliance_failed_checks",
+        "no_stub_repair_signal",
+        "retry_recommended"
+      ],
+      "final_answer_shape": "user_repair_signal_deferred_to_gate",
+      "retry_signal_reason": "user_repair_signal"
+    },
+    {
+      "case": "known_concept_neurostalking_repair",
+      "note": "Known-concept repair path before question-policy cascade.",
+      "input": {
+        "response_text": "Это внешнее слежение и биофидбек. О каком варианте ты говоришь?",
+        "contract_summary": {
+          "user_message": "что такое нейросталкинг?",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "answer_knowledge_question",
+          "planner_next_move": "answer_known_concept",
+          "planner_answer_shape": "compact_direct",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Это внешнее слежение и биофидбек. О каком варианте ты говоришь?",
+      "output_sha1": "f55b1a5bcab2ec8dc0c7271256d2ac7fb1e4cb9b",
+      "last_debug": {
+        "compliance_planner_next_move": "answer_known_concept",
+        "compliance_planner_answer_shape": "compact_direct",
+        "compliance_planner_question_policy": "none",
+        "compliance_response_planner_present": true,
+        "human_like_answer_policy_enabled": false,
+        "explicit_answer_need": true,
+        "repair_user_dissatisfaction": false,
+        "sarcasm_or_negative_feedback": false,
+        "overruled_constraints": [],
+        "final_answer_directive": {
+          "version": "final_answer_directive_v1",
+          "current_user_request": "объясни по-человечески, что такое нейросталкинг, без практик",
+          "must_answer_source": "latest_turn",
+          "answer_target": "latest_turn",
+          "writer_contact_mode": "structured_answer",
+          "no_practice_unless_requested": true,
+          "latest_turn_constraints_v1": {
+            "active_constraints": [
+              "no_practice"
+            ]
+          }
+        },
+        "legacy_constraints_suppressed": [],
+        "question_forced": false,
+        "practice_forced": false,
+        "microstep_forced": false,
+        "canned_step_disallowed": true,
+        "answer_fit_evaluator": {
+          "version": "concrete_answer_fit_v1",
+          "concrete_need": false,
+          "formulaic_opening_detected": false,
+          "context_anchor": "",
+          "user_anchor_labels": [],
+          "answer_anchor_hits": [],
+          "answer_mentions_context_anchor": false,
+          "structured_answer": false,
+          "answer_long_enough": false,
+          "explicit_one_practice_request": false,
+          "practice_request_not_fulfilled": false,
+          "panic_control_support_question": false,
+          "support_answer_too_textbook": false,
+          "fit_status": "pass",
+          "needs_repair": false
+        },
+        "final_answer_shape": "knowledge_direct_answer_repair_deferred_to_gate",
+        "compliance_failed_checks": [
+          "no_stub_repair_signal"
+        ],
+        "no_stub_repair_signal": {
+          "version": "no_stub_repair_signal_v1",
+          "reason": "knowledge_direct_answer_repair",
+          "recommended_action": "writer_retry",
+          "must_answer": "known_concept_question",
+          "user_facing_replacement_created": false
+        },
+        "retry_recommended": true
+      },
+      "last_debug_keys": [
+        "compliance_planner_next_move",
+        "compliance_planner_answer_shape",
+        "compliance_planner_question_policy",
+        "compliance_response_planner_present",
+        "human_like_answer_policy_enabled",
+        "explicit_answer_need",
+        "repair_user_dissatisfaction",
+        "sarcasm_or_negative_feedback",
+        "overruled_constraints",
+        "final_answer_directive",
+        "legacy_constraints_suppressed",
+        "question_forced",
+        "practice_forced",
+        "microstep_forced",
+        "canned_step_disallowed",
+        "answer_fit_evaluator",
+        "final_answer_shape",
+        "compliance_failed_checks",
+        "no_stub_repair_signal",
+        "retry_recommended"
+      ],
+      "final_answer_shape": "knowledge_direct_answer_repair_deferred_to_gate",
+      "retry_signal_reason": "knowledge_direct_answer_repair"
+    },
+    {
+      "case": "question_policy_none_known_concept",
+      "note": "Question-policy none path with known-concept repair tail.",
+      "input": {
+        "response_text": "Нейросталкинг — это внутреннее наблюдение за автоматическими реакциями?",
+        "contract_summary": {
+          "user_message": "что такое нейросталкинг?",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "answer_knowledge_question",
+          "planner_next_move": "answer_known_concept",
+          "planner_answer_shape": "compact_direct",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Нейросталкинг — это внутреннее наблюдение за автоматическими реакциями?",
+      "output_sha1": "88365bad0ff6a3556a0cd9fc60d115200fef46c6",
+      "last_debug": {
+        "compliance_planner_next_move": "answer_known_concept",
+        "compliance_planner_answer_shape": "compact_direct",
+        "compliance_planner_question_policy": "none",
+        "compliance_response_planner_present": true,
+        "human_like_answer_policy_enabled": false,
+        "explicit_answer_need": true,
+        "repair_user_dissatisfaction": false,
+        "sarcasm_or_negative_feedback": false,
+        "overruled_constraints": [],
+        "final_answer_directive": {
+          "version": "final_answer_directive_v1",
+          "current_user_request": "объясни по-человечески, что такое нейросталкинг, без практик",
+          "must_answer_source": "latest_turn",
+          "answer_target": "latest_turn",
+          "writer_contact_mode": "structured_answer",
+          "no_practice_unless_requested": true,
+          "latest_turn_constraints_v1": {
+            "active_constraints": [
+              "no_practice"
+            ]
+          }
+        },
+        "legacy_constraints_suppressed": [],
+        "question_forced": false,
+        "practice_forced": false,
+        "microstep_forced": false,
+        "canned_step_disallowed": true,
+        "answer_fit_evaluator": {
+          "version": "concrete_answer_fit_v1",
+          "concrete_need": false,
+          "formulaic_opening_detected": false,
+          "context_anchor": "",
+          "user_anchor_labels": [],
+          "answer_anchor_hits": [],
+          "answer_mentions_context_anchor": false,
+          "structured_answer": false,
+          "answer_long_enough": false,
+          "explicit_one_practice_request": false,
+          "practice_request_not_fulfilled": false,
+          "panic_control_support_question": false,
+          "support_answer_too_textbook": false,
+          "fit_status": "pass",
+          "needs_repair": false
+        },
+        "final_answer_shape": "knowledge_direct_answer_repair_deferred_to_gate",
+        "compliance_failed_checks": [
+          "no_stub_repair_signal"
+        ],
+        "no_stub_repair_signal": {
+          "version": "no_stub_repair_signal_v1",
+          "reason": "knowledge_direct_answer_repair",
+          "recommended_action": "writer_retry",
+          "must_answer": "known_concept_question",
+          "user_facing_replacement_created": false
+        },
+        "retry_recommended": true
+      },
+      "last_debug_keys": [
+        "compliance_planner_next_move",
+        "compliance_planner_answer_shape",
+        "compliance_planner_question_policy",
+        "compliance_response_planner_present",
+        "human_like_answer_policy_enabled",
+        "explicit_answer_need",
+        "repair_user_dissatisfaction",
+        "sarcasm_or_negative_feedback",
+        "overruled_constraints",
+        "final_answer_directive",
+        "legacy_constraints_suppressed",
+        "question_forced",
+        "practice_forced",
+        "microstep_forced",
+        "canned_step_disallowed",
+        "answer_fit_evaluator",
+        "final_answer_shape",
+        "compliance_failed_checks",
+        "no_stub_repair_signal",
+        "retry_recommended"
+      ],
+      "final_answer_shape": "knowledge_direct_answer_repair_deferred_to_gate",
+      "retry_signal_reason": "knowledge_direct_answer_repair"
+    },
+    {
+      "case": "template_leakage_practice_forbidden",
+      "note": "Planner practice-forbidden with unsolicited practice in answer text.",
+      "input": {
+        "response_text": "Попробуй сделать вдох и потом задай себе вопрос, как ты сейчас.",
+        "contract_summary": {
+          "user_message": "объясни по-человечески без практик",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "answer_knowledge_question",
+          "planner_next_move": "continue_active_line",
+          "planner_answer_shape": "compact_direct",
+          "planner_question_policy": "optional_none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Попробуй сделать вдох и потом задай себе вопрос, как ты сейчас.",
+      "output_sha1": "429db064196932409b75fe900e1275f168df23d1",
+      "last_debug": {
+        "compliance_planner_next_move": "continue_active_line",
+        "compliance_planner_answer_shape": "compact_direct",
+        "compliance_planner_question_policy": "optional_none",
+        "compliance_response_planner_present": true,
+        "human_like_answer_policy_enabled": false,
+        "explicit_answer_need": true,
+        "repair_user_dissatisfaction": false,
+        "sarcasm_or_negative_feedback": false,
+        "overruled_constraints": [],
+        "final_answer_directive": {
+          "version": "final_answer_directive_v1",
+          "current_user_request": "объясни по-человечески, что такое нейросталкинг, без практик",
+          "must_answer_source": "latest_turn",
+          "answer_target": "latest_turn",
+          "writer_contact_mode": "structured_answer",
+          "no_practice_unless_requested": true,
+          "latest_turn_constraints_v1": {
+            "active_constraints": [
+              "no_practice"
+            ]
+          }
+        },
+        "legacy_constraints_suppressed": [],
+        "question_forced": false,
+        "practice_forced": false,
+        "microstep_forced": false,
+        "canned_step_disallowed": true,
+        "answer_fit_evaluator": {
+          "version": "concrete_answer_fit_v1",
+          "concrete_need": true,
+          "formulaic_opening_detected": false,
+          "context_anchor": "",
+          "user_anchor_labels": [],
+          "answer_anchor_hits": [],
+          "answer_mentions_context_anchor": false,
+          "structured_answer": false,
+          "answer_long_enough": false,
+          "explicit_one_practice_request": false,
+          "practice_request_not_fulfilled": false,
+          "panic_control_support_question": false,
+          "support_answer_too_textbook": false,
+          "fit_status": "fail",
+          "needs_repair": true
+        },
+        "template_leakage_repair_deferred_to_gate": true,
+        "final_answer_shape": "template_repair_deferred_to_gate"
+      },
+      "last_debug_keys": [
+        "compliance_planner_next_move",
+        "compliance_planner_answer_shape",
+        "compliance_planner_question_policy",
+        "compliance_response_planner_present",
+        "human_like_answer_policy_enabled",
+        "explicit_answer_need",
+        "repair_user_dissatisfaction",
+        "sarcasm_or_negative_feedback",
+        "overruled_constraints",
+        "final_answer_directive",
+        "legacy_constraints_suppressed",
+        "question_forced",
+        "practice_forced",
+        "microstep_forced",
+        "canned_step_disallowed",
+        "answer_fit_evaluator",
+        "template_leakage_repair_deferred_to_gate",
+        "final_answer_shape"
+      ],
+      "final_answer_shape": "template_repair_deferred_to_gate",
+      "retry_signal_reason": null
+    },
+    {
+      "case": "active_line_revoicing_trim",
+      "note": "Mechanical revoicing tail branch.",
+      "input": {
+        "response_text": "Тебе сейчас тяжело. Попробуй заметить, что именно сжимает тебя в теле.",
+        "contract_summary": {
+          "user_message": "Скажи прямо, без перефразирования.",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "answer_knowledge_question",
+          "planner_next_move": "continue_active_line",
+          "planner_answer_shape": "compact_direct",
+          "planner_question_policy": "optional_none",
+          "planner_practice_policy": "optional",
+          "active_line_intent": "continue_thread",
+          "practice_allowed": true
+        }
+      },
+      "output_text": "Тебе сейчас тяжело. Попробуй заметить, что именно сжимает тебя в теле.",
+      "output_sha1": "a9bf3f0f15dc3af0255acf3e777c6e31a4196a56",
+      "last_debug": {
+        "compliance_planner_next_move": "continue_active_line",
+        "compliance_planner_answer_shape": "compact_direct",
+        "compliance_planner_question_policy": "optional_none",
+        "compliance_response_planner_present": true,
+        "human_like_answer_policy_enabled": false,
+        "explicit_answer_need": true,
+        "repair_user_dissatisfaction": false,
+        "sarcasm_or_negative_feedback": false,
+        "overruled_constraints": [],
+        "final_answer_directive": {
+          "version": "final_answer_directive_v1",
+          "current_user_request": "объясни по-человечески, что такое нейросталкинг, без практик",
+          "must_answer_source": "latest_turn",
+          "answer_target": "latest_turn",
+          "writer_contact_mode": "structured_answer",
+          "no_practice_unless_requested": true,
+          "latest_turn_constraints_v1": {
+            "active_constraints": [
+              "no_practice"
+            ]
+          }
+        },
+        "legacy_constraints_suppressed": [],
+        "question_forced": false,
+        "practice_forced": false,
+        "microstep_forced": false,
+        "canned_step_disallowed": false,
+        "answer_fit_evaluator": {
+          "version": "concrete_answer_fit_v1",
+          "concrete_need": false,
+          "formulaic_opening_detected": false,
+          "context_anchor": "",
+          "user_anchor_labels": [],
+          "answer_anchor_hits": [],
+          "answer_mentions_context_anchor": false,
+          "structured_answer": false,
+          "answer_long_enough": false,
+          "explicit_one_practice_request": false,
+          "practice_request_not_fulfilled": false,
+          "panic_control_support_question": false,
+          "support_answer_too_textbook": false,
+          "fit_status": "pass",
+          "needs_repair": false
+        }
+      },
+      "last_debug_keys": [
+        "compliance_planner_next_move",
+        "compliance_planner_answer_shape",
+        "compliance_planner_question_policy",
+        "compliance_response_planner_present",
+        "human_like_answer_policy_enabled",
+        "explicit_answer_need",
+        "repair_user_dissatisfaction",
+        "sarcasm_or_negative_feedback",
+        "overruled_constraints",
+        "final_answer_directive",
+        "legacy_constraints_suppressed",
+        "question_forced",
+        "practice_forced",
+        "microstep_forced",
+        "canned_step_disallowed",
+        "answer_fit_evaluator"
+      ],
+      "final_answer_shape": null,
+      "retry_signal_reason": null
+    },
+    {
+      "case": "tail_known_concept_self_realization",
+      "note": "Tail known-concept branch for self-realization.",
+      "input": {
+        "response_text": "Самореализация — это когда ты раскрываешь свои задатки и двигаешься к своему пути.",
+        "contract_summary": {
+          "user_message": "что такое самореализация?",
+          "dialogue_profile": "safe_guided",
+          "answer_obligation": "answer_knowledge_question",
+          "planner_next_move": "answer_known_concept",
+          "planner_answer_shape": "compact_direct",
+          "planner_question_policy": "optional_none",
+          "planner_practice_policy": "forbidden",
+          "active_line_intent": "known_concept_question",
+          "practice_allowed": false
+        }
+      },
+      "output_text": "Самореализация — это когда ты раскрываешь свои задатки и двигаешься к своему пути.",
+      "output_sha1": "7fd6d63583905bad16e86889cb85c39b57ec406d",
+      "last_debug": {
+        "compliance_planner_next_move": "answer_known_concept",
+        "compliance_planner_answer_shape": "compact_direct",
+        "compliance_planner_question_policy": "optional_none",
+        "compliance_response_planner_present": true,
+        "human_like_answer_policy_enabled": false,
+        "explicit_answer_need": true,
+        "repair_user_dissatisfaction": false,
+        "sarcasm_or_negative_feedback": false,
+        "overruled_constraints": [],
+        "final_answer_directive": {
+          "version": "final_answer_directive_v1",
+          "current_user_request": "объясни по-человечески, что такое нейросталкинг, без практик",
+          "must_answer_source": "latest_turn",
+          "answer_target": "latest_turn",
+          "writer_contact_mode": "structured_answer",
+          "no_practice_unless_requested": true,
+          "latest_turn_constraints_v1": {
+            "active_constraints": [
+              "no_practice"
+            ]
+          }
+        },
+        "legacy_constraints_suppressed": [],
+        "question_forced": false,
+        "practice_forced": false,
+        "microstep_forced": false,
+        "canned_step_disallowed": true,
+        "answer_fit_evaluator": {
+          "version": "concrete_answer_fit_v1",
+          "concrete_need": false,
+          "formulaic_opening_detected": false,
+          "context_anchor": "",
+          "user_anchor_labels": [],
+          "answer_anchor_hits": [],
+          "answer_mentions_context_anchor": false,
+          "structured_answer": false,
+          "answer_long_enough": false,
+          "explicit_one_practice_request": false,
+          "practice_request_not_fulfilled": false,
+          "panic_control_support_question": false,
+          "support_answer_too_textbook": false,
+          "fit_status": "pass",
+          "needs_repair": false
+        },
+        "final_answer_shape": "known_concept_self_realization_repair_deferred_to_gate",
+        "compliance_failed_checks": [
+          "no_stub_repair_signal"
+        ],
+        "no_stub_repair_signal": {
+          "version": "no_stub_repair_signal_v1",
+          "reason": "known_concept_self_realization_repair",
+          "recommended_action": "writer_retry",
+          "must_answer": "что такое самореализация?",
+          "user_facing_replacement_created": false
+        },
+        "retry_recommended": true
+      },
+      "last_debug_keys": [
+        "compliance_planner_next_move",
+        "compliance_planner_answer_shape",
+        "compliance_planner_question_policy",
+        "compliance_response_planner_present",
+        "human_like_answer_policy_enabled",
+        "explicit_answer_need",
+        "repair_user_dissatisfaction",
+        "sarcasm_or_negative_feedback",
+        "overruled_constraints",
+        "final_answer_directive",
+        "legacy_constraints_suppressed",
+        "question_forced",
+        "practice_forced",
+        "microstep_forced",
+        "canned_step_disallowed",
+        "answer_fit_evaluator",
+        "final_answer_shape",
+        "compliance_failed_checks",
+        "no_stub_repair_signal",
+        "retry_recommended"
+      ],
+      "final_answer_shape": "known_concept_self_realization_repair_deferred_to_gate",
+      "retry_signal_reason": "known_concept_self_realization_repair"
+    }
+  ]
+}

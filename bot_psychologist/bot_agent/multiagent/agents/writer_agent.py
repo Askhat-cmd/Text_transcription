@@ -26,6 +26,7 @@ from .writer_agent_enforce_slice2 import _extract_enforce_slice2_second_prelude_
 from .writer_agent_enforce_slice3 import _classify_enforce_slice3_bounded_practice
 from .writer_agent_enforce_slice4 import _classify_enforce_slice4_obligation_repairs_and_echo
 from .writer_agent_enforce_slice5 import _classify_enforce_slice5_block_a
+from .writer_agent_enforce_slice6 import _classify_enforce_block_b_part1
 from .writer_agent_fallback_helpers import (
     _build_gentle_close_reply as _fallback_build_gentle_close_reply,
     _build_no_practice_fallback_text as _fallback_build_no_practice_fallback_text,
@@ -801,97 +802,81 @@ class WriterAgent(WriterAgentLifecycleMixin, WriterAgentFallbackStateMixin):
                 must_answer=user_message,
             )
 
-        # Known concept answer-first path: enforce direct internal meaning framing
-        # before generic question-policy rewrites.
-        if should_answer_directly and (asks_define_known_term or has_external_surveillance_frame):
-            if "самореализац" in lowered_user and ("коррелир" in lowered_user or "связан" in lowered_user):
-                return self._defer_no_stub_repair(
-                    signal="known_concept_correlation_repair",
-                    text=text,
-                    must_answer=user_message,
-                )
-            if concept == "нейросталкинг":
-                return self._defer_no_stub_repair(
-                    signal="known_concept_neurostalking_repair",
-                    text=text,
-                    must_answer=user_message,
-                )
-            if concept == "самореализация":
-                return self._defer_no_stub_repair(
-                    signal="known_concept_self_realization_repair",
-                    text=text,
-                    must_answer=user_message,
-                )
-
-        if planner_question_policy == "none" and has_question:
-            if planner_next_move == "give_direct_step" or planner_answer_shape == "one_step":
-                return self._resolve_one_step_or_no_practice_fallback(
-                    text=text,
-                    user_message=user_message,
-                    lowered_user=lowered_user,
-                    canned_step_disallowed=canned_step_disallowed,
-                )
-            if planner_next_move == "give_short_support" or planner_answer_shape == "short_support":
-                return "Я рядом. Сейчас не нужно ничего разбирать. Можно просто немного снизить внутреннее давление."
-            if planner_next_move == "stabilize_safety" or planner_answer_shape == "safety_grounding":
-                return "Я рядом. Сейчас важнее чуть стабилизироваться и снизить внутреннюю перегрузку. Без разбора, только опора здесь-и-сейчас."
-            if planner_next_move == "answer_known_concept":
-                if "самореализац" in lowered_user and "нейросталкинг" in lowered_user:
-                    return self._defer_no_stub_repair(
-                        signal="known_concept_correlation_repair",
-                        text=text,
-                        must_answer=user_message,
-                    )
-                if "нейросталкинг" in lowered_user:
-                    return self._defer_no_stub_repair(
-                        signal="known_concept_neurostalking_repair",
-                        text=text,
-                        must_answer=user_message,
-                    )
-            return re.sub(r"\s*\?+\s*", ". ", text).strip()
-        if planner_question_policy == "none" and _contains_any(
-            lowered_text, ("что именно", "почему", "как ты", "можешь ли", "хочешь")
-        ):
-            if planner_next_move == "give_direct_step" or planner_answer_shape == "one_step":
-                return self._resolve_one_step_or_no_practice_fallback(
-                    text=text,
-                    user_message=user_message,
-                    lowered_user=lowered_user,
-                    canned_step_disallowed=canned_step_disallowed,
-                )
-            if planner_next_move == "give_short_support":
-                return "Я рядом. Сейчас не нужно ничего разбирать. Можно просто немного снизить внутреннее давление."
-            if planner_next_move == "stabilize_safety":
-                return "Я рядом. Сейчас важнее чуть стабилизироваться и снизить внутреннюю перегрузку. Без разбора, только опора здесь-и-сейчас."
-            if planner_next_move == "close_gently":
-                return "Пожалуйста. Рад, что стало чуть яснее."
+        block_b_part1_result = _classify_enforce_block_b_part1(
+            text=text,
+            user_message=user_message,
+            lowered_user=lowered_user,
+            lowered_text=lowered_text,
+            concept=concept,
+            should_answer_directly=should_answer_directly,
+            asks_define_known_term=asks_define_known_term,
+            has_external_surveillance_frame=has_external_surveillance_frame,
+            planner_question_policy=planner_question_policy,
+            planner_next_move=planner_next_move,
+            planner_answer_shape=planner_answer_shape,
+            planner_practice_policy=planner_practice_policy,
+            has_question=has_question,
+            has_unsolicited_practice=has_unsolicited_practice,
+        )
+        if block_b_part1_result.outcome in {
+            "known_concept_prefirst_correlation",
+            "no_question_known_concept_correlation",
+        }:
+            return self._defer_no_stub_repair(
+                signal="known_concept_correlation_repair",
+                text=text,
+                must_answer=user_message,
+            )
+        if block_b_part1_result.outcome in {
+            "known_concept_prefirst_neurostalking",
+            "no_question_known_concept_neurostalking",
+        }:
+            return self._defer_no_stub_repair(
+                signal="known_concept_neurostalking_repair",
+                text=text,
+                must_answer=user_message,
+            )
+        if block_b_part1_result.outcome == "known_concept_prefirst_self_realization":
+            return self._defer_no_stub_repair(
+                signal="known_concept_self_realization_repair",
+                text=text,
+                must_answer=user_message,
+            )
+        if block_b_part1_result.outcome in {
+            "no_question_one_step",
+            "question_marker_one_step",
+            "none_policy_one_step",
+        }:
+            return self._resolve_one_step_or_no_practice_fallback(
+                text=text,
+                user_message=user_message,
+                lowered_user=lowered_user,
+                canned_step_disallowed=canned_step_disallowed,
+            )
+        if block_b_part1_result.outcome in {"no_question_short_support", "question_marker_short_support"}:
+            return "Я рядом. Сейчас не нужно ничего разбирать. Можно просто немного снизить внутреннее давление."
+        if block_b_part1_result.outcome in {"no_question_safety_grounding", "question_marker_safety_grounding"}:
+            return "Я рядом. Сейчас важнее чуть стабилизироваться и снизить внутреннюю перегрузку. Без разбора, только опора здесь-и-сейчас."
+        if block_b_part1_result.outcome == "no_question_default_strip":
+            return block_b_part1_result.return_text
+        if block_b_part1_result.outcome == "question_marker_close_gently":
+            return "Пожалуйста. Рад, что стало чуть яснее."
+        if block_b_part1_result.outcome == "question_marker_default":
             return "Я рядом. Продолжим спокойно и без лишней нагрузки."
-        if planner_question_policy == "none":
-            if planner_next_move == "give_direct_step" or planner_answer_shape == "one_step":
-                return self._resolve_one_step_or_no_practice_fallback(
-                    text=text,
-                    user_message=user_message,
-                    lowered_user=lowered_user,
-                    canned_step_disallowed=canned_step_disallowed,
-                )
-            if planner_next_move == "deepen_mechanism" or planner_answer_shape == "mechanism_explanation":
-                return self._defer_no_stub_repair(
-                    signal="mechanism_explanation_repair",
-                    text=text,
-                    must_answer=user_message,
-                )
-
-        if planner_next_move == "repair_misalignment":
-            has_repair_forbidden = _contains_any(lowered_text, ("практик", "упражн", "таймер", "шаг"))
-            if has_question or has_repair_forbidden or len(text) > 480:
-                return self._defer_no_stub_repair(
-                    signal="repair_misalignment",
-                    text=text,
-                    must_answer=user_message,
-                )
-
-        if planner_practice_policy == "forbidden" and has_unsolicited_practice:
-            self.last_debug["template_leakage_repair_deferred_to_gate"] = True
+        if block_b_part1_result.outcome == "none_policy_mechanism_repair":
+            return self._defer_no_stub_repair(
+                signal="mechanism_explanation_repair",
+                text=text,
+                must_answer=user_message,
+            )
+        if block_b_part1_result.outcome == "repair_misalignment":
+            return self._defer_no_stub_repair(
+                signal="repair_misalignment",
+                text=text,
+                must_answer=user_message,
+            )
+        if block_b_part1_result.outcome == "practice_forbidden_unsolicited_repair":
+            self.last_debug.update(block_b_part1_result.last_debug_patch)
             self._set_final_answer_shape_debug("template_repair_deferred_to_gate")
             return self._strip_optional_followup_invitation(text) or text
 

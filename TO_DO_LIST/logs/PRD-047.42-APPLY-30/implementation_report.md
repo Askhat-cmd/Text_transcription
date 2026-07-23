@@ -1,8 +1,8 @@
 # PRD-047.42-APPLY-30 Implementation Report
 
 - PRD: `PRD-047.42-APPLY-30`
-- Status: `accepted_pending_delivery_metadata`
-- Delivery: `main_commit_pending`
+- Status: `accepted`
+- Delivery: `main_commit=8c0878b`, `push_status=pushed_to_origin_main`
 
 ## Scope Delivered
 
@@ -17,3 +17,13 @@
 ## Honest Boundary / Milestone
 
 - This PRD closes Part 2, completing `_enforce_mvp_free_dialogue_compliance` in full. The method now consists of exactly two classifier calls plus dispatch, with zero inline rule groups remaining. Both large methods in `writer_agent.py` (`_enforce_answer_compliance` and `_enforce_mvp_free_dialogue_compliance`) are now fully decomposed. Per the PRD, the next step is not another slice but a DoD §5.6 / Scenario A review and an owner-level discussion about opening the Epoch 2 gate.
+
+## Verification Summary
+
+- Direct helper tests: `17 passed`
+- APPLY-30 contract tests: `2 passed`
+- Historical clean-tree rerun `APPLY-6..30`: `143 passed, 1 warning` - fully green
+- Canonical isolated writer baseline: `19 failed, 351 passed, 2036 deselected, 190 warnings`
+- Owner workspace canonical writer run: `14 failed, 356 passed, 2036 deselected, 346 warnings`
+- AST inspection of `_enforce_mvp_free_dialogue_compliance` confirms the method body now contains only dispatch `if <result>.outcome == ...` checks on the two classifier results - no inline rule groups remain.
+- `answer_fit_repair_applied` confirmed computed (both `True` and `False` cases exercised), never hardcoded.

@@ -1,5 +1,22 @@
 # Architecture Decisions
 
+## ADR-129 - A self-method may be imported into a helper as the pure function it thinly wraps, but only after confirming it has no `self` access of its own, and only as a one-off exception, never a blanket rule
+
+Status: accepted
+
+Date: 2026-07-23
+
+Delivery: PRD-047.42-APPLY-30 accepted in main implementation commit `8c0878b`, completing decomposition of `_enforce_mvp_free_dialogue_compliance` and, combined with APPLY-28, both large methods in `writer_agent.py`.
+
+Context: every prior slice in this decomposition series (APPLY-21 through APPLY-29) enforced a strict rule: no `self`-method is ever called from inside an extracted classifier helper, because a `self`-method might read or write `last_debug` or otherwise depend on instance state, and calling it from the "wrong side" of the extraction boundary risks the same byte-order corruption that motivated ADR-122 (APPLY-22) in the first place. Reconnaissance of `_enforce_mvp_free_dialogue_compliance`'s group O found a case where this blanket avoidance would have been overly conservative: the group's decision logic (branching on the *length* and *content* of the stripped text, not just its terminal return) needs the result of `self._strip_optional_followup_invitation(text)` to make that decision - not just to shape the final return value. Direct inspection confirmed `self._strip_optional_followup_invitation` is a thin `@staticmethod` wrapper with a one-line body that calls the pure module-level function `_strip_optional_followup_invitation` from `writer_agent_fallback_helpers.py` (an already-protected file) - no `self` access, no `last_debug` write, nothing instance-specific at all.
+
+Decision:
+- import the pure module-level function directly into the helper (`from .writer_agent_fallback_helpers import _strip_optional_followup_invitation`), not the `self.`-bound method - functionally identical, but makes explicit that the helper depends on a stateless function, not an instance method;
+- require this kind of exception to be verified case-by-case (read the `@staticmethod`'s body, confirm zero `self` access) rather than assumed from a self-method's name or prior precedent;
+- document each such exception explicitly in the delivering PRD and this decision log, and explicitly disclaim it as a blanket precedent - a future self-method that merely *looks* similarly thin must still be checked individually before being imported this way.
+
+Consequences: the "no self-calls in helpers" rule from ADR-122 stands as the default, with exactly one documented, individually-justified exception in the entire two-method, ten-slice decomposition. Any future slice (in a new method, post-Epoch-2) that wants to reuse this pattern must perform the same verification - confirm the wrapped function is genuinely free of `self` access - rather than citing this ADR as generic permission.
+
 ## ADR-128 - An in-place text mutation that survives a non-returning group must be carried through the classifier result unconditionally, reassigned by the caller before the outcome is even checked
 
 Status: accepted

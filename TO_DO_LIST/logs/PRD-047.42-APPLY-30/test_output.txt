@@ -1,0 +1,70 @@
+PRD-047.42-APPLY-30 test output summary
+Generated on: 2026-07-23
+
+1. Focused direct helper tests
+Command:
+python -m pytest bot_psychologist/tests/multiagent/test_writer_agent_mvp_slice2.py -q
+Result:
+17 passed
+
+2. Focused APPLY-30 contract tests
+Command:
+python -m pytest bot_psychologist/tests/contract/test_prd_047_42_apply_30_mvp_slice2.py -q
+Result:
+2 passed
+
+3. Syntax compilation
+Command:
+python -m py_compile bot_psychologist/bot_agent/multiagent/agents/writer_agent.py bot_psychologist/bot_agent/multiagent/agents/writer_agent_mvp_slice2.py TO_DO_LIST/tools/run_prd_047_42_apply_30_mvp_slice2.py bot_psychologist/tests/multiagent/test_writer_agent_mvp_slice2.py bot_psychologist/tests/contract/test_prd_047_42_apply_30_mvp_slice2.py
+Result:
+passed
+
+4. Clean-tree historical contract rerun
+Environment:
+temporary detached worktree from commit 8c0878b
+Command:
+python -m pytest bot_psychologist/tests/contract/test_prd_047_42_apply_*.py -q
+Result:
+143 passed, 1 warning in 23.15s (fully green, no exceptions)
+
+5. Canonical isolated writer baseline
+Environment:
+temporary detached worktree from commit 8c0878b
+Workdir:
+bot_psychologist
+Command:
+python -m pytest tests/ -k writer -q
+Result:
+19 failed, 351 passed, 2036 deselected, 190 warnings in 69.89s
+
+6. Owner workspace writer baseline
+Environment:
+owner workspace with local runtime/test environment
+Workdir:
+bot_psychologist
+Command:
+python -m pytest tests/ -k writer -q
+Result:
+14 failed, 356 passed, 2036 deselected, 346 warnings in 152.45s
+
+7. Method fully decomposed confirmation
+AST check on _enforce_mvp_free_dialogue_compliance confirms the method
+body now contains only dispatch `if <result>.outcome == ...` checks on
+the two classifier results (mvp1_result, mvp2_result) - no inline rule
+groups remain. answer_fit_repair_applied confirmed computed
+(bool(answer_fit.get("concrete_need", False))) for both True and False
+cases, never hardcoded.
+
+Interpretation:
+- APPLY-30-specific focused tests are green (17 direct + 2 contract).
+- Historical APPLY-6..30 contract rerun is fully green on clean tree:
+  143/143.
+- The PRD-required isolated clean-worktree writer baseline reproduces
+  exactly the known 19 failures (same failing set as APPLY-20..29; pass/
+  deselect counts rose only by the newly added APPLY-30 tests: +17 passed
+  matched by `-k writer`, +2 deselected not matched).
+- The owner workspace still shows the separate 14-failure environment-
+  specific baseline (same known set); this is recorded as an honest
+  warning, not as an APPLY-30 regression.
+- MILESTONE: _enforce_mvp_free_dialogue_compliance is now fully
+  decomposed. Both large methods in writer_agent.py are complete.

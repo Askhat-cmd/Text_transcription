@@ -2,6 +2,28 @@
 
 Главный источник курса проекта: `docs/MASTER_STRATEGIC_PLAN_NEO_MindBot_v4_RU.md`.
 
+## PRD-047.42-APPLY-30 _enforce_mvp_free_dialogue_compliance slice 2 Part 2 - method fully decomposed, both large writer_agent.py methods complete
+PRD-047.42-APPLY-30 closes Part 2 (groups K-P plus the method's unconditional final fallback) of `_enforce_mvp_free_dialogue_compliance`, completing that method's decomposition in full. Combined with APPLY-28's completion of `_enforce_answer_compliance`, **both large methods in `writer_agent.py` are now fully decomposed.**
+
+Current result:
+- main implementation commit: `8c0878b`;
+- push status: `pushed_to_origin_main`;
+- status is `accepted`;
+- new helper module is `bot_psychologist/bot_agent/multiagent/agents/writer_agent_mvp_slice2.py`;
+- extracted surface is one frozen dataclass `MvpPart2Result` with a `Literal` outcome field (9 tags: 8 significant outcomes plus `not_matched`) and optional `return_text`/`last_debug_patch` - a pure classifier with zero `self` access;
+- `not_matched` here is not a fall-through to more inline code (there is none left) - it represents the physical end of the method: the computed final fallback (`sanitized_final`, built via the pure `_strip_optional_followup_invitation` function) is returned as `return_text`, and the caller's `self._set_final_answer_shape_debug(planner_answer_shape or "compact_direct")` stays as the method's last unconditional line;
+- group P's `last_debug_patch` carries a COMPUTED `answer_fit_repair_applied` value (`bool(answer_fit.get("concrete_need", False))`), never a hardcoded `True` - the only such case across both methods' entire decomposition (ADR documented separately if warranted; see implementation report);
+- `_strip_optional_followup_invitation` is imported directly as the pure module-level function from `writer_agent_fallback_helpers.py` inside the helper - a deliberate, individually-justified exception to "self-calls stay in writer_agent.py" (the self-method is confirmed to be a thin `@staticmethod` wrapper over this exact function, with no `self` access or `last_debug` writes of its own); this is not treated as a blanket precedent for other self-methods;
+- the now-unused top-level `detect_stale_stub` import was removed from `writer_agent.py` (both call sites now live independently inside `writer_agent_mvp_slice1.py` and `writer_agent_mvp_slice2.py`, matching the original's independent re-computation);
+- boundaries matched the PRD's stated post-APPLY-29 re-verified span (`1119-1192`) exactly against live HEAD;
+- direct helper tests cover all 8 significant outcomes, both `not_matched` sub-cases (`answer_obligation` in vs. not in the preserve set), and dedicated coverage proving `answer_fit_repair_applied` is computed for both `True` and `False`;
+- dedicated APPLY-30 runner reuses the APPLY-20 `17`-case harness by import, builds a historical-before snapshot from commit `c8bd2491`, and proves byte-identical before/after output plus identical `last_debug` key ordering;
+- `no_mutation_proof.md` reports `0` changed protected paths across the `26` canonical protected files (the accepted `25` plus `writer_agent_mvp_slice1.py`) and `0` changed paths under the accepted APPLY-20..29 log folders;
+- clean-tree historical contract rerun across APPLY-6..APPLY-30 is fully green at `143/143`;
+- the PRD-required isolated clean-worktree `pytest tests/ -k writer -q` baseline reports `19 failed, 351 passed, 2036 deselected, 190 warnings` - the same known failure set as prior PRDs;
+- the owner workspace canonical writer run shows the known environment-specific `14 failed, 356 passed, 2036 deselected, 346 warnings` - an already-documented, unrelated warning.
+- **MILESTONE: `_enforce_mvp_free_dialogue_compliance` is now fully decomposed** (2 slices: APPLY-29, APPLY-30). Combined with `_enforce_answer_compliance`'s completion at APPLY-28, both large methods in `writer_agent.py` are now fully decomposed across ten total apply slices, two technical "stays inline" decisions (`mvp_free_branch_handoff`, ADR-125), and one hygiene micro-PRD (APPLY-25). The next step is a DoD §5.6 / Scenario A review and owner-level discussion about the Epoch 2 gate (owner decision #4), not a unilateral technical continuation.
+
 ## PRD-047.42-APPLY-29 _enforce_mvp_free_dialogue_compliance slice 1 Part 1
 PRD-047.42-APPLY-29 opens decomposition of the second (and last) large method in `writer_agent.py`: `_enforce_mvp_free_dialogue_compliance`, a ~225-line method with a completely different signature (explicit keyword parameters, not `(self, response_text, contract)`) that was mapped from scratch in this session - no assumptions carried over from `_enforce_answer_compliance`'s decomposition. Reconnaissance found two things not seen in the prior method: dead code (`offer_repair_context`, computed and never read) and a group that mutates `text`/`lowered_text` in place and lets the mutation survive past the group if it doesn't return.
 

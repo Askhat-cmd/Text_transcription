@@ -16,7 +16,6 @@ from ..dialogue_policy import (
     detect_numbered_list_request,
     detect_practice_overview_request,
 )
-from ..stale_stub_detector import detect_stale_stub
 from ..contracts.writer_contract import WriterContract
 from .agent_llm_client import create_agent_completion
 from .agent_llm_config import get_model_for_agent, get_temperature_for_agent
@@ -29,6 +28,7 @@ from .writer_agent_enforce_slice5 import _classify_enforce_slice5_block_a
 from .writer_agent_enforce_slice6 import _classify_enforce_block_b_part1
 from .writer_agent_enforce_slice7 import _classify_enforce_block_b_part2
 from .writer_agent_mvp_slice1 import _classify_mvp_part1
+from .writer_agent_mvp_slice2 import _classify_mvp_part2
 from .writer_agent_fallback_helpers import (
     _build_gentle_close_reply as _fallback_build_gentle_close_reply,
     _build_no_practice_fallback_text as _fallback_build_no_practice_fallback_text,
@@ -1116,80 +1116,68 @@ class WriterAgent(WriterAgentLifecycleMixin, WriterAgentFallbackStateMixin):
             self._set_final_answer_shape_debug("template_repair_deferred_to_gate")
             return mvp1_result.return_text
 
-        if practice_overview_requested or planner_answer_shape == "practice_catalog_explanation":
-            list_items = re.findall(r"(?m)^\s*(?:[-*•]|\d+[.)])\s+", text)
-            if len(list_items) < 3 or len(text) < 420:
-                return self._defer_no_stub_repair(
-                    signal="mvp_practice_catalog_repair",
-                    text=text,
-                    must_answer="practice_catalog_explanation",
-                )
-
-        if planner_question_policy == "none" and has_question and not expansion_requested:
+        mvp2_result = _classify_mvp_part2(
+            text=text,
+            user_message=user_message,
+            lowered_user=lowered_user,
+            concept=concept,
+            practice_overview_requested=practice_overview_requested,
+            planner_answer_shape=planner_answer_shape,
+            planner_question_policy=planner_question_policy,
+            has_question=has_question,
+            expansion_requested=expansion_requested,
+            repair_and_expand_requested=repair_and_expand_requested,
+            user_repair_signal=user_repair_signal,
+            should_answer_directly=should_answer_directly,
+            asks_define_known_term=asks_define_known_term,
+            has_external_surveillance_frame=has_external_surveillance_frame,
+            application_request=application_request,
+            active_line_intent=active_line_intent,
+            answer_obligation=answer_obligation,
+            answer_fit=answer_fit,
+        )
+        if mvp2_result.outcome == "practice_catalog_repair":
+            return self._defer_no_stub_repair(
+                signal="mvp_practice_catalog_repair",
+                text=text,
+                must_answer="practice_catalog_explanation",
+            )
+        if mvp2_result.outcome == "direct_no_forced_question":
             self._set_final_answer_shape_debug("direct_no_forced_question")
-            return re.sub(r"\s*\?+\s*", ". ", text).strip()
-
-        if repair_and_expand_requested or user_repair_signal:
+            return mvp2_result.return_text
+        if mvp2_result.outcome == "repair_and_expand":
             return self._defer_no_stub_repair(
                 signal="mvp_repair_and_expand",
                 text=text,
                 must_answer=user_message,
             )
-
-        if should_answer_directly and (asks_define_known_term or has_external_surveillance_frame):
+        if mvp2_result.outcome == "concept_explanation_repair":
             return self._defer_no_stub_repair(
                 signal="mvp_concept_explanation_repair",
                 text=text,
                 must_answer=user_message,
             )
-
-        if (expansion_requested or application_request) and len(text) < 260:
-            if answer_obligation in {
-                "answer_direct_question",
-                "answer_knowledge_question",
-                "provide_one_bounded_practice",
-                "answer_last_offer",
-                "repair_and_answer_last_question",
-            }:
-                preserved_text = self._strip_optional_followup_invitation(text)
-                preserved_lower = preserved_text.lower()
-                if (
-                    len(preserved_text) >= 120
-                    or any(color in preserved_lower for color in ("красн", "оранж", "зелен"))
-                    or "нейросталкинг" in preserved_lower
-                ):
-                    self._set_final_answer_shape_debug("preserved_application_answer")
-                    return preserved_text
-            if concept == "нейросталкинг" or "нейросталкинг" in lowered_user or active_line_intent == "known_concept_question":
-                return self._defer_no_stub_repair(
-                    signal="mvp_concept_expansion_repair",
-                    text=text,
-                    must_answer=user_message,
-                )
+        if mvp2_result.outcome == "preserved_application_answer":
+            self._set_final_answer_shape_debug("preserved_application_answer")
+            return mvp2_result.return_text
+        if mvp2_result.outcome == "concept_expansion_repair":
+            return self._defer_no_stub_repair(
+                signal="mvp_concept_expansion_repair",
+                text=text,
+                must_answer=user_message,
+            )
+        if mvp2_result.outcome == "expanded_explanation_repair":
             return self._defer_no_stub_repair(
                 signal="mvp_expanded_explanation_repair",
                 text=text,
                 must_answer=user_message,
             )
-
-        stale_stub = detect_stale_stub(text)
-        if bool(stale_stub.get("detected", False)):
-            self.last_debug["answer_fit_repair_applied"] = bool(answer_fit.get("concrete_need", False))
-            self.last_debug["template_leakage_repair_deferred_to_gate"] = True
+        if mvp2_result.outcome == "stale_stub_retry_deferred_to_gate":
+            self.last_debug.update(mvp2_result.last_debug_patch)
             self._set_final_answer_shape_debug("stale_stub_retry_deferred_to_gate")
-            return text
-
-        sanitized_final = text
-        if answer_obligation in {
-            "answer_direct_question",
-            "answer_knowledge_question",
-            "provide_one_bounded_practice",
-            "answer_last_offer",
-            "repair_and_answer_last_question",
-        }:
-            sanitized_final = self._strip_optional_followup_invitation(text) or text
+            return mvp2_result.return_text
         self._set_final_answer_shape_debug(planner_answer_shape or "compact_direct")
-        return sanitized_final
+        return mvp2_result.return_text
 
     @staticmethod
     def _build_gentle_close_reply() -> str:

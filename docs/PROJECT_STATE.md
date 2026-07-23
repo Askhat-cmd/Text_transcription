@@ -2,6 +2,28 @@
 
 Главный источник курса проекта: `docs/MASTER_STRATEGIC_PLAN_NEO_MindBot_v4_RU.md`.
 
+## PRD-047.42-APPLY-27 _enforce_answer_compliance slice 6 Block B Part 1 classifier
+PRD-047.42-APPLY-27 extracts the first half of Block B (the last unreconnoitered stretch of `_enforce_answer_compliance`), following the architect's split decision: Block B (212 lines) is ~3.2x longer than Block A and mixes two extraction mechanics (some groups always return - classifier; some groups may fall through - mechanic (d) from APPLY-22) plus the method's only remaining direct `last_debug` write, so it was cut into two PRDs at the natural structural boundary after group 6.
+
+Current result:
+- main implementation commit: `52f071a`;
+- push status: `pushed_to_origin_main`;
+- status is `accepted`;
+- new helper module is `bot_psychologist/bot_agent/multiagent/agents/writer_agent_enforce_slice6.py`;
+- extracted surface is one frozen dataclass `EnforceBlockBPart1Result` with a `Literal` outcome field (19 tags: 18 significant outcomes plus `not_matched`), an optional computed `return_text`, and an optional `last_debug_patch` - a pure classifier with zero `self` access;
+- `not_matched` is a fall-through signal, not a normal outcome: `writer_agent.py` has no `if` branch for it at all, so control drops naturally into group 7 (line 898), which stays untouched - the same pattern already used for slice3/4/5 when no outcome matches;
+- `_enforce_answer_compliance(...)` keeps all four `self`-methods (`_defer_no_stub_repair`, `_resolve_one_step_or_no_practice_fallback`, `_set_final_answer_shape_debug`, `_strip_optional_followup_invitation`) exclusively on the call site; the helper never calls or receives any of them;
+- the method's only remaining direct `self.last_debug` write (`template_leakage_repair_deferred_to_gate`) is returned as an ordered `last_debug_patch` and applied by the caller strictly before `_set_final_answer_shape_debug`, preserving the original three-line sequence byte-for-byte - the same ordering discipline established in APPLY-22;
+- `known_concept_prefirst_correlation`/`no_question_known_concept_correlation` and the neurostalking pair are preserved as four distinct classifier tags (two physically different conditions in the original each), merged only at the call site's dispatch, not inside the classifier - direct precedent from APPLY-26;
+- `no_question_default_strip` computes `return_text` inside the helper via `re.sub(r"\s*\?+\s*", ". ", text).strip()`, matching the original inline computation exactly;
+- boundaries matched the PRD's stated `804-896` exactly against live HEAD, with group 7 (line 898) confirmed physically untouched immediately below - no re-verification discrepancy;
+- direct helper tests cover all 18 significant outcomes, `not_matched`, `return_text` computation across multiple inputs, the `last_debug` key-order guard for `practice_forbidden_unsolicited_repair`, and a group-2 priority-resolution case;
+- dedicated APPLY-27 runner reuses the APPLY-20 `17`-case harness by import, builds a historical-before snapshot from commit `2dfc9dfb`, and proves byte-identical before/after output plus identical `last_debug` key ordering;
+- `no_mutation_proof.md` reports `0` changed protected paths across the `23` canonical protected files (the accepted `22` plus `writer_agent_enforce_slice5.py`) and `0` changed paths under the accepted APPLY-20..26 log folders;
+- clean-tree historical contract rerun across APPLY-6..APPLY-27 is fully green at `137/137`;
+- the PRD-required isolated clean-worktree `pytest tests/ -k writer -q` baseline reports `19 failed, 286 passed, 2030 deselected, 190 warnings` - the same known failure set as prior PRDs;
+- the owner workspace canonical writer run shows the known environment-specific `14 failed, 291 passed, 2030 deselected, 346 warnings` - an already-documented, unrelated warning.
+
 ## PRD-047.42-APPLY-26 _enforce_answer_compliance slice 5 Block A classifier
 PRD-047.42-APPLY-26 follows the architect's direct technical decision that `mvp_free_branch_handoff` (a single delegating `self._enforce_mvp_free_dialogue_compliance(...)` call with no internal logic or `last_debug` writes) stays inline, by analogy with owner decision #3 on `provider_dispatch` - closing family 3 of the APPLY-20 map without a PRD. Reconnaissance of the remaining 278-line method tail found a natural split at the "known concept answer-first path" comment: Block A (66 lines, clean, zero `last_debug` writes, one terminal self-call) and Block B (212 lines, unreconnoitered, contains the method's only remaining `last_debug` write). This PRD extracts Block A whole.
 

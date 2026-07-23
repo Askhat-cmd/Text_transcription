@@ -1,8 +1,8 @@
 # PRD-047.42-APPLY-27 Implementation Report
 
 - PRD: `PRD-047.42-APPLY-27`
-- Status: `accepted_pending_delivery_metadata`
-- Delivery: `main_commit_pending`
+- Status: `accepted`
+- Delivery: `main_commit=52f071a`, `push_status=pushed_to_origin_main`
 
 ## Scope Delivered
 
@@ -20,3 +20,12 @@
 ## Honest Boundary
 
 - This PRD closes only Part 1 of Block B (groups 1-6, `804-896`). Groups 7-12 (`898-1015`, 118 lines - including the most structurally complex cluster of the whole method, group 9) remain untouched in `writer_agent.py` and are the next boundary (APPLY-28), per the architect's split decision recorded in the PRD (Block B is ~3.2x longer than Block A and mixes two extraction mechanics, so it was not taken in one PRD).
+
+## Verification Summary
+
+- Direct helper tests: `26 passed`
+- APPLY-27 contract tests: `3 passed`
+- Historical clean-tree rerun `APPLY-6..27`: `137 passed, 1 warning` - fully green (the APPLY-20 `rule_count` self-test has stayed green since APPLY-25's fix)
+- Canonical isolated writer baseline: `19 failed, 286 passed, 2030 deselected, 190 warnings`
+- Owner workspace canonical writer run: `14 failed, 291 passed, 2030 deselected, 346 warnings`
+- Groups 7-12 (`898-1015`) confirmed physically untouched: direct read of `writer_agent.py` immediately after the extracted block shows line 898 begins group 7 exactly as before, and the runner's `grep_proof.md` confirms the untouched marker against the historical source at the same relative position.

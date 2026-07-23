@@ -1,0 +1,69 @@
+PRD-047.42-APPLY-27 test output summary
+Generated on: 2026-07-23
+
+1. Focused direct helper tests
+Command:
+python -m pytest bot_psychologist/tests/multiagent/test_writer_agent_enforce_slice6.py -q
+Result:
+26 passed
+
+2. Focused APPLY-27 contract tests
+Command:
+python -m pytest bot_psychologist/tests/contract/test_prd_047_42_apply_27_enforce_slice6.py -q
+Result:
+3 passed
+
+3. Syntax compilation
+Command:
+python -m py_compile bot_psychologist/bot_agent/multiagent/agents/writer_agent.py bot_psychologist/bot_agent/multiagent/agents/writer_agent_enforce_slice6.py TO_DO_LIST/tools/run_prd_047_42_apply_27_enforce_slice6.py bot_psychologist/tests/multiagent/test_writer_agent_enforce_slice6.py bot_psychologist/tests/contract/test_prd_047_42_apply_27_enforce_slice6.py
+Result:
+passed
+
+4. Clean-tree historical contract rerun
+Environment:
+temporary detached worktree from commit 52f071a
+Command:
+python -m pytest bot_psychologist/tests/contract/test_prd_047_42_apply_*.py -q
+Result:
+137 passed, 1 warning in 21.39s (fully green, no exceptions)
+
+5. Canonical isolated writer baseline
+Environment:
+temporary detached worktree from commit 52f071a
+Workdir:
+bot_psychologist
+Command:
+python -m pytest tests/ -k writer -q
+Result:
+19 failed, 286 passed, 2030 deselected, 190 warnings in 112.56s
+
+6. Owner workspace writer baseline
+Environment:
+owner workspace with local runtime/test environment
+Workdir:
+bot_psychologist
+Command:
+python -m pytest tests/ -k writer -q
+Result:
+14 failed, 291 passed, 2030 deselected, 346 warnings in 189.31s
+
+7. Groups 7-12 (lines 898-1015) untouched confirmation
+Verified by direct read of writer_agent.py immediately after the extracted
+block: line 898 begins group 7 exactly as before
+(`if (\n            (planner_next_move == "deepen_mechanism" ...`), and
+runner's grep_proof.md confirms the untouched marker is present in the
+historical source at the same relative position. git diff of the PRD
+commit shows no hunks below the extracted 804-896 window.
+
+Interpretation:
+- APPLY-27-specific focused tests are green (26 direct + 3 contract).
+- Historical APPLY-6..27 contract rerun is fully green on clean tree:
+  137/137 (the APPLY-20 rule_count self-test stays green, as it has since
+  APPLY-25's fix).
+- The PRD-required isolated clean-worktree writer baseline reproduces
+  exactly the known 19 failures (same failing set as APPLY-20..26; pass/
+  deselect counts rose only by the newly added APPLY-27 tests: +26 passed
+  matched by `-k writer`, +3 deselected not matched).
+- The owner workspace still shows the separate 14-failure environment-
+  specific baseline (same known set); this is recorded as an honest
+  warning, not as an APPLY-27 regression.

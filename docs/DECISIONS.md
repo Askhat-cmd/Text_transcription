@@ -1,5 +1,23 @@
 # Architecture Decisions
 
+## ADR-126 - When a block mixes always-return and maybe-fall-through groups plus is far longer than the previous batched slice, split it at the natural structural seam instead of forcing one PRD or one mechanic
+
+Status: accepted
+
+Date: 2026-07-16
+
+Delivery: PRD-047.42-APPLY-27 accepted in main implementation commit `52f071a`.
+
+Context: after Block A (APPLY-26) closed cleanly as one batched classifier, reconnaissance of the remaining method tail found Block B (212 lines) to be structurally different in three ways: it is ~3.2x longer than Block A, it mixes two extraction mechanics (some groups always return on entry - pure classifier, matching APPLY-24/26; some groups may not match and must let execution continue - mechanic (d) from APPLY-22), and it contains the method's only remaining direct `self.last_debug` write. Forcing Block B into one PRD would have combined the "batch whole clean families" pace decision (v4.27) with a structural signal that actually called for the opposite - the same reasoning that split family 2 into R04 (APPLY-23) then R07-R16 (APPLY-24) by risk, not by an arbitrary line count.
+
+Decision:
+- split Block B at its one natural structural seam - immediately after group 6, where the mixed always-return groups end and the method's only `last_debug` write closes - rather than at an arbitrary midpoint or forcing a single mechanic across the whole block;
+- represent the `not_matched` case not as an 18th-plus-one ordinary outcome but as an explicit fall-through signal: the classifier returns it, and the caller has no corresponding `if` branch at all, so control drops naturally into the next unextracted group - the same pattern already established for slice3/4/5 whenever no rule in a batch matches;
+- keep the method's sole remaining `last_debug` write as an ordered patch applied by the caller strictly before the adjacent `self`-call, by direct precedent from APPLY-22's key-order discipline, even though this occurrence is a flat three-line sequence rather than a branching one;
+- run a differential fuzz test (50,000 random input combinations against the extracted logic re-implemented from the real source) before handing the PRD to the executor, as an additional pre-implementation confidence check layered on top of - not replacing - the mandatory post-implementation snapshot/test/hash protocol.
+
+Consequences: the project now has a documented pattern for splitting an over-large, mechanically-mixed block at its natural seam rather than either forcing it into one oversized PRD or slicing it into arbitrarily-sized pieces; and a confirmed reusable idiom for `not_matched`-as-fall-through when a batched classifier only covers part of a cascade. The next PRD (Block B Part 2) inherits a simpler `last_debug` risk profile (zero direct writes) but a larger locals/return-point surface (group 9), and should be planned accordingly rather than assumed comparable in risk to Part 1.
+
 ## ADR-125 - A single delegating self-call with no internal logic or `last_debug` writes stays inline; extracting it would be structure without benefit
 
 Status: accepted

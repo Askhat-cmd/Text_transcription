@@ -1,0 +1,77 @@
+# PRD-047.46-HF1 Test Results
+
+## Targeted run
+
+```
+tests/test_dialogue_pragmatics_v1.py::test_yes_after_phrase_offer_is_contextual_followup PASSED
+tests/test_dialogue_pragmatics_v1.py::test_da_konechno_after_example_offer_keeps_context PASSED
+tests/test_dialogue_pragmatics_v1.py::test_short_yes_without_context_is_not_crash_contextual_false PASSED
+tests/test_dialogue_pragmatics_v1.py::test_dissatisfaction_is_repair_signal PASSED
+tests/test_dialogue_pragmatics_v1.py::test_greeting_repair_complaint_is_repair_signal PASSED
+tests/test_dialogue_pragmatics_followup_v2.py::test_affirmation_with_intent_is_contextual_followup PASSED
+tests/test_dialogue_pragmatics_followup_v2.py::test_thanks_is_close_ack_not_contextual_followup PASSED
+tests/test_dialogue_pragmatics_followup_v2.py::test_thanks_with_extra_words_is_close_ack PASSED (new)
+tests/test_dialogue_pragmatics_followup_v2.py::test_thanks_with_intent_word_is_close_ack_not_followup PASSED (new)
+tests/test_dialogue_pragmatics_followup_v2.py::test_thanks_but_explain_more_is_still_imperative_followup PASSED (new)
+tests/test_dialogue_pragmatics_followup_v2.py::test_repair_request_short_followup_sets_repair_signal PASSED
+tests/test_multiagent_prd_047_10_hf1_dialogue_pragmatics.py::test_writer_contract_includes_dialogue_pragmatics_and_retrieval_decision PASSED
+tests/test_multiagent_prd_047_10_hf1_dialogue_pragmatics.py::test_writer_compliance_rewrites_regulate_stub_on_contextual_followup FAILED (pre-existing, unrelated — see PRD §2)
+tests/test_prd_047_10_hf1_dialogue_pragmatics_runner.py::test_dataset_validation_passes_for_prd_047_10_hf1_cases PASSED
+tests/test_prd_047_10_hf1_dialogue_pragmatics_runner.py::test_direct_mode_executes_required_hf1_cases PASSED
+
+1 failed, 14 passed
+```
+
+## Canonical run: `pytest tests/ -k writer -q` (owner workspace, not isolated worktree)
+
+### Pre-fix (dialogue_pragmatics.py + new tests stashed out)
+
+```
+FAILED tests/test_multiagent_prd_047_10_hf1_dialogue_pragmatics.py::test_writer_compliance_rewrites_regulate_stub_on_contextual_followup
+FAILED tests/test_prd_047_11_hf1_writer_prompt_diet.py::test_practice_suppression_rewrite_no_stub
+FAILED tests/test_prd_047_11_hf1_writer_prompt_diet.py::test_trace_preserves_raw_advisory_but_writer_prompt_does_not
+FAILED tests/test_prd_047_8_mvp_free_dialogue_runner.py::test_direct_mode_has_active_concept_inheritance_and_relaxed_writer
+FAILED tests/test_writer_contract_context_package.py::test_writer_contract_uses_context_package_for_prompt_context
+FAILED tests/test_writer_prompt_mvp_free_dialogue.py::test_writer_uses_mvp_free_system_prompt_and_higher_tokens
+FAILED tests/test_writer_prompt_philosophy_kernel.py::test_writer_prompt_has_no_long_raw_source_passages
+FAILED tests/multiagent/test_diagnostic_center_shadow_no_user_path_effect.py::test_shadow_does_not_change_writer_path
+FAILED tests/multiagent/test_planner_bridge_writer_contract_pilot_eval_runner.py::test_writer_contract_pilot_fixture_has_minimum_cases
+FAILED tests/multiagent/test_writer_agent.py::test_semantic_hits_limit_to_two
+FAILED tests/multiagent/test_writer_kb_payload_no_blind_truncation.py::test_no_blind_truncation_neurostalking_payload
+FAILED tests/multiagent/test_writer_kb_payload_no_blind_truncation.py::test_retrieval_decision_fields_remain_unchanged_when_payload_enabled
+FAILED tests/multiagent/test_writer_prompt_replay_eval_runner.py::test_replay_fixture_has_minimum_cases
+FAILED tests/multiagent/test_writer_prompt_replay_prompt_bloat.py::test_prompt_bloat_warning_detected_without_blocker
+14 failed, 356 passed, 2036 deselected, 344 warnings in 228.28s (0:03:48)
+```
+
+### Post-fix (dialogue_pragmatics.py fix + 3 new tests applied)
+
+```
+FAILED tests/test_multiagent_prd_047_10_hf1_dialogue_pragmatics.py::test_writer_compliance_rewrites_regulate_stub_on_contextual_followup
+FAILED tests/test_prd_047_11_hf1_writer_prompt_diet.py::test_practice_suppression_rewrite_no_stub
+FAILED tests/test_prd_047_11_hf1_writer_prompt_diet.py::test_trace_preserves_raw_advisory_but_writer_prompt_does_not
+FAILED tests/test_prd_047_8_mvp_free_dialogue_runner.py::test_direct_mode_has_active_concept_inheritance_and_relaxed_writer
+FAILED tests/test_writer_contract_context_package.py::test_writer_contract_uses_context_package_for_prompt_context
+FAILED tests/test_writer_prompt_mvp_free_dialogue.py::test_writer_uses_mvp_free_system_prompt_and_higher_tokens
+FAILED tests/test_writer_prompt_philosophy_kernel.py::test_writer_prompt_has_no_long_raw_source_passages
+FAILED tests/multiagent/test_diagnostic_center_shadow_no_user_path_effect.py::test_shadow_does_not_change_writer_path
+FAILED tests/multiagent/test_planner_bridge_writer_contract_pilot_eval_runner.py::test_writer_contract_pilot_fixture_has_minimum_cases
+FAILED tests/multiagent/test_writer_agent.py::test_semantic_hits_limit_to_two
+FAILED tests/multiagent/test_writer_kb_payload_no_blind_truncation.py::test_no_blind_truncation_neurostalking_payload
+FAILED tests/multiagent/test_writer_kb_payload_no_blind_truncation.py::test_retrieval_decision_fields_remain_unchanged_when_payload_enabled
+FAILED tests/multiagent/test_writer_prompt_replay_eval_runner.py::test_replay_fixture_has_minimum_cases
+FAILED tests/multiagent/test_writer_prompt_replay_prompt_bloat.py::test_prompt_bloat_warning_detected_without_blocker
+14 failed, 356 passed, 2039 deselected, 344 warnings in 213.56s (0:03:33)
+```
+
+**Named failure list is byte-for-byte identical between pre-fix and
+post-fix runs (same 14 tests, same names, same order).** The only
+numeric difference (`2036` vs `2039` deselected) is exactly the 3 new
+tests added by this PRD, which the `-k writer` filter deselects (they
+don't match the `writer` keyword) — expected, not a regression.
+
+Note: the owner-workspace canonical run count is 14 known failures
+(not the 19 seen in an isolated `git worktree`), consistent with the
+established precedent from the .42-APPLY series (isolated worktree =
+19, owner workspace = 14, same underlying causes, both pre-existing
+and unrelated to this fix).

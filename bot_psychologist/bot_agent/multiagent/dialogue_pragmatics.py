@@ -104,9 +104,16 @@ def _detect_short_utterance_type(user_message: str) -> str:
     words = _extract_words(lowered)
     if any(marker in lowered for marker in _REPAIR_DISSATISFACTION_MARKERS):
         return "repair_feedback"
-    if words and (" ".join(words) in _CLOSE_ACK_MARKERS or all(word in _CLOSE_ACK_MARKERS for word in words)):
+    has_followup_imperative = any(marker in lowered for marker in _FOLLOWUP_IMPERATIVE_MARKERS)
+    is_pure_close_ack = bool(
+        words and (" ".join(words) in _CLOSE_ACK_MARKERS or all(word in _CLOSE_ACK_MARKERS for word in words))
+    )
+    starts_with_close_marker = any(lowered.startswith(marker) for marker in _CLOSE_ACK_MARKERS)
+    if not has_followup_imperative and (
+        is_pure_close_ack or (starts_with_close_marker and _is_short_utterance(user_message))
+    ):
         return "close_ack"
-    if any(marker in lowered for marker in _FOLLOWUP_IMPERATIVE_MARKERS):
+    if has_followup_imperative:
         if words and any(word in _AFFIRM_SHORT_MARKERS for word in words):
             return "affirmation_with_intent"
         return "imperative_followup"
